@@ -1,0 +1,62 @@
+/* Styles for all browsers and printers go here  */
+
+    body:after {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        z-index: 9999;
+        font-size: 16px;
+        line-height: 16px;
+        content: '320';
+    }
+    
+    #debugwindowsize {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        z-index: 9999;
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+
+/* Styles for landscape phones and up go here */
+@media only screen and (min-width: 480px) {
+    
+    body:after {
+        content: '320 + 480';
+    }
+    
+}
+
+/* Styles for tablets and up go here */
+@media only screen and (min-width: 768px) {
+    
+    body:after {
+        content: '320 + 480 + 768';
+    }
+    
+}
+
+/* Styles for laptops/desktops go here */
+@media only screen and (min-width: 992px) {
+    
+    body:after {
+        content: '320 + 480 + 768 + 992';
+    }
+    
+}
+
+/* Styles for high-res displays go here */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+    
+    body:after {
+        content: '320 + 480 + 768 + 992 + @2x';
+    }
+    
+}
+
+/* Styles for printing go here */
+@media print {
+    
+}

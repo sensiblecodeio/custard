@@ -19,22 +19,84 @@
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" media="screen" href="css/320.css">
-    <link rel="stylesheet" media="only screen and (min-width: 480px)" href="css/480.css">
-    <link rel="stylesheet" media="only screen and (min-width: 768px)" href="css/768.css">
-    <link rel="stylesheet" media="only screen and (min-width: 992px)" href="css/992.css">
-    <link rel="stylesheet" media="only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5)" href="css/2x.css">
-    <link rel="stylesheet" media="print" href="css/print.css">
-    
-    <script src="js/libs/modernizr-2.5.3-min.js"></script>
-    
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/metro.bootstrap.css">
+    <link rel="stylesheet" href="css/custard.css">
+
+    <script src="lib/js/modernizr-2.5.3-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script src="lib/js/bootstrap.min.js"></script>
+    <script src="js/metro.bootstrap.js"></script>
+    <script src="js/custard.js"></script>
+
     <meta http-equiv="cleartype" content="on">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 </head>
 <body>
-    
-    <h1>ScraperWiki / Custard</h1>
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-    
+
+    <div style="padding: 50px">
+
+        <h1>H1: for page titles <small>With a subheader</small></h1>
+        <h2>H2: for section titles <small>With a subheader</small></h2>
+        <h3>H3: for emphasis <small>With a subheader</small></h3>
+
+        <hr/>
+
+        <p class="lead">Large body text goes in a <code>&lt;p class="large"&gt;</code></p>
+        <p>Standard body text goes in a plain <code>&lt;p&gt;</code></p>
+        <p class="small">Small body text goes in a <code>&lt;p class="small"&gt;</code></p>
+
+        <hr/>
+
+        <p>This is an <a href="#">example of a link.</a></p>
+        <p><abbr title="Apple Inc">AAPL</abbr> is an abbreviation.</p>
+
+        <hr/>
+
+        <div class="btn-toolbar">
+            <a class="btn" href="#">Button</a>
+            <input class="btn btn-primary" type="submit" value="Default action" />
+            <a class="btn btn-success" href="#"><i class="icon-ok space"></i> Creative action</a>
+            <button class="btn btn-danger"><i class="icon-remove space"></i> Destructive action</button>
+        </div>
+
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <a class="btn" href="#">Button</a>
+                <a class="btn" href="#">Button</a>
+                <a class="btn" href="#">Button</a>
+            </div>
+            <div class="btn-group">
+                <a class="btn" href="#"><i class="icon-chevron-left"></i></a>
+                <a class="btn" href="#"><i class="icon-search"></i></a>
+                <a class="btn" href="#"><i class="icon-chevron-right"></i></a>
+            </div>
+            <div class="btn-group">
+                <a class="btn" href="#">Split dropdown</a>
+                <a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                <ul class="dropdown-menu fix-right top-tail">
+                    <li><a tabindex="-1" href="#">Action</a></li>
+                    <li><a tabindex="-1" href="#">Another action</a></li>
+                    <li class="divider"></li>
+                    <li><a tabindex="-1" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <input type="text" placeholder="What's your name?" />
+            </div>
+            <div class="btn-group">
+                <span class="input-append">
+                    <input type="text" /><button type="button" class="btn">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
 </body>
+
+</html>

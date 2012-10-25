@@ -156,6 +156,15 @@ h2 .more {
     display: none;
 }
 
+div#tool {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+}
+
 
 /* Styles for landscape phones and up go here */
 @media only screen and (min-width: 480px) {
@@ -351,6 +360,10 @@ h2 .more {
 
     #masthead .user .dropdown-menu .dropdown-tail {
         right: 41px;
+    }
+
+    div#tool {
+        top: 100px;
     }
 
 }

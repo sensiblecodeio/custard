@@ -261,12 +261,12 @@ div#tool {
 
     .tool #masthead h1 i {
         position: absolute;
-        top: 12px;
+        top: 42px;
         left: -800px;
     }
 
     .tool #masthead h1:hover i {
-        left: -22px;
+        left: 18px;
     }
 
     #masthead #toggle-nav {

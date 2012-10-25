@@ -17,4 +17,6 @@ $(function(){
         $(this).next().toggleClass('hidden');
     }).insertAfter('#masthead h1');
 
+    $('.tool #masthead h1').append('<i class="icon-chevron-left"></i>');
+
 });

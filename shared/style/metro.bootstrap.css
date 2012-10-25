@@ -213,7 +213,7 @@ input[type="color"],
 .btn-success [class*=" icon-"],
 .btn-danger [class^="icon-"],
 .btn-danger [class*=" icon-"] {
-  background-image: url("../lib/img/glyphicons-halflings-white.png");
+  background-image: url("/vendor/image/glyphicons-halflings-white.png");
 }
 
 .btn-toolbar {
@@ -264,6 +264,11 @@ input[type="color"],
 }
 
 /* Icons */
+
+[class^="icon-"],
+[class*=" icon-"] {
+  background-image: url("/vendor/image/glyphicons-halflings.png");
+}
 
 [class^="icon-"].space,
 [class*=" icon-"].space {

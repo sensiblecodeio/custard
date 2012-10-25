@@ -3,5 +3,5 @@
 #= require_tree view
 
 $ ->
-  new MainRouter()
-  Backbone.history.start()
+  window.app = new MainRouter()
+  Backbone.history.start {pushState: on}

@@ -5,6 +5,6 @@ window.HomeHeaderView = class HomeHeaderView extends Backbone.View
     @render()
 
   render: ->
-    console.log $(@el)
-    $(@el).load '/home_header'
+    @$el.empty()
+    @$el.load 'home_header'
     

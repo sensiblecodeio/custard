@@ -1,62 +1,379 @@
 /* Styles for all browsers and printers go here  */
 
-    body:after {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        z-index: 9999;
-        font-size: 16px;
-        line-height: 16px;
-        content: '320';
-    }
-    
-    #debugwindowsize {
-        position: fixed;
-        bottom: 10px;
-        left: 10px;
-        z-index: 9999;
-        font-size: 16px;
-        line-height: 16px;
-    }
+body:after {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 9999;
+    font-size: 16px;
+    line-height: 16px;
+    content: '320';
+}
+
+#debugwindowsize {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 9999;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+h2 .more {
+    float: right;
+    font-size: 16px;
+    color: #999;
+}
+
+#stripes {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 400px;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+#stripes div {
+    position: absolute;
+    top: -10px;
+    height: 9999px;
+    -moz-transform:rotate(5deg);
+    -moz-transform-origin: 0 0;
+    -webkit-transform:rotate(5deg);
+    -webkit-transform-origin: 0 0;
+    -o-transform:rotate(5deg);
+    -o-transform-origin: 0 0;
+    -ms-transform:rotate(5deg);
+    -ms-transform-origin: 0 0;
+}
+
+#stripes .first {
+    width: 60px;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+    left: 10px;
+}
+
+#stripes .second {
+    width: 120px;
+    opacity: 0.1;
+    filter: alpha(opacity=10);
+    left: 50px;
+}
+
+#stripes .third {
+    width: 20px;
+    opacity: 0.15;
+    filter: alpha(opacity=15);
+    left: 150px;
+}
+
+#stripes .fourth {
+    width: 100px;
+    opacity: 0.1;
+    filter: alpha(opacity=10);
+    left: 200px;
+}
+
+#stripes .fifth {
+    width: 6px;
+    opacity: 0.15;
+    filter: alpha(opacity=15);
+    left: 230px;
+}
+
+#stripes .sixth {
+    width: 2px;
+    opacity: 0.15;
+    filter: alpha(opacity=15);
+    left: 240px;
+}
+
+#masthead {
+    position: relative;
+}
+
+#masthead h1 {
+    margin: 0 0 20px 0;
+    padding: 20px 60px 0 20px;
+}
+
+#masthead h1 a {
+    display: block;
+    overflow: hidden;
+    height: 0;
+    padding-top: 40px;
+    background: transparent url(../img/logo.png) 0 0 no-repeat;
+}
+
+#masthead #toggle-nav {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 0;
+    padding-top: 40px;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+#masthead nav.hidden {
+    display: none;
+}
+
+#masthead nav > ul {
+    list-style: none;
+    margin: 0;
+    background: #fff;
+    -webkit-box-shadow: inset 0px 2px 5px #ccc;
+    box-shadow: inset 0px 2px 5px #ccc;
+}
+
+#masthead nav > ul > li {
+    position: relative;
+}
+
+#masthead nav > ul > li > a {
+    display: block;
+    line-height: 40px;
+    padding: 0 20px;
+    color: #666;
+    border-bottom: 1px solid #eee;
+}
+
+#masthead nav > ul > li > a:hover,
+#masthead li.open > a {
+    text-decoration: none;
+    color: #000;
+}
+
+#masthead .user .caret,
+#masthead .user img {
+    display: none;
+}
 
 
 /* Styles for landscape phones and up go here */
 @media only screen and (min-width: 480px) {
-    
+
     body:after {
         content: '320 + 480';
     }
-    
+
 }
 
 /* Styles for tablets and up go here */
 @media only screen and (min-width: 768px) {
-    
+
     body:after {
         content: '320 + 480 + 768';
     }
-    
+
+    .export .dropdown-menu {
+        min-width: 250px;
+    }
+
+    .dropdown-menu h3 {
+        padding: 0px 15px;
+        margin: 20px 0 5px 0;
+        font-size: 14px;
+        line-height: 16px;
+        white-space: nowrap;
+        text-transform: uppercase;
+        color: #999;
+    }
+
+    .dropdown-menu li:first-child h3 {
+        margin-top: 10px;
+    }
+
+    .dropdown-menu h3 a.more {
+        float: right;
+        padding: 0;
+        line-height: inherit;
+        text-transform: none;
+        color: #bbb;
+    }
+
+    .dropdown-menu .price {
+        float: right;
+        padding: 0 6px;
+        background-color: #999;
+        color: #fff;
+        line-height: 19px;
+        font-size: 12px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        border-radius: 20px;
+    }
+
+    .dropdown-menu a:hover .price {
+        background-color: #fff;
+        color: #4794DB;
+    }
+
+    #masthead + * {
+        clear: both;
+    }
+
+    #masthead h1 {
+        position: relative;
+        float: left;
+        padding: 30px 0 0 40px;
+    }
+
+    #masthead h1 a {
+        width: 225px;
+    }
+
+    .tool #masthead h1 a {
+        width: 60px;
+    }
+
+    .tool #masthead h2 {
+        float: left;
+        margin-left: 5px;
+        margin-top: 30px;
+    }
+
+    .tool #masthead h2 a {
+        margin-left: 10px;
+        padding: 10px 10px 10px 20px;
+        line-height: 40px;
+        color: #000;
+        font-size: 28px;
+        border-left: 1px solid #ddd;
+        border-left: 1px solid rgba(0,0,0,0.15);
+    }
+
+    .tool #masthead h1 i {
+        position: absolute;
+        top: 12px;
+        left: -800px;
+    }
+
+    .tool #masthead h1:hover i {
+        left: -22px;
+    }
+
+    #masthead #toggle-nav {
+        display: none;
+    }
+
+    #masthead nav.hidden {
+        display: block;
+    }
+
+    #masthead nav {
+        display: block;
+        float: right;
+        margin-right: 20px;
+        margin-top: 30px;
+    }
+
+    #masthead nav > ul {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    #masthead nav > ul > li {
+        float: left;
+    }
+
+    #masthead nav > ul > li > a {
+        color: #999;
+        font-weight: bold;
+        border-bottom: 0;
+    }
+
+    #masthead nav > ul > li > a:hover,
+    #masthead li.open > a {
+        color: #666;
+    }
+
+    #masthead nav > ul > li.import > a > i,
+    #masthead nav > ul > li.settings > a > i,
+    #masthead nav > ul > li.export > a > i {
+        opacity: 0.5;
+        margin-top: 2px;
+    }
+
+    #masthead nav > ul > li.import > a:hover > i,
+    #masthead nav > ul > li.import.open > a > i,
+    #masthead nav > ul > li.settings > a:hover > i,
+    #masthead nav > ul > li.settings.open > a > i,
+    #masthead nav > ul > li.export > a:hover > i,
+    #masthead nav > ul > li.export.open > a > i {
+        opacity: 0.7;
+    }
+
+    #masthead nav > ul > li.import .dropdown-menu,
+    #masthead nav > ul > li.settings .dropdown-menu,
+    #masthead nav > ul > li.export .dropdown-menu {
+        left: 10px;
+        top: 35px;
+    }
+
+    #masthead nav .user .caret {
+        display: inline-block;
+        margin: 19px 0 0 5px;
+        border-top-color: #999;
+    }
+
+    #masthead nav .user a:hover .caret,
+    #masthead nav .user.open .caret {
+        border-top-color: #666;
+    }
+
+    #masthead nav .user img {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px;
+    }
+
+    #masthead .dropdown-menu {
+        font-size: 14px;
+    }
+
+    #masthead .user .dropdown-menu {
+        right: 30px;
+        top: 35px;
+        font-size: 14px;
+    }
+
+    #masthead .user .dropdown-menu .dropdown-tail-outline {
+        right: 40px;
+    }
+
+    #masthead .user .dropdown-menu .dropdown-tail {
+        right: 41px;
+    }
+
 }
 
 /* Styles for laptops/desktops go here */
 @media only screen and (min-width: 992px) {
-    
+
     body:after {
         content: '320 + 480 + 768 + 992';
     }
-    
+
 }
 
 /* Styles for high-res displays go here */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-    
+
     body:after {
         content: '320 + 480 + 768 + 992 + @2x';
     }
-    
+
 }
 
 /* Styles for printing go here */
 @media print {
-    
+
 }

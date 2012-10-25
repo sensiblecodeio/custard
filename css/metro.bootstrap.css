@@ -221,8 +221,8 @@ input[type="color"],
   margin-bottom: 20px;
 }
 
-.btn-toolbar .btn + .btn, 
-.btn-toolbar .btn-group + .btn, 
+.btn-toolbar .btn + .btn,
+.btn-toolbar .btn-group + .btn,
 .btn-toolbar .btn + .btn-group,
 .btn-group + .btn-group {
     margin-left: 15px;
@@ -236,7 +236,7 @@ input[type="color"],
     margin-top: 2px;
 }
 
-.btn-group > .btn:first-child, 
+.btn-group > .btn:first-child,
 .btn-group > .btn:last-child,
 .btn-group > .dropdown-toggle,
 .btn-group > .btn.large:first-child,
@@ -368,6 +368,19 @@ input[type="color"],
 
 .metro-tile:hover {
     background: #bbb;
+}
+
+.metro-section.one.column .metro-tile {
+    clear: left;
+    margin-right: 0;
+}
+
+.metro-section.two.columns .metro-tile:nth-child(2n+2) {
+    clear: left;
+}
+
+.metro-section.two.columns .metro-tile:nth-child(2n+1) {
+    margin-right: 0;
 }
 
 .metro-tile h3 {

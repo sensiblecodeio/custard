@@ -1,0 +1,30 @@
+{
+  "name": "custard",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+    "coffee-script": "1.3.3",
+    "connect-assets": "2.2.1",
+    "nib": "0.4.1",
+    "which": "*",
+    "consolidate": "~0.4.0",
+    "mustache": "~0.7.0"
+  },
+  "scripts": {
+    "install": "node_modules/coffee-script/bin/cake build",
+    "start": "node server.js",
+    "test": "mocha --require should --compilers coffee:coffee-script --colors"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "supervisor": "*",
+    "phantom": "~0.3.5",
+    "sinon": "~1.5.0"
+  },
+  "engines": {
+    "node": "~0.8.x",
+    "npm": "1.1.x"
+  }
+}

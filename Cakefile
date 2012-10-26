@@ -2,7 +2,7 @@ fs = require 'fs'
 which = require 'which'
 {spawn, exec} = require 'child_process'
 
-pkg = JSON.parse fs.readFileSync('./server/package.json')
+pkg = JSON.parse fs.readFileSync('./package.json')
 testCmd = pkg.scripts.test
 startCmd = pkg.scripts.start
  
@@ -11,37 +11,19 @@ log = (message, explanation) ->
 
 # Compiles app.coffee and src directory to the app directory
 build = (callback) ->
-  options = ['-c','-b', '-o', 'app', 'src']
+  options = ['-c','-b', '-o', 'server/js', 'server/code']
   cmd = which.sync 'coffee'
   coffee = spawn cmd, options
   coffee.stdout.pipe process.stdout
   coffee.stderr.pipe process.stderr
   coffee.on 'exit', (status) -> callback?() if status is 0
 
-# mocha test
-test = (callback) ->
-  options = [
-    '--compilers'
-    'coffee:coffee-script'
-    '--colors'
-    '--require'
-    'should'
-  ]
-  try
-    cmd = which.sync 'mocha'
-    spec = spawn cmd, options
-    spec.stdout.pipe process.stdout
-    spec.stderr.pipe process.stderr
-    spec.on 'exit', (status) -> callback?() if status is 0
-  catch err
-    log err.message
-    log 'Mocha is not installed - try npm install mocha -g'
-
 task 'build', ->
   build
 
-task 'test', 'Run Mocha tests', ->
-  build -> test
+task 'test', 'Run unit tests', ->
+  console.log process.argv[3..]
+  build -> test process.argv[3..]
 
 task 'dev', 'start dev env', ->
   # watch_coffee

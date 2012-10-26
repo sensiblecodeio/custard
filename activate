@@ -1,0 +1,38 @@
+#!/bin/sh
+# run me with . activate
+
+OLD_PATH=$PATH
+OLD_PS1=$PS1
+OLD_NODE_PATH=$NODE_PATH
+PATH=$(pwd)/node_modules/.bin:$(pwd)/bin:$PATH
+
+# Add ./code to NODE_PATH, adding a separating ':' if NODE_PATH
+# is already set.
+# See http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_06_02
+export NODE_PATH=$(pwd)/code${NODE_PATH+:}${NODE_PATH}
+
+PS1="[cu]$PS1"
+deactivate () {
+    PATH=$OLD_PATH
+    PS1=$OLD_PS1
+    NODE_PATH=$OLD_NODE_PATH
+    unset -f deactivate
+    unset -f mocha
+}
+
+mocha () {
+    eval last=\${$#}
+
+    if [ "$#" = "0" ]
+    then
+      $(which mocha) $(find test -name '*.coffee')
+    else
+      if [ -d $last ]
+      then
+        $(which mocha) $(find $last -name '*.coffee')
+      else
+        $(which mocha) $@
+      fi
+    fi
+
+}

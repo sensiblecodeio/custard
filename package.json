@@ -20,7 +20,7 @@
     "mocha": "*",
     "should": "*",
     "supervisor": "*",
-    "phantom": "~0.3.5",
+    "phantom": "git+https://github.com/thurmda/phantomjs-node",
     "sinon": "~1.5.0"
   },
   "engines": {

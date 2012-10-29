@@ -10,7 +10,7 @@ js = snockets.getConcatenation 'client/code/view/home_content.coffee', async: fa
 js = js.replace /^\(function\(\) {/gm, ''
 js = js.replace /^}\).call\(this\);/gm, ''
 
-# Factor this stuff into functions as well
+# TODO: Factor this stuff into functions as well
 doc = jsdom '<html><body><div id="content">hi</div></body></html>'
 window = doc.createWindow()
 global.document = window.document
@@ -30,7 +30,8 @@ describe 'Home page', ->
       tool = new Backbone.Model {id: 1, name: 'highrise'}
       @view = new HomeContentView model: tool
       sinon.stub @view.$el, 'load', (page) =>
-        @view.$el.html '<div id="tile">Tile</div>'
+        @view.$el.html '<div id="tile"><p>Tile</p></div>'
+        @view.renderTool()
         done()
       @view.render()
 
@@ -38,10 +39,12 @@ describe 'Home page', ->
       @view.$el.load.restore()
 
      it 'renders a single tile', ->
-       console.log $(@view).text()
-       @view.$el.find('#tile').text().should.equal 'Tile'
+       @view.$el.find('#tile p').text().should.equal 'Tile'
        
-     it 'renders the tool in the tile'
+     it 'renders the tool in the tile', ->
+       t = @view.$el.find('.tool').first()
+       should.exist t
+       t.text().should.equal 'highrise'
      
      context 'when the tile is clicked', ->
        it 'navigates to the tool page'

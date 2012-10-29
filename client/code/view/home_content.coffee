@@ -1,6 +1,6 @@
 window.HomeContentView = class HomeContentView extends Backbone.View
   events:
-    'click .metro-tile': 'click_tile'
+    'click .metro-tile': 'clickTile'
 
   el: '#content'
 
@@ -9,8 +9,12 @@ window.HomeContentView = class HomeContentView extends Backbone.View
 
   render: ->
     @$el.empty()
-    @$el.load 'home_content'
+    @$el.load 'home_content', =>
+      @renderTool()
     
-  click_tile: ->
+  renderTool: ->
+    @$el.find('#tile').append "<div class='tool'>#{@model.get 'name'}</div>"
+
+  clickTile: ->
     app.navigate 'tool', {trigger: true}
 

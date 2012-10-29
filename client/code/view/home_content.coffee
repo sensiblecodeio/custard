@@ -16,5 +16,5 @@ window.HomeContentView = class HomeContentView extends Backbone.View
     @$el.find('.metro-tile').first().find('h3').text @model.get 'name'
 
   clickTile: ->
-    window.app.navigate 'tool', {trigger: true}
+    window.app.navigate "tool/#{@model.get 'name'}", {trigger: true}
 

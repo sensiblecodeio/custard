@@ -29,7 +29,7 @@ describe 'Home page', ->
     before (done) ->
       page.evaluate (-> $('.metro-tile').click()), -> done()
 
-    it 'takes me to the tool page', (done) ->
+    it 'takes me to the hello world tool page', (done) ->
       page.evaluate (-> window.location.href), (result) ->
-        result.should.equal "#{url}/tool"
+        result.should.equal "#{url}/tool/hello-world"
         done()

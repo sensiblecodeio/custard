@@ -2,14 +2,8 @@ fs = require 'fs'
 sinon = require 'sinon'
 should = require 'should'
 {jsdom} = require 'jsdom'
+helper = require '../helper'
 
-# Concatenate our JS and eval it
-# TODO: sweep this hack under the carpet
-Snockets = require 'snockets'
-snockets = new Snockets()
-js = snockets.getConcatenation 'client/code/view/home_content.coffee', async: false
-js = js.replace /^\(function\(\) {/gm, ''
-js = js.replace /^}\).call\(this\);/gm, ''
 
 # TODO: Factor this stuff into functions as well
 doc = jsdom '<html><body><div id="content">hi</div></body></html>'
@@ -21,9 +15,10 @@ global.jQuery = global.$ = require('jquery').create global.window
 global.Backbone = require 'backbone'
 global.Backbone.setDomLibrary global.jQuery
 
-eval(js)
+helper.evalConcatenatedFile 'client/code/view/home_content.coffee'
 
-describe 'Home page', ->
+
+describe 'HomePage view', ->
   context 'Header', ->
 
   context 'Content', ->

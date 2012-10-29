@@ -8,7 +8,6 @@ describe 'Home page', ->
   phantom_instance = null
   status = null
 
-
   before (done) ->
     phantom.create (phantom_arg) ->
       phantom_instance = phantom_arg
@@ -26,7 +25,6 @@ describe 'Home page', ->
       result.should.equal 'Logo'
       done()
 
-  
   context 'when I click on a tile', ->
     before (done) ->
       page.evaluate (-> $('.metro-tile').click()), -> done()

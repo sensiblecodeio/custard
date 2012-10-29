@@ -1,3 +1,4 @@
+fs = require 'fs'
 sinon = require 'sinon'
 should = require 'should'
 {jsdom} = require 'jsdom'
@@ -28,10 +29,11 @@ describe 'Home page', ->
   context 'Content', ->
     before (done) ->
       global.window.app = {navigate: ->}
-      tool = new Backbone.Model {id: 1, name: 'highrise'}
+      tool = new Backbone.Model {id: 1, name: 'hello-world'}
       @view = new HomeContentView model: tool
       sinon.stub @view.$el, 'load', (page) =>
-        @view.$el.html '<div id="tile" class=".metro-tile"><p>Tile</p></div>'
+        html = fs.readFileSync 'server/template/home_content.html', 'utf-8'
+        @view.$el.html html
         @view.renderTool()
         done()
       @view.render()
@@ -39,18 +41,13 @@ describe 'Home page', ->
     after ->
       @view.$el.load.restore()
 
-     it 'renders a single tile', ->
-       @view.$el.find('#tile p').text().should.equal 'Tile'
+     it 'renders the hello world tool', ->
+       @view.$el.find('.metro-tile h3').first().text().should.equal 'hello-world'
        
-     it 'renders the tool in the tile', ->
-       t = @view.$el.find('.tool').first()
-       should.exist t
-       t.text().should.equal 'highrise'
-     
      context 'when the tile is clicked', ->
        before ->
          @stub = sinon.stub global.window.app, 'navigate'
-         @view.$el.find('#tile').click()
+         @view.$el.find('.metro-tile').first().click()
 
        after ->
          global.window.app.navigate.restore()

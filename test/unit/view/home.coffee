@@ -12,9 +12,9 @@ js = js.replace /^}\).call\(this\);/gm, ''
 
 # TODO: Factor this stuff into functions as well
 doc = jsdom '<html><body><div id="content">hi</div></body></html>'
-window = doc.createWindow()
-global.document = window.document
-global.addEventListener = window.addEventListener
+global.window = doc.createWindow()
+global.document = global.window.document
+global.addEventListener = global.window.addEventListener
 
 global.jQuery = global.$ = require('jquery').create window
 global.Backbone = require 'backbone'
@@ -30,7 +30,7 @@ describe 'Home page', ->
       tool = new Backbone.Model {id: 1, name: 'highrise'}
       @view = new HomeContentView model: tool
       sinon.stub @view.$el, 'load', (page) =>
-        @view.$el.html '<div id="tile"><p>Tile</p></div>'
+        @view.$el.html '<div id="tile" class=".metro-tile"><p>Tile</p></div>'
         @view.renderTool()
         done()
       @view.render()
@@ -47,5 +47,10 @@ describe 'Home page', ->
        t.text().should.equal 'highrise'
      
      context 'when the tile is clicked', ->
-       it 'navigates to the tool page'
+       before ->
+         @spy = sinon.spy @view, 'clickTile'
+         tile = @view.$el.find('#tile').first()
+         tile.click()
 
+       it 'navigates to the tool page', ->
+         @spy.calledOnce.should.be.true

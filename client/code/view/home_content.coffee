@@ -11,6 +11,7 @@ window.HomeContentView = class HomeContentView extends Backbone.View
     @$el.empty()
     @$el.load 'home_content', =>
       @renderTool()
+      @delegateEvents()
     
   renderTool: ->
     @$el.find('#tile').append "<div class='tool'>#{@model.get 'name'}</div>"

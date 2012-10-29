@@ -16,7 +16,7 @@ global.window = doc.createWindow()
 global.document = global.window.document
 global.addEventListener = global.window.addEventListener
 
-global.jQuery = global.$ = require('jquery').create window
+global.jQuery = global.$ = require('jquery').create global.window
 global.Backbone = require 'backbone'
 global.Backbone.setDomLibrary global.jQuery
 
@@ -27,6 +27,7 @@ describe 'Home page', ->
 
   context 'Content', ->
     before (done) ->
+      global.window.app = {navigate: ->}
       tool = new Backbone.Model {id: 1, name: 'highrise'}
       @view = new HomeContentView model: tool
       sinon.stub @view.$el, 'load', (page) =>
@@ -48,9 +49,11 @@ describe 'Home page', ->
      
      context 'when the tile is clicked', ->
        before ->
-         @spy = sinon.spy @view, 'clickTile'
-         tile = @view.$el.find('#tile').first()
-         tile.click()
+         @stub = sinon.stub global.window.app, 'navigate'
+         @view.$el.find('#tile').click()
+
+       after ->
+         global.window.app.navigate.restore()
 
        it 'navigates to the tool page', ->
-         @spy.calledOnce.should.be.true
+         @stub.calledOnce.should.be.true

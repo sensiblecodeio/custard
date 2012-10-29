@@ -7,13 +7,15 @@ window.MainRouter = class MainRouter extends Backbone.Router
   content: null
 
   main: ->
-    model = new Backbone.Model { id: 1, name: 'hello-world' }
-    $('body').attr 'class', ''
-    @header = new HomeHeaderView()
-    @content = new HomeContentView {model: model}
+    $.get 'apikey', (data) ->
+      window.apikey = data
+      model = new ToolModel { id: 1, name: 'hello-world' }
+      $('body').attr 'class', ''
+      @header = new HomeHeaderView()
+      @content = new HomeContentView {model: model}
 
   tool: (tool) ->
-    model = new Backbone.Model { id: 1, name: 'hello-world' }
+    model = new ToolModel { id: 1, name: 'hello-world' }
     $('body').attr 'class', 'tool'
     @header = new ToolHeaderView()
     @content = new ToolContentView {model: model}

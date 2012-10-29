@@ -25,11 +25,16 @@ describe 'Home page', ->
       result.should.equal 'Logo'
       done()
 
-  context 'when I click on a tile', ->
+  context 'when I click on the hello world tool', ->
     before (done) ->
-      page.evaluate (-> $('.metro-tile').click()), -> done()
+      page.evaluate (-> $('.metro-tile').first().click()), -> done()
 
     it 'takes me to the hello world tool page', (done) ->
       page.evaluate (-> window.location.href), (result) ->
         result.should.equal "#{url}/tool/hello-world"
+        done()
+
+    it 'displays the setup message of the tool', (done) ->
+      page.evaluate (-> $('#content').text()), (result) ->
+        result.should.equal 'This is really basic output'
         done()

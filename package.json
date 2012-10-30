@@ -10,7 +10,8 @@
     "which": "*",
     "consolidate": "~0.4.0",
     "mustache": "~0.7.0",
-    "jazz": "0.0.18"
+    "jazz": "0.0.18",
+    "stylus": "~0.30.1"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

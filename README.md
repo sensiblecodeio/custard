@@ -12,3 +12,9 @@ AGPL Licenced.
     . ~/.nvm/nvm.sh # could be in your .profile
     nvm use 0.8
     npm install
+
+    # later...
+
+    # This will start a development web server.  Best
+    # done in a separate window.
+    cake dev

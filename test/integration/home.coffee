@@ -35,6 +35,13 @@ describe 'Home page', ->
         done()
 
     it 'displays the setup message of the tool', (done) ->
-      page.evaluate (-> $('#content').text()), (result) ->
-        result.should.equal 'This is really basic output'
-        done()
+        # Factor into a wait for predicate function?
+        interval = null
+        check = ->
+          page.evaluate (-> $('#content').text()), (result) ->
+            if result.match /This is really basic output/
+              clearInterval interval
+              done()
+        interval = setInterval check, 500 
+
+

@@ -1,9 +1,10 @@
 window.ToolModel = class ToolModel extends Backbone.Model
-  setup: ->
+  setup: (callback) ->
     $.ajax
       type: 'POST'
-      url: "http://box.scraperwiki.com/ehg.custard-backbone/exec"
+      url: "http://box.scraperwiki.com/ehg/custard-backbone/exec"
       data:
         apikey: window.apikey
-        cmd: './setup'
+        cmd: '~/setup'
+      success: callback
 

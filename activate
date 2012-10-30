@@ -25,11 +25,11 @@ mocha () {
 
     if [ "$#" = "0" ]
     then
-        env mocha $(find test -name '*.coffee')
+        env mocha $(find test -name '*.coffee' | sort)
     else
         if [ -d "$last" ]
         then
-            env mocha $(find "$last" -name '*.coffee')
+            env mocha $(find "$last" -name '*.coffee' | sort)
         else
             env mocha "$@"
         fi

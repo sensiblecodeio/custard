@@ -24,9 +24,10 @@ describe 'Model: Tool', ->
     it 'execs the setup script in the box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "http://box.scraperwiki.com/ehg.custard-backbone/exec"
+        url: "http://box.scraperwiki.com/ehg/custard-backbone/exec"
         data:
           apikey: sinon.match /.+/
-          cmd: sinon.match /.*.\/setup.*/
+          cmd: sinon.match /.*setup.*/
+        success: sinon.match.any
 
       called.should.be.true

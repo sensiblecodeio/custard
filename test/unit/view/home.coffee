@@ -1,29 +1,16 @@
 fs = require 'fs'
 sinon = require 'sinon'
 should = require 'should'
-{jsdom} = require 'jsdom'
 helper = require '../helper'
 
-
-# TODO: Factor this stuff into functions as well
-doc = jsdom '<html><body><div id="content">hi</div></body></html>'
-global.window = doc.createWindow()
-global.document = global.window.document
-global.addEventListener = global.window.addEventListener
-
-global.jQuery = global.$ = require('jquery').create global.window
-global.Backbone = require 'backbone'
-global.Backbone.setDomLibrary global.jQuery
-
 helper.evalConcatenatedFile 'client/code/view/home_content.coffee'
-
-
-describe 'HomePage view', ->
+describe 'View: HomePage', ->
   context 'Header', ->
 
   context 'Content', ->
     before (done) ->
       global.window.app = {navigate: ->}
+      $('body').html '<div id="content"></div>'
       tool = new Backbone.Model {id: 1, name: 'hello-world'}
       @view = new HomeContentView model: tool
       sinon.stub @view.$el, 'load', (page) =>

@@ -4,7 +4,7 @@ helper = require '../helper'
 
 helper.evalConcatenatedFile 'client/code/model/tool.coffee'
 
-describe 'Tool Model', ->
+describe 'Model: Tool', ->
   before ->
     @tool = new ToolModel {name: 'hello-world'}
     window.apikey = 'a-test-apikey'

@@ -25,14 +25,13 @@ mocha () {
 
     if [ "$#" = "0" ]
     then
-      $(which mocha) $(find test -name '*.coffee')
+        env mocha $(find test -name '*.coffee')
     else
-      if [ -d $last ]
-      then
-        $(which mocha) $(find $last -name '*.coffee')
-      else
-        $(which mocha) $@
-      fi
+        if [ -d "$last" ]
+        then
+            env mocha $(find "$last" -name '*.coffee')
+        else
+            env mocha "$@"
+        fi
     fi
-
 }

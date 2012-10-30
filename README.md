@@ -8,9 +8,9 @@ AGPL Licenced.
 
 # Stuff you need to do only once (installing)
 
-On a mac, go to https://nodejs.org/ and install node by clicking
-on the big install button.  Hopefully it will install
-v0.8.something.
+On a Mac, go to https://nodejs.org/ and install node. You'll also need to 
+[download phantomjs v1.6.1](https://code.google.com/p/phantomjs/downloads/detail?name=phantomjs-1.6.1-macosx-static.zip) 
+and move the executable file to `/usr/local/bin`.
 
 On linux, install nvm.  No idea how we did that.  And phantomjs
 with:

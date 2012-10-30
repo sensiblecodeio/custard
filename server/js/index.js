@@ -27,14 +27,12 @@ js.root = 'code';
 
 app.get('/', function(req, resp) {
   return resp.render('index', {
-    variable: js('app')
+    scripts: js('app')
   });
 });
 
 app.get('/:page', function(req, resp) {
-  return resp.render(req.params.page, {
-    variable: js('app')
-  });
+  return resp.render(req.params.page);
 });
 
 port = process.env.PORT || process.env.VMC_APP_PORT || 3000;

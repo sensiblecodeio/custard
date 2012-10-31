@@ -8,8 +8,10 @@ username = 'cotest'
 
 describe 'Model: Tool', ->
   before ->
+    num = String(Math.random()).replace '.',''
     @tool = new ToolModel
       name: 'hello-world'
+      box_name: 'hello-world-' + num.substring(num.length, num.length - 4)
       git_url: 'git://github.com/scraperwiki/hello-world-tool.git'
 
     window.apikey = 'a-test-apikey'
@@ -25,7 +27,7 @@ describe 'Model: Tool', ->
     it 'creates a box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "#{base_url}/#{username}/#{@tool.get 'name'}"
+        url: "#{base_url}/#{username}/#{@tool.get 'box_name'}"
         data:
           apikey: sinon.match /.+/
         success: sinon.match.any
@@ -35,7 +37,7 @@ describe 'Model: Tool', ->
     it 'git clones the tool into the box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "#{base_url}/#{username}/#{@tool.get 'name'}/exec"
+        url: "#{base_url}/#{username}/#{@tool.get 'box_name'}/exec"
         data:
           apikey: sinon.match /.+/
           cmd: sinon.match /.*git clone.*/
@@ -57,7 +59,7 @@ describe 'Model: Tool', ->
     it 'execs the setup script in the box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "#{base_url}/#{username}/#{@tool.get 'name'}/exec"
+        url: "#{base_url}/#{username}/#{@tool.get 'box_name'}/exec"
         data:
           apikey: sinon.match /.+/
           cmd: sinon.match /.*setup.*/

@@ -11,7 +11,7 @@ window.ToolModel = class ToolModel extends Backbone.Model
   _create_box: (callback) ->
     $.ajax
       type: 'POST'
-      url: "#{@base_url}/cotest/#{@get 'name'}"
+      url: "#{@base_url}/cotest/#{@get 'box_name'}"
       data:
         apikey: window.apikey
       success: callback
@@ -19,7 +19,7 @@ window.ToolModel = class ToolModel extends Backbone.Model
   _exec_cmd: (cmd, callback) ->
     $.ajax
       type: 'POST'
-      url: "#{@base_url}/cotest/#{@get 'name'}/exec"
+      url: "#{@base_url}/cotest/#{@get 'box_name'}/exec"
       data:
         apikey: window.apikey
         cmd: cmd

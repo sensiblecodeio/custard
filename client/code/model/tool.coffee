@@ -3,10 +3,10 @@ window.ToolModel = class ToolModel extends Backbone.Model
 
   install: (callback) ->
     @_create_box =>
-      @_exec_cmd "cd; git clone #{@get 'git_url'}", callback
+      @_exec_cmd "cd; git clone #{@get 'git_url'} #{@get 'name'}", callback
 
   setup: (callback) ->
-    @_exec_cmd '~/setup', callback
+    @_exec_cmd "~/#{@get 'name'}/setup", callback
 
   _create_box: (callback) ->
     $.ajax

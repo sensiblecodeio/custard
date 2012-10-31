@@ -42,6 +42,6 @@ describe 'Home page', ->
             if result.match /This is really basic output/
               clearInterval interval
               done()
-        interval = setInterval check, 500 
+        interval = setInterval check, 500
 
 

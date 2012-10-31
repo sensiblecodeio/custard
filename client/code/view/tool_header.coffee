@@ -6,4 +6,5 @@ window.ToolHeaderView = class ToolHeaderView extends Backbone.View
 
   render: ->
     @$el.empty()
-    @$el.load '/tool_header'
+    @$el.load '/tool_header', =>
+      @$el.find('h2 a').text @model.get 'name'

@@ -6,4 +6,5 @@ window.ToolContentView = class HomeContentView extends Backbone.View
 
   render: ->
     @$el.empty()
-    @model.setup (stuff) => @$el.html stuff
+    @model.install =>
+      @model.setup (stuff) => @$el.html stuff

@@ -3,28 +3,61 @@ should = require 'should'
 helper = require '../helper'
 
 helper.evalConcatenatedFile 'client/code/model/tool.coffee'
+base_url = "http://boxecutor-dev-1.scraperwiki.net"
+username = 'cotest'
 
 describe 'Model: Tool', ->
   before ->
-    @tool = new ToolModel {name: 'hello-world'}
+    @tool = new ToolModel
+      name: 'hello-world'
+      git_url: 'git://github.com/scraperwiki/hello-world-tool.git'
+
     window.apikey = 'a-test-apikey'
 
   context 'when a dataset tool is installed', ->
-    it 'creates a box'
-    it 'git clones the tool into the box'
+    before (done) ->
+      @ajax = sinon.stub(jQuery, 'ajax').yieldsTo 'success'
+      @tool.install done
+
+    after ->
+      jQuery.ajax.restore()
+
+    it 'creates a box', ->
+      called = @ajax.calledWith
+        type: 'POST'
+        url: "#{base_url}/#{username}/#{@tool.get 'name'}"
+        data:
+          apikey: sinon.match /.+/
+        success: sinon.match.any
+
+      called.should.be.true
+
+    it 'git clones the tool into the box', ->
+      called = @ajax.calledWith
+        type: 'POST'
+        url: "#{base_url}/#{username}/#{@tool.get 'name'}/exec"
+        data:
+          apikey: sinon.match /.+/
+          cmd: sinon.match /.*git clone.*/
+        success: sinon.match.any
+
+      called.should.be.true
 
   context 'when a tool is installed', ->
     it 'git clones the tool into the box'
 
   context 'when the setup function is called', ->
-    before ->
-      @ajax = sinon.stub jQuery, 'ajax'
-      @tool.setup()
+    before (done) ->
+      @ajax = sinon.stub(jQuery, 'ajax').yieldsTo 'success'
+      @tool.setup done
+
+    after ->
+      jQuery.ajax.restore()
 
     it 'execs the setup script in the box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "http://box.scraperwiki.com/ehg/custard-backbone/exec"
+        url: "#{base_url}/#{username}/#{@tool.get 'name'}/exec"
         data:
           apikey: sinon.match /.+/
           cmd: sinon.match /.*setup.*/

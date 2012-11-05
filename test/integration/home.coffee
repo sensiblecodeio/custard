@@ -25,13 +25,13 @@ describe 'Home page', ->
       result.should.equal 'Logo'
       done()
 
-  context 'when I click on the hello world tool', ->
+  context 'when I click on the highrise tool', ->
     before (done) ->
       page.evaluate (-> $('.metro-tile').first().click()), -> done()
 
-    it 'takes me to the hello world tool page', (done) ->
+    it 'takes me to the highrise tool page', (done) ->
       page.evaluate (-> window.location.href), (result) ->
-        result.should.equal "#{url}/tool/hello-world"
+        result.should.equal "#{url}/tool/highrise"
         done()
 
     it 'displays the setup message of the tool', (done) ->
@@ -39,7 +39,7 @@ describe 'Home page', ->
         interval = null
         check = ->
           page.evaluate (-> $('#content').text()), (result) ->
-            if result.match /This is really basic output/
+            if result.match /Enter your username and password/
               clearInterval interval
               done()
         interval = setInterval check, 500

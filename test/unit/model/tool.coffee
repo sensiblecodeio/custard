@@ -10,11 +10,21 @@ describe 'Model: Tool', ->
   before ->
     num = String(Math.random()).replace '.',''
     @tool = new ToolModel
-      name: 'hello-world'
-      box_name: 'hello-world-' + num.substring(num.length, num.length - 4)
-      git_url: 'git://github.com/scraperwiki/hello-world-tool.git'
+      name: 'highrise'
+      box_name: 'highrise-' + num.substring(num.length, num.length - 4)
+
+    @get = sinon.stub jQuery, 'get', (_url, callback) ->
+      callback 'github.com/scraperwiki/highrise-tool.git'
 
     window.apikey = 'a-test-apikey'
+
+  after ->
+    jQuery.get.restore()
+
+  it 'retrieves a git repo url', (done) ->
+    @tool.git_url (url) ->
+      url.should.include 'github.com/scraperwiki/highrise-tool.git'
+      done()
 
   context 'when a dataset tool is installed', ->
     before (done) ->

@@ -1,12 +1,17 @@
 window.ToolModel = class ToolModel extends Backbone.Model
   base_url: 'http://boxecutor-dev-1.scraperwiki.net'
+  git_url: (callback) ->
+    $.get '/github_login', (login) =>
+      login = login.replace '\n', ''
+      callback "https://#{login}@github.com/scraperwiki/#{@get 'name'}-tool.git"
 
   install: (callback) ->
     @_create_box =>
-      @_exec_cmd "cd; git clone #{@get 'git_url'} #{@get 'name'}", callback
+      @git_url (url) =>
+        @_exec_cmd "cd; git clone #{url} #{@get 'name'}", callback
 
   setup: (callback) ->
-    @_exec_cmd "~/#{@get 'name'}/setup", callback
+    @_exec_cmd "cd;~/#{@get 'name'}/setup", callback
 
   _create_box: (callback) ->
     $.ajax

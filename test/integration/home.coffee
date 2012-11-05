@@ -38,7 +38,7 @@ describe 'Home page', ->
     waitForTextMatch = (selector, regExp, callback) ->
       interval = null
       check = ->
-        page.evaluate "function(){return $('#{selector}').text()}", (result) ->
+        page.evaluate "function(){var v = $('#{selector}'); if(v) return v.text(); return ''}", (result) ->
           if result.match /./
             clearInterval interval
             if result.match regExp
@@ -63,7 +63,7 @@ describe 'Home page', ->
         page.evaluate func, -> done()
 
       it 'outputs something after a little while', (done) ->
-        waitForTextMatch '#output', /getting deal/, done
+        waitForTextMatch '#highrise-setup .alert', /Great/, done
 
       it 'has now a crontab'
         

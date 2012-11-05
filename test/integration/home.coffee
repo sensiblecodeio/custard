@@ -34,14 +34,33 @@ describe 'Home page', ->
         result.should.equal "#{url}/tool/highrise"
         done()
 
+
+    waitForTextMatch = (selector, regExp, callback) ->
+      interval = null
+      check = ->
+        page.evaluate "function(){return $('#{selector}').text()}", (result) ->
+          if result.match /./
+            clearInterval interval
+            if result.match regExp
+              callback()
+            else
+              callback "error: got #{result}"
+      interval = setInterval check, 500
+
     it 'displays the setup message of the tool', (done) ->
-        # Factor into a wait for predicate function?
-        interval = null
-        check = ->
-          page.evaluate (-> $('#content').text()), (result) ->
-            if result.match /Enter your username and password/
-              clearInterval interval
-              done()
-        interval = setInterval check, 500
+      waitForTextMatch '#content', /Enter your username and password/, done
 
+    context 'when I enter my details and click import', ->
+      before (done) ->
+        func = """
+        function(){
+          $('#username').val('#{process.env.HIGHRISE_USER}')
+          $('#password').val('#{process.env.HIGHRISE_PASSWORD}')
+          $('#domain').val('#{process.env.HIGHRISE_DOMAIN}')
+          $('#import').click()
+         }
+        """
+        page.evaluate func, -> done()
 
+      it 'outputs something after a little while', (done) ->
+        waitForTextMatch '#output', /getting deal/, done

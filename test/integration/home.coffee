@@ -64,3 +64,6 @@ describe 'Home page', ->
 
       it 'outputs something after a little while', (done) ->
         waitForTextMatch '#output', /getting deal/, done
+
+      it 'has now a crontab'
+        

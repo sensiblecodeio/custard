@@ -30,3 +30,6 @@ quetzal. hahaha)  Install PhantomJS 1.6.x if you can.
     # This will start a development web server.  Best
     # done in a separate window.
     cake dev
+
+    # You'll also need swops-secret and you'll need to git pull it
+    # every now and then.

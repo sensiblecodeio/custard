@@ -67,4 +67,9 @@ describe 'Home page', ->
         waitForTextMatch '#highrise-setup .alert', /Great/, done
 
       it 'has now a crontab'
-        
+
+      it 'has made a cookie', (done) ->
+        page.evaluate "function(){return $.cookie('datasets')}", (result) ->
+          result.should.include 'highrise'
+          done()
+

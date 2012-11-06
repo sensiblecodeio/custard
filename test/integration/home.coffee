@@ -27,7 +27,7 @@ describe 'Home page', ->
 
   context 'when I click on the highrise tool', ->
     before (done) ->
-      page.evaluate (-> $('.metro-tile').first().click()), -> done()
+      page.evaluate (-> $('#tools .metro-tile').first().click()), -> done()
 
     it 'takes me to the highrise tool page', (done) ->
       page.evaluate (-> window.location.href), (result) ->

@@ -34,17 +34,18 @@ describe 'Home page', ->
         result.should.equal "#{url}/tool/highrise"
         done()
 
+    it 'shows the tool is loading', (done) ->
+      page.evaluate (-> $('p.loading').length > 0), (result) ->
+        result.should.be.true
+        done()
 
     waitForTextMatch = (selector, regExp, callback) ->
       interval = null
       check = ->
         page.evaluate "function(){var v = $('#{selector}'); if(v) return v.text(); return ''}", (result) ->
-          if result.match /./
-            clearInterval interval
             if result.match regExp
+              clearInterval interval
               callback()
-            else
-              callback "error: got #{result}"
       interval = setInterval check, 500
 
     it 'displays the setup message of the tool', (done) ->

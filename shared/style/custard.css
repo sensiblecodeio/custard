@@ -169,6 +169,15 @@ body.tool #content {
     margin: 0;
 }
 
+body.tool #content .loading {
+  margin-top: 200px;
+  text-align: center;
+  padding-top: 50px;
+  background: transparent url('/image/tool-loader.gif') center top no-repeat;
+  color: #666;
+  font-size: 20px;
+}
+
 .metro-tile.highrise {
     /* We should put these icons in a tool 'package' */
     background: #31819f url('/image/highrise_icon.png') 110px 8px no-repeat;

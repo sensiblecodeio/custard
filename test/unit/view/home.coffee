@@ -16,7 +16,7 @@ describe 'View: HomePage', ->
       sinon.stub @view.$el, 'load', (page) =>
         html = fs.readFileSync 'server/template/home_content.html', 'utf-8'
         @view.$el.html html
-        @view.renderTool()
+        @view.renderStuff()
         done()
       @view.render()
 

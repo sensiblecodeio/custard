@@ -68,8 +68,9 @@ describe 'Home page', ->
 
       it 'has now a crontab'
 
-      it 'has made a cookie', (done) ->
+      it 'has made a JSON cookie', (done) ->
         page.evaluate "function(){return $.cookie('datasets')}", (result) ->
-          result.should.include 'highrise'
+          parsed = JSON.parse result
+          should.exist parsed
           done()
 

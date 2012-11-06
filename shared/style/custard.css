@@ -169,6 +169,14 @@ body.tool #content {
     margin: 0;
 }
 
+.metro-tile.highrise {
+    /* We should put these icons in a tool 'package' */
+    background: #31819f url('/image/highrise_icon.png') 110px 8px no-repeat;
+}
+
+.metro-tile.highrise:hover {
+    background-color: #17627e;
+}
 
 /* Styles for landscape phones and up go here */
 @media only screen and (min-width: 480px) {

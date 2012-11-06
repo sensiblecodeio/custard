@@ -13,7 +13,7 @@ window.HomeContentView = class HomeContentView extends Backbone.View
       @renderTool()
     
   renderTool: ->
-    @$el.find('.metro-tile').first().find('h3').text @model.get 'name'
+    @$el.find('.metro-tile').first().addClass(@model.get 'name').find('h3').text @model.get 'name'
 
   clickTile: ->
     window.app.navigate "tool/#{@model.get 'name'}", {trigger: true}

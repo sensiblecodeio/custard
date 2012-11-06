@@ -175,6 +175,13 @@ input[type="color"],
     color: #fff;
 }
 
+.btn-primary[disabled].loading {
+    background-image: url('/image/button-primary-loader.gif');
+    background-position: 10px 8px;
+    background-repeat: no-repeat;
+    padding-left: 35px;
+}
+
 .btn-success {
     background-color: #35AA47;
     text-shadow: 0 1px 0 #1D943B;

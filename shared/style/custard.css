@@ -169,7 +169,7 @@ body.tool #content {
     margin: 0;
 }
 
-body.tool #content .loading {
+body.tool #content p.loading {
   margin-top: 200px;
   text-align: center;
   padding-top: 50px;

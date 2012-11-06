@@ -33,3 +33,22 @@ quetzal. hahaha)  Install PhantomJS 1.6.x if you can.
 
     # You'll also need swops-secret and you'll need to git pull it
     # every now and then.
+
+# Tests
+
+We love them.
+
+To run the tests:
+
+    . activate && cake dev       # see above
+    mocha
+
+or one of these:
+
+    mocha test/unit
+    mocha test/integration
+
+or even ehg's special:
+    mocha test
+
+

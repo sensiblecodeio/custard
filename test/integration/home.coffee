@@ -43,9 +43,18 @@ describe 'Home page', ->
       interval = null
       check = ->
         page.evaluate "function(){var v = $('#{selector}'); if(v) return v.text(); return ''}", (result) ->
-            if result.match regExp
-              clearInterval interval
-              callback()
+          if result.match regExp
+            clearInterval interval
+            callback()
+      interval = setInterval check, 500
+
+    waitForElement = (selector, callback) ->
+      interval = null
+      check = ->
+        page.evaluate "function(){var v = $('#{selector}'); return v.length}", (result) ->
+          if result
+            clearInterval interval
+            callback()
       interval = setInterval check, 500
 
     it 'displays the setup message of the tool', (done) ->
@@ -61,10 +70,14 @@ describe 'Home page', ->
           $('#import').click()
          }
         """
-        page.evaluate func, -> done()
+        page.evaluate func, ->
+          waitForElement 'iframe', done
 
-      it 'outputs something after a little while', (done) ->
-        waitForTextMatch '#highrise-setup .alert', /Great/, done
+      it 'shows a lovely spreadsheet of our amazing data', (done) ->
+        page.evaluate "function(){return $('iframe').attr('src')}", (result) ->
+          m = result.match /spreadsheet-tool/
+          should.exist m
+          done()
 
       it 'has now a crontab'
 

@@ -1,5 +1,7 @@
 window.ToolModel = class ToolModel extends Backbone.Model
+
   base_url: 'http://boxecutor-dev-1.scraperwiki.net'
+
   git_url: (callback) ->
     $.get '/github_login', (login) =>
       login = login.replace '\n', ''
@@ -8,10 +10,10 @@ window.ToolModel = class ToolModel extends Backbone.Model
   install: (callback) ->
     @_create_box =>
       @git_url (url) =>
-        @_exec_cmd "cd; git clone #{url} #{@get 'name'}", callback
+        @exec("cd; git clone #{url} #{@get 'name'}").success callback
 
   setup: (callback) ->
-    @_exec_cmd "cd;~/#{@get 'name'}/setup", callback
+    @exec("cd;~/#{@get 'name'}/setup").success callback
 
   isInstalled: ->
     name = @get 'name'
@@ -25,6 +27,21 @@ window.ToolModel = class ToolModel extends Backbone.Model
     datasets = JSON.parse($.cookie('datasets'))
     if datasets? and datasets[name]?
       return datasets[name]['box']
+    else
+      # :todo: Make this suck less
+      return 'cotest/' + window.box
+
+  exec: (cmd) ->
+    # Returns an ajax object, onto which you can
+    # chain .success and .error callbacks
+    boxname = @boxName()
+    boxurl = "#{@base_url}/#{boxname}"
+    return $.ajax
+      url: "#{boxurl}/exec"
+      type: 'POST'
+      data:
+        apikey: window.apikey
+        cmd: cmd
 
   _create_box: (callback) ->
     $.ajax
@@ -33,13 +50,3 @@ window.ToolModel = class ToolModel extends Backbone.Model
       data:
         apikey: window.apikey
       success: callback
-
-  _exec_cmd: (cmd, callback) ->
-    $.ajax
-      type: 'POST'
-      url: "#{@base_url}/cotest/#{@get 'box_name'}/exec"
-      data:
-        apikey: window.apikey
-        cmd: cmd
-      success: callback
-

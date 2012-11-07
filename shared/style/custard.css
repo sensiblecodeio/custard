@@ -177,9 +177,12 @@ body.tool #content {
 }
 
 body.tool #content p.loading {
-    margin-top: 200px;
-    text-align: center;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
     padding-top: 50px;
+    width: 100%;
+    text-align: center;
     background: transparent url('/image/tool-loader.gif') center top no-repeat;
     color: #666;
     font-size: 20px;

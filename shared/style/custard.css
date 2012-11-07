@@ -197,13 +197,23 @@ body.tool #content p.loading {
     border: none;
 }
 
+/* All of this should go in the tool 'bundle' */
+
 .metro-tile.highrise {
-    /* We should put these icons in a tool 'package' */
     background: #31819f url('/image/highrise_icon.png') 110px 8px no-repeat;
 }
 
 .metro-tile.highrise:hover {
     background-color: #17627e;
+}
+
+#datasets .metro-tile.highrise {
+    background: transparent url('/image/highrise_dataset_icon.png') 0 0 no-repeat;
+}
+
+#datasets .metro-tile.highrise h3 {
+    color: #31819f;
+    text-shadow: none;
 }
 
 /* Styles for landscape phones and up go here */

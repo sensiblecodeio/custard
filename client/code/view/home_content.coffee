@@ -17,7 +17,7 @@ window.HomeContentView = class HomeContentView extends Backbone.View
     @$el.find('#tools .metro-tile').first().addClass(name).find('h3').text name
     datasets = JSON.parse($.cookie 'datasets')
     if datasets? and datasets[name]?
-      @$el.find('#datasets').append """<div class="metro-tile"><h3>#{name}</h3></div>"""
+      @$el.find('#datasets').append """<div class="metro-tile #{name}"><h3>#{name} data</h3></div>"""
 
   clickTile: (event_) ->
     window.app.navigate "tool/#{@model.get 'name'}", {trigger: true}

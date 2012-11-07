@@ -26,4 +26,5 @@ app.get '/:page', (req, resp) ->
 # Define Port
 port = process.env.PORT or process.env.VMC_APP_PORT or 3000
 # Start Server
-app.listen port, -> console.log "Listening on #{port}\nPress CTRL-C to stop server."
+app.listen port, ->
+  console.log "Listening on #{port}\nPress CTRL-C to stop server."

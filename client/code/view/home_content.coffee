@@ -15,8 +15,7 @@ window.HomeContentView = class HomeContentView extends Backbone.View
   renderStuff: ->
     name = @model.get 'name'
     @$el.find('#tools .metro-tile').first().addClass(name).find('h3').text name
-    datasets = JSON.parse($.cookie 'datasets')
-    if datasets? and datasets[name]?
+    if @model.isInstalled
       @$el.find('#datasets').append """<div class="metro-tile #{name}"><h3>#{name} data</h3></div>"""
 
   clickTile: (event_) ->

@@ -13,6 +13,19 @@ window.ToolModel = class ToolModel extends Backbone.Model
   setup: (callback) ->
     @_exec_cmd "cd;~/#{@get 'name'}/setup", callback
 
+  isInstalled: ->
+    name = @get 'name'
+    datasets = JSON.parse($.cookie('datasets'))
+    if datasets? and datasets[name]?
+      return true
+    return false
+
+  boxName: ->
+    name = @get 'name'
+    datasets = JSON.parse($.cookie('datasets'))
+    if datasets? and datasets[name]?
+      return datasets[name]['box']
+
   _create_box: (callback) ->
     $.ajax
       type: 'POST'

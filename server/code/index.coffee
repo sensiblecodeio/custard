@@ -17,6 +17,9 @@ js.root = 'code'
 app.get '/', (req, resp) ->
   resp.render 'index', { scripts: js 'app' }
 
+# Avoids "Error: Cannot find module 'ico'"
+app.get '/favicon.ico', (req, resp) -> resp.send 404
+
 # TODO: sort out nice way of serving templates
 app.get '/:page', (req, resp) ->
   resp.render req.params.page

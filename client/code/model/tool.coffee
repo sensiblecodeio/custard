@@ -8,7 +8,7 @@ window.ToolModel = class ToolModel extends Backbone.Model
       callback "https://#{login}@github.com/scraperwiki/#{@get 'name'}-tool.git"
 
   install: (callback) ->
-    @_create_box =>
+    @_create_box().success =>
       @git_url (url) =>
         @exec("cd; git clone #{url} #{@get 'name'}").success callback
 
@@ -17,14 +17,14 @@ window.ToolModel = class ToolModel extends Backbone.Model
 
   isInstalled: ->
     name = @get 'name'
-    datasets = JSON.parse($.cookie('datasets'))
+    datasets = JSON.parse $.cookie('datasets')
     if datasets? and datasets[name]?
       return true
     return false
 
   boxName: ->
     name = @get 'name'
-    datasets = JSON.parse($.cookie('datasets'))
+    datasets = JSON.parse $.cookie('datasets')
     if datasets? and datasets[name]?
       return datasets[name]['box']
     else
@@ -36,17 +36,16 @@ window.ToolModel = class ToolModel extends Backbone.Model
     # chain .success and .error callbacks
     boxname = @boxName()
     boxurl = "#{@base_url}/#{boxname}"
-    return $.ajax
+    $.ajax
       url: "#{boxurl}/exec"
       type: 'POST'
       data:
         apikey: window.apikey
         cmd: cmd
 
-  _create_box: (callback) ->
+  _create_box: ->
     $.ajax
       type: 'POST'
-      url: "#{@base_url}/cotest/#{@get 'box_name'}"
+      url: "#{@base_url}/#{@boxName()}"
       data:
         apikey: window.apikey
-      success: callback

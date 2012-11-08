@@ -12,6 +12,8 @@ describe 'View: HomePage', ->
       global.window.app = {navigate: ->}
       $('body').html '<div id="content"></div>'
       tool = new Backbone.Model {id: 1, name: 'hello-world'}
+      # TODO: test when installed?
+      tool.isInstalled = -> false
       @view = new HomeContentView model: tool
       sinon.stub @view.$el, 'load', (page) =>
         html = fs.readFileSync 'server/template/home_content.html', 'utf-8'

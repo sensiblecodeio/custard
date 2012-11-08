@@ -11,7 +11,9 @@ describe 'Model: Tool', ->
     num = String(Math.random()).replace '.',''
     @tool = new ToolModel
       name: 'highrise'
-      box_name: 'highrise-' + num.substring(num.length, num.length - 4)
+
+    sinon.stub(@tool, 'boxName').returns \
+      'cotest/highrise-' + num.substring(num.length, num.length - 4)
 
     @get = sinon.stub jQuery, 'get', (_url, callback) ->
       callback 'github.com/scraperwiki/highrise-tool.git'
@@ -28,7 +30,10 @@ describe 'Model: Tool', ->
 
   context 'when a dataset tool is installed', ->
     before (done) ->
-      @ajax = sinon.stub(jQuery, 'ajax').yieldsTo 'success'
+      ajaxObj =
+        success: (cb) -> cb()
+
+      @ajax = sinon.stub(jQuery, 'ajax').returns ajaxObj
       @tool.install done
 
     after ->
@@ -37,21 +42,19 @@ describe 'Model: Tool', ->
     it 'creates a box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "#{base_url}/#{username}/#{@tool.get 'box_name'}"
+        url: "#{base_url}/#{@tool.boxName()}"
         data:
           apikey: sinon.match /.+/
-        success: sinon.match.any
 
       called.should.be.true
 
     it 'git clones the tool into the box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "#{base_url}/#{username}/#{@tool.get 'box_name'}/exec"
+        url: "#{base_url}/#{@tool.boxName()}/exec"
         data:
           apikey: sinon.match /.+/
           cmd: sinon.match /.*git clone.*/
-        success: sinon.match.any
 
       called.should.be.true
 
@@ -60,7 +63,9 @@ describe 'Model: Tool', ->
 
   context 'when the setup function is called', ->
     before (done) ->
-      @ajax = sinon.stub(jQuery, 'ajax').yieldsTo 'success'
+      ajaxObj =
+        success: (cb) -> cb()
+      @ajax = sinon.stub(jQuery, 'ajax').returns ajaxObj
       @tool.setup done
 
     after ->
@@ -69,10 +74,9 @@ describe 'Model: Tool', ->
     it 'execs the setup script in the box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "#{base_url}/#{username}/#{@tool.get 'box_name'}/exec"
+        url: "#{base_url}/#{@tool.boxName()}/exec"
         data:
           apikey: sinon.match /.+/
           cmd: sinon.match /.*setup.*/
-        success: sinon.match.any
 
       called.should.be.true

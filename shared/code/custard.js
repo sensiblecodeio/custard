@@ -12,7 +12,4 @@
 
 $(function(){
     $('body[data-stripes]').stripes();
-
-    $('.tool #masthead h1').append('<i class="icon-chevron-left"></i>');
-
 });

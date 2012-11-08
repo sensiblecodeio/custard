@@ -5,6 +5,7 @@ window.ToolContentView = class HomeContentView extends Backbone.View
     @render()
 
   render: ->
+    @$el.empty()
     if @model.isInstalled()
       boxname = @model.boxName()
       boxurl = "http://boxecutor-dev-1.scraperwiki.net/#{boxname}"

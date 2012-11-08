@@ -6,5 +6,6 @@ window.HomeHeaderView = class HomeHeaderView extends Backbone.View
 
   render: ->
     @$el.empty()
-    @$el.load '/home_header'
+    @$el.load '/home_header', =>
+      topAndTailDropdowns()
     

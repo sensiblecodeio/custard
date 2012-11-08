@@ -8,14 +8,16 @@ function debugWindowSize() {
     s.text( $(window).width() );
 }
 
-$(function(){
-
-    debugWindowSize();
-
+function topAndTailDropdowns() {
     $('.dropdown-menu.top-tail').each(function(){
         $('<li>').addClass('dropdown-tail-outline').appendTo($(this));
         $('<li>').addClass('dropdown-tail').appendTo($(this));
     });
+}
+
+$(function(){
+
+    debugWindowSize();
 
     $('.dropdown-menu input, .dropdown-menu label').on('click', function(e){
         e.stopPropagation();

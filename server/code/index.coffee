@@ -13,16 +13,17 @@ app.set 'views', 'server/template'
 app.engine 'html', cons.jazz
 app.set 'view engine', 'html'
 js.root = 'code'
-# Get root_path return index view
-app.get '/', (req, resp) ->
-  resp.render 'index', { scripts: js 'app' }
 
 # Avoids "Error: Cannot find module 'ico'"
 app.get '/favicon.ico', (req, resp) -> resp.send 404
 
 # TODO: sort out nice way of serving templates
-app.get '/:page', (req, resp) ->
+app.get '/tpl/:page', (req, resp) ->
   resp.render req.params.page
+
+app.get '*', (req, resp) ->
+  resp.render 'index', { scripts: js 'app' }
+
 # Define Port
 port = process.env.PORT or process.env.VMC_APP_PORT or 3000
 # Start Server

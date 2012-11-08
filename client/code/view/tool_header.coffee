@@ -6,7 +6,7 @@ window.ToolHeaderView = class ToolHeaderView extends Backbone.View
 
   render: ->
     @$el.empty()
-    @$el.load '/tool_header', =>
+    @$el.load '/tpl/tool_header', =>
       @$el.find('h2 a').text @model.get 'name'
       @$el.find('h1').append '<i class="icon-chevron-left"></i>'
       topAndTailDropdowns()

@@ -9,7 +9,7 @@ window.HomeContentView = class HomeContentView extends Backbone.View
 
   render: ->
     @$el.empty()
-    @$el.load '/home_content', =>
+    @$el.load '/tpl/home_content', =>
       @renderStuff()
     
   renderStuff: ->

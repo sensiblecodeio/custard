@@ -3,7 +3,7 @@ window.ToolModel = class ToolModel extends Backbone.Model
   base_url: 'http://boxecutor-dev-1.scraperwiki.net'
 
   git_url: (callback) ->
-    $.get '/github_login', (login) =>
+    $.get '/tpl/github_login', (login) =>
       login = login.replace '\n', ''
       callback "https://#{login}@github.com/scraperwiki/#{@get 'name'}-tool.git"
 

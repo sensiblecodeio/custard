@@ -31,17 +31,28 @@ window.ToolModel = class ToolModel extends Backbone.Model
       # :todo: Make this suck less
       return 'cotest/' + window.box
 
-  exec: (cmd) ->
+  publishToken: (callback) ->
+    if @_publishToken?
+      callback @_publishToken
+    else
+      @exec("cat ~/scraperwiki.json", {dataType: 'json'}).success (settings) ->
+        @_publishToken = settings.publish_token
+        callback @_publishToken
+
+  exec: (cmd, args) ->
     # Returns an ajax object, onto which you can
     # chain .success and .error callbacks
     boxname = @boxName()
     boxurl = "#{@base_url}/#{boxname}"
-    $.ajax
+    settings =
       url: "#{boxurl}/exec"
       type: 'POST'
       data:
         apikey: window.apikey
         cmd: cmd
+    if args?
+      $.extend settings, args
+    $.ajax settings
 
   _create_box: ->
     $.ajax

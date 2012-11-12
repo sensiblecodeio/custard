@@ -16,5 +16,8 @@ window.ToolHeaderView = class ToolHeaderView extends Backbone.View
       $li = $('<li><a href="#">Download CSV</a></li>')
       $('a', $li).on 'click', (e) =>
         e.preventDefault()
-        @model.exec './download'
+        @model.exec("cd; ./#{@model.get('name')}/download").success (data) =>
+          @model.publishToken (token) =>
+            url = "#{@model.base_url}/#{@model.boxName()}/#{token}/http/data.csv"
+            $("""<iframe src="#{url}">""").hide().appendTo('body')
       @$el.find('nav .export li:eq(0)').after($li)

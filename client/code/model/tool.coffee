@@ -7,10 +7,16 @@ window.ToolModel = class ToolModel extends Backbone.Model
       login = login.replace '\n', ''
       callback "https://#{login}@github.com/scraperwiki/#{@get 'name'}-tool.git"
 
+  zip_url: (callback) ->
+    $.get '/tpl/github_login', (login) =>
+      login = login.replace '\n', ''
+      callback "https://#{login}@github.com/scraperwiki/#{@get 'name'}-tool/archive/master.zip"
+
   install: (callback) ->
     @_create_box().success =>
-      @git_url (url) =>
-        @exec("cd; git clone #{url} #{@get 'name'}").success callback
+      @zip_url (url) =>
+        n = @get 'name'
+        @exec("cd; curl -L -O #{url}; unzip master.zip; mv #{n}-tool-master #{n}").success callback
 
   setup: (callback) ->
     @exec("cd;~/#{@get 'name'}/setup").success callback

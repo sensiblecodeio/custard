@@ -1,7 +1,9 @@
 window.MainRouter = class MainRouter extends Backbone.Router
-  routes:
-    '': 'main'
-    'tool/:tool': 'tool'
+
+  initialize: ->
+    @.route RegExp('^/?$'), 'main'
+    @.route RegExp('tool/([^/]+)/?'), 'tool'
+    @.route RegExp('new-profile/?'), 'newProfile'
 
   header: null
   content: null
@@ -24,6 +26,11 @@ window.MainRouter = class MainRouter extends Backbone.Router
       $('body').attr 'class', 'tool'
       @header = new ToolHeaderView {model: model}
       @content = new ToolContentView {model: model}
+
+  newProfile: ->
+    $('body').attr 'class', 'admin'
+    @header = new AdminHeaderView()
+    @content = new AdminContentView()
 
   _setApiKey: (callback) ->
     $.get '/tpl/apikey', (data) ->

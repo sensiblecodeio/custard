@@ -289,17 +289,20 @@ body.tool #content p.loading {
         width: 225px;
     }
 
-    .tool #header h1 a {
+    .tool #header h1 a,
+    .admin #header h1 a {
         width: 60px;
     }
 
-    .tool #header h2 {
+    .tool #header h2,
+    .admin #header h2 {
         float: left;
         margin-left: 5px;
         margin-top: 30px;
     }
 
-    .tool #header h2 a {
+    .tool #header h2 a,
+    .admin #header h2 a {
         margin-left: 10px;
         padding: 10px 10px 10px 20px;
         line-height: 40px;
@@ -309,13 +312,15 @@ body.tool #content p.loading {
         border-left: 1px solid rgba(0,0,0,0.15);
     }
 
-    .tool #header h1 i {
+    .tool #header h1 i,
+    .admin #header h1 i {
         position: absolute;
         top: 42px;
         left: -800px;
     }
 
-    .tool #header h1:hover i {
+    .tool #header h1:hover i,
+    .admin #header h1:hover i {
         left: 18px;
     }
 
@@ -414,6 +419,16 @@ body.tool #content p.loading {
 
     div#tool {
         top: 100px;
+    }
+    
+    form#new-profile {
+        width: 318px;
+        margin-left: 95px;
+        padding: 20px 0;
+    }
+    
+    form#new-profile input {
+        width: 300px;
     }
 
 }

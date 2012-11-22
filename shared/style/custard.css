@@ -421,13 +421,13 @@ body.tool #content p.loading {
         top: 100px;
     }
     
-    form#new-profile {
+    body.admin form {
         width: 318px;
         margin-left: 95px;
         padding: 20px 0;
     }
-    
-    form#new-profile input {
+
+    body.admin form input {
         width: 300px;
     }
 

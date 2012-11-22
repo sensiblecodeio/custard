@@ -31,7 +31,7 @@ window.AdminContentView = class AdminContentView extends Backbone.View
         dataType: 'json'
         success: (newProfile) =>
           console.log newProfile
-          url = "http://boxecutor-dev-1.scraperwiki.net/set-password/#{newProfile.token}"
+          url = "#{location.origin}/set-password/#{newProfile.token}"
           @$el.children('form').html "<div class=\"alert alert-success\"><strong>New profile &ldquo;#{newProfile.shortname}&rdquo; created.</strong><br/>They can set their password <a href=\"#{url}\" title=\"#{url}\">here</a>.</div>"
         error: (jqxhr, textStatus, errorThrown) ->
           if errorThrown == 'Forbidden'

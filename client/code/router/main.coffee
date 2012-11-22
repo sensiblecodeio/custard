@@ -1,9 +1,10 @@
 window.MainRouter = class MainRouter extends Backbone.Router
 
   initialize: ->
-    @.route RegExp('^/?$'), 'main'
-    @.route RegExp('tool/([^/]+)/?'), 'tool'
-    @.route RegExp('new-profile/?'), 'newProfile'
+    @route RegExp('^/?$'), 'main'
+    @route RegExp('tool/([^/]+)/?'), 'tool'
+    @route RegExp('new-profile/?'), 'newProfile'
+    @route RegExp('set-password/([^/]+)/?'), 'setPassword'
 
   header: null
   content: null
@@ -29,8 +30,13 @@ window.MainRouter = class MainRouter extends Backbone.Router
 
   newProfile: ->
     $('body').attr 'class', 'admin'
-    @header = new AdminHeaderView()
+    @header = new AdminHeaderView('Create a new profile')
     @content = new AdminContentView()
+
+  setPassword: ->
+    $('body').attr 'class', 'admin'
+    @header = new AdminHeaderView('Set your password')
+    @content = new SetPasswordView()
 
   _setApiKey: (callback) ->
     $.get '/tpl/apikey', (data) ->

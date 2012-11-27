@@ -40,5 +40,5 @@ window.MainRouter = class MainRouter extends Backbone.Router
 
   _setApiKey: (callback) ->
     $.get '/tpl/apikey', (data) ->
-      window.apikey = data
+      window.apikey = data.trim()
       callback()

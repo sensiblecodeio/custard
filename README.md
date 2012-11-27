@@ -2,7 +2,7 @@
 
 A platform for tools that do stuff with data.
 
-The name's a work in progress.
+Together with cobalt, forms x.scraperwiki.com, the new ScraperWiki platform.
 
 AGPL Licenced.
 

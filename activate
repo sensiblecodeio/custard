@@ -13,7 +13,7 @@ PATH=$(pwd)/node_modules/.bin:$(pwd)/bin:$PATH
 # Add ./code to NODE_PATH, adding a separating ':' if NODE_PATH
 # is already set.
 # See http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_06_02
-export NODE_PATH=$(pwd)/code${NODE_PATH+:}${NODE_PATH}
+export NODE_PATH=$(pwd)/server/code${NODE_PATH+:}${NODE_PATH}
 
 thisdir=$(basename "$(pwd)")
 first2=$(printf '%.2s' "$thisdir")

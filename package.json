@@ -12,7 +12,8 @@
     "mustache": "~0.7.0",
     "jazz": "0.0.18",
     "stylus": "~0.30.1",
-    "jsdom": "~0.2.19"
+    "jsdom": "~0.2.19",
+    "bcrypt": "~0.7.3"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

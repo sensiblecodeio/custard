@@ -44,6 +44,36 @@ mocha () {
     fi
 }
 
+fix_connect_file_cache () {
+  if ! [ -d node_modules/connect-assets ]
+  then
+    echo "connect-assets not found, please run npm install" 1>&2
+    return 4
+  fi
+  # node's module connect-file-cache has a bug, so we have to patch it.
+  # Unfortunately it's a dependency of a dependency, so we need to do
+  # this slightly elaborate "npm link" thing to change the installed
+  # module.
+  # See also our pull request:
+  # https://github.com/TrevorBurnham/connect-file-cache/pull/9
+  if [ -L node_modules/connect-assets/node_modules/connect-file-cache ]
+  then
+    return 0
+  fi
+  (
+  cd ..
+  git clone git://github.com/scraperwiki/connect-file-cache.git
+  cd connect-file-cache
+  npm link
+  )
+  (
+  cd node_modules/connect-assets
+  npm link connect-file-cache
+  )
+}
+
+
 s=../swops-secret/keys.sh
 test -e "$s" && . "$s" && echo yummm, keys.sh
+fix_connect_file_cache
 true

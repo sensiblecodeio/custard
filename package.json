@@ -14,7 +14,11 @@
     "stylus": "~0.30.1",
     "jsdom": "~0.2.19",
     "bcrypt": "~0.7.3",
-    "zombie": "~2.0.0-alpha9"
+    "zombie": "~2.0.0-alpha9",
+    "request": "~2.12.0",
+    "replay": "~1.6.0",
+    "passport": "~0.1.15",
+    "passport-local": "~0.1.6"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

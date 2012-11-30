@@ -5,6 +5,10 @@ cons = require 'consolidate'
 passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy
 
+User = require 'model/user'
+
+app = express()
+
 ensureAuthenticated = (req, res, next) ->
   return next() if req.isAuthenticated()
   res.redirect '/login'
@@ -15,7 +19,19 @@ passport.serializeUser (user, done) ->
 passport.deserializeUser (obj, done) ->
   done null, obj
 
-app = express()
+# Passport.js strategy
+strategy = (username, password, done) ->
+  console.warn username, password
+  User.getHashedPassword username, (hashedPass) ->
+    console.warn hashedPass
+    user = new User(username, hashedPass)
+    user.checkPassword password, (authed) ->
+      console.warn authed
+      if authed
+        return done null, {id:1, username: 'chris'}
+      else
+        done null, false, message: 'WRONG'
+
 
 app.configure ->
   app.use express.bodyParser()
@@ -25,31 +41,43 @@ app.configure ->
   app.use passport.initialize()
   app.use passport.session()
 
+
   # Add Connect Assets
   app.use assets({src: 'client'})
   # Set the public folder as static assets
   app.use express.static(process.cwd() + '/shared')
-  # Set View Engine
-  app.set 'views', 'server/template'
-  app.engine 'html', cons.jazz
-  app.set 'view engine', 'html'
-  js.root = 'code'
+
+passport.use 'local', new LocalStrategy(strategy)
+
+# Set View Engine
+app.set 'views', 'server/template'
+app.engine 'html', cons.jazz
+app.set 'view engine', 'html'
+js.root = 'code'
 
 # Avoids "Error: Cannot find module 'ico'"
 app.get '/favicon.ico', (req, resp) -> resp.send 404
+
+
+# Render login page
+app.get '/login/?', (req, resp) ->
+  resp.render 'login' { layout: 'layout' }
+
+app.post "/login", passport.authenticate("local",
+  successRedirect: "/"
+  failureRedirect: "/login"
+  failureFlash: false
+)
+
+app.all '*', ensureAuthenticated
 
 # TODO: sort out nice way of serving templates
 app.get '/tpl/:page', (req, resp) ->
   resp.render req.params.page
 
-# Render login page
-app.get '/login/?', (req, resp) ->
-  resp.render 'login'
-
-app.all '*', ensureAuthenticated
-
 app.get '*', (req, resp) ->
   resp.render 'index', { scripts: js 'app' }
+
 
 # Define Port
 port = process.env.PORT or process.env.VMC_APP_PORT or 3000

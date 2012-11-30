@@ -61,7 +61,7 @@ app.get '/favicon.ico', (req, resp) -> resp.send 404
 
 # Render login page
 app.get '/login/?', (req, resp) ->
-  resp.render 'login' { layout: 'layout' }
+  resp.render 'login'
 
 app.post "/login", passport.authenticate("local",
   successRedirect: "/"

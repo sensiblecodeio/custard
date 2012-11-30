@@ -1,43 +1,38 @@
-phantom = require 'phantom'
+Browser = require 'zombie'
 should = require 'should'
 
 url = 'http://localhost:3000'
+login_url = "#{url}/login"
 
 describe 'Home page', ->
-  page = null
-  phantom_instance = null
-  status = null
+  browser = new Browser()
 
   before (done) ->
-    phantom.create (phantom_arg) ->
-      phantom_instance = phantom_arg
-      phantom_instance.createPage (page_arg) ->
-        page = page_arg
-        page.set 'onConsoleMessage', (msg) ->
-          console.log 'phantom', msg
+    browser.visit login_url, done
 
-        page.open url, (st) ->
-          status = st
-          done()
+  before (done) ->
+    browser.fill '#username', 'ickletest'
+    browser.fill '#password', 'toottoot'
+    browser.pressButton '#login', done
+
+  before (done) ->
+    browser.visit url, done
 
   it 'contains the scraperwiki logo', (done) ->
-    page.evaluate (-> $('#header h1').text()), (result) ->
-      result.should.equal 'Logo'
-      done()
+    h = browser.text('#header h1')
+    h.should.equal 'Logo'
+    done()
 
   context 'when I click on the highrise tool', ->
     before (done) ->
-      page.evaluate (-> $('#tools .metro-tile').first().click()), -> done()
+      browser.fire 'click', browser.query('#tools .metro-tile'), done
 
-    it 'takes me to the highrise tool page', (done) ->
-      page.evaluate (-> window.location.href), (result) ->
-        result.should.equal "#{url}/tool/highrise"
-        done()
+    it 'takes me to the highrise tool page', ->
+      result = browser.location.href
+      result.should.equal "#{url}/tool/highrise"
 
-    it 'shows the tool is loading', (done) ->
-      page.evaluate (-> $('p.loading').length > 0), (result) ->
-        result.should.be.true
-        done()
+    it 'shows the tool is loading', ->
+      should.exist browser.query('p.loading')
 
     waitForTextMatch = (selector, regExp, callback) ->
       interval = null
@@ -58,7 +53,9 @@ describe 'Home page', ->
       interval = setInterval check, 500
 
     it 'displays the setup message of the tool', (done) ->
-      waitForTextMatch '#content', /Enter your username and password/, done
+      browser.wait (-> browser.query('#content')), ->
+        (browser.text().match /Enter your username and password/).should.be.true
+        done()
 
     context 'when I enter my details and click import', ->
       before (done) ->

@@ -23,9 +23,8 @@ describe 'Home page', ->
     h.should.equal 'Logo'
 
   context 'when I click on the highrise tool', ->
-    before (done) ->
-      browser.fire 'click', browser.query('.highrise'), (err, res) ->
-        done()
+    before ->
+      browser.click '.highrise'
 
     it 'takes me to the highrise tool page', ->
       result = browser.location.href

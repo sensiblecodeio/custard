@@ -1,3 +1,4 @@
+# TODO: Factor out Dataset from Tool
 window.ToolModel = class ToolModel extends Backbone.Model
 
   base_url: 'http://boxecutor-dev-1.scraperwiki.net'
@@ -33,12 +34,12 @@ window.ToolModel = class ToolModel extends Backbone.Model
 
   boxName: ->
     name = @get 'name'
-    datasets = JSON.parse $.cookie('datasets')
-    if datasets? and datasets[name]?
-      return datasets[name]['box']
-    else
-      # :todo: Make this suck less
-      return 'cotest/' + window.box
+    #datasets = JSON.parse $.cookie('datasets')
+    #if datasets? and datasets[name]?
+    #  return datasets[name]['box']
+    #else
+    console.log "#{window.user.shortName}/#{window.box}"
+    "#{window.user.shortName}/#{window.box}"
 
   publishToken: (callback) ->
     if @_publishToken?
@@ -57,7 +58,7 @@ window.ToolModel = class ToolModel extends Backbone.Model
       url: "#{boxurl}/exec"
       type: 'POST'
       data:
-        apikey: window.apikey
+        apikey: window.user.apiKey
         cmd: cmd
     if args?
       $.extend settings, args
@@ -68,4 +69,4 @@ window.ToolModel = class ToolModel extends Backbone.Model
       type: 'POST'
       url: "#{@base_url}/#{@boxName()}"
       data:
-        apikey: window.apikey
+        apikey: window.user.apiKey

@@ -4,8 +4,10 @@ assets = require 'connect-assets'
 cons = require 'consolidate'
 passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy
+mongoose = require 'mongoose'
 
 User = require 'model/user'
+Dataset = require 'model/dataset'
 
 app = express()
 
@@ -21,17 +23,19 @@ passport.deserializeUser (obj, done) ->
 
 # Passport.js strategy
 strategy = (username, password, done) ->
-    user = new User(username, password)
-    user.checkPassword (correct, user) ->
-      if correct
-        sessionUser =
-          shortName: user.shortName
-          displayName: user.displayName
-          apiKey: user.apiKey
+  console.log 'STRATEGISING'
+  user = new User(username, password)
+  user.checkPassword (correct, user) ->
+    if correct
+      console.log 'HELLO'
+      sessionUser =
+        shortName: user.shortName
+        displayName: user.displayName
+        apiKey: user.apiKey
 
-        return done null, sessionUser
-      else
-        done null, false, message: 'WRONG'
+      return done null, sessionUser
+    else
+      done null, false, message: 'WRONG'
 
 
 app.configure ->
@@ -53,6 +57,9 @@ app.configure ->
 
 passport.use 'local', new LocalStrategy(strategy)
 
+# Set up database connection
+mongoose.connect process.env.CU_DB
+
 # Set View Engine
 app.set 'views', 'server/template'
 app.engine 'html', cons.jazz
@@ -61,7 +68,6 @@ js.root = 'code'
 
 # Avoids "Error: Cannot find module 'ico'"
 app.get '/favicon.ico', (req, resp) -> resp.send 404
-
 
 # Render login page
 app.get '/login/?', (req, resp) ->
@@ -82,6 +88,26 @@ app.get '/tpl/:page', (req, resp) ->
 app.get '/logout', (req, resp) ->
   req.logout()
   resp.redirect '/'
+
+# API!
+app.get '/api/:user/datasets/?', (req, resp) ->
+  Dataset.findAllByUserShortName req.user.shortName, (err, datasets) ->
+    if err?
+      console.log err
+      return resp.send 500, error: 'Error trying to find datasets'
+    else
+      return resp.send 200, datasets
+
+app.post '/api/:user/datasets/?', (req, resp) ->
+  data = req.body
+  console.log req.body
+  dataset = new Dataset req.user.shortName, data.name, data.box
+  dataset.save (err) ->
+    console.log err if err?
+    Dataset.findOneById dataset.id, (err, dataset) ->
+      console.log err if err?
+      resp.send 200, dataset
+
 
 app.get '*', (req, resp) ->
   resp.render 'index',

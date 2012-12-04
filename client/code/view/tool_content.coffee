@@ -1,7 +1,9 @@
+Dataset = DatasetModel
 window.ToolContentView = class ToolContentView extends Backbone.View
   el: '#content'
 
   initialize: ->
+    @on 'tool:installed', @onInstalled, this
     @render()
 
   render: ->
@@ -20,3 +22,12 @@ window.ToolContentView = class ToolContentView extends Backbone.View
             @$el.html buffer.toString()
         else
           $('p.loading').text "Error: #{status}"
+
+   onInstalled: ->
+     user = window.user
+     dataset = new Dataset
+       user: user.shortName
+       name: @model.boxName()
+       box: @model.boxName()
+
+     dataset.save()

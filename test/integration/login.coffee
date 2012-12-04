@@ -47,3 +47,14 @@ describe 'Login', ->
 
       it 'shows my datasets', ->
         browser.text('body').should.include 'Your Datasets'
+
+      context 'when I logout', ->
+        before (done) ->
+          browser.click('li.user a').
+            clickLink 'Log Out', done
+
+        it 'redirects me to the login page', ->
+          browser.location.href.should.equal "#{BASE_URL}/login"
+
+        context 'when I visit the index page', ->
+          it 'should still present a login form'

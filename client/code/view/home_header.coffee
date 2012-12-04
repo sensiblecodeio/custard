@@ -1,3 +1,4 @@
+# TODO: Refactor into one view, base class/mixin if really necessary
 window.HomeHeaderView = class HomeHeaderView extends Backbone.View
   el: '#header'
 

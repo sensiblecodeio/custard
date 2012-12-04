@@ -76,6 +76,10 @@ app.all '*', ensureAuthenticated
 app.get '/tpl/:page', (req, resp) ->
   resp.render req.params.page
 
+app.get '/logout', (req, resp) ->
+  req.logout()
+  resp.redirect '/'
+
 app.get '*', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'

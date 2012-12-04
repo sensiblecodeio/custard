@@ -4,24 +4,22 @@ request = require 'request'
 INT_TEST_SRV = 'https://boxecutor-dev-1.scraperwiki.net'
 
 class User
-  constructor: (@shortname, @hashedPassword) ->
+  constructor: (@shortName, @password) ->
 
-  checkPassword: (guess, callback) ->
-    return callback(false) unless @hashedPassword?
-    console.warn guess, @hashedPassword
-    bcrypt.compare guess, @hashedPassword, (err, res) ->
-      console.log 'sdsdhusfuhsfhusfuhsf'
-      if err
-        console.log err
-        return callback(false)
-      callback res
+  checkPassword: (callback) ->
+    options =
+      uri: "#{INT_TEST_SRV}/#{@shortName}/auth"
+      form:
+        password: @password
 
-  @getHashedPassword: (shortname, callback) ->
-    request.get "#{INT_TEST_SRV}/#{shortname}/password", (err, resp, body) ->
+    request.post options, (err, resp, body) =>
       if resp.statusCode is 200
-        callback JSON.parse(body).password
+        obj = JSON.parse body
+        @apiKey = obj.apikey
+        @displayName = obj.displayname
+        callback true, this
       else
-        callback null
+        callback false
 
 
 module.exports = User

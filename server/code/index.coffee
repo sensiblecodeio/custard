@@ -21,14 +21,15 @@ passport.deserializeUser (obj, done) ->
 
 # Passport.js strategy
 strategy = (username, password, done) ->
-  console.warn username, password
-  User.getHashedPassword username, (hashedPass) ->
-    console.warn hashedPass
-    user = new User(username, hashedPass)
-    user.checkPassword password, (authed) ->
-      console.warn authed
-      if authed
-        return done null, {id:1, username: 'chris'}
+    user = new User(username, password)
+    user.checkPassword (correct, user) ->
+      if correct
+        sessionUser =
+          shortName: user.shortName
+          displayName: user.displayName
+          apiKey: user.apiKey
+
+        return done null, sessionUser
       else
         done null, false, message: 'WRONG'
 
@@ -76,7 +77,9 @@ app.get '/tpl/:page', (req, resp) ->
   resp.render req.params.page
 
 app.get '*', (req, resp) ->
-  resp.render 'index', { scripts: js 'app' }
+  resp.render 'index',
+    scripts: js 'app'
+    user: JSON.stringify req.user
 
 
 # Define Port

@@ -9,6 +9,7 @@ window.ToolHeaderView = class ToolHeaderView extends Backbone.View
     @$el.load '/tpl/tool_header', =>
       @$el.find('h2 a').text @model.get 'name'
       @$el.find('h1').append '<i class="icon-chevron-left"></i>'
+      @$el.find('li.user a').text window.user.displayName
       topAndTailDropdowns()
       # Morally: Find all tools that want to add menu items and
       # install a menu item for each one.  Right now: just add

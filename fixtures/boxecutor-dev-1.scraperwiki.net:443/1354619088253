@@ -1,0 +1,14 @@
+POST /ickletest/auth
+host: boxecutor-dev-1.scraperwiki.net
+content-type: application/x-www-form-urlencoded; charset=utf-8
+
+200 HTTP/1.1
+server: nginx/1.1.19
+date: Tue, 04 Dec 2012 11:04:48 GMT
+content-type: application/json; charset=utf-8
+content-length: 103
+connection: keep-alive
+x-powered-by: Express
+access-control-allow-origin: *
+
+{"shortname":"ickletest","displayname":"Mr Ickle Test","apikey":"7766609499231"}

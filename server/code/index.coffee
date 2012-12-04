@@ -36,8 +36,11 @@ strategy = (username, password, done) ->
 
 app.configure ->
   app.use express.bodyParser()
-  app.use express.cookieParser('SECRET')
-  app.use express.session({ cookie: { maxAge: 60000 }, secret: 'SECRET'})
+  app.use express.cookieParser( process.env.CU_SESSION_SECRET )
+  app.use express.session
+    cookie:
+      maxAge: 60000 * 60 * 24
+    secret: process.env.CU_SESSION_SECRET
 
   app.use passport.initialize()
   app.use passport.session()

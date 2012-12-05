@@ -1,11 +1,12 @@
 class Cu.View.ToolHeader extends Backbone.View
   el: '#header'
+  events:
+    'click h1 a': 'logoClicked'
 
   initialize: ->
     @render()
 
   render: ->
-    @$el.empty()
     @$el.load '/tpl/tool_header', =>
       u = window.user
       @$el.find('h2 a').text @model.get 'name'
@@ -27,3 +28,7 @@ class Cu.View.ToolHeader extends Backbone.View
               url = "#{@model.base_url}/#{@model.boxName()}/#{token}/http/#{csv}"
               $("""<iframe src="#{url}">""").hide().appendTo('body')
       @$el.find('nav .export li:eq(0)').after($li)
+
+   logoClicked: (event) ->
+     event.preventDefault()
+     window.app.navigate "/", {trigger: true}

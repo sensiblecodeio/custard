@@ -58,3 +58,5 @@ describe 'Login', ->
 
         context 'when I visit the index page', ->
           it 'should still present a login form'
+
+     context 'when I try to login with my email address as my username', ->

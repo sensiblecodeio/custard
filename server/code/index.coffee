@@ -59,6 +59,8 @@ app.configure ->
   app.use passport.initialize()
   app.use passport.session()
 
+  app.use express.logger()
+
 
   # Add Connect Assets
   app.use assets({src: 'client'})

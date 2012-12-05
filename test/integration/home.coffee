@@ -59,3 +59,7 @@ describe 'Home page', ->
         parsed = JSON.parse result
         should.exist parsed
 
+        context 'when I visit the homepage', ->
+
+          it 'shows my previous dataset'
+

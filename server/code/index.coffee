@@ -1,7 +1,7 @@
 express = require 'express'
 stylus = require 'stylus'
 assets = require 'connect-assets'
-cons = require 'consolidate'
+ejs = require 'ejs'
 passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy
 mongoose = require 'mongoose'
@@ -60,7 +60,7 @@ mongoose.connect process.env.CU_DB
 
 # Set View Engine
 app.set 'views', 'server/template'
-app.engine 'html', cons.jazz
+app.engine 'html', ejs.renderFile
 app.set 'view engine', 'html'
 js.root = 'code'
 

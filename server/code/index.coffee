@@ -5,9 +5,13 @@ ejs = require 'ejs'
 passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy
 mongoose = require 'mongoose'
+mongoStore = require('connect-mongo')(express)
 
 User = require 'model/user'
 Dataset = require 'model/dataset'
+
+# Set up database connection
+mongoose.connect process.env.CU_DB
 
 app = express()
 
@@ -37,12 +41,14 @@ strategy = (username, password, done) ->
 
 
 app.configure ->
+
   app.use express.bodyParser()
   app.use express.cookieParser( process.env.CU_SESSION_SECRET )
   app.use express.session
     cookie:
       maxAge: 60000 * 60 * 24
     secret: process.env.CU_SESSION_SECRET
+    store: new mongoStore(url: process.env.CU_DB)
 
   app.use passport.initialize()
   app.use passport.session()
@@ -55,8 +61,6 @@ app.configure ->
 
 passport.use 'local', new LocalStrategy(strategy)
 
-# Set up database connection
-mongoose.connect process.env.CU_DB
 
 # Set View Engine
 app.set 'views', 'server/template'

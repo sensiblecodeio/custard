@@ -23,11 +23,9 @@ passport.deserializeUser (obj, done) ->
 
 # Passport.js strategy
 strategy = (username, password, done) ->
-  console.log 'STRATEGISING'
   user = new User(username, password)
   user.checkPassword (correct, user) ->
     if correct
-      console.log 'HELLO'
       sessionUser =
         shortName: user.shortName
         displayName: user.displayName
@@ -100,7 +98,6 @@ app.get '/api/:user/datasets/?', (req, resp) ->
 
 app.post '/api/:user/datasets/?', (req, resp) ->
   data = req.body
-  console.log req.body
   dataset = new Dataset req.user.shortName, data.name, data.box
   dataset.save (err) ->
     console.log err if err?

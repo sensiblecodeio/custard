@@ -1,6 +1,6 @@
-window.HomeContentView = class HomeContentView extends Backbone.View
+class Cu.View.HomeContent extends Backbone.View
   events:
-    'click .metro-tile': 'clickTile'
+    'click #tools .metro-tile': 'clickTool'
 
   el: '#content'
 
@@ -16,6 +16,7 @@ window.HomeContentView = class HomeContentView extends Backbone.View
     name = @model.get 'name'
     @$el.find('#tools .metro-tile').first().addClass(name).find('h3').text name
 
-  clickTile: (event_) ->
+  clickTool: (event_) ->
     window.app.navigate "tool/#{@model.get 'name'}", {trigger: true}
+
 

@@ -1,4 +1,4 @@
-window.AdminContentView = class AdminContentView extends Backbone.View
+class Cu.View.AdminContent extends Backbone.View
   events:
     'click .btn-primary': 'createProfile'
 

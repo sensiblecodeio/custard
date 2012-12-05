@@ -1,5 +1,4 @@
-Dataset = DatasetModel
-window.ToolContentView = class ToolContentView extends Backbone.View
+class Cu.View.ToolContent extends Backbone.View
   el: '#content'
 
   initialize: ->
@@ -8,7 +7,7 @@ window.ToolContentView = class ToolContentView extends Backbone.View
 
   render: ->
     @$el.empty()
-    if @model.isInstalled()
+    if false #@model.isInstalled()
       boxname = @model.boxName()
       boxurl = "#{@model.base_url}/#{boxname}"
       @model.publishToken (token) =>
@@ -25,9 +24,9 @@ window.ToolContentView = class ToolContentView extends Backbone.View
 
    onInstalled: ->
      user = window.user
-     dataset = new Dataset
+     dataset = new Cu.Model.Dataset
        user: user.shortName
-       name: @model.boxName()
+       name: "#{@model.get 'name'}"
        box: @model.boxName()
 
      dataset.save()

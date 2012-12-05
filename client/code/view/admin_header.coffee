@@ -1,4 +1,4 @@
-window.AdminHeaderView = class AdminHeaderView extends Backbone.View
+class Cu.View.AdminHeader extends Backbone.View
   el: '#header'
 
   initialize: (title) ->

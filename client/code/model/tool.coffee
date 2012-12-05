@@ -1,6 +1,5 @@
 # TODO: Factor out Dataset from Tool
-window.ToolModel = class ToolModel extends Backbone.Model
-
+class Cu.Model.Tool extends Backbone.Model
   base_url: 'http://boxecutor-dev-1.scraperwiki.net'
 
   git_url: (callback) ->
@@ -25,20 +24,7 @@ window.ToolModel = class ToolModel extends Backbone.Model
   setup: (callback) ->
     @exec("cd;~/#{@get 'name'}/setup").success callback
 
-  isInstalled: ->
-    name = @get 'name'
-    datasets = JSON.parse $.cookie('datasets')
-    if datasets? and datasets[name]?
-      return true
-    return false
-
   boxName: ->
-    name = @get 'name'
-    #datasets = JSON.parse $.cookie('datasets')
-    #if datasets? and datasets[name]?
-    #  return datasets[name]['box']
-    #else
-    console.log "#{window.user.shortName}/#{window.box}"
     "#{window.user.shortName}/#{window.box}"
 
   publishToken: (callback) ->

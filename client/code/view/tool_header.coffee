@@ -1,4 +1,4 @@
-window.ToolHeaderView = class ToolHeaderView extends Backbone.View
+class Cu.View.ToolHeader extends Backbone.View
   el: '#header'
 
   initialize: ->

@@ -15,16 +15,14 @@ describe 'Home page', ->
     browser.fill '#password', 'toottoot'
     browser.pressButton '#login', done
 
-  before (done) ->
-    browser.visit url, done
-
   it 'contains the scraperwiki logo', ->
     h = browser.text('#header h1')
     h.should.equal 'Logo'
 
   context 'when I click on the highrise tool', ->
-    before ->
-      browser.click '.highrise'
+    before (done) ->
+      link = browser.query('#tools .highrise')
+      browser.fire 'click', link, done
 
     it 'takes me to the highrise tool page', ->
       result = browser.location.href

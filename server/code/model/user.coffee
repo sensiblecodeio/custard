@@ -17,6 +17,7 @@ class User
         obj = JSON.parse body
         @apiKey = obj.apikey
         @displayName = obj.displayname
+        @email = obj.email
         callback true, this
       else
         callback false

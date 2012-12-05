@@ -8,6 +8,10 @@ class Cu.View.HomeHeader extends Backbone.View
   render: ->
     @$el.empty()
     @$el.load '/tpl/home_header', =>
-      @$el.find('li.user > a').text window.user.displayName
+      u = window.user
+      @$el.find('li.user > a').html """
+      #{u.displayName} <span class="caret"></span>
+         <img src="#{u.avatarUrl}" width="40" height="40" alt="#{u.displayName}" />
+      """
       topAndTailDropdowns()
     

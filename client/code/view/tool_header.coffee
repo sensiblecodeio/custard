@@ -7,9 +7,13 @@ class Cu.View.ToolHeader extends Backbone.View
   render: ->
     @$el.empty()
     @$el.load '/tpl/tool_header', =>
+      u = window.user
       @$el.find('h2 a').text @model.get 'name'
       @$el.find('h1').append '<i class="icon-chevron-left"></i>'
-      @$el.find('li.user a').text window.user.displayName
+      @$el.find('li.user > a').html """
+      #{u.displayName} <span class="caret"></span>
+         <img src="#{u.avatarUrl}" width="40" height="40" alt="#{u.displayName}" />
+      """
       topAndTailDropdowns()
       # Morally: Find all tools that want to add menu items and
       # install a menu item for each one.  Right now: just add

@@ -1,3 +1,5 @@
+crypto = require 'crypto'
+
 express = require 'express'
 stylus = require 'stylus'
 assets = require 'connect-assets'
@@ -30,10 +32,14 @@ strategy = (username, password, done) ->
   user = new User(username, password)
   user.checkPassword (correct, user) ->
     if correct
+      emailHash = crypto.createHash('md5').update(user.email[0]).digest("hex")
+      avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
       sessionUser =
         shortName: user.shortName
         displayName: user.displayName
+        email: user.email
         apiKey: user.apiKey
+        avatarUrl: avatarUrl
 
       return done null, sessionUser
     else

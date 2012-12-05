@@ -28,7 +28,14 @@ class Cu.Router.Main extends Backbone.Router
     window.header = new Cu.View.ToolHeader {model: model}
     window.content = new Cu.View.ToolContent {model: model}
 
-  dataset: (dataset) ->
+  dataset: (name) ->
+    model = new Cu.Model.Dataset { user: window.user.shortName, name: name }
+    model.fetch
+      success: (model, resp, options) ->
+        window.header = new Cu.View.ToolHeader {model: model}
+        window.content = new Cu.View.DatasetContent { model: model }
+      error: (model, xhr, options) ->
+        console.warn xhr
 
 
   newProfile: ->

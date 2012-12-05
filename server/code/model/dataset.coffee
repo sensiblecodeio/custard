@@ -23,6 +23,9 @@ class Dataset
   @findAllByUserShortName: (name, callback) ->
     DbDataset.find {user: name}, callback
 
+  @findOneByName: (shortName, dsName, callback) ->
+    DbDataset.findOne {user: shortName, name: dsName}, callback
+
   @findOneById: (id, callback) ->
     DbDataset.findOne {_id: id}, callback
       

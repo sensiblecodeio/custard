@@ -1,12 +1,11 @@
 class Cu.View.DatasetList extends Backbone.View
   events:
-    'click #datasets .metro-tile': 'clickDataset'
+    'click .metro-tile': 'clickDataset'
 
   initialize: ->
     @addDataSets()
 
   addDataSets: ->
-    console.dir @collection
     @collection.each @addDataset
 
   addDataset: (dataset) ->
@@ -16,5 +15,7 @@ class Cu.View.DatasetList extends Backbone.View
        </div>
     """
 
-  clickDataset: (event_) ->
-    window.app.navigate "dataset/#{@model.get 'name'}", {trigger: true}
+  clickDataset: (event) ->
+    # TODO: refactor into Dataset view
+    name = ($(event.target).first().attr 'class').split(' ')[1]
+    window.app.navigate "dataset/#{name}", {trigger: true}

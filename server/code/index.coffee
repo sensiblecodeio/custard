@@ -61,6 +61,9 @@ app.configure ->
 
   app.use express.logger()
 
+  # Trust X-Forwarded-* headers
+  app.enable 'trust proxy'
+
 
   # Add Connect Assets
   app.use assets({src: 'client'})

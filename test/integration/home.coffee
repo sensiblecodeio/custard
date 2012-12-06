@@ -19,11 +19,10 @@ describe 'Home page (logged in)', ->
     h = browser.text('#header h1')
     h.should.equal 'Logo'
 
-
   it 'contains a list of my datasets', ->
     datasets = browser.queryAll('#datasets div')
     should.exist datasets
-    datasets.length.should.be.above 0
+    datasets.length.should.be.above 2
 
   context 'when I click on the highrise tool', ->
     before (done) ->

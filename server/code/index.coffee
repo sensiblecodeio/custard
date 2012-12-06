@@ -108,8 +108,8 @@ app.get '/api/:user/datasets/?', (req, resp) ->
     else
       return resp.send 200, datasets
 
-app.get '/api/:user/datasets/:name/?', (req, resp) ->
-  Dataset.findOneByName req.user.shortName, req.params.name, (err, dataset) ->
+app.get '/api/:user/datasets/:id/?', (req, resp) ->
+  Dataset.findOneById req.params.id, req.user.shortName, (err, dataset) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find datasets'
@@ -122,7 +122,7 @@ app.post '/api/:user/datasets/?', (req, resp) ->
   dataset = new Dataset req.user.shortName, data.name, data.box
   dataset.save (err) ->
     console.log err if err?
-    Dataset.findOneById dataset.id, (err, dataset) ->
+    Dataset.findOneById dataset.id, req.user.shortName, (err, dataset) ->
       console.log err if err?
       resp.send 200, dataset
 

@@ -1,11 +1,11 @@
 class Cu.Model.Dataset extends Backbone.Model
   base_url: 'http://boxecutor-dev-1.scraperwiki.net'
-  idAttribute: 'name'
+  idAttribute: '_id'
   url: ->
     if @isNew()
       "/api/#{window.user.shortName}/datasets"
     else
-      "/api/#{window.user.shortName}/datasets/#{@get 'name'}"
+      "/api/#{window.user.shortName}/datasets/#{@id}"
 
   publishToken: (callback) ->
     if @_publishToken?

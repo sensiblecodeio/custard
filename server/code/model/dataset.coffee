@@ -26,7 +26,7 @@ class Dataset
   @findOneByName: (shortName, dsName, callback) ->
     DbDataset.findOne {user: shortName, name: dsName}, callback
 
-  @findOneById: (id, callback) ->
-    DbDataset.findOne {_id: id}, callback
+  @findOneById: (id, shortName, callback) ->
+    DbDataset.findOne {_id: id, user: shortName}, callback
       
 module.exports = Dataset

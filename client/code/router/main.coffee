@@ -28,10 +28,10 @@ class Cu.Router.Main extends Backbone.Router
     window.header = new Cu.View.ToolHeader {model: model}
     window.content = new Cu.View.ToolContent {model: model}
 
-  dataset: (name) ->
+  dataset: (id) ->
     model = new Cu.Model.Dataset
       user: window.user.shortName
-      name: name
+      _id: id
     model.fetch
       success: (model, resp, options) ->
         window.header = new Cu.View.ToolHeader {model: model}

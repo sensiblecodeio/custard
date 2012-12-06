@@ -5,7 +5,7 @@ class Cu.Model.Dataset extends Backbone.Model
     if @isNew()
       "/api/#{window.user.shortName}/datasets"
     else
-      "/api/#{window.user.shortName}/datasets/#{@id}"
+      "/api/#{window.user.shortName}/datasets/#{@get '_id'}"
 
   publishToken: (callback) ->
     if @_publishToken?

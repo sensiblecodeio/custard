@@ -4,7 +4,7 @@ should = require 'should'
 url = 'http://localhost:3000'
 login_url = "#{url}/login"
 
-describe 'Home page', ->
+describe 'Home page (logged in)', ->
   browser = new Browser()
 
   before (done) ->
@@ -18,6 +18,12 @@ describe 'Home page', ->
   it 'contains the scraperwiki logo', ->
     h = browser.text('#header h1')
     h.should.equal 'Logo'
+
+
+  it 'contains a list of my datasets', ->
+    datasets = browser.queryAll('#datasets div')
+    should.exist datasets
+    datasets.length.should.be.above 0
 
   context 'when I click on the highrise tool', ->
     before (done) ->

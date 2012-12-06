@@ -20,5 +20,6 @@ exports.evalConcatenatedFile = (filepath) ->
   js = snockets.getConcatenation filepath, async: false
   js = js.replace /^\(function\(\) {/gm, ''
   js = js.replace /^}\).call\(this\);/gm, ''
+  js = js.replace /window\./g, 'global.' # hack, so namespacing works
 
   eval.call global, js

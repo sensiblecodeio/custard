@@ -1,4 +1,4 @@
-window.SetPasswordView = class SetPasswordView extends Backbone.View
+class Cu.View.SetPassword extends Backbone.View
   events:
     'click .btn-primary': 'setPassword'
 

@@ -46,6 +46,5 @@ class Cu.Router.Main extends Backbone.Router
     window.content = new Cu.View.AdminContent()
 
   setPassword: ->
-    $('body').attr 'class', 'admin'
-    window.header = new Cu.View.AdminHeader('Set your password')
+    window.header = new Cu.View.HomeHeader()
     window.content = new Cu.View.SetPassword()

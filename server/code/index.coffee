@@ -90,17 +90,24 @@ app.get '/favicon.ico', (req, resp) -> resp.send 404
 app.get '/login/?', (req, resp) ->
   resp.render 'login'
 
+# Allow set-password to be visited by anons
+app.get '/set-password/:token/?', (req, resp) ->
+  resp.render 'index',
+    scripts: js 'app'
+    user: JSON.stringify {}
+
 app.post "/login", passport.authenticate("local",
   successRedirect: "/"
   failureRedirect: "/login"
   failureFlash: false
 )
 
-app.all '*', ensureAuthenticated
-
 # TODO: sort out nice way of serving templates
 app.get '/tpl/:page', (req, resp) ->
-  resp.render req.params.page
+  resp.render req.params.page,
+    user: req.user
+
+app.all '*', ensureAuthenticated
 
 app.get '/logout', (req, resp) ->
   req.logout()

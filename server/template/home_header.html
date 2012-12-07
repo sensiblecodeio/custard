@@ -8,14 +8,18 @@
             <a href="#">Managed Services</a>
         </li>
         <li class="user">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Zarino Zappia <span class="caret"></span> <img src="http://placekitten.com/g/40/40" width="40" height="40" alt="Zarino Zappia" /></a>
-            <ul class="dropdown-menu fix-right top-tail">
-                <li><a href="#"><i class="icon-home space"></i> Homepage</a></li>
-                <li><a href="#"><i class="icon-lock space"></i> Security &amp; Privacy</a></li>
-                <li><a href="#"><i class="icon-wrench space"></i> Settings</a></li>
-                <li class="divider"></li>
-                <li><a href="/logout"><i class="icon-minus-sign space"></i> Log Out</a></li>
-            </ul>
+            <% if (user) { %>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Zarino Zappia <span class="caret"></span> <img src="http://placekitten.com/g/40/40" width="40" height="40" alt="Zarino Zappia" /></a>
+              <ul class="dropdown-menu fix-right top-tail">
+                  <li><a href="#"><i class="icon-home space"></i> Homepage</a></li>
+                  <li><a href="#"><i class="icon-lock space"></i> Security &amp; Privacy</a></li>
+                  <li><a href="#"><i class="icon-wrench space"></i> Settings</a></li>
+                  <li class="divider"></li>
+                  <li><a href="/logout"><i class="icon-minus-sign space"></i> Log Out</a></li>
+              </ul>
+            <% } else { %>
+              <a href="/login">Log In</a>
+            <% } %>
         </li>
     </ul>
 </nav>

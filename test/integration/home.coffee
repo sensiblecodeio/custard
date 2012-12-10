@@ -1,7 +1,7 @@
 Browser = require 'zombie'
 should = require 'should'
 
-url = 'http://localhost:3000'
+url = 'http://localhost:3001'
 login_url = "#{url}/login"
 
 describe 'Home page (logged in)', ->

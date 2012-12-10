@@ -2,7 +2,7 @@ Browser = require 'zombie'
 should = require 'should'
 request = require 'request'
 
-BASE_URL = 'http://localhost:3000'
+BASE_URL = 'http://localhost:3001'
 INT_TEST_SRV = 'https://boxecutor-dev-1.scraperwiki.net'
 
 createProfile = (name, password, done) ->
@@ -50,8 +50,8 @@ describe 'Login', ->
 
       context 'when I logout', ->
         before (done) ->
-          browser.click('li.user a').
-            clickLink 'Log Out', done
+          browser.fire 'click', browser.query('li.user a'), ->
+            browser.clickLink 'Log Out', done
 
         it 'redirects me to the login page', ->
           browser.location.href.should.equal "#{BASE_URL}/login"

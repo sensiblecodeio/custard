@@ -11,6 +11,13 @@ fakeWindow = ->
   global.Backbone = require 'backbone'
   global.Backbone.setDomLibrary global.jQuery
 
+  global.user =
+    shortName: 'test'
+    apiKey: 'fakeapikey'
+    email: 'test@example.com'
+    displayName: 'Tesuto Tesoto-San'
+
+
 fakeWindow()
 
 # Concatenate our JS and eval it

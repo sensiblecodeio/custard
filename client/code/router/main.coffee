@@ -1,4 +1,19 @@
-window.datasets = new Cu.Collection.DatasetList
+num = String(Math.random()).replace '.',''
+window.datasets = new Cu.Collection.DatasetList()
+window.tools = new Cu.Collection.Tools()
+tools.push new Cu.Model.Tool
+  id: 1
+  name: 'highrise'
+  displayName: 'Highrise'
+  box_name: 'highrise-' + num.substring(num.length, num.length - 4)
+  importer: true
+tools.push new Cu.Model.Tool
+  id: 1
+  name: 'newdataset'
+  displayName: 'New Dataset'
+  box_name: 'newdataset-' + num.substring(num.length, num.length - 4)
+  importer: true
+
 class Cu.Router.Main extends Backbone.Router
 
   initialize: ->
@@ -9,20 +24,15 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
 
   main: ->
-    model = new Cu.Model.Tool { id: 1, name: 'highrise' }
     $('body').attr 'class', ''
     window.header = new Cu.View.HomeHeader()
-    window.content = new Cu.View.HomeContent {model: model}
+    window.content = new Cu.View.HomeContent {collection: tools}
     window.datasets.fetch
       success: ->
         new Cu.View.DatasetList {collection: window.datasets, el: '#datasets'}
 
-
   tool: (tool) ->
-    num = String(Math.random()).replace '.',''
-    model = new Cu.Model.Tool
-      name: 'highrise'
-      box_name: 'highrise-' + num.substring(num.length, num.length - 4)
+    model = window.tools.get tool
     window.box = model.get 'box_name'
     $('body').attr 'class', 'tool'
     window.header = new Cu.View.ToolHeader {model: model}

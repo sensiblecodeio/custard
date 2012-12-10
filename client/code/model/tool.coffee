@@ -1,5 +1,6 @@
 # TODO: Factor out Dataset from Tool
 class Cu.Model.Tool extends Backbone.Model
+  idAttribute: 'name'
   base_url: 'http://boxecutor-dev-1.scraperwiki.net'
 
   git_url: (callback) ->
@@ -56,3 +57,6 @@ class Cu.Model.Tool extends Backbone.Model
       url: "#{@base_url}/#{@boxName()}"
       data:
         apikey: window.user.apiKey
+
+class Cu.Collection.Tools extends Backbone.Collection
+

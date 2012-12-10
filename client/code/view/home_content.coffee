@@ -10,13 +10,21 @@ class Cu.View.HomeContent extends Backbone.View
   render: ->
     @$el.empty()
     @$el.load '/tpl/home_content', =>
-      @renderStuff()
+      @addTools()
     
-  renderStuff: ->
-    name = @model.get 'name'
-    @$el.find('#tools .metro-tile').first().addClass(name).find('h3').text name
+  addTools: ->
+    @collection.each @addTool
 
-  clickTool: (event_) ->
-    window.app.navigate "tool/#{@model.get 'name'}", {trigger: true}
+  addTool: (tool) =>
+    @$el.find('#tools').append """
+      <div class="metro-tile #{tool.get 'name'}">
+          <h3>#{tool.get 'displayName'}</h3>
+      </div>
+    """
+
+  clickTool: (event) ->
+    # TODO: refactor into Tool view
+    name = ($(event.target).first().attr 'class').split(' ')[1]
+    window.app.navigate "tool/#{name}", {trigger: true}
 
 

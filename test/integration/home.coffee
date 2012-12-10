@@ -24,6 +24,11 @@ describe 'Home page (logged in)', ->
     should.exist datasets
     datasets.length.should.be.above 2
 
+  it 'contains a list of my tools', ->
+    tools = browser.queryAll('#tools div')
+    should.exist tools
+    tools.length.should.be.above 1
+
   context 'when I click on the highrise tool', ->
     before (done) ->
       link = browser.query('#tools .highrise')

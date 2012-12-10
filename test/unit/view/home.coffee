@@ -3,7 +3,7 @@ sinon = require 'sinon'
 should = require 'should'
 helper = require '../helper'
 
-helper.evalConcatenatedFile 'client/code/view/home_content.coffee'
+helper.evalConcatenatedFile 'client/code/app.coffee'
 describe 'View: HomePage', ->
   context 'Header', ->
 
@@ -14,7 +14,7 @@ describe 'View: HomePage', ->
       tool = new Backbone.Model {id: 1, name: 'hello-world'}
       # TODO: test when installed?
       tool.isInstalled = -> false
-      @view = new HomeContentView model: tool
+      @view = new Cu.View.HomeContent model: tool
       sinon.stub @view.$el, 'load', (page) =>
         html = fs.readFileSync 'server/template/home_content.html', 'utf-8'
         @view.$el.html html

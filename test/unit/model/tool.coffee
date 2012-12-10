@@ -2,14 +2,14 @@ sinon = require 'sinon'
 should = require 'should'
 helper = require '../helper'
 
-helper.evalConcatenatedFile 'client/code/model/tool.coffee'
+helper.evalConcatenatedFile 'client/code/app.coffee'
 base_url = "http://boxecutor-dev-1.scraperwiki.net"
 username = 'cotest'
 
 describe 'Model: Tool', ->
   before ->
     num = String(Math.random()).replace '.',''
-    @tool = new ToolModel
+    @tool = new Cu.Model.Tool
       name: 'highrise'
 
     sinon.stub(@tool, 'boxName').returns \
@@ -18,7 +18,6 @@ describe 'Model: Tool', ->
     @get = sinon.stub jQuery, 'get', (_url, callback) ->
       callback 'github.com/scraperwiki/highrise-tool.git'
 
-    window.apikey = 'a-test-apikey'
 
   after ->
     jQuery.get.restore()
@@ -32,6 +31,7 @@ describe 'Model: Tool', ->
     before (done) ->
       ajaxObj =
         success: (cb) -> cb()
+        complete: (cb) -> cb(null, 'success')
 
       @ajax = sinon.stub(jQuery, 'ajax').returns ajaxObj
       @tool.install done
@@ -54,7 +54,7 @@ describe 'Model: Tool', ->
         url: "#{base_url}/#{@tool.boxName()}/exec"
         data:
           apikey: sinon.match /.+/
-          cmd: sinon.match /.*git clone.*/
+          cmd: sinon.match /.*unzip master.*/
 
       called.should.be.true
 

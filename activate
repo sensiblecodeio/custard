@@ -75,5 +75,10 @@ fix_connect_file_cache () {
 
 s=../swops-secret/keys.sh
 test -e "$s" && . "$s" && echo yummm, keys.sh
-fix_connect_file_cache
+
+if [ ${NODE_ENV:-test} = "test" ]
+then
+  fix_connect_file_cache
+fi
+
 true

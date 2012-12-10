@@ -18,6 +18,9 @@
 </div>
 <script>
   $('#username').focus()
+  $('#content form').on('submit', function(){
+      $('#login').attr('disabled', true).addClass('loading').html('Logging In&hellip;')
+  })
 </script>
 
 <% include base_footer.html %>

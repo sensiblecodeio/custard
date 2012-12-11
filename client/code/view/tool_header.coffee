@@ -25,7 +25,7 @@ class Cu.View.ToolHeader extends Backbone.View
         @model.exec("cd; ./#{@model.get('name')}/download", {dataType: 'json'}).success (data) =>
           $.each data, (i, csv) =>
             @model.publishToken (token) =>
-              url = "#{@model.base_url}/#{@model.boxName()}/#{token}/http/#{csv}"
+              url = "#{@model.base_url}/#{@model.get 'box'}/#{token}/http/#{csv}"
               $("""<iframe src="#{url}">""").hide().appendTo('body')
       @$el.find('nav .export li:eq(0)').after($li)
 

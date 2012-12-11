@@ -312,6 +312,21 @@ body.tool #content p.loading {
         border-left: 1px solid rgba(0,0,0,0.15);
     }
 
+    .tool #header h2 input {
+        margin: 0;
+        margin-left: 10px;
+        padding: 10px 10px 10px 20px;
+        line-height: 40px;
+        color: #000;
+        font-size: 28px;
+        background: transparent;
+        border: 1px solid #ddd;
+        border: 1px solid rgba(0,0,0,0.15);
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+
     .tool #header h1 i,
     .admin #header h1 i {
         position: absolute;

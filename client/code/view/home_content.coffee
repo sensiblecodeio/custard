@@ -24,7 +24,7 @@ class Cu.View.HomeContent extends Backbone.View
 
   clickTool: (event) ->
     # TODO: refactor into Tool view
-    name = ($(event.target).first().attr 'class').split(' ')[1]
+    name = ($(event.target).closest('.metro-tile').attr 'class').split(' ')[1]
     window.app.navigate "tool/#{name}", {trigger: true}
 
 

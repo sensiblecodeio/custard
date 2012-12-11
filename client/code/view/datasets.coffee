@@ -17,5 +17,5 @@ class Cu.View.DatasetList extends Backbone.View
 
   clickDataset: (event) ->
     # TODO: refactor into Dataset view
-    id = ($(event.target).first().attr 'class').split(' ')[1]
+    id = ($(event.target).closest('.metro-tile').attr 'class').split(' ')[1]
     window.app.navigate "dataset/#{id}", {trigger: true}

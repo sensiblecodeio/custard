@@ -113,6 +113,9 @@ app.get '/logout', (req, resp) ->
   req.logout()
   resp.redirect '/'
 
+app.get '/github-login/?', (req, resp) ->
+  resp.send 200, process.env.CU_GITHUB_LOGIN
+
 # API!
 app.get '/api/:user/datasets/?', (req, resp) ->
   Dataset.findAllByUserShortName req.user.shortName, (err, datasets) ->

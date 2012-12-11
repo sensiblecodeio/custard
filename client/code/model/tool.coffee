@@ -4,12 +4,12 @@ class Cu.Model.Tool extends Backbone.Model
   base_url: 'http://boxecutor-dev-1.scraperwiki.net'
 
   git_url: (callback) ->
-    $.get '/tpl/github_login', (login) =>
+    $.get '/github-login', (login) =>
       login = login.replace '\n', ''
       callback "https://#{login}@github.com/scraperwiki/#{@get 'name'}-tool.git"
 
   zip_url: (callback) ->
-    $.get '/tpl/github_login', (login) =>
+    $.get '/github-login', (login) =>
       login = login.replace '\n', ''
       callback "https://#{login}@github.com/scraperwiki/#{@get 'name'}-tool/archive/master.zip"
 

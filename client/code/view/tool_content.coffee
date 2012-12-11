@@ -22,4 +22,7 @@ class Cu.View.ToolContent extends Backbone.View
        name: "#{@model.get 'name'}"
        box: @model.boxName()
 
-     dataset.save()
+     dataset.save {},
+       wait: true
+       success: ->
+         window.app.navigate "/dataset/#{dataset.id}", {trigger: true}

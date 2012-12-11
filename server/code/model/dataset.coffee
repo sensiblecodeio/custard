@@ -18,7 +18,9 @@ class Dataset
       name: @name
       box: @box
 
-    ds.save done
+    ds.save =>
+      @id = ds._id
+      done()
 
   @findAllByUserShortName: (name, callback) ->
     DbDataset.find {user: name}, callback

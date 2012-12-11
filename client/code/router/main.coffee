@@ -1,18 +1,24 @@
 num = String(Math.random()).replace '.',''
+
+
 window.datasets = new Cu.Collection.DatasetList()
 window.tools = new Cu.Collection.Tools()
+
 tools.push new Cu.Model.Tool
-  id: 1
   name: 'highrise'
   displayName: 'Highrise'
   box_name: 'highrise-' + num.substring(num.length, num.length - 4)
   importer: true
+
 tools.push new Cu.Model.Tool
-  id: 1
   name: 'newdataset'
   displayName: 'New Dataset'
   box_name: 'newdataset-' + num.substring(num.length, num.length - 4)
   importer: true
+
+Backbone.View::close = ->
+  @$el.off()
+  @off()
 
 class Cu.Router.Main extends Backbone.Router
 
@@ -29,9 +35,10 @@ class Cu.Router.Main extends Backbone.Router
     window.content = new Cu.View.HomeContent {collection: tools}
     window.datasets.fetch
       success: ->
-        new Cu.View.DatasetList {collection: window.datasets, el: '#datasets'}
+        window.dataset_list = new Cu.View.DatasetList {collection: window.datasets, el: '#datasets'}
 
   tool: (tool) ->
+    window.header?.close?()
     model = window.tools.get tool
     window.box = model.get 'box_name'
     $('body').attr 'class', 'tool'
@@ -39,12 +46,14 @@ class Cu.Router.Main extends Backbone.Router
     window.content = new Cu.View.ToolContent {model: model}
 
   dataset: (id) ->
-    model = new Cu.Model.Dataset
+    window.header?.close?()
+    mod = null
+    mod = new Cu.Model.Dataset
       user: window.user.shortName
       _id: id
-    model.fetch
+    mod.fetch
       success: (model, resp, options) ->
-        window.header = new Cu.View.ToolHeader {model: model}
+        window.header = new Cu.View.DatasetHeader {model: model}
         window.content = new Cu.View.DatasetContent { model: model }
       error: (model, xhr, options) ->
         console.warn xhr

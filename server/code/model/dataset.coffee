@@ -5,17 +5,19 @@ ObjectId = Schema.ObjectId
 datasetSchema = new Schema
   user: String
   name: String
+  displayName: String
   box: String
 
 DbDataset = mongoose.model 'Dataset', datasetSchema
 
 class Dataset
-  constructor: (@user, @name, @box) ->
+  constructor: (@user, @name, @displayName, @box) ->
 
   save: (done) ->
     ds = new DbDataset
       user: @user
       name: @name
+      displayName: @displayName
       box: @box
 
     ds.save =>

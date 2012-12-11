@@ -7,6 +7,9 @@ class Cu.Model.Dataset extends Backbone.Model
     else
       "/api/#{window.user.shortName}/datasets/#{@get '_id'}"
 
+  name: ->
+    @get('displayName') or @get('name') or 'no name'
+
   publishToken: (callback) ->
     if @_publishToken?
       callback @_publishToken
@@ -30,6 +33,9 @@ class Cu.Model.Dataset extends Backbone.Model
     if args?
       $.extend settings, args
     $.ajax settings
+
+  validate: (attrs) ->
+    return "Please enter a name" if 'displayName' of attrs and attrs.displayName.length < 1
 
 class Cu.Collection.DatasetList extends Backbone.Collection
   model: Cu.Model.Dataset

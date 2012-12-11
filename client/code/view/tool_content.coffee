@@ -19,7 +19,8 @@ class Cu.View.ToolContent extends Backbone.View
      user = window.user
      dataset = new Cu.Model.Dataset
        user: user.shortName
-       name: "#{@model.get 'name'}"
+       name: @model.get 'name'
+       displayName: @model.get 'name'
        box: @model.boxName()
 
      dataset.save {},

@@ -133,10 +133,20 @@ app.get '/api/:user/datasets/:id/?', (req, resp) ->
     else
       return resp.send 200, dataset
 
+app.put '/api/:user/datasets/:id/?', (req, resp) ->
+  Dataset.findOneById req.params.id, req.user.shortName, (err, dataset) ->
+    if err?
+      console.log err
+      return resp.send 500, error: 'Error trying to find datasets'
+    else
+      dataset.displayName = req.body.displayName
+      dataset.save() # dataset is a mongoose object
+      return resp.send 200, dataset
+
 
 app.post '/api/:user/datasets/?', (req, resp) ->
   data = req.body
-  dataset = new Dataset req.user.shortName, data.name, data.box
+  dataset = new Dataset req.user.shortName, data.name, data.displayName, data.box
   dataset.save (err) ->
     console.log err if err?
     Dataset.findOneById dataset.id, req.user.shortName, (err, dataset) ->

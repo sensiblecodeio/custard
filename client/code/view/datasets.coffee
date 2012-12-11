@@ -11,7 +11,7 @@ class Cu.View.DatasetList extends Backbone.View
   addDataset: (dataset) ->
     $('#datasets').append """
        <div class="metro-tile #{dataset.id}">
-          <h3>#{dataset.get 'name'} data</h3>
+          <h3>#{dataset.name()}</h3>
        </div>
     """
 

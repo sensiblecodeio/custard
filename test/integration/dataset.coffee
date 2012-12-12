@@ -1,13 +1,12 @@
+$ = jQuery = require 'jquery'
 Browser = require 'zombie'
 should = require 'should'
 
-url = 'http://localhost:3000'
+url = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{url}/login"
 
 describe 'Dataset', ->
   browser = new Browser()
-  browser.features = "no-scripts css iframe"
-  console.log browser.features
 
   before (done) ->
     browser.visit login_url, done
@@ -17,27 +16,48 @@ describe 'Dataset', ->
     browser.fill '#password', 'toottoot'
     browser.pressButton '#login', done
 
-  context 'when I click on the highrise tool', ->
+  context 'when I click on the newdataset dataset', ->
     before (done) ->
-        link = browser.query('#datasets .highrise')
-        browser.fire 'click', link, ->
-          
-          done()
+        link = browser.query('#datasets .50c84caed1f25c8211000003')
+        browser.fire 'click', link, done
 
     it 'takes me to the highrise dataset page', ->
       result = browser.location.href
-      result.should.equal "#{url}/dataset/highrise"
+      result.should.include "#{url}/dataset/"
+
+    it 'has not shown the input box', ->
+      @input = browser.query '#header h2 input'
+      $(@input).is(':visible').should.be.false
 
     context 'when I click the title', ->
       before (done) ->
+        @input = browser.query '#header h2 input'
+        @a = browser.query '#header h2 a'
         browser.fire 'click', browser.query('#header h2 a'), done
 
-      it 'lets me edit the title', (done) ->
-        browser.fill '#header h2 input', 'Some lovely string'
-        browser.evaluate """
-          var e = jQuery.Event("keypress")
-          e.which = 13
-          $('#header h2 input').trigger(e)
-        """
-        done()
+      it 'an input box appears', ->
+        should.exist @input
+        $(@input).is(':visible').should.be.true
+
+      context 'when I fill in the input box and press enter', ->
+        before (done) ->
+          browser.fill '#header h2 input', 'Some lovely string', ->
+            browser.evaluate """
+              var e = jQuery.Event("keypress")
+              e.which = 13
+              e.keyCode = 13
+              $('#header h2 input').trigger(e)
+            """
+            browser.wait done
+
+        it 'hides the input box and shows the title', ->
+          @input = browser.query '#header h2 input'
+          @a = browser.query '#header h2 a'
+          $(@a).is(':visible').should.be.true
+          $(@input).is(':visible').should.be.false
+
+        it 'has updated the title', (done) ->
+          @a = browser.query '#header h2 a'
+          $(@a).text().should.equal 'Some lovely string'
+          done()
 

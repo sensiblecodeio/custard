@@ -6,6 +6,7 @@ url = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{url}/login"
 
 describe 'Dataset', ->
+  randomname = "New favourite number is #{Math.random()}"
   browser = new Browser()
 
   before (done) ->
@@ -41,7 +42,7 @@ describe 'Dataset', ->
 
       context 'when I fill in the input box and press enter', ->
         before (done) ->
-          browser.fill '#header h2 input', 'Some lovely string', ->
+          browser.fill '#header h2 input', randomname, ->
             browser.evaluate """
               var e = jQuery.Event("keypress")
               e.which = 13
@@ -58,6 +59,18 @@ describe 'Dataset', ->
 
         it 'has updated the title', (done) ->
           @a = browser.query '#header h2 a'
-          $(@a).text().should.equal 'Some lovely string'
+          $(@a).text().should.equal randomname
           done()
+
+      context 'when I go back home', ->
+        before (done) ->
+          browser.visit "#{url}/", ->
+            browser.wait done
+
+        it 'should display the home page', ->
+          browser.location.href.should.match /\/$/
+
+        it 'should show the new dataset new name', ->
+          browser.text().should.include randomname
+
 

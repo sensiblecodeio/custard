@@ -7,5 +7,5 @@ class Cu.View.DatasetContent extends Backbone.View
 
     boxurl = "http://boxecutor-dev-1.scraperwiki.net/#{@model.get 'box'}"
     @model.publishToken (token) =>
-      $('#content').html """<iframe src="#{boxurl}/#{token}/http/spreadsheet-tool/"></iframe>"""
+      $('#content').html """<iframe src="#{boxurl}/#{token}/http/"></iframe>"""
 

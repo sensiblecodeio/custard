@@ -7,6 +7,7 @@ login_url = "#{url}/login"
 
 describe 'New dataset tool', ->
   browser = new Browser()
+  browser.waitDuration = "10s"
 
   before (done) ->
     browser.visit login_url, done
@@ -26,10 +27,8 @@ describe 'New dataset tool', ->
       result = browser.location.href
       result.should.include "#{url}/dataset/"
 
-    it 'shows me details of how to ssh in to my box', (done) ->
-      browser.wait ->
-        iframe = browser.query('iframe')
-        text = $(iframe).contents().find('body').html()
-        console.log text
-        text.should.include 'ssh in via blah'
-        done()
+    it 'shows me details of how to ssh in to my box', ->
+      iframe = browser.query('iframe')
+      text = $(iframe).contents().find('body').text()
+      text.should.include 'Add your SSH key'
+      text.should.include 'ickletest.'

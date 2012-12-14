@@ -6,7 +6,7 @@ class User
 
   checkPassword: (callback) ->
     options =
-      uri: "#{window.boxServer}/#{@shortName}/auth"
+      uri: "#{process.env.CU_BOX_SERVER}/#{@shortName}/auth"
       form:
         password: @password
 

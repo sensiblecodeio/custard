@@ -49,7 +49,7 @@ class Cu.Router.Main extends Backbone.Router
     window.header?.close?()
     mod = null
     mod = new Cu.Model.Dataset
-      user: window.user.shortName
+      user: window.user.effective.shortName
       _id: id
     mod.fetch
       success: (model, resp, options) ->

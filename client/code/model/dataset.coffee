@@ -2,9 +2,9 @@ class Cu.Model.Dataset extends Backbone.Model
   idAttribute: '_id'
   url: ->
     if @isNew()
-      "/api/#{window.user.shortName}/datasets"
+      "/api/#{window.user.effective.shortName}/datasets"
     else
-      "/api/#{window.user.shortName}/datasets/#{@get '_id'}"
+      "/api/#{window.user.effective.shortName}/datasets/#{@get '_id'}"
 
   name: ->
     @get('displayName') or @get('name') or 'no name'
@@ -27,7 +27,7 @@ class Cu.Model.Dataset extends Backbone.Model
       url: "#{boxurl}/exec"
       type: 'POST'
       data:
-        apikey: window.user.apiKey
+        apikey: window.user.effective.apiKey
         cmd: cmd
     if args?
       $.extend settings, args
@@ -38,4 +38,4 @@ class Cu.Model.Dataset extends Backbone.Model
 
 class Cu.Collection.DatasetList extends Backbone.Collection
   model: Cu.Model.Dataset
-  url: -> "/api/#{window.user.shortName}/datasets"
+  url: -> "/api/#{window.user.effective.shortName}/datasets"

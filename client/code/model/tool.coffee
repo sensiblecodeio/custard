@@ -26,7 +26,7 @@ class Cu.Model.Tool extends Backbone.Model
     @exec("cd;~/#{@get 'name'}/setup").success callback
 
   boxName: ->
-    "#{window.user.shortName}/#{window.box}"
+    "#{window.user.effective.shortName}/#{window.box}"
 
   publishToken: (callback) ->
     if @_publishToken?
@@ -45,7 +45,7 @@ class Cu.Model.Tool extends Backbone.Model
       url: "#{boxurl}/exec"
       type: 'POST'
       data:
-        apikey: window.user.apiKey
+        apikey: window.user.effective.apiKey
         cmd: cmd
     if args?
       $.extend settings, args
@@ -56,7 +56,7 @@ class Cu.Model.Tool extends Backbone.Model
       type: 'POST'
       url: "#{@base_url}/#{@boxName()}"
       data:
-        apikey: window.user.apiKey
+        apikey: window.user.effective.apiKey
 
 class Cu.Collection.Tools extends Backbone.Collection
 

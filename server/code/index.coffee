@@ -123,7 +123,12 @@ app.get '/github-login/?', (req, resp) ->
   resp.send 200, process.env.CU_GITHUB_LOGIN
 
 # API!
-app.get '/api/:user/datasets/?', (req, resp) ->
+checkUserRights = (req, resp, next) ->
+  console.log req.user.shortName, req.params.user
+  return next() if req.user.shortName == req.params.user
+  return resp.send 403, error: "Unauthorised"
+
+app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   Dataset.findAllByUserShortName req.user.shortName, (err, datasets) ->
     if err?
       console.log err
@@ -131,7 +136,7 @@ app.get '/api/:user/datasets/?', (req, resp) ->
     else
       return resp.send 200, datasets
 
-app.get '/api/:user/datasets/:id/?', (req, resp) ->
+app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   Dataset.findOneById req.params.id, req.user.shortName, (err, dataset) ->
     if err?
       console.log err
@@ -139,7 +144,7 @@ app.get '/api/:user/datasets/:id/?', (req, resp) ->
     else
       return resp.send 200, dataset
 
-app.put '/api/:user/datasets/:id/?', (req, resp) ->
+app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   Dataset.findOneById req.params.id, req.user.shortName, (err, dataset) ->
     if err?
       console.log err
@@ -150,7 +155,7 @@ app.put '/api/:user/datasets/:id/?', (req, resp) ->
       return resp.send 200, dataset
 
 
-app.post '/api/:user/datasets/?', (req, resp) ->
+app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   data = req.body
   dataset = new Dataset req.user.shortName, data.name, data.displayName, data.box
   dataset.save (err) ->

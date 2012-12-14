@@ -60,3 +60,48 @@ describe 'Login', ->
           it 'should still present a login form'
 
      context 'when I try to login with my email address as my username', ->
+
+describe 'Switch', ->
+
+  user_a = 'ickletest'
+  pass_a = 'toottoot'
+  user_b = 'ehg'
+  pass_b = 'testing'
+  dataset_name = "dataset-#{String(Math.random()*Math.pow(2,32))[0..4]}"
+
+  before (done) ->
+    # log in as A
+    request.get "#{BASE_URL}/login", ->
+      request.post
+        uri: "#{BASE_URL}/login"
+        form:
+          username: user_a
+          password: pass_a
+      , (err, resp, body) ->
+        request.post
+          uri: "#{BASE_URL}/api/xxxxxxxxxx/datasets/"
+          form:
+            name: dataset_name
+            displayName: "Ickletest's dataset"
+            box: 'dummybox'
+        , (err, resp, body) ->
+          request.get "#{BASE_URL}/logout", done
+
+  before (done) ->
+    request.get "#{BASE_URL}/login", ->
+      request.post
+        uri: "#{BASE_URL}/login"
+        form:
+          username: user_b
+          password: pass_b
+      , done
+
+  context 'when I switch context', ->
+    before (done) ->
+      request.get "#{BASE_URL}/api/switch/#{user_a}", =>
+        request.get "#{BASE_URL}/api/xxxxxxxxx/datasets/", (err, resp, body) =>
+          @j = body
+          done()
+
+    it 'shows me datasets of the profile into which I have switched', ->
+      @j.should.include dataset_name

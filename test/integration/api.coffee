@@ -10,13 +10,13 @@ describe 'API', ->
 
     @loginURL = "#{settings.serverURL}/login"
     @agent = request.agent()
-    @agent.get(@loginURL) # maybe need to set session cookie?
-    @agent.post(@loginURL)
-      .send({ user: @user, password: @password })
-      .end (err, res) =>
-        @loginResponse = res
-        #console.log(res)
-        done(err)
+    @agent.get @loginURL, =>
+      @agent.post(@loginURL)
+        .send({ user: @user, password: @password })
+        .end (err, res) =>
+          @loginResponse = res
+          #console.log(res)
+          done(err)
 
   it 'managed to log in', ->
     should.exist @loginResponse

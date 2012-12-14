@@ -37,7 +37,7 @@ describe 'API', ->
           @agent.get("/api/#{@user}/datasets")
             .end (err, res) ->
               #console.log res
-              #console.log res.body
+              #console.log res.text
               done(err)
 
       context 'GET /api/:user/datasets/:id', ->

@@ -1,4 +1,4 @@
-request = require 'superagent'
+request = require 'request'
 should = require 'should'
 settings = require '../settings.json'
 
@@ -9,19 +9,23 @@ describe 'API', ->
     @fullName = 'Mr Ickle Test'
 
     @loginURL = "#{settings.serverURL}/login"
-    @agent = request.agent()
+    @agent = request
     @agent.get @loginURL, =>
-      @agent.post(@loginURL)
-        .send({ username: @user, password: @password })
-        .end (err, res) =>
+      @agent.post
+        uri: @loginURL
+        form:
+          username: @user
+          password: @password
+      , (err, res) =>
           @loginResponse = res
           #console.log(res)
           done(err)
 
   it 'managed to log in', ->
     should.exist @loginResponse
-    # check for the menu at the top right with their name in it
-    @loginResponse.text.should.include @fullName
+    # check we're being redirected to /, as opposed to /login
+    @loginResponse.body.should.include 'Redirecting to /'
+    @loginResponse.body.should.not.include 'Redirecting to /login'
 
   describe 'Datasets', ->
     context 'when I create a dataset', ->
@@ -34,11 +38,10 @@ describe 'API', ->
 
       context 'GET: /api/:user/datasets', ->
         it 'returns a list of datasets', (done) ->
-          @agent.get("/api/#{@user}/datasets")
-            .end (err, res) ->
-              #console.log res
-              #console.log res.body
-              done(err)
+          @agent.get "#{settings.serverURL}/api/#{@user}/datasets", (err, res) ->
+            datasets = JSON.parse res.body
+            datasets.length.should.be.above 1
+            done(err)
 
       context 'GET /api/:user/datasets/:id', ->
         it 'returns a single dataset'

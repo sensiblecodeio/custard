@@ -21,7 +21,7 @@ class Cu.View.AdminContent extends Backbone.View
     if apikey!='' or shortname!=''
       $button.attr('disabled', true).addClass('loading').html('Creating Profile&hellip;')
       $.ajax
-        url: "http://boxecutor-dev-0.scraperwiki.net/#{shortname}/"
+        url: "#{window.boxServer}/#{shortname}/"
         data:
           apikey: apikey
           shortname: shortname

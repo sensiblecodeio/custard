@@ -5,7 +5,7 @@ class Cu.View.DatasetContent extends Backbone.View
     @$el.empty()
     $('body').attr 'class', 'tool' # TODO: change to dataset CSS
 
-    boxurl = "http://boxecutor-dev-0.scraperwiki.net/#{@model.get 'box'}"
+    boxurl = "#{window.boxServer}/#{@model.get 'box'}"
     @model.publishToken (token) =>
       $('#content').html """<iframe src="#{boxurl}/#{token}/http/"></iframe>"""
 

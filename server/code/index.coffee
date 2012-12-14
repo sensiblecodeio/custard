@@ -99,6 +99,7 @@ app.get '/set-password/:token/?', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
     user: JSON.stringify {}
+    boxServer: process.env.CU_BOX_SERVER
 
 app.post "/login", (req, resp) ->
   # console.log req.body # XXX debug only, shows passwords, please remove
@@ -169,6 +170,7 @@ app.get '*', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
     user: JSON.stringify req.user
+    boxServer: process.env.CU_BOX_SERVER
 
 
 # Define Port

@@ -48,7 +48,7 @@ strategy = (username, password, done) ->
 
       return done null, sessionUser
     else
-      done null, false, message: 'WRONG'
+      done null, false, message: 'Incorrect username or password'
 
 
 app.configure ->

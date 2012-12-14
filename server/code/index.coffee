@@ -3,6 +3,7 @@ path = require 'path'
 existsSync = fs.existsSync || path.existsSync
 crypto = require 'crypto'
 child_process = require 'child_process'
+flash = require 'connect-flash'
 
 express = require 'express'
 stylus = require 'stylus'
@@ -65,6 +66,8 @@ app.configure ->
 
   app.use express.logger()
 
+  app.use flash()
+
   # Trust X-Forwarded-* headers
   app.enable 'trust proxy'
 
@@ -88,7 +91,8 @@ app.get '/favicon.ico', (req, resp) -> resp.send 404
 
 # Render login page
 app.get '/login/?', (req, resp) ->
-  resp.render 'login'
+  resp.render 'login',
+    errors: req.flash('error')
 
 # Allow set-password to be visited by anons
 app.get '/set-password/:token/?', (req, resp) ->
@@ -96,11 +100,13 @@ app.get '/set-password/:token/?', (req, resp) ->
     scripts: js 'app'
     user: JSON.stringify {}
 
-app.post "/login", passport.authenticate("local",
-  successRedirect: "/"
-  failureRedirect: "/login"
-  failureFlash: false
-)
+app.post "/login", (req, resp) ->
+  # console.log req.body # XXX debug only, shows passwords, please remove
+  passport.authenticate("local",
+    successRedirect: "/"
+    failureRedirect: "/login"
+    failureFlash: true
+  )(req,resp)
 
 # TODO: sort out nice way of serving templates
 app.get '/tpl/:page', (req, resp) ->

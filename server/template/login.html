@@ -1,4 +1,11 @@
 <% include base_header.html %>
+
+<% if (errors.length > 0) { %>
+<div id="error">
+    <%=errors %>
+</div>
+<% } %>
+
 <div id="content">
   <form action="/login" method="post">
     <p>

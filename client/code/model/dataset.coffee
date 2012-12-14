@@ -1,5 +1,4 @@
 class Cu.Model.Dataset extends Backbone.Model
-  base_url: 'http://boxecutor-dev-0.scraperwiki.net'
   idAttribute: '_id'
   url: ->
     if @isNew()
@@ -23,7 +22,7 @@ class Cu.Model.Dataset extends Backbone.Model
     # Returns an ajax object, onto which you can
     # chain .success and .error callbacks
     boxname = @get 'box'
-    boxurl = "#{@base_url}/#{boxname}"
+    boxurl = "#{window.boxServer}/#{boxname}"
     settings =
       url: "#{boxurl}/exec"
       type: 'POST'

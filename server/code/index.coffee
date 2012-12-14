@@ -106,6 +106,7 @@ app.get '/set-password/:token/?', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
     user: JSON.stringify {}
+    boxServer: process.env.CU_BOX_SERVER
 
 app.post "/login", (req, resp) ->
   # console.log req.body # XXX debug only, shows passwords, please remove
@@ -130,7 +131,12 @@ app.get '/github-login/?', (req, resp) ->
   resp.send 200, process.env.CU_GITHUB_LOGIN
 
 # API!
-app.get '/api/:user/datasets/?', (req, resp) ->
+checkUserRights = (req, resp, next) ->
+  console.log req.user.shortName, req.params.user
+  return next() if req.user.shortName == req.params.user
+  return resp.send 403, error: "Unauthorised"
+
+app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   # note: this ignores :user !?
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
     if err?
@@ -139,7 +145,7 @@ app.get '/api/:user/datasets/?', (req, resp) ->
     else
       return resp.send 200, datasets
 
-app.get '/api/:user/datasets/:id/?', (req, resp) ->
+app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
       console.log err
@@ -154,7 +160,7 @@ app.get '/api/switch/:username/?', (req, resp) ->
   req.session.save()
   return resp.send 200
 
-app.put '/api/:user/datasets/:id/?', (req, resp) ->
+app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
       console.log err
@@ -165,7 +171,7 @@ app.put '/api/:user/datasets/:id/?', (req, resp) ->
       return resp.send 200, dataset
 
 
-app.post '/api/:user/datasets/?', (req, resp) ->
+app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   data = req.body
   dataset = new Dataset req.user.effective.shortName, data.name, data.displayName, data.box
   dataset.save (err) ->
@@ -179,6 +185,7 @@ app.get '*', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
     user: JSON.stringify req.user
+    boxServer: process.env.CU_BOX_SERVER
 
 
 # Define Port

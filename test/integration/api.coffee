@@ -12,7 +12,7 @@ describe 'API', ->
     @agent = request.agent()
     @agent.get @loginURL, =>
       @agent.post(@loginURL)
-        .send({ user: @user, password: @password })
+        .send({ username: @user, password: @password })
         .end (err, res) =>
           @loginResponse = res
           #console.log(res)

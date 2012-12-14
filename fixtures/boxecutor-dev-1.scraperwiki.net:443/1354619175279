@@ -1,5 +1,5 @@
 POST /hmm/auth
-host: boxecutor-dev-1.scraperwiki.net
+host: boxecutor-dev-0.scraperwiki.net
 content-type: application/x-www-form-urlencoded; charset=utf-8
 
 403 HTTP/1.1

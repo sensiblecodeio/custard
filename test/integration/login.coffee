@@ -3,7 +3,7 @@ should = require 'should'
 request = require 'request'
 
 BASE_URL = 'http://localhost:3001'
-INT_TEST_SRV = 'https://boxecutor-dev-1.scraperwiki.net'
+INT_TEST_SRV = 'https://boxecutor-dev-0.scraperwiki.net'
 
 createProfile = (name, password, done) ->
   request.post

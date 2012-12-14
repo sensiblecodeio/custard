@@ -3,7 +3,7 @@ should = require 'should'
 helper = require '../helper'
 
 helper.evalConcatenatedFile 'client/code/app.coffee'
-base_url = "http://boxecutor-dev-1.scraperwiki.net"
+base_url = "http://boxecutor-dev-0.scraperwiki.net"
 username = 'cotest'
 
 describe 'Model: Tool', ->

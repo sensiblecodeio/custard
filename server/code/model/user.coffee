@@ -1,7 +1,7 @@
 bcrypt = require 'bcrypt'
 request = require 'request'
 
-INT_TEST_SRV = 'https://boxecutor-dev-1.scraperwiki.net'
+INT_TEST_SRV = 'https://boxecutor-dev-0.scraperwiki.net'
 
 class User
   constructor: (@shortName, @password) ->

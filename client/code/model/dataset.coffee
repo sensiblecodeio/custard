@@ -1,5 +1,5 @@
 class Cu.Model.Dataset extends Backbone.Model
-  base_url: 'http://boxecutor-dev-1.scraperwiki.net'
+  base_url: 'http://boxecutor-dev-0.scraperwiki.net'
   idAttribute: '_id'
   url: ->
     if @isNew()

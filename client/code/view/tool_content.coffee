@@ -16,7 +16,7 @@ class Cu.View.ToolContent extends Backbone.View
         $('p.loading').text "Error: #{status}"
 
    onInstalled: ->
-     user = window.user
+     user = window.user.effective
      dataset = new Cu.Model.Dataset
        user: user.shortName
        name: @model.get 'name'

@@ -20,7 +20,7 @@ class Cu.View.SetPassword extends Backbone.View
     if password!=''
       $button.attr('disabled', true).addClass('loading').html('Setting Password&hellip;')
       $.ajax
-        url: "http://boxecutor-dev-0.scraperwiki.net/token/#{token}"
+        url: "#{window.boxServer}/token/#{token}"
         data:
           password: password
         type: 'POST'

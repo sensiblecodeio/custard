@@ -8,7 +8,7 @@ class Cu.View.HomeHeader extends Backbone.View
   render: ->
     @$el.empty()
     @$el.load '/tpl/home_header', =>
-      u = window.user
+      u = window.user.effective
       if u.displayName?
         @$el.find('li.user > a').html """
         #{u.displayName} <span class="caret"></span>

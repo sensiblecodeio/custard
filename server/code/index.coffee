@@ -32,19 +32,26 @@ passport.serializeUser (user, done) ->
 passport.deserializeUser (obj, done) ->
   done null, obj
 
-# Passport.js strategy
-strategy = (username, password, done) ->
+# Verify callback for LocalStrategy
+verify = (username, password, done) ->
   user = new User(username, password)
   user.checkPassword (correct, user) ->
     if correct
       emailHash = crypto.createHash('md5').update(user.email[0]).digest("hex")
       avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
       sessionUser =
-        shortName: user.shortName
-        displayName: user.displayName
-        email: user.email
-        apiKey: user.apiKey
-        avatarUrl: avatarUrl
+        real:
+          shortName: user.shortName
+          displayName: user.displayName
+          email: user.email
+          apiKey: user.apiKey
+          avatarUrl: avatarUrl
+        effective:
+          shortName: user.shortName
+          displayName: user.displayName
+          email: user.email
+          apiKey: user.apiKey
+          avatarUrl: avatarUrl
 
       return done null, sessionUser
     else
@@ -77,7 +84,7 @@ app.configure ->
   # Set the public folder as static assets
   app.use express.static(process.cwd() + '/shared')
 
-passport.use 'local', new LocalStrategy(strategy)
+passport.use 'local', new LocalStrategy(verify)
 
 
 # Set View Engine
@@ -99,6 +106,7 @@ app.get '/set-password/:token/?', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
     user: JSON.stringify {}
+    boxServer: process.env.CU_BOX_SERVER
 
 app.post "/login", (req, resp) ->
   # console.log req.body # XXX debug only, shows passwords, please remove
@@ -123,24 +131,37 @@ app.get '/github-login/?', (req, resp) ->
   resp.send 200, process.env.CU_GITHUB_LOGIN
 
 # API!
-app.get '/api/:user/datasets/?', (req, resp) ->
-  Dataset.findAllByUserShortName req.user.shortName, (err, datasets) ->
+checkUserRights = (req, resp, next) ->
+  console.log req.user.shortName, req.params.user
+  return next() if req.user.effective.shortName == req.params.user
+  return resp.send 403, error: "Unauthorised"
+
+app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
+  # note: this ignores :user !?
+  Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find datasets'
     else
       return resp.send 200, datasets
 
-app.get '/api/:user/datasets/:id/?', (req, resp) ->
-  Dataset.findOneById req.params.id, req.user.shortName, (err, dataset) ->
+app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
+  Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find datasets'
     else
       return resp.send 200, dataset
 
-app.put '/api/:user/datasets/:id/?', (req, resp) ->
-  Dataset.findOneById req.params.id, req.user.shortName, (err, dataset) ->
+app.get '/api/switch/:username/?', (req, resp) ->
+  req.user.effective.shortName = req.params.username
+  # :todo: make this actually get a user from the user model
+  req.user.effective.displayName = 'Switched'
+  req.session.save()
+  return resp.send 200
+
+app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
+  Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find datasets'
@@ -150,20 +171,22 @@ app.put '/api/:user/datasets/:id/?', (req, resp) ->
       return resp.send 200, dataset
 
 
-app.post '/api/:user/datasets/?', (req, resp) ->
+app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   data = req.body
-  dataset = new Dataset req.user.shortName, data.name, data.displayName, data.box
+  dataset = new Dataset req.user.effective.shortName, data.name, data.displayName, data.box
   dataset.save (err) ->
     console.log err if err?
-    Dataset.findOneById dataset.id, req.user.shortName, (err, dataset) ->
+    Dataset.findOneById dataset.id, req.user.effective.shortName, (err, dataset) ->
       console.log err if err?
       resp.send 200, dataset
 
 
 app.get '*', (req, resp) ->
+  console.log 'USER', req.user
   resp.render 'index',
     scripts: js 'app'
     user: JSON.stringify req.user
+    boxServer: process.env.CU_BOX_SERVER
 
 
 # Define Port

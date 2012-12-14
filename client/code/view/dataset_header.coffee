@@ -11,7 +11,7 @@ class Cu.View.DatasetHeader extends Backbone.View
 
   render: ->
     @$el.load '/tpl/tool_header', =>
-      u = window.user
+      u = window.user.effective
       @$el.find('h2 a').text @model.name()
       @$el.find('h1').append '<i class="icon-chevron-left"></i>'
       @$el.find('li.user > a').html """

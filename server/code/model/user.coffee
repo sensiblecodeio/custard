@@ -1,14 +1,12 @@
 bcrypt = require 'bcrypt'
 request = require 'request'
 
-INT_TEST_SRV = 'https://boxecutor-dev-0.scraperwiki.net'
-
 class User
   constructor: (@shortName, @password) ->
 
   checkPassword: (callback) ->
     options =
-      uri: "#{INT_TEST_SRV}/#{@shortName}/auth"
+      uri: "#{process.env.CU_BOX_SERVER}/#{@shortName}/auth"
       form:
         password: @password
 

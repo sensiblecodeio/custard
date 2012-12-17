@@ -29,10 +29,12 @@ main = ->
   mongoose.connect mongo
   process.stdout.write "\rConnected    \n"
   each = (user, cb) ->
-    user.shortName = user.shortname
-    delete user.shortname
-    user.displayName = user.displayname
-    delete user.displayname
+    if user.shortname?
+      user.shortName = user.shortname
+    user.shortname = undefined
+    if user.displayname?
+      user.displayName = user.displayname
+    user.displayname = undefined
     console.log user
     user.save ->
       cb null, user

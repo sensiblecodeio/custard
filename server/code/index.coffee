@@ -73,6 +73,7 @@ app.configure ->
   app.use express.logger()
 
   app.use flash()
+  app.use express.favicon()
 
   # Trust X-Forwarded-* headers
   app.enable 'trust proxy'

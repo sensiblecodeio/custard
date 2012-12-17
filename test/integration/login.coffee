@@ -79,7 +79,7 @@ describe 'Switch', ->
           password: pass_a
       , (err, resp, body) ->
         request.post
-          uri: "#{BASE_URL}/api/xxxxxxxxxx/datasets/"
+          uri: "#{BASE_URL}/api/#{user_a}/datasets/"
           form:
             name: dataset_name
             displayName: "Ickletest's dataset"
@@ -99,7 +99,7 @@ describe 'Switch', ->
   context 'when I switch context', ->
     before (done) ->
       request.get "#{BASE_URL}/api/switch/#{user_a}", =>
-        request.get "#{BASE_URL}/api/xxxxxxxxx/datasets/", (err, resp, body) =>
+        request.get "#{BASE_URL}/api/#{user_a}/datasets/", (err, resp, body) =>
           @j = body
           done()
 

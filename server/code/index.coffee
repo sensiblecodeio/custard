@@ -137,7 +137,6 @@ checkUserRights = (req, resp, next) ->
   return resp.send 403, error: "Unauthorised"
 
 app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
-  # note: this ignores :user !?
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
     if err?
       console.log err

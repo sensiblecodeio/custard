@@ -32,27 +32,25 @@ passport.serializeUser (user, done) ->
 passport.deserializeUser (obj, done) ->
   done null, obj
 
+# Convert user into session appropriate user
+getSessionUser = (user) ->
+  emailHash = crypto.createHash('md5').update(user.email[0]).digest("hex")
+  avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
+  session =
+    shortName: user.shortName
+    displayName: user.displayName
+    email: user.email
+    apiKey: user.apikey
+    avatarUrl: avatarUrl
+
 # Verify callback for LocalStrategy
 verify = (username, password, done) ->
   user = new User username
   user.checkPassword password, (correct, user) ->
     if correct
-      emailHash = crypto.createHash('md5').update(user.email[0]).digest("hex")
-      avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
       sessionUser =
-        real:
-          shortName: user.shortName
-          displayName: user.displayName
-          email: user.email
-          apiKey: user.apikey
-          avatarUrl: avatarUrl
-        effective:
-          shortName: user.shortName
-          displayName: user.displayName
-          email: user.email
-          apiKey: user.apikey
-          avatarUrl: avatarUrl
-
+        real: getSessionUser user
+        effective: getSessionUser user
       return done null, sessionUser
     else
       done null, false, message: 'Incorrect username or password'
@@ -153,11 +151,14 @@ app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
       return resp.send 200, dataset
 
 app.get '/api/switch/:username/?', (req, resp) ->
-  req.user.effective.shortName = req.params.username
-  # :todo: make this actually get a user from the user model
-  req.user.effective.displayName = 'Switched'
-  req.session.save()
-  return resp.send 200
+  shortName = req.params.username
+  User.findByShortName shortName, (err, user) ->
+    if err? or not user?
+      resp.send 500, err
+    else
+      req.user.effective = getSessionUser user
+      req.session.save()
+      resp.send 200
 
 app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
@@ -181,7 +182,6 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
 
 
 app.get '*', (req, resp) ->
-  console.log 'USER', req.user
   resp.render 'index',
     scripts: js 'app'
     user: JSON.stringify req.user

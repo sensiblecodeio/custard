@@ -82,26 +82,30 @@ describe 'Switch', ->
           uri: "#{BASE_URL}/api/#{user_a}/datasets/"
           form:
             name: dataset_name
-            displayName: "Ickletest's dataset"
+            displayName: dataset_name
             box: 'dummybox'
         , (err, resp, body) ->
           request.get "#{BASE_URL}/logout", done
 
   before (done) ->
-    request.get "#{BASE_URL}/login", ->
-      request.post
-        uri: "#{BASE_URL}/login"
-        form:
-          username: user_b
-          password: pass_b
-      , done
+    @browser = new Browser()
+    # Log in as B via zombie
+    @browser.visit BASE_URL, =>
+      @browser.fill '#username', user_b
+      @browser.fill '#password', pass_b
+      @browser.pressButton '#login', done
 
   context 'when I switch context', ->
     before (done) ->
-      request.get "#{BASE_URL}/api/switch/#{user_a}", =>
-        request.get "#{BASE_URL}/api/#{user_a}/datasets/", (err, resp, body) =>
-          @j = body
-          done()
+      @browser.visit "#{BASE_URL}/api/switch/#{user_a}", =>
+        @browser.visit BASE_URL, done
 
     it 'shows me datasets of the profile into which I have switched', ->
-      @j.should.include dataset_name
+      @browser.text('#datasets').should.include dataset_name
+
+    it "has the switched to profile's name", ->
+      @browser.text('.user').should.include 'Mr Ickle Test'
+
+    it "shows a gravatar", ->
+      img = @browser.query('.user a img')
+      img.src.should.include 'gravatar'

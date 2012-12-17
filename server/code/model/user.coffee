@@ -1,24 +1,30 @@
 bcrypt = require 'bcrypt'
-request = require 'request'
+mongoose = require 'mongoose'
+_ = require 'underscore'
+
+userSchema = new mongoose.Schema
+  shortname: {type: String, unique: true}
+  email: [String]
+  displayname: String
+  password: String # encrypted, see setPassword method
+  apikey: {type: String, unique: true}
+  isstaff: Boolean
+  created: {type: Date, default: Date.now}
+
+DbUser = mongoose.model 'User', userSchema
 
 class User
-  constructor: (@shortName, @password) ->
+  constructor: (@shortName) ->
 
-  checkPassword: (callback) ->
-    options =
-      uri: "#{process.env.CU_BOX_SERVER}/#{@shortName}/auth"
-      form:
-        password: @password
+  checkPassword: (password, callback) ->
+    DbUser.findOne {shortname: @shortName}, (err, user) ->
+      console.warn err if err?
+      if not user? then return callback false
 
-    request.post options, (err, resp, body) =>
-      if resp.statusCode is 200
-        obj = JSON.parse body
-        @apiKey = obj.apikey
-        @displayName = obj.displayname
-        @email = obj.email
-        callback true, this
-      else
-        callback false
-
+      bcrypt.compare password, user.password, (err, correct) ->
+        if correct
+          callback true, _.extend(this, user.toObject())
+        else
+          callback false
 
 module.exports = User

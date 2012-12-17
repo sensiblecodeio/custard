@@ -1,0 +1,42 @@
+#!/usr/bin/env coffee
+# Created 2012-12-17
+# convert properties to camelCase
+
+async = require 'async'
+mongoose = require 'mongoose'
+request = require 'request'
+
+# This is the a fake User schema
+Schema = mongoose.Schema
+userSchema = new Schema
+  apikey: {type: String}
+  email: [String]
+  displayname: String
+  displayName: String
+  password: String
+  isstaff: Boolean
+  shortname: String
+  shortName: String
+
+User = mongoose.model 'User', userSchema
+
+main = ->
+  if not process.argv[2]?
+    console.log "Please specify a Mongo DB connection thingy"
+    process.exit 4
+  mongo = process.argv[2]
+  process.stdout.write "Connecting to #{mongo}..."
+  mongoose.connect mongo
+  process.stdout.write "\rConnected    \n"
+  each = (user, cb) ->
+    user.shortName = user.shortname
+    delete user.shortname
+    user.displayName = user.displayname
+    delete user.displayname
+    console.log user
+    user.save ->
+      cb null, user
+  User.find {}, null, {}, (err, users) ->
+    async.map users, each, process.exit
+
+main()

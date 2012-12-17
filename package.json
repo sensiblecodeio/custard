@@ -28,6 +28,7 @@
     "test": "mocha --require should --compilers coffee:coffee-script --colors"
   },
   "devDependencies": {
+    "async": "~0.1.22",
     "mocha": "*",
     "should": "*",
     "supervisor": "*",

@@ -61,7 +61,7 @@ class Cu.Router.Main extends Backbone.Router
 
   newProfile: ->
     $('body').attr 'class', 'admin'
-    window.header = new Cu.View.AdminHeader('Create a new profile')
+    window.header = new Cu.View.AdminHeader title: 'Create a new profile'
     window.content = new Cu.View.AdminContent()
 
   setPassword: ->

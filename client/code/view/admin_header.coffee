@@ -1,7 +1,7 @@
 class Cu.View.AdminHeader extends Backbone.View
   el: '#header'
 
-  initialize: (@title) ->
+  initialize: ->
     @render()
 
   render: ->

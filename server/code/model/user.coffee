@@ -3,9 +3,9 @@ mongoose = require 'mongoose'
 _ = require 'underscore'
 
 userSchema = new mongoose.Schema
-  shortname: {type: String, unique: true}
+  shortName: {type: String, unique: true}
   email: [String]
-  displayname: String
+  displayName: String
   password: String # encrypted, see setPassword method
   apikey: {type: String, unique: true}
   isstaff: Boolean
@@ -28,7 +28,7 @@ class User
           callback false
 
   @findByShortName: (shortName, callback) ->
-    DbUser.findOne {shortname: shortName}, (err, user) ->
+    DbUser.findOne {shortName: shortName}, (err, user) ->
       if err?
         console.warn err
         callback err, null

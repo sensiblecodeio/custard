@@ -41,14 +41,14 @@ verify = (username, password, done) ->
       avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
       sessionUser =
         real:
-          shortName: user.shortname
-          displayName: user.displayname
+          shortName: user.shortName
+          displayName: user.displayName
           email: user.email
           apiKey: user.apikey
           avatarUrl: avatarUrl
         effective:
-          shortName: user.shortname
-          displayName: user.displayname
+          shortName: user.shortName
+          displayName: user.displayName
           email: user.email
           apiKey: user.apikey
           avatarUrl: avatarUrl

@@ -34,7 +34,8 @@ passport.deserializeUser (obj, done) ->
 
 # Convert user into session appropriate user
 getSessionUser = (user) ->
-  emailHash = crypto.createHash('md5').update(user.email[0]).digest("hex")
+  email = user.email[0].toLowerCase().trim()
+  emailHash = crypto.createHash('md5').update(email).digest("hex")
   avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
   session =
     shortName: user.shortName

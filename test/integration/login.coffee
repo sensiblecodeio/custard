@@ -16,7 +16,7 @@ createProfile = (name, password, done) ->
   , (err, resp, body) ->
     obj = JSON.parse body
     request.post
-      uri: "#{INT_TEST_SRV}/token/#{obj.token}"
+      uri: "#{BASE_URL}/api/token/#{obj.token}"
       form:
         password: password
     , done

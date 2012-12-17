@@ -9,7 +9,7 @@ describe 'User', ->
 
   describe 'password', ->
     before ->
-      @user = new User 'ickletest'
+      @user = new User {shortName: 'ickletest'}
       @password = 'toottoot'
 
     it 'can be verified as correct', (done) ->
@@ -24,7 +24,7 @@ describe 'User', ->
 
     context "when the user doesn't exist", ->
       before ->
-        @user = new User 'IDONOTEXIST'
+        @user = new User {shortName: 'IDONOTEXIST'}
 
       it 'returns false', (done) ->
         @user.checkPassword @password, (correct) ->

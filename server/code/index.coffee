@@ -16,6 +16,7 @@ mongoStore = require('connect-mongo')(express)
 
 User = require 'model/user'
 Dataset = require 'model/dataset'
+Token = require 'model/token'
 
 # Set up database connection
 mongoose.connect process.env.CU_DB
@@ -43,10 +44,11 @@ getSessionUser = (user) ->
     email: user.email
     apiKey: user.apikey
     avatarUrl: avatarUrl
+    isStaff: user.isStaff
 
 # Verify callback for LocalStrategy
 verify = (username, password, done) ->
-  user = new User username
+  user = new User {shortName: username}
   user.checkPassword password, (correct, user) ->
     if correct
       sessionUser =
@@ -93,8 +95,15 @@ app.engine 'html', ejs.renderFile
 app.set 'view engine', 'html'
 js.root = 'code'
 
-# Avoids "Error: Cannot find module 'ico'"
-app.get '/favicon.ico', (req, resp) -> resp.send 404
+
+rand32 = ->
+  # 32 bits of lovely randomness.
+  # It so happens that Math.random() only generates 32 random
+  # bits on V8 (on node.js and Chrome).
+  Math.floor(Math.random() * Math.pow(2, 32))
+
+fresh_apikey = ->
+  [rand32(), rand32()].join('-')
 
 # Render login page
 app.get '/login/?', (req, resp) ->
@@ -135,6 +144,12 @@ checkUserRights = (req, resp, next) ->
   console.log req.user.shortName, req.params.user
   return next() if req.user.effective.shortName == req.params.user
   return resp.send 403, error: "Unauthorised"
+
+checkStaff = (req, resp, next) ->
+  console.log 'CHECKSTAFF', req.user.real.shortName, req.user.real.isStaff
+  if req.user.real.isStaff
+    return next()
+  return resp.send 403, error: "Unstafforised"
 
 app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
@@ -181,6 +196,23 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
     Dataset.findOneById dataset.id, req.user.effective.shortName, (err, dataset) ->
       console.log err if err?
       resp.send 200, dataset
+
+app.post '/api/:user/?', checkStaff, (req, resp) ->
+  shortName = req.params.user
+  new User(
+    shortName: shortName
+    displayName: req.body.displayName
+    email: [req.body.email]
+    apikey: fresh_apikey()
+  ).save (err) ->
+    console.warn err if err?
+    User.findByShortName shortName, (err, user) ->
+      token = String(Math.random()).replace('0.', '')
+      new Token({token: token, shortName: user.shortName}).save (err) ->
+        # 201 Created, RFC2616
+        userobj = user.objectify()
+        userobj.token = token
+        return resp.json 201, userobj
 
 
 app.get '*', (req, resp) ->

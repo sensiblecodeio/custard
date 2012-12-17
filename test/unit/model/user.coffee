@@ -1,11 +1,11 @@
-bcrypt = require 'bcrypt'
-User = require 'model/user'
 mongoose = require 'mongoose'
+should = require 'should'
+
+User = require 'model/user'
 
 describe 'User', ->
   before ->
     mongoose.connect process.env.CU_DB
-
 
   describe 'password', ->
     before ->
@@ -30,3 +30,17 @@ describe 'User', ->
         @user.checkPassword @password, (correct) ->
           correct.should.be.false
           done()
+
+   context 'when trying to find a user', ->
+     it 'can find one by its shortname', (done) ->
+       # TODO: Stub actual DB calls?
+       User.findByShortName 'ickletest', (err, user) ->
+         should.exist user
+         user.displayname.should.equal 'Mr Ickle Test'
+         done()
+
+     it "returns null when the user doesn't exist", (done) ->
+       User.findByShortName 'NONEXIST', (err, user) ->
+         should.not.exist err
+         should.not.exist user
+         done()

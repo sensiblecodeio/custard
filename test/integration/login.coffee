@@ -84,8 +84,7 @@ describe 'Switch', ->
             name: dataset_name
             displayName: dataset_name
             box: 'dummybox'
-        , (err, resp, body) ->
-          request.get "#{BASE_URL}/logout", done
+        , done
 
   before (done) ->
     @browser = new Browser()

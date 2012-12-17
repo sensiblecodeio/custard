@@ -34,23 +34,23 @@ passport.deserializeUser (obj, done) ->
 
 # Verify callback for LocalStrategy
 verify = (username, password, done) ->
-  user = new User(username, password)
-  user.checkPassword (correct, user) ->
+  user = new User username
+  user.checkPassword password, (correct, user) ->
     if correct
       emailHash = crypto.createHash('md5').update(user.email[0]).digest("hex")
       avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
       sessionUser =
         real:
-          shortName: user.shortName
-          displayName: user.displayName
+          shortName: user.shortname
+          displayName: user.displayname
           email: user.email
-          apiKey: user.apiKey
+          apiKey: user.apikey
           avatarUrl: avatarUrl
         effective:
-          shortName: user.shortName
-          displayName: user.displayName
+          shortName: user.shortname
+          displayName: user.displayname
           email: user.email
-          apiKey: user.apiKey
+          apiKey: user.apikey
           avatarUrl: avatarUrl
 
       return done null, sessionUser

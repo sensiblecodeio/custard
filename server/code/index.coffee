@@ -141,7 +141,6 @@ app.get '/github-login/?', (req, resp) ->
 
 # API!
 checkUserRights = (req, resp, next) ->
-  console.log req.user.shortName, req.params.user
   return next() if req.user.effective.shortName == req.params.user
   return resp.send 403, error: "Unauthorised"
 

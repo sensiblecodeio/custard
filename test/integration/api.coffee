@@ -119,7 +119,7 @@ describe 'API', ->
             form:
               email: 'random@example.com'
               displayName: 'Ran Dom Test'
-          , (err, resp, body) ->
+          , (err, resp, body) =>
             obj = JSON.parse body
             @token = obj.token
             resp.should.have.status 201

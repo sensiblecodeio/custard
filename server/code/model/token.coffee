@@ -1,4 +1,5 @@
 mongoose = require 'mongoose'
+_ = require 'underscore'
 
 tokenSchema = new mongoose.Schema
   token: {type: String, unique: true}
@@ -28,7 +29,7 @@ class Token
         callback err, null
       else
         newToken = new Token
-        _.extend newToken, this.toObject()
+        _.extend newToken, token.toObject()
         callback null, newToken
 
 module.exports = Token

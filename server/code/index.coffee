@@ -120,6 +120,22 @@ app.get '/tpl/:page', (req, resp) ->
   resp.render req.params.page,
     user: req.user
 
+# Set a password using a token.
+# TODO: :token should be in POST body
+app.post '/api/token/:token/?', (req, resp) ->
+  Token.find req.params.token, (err, token) ->
+    if token?.shortName and req.body.password?
+      # TODO: token expiration
+      User.findByShortName token.shortName, (err, user) ->
+        if user?
+          user.setPassword req.body.password, ->
+            return resp.send 200, user
+        else
+          console.warn "no User with shortname #{token.shortname} for Token #{token.token}"
+          return resp.send 500
+    else
+      return resp.send 404, error: 'No token/password specified'
+
 app.all '*', ensureAuthenticated
 
 app.get '/logout', (req, resp) ->

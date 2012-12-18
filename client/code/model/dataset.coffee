@@ -34,7 +34,7 @@ class Cu.Model.Dataset extends Backbone.Model
     $.ajax settings
 
   validate: (attrs) ->
-    return "Please enter a name" if 'displayName' of attrs and attrs.displayName.length < 1
+    return "Please enter a name" if 'displayName' of attrs and attrs.displayName?.length < 1
 
 class Cu.Collection.DatasetList extends Backbone.Collection
   model: Cu.Model.Dataset

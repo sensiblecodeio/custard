@@ -3,7 +3,6 @@ path = require 'path'
 existsSync = fs.existsSync || path.existsSync
 crypto = require 'crypto'
 child_process = require 'child_process'
-flash = require 'connect-flash'
 
 express = require 'express'
 stylus = require 'stylus'
@@ -13,6 +12,7 @@ passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy
 mongoose = require 'mongoose'
 mongoStore = require('connect-mongo')(express)
+flash = require 'connect-flash'
 
 User = require 'model/user'
 Dataset = require 'model/dataset'

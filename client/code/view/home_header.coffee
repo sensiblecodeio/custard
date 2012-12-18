@@ -9,7 +9,7 @@ class Cu.View.HomeHeader extends Backbone.View
     @$el.empty()
     @$el.load '/tpl/home_header', =>
       u = window.user.effective
-      if u.displayName?
+      if u?.displayName?
         @$el.find('li.user > a').html """
         #{u.displayName} <span class="caret"></span>
            <img src="#{u.avatarUrl}" width="40" height="40" alt="#{u.displayName}" />

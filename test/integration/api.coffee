@@ -5,20 +5,27 @@ settings = require '../settings.json'
 describe 'API', ->
   context "When I'm logged in", ->
     before (done) ->
+      @token = '339231725782156'
       @user = 'ickletest'
       @password = 'toottoot'
       @fullName = 'Mr Ickle Test'
 
-      @loginURL = "#{settings.serverURL}/login"
-      request.get @loginURL, =>
-        request.post
-          uri: @loginURL
-          form:
-            username: @user
-            password: @password
-        , (err, res) =>
-            @loginResponse = res
-            done(err)
+      # Set password & login
+      request.post
+        uri: "#{settings.serverURL}/api/token/#{@token}"
+        form:
+          password: @password
+      , (err, res) =>
+        @loginURL = "#{settings.serverURL}/login"
+        request.get @loginURL, =>
+          request.post
+            uri: @loginURL
+            form:
+              username: @user
+              password: @password
+          , (err, res) =>
+              @loginResponse = res
+              done(err)
 
     it 'managed to log in', ->
       should.exist @loginResponse

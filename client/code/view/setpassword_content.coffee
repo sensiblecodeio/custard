@@ -20,7 +20,7 @@ class Cu.View.SetPassword extends Backbone.View
     if password!=''
       $button.attr('disabled', true).addClass('loading').html('Setting Password&hellip;')
       $.ajax
-        url: "#{window.boxServer}/token/#{token}"
+        url: "#{location.origin}/api/token/#{token}"
         data:
           password: password
         type: 'POST'
@@ -29,10 +29,7 @@ class Cu.View.SetPassword extends Backbone.View
           @$el.children('form').html "<div class=\"alert alert-success\"><strong>Thanks for setting your password.</strong></div>"
           $('#header h2 a').text(profile.displayname)
         error: (jqxhr, textStatus, errorThrown) ->
-          if errorThrown == 'Forbidden'
-            alert("Hmmm... computer says no. Is your API key a valid staff key?")
-          else
-            alert("#{textStatus}: #{errorThrown}")
+          alert("#{textStatus}: #{errorThrown}")
           $button.attr('disabled', false).removeClass('loading').html('<i class="icon-ok space"></i> Try Again')
     else
       alert 'Sorry. You must supply a password.'

@@ -13,26 +13,24 @@ class Cu.View.AdminContent extends Backbone.View
 
   createProfile: (e) ->
     e.preventDefault()
-    apikey = $('#apikey').val()
-    displayname = $('#displayname').val()
-    shortname = $('#shortname').val()
+    displayName = $('#displayname').val()
+    shortName = $('#shortname').val()
     email = $('#email').val()
     $button = $(e.target)
-    if apikey!='' or shortname!=''
+    if shortName!=''
       $button.attr('disabled', true).addClass('loading').html('Creating Profile&hellip;')
       $.ajax
-        url: "#{window.boxServer}/#{shortname}/"
+        url: "#{location.origin}/api/#{shortName}/"
         data:
-          apikey: apikey
-          shortname: shortname
-          displayname: displayname
+          shortName: shortName
+          displayName: displayName
           email: email
         type: 'POST'
         dataType: 'json'
         success: (newProfile) =>
           console.log newProfile
           url = "#{location.origin}/set-password/#{newProfile.token}"
-          @$el.children('form').html "<div class=\"alert alert-success\"><strong>New profile &ldquo;#{newProfile.shortname}&rdquo; created.</strong><br/>They can set their password <a href=\"#{url}\" title=\"#{url}\">here</a>.</div>"
+          @$el.children('form').html "<div class=\"alert alert-success\"><strong>New profile &ldquo;#{newProfile.shortName}&rdquo; created.</strong><br/>They can set their password <a href=\"#{url}\" title=\"#{url}\">here</a>.</div>"
         error: (jqxhr, textStatus, errorThrown) ->
           if errorThrown == 'Forbidden'
             alert("Hmmm... computer says no. Is your API key a valid staff key?")
@@ -40,4 +38,4 @@ class Cu.View.AdminContent extends Backbone.View
             alert("#{textStatus}: #{errorThrown}")
           $button.attr('disabled', false).removeClass('loading').html('<i class="icon-ok space"></i> Try Again')
     else
-      alert('Sorry. You must supply a staff API key and a shortname.')
+      alert('Sorry. You must supply a staff API key and a shortName.')

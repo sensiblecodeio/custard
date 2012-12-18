@@ -95,16 +95,6 @@ app.engine 'html', ejs.renderFile
 app.set 'view engine', 'html'
 js.root = 'code'
 
-
-rand32 = ->
-  # 32 bits of lovely randomness.
-  # It so happens that Math.random() only generates 32 random
-  # bits on V8 (on node.js and Chrome).
-  Math.floor(Math.random() * Math.pow(2, 32))
-
-fresh_apikey = ->
-  [rand32(), rand32()].join('-')
-
 # Render login page
 app.get '/login/?', (req, resp) ->
   resp.render 'login',
@@ -202,7 +192,6 @@ app.post '/api/:user/?', checkStaff, (req, resp) ->
     shortName: shortName
     displayName: req.body.displayName
     email: [req.body.email]
-    apikey: fresh_apikey()
   ).save (err) ->
     console.warn err if err?
     User.findByShortName shortName, (err, user) ->

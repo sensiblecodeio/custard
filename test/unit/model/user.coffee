@@ -12,11 +12,6 @@ describe 'User', ->
       @user = new User {shortName: 'ickletest'}
       @password = 'toottoot'
 
-    it 'can be verified as correct', (done) ->
-      @user.checkPassword @password, (correct) ->
-        correct.should.be.true
-        done()
-
     it 'can be verified as wrong', (done) ->
       @user.checkPassword 'WRONG', (correct) ->
         correct.should.be.false
@@ -30,6 +25,19 @@ describe 'User', ->
         @user.checkPassword @password, (correct) ->
           correct.should.be.false
           done()
+
+    context "when trying to set a password", ->
+      before (done) ->
+        @newPassword = String(Math.random()*Math.pow(2,32))
+        User.findByShortName 'ickletest', (err, user) =>
+          user.setPassword @newPassword, done
+
+      it "sets the password and is correct", (done) ->
+        User.findByShortName 'ickletest', (err, user) =>
+          user.checkPassword @newPassword, (correct) ->
+            correct.should.be.true
+            done()
+
 
    context 'when trying to find a user', ->
      it 'can find one by its shortname', (done) ->

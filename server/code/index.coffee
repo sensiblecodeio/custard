@@ -151,10 +151,12 @@ checkUserRights = (req, resp, next) ->
   return resp.send 403, error: "Unauthorised"
 
 checkStaff = (req, resp, next) ->
-  console.log 'CHECKSTAFF', req.user.real.shortName, req.user.real.isStaff
   if req.user.real.isStaff
     return next()
   return resp.send 403, error: "Unstafforised"
+
+# :todo: more flexible implementation that checks group membership and stuff
+checkSwitchUserRights = checkStaff
 
 app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
@@ -172,7 +174,7 @@ app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
     else
       return resp.send 200, dataset
 
-app.get '/api/switch/:username/?', (req, resp) ->
+app.get '/api/switch/:username/?', checkSwitchUserRights, (req, resp) ->
   shortName = req.params.username
   User.findByShortName shortName, (err, user) ->
     if err? or not user?

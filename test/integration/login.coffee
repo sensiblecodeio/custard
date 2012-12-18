@@ -3,23 +3,39 @@ should = require 'should'
 request = require 'request'
 
 BASE_URL = 'http://localhost:3001'
-INT_TEST_SRV = 'https://boxecutor-dev-0.scraperwiki.net'
+
+# Overview
+# Login as teststaff, create a profile called ickletest, attempt to login.
+#
+# Switching logs in as user A, adds a dataset using the API.
+# Then we switch to zombie to switch the context.
+#
+# TODO: move Switching out into its own test file
+
+login  = (username, password, callback) ->
+  request.get "#{BASE_URL}/login", ->
+    request.post
+      uri: "#{BASE_URL}/login"
+      form:
+        username: username
+        password: password
+    , callback
 
 createProfile = (name, password, done) ->
-  request.post
-    uri: "#{INT_TEST_SRV}/#{name}"
-    form:
-      apikey: process.env.COTEST_STAFF_API_KEY
-      displayname: 'Mr Ickle Test'
-      email: 'ickle@example.com'
-
-  , (err, resp, body) ->
-    obj = JSON.parse body
+  login 'teststaff', process.env.CU_TEST_STAFF_PASSWORD, (err, res, body) ->
     request.post
-      uri: "#{BASE_URL}/api/token/#{obj.token}"
+      uri: "#{BASE_URL}/api/#{name}"
       form:
-        password: password
-    , done
+        displayName: 'Mr Ickle Test'
+        email: 'ickle@example.com'
+
+    , (err, resp, body) ->
+      obj = JSON.parse body
+      request.post
+        uri: "#{BASE_URL}/api/token/#{obj.token}"
+        form:
+          password: password
+      , done
 
 describe 'Login', ->
   browser = null
@@ -65,26 +81,20 @@ describe 'Switch', ->
 
   user_a = 'ickletest'
   pass_a = 'toottoot'
-  user_b = 'ehg'
-  pass_b = 'testing'
+  user_b = 'teststaff'
+  pass_b = process.env.CU_TEST_STAFF_PASSWORD
   dataset_name = "dataset-#{String(Math.random()*Math.pow(2,32))[0..4]}"
 
   before (done) ->
     # log in as A
-    request.get "#{BASE_URL}/login", ->
+    login user_a, pass_a, (err, resp, body) ->
       request.post
-        uri: "#{BASE_URL}/login"
+        uri: "#{BASE_URL}/api/#{user_a}/datasets/"
         form:
-          username: user_a
-          password: pass_a
-      , (err, resp, body) ->
-        request.post
-          uri: "#{BASE_URL}/api/#{user_a}/datasets/"
-          form:
-            name: dataset_name
-            displayName: dataset_name
-            box: 'dummybox'
-        , done
+          name: dataset_name
+          displayName: dataset_name
+          box: 'dummybox'
+      , done
 
   before (done) ->
     @browser = new Browser()
@@ -94,7 +104,7 @@ describe 'Switch', ->
       @browser.fill '#password', pass_b
       @browser.pressButton '#login', done
 
-  context 'when I switch context', ->
+  context 'when a staff member switches context', ->
     before (done) ->
       @browser.visit "#{BASE_URL}/api/switch/#{user_a}", =>
         @browser.visit BASE_URL, done
@@ -108,3 +118,20 @@ describe 'Switch', ->
     it "shows a gravatar", ->
       img = @browser.query('.user a img')
       img.src.should.include 'gravatar'
+
+  context 'when a non-staff member attempts to switch context', ->
+    before (done) ->
+      @browser = new Browser()
+      @browser.visit BASE_URL, =>
+        @browser.fill '#username', user_b
+        @browser.fill '#password', pass_b
+        @browser.pressButton '#login', =>
+          @browser.visit "#{BASE_URL}/api/switch/#{user_a}", =>
+            @browser.visit BASE_URL, done
+
+    it "hasn't changed who I am", ->
+      @browser.text('.user').should.include 'Mr Ickle Test'
+      @browser.text('.user').should.not.include 'Staff Test'
+
+    it "still shows me my datasets", ->
+      @browser.text('#datasets').should.include dataset_name

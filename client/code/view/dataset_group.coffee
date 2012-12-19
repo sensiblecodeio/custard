@@ -1,13 +1,29 @@
 class Cu.View.DataSetGroup extends Backbone.View
   className: 'dataset-group'
   events:
-    'click': 'click'
+    'click .dataset': 'clickDataset'
+    'click .view': 'clickView'
 
   render: ->
     @addDataSet()
+    @addViews()
     @
 
-  addViews: ->
+  addDataSet: ->
+    view = new Cu.View.DataSet model: @model
+    @$el.html view.render().el
 
-  click: ->
-    window.app.navigate "dataset/#{@model.id}", {trigger: true}
+  addViews: ->
+    # Fake for now
+    @$el.append """
+      <a class="view spreadsheet">View Spreadsheet</a>
+      <a class="view download">Download CSV</a>
+    """
+
+  clickDataset: ->
+    window.app.navigate "/dataset/#{@model.id}", {trigger: true}
+
+  clickView: ->
+    # Ew.
+    name = ($(event.target).closest('.view').attr 'class').split(' ')[0]
+    window.app.navigate "/dataset/#{@model.id}/#{name}", {trigger: true}

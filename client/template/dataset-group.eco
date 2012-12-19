@@ -1,3 +1,0 @@
-<h3><a href="/dataset/<%= @_id %>"><%= @dataset.displayName %></a></h3>
-<p><i class="icon-user icon-white space"></i> <span>Author:</span> <%= @user.displayName %> </p>
-<p><i class="icon-refresh icon-white space"></i> <span>Updated:</span> 23 hours ago</p>

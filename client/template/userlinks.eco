@@ -1,0 +1,23 @@
+<li class="header">
+    Switch context:
+</li>
+<li class="context">
+    <a href="#">
+        <img src="http://placekitten.com/g/24/24" width="24" height="24" alt="Zarino Zappia" />
+        <span>Zarino Zappia</span>
+        <i class="icon-ok">(Active)</i>
+    </a>
+</li>
+<li class="context">
+    <a href="#">
+        <img src="http://placekitten.com/24/24?image=5" width="24" height="24" alt="ScraperWiki Ltd" />
+        <span>ScraperWiki Ltd</span>
+    </a>
+</li>
+<li class="last">
+    <button class="btn"><i class="icon-th-list space"></i>Settings</button>
+    <button class="btn btn-primary"><i class="icon-off space"></i>Log Out</button>
+
+</li>
+<li class="dropdown-tail-outline"></li>
+<li class="dropdown-tail"></li>

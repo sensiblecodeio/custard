@@ -111,6 +111,19 @@ app.engine 'html', ejs.renderFile
 app.set 'view engine', 'html'
 js.root = 'code'
 
+# Middleware (for checking users)
+checkUserRights = (req, resp, next) ->
+  return next() if req.user.effective.shortName == req.params.user
+  return resp.send 403, error: "Unauthorised"
+
+checkStaff = (req, resp, next) ->
+  if req.user.real.isStaff
+    return next()
+  return resp.send 403, error: "Unstafforised"
+
+# :todo: more flexible implementation that checks group membership and stuff
+checkSwitchUserRights = checkStaff
+
 # Render login page
 app.get '/login/?', (req, resp) ->
   resp.render 'login',
@@ -122,6 +135,20 @@ app.get '/set-password/:token/?', (req, resp) ->
     scripts: js 'app'
     user: JSON.stringify {}
     boxServer: process.env.CU_BOX_SERVER
+
+# Switch is protected by a specific function.
+app.get '/switch/:username/?', checkSwitchUserRights, (req, resp) ->
+  shortName = req.params.username
+  console.log "SWITCH #{req.user.effective.shortName} -> #{shortName}"
+  User.findByShortName shortName, (err, user) ->
+    if err? or not user?
+      resp.send 500, err
+    else
+      req.user.effective = getSessionUser user
+      req.session.save()
+      resp.writeHead 302,
+        location: "/"   # How to give full URL here?
+      resp.end()
 
 app.post "/login", (req, resp) ->
   # console.log req.body # XXX debug only, shows passwords, please remove
@@ -162,17 +189,6 @@ app.get '/github-login/?', (req, resp) ->
   resp.send 200, process.env.CU_GITHUB_LOGIN
 
 # API!
-checkUserRights = (req, resp, next) ->
-  return next() if req.user.effective.shortName == req.params.user
-  return resp.send 403, error: "Unauthorised"
-
-checkStaff = (req, resp, next) ->
-  if req.user.real.isStaff
-    return next()
-  return resp.send 403, error: "Unstafforised"
-
-# :todo: more flexible implementation that checks group membership and stuff
-checkSwitchUserRights = checkStaff
 
 app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
@@ -189,16 +205,6 @@ app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
       return resp.send 500, error: 'Error trying to find datasets'
     else
       return resp.send 200, dataset
-
-app.get '/api/switch/:username/?', checkSwitchUserRights, (req, resp) ->
-  shortName = req.params.username
-  User.findByShortName shortName, (err, user) ->
-    if err? or not user?
-      resp.send 500, err
-    else
-      req.user.effective = getSessionUser user
-      req.session.save()
-      resp.send 200
 
 app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->

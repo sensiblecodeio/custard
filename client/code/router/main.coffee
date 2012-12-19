@@ -19,32 +19,25 @@ tools.push new Cu.Model.Tool
 Backbone.View::close = ->
   @$el.off()
   @off()
+  @remove()
 
 class Cu.Router.Main extends Backbone.Router
 
   initialize: ->
+    @appView = new Cu.AppView
+    @navView ?= new Cu.View.Nav()
     @route RegExp('^/?$'), 'main'
     @route RegExp('tool/([^/]+)/?'), 'tool'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
+    @route RegExp('dataset/([^/]+)/([^/]+)/?'), 'view'
     @route RegExp('new-profile/?'), 'newProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
 
   main: ->
-    # TODO: Move into AppView
-    # TODO: Move into nav view
-    window.sidebar = new Cu.View.SideBar()
-    $('nav').append window.sidebar.render().el
-
-    window.sitelinks = new Cu.View.SiteLinks()
-    $('nav').append window.sitelinks.render().el
-
-    window.userlinks = new Cu.View.UserLinks()
-    $('nav').append window.userlinks.render().el
-
     window.datasets.fetch
-      success: ->
-        window.dataset_list = new Cu.View.DatasetList {collection: window.datasets}
-        $('#content').html window.dataset_list.render().el
+      success: =>
+        view = new Cu.View.DatasetList {collection: window.datasets}
+        @appView.showView view
 
   tool: (tool) ->
     window.header?.close?()
@@ -55,18 +48,30 @@ class Cu.Router.Main extends Backbone.Router
     window.content = new Cu.View.ToolContent {model: model}
 
   dataset: (id) ->
-    window.header?.close?()
     mod = null
     mod = new Cu.Model.Dataset
       user: window.user.effective.shortName
       _id: id
     mod.fetch
-      success: (model, resp, options) ->
-        window.header = new Cu.View.DatasetHeader {model: model}
-        window.content = new Cu.View.DatasetContent { model: model }
+      success: (model, resp, options) =>
+        # Title?
+        view = new Cu.View.DatasetContent { model: model }
+        @appView.showView view
       error: (model, xhr, options) ->
         console.warn xhr
 
+  view: (datasetId, viewName) ->
+    mod = null
+    mod = new Cu.Model.Dataset
+      user: window.user.effective.shortName
+      _id: id
+    mod.fetch
+      success: (model, resp, options) =>
+        # Title?
+        view = new Cu.View.ViewContent { model: model }
+        @appView.showView view
+      error: (model, xhr, options) ->
+        console.warn xhr
 
   newProfile: ->
     $('body').attr 'class', 'admin'

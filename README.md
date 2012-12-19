@@ -4,9 +4,11 @@ A platform for tools that do stuff with data.
 
 Together with cobalt, forms x.scraperwiki.com, the new ScraperWiki platform.
 
-AGPL Licenced.
+AGPL Licenced (see LICENCE file).
 
 # Stuff you need to do only once (installing)
+
+## Install node.js and stuff
 
 On a Mac, go to https://nodejs.org/ and install node. You'll also need to 
 [download phantomjs v1.6.1](https://code.google.com/p/phantomjs/downloads/detail?name=phantomjs-1.6.1-macosx-static.zip) 
@@ -19,6 +21,18 @@ with:
 
 (It only installs the right version if you're using quantal
 quetzal. hahaha)  Install PhantomJS 1.6.x if you can.
+
+## Install zombie
+
+The tests require a specially patched version of zombie:
+
+    cd ~/sw     # switch to directory containing all our repos.
+    git clone git@github.com:scraperwiki/zombie.git
+    cd zombie
+    npm link
+    cd ../custard
+    npm link zombie     # Makes custard use our local copy of zombie
+
 
 # Every time you need to develop custard:
 

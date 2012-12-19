@@ -13,6 +13,7 @@ LocalStrategy = require('passport-local').Strategy
 mongoose = require 'mongoose'
 mongoStore = require('connect-mongo')(express)
 flash = require 'connect-flash'
+eco = require 'eco'
 
 User = require 'model/user'
 Dataset = require 'model/dataset'
@@ -20,6 +21,21 @@ Token = require 'model/token'
 
 # Set up database connection
 mongoose.connect process.env.CU_DB
+
+
+assets.jsCompilers.eco =
+  match: /\.eco$/
+  compileSync: (sourcePath, source) ->
+    fileName = path.basename sourcePath, '.eco'
+    directoryName = (path.dirname sourcePath).replace "#{__dirname}/templates", ""
+    jstPath = if directoryName then "#{directoryName}/#{fileName}" else fileName
+
+    """
+    (function() {
+      this.JST || (this.JST = {});
+      this.JST['#{fileName}'] = #{eco.precompile source}
+    }).call(this);
+    """
 
 app = express()
 
@@ -224,6 +240,7 @@ app.post '/api/:user/?', checkStaff, (req, resp) ->
 app.get '*', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
+    templates: js 'templates/index'
     user: JSON.stringify req.user
     boxServer: process.env.CU_BOX_SERVER
 

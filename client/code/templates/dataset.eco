@@ -1,0 +1,4 @@
+<div class="metro-tile <%= @_id %>">
+   <h3><%= @displayName %></h3>
+</div>
+

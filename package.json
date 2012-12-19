@@ -20,7 +20,8 @@
     "ejs": "~0.8.3",
     "connect-mongo": "~0.2.0",
     "connect-flash": "~0.1.0",
-    "underscore": "~1.4.3"
+    "underscore": "~1.4.3",
+    "eco": "~1.1.0-rc-3"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

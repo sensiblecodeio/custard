@@ -8,12 +8,8 @@ class Cu.View.DatasetList extends Backbone.View
   addDataSets: ->
     @collection.each @addDataset
 
-  addDataset: (dataset) ->
-    $('#datasets').append """
-       <div class="metro-tile #{dataset.id}">
-          <h3>#{dataset.name()}</h3>
-       </div>
-    """
+  addDataset: (dataset) =>
+    @$el.append JST['dataset'](dataset.toJSON())
 
   clickDataset: (event) ->
     # TODO: refactor into Dataset view

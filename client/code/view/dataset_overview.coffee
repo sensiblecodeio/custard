@@ -4,6 +4,6 @@ class Cu.View.DataSetOverview extends Backbone.View
   render: ->
     detailsView = new Cu.View.DataSetDetails model: @model
     @$el.append detailsView.render().el
-    viewsView = new Cu.View.DataSetViews
+    viewsView = new Cu.View.DataSetViews model: @model
     @$el.append viewsView.render().el
     @

@@ -25,5 +25,5 @@ class Cu.View.DataSetGroup extends Backbone.View
 
   clickView: ->
     # Ew.
-    name = ($(event.target).closest('.view').attr 'class').split(' ')[0]
+    name = ($(event.target).closest('.view').attr 'class').split(' ')[1]
     window.app.navigate "/dataset/#{@model.id}/#{name}", {trigger: true}

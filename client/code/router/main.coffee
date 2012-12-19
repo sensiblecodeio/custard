@@ -26,6 +26,12 @@ class Cu.Router.Main extends Backbone.Router
   initialize: ->
     @appView = new Cu.AppView
     @navView ?= new Cu.View.Nav()
+
+    # Move somewhere better
+    $('#logo').click ->
+      event.preventDefault()
+      window.app.navigate "/", {trigger: true}
+    
     @route RegExp('^/?$'), 'main'
     @route RegExp('tool/([^/]+)/?'), 'tool'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
@@ -60,15 +66,15 @@ class Cu.Router.Main extends Backbone.Router
       error: (model, xhr, options) ->
         console.warn xhr
 
-  view: (datasetId, viewName) ->
+  view: (datasetID, viewName) ->
     mod = null
     mod = new Cu.Model.Dataset
       user: window.user.effective.shortName
-      _id: id
+      _id: datasetID
     mod.fetch
       success: (model, resp, options) =>
         # Title?
-        view = new Cu.View.ViewContent { model: model }
+        view = new Cu.View.ViewContent { model: model, viewName: viewName }
         @appView.showView view
       error: (model, xhr, options) ->
         console.warn xhr

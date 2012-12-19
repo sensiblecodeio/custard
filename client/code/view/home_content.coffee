@@ -2,25 +2,15 @@ class Cu.View.HomeContent extends Backbone.View
   events:
     'click #tools .metro-tile': 'clickTool'
 
-  el: '#content'
-
-  initialize: ->
-    @render()
-
   render: ->
-    @$el.empty()
-    @$el.load '/tpl/home_content', =>
-      @addTools()
+    @addTools()
     
-  addTools: ->
-    @collection.each @addTool
+  addDatasets: ->
+    @collection.each @addDataset
 
-  addTool: (tool) =>
-    @$el.find('#tools').append """
-      <div class="metro-tile #{tool.get 'name'}">
-          <h3>#{tool.get 'displayName'}</h3>
-      </div>
-    """
+  addDataset: (dataset) =>
+    view = new Cu.View.DataSetGroup model: dataset
+    @$el.append view.render().el
 
   clickTool: (event) ->
     # TODO: refactor into Tool view

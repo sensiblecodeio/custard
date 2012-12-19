@@ -30,12 +30,21 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
 
   main: ->
-    $('body').attr 'class', ''
-    window.header = new Cu.View.HomeHeader()
-    window.content = new Cu.View.HomeContent {collection: tools}
+    # TODO: Move into AppView
+    # TODO: Move into nav view
+    window.sidebar = new Cu.View.SideBar()
+    $('nav').append window.sidebar.render().el
+
+    window.sitelinks = new Cu.View.SiteLinks()
+    $('nav').append window.sitelinks.render().el
+
+    window.userlinks = new Cu.View.UserLinks()
+    $('nav').append window.userlinks.render().el
+
     window.datasets.fetch
       success: ->
-        window.dataset_list = new Cu.View.DatasetList {collection: window.datasets, el: '#datasets'}
+        window.dataset_list = new Cu.View.DatasetList {collection: window.datasets}
+        $('#content').html window.dataset_list.render().el
 
   tool: (tool) ->
     window.header?.close?()

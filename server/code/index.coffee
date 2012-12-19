@@ -27,7 +27,7 @@ assets.jsCompilers.eco =
   match: /\.eco$/
   compileSync: (sourcePath, source) ->
     fileName = path.basename sourcePath, '.eco'
-    directoryName = (path.dirname sourcePath).replace "#{__dirname}/templates", ""
+    directoryName = (path.dirname sourcePath).replace "#{__dirname}/template", ""
     jstPath = if directoryName then "#{directoryName}/#{fileName}" else fileName
 
     """
@@ -240,7 +240,7 @@ app.post '/api/:user/?', checkStaff, (req, resp) ->
 app.get '*', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
-    templates: js 'templates/index'
+    templates: js 'template/index'
     user: JSON.stringify req.user
     boxServer: process.env.CU_BOX_SERVER
 

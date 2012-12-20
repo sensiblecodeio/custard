@@ -9,7 +9,7 @@ fakeWindow = ->
   global.jQuery = global.$ = require('jquery').create global.window
   global.$.cookie = -> null
   global.Backbone = require 'backbone'
-  global.Backbone.setDomLibrary global.jQuery
+  global.Backbone.$ = global.$
 
   auser =
     shortName: 'test'

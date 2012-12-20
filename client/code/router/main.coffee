@@ -23,7 +23,8 @@ Backbone.View::close = ->
 class Cu.Router.Main extends Backbone.Router
 
   initialize: ->
-    @appView = new Cu.AppView
+    @appView = new Cu.AppView '#content'
+    @titleView = new Cu.AppView '#title'
     @navView ?= new Cu.View.Nav()
 
     # Move somewhere better
@@ -41,8 +42,10 @@ class Cu.Router.Main extends Backbone.Router
   main: ->
     window.datasets.fetch
       success: =>
-        view = new Cu.View.DatasetList {collection: window.datasets}
-        @appView.showView view
+        titleView = new Cu.View.Title {text: 'My Datasets'}
+        contentView = new Cu.View.DatasetList {collection: window.datasets}
+        @titleView.showView titleView
+        @appView.showView contentView
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 

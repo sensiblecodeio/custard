@@ -33,6 +33,7 @@ class Cu.Router.Main extends Backbone.Router
       window.app.navigate "/", {trigger: true}
     
     @route RegExp('^/?$'), 'main'
+    @route RegExp('tools/?'), 'tools'
     @route RegExp('tool/([^/]+)/?'), 'tool'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
     @route RegExp('dataset/([^/]+)/([^/]+)/?'), 'view'
@@ -48,6 +49,12 @@ class Cu.Router.Main extends Backbone.Router
         @appView.showView contentView
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
+  
+  tools: ->
+    titleView = new Cu.View.Title {text: 'My Tools'}
+    contentView = new Cu.View.ToolList {collection: window.tools}
+    @titleView.showView titleView
+    @appView.showView contentView
 
   tool: (tool) ->
     model = window.tools.get tool

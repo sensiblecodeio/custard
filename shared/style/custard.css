@@ -221,7 +221,8 @@ html, body {
     background-position: -288px 0;
 }
 
-.dataset-group {
+.dataset-group,
+.my-tools .tool {
     width: 280px;
     margin: 15px 0 0 20px;
     float: left;

@@ -63,8 +63,10 @@ class Cu.Router.Main extends Backbone.Router
     mod.fetch
       success: (model, resp, options) =>
         # Title?
-        view = new Cu.View.DataSetOverview { model: model }
-        @appView.showView view
+        titleView = new Cu.View.DataSetTitle {model: model}
+        contentView = new Cu.View.DataSetOverview { model: model }
+        @titleView.showView titleView
+        @appView.showView contentView
       error: (model, xhr, options) ->
         console.warn xhr
 

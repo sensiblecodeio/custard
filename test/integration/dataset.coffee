@@ -19,12 +19,12 @@ describe 'Dataset', ->
 
   context 'when I click on the newdataset dataset', ->
     before (done) ->
-        link = browser.query('#datasets .50c84caed1f25c8211000003')
+        link = browser.query('#tools .newdataset')
         browser.fire 'click', link, done
 
     it 'takes me to the highrise dataset page', ->
       result = browser.location.href
-      result.should.include "#{url}/dataset/"
+      result.should.equal "#{url}/tool/newdataset"
 
     it 'has not shown the input box', ->
       @input = browser.query '#header h2 input'

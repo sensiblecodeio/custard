@@ -1,16 +1,14 @@
 class Cu.View.DataSetViews extends Backbone.View
   className: 'dataset-views'
   events:
-    'click .spreadsheet': 'clickSpreadsheet'
-    'click .csv': 'clickCSV'
+    'click': 'click'
 
   render: ->
     # Cheating
     @$el.append JST['dataset-views']()
     @
 
-  clickSpreadsheet: ->
-    window.app.navigate "/dataset/#{@model.id}/spreadsheet", {trigger: true}
-
-  clickCSV: ->
-    window.app.navigate "/dataset/#{@model.id}/csv", {trigger: true}
+  click: (e) ->
+    # TODO: make this suck less
+    name = ($(event.target).closest('.view').attr 'class').split(' ')[1]
+    window.app.navigate "/dataset/#{@model.id}/#{name}", {trigger: true}

@@ -3,6 +3,9 @@ class Cu.View.DataSet extends Backbone.View
   events:
     'click': 'click'
 
+  initialize: ->
+    @model.on 'change', @render, this
+
   render: ->
     @$el.html JST['dataset']
       dataset: @model.toJSON()

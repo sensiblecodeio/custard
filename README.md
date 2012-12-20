@@ -8,20 +8,6 @@ AGPL Licenced (see LICENCE file).
 
 # Stuff you need to do only once (installing)
 
-## Install node.js and stuff
-
-On a Mac, go to https://nodejs.org/ and install node. You'll also need to 
-[download phantomjs v1.6.1](https://code.google.com/p/phantomjs/downloads/detail?name=phantomjs-1.6.1-macosx-static.zip) 
-and move the executable file to `/usr/local/bin`.
-
-On linux, install nvm.  No idea how we did that.  And phantomjs
-with:
-
-    apt-get install phantomjs
-
-(It only installs the right version if you're using quantal
-quetzal. hahaha)  Install PhantomJS 1.6.x if you can.
-
 ## Install zombie
 
 The tests require a specially patched version of zombie:

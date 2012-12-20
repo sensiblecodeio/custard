@@ -11,11 +11,15 @@ fakeWindow = ->
   global.Backbone = require 'backbone'
   global.Backbone.setDomLibrary global.jQuery
 
-  global.user =
+  auser =
     shortName: 'test'
     apiKey: 'fakeapikey'
     email: 'test@example.com'
     displayName: 'Tesuto Tesoto-San'
+
+  global.user =
+    effective: auser
+    real: auser
 
 
 fakeWindow()

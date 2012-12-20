@@ -17,7 +17,7 @@ class Cu.View.DataSetGroup extends Backbone.View
     # Fake for now
     @$el.append """
       <a class="view spreadsheet">View Spreadsheet</a>
-      <a class="view download">Download CSV</a>
+      <a class="view csvdownload">Download CSV</a>
     """
 
   clickDataset: ->

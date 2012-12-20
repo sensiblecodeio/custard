@@ -21,7 +21,6 @@ class Cu.View.AdminContent extends Backbone.View
       dataType: 'json'
       data:
         apikey: window.user.real.apiKey
-        displayname: profile.displayName
         email: profile.email[0]
         newApikey: profile.apikey
       success: (cobaltProfile) =>

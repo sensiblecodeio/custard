@@ -17,7 +17,6 @@ tools.push new Cu.Model.Tool
   importer: true
 
 Backbone.View::close = ->
-  @$el.off()
   @off()
   @remove()
 

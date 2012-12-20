@@ -155,6 +155,10 @@ html, body {
     border-top: 1px solid #ccc;
 }
 
+#userlinks li.last a {
+    display: inline-block;
+}
+
 #userlinks .btn-primary {
     margin-left: 5px;
 }

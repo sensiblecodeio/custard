@@ -1,6 +1,5 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
-ObjectId = Schema.ObjectId
 
 datasetSchema = new Schema
   user: String

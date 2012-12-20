@@ -1,59 +1,58 @@
-<!DOCTYPE html>
-
+<!doctype html>
+<!-- HTML5 Boilerplate -->
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
 <!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
-
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>ScraperWiki X</title>
-    <meta name="description" content="A platform for tools that make data do stuff.">
+    <title>ScraperWiki</title>
+    <meta name="description" content="">
     <meta name="author" content="ScraperWiki Ltd">
-
-    <!-- We're AGPL and proud -->
-    <link rel="copyright license" href="https://raw.github.com/scraperwiki/custard/master/LICENCE">
-    <link rel="source" href="https://github.com/scraperwiki/custard">
-
+    <!-- http://t.co/dKP3o1e -->
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="/vendor/style/bootstrap.min.css">
-    <link rel="stylesheet" href="/style/metro.bootstrap.css">
+    <link rel="stylesheet" href="/vendor/style/metro.bootstrap.css">
     <link rel="stylesheet" href="/style/custard.css">
-
-    <script src="/vendor/js/modernizr-2.5.3-min.js"></script>
+    <!--[if (lt IE 9) & (!IEMobile)]> <script src="vendor/js/selectivizr-min.js"></script> <![endif]-->
+    <script src="/vendor/js/modernizr.custom.2.6.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.js"></script>
-    <script src="/vendor/js/underscore.js"></script>
-    <script src="/vendor/js/backbone.js"></script>
-    <script src="/vendor/js/mustache.js"></script>
-    <!--[if (gte IE 6)&(lte IE 8)]>
-      <script src="lib/js/selectivizr-min.js" type="text/javascript"></script>
-    <![endif]-->
     <script src="/vendor/js/bootstrap.min.js"></script>
-    <script src="/code/metro.bootstrap.js"></script>
-    <script src="/code/custard.js"></script>
-
-
+    <script src="/vendor/js/320andup.helper.js"></script>
     <meta http-equiv="cleartype" content="on">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 </head>
-<body class="grid" data-stripes="#fc3">
+<body>
     <header id="header">
-         <h1><a href="/">Logo</a></h1>
-         <nav>
-             <ul>
-                 <li class="about">
-                     <a href="#">About</a>
-                 </li>
-                 <li class="managed-services">
-                     <a href="https://scraperwiki.com/dataservices">Managed Services</a>
-                 </li>
-                 <li class="login">
-                     <a href="#">Log In</a>
-                 </li>
-             </ul>
-         </nav>
+        <h1><a id="logo" href="#sidebar">ScraperWiki</a></h1>
     </header>
+    <nav id="nav">
+        <ul id="sidebar">
+            <li class="my-datasets">
+                <a href="/" class="active" data-original-title="My Datasets"><img src="/image/datasets.png" width="32" height="32" /><span>My Datasets</span></a>
+            </li>
+            <li class="my-tools">
+                <a href="/tools" data-original-title="My Tools"><img src="/image/tools.png" width="32" height="32" /><span>My Tools</span></a>
+            </li>
+            <li class="divider"></li>
+            <li class="help secondary">
+                <a href="#" data-original-title="Help!"><img src="/image/help.png" width="32" height="32" /><span>Help!</span></a>
+            </li>
+            <li class="data-services secondary">
+                <a href="#" data-original-title="Data Services"><img src="/image/data-services.png" width="32" height="32" /><span>Data Services</span></a>
+            </li>
+            <li class="about secondary">
+                <a href="#" data-original-title="About ScraperWiki"><img src="/image/about.png" width="32" height="32" /><span>About ScraperWiki</span></a>
+            </li>
+            <li id="toggle-sidebar-width" data-original-title="Expand"><span>Collapse</span><i class="bar">|</i><i class="bar">|</i><i class="bar">|</i></li>
+        </ul>
+        <ul id="sitelinks">
+            <li class="login">
+                <a href="/login">Log in</a>
+            </li>
+        </ul>
+    </nav>
+    <div id="title">
+        <h2>Log In</h2>
+    </div>

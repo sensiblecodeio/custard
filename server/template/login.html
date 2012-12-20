@@ -1,27 +1,28 @@
 <% include base_header.html %>
 
-<% if (errors.length > 0) { %>
-<div id="error" class="container alert alert-error alert-block">
-    <h4><%=errors %></h4>
-</div>
-<% } %>
-
 <div id="content">
-  <form action="/login" method="post">
-    <p>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username"/>
-    </p>
-    <p>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password"/>
-    </p>
-    <p>
-      <button type="submit" id="login" class="btn btn-primary">
-        <i class="icon-ok space"></i> Log In
-      </button>
-    </p>
-  </form>
+  <div class="login-page">
+    <% if (errors.length > 0) { %>
+    <div id="error" class="alert alert-error alert-block">
+      <h4><%=errors %></h4>
+    </div>
+    <% } %>
+    <form action="/login" method="post">
+      <p>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"/>
+      </p>
+      <p>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"/>
+      </p>
+      <p>
+        <button type="submit" id="login" class="btn btn-primary">
+          <i class="icon-ok space"></i> Log In
+        </button>
+      </p>
+    </form>
+  </div>
 </div>
 <script>
   $('#username').focus()

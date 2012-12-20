@@ -370,6 +370,10 @@ a.view {
     height: 100%;
 }
 
+div.login-page {
+    margin: 15px 20px;
+}
+
 
 @media only screen and (min-width: 480px) {
 

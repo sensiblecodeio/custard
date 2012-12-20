@@ -241,6 +241,25 @@ html, body {
     color: #fff;
     cursor: pointer;
     text-shadow: 0 1px 1px #176dc2;
+    background-image: url(/image/watermark-dataset.png);
+    background-position: 97% 100%;
+    background-repeat: no-repeat;
+}
+
+.view {
+    background-image: none;
+}
+
+.view.spreadsheet {
+    background-image: url(/image/watermark-spreadsheet.png);
+}
+
+.view.csvdownload {
+    background-image: url(/image/watermark-download.png);
+}
+
+.view.newdataset {
+    background-image: url(/image/watermark-viewsource.png);
 }
 
 .dataset:hover,

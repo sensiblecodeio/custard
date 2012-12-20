@@ -3,6 +3,7 @@ class Cu.View.SideBar extends Backbone.View
   id: 'sidebar'
   events:
     'click li': 'clickedLink'
+    'click #toggle-sidebar-width': 'toggleSidebarWidth'
 
   render: ->
     @el.innerHTML = JST.sidebar()
@@ -19,4 +20,16 @@ class Cu.View.SideBar extends Backbone.View
     $a.addClass('active').parent().siblings().children('a').removeClass('active')
     window.app.navigate $a.attr('href'), {trigger: true}
 
-
+  toggleSidebarWidth: (e) ->
+    e.preventDefault()
+    $b = $('body');
+    if $b.hasClass 'thin-sidebar'
+      $b.removeClass 'thin-sidebar'
+      $('#toggle-sidebar-width span').text 'Collapse'
+      $('#sidebar a, #toggle-sidebar-width').tooltip 'destroy'
+    else
+      $b.addClass 'thin-sidebar'
+      $('#toggle-sidebar-width span').text('Expand').attr('data-original-title', 'Expand')
+      $('#sidebar a, #toggle-sidebar-width').tooltip
+        animation: false
+        placement: 'right'

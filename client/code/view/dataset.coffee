@@ -9,5 +9,6 @@ class Cu.View.DataSet extends Backbone.View
       user: window.user.effective
     @
 
-  click: ->
+  click: (e) ->
+    e.preventDefault()
     window.app.navigate "dataset/#{@model.id}", {trigger: true}

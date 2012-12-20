@@ -182,6 +182,7 @@ app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
     else
       return resp.send 200, datasets
 
+# :todo: should :user be part of the dataset URL?
 app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -196,8 +197,10 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
       console.log err
       return resp.send 500, error: 'Error trying to find datasets'
     else
-      dataset.displayName = req.body.displayName
-      dataset.save() # dataset is a mongoose object
+      # :todo: should be more systematic about what can be set this way.
+      for k of req.body
+        dataset[k] = req.body[k]
+      dataset.save()
       return resp.send 200, dataset
 
 

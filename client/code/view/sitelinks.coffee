@@ -6,7 +6,6 @@ class Cu.View.SiteLinks extends Backbone.View
     'click #userlink': 'userClicked'
 
   render: ->
-    console.log 'rendered'
     @el.innerHTML = JST.sitelinks window.user.effective
     @
 

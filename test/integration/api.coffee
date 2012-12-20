@@ -75,7 +75,7 @@ describe 'API', ->
               done()
 
         context 'PUT /api/:user/datasets/:id', ->
-          it 'updates a single dataset with new values', (done) ->
+          it 'changes the display name of a single dataset', (done) ->
             request.put
               uri: "#{settings.serverURL}/api/#{@user}/datasets/#{dataset._id}"
               form:

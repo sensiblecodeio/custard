@@ -1,17 +1,21 @@
 class Cu.View.Title extends Backbone.View
+  tagName: 'h2'
   render: ->
-    @$el.html """<h2>#{@options.text}</h2>"""
+    @$el.html """#{@options.text}"""
     @
 
 class Cu.View.DataSetTitle extends Backbone.View
+  tagName: 'h2'
   events:
-    'click a': 'nameClicked'
+    'click .editable': 'nameClicked'
     'blur input': 'editableNameBlurred'
-    'keypress input': 'enterOnEditableName'
+    'keypress input': 'keypressOnEditableName'
 
   render: ->
     tpl = """
-      <a href="#">#{@model.get 'displayName'}</a>
+      <a href="/">My Datasets</a>
+      <span class="slash">/</span>
+      <span class="editable">#{@model.get 'displayName'}</span>
       <input type="text" id="txtName" style="display: none"/>
     """
     @$el.html tpl
@@ -19,24 +23,34 @@ class Cu.View.DataSetTitle extends Backbone.View
 
   nameClicked: (e) ->
     e.preventDefault()
-    @$el.find('a').hide()
-    @$el.find('input').val @model.name()
-    @$el.find('input').show 0, ->
+    $a = @$el.find('.editable')
+    $a.hide()
+    @$el.find('input').val(@model.name()).css('width', $a.width() + 20).show 0, ->
       @focus()
-      @select()
 
   editableNameBlurred: ->
-    label = @$el.find('a')
-    if not label.is(':visible')
-      label.show()
-      @newName = (@$el.find('input').hide()).val()
-      @$el.find('a').text @newName
+    $label = @$el.find('.editable')
+    $input = @$el.find('input')
+    @newName = $.trim($input.val())
+    if @newName == '' or @newName == $label.text()
+      $label.show().next().hide();
+    else
+      $input.hide()
+      $label.text(@newName).show()
       @model.save displayName: @newName,
         success: =>
+          $label.addClass 'saved'
+          setTimeout ->
+            $label.removeClass 'saved'
+          , 1000
         error: (e) =>
-          @$el.find('a').text @model.name()
-          console.log e
+          $label.text @model.name()
+          console.log 'error saving new name', e
 
+  editableNameEscaped: (e) ->
+    e.preventDefault()
+    @$el.find('.editable').show().next().hide()
 
-  enterOnEditableName: (event) ->
+  keypressOnEditableName: (event) ->
     @editableNameBlurred() if event.keyCode is 13
+    @editableNameEscaped() if event.keyCode is 27

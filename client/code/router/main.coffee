@@ -43,6 +43,8 @@ class Cu.Router.Main extends Backbone.Router
       success: =>
         view = new Cu.View.DatasetList {collection: window.datasets}
         @appView.showView view
+      error: (x,y,z) ->
+        console.warn 'ERRROR', x, y, z
 
   tool: (tool) ->
     model = window.tools.get tool

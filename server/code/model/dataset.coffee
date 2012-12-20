@@ -1,9 +1,8 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
-ObjectId = Schema.ObjectId
 
 datasetSchema = new Schema
-  user: String
+  user: String  # Actually, the owner
   name: String
   displayName: String
   box: String

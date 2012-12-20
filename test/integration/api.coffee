@@ -75,7 +75,7 @@ describe 'API', ->
               done()
 
         context 'PUT /api/:user/datasets/:id', ->
-          it 'updates a single dataset with new values', (done) ->
+          it 'changes the display name of a single dataset', (done) ->
             request.put
               uri: "#{settings.serverURL}/api/#{@user}/datasets/#{dataset._id}"
               form:
@@ -87,6 +87,20 @@ describe 'API', ->
                 dataset.displayName.should.equal 'Cheese'
                 done(err)
 
+          it 'changes the owner of a single dataset', (done) ->
+            @newowner = 'ehg'
+            request.put
+              uri: "#{settings.serverURL}/api/#{@user}/datasets/#{dataset._id}"
+              form:
+                user: @newowner
+            , (err, res) =>
+              res.should.have.status 200
+              done(err)
+
+          it "that dataset doesn't appear in my list of datasets any more", (done) ->
+            request.get "#{settings.serverURL}/api/#{@user}/datasets", (err, res) ->
+              res.body.should.not.include "#{dataset._id}"
+              done()
 
           it "500 errors if the dataset doesn't exist", (done) ->
             request.put "#{settings.serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->

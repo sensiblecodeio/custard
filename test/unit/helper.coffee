@@ -9,13 +9,17 @@ fakeWindow = ->
   global.jQuery = global.$ = require('jquery').create global.window
   global.$.cookie = -> null
   global.Backbone = require 'backbone'
-  global.Backbone.setDomLibrary global.jQuery
+  global.Backbone.$ = global.$
 
-  global.user =
+  auser =
     shortName: 'test'
     apiKey: 'fakeapikey'
     email: 'test@example.com'
     displayName: 'Tesuto Tesoto-San'
+
+  global.user =
+    effective: auser
+    real: auser
 
 
 fakeWindow()

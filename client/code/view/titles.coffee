@@ -55,7 +55,7 @@ class Cu.View.DataSetTitle extends Cu.View.Title
     $input = @$el.find('input')
     @newName = $.trim($input.val())
     if @newName == '' or @newName == $label.text()
-      $label.show().next().hide();
+      $label.show().next().hide()
     else
       $input.hide()
       $label.text(@newName).show()

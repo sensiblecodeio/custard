@@ -1,7 +1,5 @@
 class Cu.View.Nav extends Backbone.View
   el: 'nav'
-  events:
-    'click #logo': 'logoClicked'
 
   initialize: ->
     @sideBar = new Cu.View.SideBar()
@@ -12,5 +10,3 @@ class Cu.View.Nav extends Backbone.View
 
     @userLinks = new Cu.View.UserLinks()
     @$el.append @userLinks.render().el
-
-   logoClicked: (event) ->

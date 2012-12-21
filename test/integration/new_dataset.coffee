@@ -33,7 +33,7 @@ describe 'New dataset tool', ->
 
       context 'when I click on the view source view', ->
         before (done) ->
-          link = browser.query('div.newdataset')
+          link = browser.query('.newdataset a')
           browser.fire 'click', link, ->
             browser.wait 1000, ->
               browser.wait done

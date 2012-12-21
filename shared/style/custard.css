@@ -395,7 +395,8 @@ a.view {
     height: 100%;
 }
 
-div.login-page {
+div.login-page,
+div.create-profile {
     margin: 15px 20px;
 }
 

@@ -37,7 +37,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('tool/([^/]+)/?'), 'tool'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
     @route RegExp('dataset/([^/]+)/([^/]+)/?'), 'view'
-    @route RegExp('new-profile/?'), 'newProfile'
+    @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
 
   main: ->
@@ -90,10 +90,11 @@ class Cu.Router.Main extends Backbone.Router
       error: (model, xhr, options) ->
         console.warn xhr
 
-  newProfile: ->
-    $('body').attr 'class', 'admin'
-    window.header = new Cu.View.AdminHeader title: 'Create a new profile'
-    window.content = new Cu.View.AdminContent()
+  createProfile: ->
+    titleView = new Cu.View.Title {text: 'Create Profile'}
+    contentView = new Cu.View.CreateProfile()
+    @titleView.showView titleView
+    @appView.showView contentView
 
   setPassword: ->
     window.header = new Cu.View.HomeHeader()

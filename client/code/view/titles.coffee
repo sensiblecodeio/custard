@@ -20,6 +20,7 @@ class Cu.View.Title extends Backbone.View
 class Cu.View.DataSetTitle extends Cu.View.Title
   tagName: 'h2'
   events:
+    'click a': 'datasetsClicked'
     'click .editable': 'nameClicked'
     'blur input': 'editableNameBlurred'
     'keypress input': 'keypressOnEditableName'
@@ -37,6 +38,10 @@ class Cu.View.DataSetTitle extends Cu.View.Title
     """
     @$el.html tpl
     @
+
+  datasetsClicked: (e) ->
+    e.preventDefault()
+    window.app.navigate "/", {trigger: true}
 
   nameClicked: (e) ->
     e.preventDefault()

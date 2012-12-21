@@ -2,16 +2,10 @@
     Switch context:
 </li>
 <li class="context">
-    <a href="#">
+    <a>
         <img src="<%= @avatarUrl %>" width="24" height="24" alt="<%= @displayName %>" />
         <span><%= @displayName %></span>
         <i class="icon-ok">(Active)</i>
-    </a>
-</li>
-<li class="context">
-    <a href="#">
-        <img src="http://placekitten.com/24/24?image=5" width="24" height="24" alt="ScraperWiki Ltd" />
-        <span>ScraperWiki Ltd</span>
     </a>
 </li>
 <li class="last">

@@ -12,6 +12,7 @@ class Cu.View.SiteLinks extends Backbone.View
   userClicked: (event) ->
     # TODO: abstract this out
     event.preventDefault()
+    event.stopPropagation()
     if $('#userlinks').hasClass('open')
       $('#userlinks').removeClass 'open'
       $('a[href="#userlinks"]').removeClass 'active'
@@ -20,12 +21,9 @@ class Cu.View.SiteLinks extends Backbone.View
       $('a[href="#userlinks"]').addClass 'active'
       $('#sidebar.open').removeClass 'open'
       $('a[href="#sidebar"]').removeClass 'active'
-      # TODO: make this work (ask Zarino)
-      # $(document).on 'click.userlinks', (e) ->
-      #   console.log 'userlinks is open and you clicked the document'
-      #   if $('#userlinks').has(e.target).length == 0
-      #     console.log 'your click was outside the userlinks menu'
-      #     $(document).off('.userlinks');
-      #     $('#userlinks').removeClass 'open'
-      #     $('a[href="#userlinks"]').removeClass 'active'
+      $('body').on 'click.userlinks', (e) ->
+        if $('#userlinks').has(e.target).length == 0
+          $('body').off('.userlinks');
+          $('#userlinks').removeClass 'open'
+          $('a[href="#userlinks"]').removeClass 'active'
 

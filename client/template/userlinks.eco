@@ -3,8 +3,8 @@
 </li>
 <li class="context">
     <a href="#">
-        <img src="http://placekitten.com/g/24/24" width="24" height="24" alt="Zarino Zappia" />
-        <span>Zarino Zappia</span>
+        <img src="<%= @avatarUrl %>" width="24" height="24" alt="<%= @displayName %>" />
+        <span><%= @displayName %></span>
         <i class="icon-ok">(Active)</i>
     </a>
 </li>

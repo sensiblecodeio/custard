@@ -10,5 +10,5 @@ class Cu.View.UserLinks extends Backbone.View
     location.href = '/logout'
 
   render: ->
-    @el.innerHTML = JST.userlinks()
+    @el.innerHTML = JST.userlinks window.user.effective
     @

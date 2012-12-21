@@ -97,5 +97,7 @@ class Cu.Router.Main extends Backbone.Router
     @appView.showView contentView
 
   setPassword: ->
-    window.header = new Cu.View.HomeHeader()
-    window.content = new Cu.View.SetPassword()
+    titleView = new Cu.View.Title {text: 'Set your password'}
+    contentView = new Cu.View.SetPassword()
+    @titleView.showView titleView
+    @appView.showView contentView

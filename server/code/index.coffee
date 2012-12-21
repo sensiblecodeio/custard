@@ -133,6 +133,7 @@ app.get '/login/?', (req, resp) ->
 app.get '/set-password/:token/?', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
+    templates: js 'template/index'
     user: JSON.stringify {}
     boxServer: process.env.CU_BOX_SERVER
 

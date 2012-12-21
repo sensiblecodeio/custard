@@ -396,7 +396,8 @@ a.view {
 }
 
 div.login-page,
-div.create-profile {
+div.create-profile,
+div.set-password {
     margin: 15px 20px;
 }
 

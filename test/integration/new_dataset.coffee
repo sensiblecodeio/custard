@@ -13,22 +13,37 @@ describe 'New dataset tool', ->
     browser.visit login_url, done
 
   before (done) ->
-    browser.fill '#username', 'ickletest'
-    browser.fill '#password', 'toottoot'
+    browser.fill '#username', 'ehg'
+    browser.fill '#password', 'testing'
     browser.pressButton '#login', done
 
-  context 'when I click on the newdataset tool', ->
+  context 'when I am on the tools page', ->
     before (done) ->
-        link = browser.query('#tools .newdataset')
+      browser.visit "#{url}/tools", done
+
+    context 'when I click on the newdataset tool', ->
+      before (done) ->
+        link = browser.query('.tool a[href="/tool/newdataset"]')
         browser.fire 'click', link, ->
           browser.wait done
 
-    it 'takes me to a new dataset page', ->
-      result = browser.location.href
-      result.should.include "#{url}/dataset/"
+      it 'takes me to the new dataset page', ->
+        result = browser.location.href
+        result.should.include "#{url}/dataset/"
 
-    it 'shows me details of how to ssh in to my box', ->
-      iframe = browser.query('iframe')
-      text = $(iframe).contents().find('body').text()
-      text.should.include 'Add your SSH key'
-      text.should.include 'ickletest.'
+      context 'when I click on the view source view', ->
+        before (done) ->
+          link = browser.query('div.newdataset')
+          browser.fire 'click', link, ->
+            browser.wait 1000, ->
+              browser.wait done
+
+        it 'takes me to the view source view', ->
+          result = browser.location.href
+          result.should.include '/newdataset'
+
+        it 'shows me details of how to ssh in to my box', ->
+          iframe = browser.query('iframe')
+          text = $(iframe).contents().find('body').text()
+          text.should.include 'Add your SSH key'
+          text.should.include 'ehg.'

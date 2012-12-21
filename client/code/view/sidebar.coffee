@@ -18,11 +18,10 @@ class Cu.View.SideBar extends Backbone.View
     e.preventDefault()
     $a = $(event.target).closest('a')
     $a.addClass('active').parent().siblings().children('a').removeClass('active')
-    window.app.navigate $a.attr('href'), {trigger: true}
 
   toggleSidebarWidth: (e) ->
     e.preventDefault()
-    $b = $('body');
+    $b = $('body')
     if $b.hasClass 'thin-sidebar'
       $b.removeClass 'thin-sidebar'
       $('#toggle-sidebar-width span').text 'Collapse'

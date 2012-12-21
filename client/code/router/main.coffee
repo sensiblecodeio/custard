@@ -49,7 +49,7 @@ class Cu.Router.Main extends Backbone.Router
     $('#logo').click ->
       event.preventDefault()
       window.app.navigate "/", {trigger: true}
-    
+
     # Backbone seems to reverse route order
     # TODO: revert to standard routes?
     @route RegExp('.*'), 'fourOhFour'
@@ -70,7 +70,7 @@ class Cu.Router.Main extends Backbone.Router
         @appView.showView contentView
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
-  
+
   tools: ->
     titleView = new Cu.View.Title {text: 'My Tools'}
     contentView = new Cu.View.ToolList {collection: window.tools}
@@ -90,7 +90,6 @@ class Cu.Router.Main extends Backbone.Router
       _id: id
     mod.fetch
       success: (model, resp, options) =>
-        # Title?
         titleView = new Cu.View.DataSetTitle {model: model}
         contentView = new Cu.View.DataSetOverview { model: model }
         @titleView.showView titleView
@@ -122,7 +121,7 @@ class Cu.Router.Main extends Backbone.Router
     contentView = new Cu.View.SetPassword()
     @titleView.showView titleView
     @appView.showView contentView
-    
+
   fourOhFour: ->
     titleView = new Cu.View.Title {text: '404: Not Found'}
     contentView = new Cu.View.FourOhFour()

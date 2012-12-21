@@ -23,7 +23,7 @@ class Cu.View.SiteLinks extends Backbone.View
       $('a[href="#sidebar"]').removeClass 'active'
       $('body').on 'click.userlinks', (e) ->
         if $('#userlinks').has(e.target).length == 0
-          $('body').off('.userlinks');
+          $('body').off('.userlinks')
           $('#userlinks').removeClass 'open'
           $('a[href="#userlinks"]').removeClass 'active'
 

@@ -17,53 +17,96 @@ tools.push new Cu.Model.Tool
   importer: true
 
 Backbone.View::close = ->
-  @$el.off()
   @off()
+  @remove()
 
 class Cu.Router.Main extends Backbone.Router
 
   initialize: ->
+    @appView = new Cu.AppView '#content'
+    @titleView = new Cu.AppView '#title'
+    @navView ?= new Cu.View.Nav()
+
+    # Move somewhere better
+    $('#logo').click ->
+      event.preventDefault()
+      window.app.navigate "/", {trigger: true}
+    
+    # Backbone seems to reverse route order
+    # TODO: revert to standard routes?
+    @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'main'
+    @route RegExp('tools/?'), 'tools'
     @route RegExp('tool/([^/]+)/?'), 'tool'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
-    @route RegExp('new-profile/?'), 'newProfile'
+    @route RegExp('dataset/([^/]+)/([^/]+)/?'), 'view'
+    @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
 
   main: ->
-    $('body').attr 'class', ''
-    window.header = new Cu.View.HomeHeader()
-    window.content = new Cu.View.HomeContent {collection: tools}
     window.datasets.fetch
-      success: ->
-        window.dataset_list = new Cu.View.DatasetList {collection: window.datasets, el: '#datasets'}
+      success: =>
+        titleView = new Cu.View.Title {text: 'My Datasets'}
+        contentView = new Cu.View.DatasetList {collection: window.datasets}
+        @titleView.showView titleView
+        @appView.showView contentView
+      error: (x,y,z) ->
+        console.warn 'ERRROR', x, y, z
+  
+  tools: ->
+    titleView = new Cu.View.Title {text: 'My Tools'}
+    contentView = new Cu.View.ToolList {collection: window.tools}
+    @titleView.showView titleView
+    @appView.showView contentView
 
   tool: (tool) ->
-    window.header?.close?()
     model = window.tools.get tool
     window.box = model.get 'box_name'
-    $('body').attr 'class', 'tool'
-    window.header = new Cu.View.ToolHeader {model: model}
-    window.content = new Cu.View.ToolContent {model: model}
+    view = new Cu.View.ToolContent {model: model}
+    @appView.showView view
 
   dataset: (id) ->
-    window.header?.close?()
     mod = null
     mod = new Cu.Model.Dataset
       user: window.user.effective.shortName
       _id: id
     mod.fetch
-      success: (model, resp, options) ->
-        window.header = new Cu.View.DatasetHeader {model: model}
-        window.content = new Cu.View.DatasetContent { model: model }
+      success: (model, resp, options) =>
+        # Title?
+        titleView = new Cu.View.DataSetTitle {model: model}
+        contentView = new Cu.View.DataSetOverview { model: model }
+        @titleView.showView titleView
+        @appView.showView contentView
       error: (model, xhr, options) ->
         console.warn xhr
 
+  view: (datasetID, viewName) ->
+    mod = null
+    mod = new Cu.Model.Dataset
+      user: window.user.effective.shortName
+      _id: datasetID
+    mod.fetch
+      success: (model, resp, options) =>
+        # Title?
+        view = new Cu.View.ViewContent { model: model, viewName: viewName }
+        @appView.showView view
+      error: (model, xhr, options) ->
+        console.warn xhr
 
-  newProfile: ->
-    $('body').attr 'class', 'admin'
-    window.header = new Cu.View.AdminHeader title: 'Create a new profile'
-    window.content = new Cu.View.AdminContent()
+  createProfile: ->
+    titleView = new Cu.View.Title {text: 'Create Profile'}
+    contentView = new Cu.View.CreateProfile()
+    @titleView.showView titleView
+    @appView.showView contentView
 
   setPassword: ->
-    window.header = new Cu.View.HomeHeader()
-    window.content = new Cu.View.SetPassword()
+    titleView = new Cu.View.Title {text: 'Set your password'}
+    contentView = new Cu.View.SetPassword()
+    @titleView.showView titleView
+    @appView.showView contentView
+    
+  fourOhFour: ->
+    titleView = new Cu.View.Title {text: '404: Not Found'}
+    contentView = new Cu.View.FourOhFour()
+    @titleView.showView titleView
+    @appView.showView contentView

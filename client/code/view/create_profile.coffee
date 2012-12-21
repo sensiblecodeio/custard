@@ -1,15 +1,12 @@
-class Cu.View.AdminContent extends Backbone.View
+class Cu.View.CreateProfile extends Backbone.View
+  className: "create-profile"
+
   events:
     'click .btn-primary': 'createProfile'
 
-  el: '#content'
-
-  initialize: ->
-    @render()
-
   render: ->
-    @$el.empty()
-    @$el.load '/tpl/admin_content'
+    @el.innerHTML = JST['create-profile']()
+    @
 
   # Temporary Cobalt creation
 

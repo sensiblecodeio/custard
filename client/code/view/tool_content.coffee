@@ -1,12 +1,9 @@
 class Cu.View.ToolContent extends Backbone.View
-  el: '#content'
 
   initialize: ->
-    @on 'tool:installed', @onInstalled, this
-    @render()
+    Backbone.on 'tool:installed', @onInstalled, this
 
   render: ->
-    @$el.empty()
     @$el.html """<p class="loading">Loading tool</p>"""
     @model.install (ajaxObj, status) =>
       if status == 'success'

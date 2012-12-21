@@ -1,472 +1,749 @@
-/* Styles for all browsers and printers go here  */
-
-body:after {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    z-index: 9999;
-    font-size: 16px;
-    line-height: 16px;
-    content: '320';
-}
-
-#debugwindowsize {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    z-index: 9999;
-    font-size: 16px;
-    line-height: 16px;
-}
-
-h2 .more {
-    float: right;
-    font-size: 16px;
-    color: #999;
-}
-
-h2 .more i[class^="icon-"],
-h2 .more i[class*=" icon-"] {
-    opacity: 0.5;
-    vertical-align: -1px;
-    margin-left: 3px;
-}
-
-#stripes {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 400px;
+html, body {
+    position: relative;
+    width: 100%;
     height: 100%;
-    z-index: -1;
-    overflow: hidden;
-}
-
-#stripes div {
-    position: absolute;
-    top: -10px;
-    height: 9999px;
-    -moz-transform:rotate(5deg);
-    -moz-transform-origin: 0 0;
-    -webkit-transform:rotate(5deg);
-    -webkit-transform-origin: 0 0;
-    -o-transform:rotate(5deg);
-    -o-transform-origin: 0 0;
-    -ms-transform:rotate(5deg);
-    -ms-transform-origin: 0 0;
-}
-
-#stripes .first {
-    width: 60px;
-    opacity: 0.2;
-    filter: alpha(opacity=20);
-    left: 10px;
-}
-
-#stripes .second {
-    width: 120px;
-    opacity: 0.1;
-    filter: alpha(opacity=10);
-    left: 50px;
-}
-
-#stripes .third {
-    width: 20px;
-    opacity: 0.15;
-    filter: alpha(opacity=15);
-    left: 150px;
-}
-
-#stripes .fourth {
-    width: 100px;
-    opacity: 0.1;
-    filter: alpha(opacity=10);
-    left: 200px;
-}
-
-#stripes .fifth {
-    width: 6px;
-    opacity: 0.15;
-    filter: alpha(opacity=15);
-    left: 230px;
-}
-
-#stripes .sixth {
-    width: 2px;
-    opacity: 0.15;
-    filter: alpha(opacity=15);
-    left: 240px;
 }
 
 #header {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 50px;
+    border-bottom: 1px solid #ccc;
+    background: #f1f1f1 url(/image/noise-f1f1f1.gif) 0 0 repeat;
 }
 
 #header h1 {
-    margin: 0 0 20px 0;
-    padding: 20px 60px 0 20px;
+    margin: 0;
 }
 
 #header h1 a {
-    display: block;
+    float: left;
     overflow: hidden;
+    padding-top: 50px;
     height: 0;
-    padding-top: 40px;
-    background: transparent url(/image/logo.png) 0 0 no-repeat;
+    width: 190px;
+    background: transparent url(/image/logo-f1f1f1.gif) 10px 10px no-repeat;
 }
 
-#header #toggle-nav {
-    display: block;
-    position: absolute;
-    overflow: hidden;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 0;
-    padding-top: 40px;
-    background-color: #ccc;
-    cursor: pointer;
+#toggle-sitelinks,
+#toggle-userlinks {
+    float: right;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 46px;
 }
 
-#header nav.hidden {
+#header a.active {
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #fff;
+    margin: 0 -1px -1px -1px;
+}
+
+#sitelinks .user {
     display: none;
 }
 
-#header nav > ul {
+#nav {
+    padding-top: 51px;
+}
+
+#sidebar,
+#sitelinks,
+#userlinks {
+    display: none;
     list-style: none;
     margin: 0;
-    background: #fff;
-    -webkit-box-shadow: inset 0px 2px 5px #ccc;
-    box-shadow: inset 0px 2px 5px #ccc;
 }
 
-#header nav > ul > li {
-    position: relative;
-}
-
-#header nav > ul > li > a {
+#sidebar.open,
+#sitelinks.open,
+#userlinks.open {
     display: block;
-    line-height: 40px;
-    padding: 0 20px;
-    color: #666;
-    border-bottom: 1px solid #eee;
 }
 
-#header nav > ul > li > a:hover,
-#header li.open > a {
+#sidebar a,
+#sitelinks a,
+#userlinks a,
+#sidebar label {
+    display: block;
+    padding: 9px 10px;
+}
+
+#sidebar a,
+#sitelinks a,
+#sidebar label {
+    color: #666;
+    text-shadow: 0 1px 0 #fff;
+}
+
+#sidebar a:hover,
+#sitelinks a:hover,
+#userlinks a:hover {
     text-decoration: none;
+}
+
+#sidebar a:hover,
+#sitelinks a:hover,
+#sidebar label:hover {
+    color: #333;
+}
+
+#sidebar a,
+#sidebar label {
+    padding: 9px 15px;
+    line-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#sidebar a img,
+#sidebar label img {
+    vertical-align: top;
+    margin: 0 10px 0 0;
+}
+
+#sidebar input {
+    margin: 0;
+    vertical-align: 1px;
+    width: 170px;
+}
+
+#userlinks i {
+    margin-right: 8px;
+}
+
+#sitelinks .user img,
+#toggle-userlinks img,
+#toggle-sitelinks img {
+    -webkit-box-shadow: 0 1px 0 #fff;
+    -moz-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 #fff;
+}
+
+#sitelinks .user img {
+    vertical-align: top;
+    margin: 0 0 0 5px;
+}
+
+.dropdown-menu li.header {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    padding: 5px 10px;
+}
+
+#userlinks li.context img {
+    margin-right: 5px;
+}
+
+#userlinks i.icon-ok {
+    text-indent: -9000px;
+    float: right;
+    margin-top: 3px;
+}
+
+#userlinks li.last {
+    margin-top: 10px;
+    padding: 10px 10px 5px 10px;
+    border-top: 1px solid #ccc;
+}
+
+#userlinks .btn-primary {
+    margin-left: 5px;
+}
+
+#toggle-sidebar-width {
+    display: none;
+}
+
+#title {
+    padding: 9px 10px 12px 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#title h2 {
+    font-size: 21px;
+    margin: 0;
+}
+
+#title h2 a {
     color: #000;
 }
 
-#header .user .caret,
-#header .user img {
-    display: none;
+#title h2 .slash {
+    margin: 0 3px;
+    color: #999;
 }
 
-#content {
-  margin-left: 40px;
-}
-
-body.tool #content {
-    position: absolute;
-    top: 100px;
-    left: 0;
-    right: 0;
-    bottom: 0;
+#title h2 input {
+    padding: 0;
     margin: 0;
+    background: #fff;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 30px;
+    vertical-align: 0;
+    padding: 0 5px;
+    margin: -2px 0 -2px -6px;
+    width: 260px;
+    height: 30px;
+    color: #000;
 }
 
-body.tool #content p.loading {
-    position: absolute;
-    top: 50%;
-    margin-top: -50px;
+#title h2 .editable {
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+#title h2 .editable:hover {
+    text-decoration: underline;
+    padding-right: 0;
+}
+
+#title h2 .editable:hover:after,
+#title h2 .editable.saved:after {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: transparent url("../vendor/image/glyphicons-halflings.png") 0 -72px no-repeat;
+    margin-left: 5px;
+}
+
+#title h2 .editable.saved:after {
+    background-position: -288px 0;
+}
+
+.dataset-group,
+.my-tools .tool {
+    width: 280px;
+    margin: 15px 0 0 20px;
+    float: left;
+}
+
+.dataset-overview > div {
+    width: 280px;
+    padding: 15px 20px;
+    float: left;
+}
+
+.dataset,
+.view {
+    padding: 10px 10px 5px 10px;
+    background-color: #358ce0;
+    color: #fff;
+    cursor: pointer;
+    text-shadow: 0 1px 1px #176dc2;
+    background-image: url(/image/watermark-dataset.png);
+    background-position: 97% 100%;
+    background-repeat: no-repeat;
+}
+
+.view {
+    background-image: none;
+}
+
+.view.spreadsheet {
+    background-image: url(/image/watermark-spreadsheet.png);
+}
+
+.view.csvdownload {
+    background-image: url(/image/watermark-download.png);
+}
+
+.view.newdataset {
+    background-image: url(/image/watermark-viewsource.png);
+}
+
+.dataset:hover,
+.view:hover {
+    background-color: #176dc2;
+    color: #fff;
+}
+
+a.view {
+    padding-bottom: 10px;
+}
+
+.dataset h3,
+.view h3 {
+    margin: 0 0 5px 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.dataset h3 a,
+.view h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.dataset p,
+.view p {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.dataset p i,
+.view p i {
+    opacity: 0.7;
+}
+
+.view {
+    display: block;
+    margin-top: 1px;
+    background-color: #5baeff;
+    color: #fff;
+    text-shadow: 0 1px 1px #176dc2;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+a.view {
+    font-weight: bold;
+}
+
+.view:hover {
+    background-color: #358ce0;
+    text-decoration: none;
+}
+
+.dataset-overview h4 {
+    font-size: 14px;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: rgb(153, 153, 153);
+    font-weight: normal;
+    margin: 0 0 15px 0;
+}
+
+.dataset-overview .dataset h3 {
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 10px;
+}
+
+.dataset-overview .view,
+.dataset-overview .tool {
+    margin-bottom: 15px;
+}
+
+.dataset-overview .dataset-description {
+    margin-top: 15px;
+}
+
+.tool {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.tool:hover {
+    background-color: #ddd;
+    border-color: #bbb;
+}
+
+.tool h3 {
+    margin: 0 0 5px 0;
+    font-weight: normal;
+}
+
+.tool h3 a,
+.tool h3 a:hover {
+    color: #666;
+    text-decoration: none;
+}
+
+.tool p {
+    color: #999;
+    margin: 0;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+#content p.loading {
+    margin-top: 100px;
     padding-top: 50px;
-    width: 100%;
     text-align: center;
     background: transparent url('/image/tool-loader.gif') center top no-repeat;
     color: #666;
     font-size: 20px;
 }
 
-#content iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+#fullscreen {
+    width: 100%;
+    height: 600px;
+}
+
+#fullscreen iframe {
+    border: none;
     width: 100%;
     height: 100%;
-    border: none;
 }
 
-/* All of this should go in the tool 'bundle' */
-
-.metro-tile.highrise {
-    background: #31819f url('/image/highrise_icon.png') 110px 8px no-repeat;
+div.login-page,
+div.create-profile,
+div.set-password,
+div.fourohfour {
+    margin: 15px 20px;
 }
 
-.metro-tile.highrise:hover {
-    background-color: #17627e;
-}
 
-#datasets .metro-tile {
-    background: transparent url('/image/highrise_dataset_icon.png') 0 0 no-repeat;
-}
-
-#datasets .metro-tile h3 {
-    color: #31819f;
-    text-shadow: none;
-}
-
-/* Styles for landscape phones and up go here */
 @media only screen and (min-width: 480px) {
 
-    body:after {
-        content: '320 + 480';
-    }
+}
+
+@media only screen and (min-width: 600px) {
 
 }
 
-/* Styles for tablets and up go here */
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 767px) {
 
-    body:after {
-        content: '320 + 480 + 768';
-    }
-
-    .export .dropdown-menu {
-        min-width: 250px;
-    }
-
-    .dropdown-menu h3 {
-        padding: 0px 15px;
-        margin: 20px 0 5px 0;
-        font-size: 14px;
-        line-height: 16px;
-        white-space: nowrap;
-        text-transform: uppercase;
-        color: #999;
-    }
-
-    .dropdown-menu li:first-child h3 {
-        margin-top: 10px;
-    }
-
-    .dropdown-menu h3 a.more {
-        float: right;
+    #userlinks {
+        position: static;
+        top: auto;
+        left: auto;
+        float: none;
+        min-width: none;
         padding: 0;
-        line-height: inherit;
-        text-transform: none;
-        color: #bbb;
-    }
-
-    .dropdown-menu .price {
-        float: right;
-        padding: 0 6px;
-        background-color: #999;
-        color: #fff;
-        line-height: 19px;
-        font-size: 12px;
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        border-radius: 20px;
-    }
-
-    .dropdown-menu a:hover .price {
-        background-color: #fff;
-        color: #4794DB;
-    }
-
-    #header + * {
-        clear: both;
-    }
-
-    #header h1 {
-        position: relative;
-        float: left;
-        padding: 30px 0 0 40px;
-    }
-
-    #header h1 a {
-        width: 225px;
-    }
-
-    .tool #header h1 a,
-    .admin #header h1 a {
-        width: 60px;
-    }
-
-    .tool #header h2,
-    .admin #header h2 {
-        float: left;
-        margin-left: 5px;
-        margin-top: 30px;
-    }
-
-    .tool #header h2 a,
-    .admin #header h2 a {
-        margin-left: 10px;
-        padding: 10px 10px 10px 20px;
-        line-height: 40px;
-        color: #000;
-        font-size: 28px;
-        border-left: 1px solid #ddd;
-        border-left: 1px solid rgba(0,0,0,0.15);
-    }
-
-    .tool #header h2 input {
         margin: 0;
-        margin-left: 10px;
-        padding: 10px 10px 10px 20px;
-        line-height: 40px;
-        color: #000;
-        font-size: 28px;
-        background: transparent;
-        border: 1px solid #ddd;
-        border: 1px solid rgba(0,0,0,0.15);
+        border: none;
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
         box-shadow: none;
     }
 
-    .tool #header h1 i,
-    .admin #header h1 i {
-        position: absolute;
-        top: 42px;
-        left: -800px;
+    #sidebar,
+    #sitelinks,
+    #userlinks {
+        -webkit-box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        box-shadow: 0 2px 15px rgba(0,0,0,0.3);
     }
 
-    .tool #header h1:hover i,
-    .admin #header h1:hover i {
-        left: 18px;
+    #sidebar li,
+    #sitelinks li,
+    #userlinks li {
+        border-bottom: 1px solid #e5e5e5;
     }
 
-    #header #toggle-nav {
-        display: none;
+    #sidebar li.divider {
+        border-bottom: none;
     }
 
-    #header nav.hidden {
-        display: block;
-    }
-
-    #header nav {
-        display: block;
-        float: right;
-        margin-right: 20px;
-        margin-top: 30px;
-    }
-
-    #header nav > ul {
-        -webkit-box-shadow: none;
-        box-shadow: none;
-    }
-
-    #header nav > ul > li {
-        float: left;
-    }
-
-    #header nav > ul > li > a {
-        color: #999;
-        font-weight: bold;
-        border-bottom: 0;
-    }
-
-    #header nav > ul > li > a:hover,
-    #header li.open > a {
+    #userlinks > li > a {
         color: #666;
     }
 
-    #header nav > ul > li.import > a > i,
-    #header nav > ul > li.settings > a > i,
-    #header nav > ul > li.export > a > i {
-        opacity: 0.5;
-        margin-top: 2px;
+    #userlinks > li > a:hover {
+        color: #fff;
     }
 
-    #header nav > ul > li.import > a:hover > i,
-    #header nav > ul > li.import.open > a > i,
-    #header nav > ul > li.settings > a:hover > i,
-    #header nav > ul > li.settings.open > a > i,
-    #header nav > ul > li.export > a:hover > i,
-    #header nav > ul > li.export.open > a > i {
-        opacity: 0.7;
+    #userlinks .divider {
+        display: none;
     }
 
-    #header nav > ul > li.import .dropdown-menu,
-    #header nav > ul > li.settings .dropdown-menu,
-    #header nav > ul > li.export .dropdown-menu {
-        left: 10px;
-        top: 35px;
+    #userlinks li.last {
+        margin-top: 0;
+        padding: 10px;
+        border-top: none;
+        text-align: right;
     }
 
-    #header nav .user .caret {
+}
+
+@media only screen and (min-width: 768px) {
+
+    #content {
+        position: relative;
+        padding: 51px 0 0 191px;
+    }
+
+    .thin-sidebar #content {
+        padding-left: 62px;
+    }
+
+    #fullscreen {
+        position: fixed;
+        top: 51px;
+        right: 0;
+        bottom: 0;
+        left: 191px;
+        z-index: 90;
+        width: auto;
+        height: auto;
+    }
+
+    .thin-sidebar #fullscreen {
+        left: 62px;
+    }
+
+    #header {
+        background: transparent;
+    }
+
+    #header h1 {
+        float: none;
+        width: 190px;
+        height: 50px;
+        background: #f1f1f1 url(/image/noise-f1f1f1.gif) 0 0 repeat;
+    }
+
+    #header h1 a {
+        border-right: 1px solid #ccc;
+    }
+
+    #header h1 a:hover,
+    #header h1 a.active:hover {
+        background-color: #eaeaea;
+        background-color: rgba(0,0,0,0.02);
+    }
+
+    #header h1 a:active,
+    #header h1 a.active:active {
+        background-position: 10px 11px;
+    }
+
+    #header h1 a.active {
+        background-color: transparent;
+        border-bottom: none;
+        border-right: 1px solid #ccc;
+    }
+
+    .thin-sidebar #header h1 {
+        width: 62px;
+    }
+
+    .thin-sidebar #header h1 a {
+        width: 62px;
+        background-image: url(/image/logo-f1f1f1-thin.gif);
+    }
+
+    #toggle-sitelinks,
+    #toggle-userlinks {
+        display: none;
+    }
+
+    #nav {
+        position: fixed;
+        top: 0;
+        left: 191px;
+        right: 0;
+        z-index: 101;
+        padding-top: 0;
+        background-color: #fff;
+    }
+
+    .thin-sidebar #nav {
+        left: 63px;
+    }
+
+    #sidebar {
+        display: block;
+        position: fixed;
+        top: 51px;
+        left: 0;
+        bottom: 0;
+        width: 190px;
+        padding-top: 5px;
+        border-right: 1px solid rgb(204, 204, 204);
+        background: #f1f1f1 url(/image/noise-f1f1f1.gif) 0 0 repeat;
+    }
+
+    .thin-sidebar #sidebar {
+        width: 62px;
+    }
+
+    #sidebar li {
+        margin: 2px 0;
+    }
+
+    #sidebar a,
+    #sidebar label {
+        padding: 7px 9px;
+        margin: 0 6px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+
+    #sidebar a.active,
+    #sidebar label.active {
+        padding: 6px 8px;
+        background: #f6f6f6;
+        border: 1px solid #ddd;
+    }
+
+    #sidebar a:hover,
+    #sidebar a.active:hover,
+    #sidebar label:hover  {
+        padding: 6px 8px;
+        background-color: #fcfcfc;
+        border: 1px solid #ddd;
+    }
+
+    #sidebar input {
+        width: 98px;
+    }
+
+    #sidebar li.divider {
+        margin: 5px 0;
+        border-bottom: 1px solid #ccc;
+    }
+
+    #sidebar li.secondary a {
+        color: #999;
+    }
+
+    #sidebar .tooltip {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    #sidebar .tooltip.in {
+        opacity: 0.99;
+        filter: alpha(opacity=100);
+    }
+
+    .thin-sidebar #sidebar a span {
+        display: none;
+    }
+
+    .thin-sidebar #sidebar a img {
+        margin-right: 0;
+    }
+
+    #sitelinks {
+        display: block;
+        text-align: right;
+    }
+
+    #sitelinks li {
         display: inline-block;
-        margin: 19px 0 0 5px;
+    }
+
+    #sitelinks a {
+        display: inline-block;
+        line-height: 32px;
+    }
+
+    #sitelinks .user {
+        display: inline;
+    }
+
+    #sitelinks .user .caret {
+        margin-left: 2px;
+        vertical-align: 10%;
         border-top-color: #999;
     }
 
-    #header nav .user a:hover .caret,
-    #header nav .user.open .caret {
-        border-top-color: #666;
+    #userlinks {
+        left: auto;
+        right: 20px;
+        top: 40px;
     }
 
-    #header nav .user img {
-        display: inline-block;
-        vertical-align: middle;
+    #userlinks a {
+        padding: 5px 15px;
+        font-size: 14px;
+    }
+
+    #userlinks .dropdown-tail-outline {
+        left: auto;
+        right: 27px;
+    }
+
+    #userlinks .dropdown-tail {
+        left: auto;
+        right: 28px;
+    }
+
+    .dropdown-menu li.header {
+        padding: 5px 15px;
+    }
+
+    #toggle-sidebar-width {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: #999;
+        padding: 5px 10px 5px 5px;
+        text-shadow: 0 1px 0 #fff;
+        line-height: 32px;
+        height: 32px;
+        text-align: right;
+        cursor: w-resize;
+    }
+
+    .thin-sidebar #toggle-sidebar-width {
+        cursor: e-resize;
+        text-align: center;
+        padding-right: 5px;
+    }
+
+    #toggle-sidebar-width .bar {
+        margin-left: 1px;
+    }
+
+    #toggle-sidebar-width span {
+        float: left;
         margin-left: 10px;
     }
 
-    #header .dropdown-menu {
-        font-size: 14px;
+    #toggle-sidebar-width span,
+    .thin-sidebar #toggle-sidebar-width span,
+    .thin-sidebar #toggle-sidebar-width:hover span {
+        display: none;
     }
 
-    #header .user .dropdown-menu {
-        right: 30px;
-        top: 35px;
-        font-size: 14px;
+    #toggle-sidebar-width:hover span {
+        display: inline;
+        margin-right: 5px;
     }
 
-    #header .user .dropdown-menu .dropdown-tail-outline {
-        right: 40px;
+    #title {
+        position: fixed;
+        top: 0;
+        left: 190px;
+        z-index: 101;
+        padding: 0 0 0 20px;
+        border-bottom: none;
     }
 
-    #header .user .dropdown-menu .dropdown-tail {
-        right: 41px;
+    .thin-sidebar #title {
+        left: 62px;
     }
 
-    div#tool {
-        top: 100px;
-    }
-    
-    body.admin form {
-        width: 318px;
-        margin-left: 95px;
-        padding: 20px 0;
-    }
-
-    body.admin form input {
-        width: 300px;
+    #title h2 {
+        line-height: 50px;
     }
 
 }
 
-/* Styles for laptops/desktops go here */
 @media only screen and (min-width: 992px) {
 
-    body:after {
-        content: '320 + 480 + 768 + 992';
-    }
+}
+
+@media only screen and (min-width: 1382px) {
 
 }
 
-/* Styles for high-res displays go here */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-
-    body:after {
-        content: '320 + 480 + 768 + 992 + @2x';
-    }
-
-}
-
-/* Styles for printing go here */
-@media print {
 
 }

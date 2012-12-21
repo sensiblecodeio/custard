@@ -12,64 +12,52 @@ describe 'Home page (logged in)', ->
     browser.visit login_url, done
 
   before (done) ->
-    browser.fill '#username', 'ickletest'
-    browser.fill '#password', 'toottoot'
+    browser.fill '#username', 'ehg'
+    browser.fill '#password', 'testing'
     browser.pressButton '#login', done
 
   it 'contains the scraperwiki logo', ->
     h = browser.text('#header h1')
-    h.should.equal 'Logo'
+    h.should.equal 'ScraperWiki'
 
   it 'contains a list of my datasets', ->
-    datasets = browser.queryAll('#datasets div')
+    datasets = browser.queryAll('.dataset')
     should.exist datasets
     datasets.length.should.be.above 2
 
-  it 'contains a list of my tools', ->
-    tools = browser.queryAll('#tools div')
-    should.exist tools
-    tools.length.should.be.above 1
 
-  context 'when I click on the highrise tool', ->
+  context 'when I am on the tools page', ->
     before (done) ->
-      link = browser.query('#tools .highrise')
-      browser.fire 'click', link, done
+      browser.visit "#{url}/tools", done
 
-    it 'takes me to the highrise tool page', ->
-      result = browser.location.href
-      result.should.equal "#{url}/tool/highrise"
-
-    xit 'shows the tool is loading', ->
-      should.exist browser.query('p.loading')
-
-    xit 'displays the setup message of the tool', (done) ->
-      forText = (window, wut) ->
-        browser.text().match(/Enter your username and password/) is true
-
-      browser.wait forText, ->
-        (browser.text().match(/Enter your username and password/)).should.be.true
-        done()
-        
-
-    context 'when I enter my details and click import', ->
+    context 'when I click on the highrise tool', ->
       before (done) ->
-        browser.fill '#username', process.env.HIGHRISE_USER
-        browser.fill '#password', process.env.HIGHRISE_PASSWORD
-        browser.fill '#domain', process.env.HIGHRISE_DOMAIN
-        browser.pressButton  '#import', ->
-          browser.wait done
+        link = browser.query('.tool a[href="/tool/highrise"]')
+        browser.fire 'click', link, done
 
-      it 'shows a lovely spreadsheet of our amazing data', ->
-        browser.location.href.should.include "#{url}/dataset/"
+      it 'takes me to the highrise tool page', ->
+        result = browser.location.href
+        result.should.equal "#{url}/tool/highrise"
 
-      it 'has now a crontab'
+      it 'displays the setup message of the tool', (done) ->
+        browser.wait ->
+          browser.text().should.include "Enter your username and password"
+          done()
 
-      it 'has made a JSON cookie', ->
-        result = browser.evaluate "function(){return $.cookie('datasets')}"
-        parsed = JSON.parse result
-        should.exist parsed
 
-        context 'when I visit the homepage', ->
+      context 'when I enter my details and click import', ->
+        before (done) ->
+          browser.fill '#username', process.env.HIGHRISE_USER
+          browser.fill '#password', process.env.HIGHRISE_PASSWORD
+          browser.fill '#domain', process.env.HIGHRISE_DOMAIN
+          browser.pressButton  '#import', ->
+            browser.wait done
 
-          it 'shows my previous dataset'
+        it 'shows a lovely spreadsheet of our amazing data', ->
+          browser.location.href.should.include "#{url}/dataset/"
+
+        it 'has made a JSON cookie', ->
+          result = browser.evaluate "function(){return $.cookie('datasets')}"
+          parsed = JSON.parse result
+          should.exist parsed
 

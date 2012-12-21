@@ -1,18 +1,9 @@
-/* Turn gaudy bootstrap into metro bootstrap */
-
-html, body {
-    width: 100%;
-    height: 100%;
-}
-
 body {
     font-size: 16px;
     line-height: 21px;
     color: #000;
     position: relative;
 }
-
-/* Typography: Headings */
 
 h1 {
     font-size: 46px;
@@ -38,7 +29,11 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
     font-weight: inherit;
 }
 
-/* Typography: Other */
+h2 .more {
+    float: right;
+    font-size: 16px;
+    color: #999;
+}
 
 hr {
     border-top: 1px solid #ccc;
@@ -62,7 +57,27 @@ code {
     border: none;
 }
 
-/* Forms, Buttons and Inputs */
+
+[class^="icon-"], 
+[class*=" icon-"] {
+  background-image: url("/vendor/image/glyphicons-halflings.png");
+}
+
+.icon-white,
+.nav-pills > .active > a > [class^="icon-"],
+.nav-pills > .active > a > [class*=" icon-"],
+.nav-list > .active > a > [class^="icon-"],
+.nav-list > .active > a > [class*=" icon-"],
+.navbar-inverse .nav > .active > a > [class^="icon-"],
+.navbar-inverse .nav > .active > a > [class*=" icon-"],
+.dropdown-menu > li > a:hover > [class^="icon-"],
+.dropdown-menu > li > a:hover > [class*=" icon-"],
+.dropdown-menu > .active > a > [class^="icon-"],
+.dropdown-menu > .active > a > [class*=" icon-"],
+.dropdown-submenu:hover > a > [class^="icon-"],
+.dropdown-submenu:hover > a > [class*=" icon-"] {
+    background-image: url("/vendor/image/glyphicons-halflings-white.png");
+}
 
 textarea,
 input[type="text"],
@@ -175,13 +190,6 @@ input[type="color"],
     color: #fff;
 }
 
-.btn-primary[disabled].loading {
-    background-image: url('/image/button-primary-loader.gif');
-    background-position: 10px 8px;
-    background-repeat: no-repeat;
-    padding-left: 35px;
-}
-
 .btn-success {
     background-color: #35AA47;
     text-shadow: 0 1px 0 #1D943B;
@@ -228,11 +236,16 @@ input[type="color"],
   margin-bottom: 20px;
 }
 
-.btn-toolbar .btn + .btn,
-.btn-toolbar .btn-group + .btn,
+.btn-toolbar .btn + .btn, 
+.btn-toolbar .btn-group + .btn, 
 .btn-toolbar .btn + .btn-group,
 .btn-group + .btn-group {
     margin-left: 15px;
+}
+
+[class^="icon-"].space,
+[class*=" icon-"].space {
+    margin-right: 0.2em;
 }
 
 .btn-group > .btn + .btn {
@@ -243,7 +256,7 @@ input[type="color"],
     margin-top: 2px;
 }
 
-.btn-group > .btn:first-child,
+.btn-group > .btn:first-child, 
 .btn-group > .btn:last-child,
 .btn-group > .dropdown-toggle,
 .btn-group > .btn.large:first-child,
@@ -270,41 +283,15 @@ input[type="color"],
     margin-bottom: 9px;
 }
 
-/* Icons */
-
-[class^="icon-"],
-[class*=" icon-"] {
-  background-image: url("/vendor/image/glyphicons-halflings.png");
-}
-
-[class^="icon-"].space,
-[class*=" icon-"].space {
-    margin-right: 0.2em;
-}
-
-.icon-white,
-.nav-tabs > .active > a > [class^="icon-"],
-.nav-tabs > .active > a > [class*=" icon-"],
-.nav-pills > .active > a > [class^="icon-"],
-.nav-pills > .active > a > [class*=" icon-"],
-.nav-list > .active > a > [class^="icon-"],
-.nav-list > .active > a > [class*=" icon-"],
-.navbar-inverse .nav > .active > a > [class^="icon-"],
-.navbar-inverse .nav > .active > a > [class*=" icon-"],
-.dropdown-menu > li > a:hover > [class^="icon-"],
-.dropdown-menu > li > a:hover > [class*=" icon-"],
-.dropdown-menu > .active > a > [class^="icon-"],
-.dropdown-menu > .active > a > [class*=" icon-"] {
-  background-image: url("/vendor/image/glyphicons-halflings-white.png");
-}
-
-/* Dropdown Menus */
-
 .dropdown-menu {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
     border: 1px solid #CCC;
+}
+
+.export .dropdown-menu {
+    min-width: 250px;
 }
 
 .dropdown-menu.fix-right {
@@ -315,6 +302,45 @@ input[type="color"],
 .dropdown-menu a,
 .dropdown-menu label {
     padding: 4px 15px;
+}
+
+.dropdown-menu h3 {
+    padding: 0px 15px;
+    margin: 20px 0 5px 0;
+    font-size: 14px;
+    line-height: 16px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    color: #999;
+}
+
+.dropdown-menu li:first-child h3 {
+    margin-top: 10px;
+}
+
+.dropdown-menu h3 a.more {
+    float: right;
+    padding: 0;
+    line-height: inherit;
+    text-transform: none;
+    color: #bbb;
+}
+
+.dropdown-menu .price {
+    float: right;
+    padding: 0 6px;
+    background-color: #999;
+    color: #fff;
+    line-height: 19px;
+    font-size: 12px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.dropdown-menu a:hover .price {
+    background-color: #fff;
+    color: #4794DB;
 }
 
 .dropdown-menu label {
@@ -370,69 +396,4 @@ input[type="color"],
 .fix-right .dropdown-tail-outline {
     left: auto;
     right: 5px;
-}
-
-/* New Metro Elements */
-
-.metro-content {
-    padding-left: 40px;
-}
-
-.metro-section {
-    float: left;
-    margin-right: 80px;
-    margin-bottom: 60px;
-    min-width: 180px;
-}
-
-.metro-tile {
-    position: relative;
-    float: left;
-    width: 180px;
-    height: 100px;
-    background: #ccc;
-    margin: 0 20px 20px 0;
-    cursor: pointer;
-}
-
-.metro-tile:hover {
-    background: #bbb;
-}
-
-.metro-section.one.column .metro-tile {
-    clear: left;
-    margin-right: 0;
-}
-
-.metro-section.two.columns .metro-tile:nth-child(2n+2) {
-    clear: left;
-}
-
-.metro-section.two.columns .metro-tile:nth-child(2n+1) {
-    margin-right: 0;
-}
-
-.metro-tile h3 {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    color: #fff;
-    margin-bottom: 0;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-
-.metro-tile .badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    padding: 0 8px;
-    background: #CF1919;
-    border: 2px solid #fff;
-    color: #fff;
-    line-height: 24px;
-    font-size: 14px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
 }

@@ -100,15 +100,18 @@ class Cu.Router.Main extends Backbone.Router
         console.warn xhr
 
   view: (datasetID, viewName) ->
-    mod = null
-    mod = new Cu.Model.Dataset
+    dataset = new Cu.Model.Dataset
       user: window.user.effective.shortName
       _id: datasetID
-    mod.fetch
-      success: (model, resp, options) =>
-        # Title?
-        view = new Cu.View.ViewContent { model: model, viewName: viewName }
-        @appView.showView view
+
+    tool = window.tools.get viewName
+
+    dataset.fetch
+      success: (dataset, resp, options) =>
+        titleView = new Cu.View.ToolTitle {dataset: dataset, tool: tool}
+        contentView = new Cu.View.ViewContent {dataset: dataset, tool: tool}
+        @titleView.showView titleView
+        @appView.showView contentView
       error: (model, xhr, options) ->
         console.warn xhr
 

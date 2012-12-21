@@ -1,15 +1,32 @@
 class Cu.View.Title extends Backbone.View
   tagName: 'h2'
+
+  initialize: ->
+    @setDocumentTitle()
+
   render: ->
     @$el.html """#{@options.text}"""
     @
 
-class Cu.View.DataSetTitle extends Backbone.View
+  setDocumentTitle: (model) =>
+    if model?
+      t = "#{model.get 'displayName'} | "
+    else if @options.text
+      t = "#{@options.text} | "
+    else
+      t = ''
+    window.document.title = """#{t}ScraperWiki"""
+
+class Cu.View.DataSetTitle extends Cu.View.Title
   tagName: 'h2'
   events:
     'click .editable': 'nameClicked'
     'blur input': 'editableNameBlurred'
     'keypress input': 'keypressOnEditableName'
+
+  initialize: ->
+    @model.on 'change', @setDocumentTitle, @
+    @setDocumentTitle(@model)
 
   render: ->
     tpl = """

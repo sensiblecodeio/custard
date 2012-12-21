@@ -397,7 +397,8 @@ a.view {
 
 div.login-page,
 div.create-profile,
-div.set-password {
+div.set-password,
+div.fourohfour {
     margin: 15px 20px;
 }
 

@@ -39,6 +39,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('dataset/([^/]+)/([^/]+)/?'), 'view'
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
+    @route RegExp('.*'), 'fourOhFour'
 
   main: ->
     window.datasets.fetch
@@ -99,5 +100,11 @@ class Cu.Router.Main extends Backbone.Router
   setPassword: ->
     titleView = new Cu.View.Title {text: 'Set your password'}
     contentView = new Cu.View.SetPassword()
+    @titleView.showView titleView
+    @appView.showView contentView
+    
+  fourOhFour: ->
+    titleView = new Cu.View.Title {text: '404: Not Found'}
+    contentView = new Cu.View.FourOhFour()
     @titleView.showView titleView
     @appView.showView contentView

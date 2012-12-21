@@ -59,15 +59,15 @@ describe 'Login', ->
         browser.pressButton '#login', done
 
       it 'shows my name', ->
-        browser.text('body').should.include 'Mr Ickle Test'
+        browser.text('nav').should.include 'Mr Ickle Test'
 
       it 'shows my datasets', ->
-        browser.text('body').should.include 'Your Datasets'
+        browser.text('#title').should.include 'My Datasets'
 
       context 'when I logout', ->
         before (done) ->
-          browser.fire 'click', browser.query('li.user a'), ->
-            browser.clickLink 'Log Out', done
+          browser.fire 'click', browser.query('#userlink'), ->
+            browser.fire 'click', browser.query('#userlinks .btn-primary'), done
 
         it 'redirects me to the login page', ->
           browser.location.href.should.equal "#{BASE_URL}/login"
@@ -112,7 +112,7 @@ describe 'Switch', ->
       @browser.location.href.should.equal "#{BASE_URL}/"
 
     it 'shows me datasets of the profile into which I have switched', ->
-      @browser.text('#datasets').should.include dataset_name
+      @browser.text('.my-datasets').should.include dataset_name
 
     it "has the switched to profile's name", ->
       @browser.text('.user').should.include 'Mr Ickle Test'
@@ -136,4 +136,4 @@ describe 'Switch', ->
       @browser.text('.user').should.not.include 'Staff Test'
 
     it "still shows me my datasets", ->
-      @browser.text('#datasets').should.include dataset_name
+      @browser.text('.my-datasets').should.include dataset_name

@@ -8,19 +8,22 @@ login_url = "#{url}/login"
 describe 'Dataset', ->
   randomname = "New favourite number is #{Math.random()}"
   browser = new Browser()
+  browser.waitDuration = "10s"
 
   before (done) ->
     browser.visit login_url, done
 
   before (done) ->
-    browser.fill '#username', 'ickletest'
-    browser.fill '#password', 'toottoot'
-    browser.pressButton '#login', done
+    browser.fill '#username', 'ehg'
+    browser.fill '#password', 'testing'
+    browser.pressButton '#login', ->
+      browser.visit '/tools', done
 
   context 'when I click on the newdataset dataset', ->
     before (done) ->
-        link = browser.query('#datasets .50c84caed1f25c8211000003')
-        browser.fire 'click', link, done
+        link = browser.query('.tool a[href="/tool/newdataset"]')
+        browser.fire 'click', link, ->
+          browser.wait done
 
     it 'takes me to the highrise dataset page', ->
       result = browser.location.href
@@ -32,9 +35,9 @@ describe 'Dataset', ->
 
     context 'when I click the title', ->
       before (done) ->
-        @input = browser.query '#header h2 input'
-        @a = browser.query '#header h2 a'
-        browser.fire 'click', browser.query('#header h2 a'), done
+        @input = browser.query '#title input'
+        @a = browser.query '#title .editable'
+        browser.fire 'click', browser.query('#title .editable'), done
 
       it 'an input box appears', ->
         should.exist @input
@@ -42,23 +45,23 @@ describe 'Dataset', ->
 
       context 'when I fill in the input box and press enter', ->
         before (done) ->
-          browser.fill '#header h2 input', randomname, ->
+          browser.fill '#title input', randomname, ->
             browser.evaluate """
               var e = jQuery.Event("keypress")
               e.which = 13
               e.keyCode = 13
-              $('#header h2 input').trigger(e)
+              $('#title input').trigger(e)
             """
             browser.wait done
 
         it 'hides the input box and shows the title', ->
-          @input = browser.query '#header h2 input'
-          @a = browser.query '#header h2 a'
+          @input = browser.query '#title input'
+          @a = browser.query '#title .editable'
           $(@a).is(':visible').should.be.true
           $(@input).is(':visible').should.be.false
 
         it 'has updated the title', (done) ->
-          @a = browser.query '#header h2 a'
+          @a = browser.query '#title .editable'
           $(@a).text().should.equal randomname
           done()
 

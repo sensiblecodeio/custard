@@ -1,7 +1,7 @@
 class Cu.View.ToolContent extends Backbone.View
 
   initialize: ->
-    Backbone.on 'tool:installed', @onInstalled, this
+    Backbone.once 'tool:installed', @onInstalled, this
 
   render: ->
     @$el.html """<p class="loading">Loading tool</p>"""

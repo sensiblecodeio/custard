@@ -80,8 +80,10 @@ class Cu.Router.Main extends Backbone.Router
   tool: (tool) ->
     model = window.tools.get tool
     window.box = model.get 'box_name'
-    view = new Cu.View.ToolContent {model: model}
-    @appView.showView view
+    titleView = new Cu.View.Title {text: "My Tools / #{model.get 'displayName'}" }
+    contentView = new Cu.View.ToolContent {model: model}
+    @titleView.showView titleView
+    @appView.showView contentView
 
   dataset: (id) ->
     mod = null

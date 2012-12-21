@@ -91,7 +91,7 @@ app.configure ->
   app.use express.logger()
 
   app.use flash()
-  app.use express.favicon()
+  app.use express.favicon(__dirname + '/../../shared/image/favicon.ico', { maxAge: 2592000000 })
 
   # Trust X-Forwarded-* headers
   app.enable 'trust proxy'

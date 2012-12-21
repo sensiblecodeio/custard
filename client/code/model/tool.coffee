@@ -59,4 +59,6 @@ class Cu.Model.Tool extends Backbone.Model
         apikey: window.user.effective.apiKey
 
 class Cu.Collection.Tools extends Backbone.Collection
-
+  importers: ->
+    importers = @filter (t) -> t.get('type') is 'importer'
+    new Cu.Collection.Tools importers

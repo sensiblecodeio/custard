@@ -8,13 +8,31 @@ tools.push new Cu.Model.Tool
   name: 'highrise'
   displayName: 'Highrise'
   box_name: 'highrise-' + num.substring(num.length, num.length - 4)
-  importer: true
+  type: 'importer'
 
 tools.push new Cu.Model.Tool
   name: 'newdataset'
   displayName: 'New Dataset'
   box_name: 'newdataset-' + num.substring(num.length, num.length - 4)
-  importer: true
+  type: 'importer'
+
+tools.push new Cu.Model.Tool
+  name: 'spreadsheet'
+  displayName: 'Spreadsheet'
+  box_name: 'spreadsheet-' + num.substring(num.length, num.length - 4)
+  type: 'view'
+
+tools.push new Cu.Model.Tool
+  name: 'csvdownload'
+  displayName: 'CSV Download'
+  box_name: 'csvdownload-' + num.substring(num.length, num.length - 4)
+  type: 'view'
+
+tools.push new Cu.Model.Tool
+  name: 'viewsource'
+  displayName: 'View Source'
+  box_name: 'viewsource-' + num.substring(num.length, num.length - 4)
+  type: 'view'
 
 Backbone.View::close = ->
   @off()

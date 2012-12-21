@@ -16,18 +16,18 @@ describe 'Dataset', ->
   before (done) ->
     browser.fill '#username', 'ehg'
     browser.fill '#password', 'testing'
-    browser.pressButton '#login', ->
-      browser.visit '/tools', done
+    browser.pressButton '#login', done
 
-  context 'when I click on the newdataset dataset', ->
+  context 'when I click on a newdataset dataset', ->
     before (done) ->
-      link = browser.query('.tool a[href="/tool/newdataset"]')
+      body = browser.query('body')
+      link = $(body).find('.dataset:contains("newdataset")').first()[0]
       browser.fire 'click', link, ->
         browser.wait done
 
     it 'takes me to the highrise dataset page', ->
       result = browser.location.href
-      result.should.equal "#{url}/tool/newdataset"
+      result.should.match /\/dataset\/(\w+)/
 
     it 'has not shown the input box', ->
       @input = browser.query '#header h2 input'

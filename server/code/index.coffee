@@ -134,7 +134,7 @@ app.get '/set-password/:token/?', (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
     templates: js 'template/index'
-    user: JSON.stringify {}
+    user: JSON.stringify( req.user or {} )
     boxServer: process.env.CU_BOX_SERVER
 
 # Switch is protected by a specific function.

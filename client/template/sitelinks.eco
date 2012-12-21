@@ -1,7 +1,13 @@
-<li class="user">
-    <a href="#userlinks" id="userlink">
-        <span class="username"><%= @displayName %></span>
-        <span class="caret"></span>
-        <img src="<%= @avatarUrl %>" width="32" height="32" alt="<%= @displayName %>" />
-    </a>
-</li>
+<% if @displayName: %>
+    <li class="user">
+        <a href="#userlinks" id="userlink">
+            <span class="username"><%= @displayName %></span>
+            <span class="caret"></span>
+            <img src="<%= @avatarUrl %>" width="32" height="32" alt="<%= @displayName %>" />
+        </a>
+    </li>
+<% else: %>
+    <li class="login">
+        <a href="/login">Log In</a>
+    </li>
+<% end %>

@@ -32,6 +32,9 @@ class Cu.Router.Main extends Backbone.Router
       event.preventDefault()
       window.app.navigate "/", {trigger: true}
     
+    # Backbone seems to reverse route order
+    # TODO: revert to standard routes?
+    @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'main'
     @route RegExp('tools/?'), 'tools'
     @route RegExp('tool/([^/]+)/?'), 'tool'
@@ -39,7 +42,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('dataset/([^/]+)/([^/]+)/?'), 'view'
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
-    @route RegExp('.*'), 'fourOhFour'
 
   main: ->
     window.datasets.fetch

@@ -15,7 +15,6 @@ class Cu.View.SideBar extends Backbone.View
     @
 
   clickedLink: (e) ->
-    e.preventDefault()
     $a = $(event.target).closest('a')
     $a.addClass('active').parent().siblings().children('a').removeClass('active')
 

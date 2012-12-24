@@ -26,7 +26,7 @@ class Cu.Model.Tool extends Backbone.Model
     @exec("cd;~/#{@get 'name'}/setup").success callback
 
   boxName: ->
-    "#{window.user.effective.shortName}/#{window.box}"
+    "#{window.box}"
 
   publishToken: (callback) ->
     if @_publishToken?
@@ -54,7 +54,7 @@ class Cu.Model.Tool extends Backbone.Model
   _create_box: ->
     $.ajax
       type: 'POST'
-      url: "#{@base_url}/#{@boxName()}"
+      url: "#{@base_url}/box/#{@boxName()}"
       data:
         apikey: window.user.effective.apiKey
 

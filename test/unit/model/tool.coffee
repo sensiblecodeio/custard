@@ -2,7 +2,7 @@ sinon = require 'sinon'
 should = require 'should'
 helper = require '../helper'
 
-helper.evalConcatenatedFile 'client/code/app.coffee'
+helper.evalConcatenatedFile 'client/code/model/tool.coffee'
 base_url = "http://boxecutor-dev-0.scraperwiki.net"
 username = 'cotest'
 
@@ -13,7 +13,7 @@ describe 'Model: Tool', ->
       name: 'highrise'
 
     sinon.stub(@tool, 'boxName').returns \
-      'cotest/highrise-' + num.substring(num.length, num.length - 4)
+      'highrise-' + num.substring(num.length, num.length - 4)
 
     @get = sinon.stub jQuery, 'get', (_url, callback) ->
       callback 'github.com/scraperwiki/highrise-tool.git'
@@ -40,9 +40,10 @@ describe 'Model: Tool', ->
       jQuery.ajax.restore()
 
     it 'creates a box', ->
+      console.log "#{base_url}/box/#{@tool.boxName()}"
       called = @ajax.calledWith
         type: 'POST'
-        url: "#{base_url}/#{@tool.boxName()}"
+        url: "#{base_url}/box/#{@tool.boxName()}"
         data:
           apikey: sinon.match /.+/
 

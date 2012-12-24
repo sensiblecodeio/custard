@@ -11,6 +11,9 @@ fakeWindow = ->
   global.Backbone = require 'backbone'
   global.Backbone.$ = global.$
 
+  exports.evalConcatenatedFile "client/code/namespace.coffee"
+
+
   auser =
     shortName: 'test'
     apiKey: 'fakeapikey'
@@ -20,9 +23,6 @@ fakeWindow = ->
   global.user =
     effective: auser
     real: auser
-
-
-fakeWindow()
 
 # Concatenate our JS and eval it
 exports.evalConcatenatedFile = (filepath) ->
@@ -34,3 +34,5 @@ exports.evalConcatenatedFile = (filepath) ->
   js = js.replace /window\./g, 'global.' # hack, so namespacing works
 
   eval.call global, js
+
+fakeWindow()

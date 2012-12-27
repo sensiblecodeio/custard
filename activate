@@ -33,13 +33,13 @@ mocha () {
 
     if [ "$#" = "0" ]
     then
-        env mocha $(find test -name '*.coffee' | sort)
+        env mocha ${@:1:$#-1} $(find test -name '*.coffee' | sort)
     else
         if [ -d "$last" ]
         then
-            env mocha $(find "$last" -name '*.coffee' | sort)
+            env mocha ${@:1:$#-1} $(find "$last" -name '*.coffee' | sort)
         else
-            env mocha "$@"
+            env mocha $@
         fi
     fi
 }

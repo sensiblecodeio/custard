@@ -18,7 +18,7 @@ class Cu.View.ToolContent extends Backbone.View
        user: user.shortName
        name: @model.get 'name'
        displayName: @model.get 'name'
-       box: @model.boxName()
+       box: @model.get 'boxName'
 
      dataset.save {},
        wait: true

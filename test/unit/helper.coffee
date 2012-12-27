@@ -10,6 +10,7 @@ fakeWindow = ->
   global.$.cookie = -> null
   global.Backbone = require 'backbone'
   global.Backbone.$ = global.$
+  global.Nibbler = require 'nibbler'
 
   exports.evalConcatenatedFile "client/code/namespace.coffee"
 

@@ -1,4 +1,3 @@
-# TODO: Factor out Dataset from Tool
 class Cu.Model.Tool extends Backbone.Model
   idAttribute: 'name'
   base_url: "#{window.boxServer}"
@@ -25,9 +24,6 @@ class Cu.Model.Tool extends Backbone.Model
   setup: (callback) ->
     @exec("cd;~/#{@get 'name'}/setup").success callback
 
-  boxName: ->
-    "#{window.box}"
-
   publishToken: (callback) ->
     if @_publishToken?
       callback @_publishToken
@@ -39,8 +35,7 @@ class Cu.Model.Tool extends Backbone.Model
   exec: (cmd, args) ->
     # Returns an ajax object, onto which you can
     # chain .success and .error callbacks
-    boxname = @boxName()
-    boxurl = "#{@base_url}/#{boxname}"
+    boxurl = "#{@base_url}/#{@get 'boxName'}"
     settings =
       url: "#{boxurl}/exec"
       type: 'POST'
@@ -52,11 +47,20 @@ class Cu.Model.Tool extends Backbone.Model
     $.ajax settings
 
   _create_box: ->
+    @_generateBoxName()
     $.ajax
       type: 'POST'
-      url: "#{@base_url}/box/#{@boxName()}"
+      url: "#{@base_url}/box/#{@get 'boxName'}"
       data:
         apikey: window.user.effective.apiKey
+
+  _generateBoxName: ->
+    r = Math.random() * Math.pow(10,9)
+    n = Nibbler.b32encode(String.fromCharCode(r>>24,(r>>16)&0xff,(r>>8)&0xff,r&0xff)).replace(/[=]/g,'').toLowerCase()
+    @set 'boxName', n
+    # HACK: Set this here so the tool code can have access to it
+    # our box messaging API (using easyXDM) should take care of this
+    window.box = n
 
 class Cu.Collection.Tools extends Backbone.Collection
   importers: ->

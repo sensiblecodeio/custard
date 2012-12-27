@@ -46,4 +46,4 @@ describe 'New dataset tool', ->
           iframe = browser.query('iframe')
           text = $(iframe).contents().find('body').text()
           text.should.include 'Add your SSH key'
-          text.should.include 'ehg.'
+          text.should.match /\w+@box\.scraperwiki\.com/g

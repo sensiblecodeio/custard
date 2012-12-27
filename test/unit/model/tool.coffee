@@ -3,7 +3,7 @@ should = require 'should'
 helper = require '../helper'
 
 helper.evalConcatenatedFile 'client/code/model/tool.coffee'
-base_url = "http://boxecutor-dev-0.scraperwiki.net"
+base_url = process.env.CU_BOX_SERVER
 username = 'cotest'
 
 describe 'Model: Tool', ->
@@ -40,7 +40,6 @@ describe 'Model: Tool', ->
       jQuery.ajax.restore()
 
     it 'creates a box', ->
-      console.log "#{base_url}/box/#{@tool.boxName()}"
       called = @ajax.calledWith
         type: 'POST'
         url: "#{base_url}/box/#{@tool.boxName()}"

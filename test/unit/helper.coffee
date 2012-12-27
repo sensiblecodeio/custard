@@ -24,6 +24,8 @@ fakeWindow = ->
     effective: auser
     real: auser
 
+  global.boxServer = process.env.CU_BOX_SERVER
+
 # Concatenate our JS and eval it
 exports.evalConcatenatedFile = (filepath) ->
   Snockets = require 'snockets'

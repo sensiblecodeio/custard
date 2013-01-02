@@ -79,11 +79,10 @@ class Cu.Router.Main extends Backbone.Router
     @titleView.showView titleView
     @appView.showView contentView
 
-  dataset: (id) ->
-    mod = null
+  dataset: (box) ->
     mod = new Cu.Model.Dataset
       user: window.user.effective.shortName
-      _id: id
+      box: box
     mod.fetch
       success: (model, resp, options) =>
         titleView = new Cu.View.DataSetTitle {model: model}
@@ -93,10 +92,10 @@ class Cu.Router.Main extends Backbone.Router
       error: (model, xhr, options) ->
         console.warn xhr
 
-  view: (datasetID, viewName) ->
+  view: (box, viewName) ->
     dataset = new Cu.Model.Dataset
       user: window.user.effective.shortName
-      _id: datasetID
+      box: box
 
     tool = window.tools.get viewName
 

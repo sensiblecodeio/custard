@@ -1,10 +1,10 @@
 class Cu.Model.Dataset extends Backbone.Model
-  idAttribute: '_id'
+  idAttribute: 'box'
   url: ->
     if @isNew()
       "/api/#{window.user.effective.shortName}/datasets"
     else
-      "/api/#{window.user.effective.shortName}/datasets/#{@get '_id'}"
+      "/api/#{window.user.effective.shortName}/datasets/#{@get 'box'}"
 
   name: ->
     @get('displayName') or @get('name') or 'no name'

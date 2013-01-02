@@ -1,2 +1,2 @@
-<h3><a href="/dataset/<%= @dataset._id %>"><%= @dataset.displayName %></a></h3>
+<h3><a href="/dataset/<%= @dataset.box %>"><%= @dataset.displayName %></a></h3>
 <p><i class="icon-user icon-white space"></i> <span>Author:</span> <%= @user.displayName %> </p>

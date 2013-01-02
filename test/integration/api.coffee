@@ -43,7 +43,7 @@ describe 'API', ->
             uri: "#{settings.serverURL}/api/#{@user}/datasets"
             form:
               displayName: 'Biscuit'
-              box: 'ickletest/blah'
+              box: String(Math.random() * Math.pow(2, 32))
           , (err, res) ->
             response = res
             dataset = JSON.parse res.body
@@ -54,35 +54,35 @@ describe 'API', ->
             response.should.have.status 200
 
           it 'returns the newly created dataset', ->
-            should.exist dataset._id
+            should.exist dataset.box
             dataset.displayName.should.equal 'Biscuit'
 
         context 'GET /api/:user/datasets/:id', ->
           it 'returns a single dataset', (done)  ->
-            request.get "#{settings.serverURL}/api/#{@user}/datasets/#{dataset._id}", (err, res) ->
+            request.get "#{settings.serverURL}/api/#{@user}/datasets/#{dataset.box}", (err, res) ->
               dataset = JSON.parse res.body
-              should.exist dataset._id
+              should.exist dataset.box
               done()
 
-          it "500 errors if the dataset doesn't exist", (done) ->
+          it "404 errors if the dataset doesn't exist", (done) ->
             request.get "#{settings.serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
-              res.should.have.status 500
+              res.should.have.status 404
               done()
 
           it "403 errors if the user doesn't exist", (done) ->
-            request.get "#{settings.serverURL}/api/MRINVISIBLE/datasets/#{dataset._id}", (err, res) ->
+            request.get "#{settings.serverURL}/api/MRINVISIBLE/datasets/#{dataset.box}", (err, res) ->
               res.should.have.status 403
               done()
 
         context 'PUT /api/:user/datasets/:id', ->
           it 'changes the display name of a single dataset', (done) ->
             request.put
-              uri: "#{settings.serverURL}/api/#{@user}/datasets/#{dataset._id}"
+              uri: "#{settings.serverURL}/api/#{@user}/datasets/#{dataset.box}"
               form:
                 displayName: 'Cheese'
             , (err, res) =>
               res.should.have.status 200
-              request.get "#{settings.serverURL}/api/#{@user}/datasets/#{dataset._id}", (err, res) ->
+              request.get "#{settings.serverURL}/api/#{@user}/datasets/#{dataset.box}", (err, res) ->
                 dataset = JSON.parse res.body
                 dataset.displayName.should.equal 'Cheese'
                 done(err)
@@ -90,7 +90,7 @@ describe 'API', ->
           it 'changes the owner of a single dataset', (done) ->
             @newowner = 'ehg'
             request.put
-              uri: "#{settings.serverURL}/api/#{@user}/datasets/#{dataset._id}"
+              uri: "#{settings.serverURL}/api/#{@user}/datasets/#{dataset.box}"
               form:
                 user: @newowner
             , (err, res) =>
@@ -99,12 +99,12 @@ describe 'API', ->
 
           it "that dataset doesn't appear in my list of datasets any more", (done) ->
             request.get "#{settings.serverURL}/api/#{@user}/datasets", (err, res) ->
-              res.body.should.not.include "#{dataset._id}"
+              res.body.should.not.include "#{dataset.box}"
               done()
 
-          it "500 errors if the dataset doesn't exist", (done) ->
+          it "404 errors if the dataset doesn't exist", (done) ->
             request.put "#{settings.serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
-              res.should.have.status 500
+              res.should.have.status 404
               done()
 
       context 'GET: /api/:user/datasets', ->

@@ -205,6 +205,8 @@ app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find datasets'
+    else if not dataset
+      return resp.send 404
     else
       return resp.send 200, dataset
 
@@ -213,6 +215,8 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find datasets'
+    else if not dataset
+      return resp.send 404
     else
       # :todo: should be more systematic about what can be set this way.
       for k of req.body
@@ -226,7 +230,7 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   dataset = new Dataset req.user.effective.shortName, data.name, data.displayName, data.box
   dataset.save (err) ->
     console.log err if err?
-    Dataset.findOneById dataset.id, req.user.effective.shortName, (err, dataset) ->
+    Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
       console.log err if err?
       resp.send 200, dataset
 

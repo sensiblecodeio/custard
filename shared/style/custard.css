@@ -236,6 +236,7 @@ html, body {
 
 .dataset,
 .view {
+    display: block;
     padding: 10px 10px 5px 10px;
     background-color: #358ce0;
     color: #fff;
@@ -264,6 +265,7 @@ html, body {
 
 .dataset:hover,
 .view:hover {
+    text-decoration: none;
     background-color: #176dc2;
     color: #fff;
 }

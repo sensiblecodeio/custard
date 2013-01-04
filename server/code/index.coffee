@@ -113,6 +113,7 @@ js.root = 'code'
 
 # Middleware (for checking users)
 checkUserRights = (req, resp, next) ->
+  console.log 'CheckUserRights', req.method, req.url, req.user.effective.shortName, req.params.user
   return next() if req.user.effective.shortName == req.params.user
   return resp.send 403, error: "Unauthorised"
 
@@ -201,21 +202,25 @@ app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
 
 # :todo: should :user be part of the dataset URL?
 app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
+  console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find datasets'
     else if not dataset
+      console.log "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
       return resp.send 404
     else
       return resp.send 200, dataset
 
 app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
+  console.log "PUT /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find datasets'
     else if not dataset
+      console.log "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
       return resp.send 404
     else
       # :todo: should be more systematic about what can be set this way.

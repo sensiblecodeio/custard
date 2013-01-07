@@ -6,6 +6,9 @@ class Cu.Model.Dataset extends Backbone.Model
     else
       "/api/#{window.user.effective.shortName}/datasets/#{@get 'box'}"
 
+  isNew: ->
+    @new
+
   name: ->
     @get('displayName') or @get('name') or 'no name'
 

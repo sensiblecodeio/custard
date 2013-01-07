@@ -21,7 +21,7 @@ describe 'Dataset', ->
   context 'when I click on a newdataset dataset', ->
     before (done) ->
       body = browser.query('body')
-      link = $(body).find('.dataset:contains("newdataset")').first()[0]
+      link = $(body).find('.dataset:contains("Cheese")').first()[0]
       browser.fire 'click', link, ->
         browser.wait done
 

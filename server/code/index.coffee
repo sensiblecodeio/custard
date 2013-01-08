@@ -239,6 +239,20 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
       console.log err if err?
       resp.send 200, dataset
 
+
+# user api is staff-only for now (probably forever)
+app.get '/api/user/?', checkStaff, (req, resp) ->
+  User.findAll (err, users) ->
+    if err?
+      console.log err
+      return resp.send 500, error: 'Error trying to find users'
+    else
+      result = for u in users when u.shortName
+        u.objectify()
+      return resp.send 200, result
+
+
+# :todo: you should POST to /api/user/ to create a user, not /api/<username>
 app.post '/api/:user/?', checkStaff, (req, resp) ->
   shortName = req.params.user
   new User(

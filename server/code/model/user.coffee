@@ -58,14 +58,28 @@ class User
       if err?
         console.warn err
         callback err, null
-
       if user?
-        newUser = new User {}
-        newUser.dbUser = user
-        _.extend newUser, user.toObject()
-        callback null, newUser
+        callback null, makeUserFromMongo user
       else
         callback null, null
+
+  @findAll: (callback) ->
+    DbUser.find {}, (err, users) ->
+      if err?
+        console.warn err
+        callback err, null
+      if users?
+        result = for u in users
+          makeUserFromMongo u
+        callback null, result
+      else
+        callback null, null
+
+makeUserFromMongo = (user) ->
+  newUser = new User {}
+  newUser.dbUser = user
+  _.extend newUser, user.toObject()
+  return newUser
 
 rand32 = ->
   # 32 bits of lovely randomness.

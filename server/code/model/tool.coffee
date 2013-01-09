@@ -5,7 +5,7 @@ toolSchema = new Schema
   name: String
   type: String
   gitUrl: String
-  manifest: String
+  manifest: Schema.Types.Mixed
 
 DbTool = mongoose.model 'Tool', toolSchema
 

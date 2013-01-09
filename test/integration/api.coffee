@@ -35,7 +35,6 @@ describe 'API', ->
 
     describe 'Tools', ->
       context 'POST /api/tools', ->
-        # TODO: STAFF ONLY!!111
         context 'when I create a tool', ->
           response = null
           dataset = null
@@ -44,7 +43,7 @@ describe 'API', ->
             request.post
               uri: "#{settings.serverURL}/api/tools"
               form:
-                name: 'blah'
+                name: 'int-test-importer'
                 type: 'importer'
                 gitUrl: 'git://blah.git'
             , (err, res) =>
@@ -57,7 +56,7 @@ describe 'API', ->
 
           it 'returns the newly created tool', ->
             should.exist @tool.name
-            @tool.name.should.equal 'blah'
+            @tool.name.should.equal 'int-test-importer'
 
       context 'GET /api/tools', ->
         before (done) ->

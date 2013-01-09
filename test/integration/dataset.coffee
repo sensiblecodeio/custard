@@ -29,6 +29,14 @@ describe 'Dataset', ->
       result = browser.location.href
       result.should.match /\/dataset\/(\w+)/
 
+    it 'shows the tools I can use on this dataset', ->
+      tools = browser.queryAll '.dataset-tools .tool'
+      tools.length.should.be.above 0
+
+    xit 'shows the "Code your own View" tool', ->
+      tools = browser.queryAll '.dataset-tools .tool'
+      $(tools).text().toLowerCase().should.include 'code your own view'
+
     it 'has not shown the input box', ->
       @input = browser.query '#header h2 input'
       $(@input).is(':visible').should.be.false

@@ -4,31 +4,6 @@ num = String(Math.random()).replace '.',''
 window.datasets = new Cu.Collection.DatasetList()
 window.tools = new Cu.Collection.Tools()
 
-tools.push new Cu.Model.Tool
-  name: 'highrise'
-  displayName: 'Highrise'
-  type: 'importer'
-
-tools.push new Cu.Model.Tool
-  name: 'newdataset'
-  displayName: 'New Dataset'
-  type: 'importer'
-
-tools.push new Cu.Model.Tool
-  name: 'spreadsheet'
-  displayName: 'Spreadsheet'
-  type: 'view'
-
-tools.push new Cu.Model.Tool
-  name: 'csvdownload'
-  displayName: 'CSV Download'
-  type: 'view'
-
-tools.push new Cu.Model.Tool
-  name: 'viewsource'
-  displayName: 'View Source'
-  type: 'view'
-
 Backbone.View::close = ->
   @off()
   @remove()
@@ -67,17 +42,25 @@ class Cu.Router.Main extends Backbone.Router
         console.warn 'ERRROR', x, y, z
 
   tools: ->
-    titleView = new Cu.View.Title {text: 'My Tools'}
-    contentView = new Cu.View.ToolList {collection: window.tools}
-    @titleView.showView titleView
-    @appView.showView contentView
+    window.tools.fetch
+      success: =>
+        titleView = new Cu.View.Title {text: 'My Tools'}
+        contentView = new Cu.View.ToolList {collection: window.tools}
+        @titleView.showView titleView
+        @appView.showView contentView
+      error: (x,y,z) ->
+        console.warn 'ERRROR', x, y, z
 
   tool: (tool) ->
-    model = window.tools.get tool
-    titleView = new Cu.View.Title {text: "My Tools / #{model.get 'displayName'}" }
-    contentView = new Cu.View.ToolContent {model: model}
-    @titleView.showView titleView
-    @appView.showView contentView
+    window.tools.fetch
+      success: =>
+        model = window.tools.get tool
+        titleView = new Cu.View.Title {text: "My Tools / #{model.get 'displayName'}" }
+        contentView = new Cu.View.ToolContent {model: model}
+        @titleView.showView titleView
+        @appView.showView contentView
+      error: (x,y,z) ->
+        console.warn 'ERRROR', x, y, z
 
   dataset: (box) ->
     mod = new Cu.Model.Dataset
@@ -85,10 +68,14 @@ class Cu.Router.Main extends Backbone.Router
       box: box
     mod.fetch
       success: (model, resp, options) =>
-        titleView = new Cu.View.DataSetTitle {model: model}
-        contentView = new Cu.View.DataSetOverview { model: model }
-        @titleView.showView titleView
-        @appView.showView contentView
+        window.tools.fetch
+          success: =>
+            titleView = new Cu.View.DataSetTitle {model: model}
+            contentView = new Cu.View.DataSetOverview { model: model, tools: window.tools }
+            @titleView.showView titleView
+            @appView.showView contentView
+          error: (x,y,z) ->
+            console.warn 'ERRROR', x, y, z
       error: (model, xhr, options) ->
         console.warn xhr
 

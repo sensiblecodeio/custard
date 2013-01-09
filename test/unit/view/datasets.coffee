@@ -29,6 +29,6 @@ describe 'View: Datasets', ->
     done()
 
    it 'renders the datasets', ->
-     @view.$el.find('h3 a')[0].innerHTML.should.equal 'Test'
-     @view.$el.find('h3 a')[1].innerHTML.should.equal 'Test 2'
-     @view.$el.find('h3 a')[2].innerHTML.should.equal 'Test 3'
+     @view.$el.find('h3')[0].innerHTML.should.equal 'Test'
+     @view.$el.find('h3')[1].innerHTML.should.equal 'Test 2'
+     @view.$el.find('h3')[2].innerHTML.should.equal 'Test 3'

@@ -11,12 +11,17 @@ userSchema = new mongoose.Schema
   isStaff: Boolean
   created: {type: Date, default: Date.now}
 
-DbUser = mongoose.model 'User', userSchema
+zDbUser = mongoose.model 'User', userSchema
 
-class User
+# All server models should extend this class.
+class ModelBase
   constructor: (obj) ->
     for k of obj
       @[k] = obj[k]
+
+class User extends ModelBase
+  constructor: (obj) ->
+    super obj
     if not ('apikey' of obj)
       @apikey = fresh_apikey()
     @
@@ -41,20 +46,23 @@ class User
   objectify: ->
     res = {}
     for k of @
-      res[k] = @[k] unless k is 'dbUser'
-    console.log "OBJECTIFY #{JSON.stringify(res)}"
+      res[k] = @[k]
+    # :todo: maybe split into superclass (above) and this class (below)
+    delete res.dbUser
     return res
 
   save: (callback) ->
-    if not @dbUser?
-      @dbUser = new DbUser(@)
+    if not @dbInstance?
+      @dbInstance = new @constructor.dbClass(@)
     else
-      for k of @dbUser
-        @dbUser[k] = @[k] if @hasOwnProperty k
-    @dbUser.save callback
+      for k of @dbInstance
+        @dbInstance[k] = @[k] if @hasOwnProperty k
+    @dbInstance.save callback
+
+  @dbClass: zDbUser
 
   @findByShortName: (shortName, callback) ->
-    DbUser.findOne {shortName: shortName}, (err, user) ->
+    @dbClass.findOne {shortName: shortName}, (err, user) ->
       if err?
         console.warn err
         callback err, null
@@ -64,7 +72,7 @@ class User
         callback null, null
 
   @findAll: (callback) ->
-    DbUser.find {}, (err, users) ->
+    @dbClass.find {}, (err, users) ->
       if err?
         console.warn err
         callback err, null
@@ -77,7 +85,7 @@ class User
 
 makeUserFromMongo = (user) ->
   newUser = new User {}
-  newUser.dbUser = user
+  newUser.dbInstance = user
   _.extend newUser, user.toObject()
   return newUser
 

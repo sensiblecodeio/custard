@@ -56,7 +56,8 @@ describe 'Login', ->
       before (done) ->
         browser.fill '#username', 'ickletest'
         browser.fill '#password', 'toottoot'
-        browser.pressButton '#login', done
+        browser.pressButton '#login', ->
+          browser.wait done
 
       it 'shows my name', ->
         browser.text('nav').should.include 'Mr Ickle Test'

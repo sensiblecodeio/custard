@@ -215,7 +215,7 @@ app.post '/api/tools/?', (req, resp) ->
 app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
     if err?
-      console.log err
+      console.warn err
       return resp.send 500, error: 'Error trying to find datasets'
     else
       return resp.send 200, datasets
@@ -225,10 +225,10 @@ app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
-      console.log err
+      console.warn err
       return resp.send 500, error: 'Error trying to find datasets'
     else if not dataset
-      console.log "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
+      console.warn "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
       return resp.send 404
     else
       return resp.send 200, dataset
@@ -237,7 +237,7 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   console.log "PUT /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
-      console.log err
+      console.warn err
       return resp.send 500, error: 'Error trying to find datasets'
     else if not dataset
       console.log "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
@@ -254,9 +254,9 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   data = req.body
   dataset = new Dataset req.user.effective.shortName, data.name, data.displayName, data.box
   dataset.save (err) ->
-    console.log err if err?
+    console.warn err if err?
     Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
-      console.log err if err?
+      console.warn err if err?
       resp.send 200, dataset
 
 app.post '/api/:user/?', checkStaff, (req, resp) ->

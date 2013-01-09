@@ -33,6 +33,48 @@ describe 'API', ->
       @loginResponse.body.should.include 'Redirecting to /'
       @loginResponse.body.should.not.include 'Redirecting to /login'
 
+    describe 'Tools', ->
+      context 'POST /api/tools', ->
+        # TODO: STAFF ONLY!!111
+        context 'when I create a tool', ->
+          response = null
+          dataset = null
+
+          before (done) ->
+            request.post
+              uri: "#{settings.serverURL}/api/tools"
+              form:
+                name: 'blah'
+                type: 'importer'
+                gitUrl: 'git://blah.git'
+            , (err, res) =>
+              response = res
+              @tool = JSON.parse res.body
+              done()
+
+          it 'creates a new tool', ->
+            response.should.have.status 201
+
+          it 'returns the newly created tool', ->
+            should.exist @tool.name
+            @tool.name.should.equal 'blah'
+
+      context 'GET /api/tools', ->
+        before (done) ->
+          request.get "#{settings.serverURL}/api/tools", (err, res) =>
+            @body = res.body
+            done()
+
+        it 'returns a list of tools', ->
+          tools = JSON.parse @body
+          tools.length.should.be.above 0
+
+        it 'returns the right fields', ->
+          tools = JSON.parse @body
+          should.exist tools[0].name
+          should.exist tools[0].gitUrl
+          should.exist tools[0].type
+
     describe 'Datasets', ->
       context 'when I create a dataset', ->
         response = null

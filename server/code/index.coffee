@@ -18,6 +18,7 @@ eco = require 'eco'
 User = require 'model/user'
 Dataset = require 'model/dataset'
 Token = require 'model/token'
+Tool = require('model/tool')()
 
 # Set up database connection
 mongoose.connect process.env.CU_DB
@@ -191,6 +192,25 @@ app.get '/github-login/?', (req, resp) ->
   resp.send 200, process.env.CU_GITHUB_LOGIN
 
 # API!
+app.get '/api/tools/?', (req, resp) ->
+  Tool.findAll (err, tools) ->
+    resp.send 200, tools
+
+app.post '/api/tools/?', (req, resp) ->
+  body = req.body
+  tool = new Tool
+    name: body.name
+    type: body.type
+    gitUrl: body.gitUrl
+
+  tool.save (err) ->
+    Tool.findOneById tool.id, (err, tool) ->
+      console.warn err if err?
+      if err?
+        console.warn err
+        return resp.send 500, error: 'Error trying to find datasets'
+      else
+        return resp.send 201, tool
 
 app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->

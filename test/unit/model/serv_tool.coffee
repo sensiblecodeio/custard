@@ -5,8 +5,8 @@ class TestDb
   save: (callback) ->
     callback null
   @find: (_args, callback) ->
-    callback null, [ new Tool('test'),
-      new Tool('test2')
+    callback null, [ new Tool(name: 'test'),
+      new Tool(name: 'test2')
     ]
 
 Tool = require('model/tool')(TestDb)
@@ -27,11 +27,11 @@ describe 'Server model: Tool', ->
 
   context 'when tool.findAll is called', ->
     before (done) ->
-      Tool.findAll (res) =>
+      Tool.findAll (err, res) =>
         @results = res
         done()
 
     it 'should return Tool results', ->
       @results[0].should.be.an.instanceOf Tool
-      @results[0].name = 'test'
+      @results[0].name.should.equal 'test'
       @results.length.should.equal 2

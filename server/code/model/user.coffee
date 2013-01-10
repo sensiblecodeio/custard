@@ -13,13 +13,62 @@ userSchema = new mongoose.Schema
 
 zDbUser = mongoose.model 'User', userSchema
 
-# All server models should extend this class.
+# All server models should extend this class.  All subclasses
+# should ensure that they have defined a dbClass field that
+# is the database class to use (when finding).  Typically
+# this will be something like:
+# @dbClass: mongoose.model 'User', userSchema
 class ModelBase
   constructor: (obj) ->
     for k of obj
       @[k] = obj[k]
 
+  objectify: ->
+    # Prepare the object for transmission.  Converts it to a
+    # plain old JavaScript object.  Any uninteresting fields
+    # removed.
+    res = {}
+    for k of @
+      res[k] = @[k]
+    delete res.dbInstance
+    return res
+
+  save: (callback) ->
+    if not @dbInstance?
+      @dbInstance = new @constructor.dbClass(@)
+    else
+      for k of @dbInstance
+        @dbInstance[k] = @[k] if @hasOwnProperty k
+    @dbInstance.save callback
+
+  @findAll: (callback) ->
+    @dbClass.find {}, (err, docs) =>
+      if err?
+        console.warn err
+        callback err, null
+      if docs?
+        result = for d in docs
+          @makeModelFromMongo d
+        callback null, result
+      else
+        callback null, null
+
+  @makeModelFromMongo: (mongo_document) ->
+    # Takes a Mongo document instance and returns an instance of this
+    # model.
+
+    # Note that this cool "new @" thing creates a fresh instance
+    # of the same actual class of "this", which will in general
+    # be some subclass of ModelBase.
+    newModel = new @ {}
+    newModel.dbInstance = mongo_document
+    _.extend newModel, mongo_document.toObject()
+    return newModel
+
 class User extends ModelBase
+
+  @dbClass: zDbUser
+
   constructor: (obj) ->
     super obj
     if not ('apikey' of obj)
@@ -43,51 +92,15 @@ class User extends ModelBase
       @password = hash
       @save callback
 
-  objectify: ->
-    res = {}
-    for k of @
-      res[k] = @[k]
-    # :todo: maybe split into superclass (above) and this class (below)
-    delete res.dbUser
-    return res
-
-  save: (callback) ->
-    if not @dbInstance?
-      @dbInstance = new @constructor.dbClass(@)
-    else
-      for k of @dbInstance
-        @dbInstance[k] = @[k] if @hasOwnProperty k
-    @dbInstance.save callback
-
-  @dbClass: zDbUser
-
   @findByShortName: (shortName, callback) ->
-    @dbClass.findOne {shortName: shortName}, (err, user) ->
+    @dbClass.findOne {shortName: shortName}, (err, user) =>
       if err?
         console.warn err
         callback err, null
       if user?
-        callback null, makeUserFromMongo user
+        callback null, @makeModelFromMongo user
       else
         callback null, null
-
-  @findAll: (callback) ->
-    @dbClass.find {}, (err, users) ->
-      if err?
-        console.warn err
-        callback err, null
-      if users?
-        result = for u in users
-          makeUserFromMongo u
-        callback null, result
-      else
-        callback null, null
-
-makeUserFromMongo = (user) ->
-  newUser = new User {}
-  newUser.dbInstance = user
-  _.extend newUser, user.toObject()
-  return newUser
 
 rand32 = ->
   # 32 bits of lovely randomness.

@@ -30,6 +30,14 @@ describe 'Home page (logged in)', ->
     before (done) ->
       browser.visit "#{url}/tools", done
 
+    it 'shows the tools I can use to create datasets', ->
+      tools = browser.queryAll '.my-tools .tool'
+      tools.length.should.be.above 0
+
+    xit 'shows the "Code your own Dataset" tool', ->
+      tools = browser.queryAll '.dataset-tools .tool'
+      $(tools).text().toLowerCase().should.include 'code your own dataset'
+
     context 'when I click on the highrise tool', ->
       before (done) ->
         link = browser.query('.tool a[href="/tool/highrise"]')

@@ -1,0 +1,2 @@
+<h3><%= if @manifest? then @manifest.displayName else @name %></h3>
+<p>by ScraperWiki</p>

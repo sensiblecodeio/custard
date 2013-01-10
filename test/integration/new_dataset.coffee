@@ -23,7 +23,7 @@ describe 'New dataset tool', ->
 
     context 'when I click on the newdataset tool', ->
       before (done) ->
-        link = browser.query('.tool a[href="/tool/newdataset"]')
+        link = browser.query('a[href="/tool/newdataset"].tool')
         browser.fire 'click', link, ->
           browser.wait done
 

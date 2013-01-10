@@ -348,6 +348,7 @@ a.view {
 }
 
 .tool {
+    display: block;
     background-color: #eee;
     border: 1px solid #ccc;
     padding: 10px;
@@ -357,17 +358,13 @@ a.view {
 .tool:hover {
     background-color: #ddd;
     border-color: #bbb;
+    text-decoration: none;
 }
 
 .tool h3 {
     margin: 0 0 5px 0;
     font-weight: normal;
-}
-
-.tool h3 a,
-.tool h3 a:hover {
     color: #666;
-    text-decoration: none;
 }
 
 .tool p {

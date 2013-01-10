@@ -1,4 +1,0 @@
-<div class="tool <%= @name %>">
-    <h3><a href="/tool/<%= @name %>"><%= if @manifest? then @manifest.displayName else @name %></a></h3>
-    <p>by ScraperWiki</p>
-</div>

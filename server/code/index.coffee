@@ -196,12 +196,17 @@ app.get '/api/tools/?', (req, resp) ->
   Tool.findAll (err, tools) ->
     resp.send 200, tools
 
+# Should we git clone here? Allows us to keep repo passwds private...
 app.post '/api/tools/?', (req, resp) ->
   body = req.body
   tool = new Tool
     name: body.name
     type: body.type
     gitUrl: body.gitUrl
+
+  # git clone
+  # parse scraperwiki.json
+  # validate it?
 
   tool.save (err) ->
     Tool.findOneById tool.id, (err, tool) ->

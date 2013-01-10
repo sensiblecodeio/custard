@@ -38,7 +38,8 @@
     "backbone": "~0.9.9",
     "jquery": "~1.7.3",
     "zombie": "2.0.0-alpha9",
-    "nibbler": "git+https://github.com/mattrobenolt/node_nibbler.git"
+    "nibbler": "git+https://github.com/mattrobenolt/node_nibbler.git",
+    "mkdirp": "~0.3.4"
   },
   "engines": {
     "node": "~0.8.x",

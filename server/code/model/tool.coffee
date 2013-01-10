@@ -1,8 +1,13 @@
+child_process = require 'child_process'
+fs = require 'fs'
+
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
 toolSchema = new Schema
-  name: String
+  name: 
+    type: String
+    index: unique: true
   type: String
   gitUrl: String
   manifest: Schema.Types.Mixed
@@ -25,6 +30,25 @@ class Tool
     ds.save =>
       @id = ds._id
       done()
+
+  gitClone: (options, callback) ->
+    @directory = "#{options.dir}/#{@name}"
+    child_process.exec "git clone #{@gitUrl} #{@directory}", callback
+
+  loadManifest: (callback) ->
+    fs.exists @directory, (isok) =>
+      if not isok
+        callback 'not cloned'
+        return
+      fs.readFile "#{@directory}/scraperwiki.json", (err, data) =>
+        if err
+          callback err
+          return
+        try
+          @manifest = JSON.parse data
+        catch error
+          callback error: json: error
+        callback null
 
   @findAll: (callback) ->
     DbTool.find {}, callback

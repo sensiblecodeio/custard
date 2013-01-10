@@ -1,13 +1,6 @@
 <li class="header">
     Switch context:
 </li>
-<li class="context">
-    <a>
-        <img src="<%= @avatarUrl %>" width="24" height="24" alt="<%= @displayName %>" />
-        <span><%= @displayName %></span>
-        <i class="icon-ok">(Active)</i>
-    </a>
-</li>
 <li class="context input-append" style="margin-bottom:0;padding:5px 15px">
     <input type="search" class="search-query" placeholder="Find another…" style="width:140px;" />
     <button class="btn" type="button" id="switch-to-this-user">Go</button>

@@ -1,0 +1,7 @@
+<a href="/switch/<%= @contextUser.shortName %>/">
+    <img src="<%= @contextUser.avatarUrl %>" width="24" height="24" alt="<%= @contextUser.displayName %>" />
+    <span><%= @contextUser.displayName %></span>
+    <% if @contextActive: %>
+        <i class="icon-ok">(Active)</i>
+    <% end %>
+</a>

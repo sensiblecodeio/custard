@@ -16,8 +16,23 @@ class Cu.View.UserLinks extends Backbone.View
       location.href = "/switch/#{username}/"
 
   render: ->
+    # populate user dropdown menu
+    @$el.html JST.userlinks
+
+    # add real user link
+    if window.user.effective.shortName != window.user.real.shortName
+      view = new Cu.View.ContextLink
+        contextUser: window.user.real
+        contextActive: false
+      @$el.find('.header').after view.render().el
+
+    # add effective user link
+    view = new Cu.View.ContextLink
+      contextUser: window.user.effective
+      contextActive: true
+    @$el.find('.header').after view.render().el
+
     users = []
-    @el.innerHTML = JST.userlinks window.user.effective
     @$el.find('.search-query').typeahead({
       source: (query, process) ->
         $.ajax

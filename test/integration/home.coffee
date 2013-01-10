@@ -40,7 +40,7 @@ describe 'Home page (logged in)', ->
 
     context 'when I click on the highrise tool', ->
       before (done) ->
-        link = browser.query('.tool a[href="/tool/highrise"]')
+        link = browser.query('a[href="/tool/highrise"].tool')
         browser.fire 'click', link, done
 
       it 'takes me to the highrise tool page', ->

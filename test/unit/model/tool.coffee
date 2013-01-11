@@ -8,22 +8,13 @@ username = 'cotest'
 
 describe 'Model: Tool', ->
   before ->
-    @get = sinon.stub jQuery, 'get', (_url, callback) ->
-      callback 'github.com/scraperwiki/highrise-tool.git'
-
     @tool = new Cu.Model.Tool
       name: 'highrise'
 
     @spy = sinon.spy @tool, '_generateBoxName'
 
   after ->
-    jQuery.get.restore()
     @tool._generateBoxName.restore()
-
-  it 'retrieves a git repo url', (done) ->
-    @tool.git_url (url) ->
-      url.should.include 'github.com/scraperwiki/highrise-tool.git'
-      done()
 
   it 'can generate a random boxname', ->
     @tool._generateBoxName()
@@ -60,7 +51,7 @@ describe 'Model: Tool', ->
         url: "#{base_url}/#{@tool.get 'boxName'}/exec"
         data:
           apikey: sinon.match /.+/
-          cmd: sinon.match /.*unzip master.*/
+          cmd: sinon.match /.*git clone.*/
 
       called.should.be.true
 

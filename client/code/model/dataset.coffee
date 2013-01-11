@@ -1,5 +1,15 @@
-class Cu.Model.Dataset extends Backbone.Model
+class Cu.Model.Dataset extends Backbone.RelationalModel
   idAttribute: 'box'
+  relations: [
+    type: Backbone.HasMany
+    key: 'views'
+    relatedModel: 'Cu.Model.View'
+    collectionType: 'Cu.Model.ViewCollection'
+    reverseRelation:
+      key: 'plugsInTo'
+      includeInJSON: 'box'
+  ]
+
   url: ->
     if @isNew()
       "/api/#{window.user.effective.shortName}/datasets"
@@ -21,6 +31,22 @@ class Cu.Model.Dataset extends Backbone.Model
         @_publishToken = settings.publish_token
         callback @_publishToken
 
+  installPlugin: (name, callback) ->
+    # get tool, install tool
+    tools.fetch
+      success: =>
+        tool = window.tools.get name
+        console.log tool
+        tool.install =>
+          console.log 'INSTALLLLLED'
+          @get('views').add
+            user: user.shortName
+            name: tool.get 'name'
+            displayName: tool.get 'name'
+            box: tool.get 'boxName'
+          console.log 'HMM', @get('views')
+          @save()
+
   exec: (cmd, args) ->
     # Returns an ajax object, onto which you can
     # chain .success and .error callbacks
@@ -39,6 +65,9 @@ class Cu.Model.Dataset extends Backbone.Model
   validate: (attrs) ->
     return "Please enter a name" if 'displayName' of attrs and attrs.displayName?.length < 1
 
+Cu.Model.Dataset.setup()
+
 class Cu.Collection.DatasetList extends Backbone.Collection
   model: Cu.Model.Dataset
   url: -> "/api/#{window.user.effective.shortName}/datasets"
+

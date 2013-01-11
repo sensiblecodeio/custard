@@ -3,11 +3,18 @@ Schema = mongoose.Schema
 
 ModelBase = require 'model/base'
 
+viewSchema = new Schema
+  name: String
+  displayName: String
+  box: String
+
 datasetSchema = new Schema
   user: String  # Actually, the owner
   name: String
   displayName: String
   box: String
+  views: [viewSchema]
+  #views: [{type: String, ref: 'View'}]
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 

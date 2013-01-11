@@ -245,6 +245,20 @@ app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
     else
       return resp.send 200, dataset
 
+app.get '/api/:user/datasets/:id/views?', checkUserRights, (req, resp) ->
+  console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}/views"
+  Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
+    if err?
+      console.warn err
+      return resp.send 500, error: 'Error trying to find dataset views'
+    else if not dataset
+      console.warn "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
+      return resp.send 404
+    else
+      dataset.views (err, views) ->
+        console.warn "Error fetching views #{err}" if err?
+        return resp.send 200, views
+
 app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
   console.log "PUT /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
@@ -257,10 +271,27 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
     else
       # :todo: should be more systematic about what can be set this way.
       for k of req.body
+        console.log 'KEEEEY', k
+        console.log 'VLAUEU', req.body[k]
         dataset[k] = req.body[k]
+      console.log 'PINCH POINT', req.body['views']
+      console.log 'FSDUHSDFHSDLIHFIDHSFSD', dataset.views[0]
       dataset.save()
       return resp.send 200, dataset
 
+app.post '/api/:user/datasets/:id/views?', checkUserRights, (req, resp) ->
+  console.log "POST /api/#{req.params.user}/datasets/#{req.params.id}/views"
+  Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
+    if err?
+      console.warn err
+      return resp.send 500, error: 'Error trying to find dataset'
+    else if not dataset
+      console.log "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
+      return resp.send 404
+    else
+      dataset.view_ids.push view
+      dataset.save()
+      return resp.send 200, dataset
 
 app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   data = req.body

@@ -27,7 +27,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('tools/?'), 'tools'
     @route RegExp('tool/([^/]+)/?'), 'tool'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
-    @route RegExp('dataset/([^/]+)/([^/]+)/?'), 'view'
+    @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
     @route RegExp('dataset/([^/]+)/plugin/([^/]+)/?'), 'plugin'
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
@@ -94,19 +94,21 @@ class Cu.Router.Main extends Backbone.Router
       error: (model, xhr, options) ->
         console.warn xhr
 
-  view: (box, pluginName) ->
+  view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate
       user: window.user.effective.shortName
-      box: box
-
-    tool = window.tools.get pluginName
+      box: datasetID
 
     dataset.fetch
       success: (dataset, resp, options) =>
-        titleView = new Cu.View.ToolTitle {dataset: dataset, tool: tool}
-        contentView = new Cu.View.ViewContent {dataset: dataset, tool: tool}
-        @titleView.showView titleView
-        @appView.showView contentView
+        window.tools.fetch
+          success: =>
+            v = dataset.get('views').findById(viewID)
+            console.log 'v', v
+            titleView = new Cu.View.Title {text: 'this should be the view title'}
+            contentView = new Cu.View.ViewContent {model: v}
+            @titleView.showView titleView
+            @appView.showView contentView
       error: (model, xhr, options) ->
         console.warn xhr
 

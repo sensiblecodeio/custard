@@ -55,7 +55,7 @@ class Cu.Router.Main extends Backbone.Router
     window.tools.fetch
       success: =>
         model = window.tools.get tool
-        titleView = new Cu.View.Title {text: "My Tools / #{model.get 'displayName'}" }
+        titleView = new Cu.View.Title {text: "My Tools / #{model.get('manifest').displayName}" }
         contentView = new Cu.View.ToolContent {model: model}
         @titleView.showView titleView
         @appView.showView contentView

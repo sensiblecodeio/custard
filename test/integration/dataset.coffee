@@ -18,14 +18,14 @@ describe 'Dataset', ->
     browser.fill '#password', 'testing'
     browser.pressButton '#login', done
 
-  context 'when I click on a newdataset dataset', ->
+  context 'when I click on a Cheese dataset', ->
     before (done) ->
       body = browser.query('body')
       link = $(body).find('.dataset:contains("Cheese")').first()[0]
       browser.fire 'click', link, ->
         browser.wait done
 
-    it 'takes me to the highrise dataset page', ->
+    it 'takes me to the Cheese dataset page', ->
       result = browser.location.href
       result.should.match /\/dataset\/(\w+)/
 

@@ -107,7 +107,8 @@ describe 'Switch', ->
 
   context 'when a staff member switches context', ->
     before (done) ->
-      @browser.visit "#{BASE_URL}/switch/#{user_a}", done
+      @browser.visit "#{BASE_URL}/switch/#{user_a}", =>
+        @browser.wait done
     
     it 'redirected to home page', ->
       @browser.location.href.should.equal "#{BASE_URL}/"
@@ -130,7 +131,9 @@ describe 'Switch', ->
         @browser.fill '#password', pass_b
         @browser.pressButton '#login', =>
           @browser.visit "#{BASE_URL}/switch/#{user_a}", =>
-            @browser.visit BASE_URL, done
+            @browser.visit BASE_URL, =>
+              @browser.wait done
+
 
     it "hasn't changed who I am", ->
       @browser.text('.user').should.include 'Mr Ickle Test'

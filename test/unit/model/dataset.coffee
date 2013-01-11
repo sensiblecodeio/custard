@@ -18,7 +18,7 @@ describe 'Client model: Dataset', ->
       @dataset.url().should.include @boxName
 
 describe 'Server model: Dataset', ->
-  Dataset = require 'model/dataset'
+  Dataset = require('model/dataset')()
 
   before ->
     @dataset = new Dataset()

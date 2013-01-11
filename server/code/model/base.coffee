@@ -23,6 +23,7 @@ class ModelBase
   save: (callback) ->
     if not @dbInstance?
       @dbInstance = new @constructor.dbClass(@)
+      @id = @dbInstance._id
     else
       for k of @dbInstance
         @dbInstance[k] = @[k] if @hasOwnProperty k

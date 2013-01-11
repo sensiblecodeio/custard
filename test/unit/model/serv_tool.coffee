@@ -6,11 +6,18 @@ sinon = require 'sinon'
 should = require 'should'
 
 class TestDb
+  class Model
+    constructor: (obj) ->
+      for k of obj
+        @[k] = obj[k]
+
+    toObject: -> @
+
   save: (callback) ->
     callback null
   @find: (_args, callback) ->
-    callback null, [ new Tool(name: 'test'),
-      new Tool(name: 'test2')
+    callback null, [ new Model(name: 'test'),
+      new Model(name: 'test2')
     ]
 
 Tool = require('model/tool')(TestDb)
@@ -53,7 +60,7 @@ describe 'Server model: Tool', ->
       before (done) ->
         @spy = sinon.spy JSON, 'parse'
         @fsRead = sinon.stub fs, 'readFile', (path_, cb) ->
-          obj = 
+          obj =
             displayName: 'WHEEEE'
             description: 'Whee whee whee'
             gitUrl: 'git://blah.git'

@@ -59,4 +59,6 @@ rand32 = ->
 fresh_apikey = ->
   [rand32(), rand32()].join('-')
 
-module.exports = User
+module.exports = (dbObj) ->
+  zDbUser = dbObj if dbObj?
+  User

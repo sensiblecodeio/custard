@@ -1,35 +1,28 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
+ModelBase = require 'model/base'
+
 datasetSchema = new Schema
   user: String  # Actually, the owner
   name: String
   displayName: String
   box: String
 
-DbDataset = mongoose.model 'Dataset', datasetSchema
+zDbDataset = mongoose.model 'Dataset', datasetSchema
 
-class Dataset
-  constructor: (@user, @name, @displayName, @box) ->
-
-  save: (done) ->
-    ds = new DbDataset
-      user: @user
-      name: @name
-      displayName: @displayName
-      box: @box
-
-    ds.save =>
-      @id = ds._id
-      done()
+class Dataset extends ModelBase
+  @dbClass: zDbDataset
 
   @findAllByUserShortName: (name, callback) ->
-    DbDataset.find {user: name}, callback
+    @dbClass.find {user: name}, callback
 
   @findOneByName: (shortName, dsName, callback) ->
-    DbDataset.findOne {user: shortName, name: dsName}, callback
+    @dbClass.findOne {user: shortName, name: dsName}, callback
 
   @findOneById: (id, shortName, callback) ->
-    DbDataset.findOne {box: id, user: shortName}, callback
+    @dbClass.findOne {box: id, user: shortName}, callback
       
-module.exports = Dataset
+module.exports = (dbObj) ->
+  zDbDataset = dbObj if dbObj?
+  Dataset

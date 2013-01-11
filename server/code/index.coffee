@@ -15,9 +15,9 @@ mongoStore = require('connect-mongo')(express)
 flash = require 'connect-flash'
 eco = require 'eco'
 
-User = require 'model/user'
-Dataset = require 'model/dataset'
-Token = require 'model/token'
+User = require('model/user')()
+Dataset = require('model/dataset')()
+Token = require('model/token')()
 Tool = require('model/tool')()
 
 # Set up database connection
@@ -203,7 +203,6 @@ app.post '/api/tools/?', (req, resp) ->
     name: body.name
     type: body.type
     gitUrl: body.gitUrl
-
   # git clone
   # parse scraperwiki.json
   # validate it?
@@ -257,7 +256,12 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
 
 app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   data = req.body
-  dataset = new Dataset req.user.effective.shortName, data.name, data.displayName, data.box
+  dataset = new Dataset
+    user: req.user.effective.shortName
+    name: data.name
+    displayName: data.displayName
+    box: data.box
+
   dataset.save (err) ->
     console.warn err if err?
     Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->

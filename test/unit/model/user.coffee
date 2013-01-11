@@ -1,7 +1,7 @@
 mongoose = require 'mongoose'
 should = require 'should'
 
-User = require 'model/user'
+User = require('model/user')()
 
 describe 'User', ->
   before ->

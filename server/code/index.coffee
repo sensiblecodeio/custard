@@ -203,18 +203,24 @@ app.post '/api/tools/?', (req, resp) ->
     name: body.name
     type: body.type
     gitUrl: body.gitUrl
-  # git clone
-  # parse scraperwiki.json
-  # validate it?
 
-  tool.save (err) ->
-    Tool.findOneById tool.id, (err, tool) ->
-      console.warn err if err?
+  tool.gitClone dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
+    console.log err, stdout, stderr
+    if err?
+      return resp.send 500, error: "Error cloning your tool's Git repo"
+    tool.loadManifest (err) ->
       if err?
-        console.warn err
-        return resp.send 500, error: 'Error trying to find datasets'
+        return resp.send 500, error: "Error trying to load your tool's manifest"
       else
-        return resp.send 201, tool
+        tool.save (err) ->
+          Tool.findOneById tool.id, (err, tool) ->
+            console.warn err if err?
+            if err?
+              console.warn err
+              return resp.send 500, error: 'Error trying to find datasets'
+            else
+              return resp.send 201, tool
+
 
 app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->

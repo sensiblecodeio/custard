@@ -40,12 +40,13 @@ describe 'API', ->
           dataset = null
 
           before (done) ->
+            @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
             request.post
               uri: "#{settings.serverURL}/api/tools"
               form:
-                name: 'int-test-importer'
-                type: 'importer'
-                gitUrl: 'git://blah.git'
+                name: @toolName
+                type: 'view'
+                gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
             , (err, res) =>
               response = res
               @tool = JSON.parse res.body
@@ -56,7 +57,7 @@ describe 'API', ->
 
           it 'returns the newly created tool', ->
             should.exist @tool.name
-            @tool.name.should.equal 'int-test-importer'
+            @tool.name.should.equal @toolName
 
       context 'GET /api/tools', ->
         before (done) ->

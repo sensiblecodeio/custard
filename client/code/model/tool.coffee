@@ -2,24 +2,12 @@ class Cu.Model.Tool extends Backbone.Model
   idAttribute: 'name'
   base_url: "#{window.boxServer}"
 
-  git_url: (callback) ->
-    $.get '/github-login', (login) =>
-      login = login.replace '\n', ''
-      callback "https://#{login}@github.com/scraperwiki/#{@get 'name'}-tool.git"
-
-  zip_url: (callback) ->
-    $.get '/github-login', (login) =>
-      login = login.replace '\n', ''
-      callback "https://#{login}@github.com/scraperwiki/#{@get 'name'}-tool/archive/master.zip"
-
   install: (callback) ->
     @_create_box().complete (ajaxObj, status) =>
       if status != 'success'
         callback ajaxObj, status
       else
-        @zip_url (url) =>
-          n = @get 'name'
-          @exec("cd; curl -L -O #{url}; unzip master.zip; mv #{n}-tool-master #{n}").complete callback
+        @exec("cd; git clone #{@get 'gitUrl'} #{@get 'name'} --depth 1").complete callback
 
   setup: (callback) ->
     @exec("cd;~/#{@get 'name'}/setup").success callback

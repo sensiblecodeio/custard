@@ -210,7 +210,8 @@ app.post '/api/tools/?', (req, resp) ->
       return resp.send 500, error: "Error cloning your tool's Git repo"
     tool.loadManifest (err) ->
       if err?
-        return resp.send 500, error: "Error trying to load your tool's manifest"
+        tool.deleteRepo ->
+          return resp.send 500, error: "Error trying to load your tool's manifest"
       else
         tool.save (err) ->
           Tool.findOneById tool.id, (err, tool) ->

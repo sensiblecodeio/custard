@@ -1,5 +1,6 @@
 child_process = require 'child_process'
 fs = require 'fs'
+rimraf = require 'rimraf'
 
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
@@ -37,6 +38,9 @@ class Tool extends ModelBase
         catch error
           callback error: json: error
         callback null
+
+  deleteRepo: (callback) ->
+    rimraf @directory, callback
 
   @findOneById: (id, callback) ->
     @dbClass.findOne {_id: id}, callback

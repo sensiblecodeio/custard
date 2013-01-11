@@ -9,9 +9,10 @@ $ ->
 
   if Backbone.history and Backbone.history._hasPushState
     $(document).delegate "a:not([href^=http])", "click", (evt) ->
-      href = $(@).attr "href"
-      evt.preventDefault()
-      window.app.navigate href, trigger: true
+      unless $(@).is '[data-nonpushstate]'
+        href = $(@).attr "href"
+        evt.preventDefault()
+        window.app.navigate href, trigger: true
 
 class Cu.AppView
   constructor: (@selector) ->

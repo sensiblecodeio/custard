@@ -10,7 +10,14 @@ class Cu.View.DataSetGroup extends Backbone.View
     view = new Cu.View.DataSet model: @model
     @$el.html view.render().el
 
-  addViews: ->
+  addViews: =>
+    @model.get('views').each @addView
+
+  addView: (view) =>
+    v = new Cu.View.ViewTile model: view
+    @$el.append v.render().el
+
+  xaddViews: ->
     # Fake for now
     @$el.append """
       <a href="/dataset/#{@model.id}/spreadsheet" class="view spreadsheet">View Spreadsheet</a>

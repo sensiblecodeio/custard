@@ -7,7 +7,6 @@ class Cu.View.DataSetViews extends Backbone.View
     @
 
   addViews: =>
-    console.log @model
     @model.get('views').each @addView
 
   addView: (view) =>

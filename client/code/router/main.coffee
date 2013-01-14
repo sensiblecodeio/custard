@@ -69,7 +69,6 @@ class Cu.Router.Main extends Backbone.Router
       success: (model, resp, options) =>
         window.tools.fetch
           success: =>
-            console.log 'VIEWS', model.get 'views'
             titleView = new Cu.View.DataSetTitle {model: model}
             contentView = new Cu.View.DataSetOverview { model: model, tools: window.tools }
             @titleView.showView titleView
@@ -88,9 +87,9 @@ class Cu.Router.Main extends Backbone.Router
       success: (dataset, resp, options) =>
         # install plugin to dataset
         #
-        dataset.installPlugin pluginName, (err) ->
+        dataset.installPlugin pluginName, (err, view) ->
           console.warn 'Error', err if err?
-          # redirect to view
+          window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
       error: (model, xhr, options) ->
         console.warn xhr
 
@@ -104,7 +103,6 @@ class Cu.Router.Main extends Backbone.Router
         window.tools.fetch
           success: =>
             v = dataset.get('views').findById(viewID)
-            console.log 'v', v
             titleView = new Cu.View.Title {text: 'this should be the view title'}
             contentView = new Cu.View.ViewContent {model: v}
             @titleView.showView titleView

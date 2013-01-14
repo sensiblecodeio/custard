@@ -36,16 +36,17 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     tools.fetch
       success: =>
         tool = window.tools.get name
-        console.log tool
         tool.install =>
-          console.log 'INSTALLLLLED'
           @get('views').add
             user: user.shortName
             name: tool.get 'name'
             displayName: tool.get 'name'
             box: tool.get 'boxName'
-          console.log 'HMM', @get('views')
           @save()
+          newView = @get('views').findById tool.get 'boxName'
+          callback null, newView
+      error: (model_, xhr_, err) =>
+        callback err
 
   exec: (cmd, args) ->
     # Returns an ajax object, onto which you can

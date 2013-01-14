@@ -1,0 +1,4 @@
+<a href="/switch/<%= @shortName %>/" data-nonpushstate>
+    <img src="<%= @avatarUrl or '/image/avatar.png' %>" width="24" height="24" alt="<%= @shortName %>" />
+    <span><%= @displayName or @shortName %></span>
+</a>

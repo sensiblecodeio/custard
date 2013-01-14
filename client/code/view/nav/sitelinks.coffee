@@ -16,6 +16,8 @@ class Cu.View.SiteLinks extends Backbone.View
     if $('#userlinks').hasClass('open')
       $('#userlinks').removeClass 'open'
       $('a[href="#userlinks"]').removeClass 'active'
+      $('#context-search input').val('')
+      $('#userlinks .context-search-result').remove()
     else
       $('#userlinks').addClass 'open'
       $('a[href="#userlinks"]').addClass 'active'
@@ -26,4 +28,6 @@ class Cu.View.SiteLinks extends Backbone.View
           $('body').off('.userlinks')
           $('#userlinks').removeClass 'open'
           $('a[href="#userlinks"]').removeClass 'active'
+          $('#context-search input').val('')
+          $('#userlinks .context-search-result').remove()
 

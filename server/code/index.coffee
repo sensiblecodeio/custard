@@ -53,9 +53,12 @@ passport.deserializeUser (obj, done) ->
 
 # Convert user into session appropriate user
 getSessionUser = (user) ->
-  email = user.email[0].toLowerCase().trim()
-  emailHash = crypto.createHash('md5').update(email).digest("hex")
-  avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
+  if user.email.length
+    email = user.email[0].toLowerCase().trim()
+    emailHash = crypto.createHash('md5').update(email).digest("hex")
+    avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
+  else
+    avatarUrl = "/image/avatar.png"
   session =
     shortName: user.shortName
     displayName: user.displayName
@@ -367,7 +370,7 @@ app.get '/api/user/?', checkStaff, (req, resp) ->
       return resp.send 500, error: 'Error trying to find users'
     else
       result = for u in users when u.shortName
-        u.objectify()
+        getSessionUser u
       return resp.send 200, result
 
 

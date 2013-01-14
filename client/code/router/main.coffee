@@ -27,7 +27,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('tools/?'), 'tools'
     @route RegExp('tool/([^/]+)/?'), 'tool'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
-    @route RegExp('dataset/([^/]+)/([^/]+)/?'), 'view'
+    @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
     @route RegExp('dataset/([^/]+)/plugin/([^/]+)/?'), 'plugin'
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
@@ -69,7 +69,6 @@ class Cu.Router.Main extends Backbone.Router
       success: (model, resp, options) =>
         window.tools.fetch
           success: =>
-            console.log 'VIEWS', model.get 'views'
             titleView = new Cu.View.DataSetTitle {model: model}
             contentView = new Cu.View.DataSetOverview { model: model, tools: window.tools }
             @titleView.showView titleView
@@ -88,25 +87,26 @@ class Cu.Router.Main extends Backbone.Router
       success: (dataset, resp, options) =>
         # install plugin to dataset
         #
-        dataset.installPlugin pluginName, (err) ->
+        dataset.installPlugin pluginName, (err, view) ->
           console.warn 'Error', err if err?
-          # redirect to view
+          window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
       error: (model, xhr, options) ->
         console.warn xhr
 
-  view: (box, pluginName) ->
+  view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate
       user: window.user.effective.shortName
-      box: box
-
-    tool = window.tools.get pluginName
+      box: datasetID
 
     dataset.fetch
       success: (dataset, resp, options) =>
-        titleView = new Cu.View.ToolTitle {dataset: dataset, tool: tool}
-        contentView = new Cu.View.ViewContent {dataset: dataset, tool: tool}
-        @titleView.showView titleView
-        @appView.showView contentView
+        window.tools.fetch
+          success: =>
+            v = dataset.get('views').findById(viewID)
+            titleView = new Cu.View.Title {text: 'this should be the view title'}
+            contentView = new Cu.View.ViewContent {model: v}
+            @titleView.showView titleView
+            @appView.showView contentView
       error: (model, xhr, options) ->
         console.warn xhr
 

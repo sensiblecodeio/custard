@@ -93,16 +93,17 @@ class Cu.View.ViewTitle extends Cu.View.Title
     'blur input': 'editableNameBlurred'
     'keypress input': 'keypressOnEditableName'
 
+  dataset: -> @model.get('plugsInTo')
+
   initialize: ->
     @model.on 'change', @setDocumentTitle, @
     @setDocumentTitle(@model)
 
   render: ->
-    dataset = @model.get('plugsInTo')
     tpl = """
       <a href="/">My Datasets</a>
       <span class="slash">/</span>
-      <a href="/dataset/#{dataset.get 'box'}/">#{dataset.get 'displayName'}</a>
+      <a href="/dataset/#{@dataset().get 'box'}/">#{@dataset().get 'displayName'}</a>
       <span class="slash">/</span>
       <span class="editable">#{@model.get 'displayName'}</span>
       <input type="text" id="txtName" style="display: none"/>
@@ -121,21 +122,22 @@ class Cu.View.ViewTitle extends Cu.View.Title
     $label = @$el.find('.editable')
     $input = @$el.find('input')
     @newName = $.trim($input.val())
+    @oldName = $label.text()
     if @newName == '' or @newName == $label.text()
       $label.show().next().hide()
     else
       $input.hide()
       $label.text(@newName).show()
-      # :TODO: Save doesn't work for views yet
-      @model.save displayName: @newName,
+      @model.set 'displayName', @newName
+      @dataset().save {},
         success: =>
           $label.addClass 'saved'
           setTimeout ->
             $label.removeClass 'saved'
           , 1000
         error: (e) =>
-          # :TODO: This doesn't rename the $label to its original value
-          $label.text @model.get 'displayName'
+          $label.text @oldName
+          @model.set 'displayName', @oldName
           console.warn 'error saving new name', e
 
   editableNameEscaped: (e) ->

@@ -38,11 +38,11 @@ describe 'New dataset tool', ->
             browser.wait 1000, ->
               browser.wait done
 
-        it 'takes me to the view source view', ->
+        xit 'takes me to the view source view', ->
           result = browser.location.href
           result.should.include '/newdataset'
 
-        it 'shows me details of how to ssh in to my box', ->
+        xit 'shows me details of how to ssh in to my box', ->
           iframe = browser.query('iframe')
           text = $(iframe).contents().find('body').text()
           text.should.include 'Add your SSH key'

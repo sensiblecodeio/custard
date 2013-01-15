@@ -28,7 +28,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('tool/([^/]+)/?'), 'tool'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
     @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
-    @route RegExp('dataset/([^/]+)/plugin/([^/]+)/?'), 'plugin'
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
 
@@ -78,20 +77,6 @@ class Cu.Router.Main extends Backbone.Router
       error: (model, xhr, options) ->
         console.warn xhr
 
-  plugin: (datasetId, pluginName) ->
-    dataset = Cu.Model.Dataset.findOrCreate
-      user: window.user.effective.shortName
-      box: datasetId
-
-    dataset.fetch
-      success: (dataset, resp, options) =>
-        # install plugin to dataset
-        #
-        dataset.installPlugin pluginName, (err, view) ->
-          console.warn 'Error', err if err?
-          window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
-      error: (model, xhr, options) ->
-        console.warn xhr
 
   view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate

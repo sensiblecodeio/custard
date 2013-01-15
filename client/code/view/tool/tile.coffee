@@ -13,5 +13,22 @@ class Cu.View.AppTile extends Cu.View.ToolTile
     href: "/tool/#{@model.get 'name'}"
 
 class Cu.View.PluginTile extends Cu.View.ToolTile
+  events:
+    'click' : 'install'
+
   attributes: ->
-    href: "/dataset/#{@options.dataset.get 'box'}/plugin/#{@model.get 'name'}"
+    'data-nonpushstate': ''
+
+  install: (e) ->
+    e.preventDefault()
+    dataset = Cu.Model.Dataset.findOrCreate
+      user: window.user.effective.shortName
+      box: @options.dataset.id
+
+    dataset.fetch
+      success: (dataset, resp, options) =>
+        dataset.installPlugin @model.get('name'), (err, view) =>
+          console.warn 'Error', err if err?
+          window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
+      error: (model, xhr, options) ->
+        console.warn xhr

@@ -122,21 +122,22 @@ class Cu.View.ViewTitle extends Cu.View.Title
     $label = @$el.find('.editable')
     $input = @$el.find('input')
     @newName = $.trim($input.val())
+    @oldName = $label.text()
     if @newName == '' or @newName == $label.text()
       $label.show().next().hide()
     else
       $input.hide()
       $label.text(@newName).show()
       @model.set 'displayName', @newName
-      @dataset().save
+      @dataset().save {},
         success: =>
           $label.addClass 'saved'
           setTimeout ->
             $label.removeClass 'saved'
           , 1000
         error: (e) =>
-          # :TODO: This doesn't rename the $label to its original value
-          $label.text @model.get 'displayName'
+          $label.text @oldName
+          @model.set 'displayName', @oldName
           console.warn 'error saving new name', e
 
   editableNameEscaped: (e) ->

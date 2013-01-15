@@ -88,7 +88,7 @@ class Cu.Router.Main extends Backbone.Router
         window.tools.fetch
           success: =>
             v = dataset.get('views').findById(viewID)
-            titleView = new Cu.View.Title {text: 'this should be the view title'}
+            titleView = new Cu.View.ViewTitle {model: v}
             contentView = new Cu.View.ViewContent {model: v}
             @titleView.showView titleView
             @appView.showView contentView

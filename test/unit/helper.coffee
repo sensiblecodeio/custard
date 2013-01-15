@@ -5,10 +5,13 @@ fakeWindow = ->
   global.window = doc.createWindow()
   global.document = global.window.document
   global.addEventListener = global.window.addEventListener
+  window = global.window
 
   global.jQuery = global.$ = require('jquery').create global.window
   global.$.cookie = -> null
-  global.Backbone = require 'backbone'
+  global._ = window._ = require 'underscore'
+  global.Backbone = window.Backbone = require 'backbone'
+  global.BackboneRelational = window.BackboneRelational = require 'backbone-relational'
   global.Backbone.$ = global.$
   global.Nibbler = require 'nibbler'
 

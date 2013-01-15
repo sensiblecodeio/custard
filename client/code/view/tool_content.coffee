@@ -14,7 +14,6 @@ class Cu.View.ToolContent extends Backbone.View
 
    onInstalled: ->
      user = window.user.effective
-     console.log 'B4', window.datasets
      dataset = new Cu.Model.Dataset
        user: user.shortName
        name: @model.get 'name'
@@ -26,7 +25,6 @@ class Cu.View.ToolContent extends Backbone.View
      dataset.save {},
        wait: true
        success: ->
-         console.log 'AFTER', window.datasets
          delete dataset.new
          window.app.navigate "/dataset/#{dataset.id}", {trigger: true}
        error: (model, xhr, options) ->

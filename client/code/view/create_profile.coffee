@@ -39,7 +39,6 @@ class Cu.View.CreateProfile extends Backbone.View
         type: 'POST'
         dataType: 'json'
         success: (newProfile) =>
-          console.log newProfile
           @createCobaltProfile newProfile, (cobaltProfile) =>
             url = "#{location.origin}/set-password/#{newProfile.token}"
             @$el.children('form').html "<div class=\"alert alert-success\"><strong>New profile &ldquo;#{newProfile.shortName}&rdquo; created.</strong><br/>They can set their password <a href=\"#{url}\" title=\"#{url}\">here</a>.</div>"

@@ -114,7 +114,7 @@ describe 'Switch', ->
       @browser.location.href.should.equal "#{BASE_URL}/"
 
     it 'shows me datasets of the profile into which I have switched', ->
-      @browser.text('.my-datasets').should.include dataset_name
+      @browser.text('.dataset-list').should.include dataset_name
 
     it "has the switched to profile's name", ->
       @browser.text('.user').should.include 'Mr Ickle Test'
@@ -140,4 +140,4 @@ describe 'Switch', ->
       @browser.text('.user').should.not.include 'Staff Test'
 
     it "still shows me my datasets", ->
-      @browser.text('.my-datasets').should.include dataset_name
+      @browser.text('.dataset-list').should.include dataset_name

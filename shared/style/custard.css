@@ -243,6 +243,11 @@ html, body {
     background-position: -288px 0;
 }
 
+.dataset-list {
+    padding: 0 15px 20px 0;
+    overflow: auto;
+}
+
 .dataset-group,
 .my-tools .tool {
     width: 280px;

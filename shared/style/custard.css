@@ -397,6 +397,11 @@ a.view {
     line-height: 16px;
 }
 
+.tool p.loading {
+    background: transparent url(/image/context-search-loader.gif) 195px center no-repeat;
+}
+
+
 #content p.loading {
     margin-top: 100px;
     padding-top: 50px;

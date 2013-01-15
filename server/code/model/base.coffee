@@ -8,7 +8,6 @@ _ = require 'underscore'
 class ModelBase
   constructor: (obj) ->
     for k of obj
-      console.log k, obj[k]
       @[k] = obj[k]
 
   objectify: ->

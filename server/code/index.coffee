@@ -200,7 +200,6 @@ app.get '/api/tools/?', (req, resp) ->
   Tool.findAll (err, tools) ->
     resp.send 200, tools
 
-# Should we git clone here? Allows us to keep repo passwds private...
 app.post '/api/tools/?', (req, resp) ->
   body = req.body
   tool = new Tool
@@ -274,25 +273,7 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
     else
       # :todo: should be more systematic about what can be set this way.
       for k of req.body
-        console.log 'KEEEEY', k
-        console.log 'VLAUEU', req.body[k]
         dataset[k] = req.body[k]
-      console.log 'PINCH POINT', req.body['views']
-      console.log 'FSDUHSDFHSDLIHFIDHSFSD', dataset.views[0]
-      dataset.save()
-      return resp.send 200, dataset
-
-app.post '/api/:user/datasets/:id/views?', checkUserRights, (req, resp) ->
-  console.log "POST /api/#{req.params.user}/datasets/#{req.params.id}/views"
-  Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
-    if err?
-      console.warn err
-      return resp.send 500, error: 'Error trying to find dataset'
-    else if not dataset
-      console.log "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
-      return resp.send 404
-    else
-      dataset.view_ids.push view
       dataset.save()
       return resp.send 200, dataset
 
@@ -309,58 +290,6 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
     Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
       console.warn err if err?
       resp.send 200, dataset
-
-# Views
-app.get '/api/:user/views/?', checkUserRights, (req, resp) ->
-  View.findAllByUserShortName req.user.effective.shortName, (err, views) ->
-    if err?
-      console.warn err
-      return resp.send 500, error: 'Error trying to find views'
-    else
-      return resp.send 200, views
-
-app.get '/api/:user/views/:id/?', checkUserRights, (req, resp) ->
-  console.log "GET /api/#{req.params.user}/views/#{req.params.id}"
-  View.findOneById req.params.id, req.user.effective.shortName, (err, view) ->
-    if err?
-      console.warn err
-      return resp.send 500, error: 'Error trying to find views'
-    else if not view
-      console.warn "Could not find a view with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
-      return resp.send 404
-    else
-      return resp.send 200, view
-
-app.put '/api/:user/views/:id/?', checkUserRights, (req, resp) ->
-  console.log "PUT /api/#{req.params.user}/views/#{req.params.id}"
-  View.findOneById req.params.id, req.user.effective.shortName, (err, view) ->
-    if err?
-      console.warn err
-      return resp.send 500, error: 'Error trying to find views'
-    else if not view
-      console.log "Could not find a view with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
-      return resp.send 404
-    else
-      # :todo: should be more systematic about what can be set this way.
-      for k of req.body
-        view[k] = req.body[k]
-      view.save()
-      return resp.send 200, view
-
-
-app.post '/api/:user/views/?', checkUserRights, (req, resp) ->
-  data = req.body
-  view = new View
-    user: req.user.effective.shortName
-    name: data.name
-    displayName: data.displayName
-    box: data.box
-
-  view.save (err) ->
-    console.warn err if err?
-    View.findOneById view.box, req.user.effective.shortName, (err, view) ->
-      console.warn err if err?
-      resp.send 200, view
 
 # user api is staff-only for now (probably forever)
 app.get '/api/user/?', checkStaff, (req, resp) ->

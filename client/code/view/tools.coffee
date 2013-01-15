@@ -9,5 +9,5 @@ class Cu.View.ToolList extends Backbone.View
     @collection.importers().each @addTool
 
   addTool: (tool) =>
-    view = new Cu.View.ToolTile model: tool
+    view = new Cu.View.AppTile model: tool
     @$el.append view.render().el

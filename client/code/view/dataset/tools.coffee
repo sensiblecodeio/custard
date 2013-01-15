@@ -10,5 +10,5 @@ class Cu.View.DataSetTools extends Backbone.View
     @collection.nonimporters().each @addTool
 
   addTool: (tool) =>
-    view = new Cu.View.ToolTile model: tool, dataset: @model
+    view = new Cu.View.PluginTile model: tool, dataset: @model
     @$el.append view.render().el

@@ -282,11 +282,11 @@ html, body {
     background-image: url(/image/watermark-spreadsheet.png);
 }
 
-.view.csvdownload {
+.view.download {
     background-image: url(/image/watermark-download.png);
 }
 
-.view.newdataset {
+.view.source {
     background-image: url(/image/watermark-viewsource.png);
 }
 
@@ -295,10 +295,6 @@ html, body {
     text-decoration: none;
     background-color: #176dc2;
     color: #fff;
-}
-
-a.view {
-    padding-bottom: 10px;
 }
 
 .dataset h3,

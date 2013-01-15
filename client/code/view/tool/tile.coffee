@@ -21,7 +21,7 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
 
   install: (e) ->
     e.preventDefault()
-    @$el.find('#tool-loading').addClass 'loading'
+    @$el.addClass 'loading'
     dataset = Cu.Model.Dataset.findOrCreate
       user: window.user.effective.shortName
       box: @options.dataset.id
@@ -30,7 +30,7 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
       success: (dataset, resp, options) =>
         dataset.installPlugin @model.get('name'), (err, view) =>
           console.warn 'Error', err if err?
-          @$el.find('#tool-loading').removeClass 'loading'
+          @$el.removeClass 'loading'
           window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
       error: (model, xhr, options) ->
         console.warn xhr

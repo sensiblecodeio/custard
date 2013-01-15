@@ -384,6 +384,16 @@ a.view {
     text-decoration: none;
 }
 
+.tool.loading {
+    background-image: url('/image/tool-loader-eee.gif');
+    background-position: 230px 15px;
+    background-repeat: no-repeat;
+}
+
+.tool.loading:hover {
+    background-image: url('/image/tool-loader-ddd.gif');
+}
+
 .tool h3 {
     margin: 0 0 5px 0;
     font-weight: normal;
@@ -396,11 +406,6 @@ a.view {
     font-size: 14px;
     line-height: 16px;
 }
-
-.tool p.loading {
-    background: transparent url(/image/context-search-loader.gif) 195px center no-repeat;
-}
-
 
 #content p.loading {
     margin-top: 100px;

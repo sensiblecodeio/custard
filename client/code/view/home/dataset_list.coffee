@@ -1,5 +1,5 @@
 class Cu.View.DatasetList extends Backbone.View
-  className: 'my-datasets'
+  className: 'dataset-list'
 
   render: ->
     @addDataSets()

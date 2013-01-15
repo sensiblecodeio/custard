@@ -1,2 +1,2 @@
-<h3><a href="/view/<%= @box %>/"><%= @displayName %></a></h3>
-<p><i class="icon-user icon-white space"></i> <span>Author:</span> ScraperWiki</p>
+<h3><%= @displayName %></h3>
+<!--<p><i class="icon-user icon-white space"></i> <span>Author:</span> ScraperWiki</p>-->

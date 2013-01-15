@@ -29,7 +29,7 @@ class Cu.View.UserLinks extends Backbone.View
           user
       error: (jqXHR, textStatus, errorThrown) ->
         $('#context-search').removeClass 'loading'
-        console.log 'Could not query users API', errorThrown
+        console.warn 'Could not query users API', errorThrown
 
   blurContextSearch: ->
     $('#context-search').removeClass 'focussed'
@@ -60,7 +60,7 @@ class Cu.View.UserLinks extends Backbone.View
           view = new Cu.View.ContextSearchLink tophit
           li.after view.render().el
       else
-        console.log 'Could not query users API'
+        console.warn 'Could not query users API'
     else if t == ''
       results.remove()
 

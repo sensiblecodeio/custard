@@ -28,4 +28,4 @@ class Cu.View.ToolContent extends Backbone.View
          delete dataset.new
          window.app.navigate "/dataset/#{dataset.id}", {trigger: true}
        error: (model, xhr, options) ->
-         console.log "Error saving dataset (xhr status: #{xhr.status} #{xhr.statusText})"
+         console.warn "Error saving dataset (xhr status: #{xhr.status} #{xhr.statusText})"

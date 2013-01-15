@@ -76,7 +76,7 @@ class Cu.View.DataSetTitle extends Cu.View.Title
           , 1000
         error: (e) =>
           $label.text @model.name()
-          console.log 'error saving new name', e
+          console.warn 'error saving new name', e
 
   editableNameEscaped: (e) ->
     e.preventDefault()

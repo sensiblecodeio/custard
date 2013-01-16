@@ -27,7 +27,7 @@ class Cu.View.EditableTitle extends Cu.View.Title
     e.preventDefault()
     $a = @$el.find('.editable')
     @$el.find('input')
-      .val(@model.name())
+      .val(@model.get 'displayName')
       .css('width', $a.width() + 20)
       .show 0, ->
         @focus()

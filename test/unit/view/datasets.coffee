@@ -17,10 +17,11 @@ describe 'View: Datasets', ->
 
     global.window.app = {navigate: ->}
     $('body').html '<div id="content"></div>'
+    views = new Backbone.Collection
     models = [
-      new Backbone.Model {_id: 1, name: 'test', displayName: 'Test', boxName: 'sdfsd'}
-      new Backbone.Model {_id: 2, name: 'test2', displayName: 'Test 2', boxName: 'sasdas'}
-      new Backbone.Model {_id: 3, name: 'test3', displayName: 'Test 3', boxName: 'sasisdfdas'}
+      new Backbone.Model {_id: 1, name: 'test', displayName: 'Test', boxName: 'sdfsd', views: views}
+      new Backbone.Model {_id: 2, name: 'test2', displayName: 'Test 2', boxName: 'sasdas', views: views}
+      new Backbone.Model {_id: 3, name: 'test3', displayName: 'Test 3', boxName: 'sasisdfdas', views: views}
     ]
 
     datasets = new Backbone.Collection models

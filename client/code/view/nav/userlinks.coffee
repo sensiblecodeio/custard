@@ -69,16 +69,17 @@ class Cu.View.UserLinks extends Backbone.View
     @$el.html JST.userlinks
 
     # add real user link
-    if window.user.effective.shortName != window.user.real.shortName
-      view = new Cu.View.ContextLink
-        contextUser: window.user.real
-        contextActive: false
-      @$el.find('.header').after view.render().el
+    if window.user.effective?
+      if window.user.effective.shortName isnt window.user.real.shortName
+        view = new Cu.View.ContextLink
+          contextUser: window.user.real
+          contextActive: false
+        @$el.find('.header').after view.render().el
 
-    # add effective user link
-    view = new Cu.View.ContextLink
-      contextUser: window.user.effective
-      contextActive: true
-    @$el.find('.header').after view.render().el
+      # add effective user link
+      view = new Cu.View.ContextLink
+        contextUser: window.user.effective
+        contextActive: true
+      @$el.find('.header').after view.render().el
 
     @

@@ -8,6 +8,6 @@
     </li>
 <% else: %>
     <li class="login">
-        <a href="/login">Log In</a>
+        <a href="/login" data-nonpushstate>Log In</a>
     </li>
 <% end %>

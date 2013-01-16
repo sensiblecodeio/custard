@@ -30,7 +30,7 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
       success: (dataset, resp, options) =>
         dataset.installPlugin @model.get('name'), (err, view) =>
           console.warn 'Error', err if err?
-          @$el.removeClass 'loading'
           window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
       error: (model, xhr, options) ->
+        @$el.removeClass 'loading'
         console.warn xhr

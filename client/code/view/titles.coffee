@@ -26,9 +26,12 @@ class Cu.View.EditableTitle extends Cu.View.Title
   nameClicked: (e) ->
     e.preventDefault()
     $a = @$el.find('.editable')
+    @$el.find('input')
+      .val(@model.name())
+      .css('width', $a.width() + 20)
+      .show 0, ->
+        @focus()
     $a.hide()
-    @$el.find('input').val(@model.get 'displayName').css('width', $a.width() + 20).show 0, ->
-      @focus()
 
   editableNameBlurred: ->
     $label = @$el.find('.editable')
@@ -100,3 +103,42 @@ class Cu.View.ViewTitle extends Cu.View.EditableTitle
     @$el.html tpl
     @
 
+<<<<<<< HEAD
+=======
+  nameClicked: (e) ->
+    e.preventDefault()
+    $a = @$el.find('.editable')
+    @$el.find('input').val(@model.get 'displayName').css('width', $a.width() + 20).show 0, ->
+      @focus()
+    $a.hide()
+
+  editableNameBlurred: ->
+    $label = @$el.find('.editable')
+    $input = @$el.find('input')
+    @newName = $.trim($input.val())
+    @oldName = $label.text()
+    if @newName == '' or @newName == $label.text()
+      $label.show().next().hide()
+    else
+      $input.hide()
+      $label.text(@newName).show()
+      @model.set 'displayName', @newName
+      @dataset().save {},
+        success: =>
+          $label.addClass 'saved'
+          setTimeout ->
+            $label.removeClass 'saved'
+          , 1000
+        error: (e) =>
+          $label.text @oldName
+          @model.set 'displayName', @oldName
+          console.warn 'error saving new name', e
+
+  editableNameEscaped: (e) ->
+    e.preventDefault()
+    @$el.find('.editable').show().next().hide()
+
+  keypressOnEditableName: (event) ->
+    @editableNameBlurred() if event.keyCode is 13
+    @editableNameEscaped() if event.keyCode is 27
+>>>>>>> 17d994a3ead0471d0ab2db3d9acccbf1e8933b16

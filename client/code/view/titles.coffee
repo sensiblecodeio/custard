@@ -55,9 +55,9 @@ class Cu.View.DataSetTitle extends Cu.View.Title
   nameClicked: (e) ->
     e.preventDefault()
     $a = @$el.find('.editable')
-    $a.hide()
     @$el.find('input').val(@model.name()).css('width', $a.width() + 20).show 0, ->
       @focus()
+    $a.hide()
 
   editableNameBlurred: ->
     $label = @$el.find('.editable')
@@ -114,9 +114,9 @@ class Cu.View.ViewTitle extends Cu.View.Title
   nameClicked: (e) ->
     e.preventDefault()
     $a = @$el.find('.editable')
-    $a.hide()
     @$el.find('input').val(@model.get 'displayName').css('width', $a.width() + 20).show 0, ->
       @focus()
+    $a.hide()
 
   editableNameBlurred: ->
     $label = @$el.find('.editable')

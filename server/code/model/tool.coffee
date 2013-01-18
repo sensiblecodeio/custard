@@ -1,4 +1,5 @@
 child_process = require 'child_process'
+path = require 'path'
 fs = require 'fs'
 exists = fs.exists or path.exists
 rimraf = require 'rimraf'

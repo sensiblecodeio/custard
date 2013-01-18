@@ -27,7 +27,7 @@ class Tool extends ModelBase
     child_process.exec "git clone #{@gitUrl} #{@directory}", callback
 
   loadManifest: (callback) ->
-    fs.exists @directory, (isok) =>
+    exists @directory, (isok) =>
       if not isok
         callback 'not cloned'
         return

@@ -6,6 +6,7 @@ class Cu.View.ToolTile extends Backbone.View
 
   render: ->
     @$el.html JST['tool-tile'] @model.toJSON()
+    @$el.addClass @model.get('name')
     @
 
 class Cu.View.AppTile extends Cu.View.ToolTile

@@ -34,19 +34,20 @@ describe 'Use a plugin to create a new view', ->
         result.should.include "#{url}/dataset/"
         @datasetUrl = result
 
-      context 'when I click on the Spreadsheet tool', ->
+      context 'when I click on the Code Your Own View tool', ->
         before (done) ->
-          link = browser.query('a.tool')
+          link = browser.query('a.code-your-own-view')
           browser.fire 'click', link, ->
+            # Zarino isn't quite sure why we have
+            # two levels of .wait() in here, but he's
+            # going to leave it in just in case.
             browser.wait 1000, ->
               browser.wait done
 
         it 'takes me to the new view', ->
           result = browser.location.href
-          result.should.match /dataset[/][^/]+[/]view[/][^/]+/
+          result.should.match RegExp('dataset/[^/]+/view/[^/]+')
           @viewPathname = browser.location.pathname
-
-        it 'shows me stuff', ->
 
       context "when I return to the dataset's page", ->
         before (done) ->

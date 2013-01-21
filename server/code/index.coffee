@@ -332,10 +332,12 @@ app.get '*', (req, resp) ->
 # Define Port
 port = process.env.CU_PORT or 3001
 
-if existsSync(port) && fs.lstatSync(port).isSocket()
-  fs.chmodSync port, 0o600
-  child_process.exec "chown www-data #{port}"
+if existsSync(port)
+  fs.unlinkSync port
 
 # Start Server
 app.listen port, ->
+  if existsSync(port)
+    fs.chmodSync port, 0o600
+    child_process.execSync "chown www-data #{port}"
   console.log "Listening on #{port}\nPress CTRL-C to stop server."

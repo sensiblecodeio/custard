@@ -46,9 +46,6 @@ class Cu.Model.Tool extends Backbone.Model
     r = Math.random() * Math.pow(10,9)
     n = Nibbler.b32encode(String.fromCharCode(r>>24,(r>>16)&0xff,(r>>8)&0xff,r&0xff)).replace(/[=]/g,'').toLowerCase()
     @set 'boxName', n
-    # HACK: Set this here so the tool code can have access to it
-    # our box messaging API (using easyXDM) should take care of this
-    window.box = n
 
 class Cu.Collection.Tools extends Backbone.Collection
   model: Cu.Model.Tool

@@ -51,11 +51,11 @@ class Cu.Router.Main extends Backbone.Router
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 
-  tool: (tool) ->
-    window.tools.fetch
-      success: =>
-        model = window.tools.get tool
-        titleView = new Cu.View.Title {text: "My Tools / #{model.get('manifest').displayName}" }
+  tool: (box) ->
+    mod = Cu.Model.Dataset.findOrCreate box: box
+    mod.fetch
+      success: (model) =>
+        titleView = new Cu.View.DataSetTitle {model: model}
         contentView = new Cu.View.ToolContent {model: model}
         @titleView.showView titleView
         @appView.showView contentView

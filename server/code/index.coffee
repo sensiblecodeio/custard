@@ -339,5 +339,5 @@ if existsSync(port)
 app.listen port, ->
   if existsSync(port)
     fs.chmodSync port, 0o600
-    child_process.execSync "chown www-data #{port}"
+    child_process.exec "chown www-data #{port}"
   console.log "Listening on #{port}\nPress CTRL-C to stop server."

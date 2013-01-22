@@ -192,10 +192,10 @@ app.get '/logout', (req, resp) ->
   req.logout()
   resp.redirect '/'
 
-app.get new RegExp('/preview/(\\w+)/?(\\w+)?/?'), (req, resp) ->
+app.get '/preview/:box/?', (req, resp) ->
   resp.render 'preview',
     user: JSON.stringify req.user.effective
-    boxName: req.params[0]
+    boxName: req.params.box
     boxServer: process.env.CU_BOX_SERVER
 
 # API!

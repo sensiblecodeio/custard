@@ -40,11 +40,8 @@ function reinstall(){
   .done(function(settings){
     refresh(true)
   }).fail(function(jqXHR, textStatus, errorThrown){
-    if (errorThrown == 'parsererror') {
-      alert('PARSE ERROR')
-    } else {
-      alert('DUNNO')
-    }
+    alert('Ooops! Something went wrong. See javascript console for details.')
+    console.warn(jqXHR.status, jqXHR.statusText, jqXHR.responseText, textStatus, errorThrown)
   })
 }
 
@@ -57,7 +54,14 @@ $(function(){
     baseUrl = window.boxServer + '/' + window.boxName + '/' + settings.publish_token + '/http'
     refresh(true)
   }).fail(function(jqXHR, textStatus, errorThrown){
-      alert('DUNNO')
+    if(errorThrown == 'Not Found'){
+      $('h1').html('<b class="text-error">Error!</b> Box &ldquo;' + window.boxName + '&rdquo; does not exist!')
+    } else if(errorThrown == 'Forbidden'){
+      $('h1').html('<b class="text-error">Error!</b> Incorrect apikey for accessing box &ldquo;' + window.boxName + '&rdquo;!')
+    } else {
+      $('h1').html('<b class="text-error">Error!</b> Something went wrong. See javascript console for details.')
+    }
+    console.warn(jqXHR.status, jqXHR.statusText, jqXHR.responseText, textStatus, errorThrown)
   })
 
   var obj = {

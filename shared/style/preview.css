@@ -1,0 +1,129 @@
+html, body {
+  height: 100%;
+}
+ 
+body {
+  position: relative;
+  width: 100%;
+}
+
+header {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 49px;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+h1 {
+  font-size: 18px;
+  line-height: 49px;
+  height: 49px;
+  vertical-align: top;
+  font-weight: normal;
+  padding: 0 120px 0 65px;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+h1 .hash {
+  color: #ccc;
+  cursor: pointer;
+}
+
+header a {
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: 14px;
+  width: 39px;
+  height: 39px;
+  text-indent: -9000px;
+  background: transparent url(/image/refresh.png) 50% 50% no-repeat;
+  border: 1px solid transparent;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#refresh:hover,
+#refresh.hover {
+  background-color: #82c834;
+  background-image: url(/image/refresh-white.png);
+}
+
+#toggle-settings {
+  left: auto;
+  right: 64px;
+  background-image: url(/image/settings.png);
+}
+
+#toggle-settings:hover {
+  background-color: #37AEEB;
+  background-image: url(/image/settings-white.png);
+}
+
+#reinstall {
+  left: auto;
+  right: 14px;
+  background-image: url(/image/reinstall.png);
+}
+
+#reinstall:hover {
+  background-color: #DD4B39;
+  background-image: url(/image/reinstall-white.png);
+}
+
+#settings {
+  left: auto;
+  right: 20px;
+  top: 30px;
+  width: 708px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+#settings .arrow {
+  left: auto;
+  right: 53px;
+}
+
+#settings p {
+  margin: 0;
+  padding: 0 10px 10px 10px;
+  font-size: 14px;
+  color: rgb(153, 153, 153);
+}
+
+#settings textarea {
+  margin: 10px;
+  width: 670px;
+  max-width: 670px;
+  font-family: Consolas, Courier, "Courier New", monospace;
+  height: 120px;
+  white-space: pre;
+}
+
+#iframe-container {
+  position: absolute;
+  z-index: 5;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 0; /* required to avoid extra scrollbars?? */
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}

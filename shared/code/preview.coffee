@@ -2,11 +2,11 @@ refresh = (force) ->
   settings = $("#settings textarea").val()
   if settings isnt activeSettings or force is true
     activeSettings = settings
-    $("h1").html baseUrl + "<span class=\"hash\">#" + encodeURIComponent(settings) + "</span>"
+    $("h1").html window.baseUrl + "<span class=\"hash\">#" + encodeURIComponent(settings) + "</span>"
     
     # We have to completely regenerate the iframe, because
     # iframes don't reload when you only change their URL hash.
-    $("iframe").replaceWith "<iframe src=\"" + baseUrl + "#" + encodeURIComponent(settings) + "\"></iframe>"
+    $("iframe").replaceWith "<iframe src=\"" + window.baseUrl + "#" + encodeURIComponent(settings) + "\"></iframe>"
 flashRefreshButton = ->
   $("#refresh").addClass "hover"
   setTimeout (->
@@ -35,7 +35,7 @@ $ ->
   activeSettings = null
   exec("cd; cat scraperwiki.json").done((data) ->
     settings = JSON.parse(data)
-    baseUrl = window.boxServer + "/" + window.boxName + "/" + settings.publish_token + "/http"
+    window.baseUrl = window.boxServer + "/" + window.boxName + "/" + settings.publish_token + "/http"
     refresh true
   ).fail (jqXHR, textStatus, errorThrown) ->
     if errorThrown is "Not Found"

@@ -36,7 +36,7 @@ function exec(cmd) {
 }
 
 function reinstall(){
-  exec("cd; sh -c */setup;echo hai")
+  exec("cd; for f in */setup; do $f;done")
   .done(function(settings){
     refresh(true)
   }).fail(function(jqXHR, textStatus, errorThrown){

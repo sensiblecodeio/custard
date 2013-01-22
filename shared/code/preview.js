@@ -24,19 +24,20 @@ function hideSettings(){
   $('#settings').hide()
 }
 
-$(function(){
-  activeSettings = null
-
-  $.ajax({
+function exec(cmd) {
+  return $.ajax({
     url: window.boxServer + '/' + window.boxName + '/exec',
     type: 'POST',
-    dataType: 'json',
     data: {
       apikey: window.user.apiKey,
-      cmd: 'cd; cat scraperwiki.json'
+      cmd: cmd
     }
-  }).done(function(settings){
-    baseUrl = window.boxServer + '/' + window.boxName + '/' + settings.publish_token + '/http'
+  })
+}
+
+function reinstall(){
+  exec("cd; sh -c */setup;echo hai")
+  .done(function(settings){
     refresh(true)
   }).fail(function(jqXHR, textStatus, errorThrown){
     if (errorThrown == 'parsererror') {
@@ -45,6 +46,20 @@ $(function(){
       alert('DUNNO')
     }
   })
+}
+
+$(function(){
+  activeSettings = null
+
+  exec('cd; cat scraperwiki.json')
+  .done(function(data){
+    settings = JSON.parse(data)
+    baseUrl = window.boxServer + '/' + window.boxName + '/' + settings.publish_token + '/http'
+    refresh(true)
+  }).fail(function(jqXHR, textStatus, errorThrown){
+      alert('DUNNO')
+  })
+
   var obj = {
     dataset_box_url: window.boxServer + '/boxname/publishtoken',
     view_apikey: window.user.apiKey
@@ -79,8 +94,8 @@ $(function(){
     hideSettings()
   })
 
-  $('h1').on('click', '.hash', function(){
-    showSettings()
-  })
+  $('h1').on('click', '.hash', showSettings)
+
+  $('#reinstall').on('click', reinstall)
 
 })

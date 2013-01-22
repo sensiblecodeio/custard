@@ -61,8 +61,12 @@ $(function(){
   })
 
   var obj = {
-    dataset_box_url: window.boxServer + '/boxname/publishtoken',
-    view_apikey: window.user.apiKey
+    source: {
+        apikey: window.user.apiKey
+    },
+    target: {
+        url: window.boxServer + '/boxname/publishtoken'
+    }
   }
   $('textarea').val(JSON.stringify(obj, null, 2))
 

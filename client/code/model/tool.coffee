@@ -10,7 +10,7 @@ class Cu.Model.Tool extends Backbone.Model
         @exec("cd; git clone #{@get 'gitUrl'} #{@get 'name'} --depth 1").complete callback
 
   setup: (callback) ->
-    @exec("cd;~/#{@get 'name'}/setup").success callback
+    @exec("cd;#{@get 'name'}/setup").success callback
 
   publishToken: (callback) ->
     if @_publishToken?

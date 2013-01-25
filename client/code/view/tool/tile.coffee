@@ -35,7 +35,7 @@ class Cu.View.AppTile extends Cu.View.ToolTile
         wait: true
         success: ->
           delete dataset.new
-          window.app.navigate "/tool/#{dataset.id}", {trigger: true}
+          window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
         error: (model, xhr, options) ->
           @$el.removeClass 'loading'
           console.warn "Error saving dataset (xhr status: #{xhr.status} #{xhr.statusText})"

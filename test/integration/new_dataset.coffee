@@ -27,6 +27,6 @@ describe 'New dataset tool', ->
         browser.fire 'click', link, ->
           browser.wait done
 
-      it 'takes me to the tool loading page', ->
+      it 'takes me to the dataset settings page', ->
         result = browser.location.href
-        result.should.include "#{url}/tool/"
+        result.should.match new RegExp("#{url}/dataset/[^/]+/settings")

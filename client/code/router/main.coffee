@@ -25,8 +25,8 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'main'
     @route RegExp('tools/?'), 'tools'
-    @route RegExp('tool/([^/]+)/?'), 'tool'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
+    @route RegExp('dataset/([^/]+)/settings/?'), 'datasetSettings'
     @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
@@ -51,7 +51,7 @@ class Cu.Router.Main extends Backbone.Router
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 
-  tool: (box) ->
+  datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>

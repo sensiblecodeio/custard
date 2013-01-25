@@ -26,7 +26,7 @@ class Cu.View.AppTile extends Cu.View.ToolTile
       dataset = Cu.Model.Dataset.findOrCreate
         user: user.shortName
         name: @model.get 'name'
-        displayName: @model.get 'name'
+        displayName: @model.get('manifest').displayName
         box: @model.get 'boxName'
 
       dataset.new = true

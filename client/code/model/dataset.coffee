@@ -40,7 +40,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
           @get('views').add
             user: user.shortName
             name: tool.get 'name'
-            displayName: tool.get 'name'
+            displayName: tool.get('manifest').displayName
             box: tool.get 'boxName'
           @save()
           newView = @get('views').findById tool.get 'boxName'

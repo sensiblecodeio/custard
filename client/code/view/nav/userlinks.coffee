@@ -66,7 +66,7 @@ class Cu.View.UserLinks extends Backbone.View
 
   render: ->
     # populate user dropdown menu
-    @$el.html JST.userlinks
+    @$el.html JST.userlinks(isStaff: window.user.real.isStaff)
 
     # add real user link
     if window.user.effective?

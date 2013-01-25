@@ -123,6 +123,9 @@ describe 'Switch', ->
       img = @browser.query('.user a img')
       img.src.should.include 'gravatar'
 
+    it "shows the context search box", ->
+      should.exist @browser.document.getElementById('context-search')
+
   context 'when a non-staff member attempts to switch context', ->
     before (done) ->
       @browser = new Browser()
@@ -134,10 +137,12 @@ describe 'Switch', ->
             @browser.visit BASE_URL, =>
               @browser.wait done
 
-
     it "hasn't changed who I am", ->
       @browser.text('.user').should.include 'Mr Ickle Test'
       @browser.text('.user').should.not.include 'Staff Test'
 
     it "still shows me my datasets", ->
       @browser.text('.dataset-list').should.include dataset_name
+
+    it "doesn't show the context search box", ->
+      should.not.exist @browser.document.getElementById('context-search')

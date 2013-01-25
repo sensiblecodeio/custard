@@ -37,15 +37,14 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
       success: =>
         tool = window.tools.get name
         tool.install =>
-          tool.setup =>
-            @get('views').add
-              user: user.shortName
-              name: tool.get 'name'
-              displayName: tool.get 'name'
-              box: tool.get 'boxName'
-            @save()
-            newView = @get('views').findById tool.get 'boxName'
-            callback null, newView
+          @get('views').add
+            user: user.shortName
+            name: tool.get 'name'
+            displayName: tool.get 'name'
+            box: tool.get 'boxName'
+          @save()
+          newView = @get('views').findById tool.get 'boxName'
+          callback null, newView
       error: (model_, xhr_, err) =>
         callback err
 

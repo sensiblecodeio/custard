@@ -7,10 +7,7 @@ class Cu.Model.Tool extends Backbone.Model
       if status != 'success'
         callback ajaxObj, status
       else
-        @exec("cd; git clone #{@get 'gitUrl'} #{@get 'name'} --depth 1").complete callback
-
-  setup: (callback) ->
-    @exec("cd;#{@get 'name'}/setup").success callback
+        @exec("cd; rm -r http && git clone #{@get 'gitUrl'} tool --depth 1 && ln -s tool/http http").complete callback
 
   publishToken: (callback) ->
     if @_publishToken?

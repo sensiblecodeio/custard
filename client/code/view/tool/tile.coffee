@@ -22,24 +22,23 @@ class Cu.View.AppTile extends Cu.View.ToolTile
     @$el.addClass 'loading'
 
     @model.install (jqXHR, text) =>
-      @model.setup (jqXHR, text) =>
-        user = window.user.effective
-        dataset = Cu.Model.Dataset.findOrCreate
-          user: user.shortName
-          name: @model.get 'name'
-          displayName: @model.get 'name'
-          box: @model.get 'boxName'
+      user = window.user.effective
+      dataset = Cu.Model.Dataset.findOrCreate
+        user: user.shortName
+        name: @model.get 'name'
+        displayName: @model.get 'name'
+        box: @model.get 'boxName'
 
-        dataset.new = true
+      dataset.new = true
 
-        dataset.save {},
-          wait: true
-          success: ->
-            delete dataset.new
-            window.app.navigate "/tool/#{dataset.id}", {trigger: true}
-          error: (model, xhr, options) ->
-            @$el.removeClass 'loading'
-            console.warn "Error saving dataset (xhr status: #{xhr.status} #{xhr.statusText})"
+      dataset.save {},
+        wait: true
+        success: ->
+          delete dataset.new
+          window.app.navigate "/tool/#{dataset.id}", {trigger: true}
+        error: (model, xhr, options) ->
+          @$el.removeClass 'loading'
+          console.warn "Error saving dataset (xhr status: #{xhr.status} #{xhr.statusText})"
 
 class Cu.View.PluginTile extends Cu.View.ToolTile
   events:

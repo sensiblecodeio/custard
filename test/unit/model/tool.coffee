@@ -54,26 +54,3 @@ describe 'Model: Tool', ->
           cmd: sinon.match /.*git clone.*/
 
       called.should.be.true
-
-  context 'when a tool is installed', ->
-    it 'git clones the tool into the box'
-
-  context 'when the setup function is called', ->
-    before (done) ->
-      ajaxObj =
-        success: (cb) -> cb()
-      @ajax = sinon.stub(jQuery, 'ajax').returns ajaxObj
-      @tool.setup done
-
-    after ->
-      jQuery.ajax.restore()
-
-    it 'execs the setup script in the box', ->
-      called = @ajax.calledWith
-        type: 'POST'
-        url: "#{base_url}/#{@tool.get 'boxName'}/exec"
-        data:
-          apikey: sinon.match /.+/
-          cmd: sinon.match /.*setup.*/
-
-      called.should.be.true

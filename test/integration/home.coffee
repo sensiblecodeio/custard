@@ -37,35 +37,3 @@ describe 'Home page (logged in)', ->
     xit 'shows the "Code your own Dataset" tool', ->
       tools = browser.queryAll '.dataset-tools .tool'
       $(tools).text().toLowerCase().should.include 'code your own dataset'
-
-    context 'when I click on the highrise tool', ->
-      before (done) ->
-        link = browser.query('a[href="/tool/highrise"].tool')
-        browser.fire 'click', link, done
-
-      it 'takes me to the highrise tool page', ->
-        result = browser.location.href
-        result.should.equal "#{url}/tool/highrise"
-
-      it 'displays the setup message of the tool', (done) ->
-        browser.wait ->
-          browser.text().should.include "Enter your username and password"
-          done()
-
-
-      context 'when I enter my details and click import', ->
-        before (done) ->
-          browser.fill '#username', process.env.HIGHRISE_USER
-          browser.fill '#password', process.env.HIGHRISE_PASSWORD
-          browser.fill '#domain', process.env.HIGHRISE_DOMAIN
-          browser.pressButton  '#import', ->
-            browser.wait done
-
-        it 'shows a lovely spreadsheet of our amazing data', ->
-          browser.location.href.should.include "#{url}/dataset/"
-
-        it 'has made a JSON cookie', ->
-          result = browser.evaluate "function(){return $.cookie('datasets')}"
-          parsed = JSON.parse result
-          should.exist parsed
-

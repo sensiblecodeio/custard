@@ -80,17 +80,17 @@ describe 'Login', ->
 
 describe 'Switch', ->
 
-  user_a = 'ickletest'
-  pass_a = 'toottoot'
-  user_b = 'teststaff'
-  pass_b = process.env.CU_TEST_STAFF_PASSWORD
+  nonstaff_user = 'ickletest'
+  nonstaff_pass = 'toottoot'
+  staff_user = 'teststaff'
+  staff_pass = process.env.CU_TEST_STAFF_PASSWORD
   dataset_name = "dataset-#{String(Math.random()*Math.pow(2,32))[0..4]}"
 
   before (done) ->
     # log in as A
-    login user_a, pass_a, (err, resp, body) ->
+    login nonstaff_user, nonstaff_pass, (err, resp, body) ->
       request.post
-        uri: "#{BASE_URL}/api/#{user_a}/datasets/"
+        uri: "#{BASE_URL}/api/#{nonstaff_user}/datasets/"
         form:
           name: dataset_name
           displayName: dataset_name
@@ -101,15 +101,15 @@ describe 'Switch', ->
     @browser = new Browser()
     # Log in as B via zombie
     @browser.visit BASE_URL, =>
-      @browser.fill '#username', user_b
-      @browser.fill '#password', pass_b
+      @browser.fill '#username', staff_user
+      @browser.fill '#password', staff_pass
       @browser.pressButton '#login', done
 
   context 'when a staff member switches context', ->
     before (done) ->
-      @browser.visit "#{BASE_URL}/switch/#{user_a}", =>
+      @browser.visit "#{BASE_URL}/switch/#{nonstaff_user}", =>
         @browser.wait done
-    
+
     it 'redirected to home page', ->
       @browser.location.href.should.equal "#{BASE_URL}/"
 
@@ -130,10 +130,10 @@ describe 'Switch', ->
     before (done) ->
       @browser = new Browser()
       @browser.visit BASE_URL, =>
-        @browser.fill '#username', user_b
-        @browser.fill '#password', pass_b
+        @browser.fill '#username', nonstaff_user
+        @browser.fill '#password', nonstaff_pass
         @browser.pressButton '#login', =>
-          @browser.visit "#{BASE_URL}/switch/#{user_a}", =>
+          @browser.visit "#{BASE_URL}/switch/#{staff_user}", =>
             @browser.visit BASE_URL, =>
               @browser.wait done
 

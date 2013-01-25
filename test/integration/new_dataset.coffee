@@ -23,27 +23,10 @@ describe 'New dataset tool', ->
 
     context 'when I click on the newdataset tool', ->
       before (done) ->
-        link = browser.query('a[href="/tool/newdataset"].tool')
+        link = browser.query('.newdataset.tool')
         browser.fire 'click', link, ->
           browser.wait done
 
-      it 'takes me to the new dataset page', ->
+      it 'takes me to the tool loading page', ->
         result = browser.location.href
-        result.should.include "#{url}/dataset/"
-
-      context 'when I click on the view source view', ->
-        before (done) ->
-          link = browser.query('.newdataset a')
-          browser.fire 'click', link, ->
-            browser.wait 1000, ->
-              browser.wait done
-
-        xit 'takes me to the view source view', ->
-          result = browser.location.href
-          result.should.include '/newdataset'
-
-        xit 'shows me details of how to ssh in to my box', ->
-          iframe = browser.query('iframe')
-          text = $(iframe).contents().find('body').text()
-          text.should.include 'Add your SSH key'
-          text.should.match /\w+@box\.scraperwiki\.com/g
+        result.should.include "#{url}/tool/"

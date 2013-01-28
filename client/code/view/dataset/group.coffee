@@ -7,7 +7,7 @@ class Cu.View.DataSetGroup extends Backbone.View
     @
 
   addDataSet: ->
-    view = new Cu.View.DataSet model: @model
+    view = new Cu.View.DatasetTile model: @model
     @$el.html view.render().el
 
   addViews: =>

@@ -64,7 +64,7 @@ class Cu.View.EditableTitle extends Cu.View.Title
     @editableNameEscaped() if event.keyCode is 27
 
 
-class Cu.View.DataSetTitle extends Cu.View.EditableTitle
+class Cu.View.DatasetTitle extends Cu.View.EditableTitle
   #TODO: create BaseView to extend events, for the DRY
   events:
     'click .editable': 'nameClicked'

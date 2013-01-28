@@ -55,7 +55,7 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
-        titleView = new Cu.View.DataSetTitle {model: model}
+        titleView = new Cu.View.DatasetTitle {model: model}
         contentView = new Cu.View.ToolContent {model: model}
         @titleView.showView titleView
         @appView.showView contentView
@@ -68,8 +68,8 @@ class Cu.Router.Main extends Backbone.Router
       success: (model, resp, options) =>
         window.tools.fetch
           success: =>
-            titleView = new Cu.View.DataSetTitle {model: model}
-            contentView = new Cu.View.DataSetOverview { model: model, tools: window.tools }
+            titleView = new Cu.View.DatasetTitle {model: model}
+            contentView = new Cu.View.DatasetOverview { model: model, tools: window.tools }
             @titleView.showView titleView
             @appView.showView contentView
           error: (x,y,z) ->

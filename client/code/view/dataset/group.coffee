@@ -1,12 +1,12 @@
-class Cu.View.DataSetGroup extends Backbone.View
+class Cu.View.DatasetGroup extends Backbone.View
   className: 'dataset-group'
 
   render: ->
-    @addDataSet()
+    @addDataset()
     @addViews()
     @
 
-  addDataSet: ->
+  addDataset: ->
     view = new Cu.View.DatasetTile model: @model
     @$el.html view.render().el
 

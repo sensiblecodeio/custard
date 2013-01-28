@@ -1,4 +1,4 @@
-class Cu.View.DataSetViews extends Backbone.View
+class Cu.View.DatasetViews extends Backbone.View
   className: 'dataset-views'
 
   render: ->

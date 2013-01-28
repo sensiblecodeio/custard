@@ -2,7 +2,10 @@ class Cu.View.DatasetTile extends Backbone.View
   className: 'dataset'
   tagName: 'a'
   attributes: ->
-    href: "/dataset/#{@model.attributes.box}"
+    if @options.details?
+      href: "/dataset/#{@model.attributes.box}/settings"
+    else
+      href: "/dataset/#{@model.attributes.box}"
 
   initialize: ->
     @model.on 'change', @render, this

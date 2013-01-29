@@ -85,6 +85,39 @@ describe 'Login', ->
 
      context 'when I try to login with my email address as my username', ->
 
+describe 'Password', ->
+  context 'when I use the password reset link', ->
+    newUser = String(Math.random()).replace('0.', 'pass-')
+    newPass = newUser
+    before (done) ->
+      login 'teststaff', process.env.CU_TEST_STAFF_PASSWORD, (err, res, body) =>
+        form =
+          displayName: newUser
+          email: "pass@example.com"
+        request.post
+          uri: "#{BASE_URL}/api/#{newUser}"
+          form: form
+        , (err, resp, body) =>
+          obj = JSON.parse body
+          @browser = new Browser()
+          @browser.visit "#{BASE_URL}/set-password/#{obj.token}", =>
+            @browser.wait done
+
+    it 'shows a page with a password field', ->
+      should.exist @browser.query('#password')
+
+    context 'when I fill in my new password', ->
+      before (done) ->
+        @browser.fill '#password', newPass
+        console.log "FILLED"
+        @browser.pressButton '#content .btn-primary', =>
+          console.log "PRESSED"
+          @browser.wait done
+
+      it 'sets my password', ->
+        should.exist @browser.query('.alert-success')
+
+
 describe 'Switch', ->
 
   nonstaff_user = 'ickletest'

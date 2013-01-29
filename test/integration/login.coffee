@@ -21,20 +21,22 @@ login  = (username, password, callback) ->
         password: password
     , callback
 
-createProfile = (name, password, done) ->
+createProfile = (options, done) ->
   login 'teststaff', process.env.CU_TEST_STAFF_PASSWORD, (err, res, body) ->
-    request.post
-      uri: "#{BASE_URL}/api/#{name}"
-      form:
-        displayName: 'Mr Ickle Test'
-        email: 'ickle@example.com'
+    form =
+      displayName: options.displayName
+      email: options.email
+    form.logoUrl = options.logoUrl if options.logoUrl?
 
+    request.post
+      uri: "#{BASE_URL}/api/#{options.shortName}"
+      form: form
     , (err, resp, body) ->
       obj = JSON.parse body
       request.post
         uri: "#{BASE_URL}/api/token/#{obj.token}"
         form:
-          password: password
+          password: options.password
       , done
 
 describe 'Login', ->
@@ -42,7 +44,12 @@ describe 'Login', ->
 
   before (done) ->
     browser = new Browser()
-    createProfile 'ickletest', 'toottoot', done
+    createProfile
+      shortName: 'ickletest'
+      displayName: 'Mr Ickle Test'
+      password: 'toottoot'
+      email: 'ickle@example.com'
+    , done
 
   context 'when I visit the homepage', ->
     before (done) ->

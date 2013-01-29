@@ -19,7 +19,7 @@ class Cu.View.SetPassword extends Backbone.View
     if password!=''
       $button.attr('disabled', true).addClass('loading').html('Setting Password&hellip;')
       $.ajax
-        url: "#{location.origin}/api/token/#{token}"
+        url: "#{location.protocol}//#{location.host}/api/token/#{token}"
         data:
           password: password
         type: 'POST'

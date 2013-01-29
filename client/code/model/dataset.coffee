@@ -42,9 +42,10 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
             name: tool.get 'name'
             displayName: tool.get('manifest').displayName
             box: tool.get 'boxName'
-          @save()
-          newView = @get('views').findById tool.get 'boxName'
-          callback null, newView
+          @save {},
+            success:=>
+              newView = @get('views').findById tool.get 'boxName'
+              callback null, newView
       error: (model_, xhr_, err) =>
         callback err
 

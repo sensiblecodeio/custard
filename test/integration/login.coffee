@@ -109,9 +109,7 @@ describe 'Password', ->
     context 'when I fill in my new password', ->
       before (done) ->
         @browser.fill '#password', newPass
-        console.log "FILLED"
         @browser.pressButton '#content .btn-primary', =>
-          console.log "PRESSED"
           @browser.wait done
 
       it 'sets my password', ->

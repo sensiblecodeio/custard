@@ -243,6 +243,12 @@ html, body {
     background-position: -288px 0;
 }
 
+#title h2 img {
+  height: 32px;
+  vertical-align: -8px;
+  margin-right: 5px;
+}
+
 .dataset-list {
     padding: 0 15px 20px 0;
     overflow: auto;

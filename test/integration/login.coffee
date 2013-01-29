@@ -153,3 +153,30 @@ describe 'Switch', ->
 
     it "doesn't show the context search box", ->
       should.not.exist @browser.document.getElementById('context-search')
+
+describe 'Whitelabel', ->
+
+  browser = null
+  corpProfile =
+    shortName: 'evilcorp'
+    displayName: 'Evil Corp'
+    password: 'evilevil'
+    email: 'mail@evil.com'
+    logoUrl: "https://example.com/evil.png"
+
+  before (done) ->
+    createProfile corpProfile, done
+
+  context 'when I log in to a corporate account', ->
+    before (done) ->
+      @browser = new Browser()
+      @browser.visit BASE_URL, =>
+        @browser.fill '#username', corpProfile.shortName
+        @browser.fill '#password', corpProfile.password
+        @browser.pressButton '#login', =>
+          @browser.visit BASE_URL, =>
+            @browser.wait done
+
+    it 'shows my corporate logo somewhere', ->
+      @browser.html().should.include """src="#{corpProfile.logoUrl}"""
+

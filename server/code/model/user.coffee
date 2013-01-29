@@ -11,6 +11,7 @@ userSchema = new mongoose.Schema
   apikey: {type: String, unique: true}
   isStaff: Boolean
   created: {type: Date, default: Date.now}
+  logoUrl: String
 
 zDbUser = mongoose.model 'User', userSchema
 

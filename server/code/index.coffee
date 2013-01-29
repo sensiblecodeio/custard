@@ -53,19 +53,20 @@ passport.deserializeUser (obj, done) ->
 
 # Convert user into session appropriate user
 getSessionUser = (user) ->
-  if user.email.length
-    email = user.email[0].toLowerCase().trim()
-    emailHash = crypto.createHash('md5').update(email).digest("hex")
-    avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
-  else
-    avatarUrl = "/image/avatar.png"
   session =
     shortName: user.shortName
     displayName: user.displayName
     email: user.email
     apiKey: user.apikey
-    avatarUrl: avatarUrl
     isStaff: user.isStaff
+    avatarUrl: "/image/avatar.png"
+  if user.email.length
+    email = user.email[0].toLowerCase().trim()
+    emailHash = crypto.createHash('md5').update(email).digest("hex")
+    session.avatarUrl = "https://www.gravatar.com/avatar/#{emailHash}"
+  if user.logoUrl?
+    session.logoUrl = user.logoUrl
+  session
 
 # Verify callback for LocalStrategy
 verify = (username, password, done) ->
@@ -308,14 +309,16 @@ app.get '/api/user/?', checkStaff, (req, resp) ->
 
 # :todo: you should POST to /api/user/ to create a user, not /api/<username>
 app.post '/api/:user/?', checkStaff, (req, resp) ->
-  shortName = req.params.user
-  new User(
-    shortName: shortName
+  newUser =
+    shortName: req.params.user
     displayName: req.body.displayName
     email: [req.body.email]
-  ).save (err) ->
+  if req.body.logoUrl?
+    newUser.logoUrl = req.body.logoUrl
+
+  new User(newUser).save (err) ->
     console.warn err if err?
-    User.findByShortName shortName, (err, user) ->
+    User.findByShortName newUser.shortName, (err, user) ->
       token = String(Math.random()).replace('0.', '')
       new Token({token: token, shortName: user.shortName}).save (err) ->
         # 201 Created, RFC2616

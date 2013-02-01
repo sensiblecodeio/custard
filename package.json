@@ -6,14 +6,7 @@
     "express": "3.x",
     "coffee-script": "~1.4",
     "connect-assets": "2.2.1",
-    "nib": "0.4.1",
-    "which": "*",
-    "consolidate": "~0.4.0",
-    "stylus": "~0.30.1",
-    "jsdom": "~0.2.19",
     "bcrypt": "~0.7.3",
-    "request": "~2.12.0",
-    "replay": "~1.6.0",
     "passport": "~0.1.15",
     "passport-local": "~0.1.6",
     "mongoose": "~3.4.0",
@@ -30,10 +23,12 @@
     "test": "mocha --require should --compilers coffee:coffee-script --colors"
   },
   "devDependencies": {
+    "which": "*",
     "async": "~0.1.22",
     "mocha": "*",
     "should": "*",
     "supervisor": "*",
+    "request": "~2.12.0",
     "sinon": "~1.5.0",
     "snockets": "~1.3.8",
     "backbone": "~0.9.9",
@@ -41,7 +36,8 @@
     "zombie": "2.0.0-alpha9",
     "nibbler": "git+https://github.com/mattrobenolt/node_nibbler.git",
     "mkdirp": "~0.3.4",
-    "backbone-relational": "~0.7.0"
+    "backbone-relational": "~0.7.0",
+    "jsdom": "~0.3.4"
   },
   "engines": {
     "node": "~0.8.x",

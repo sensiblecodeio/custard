@@ -6,7 +6,6 @@ crypto = require 'crypto'
 child_process = require 'child_process'
 
 express = require 'express'
-stylus = require 'stylus'
 assets = require 'connect-assets'
 ejs = require 'ejs'
 passport = require 'passport'

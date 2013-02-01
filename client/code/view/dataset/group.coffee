@@ -16,10 +16,3 @@ class Cu.View.DatasetGroup extends Backbone.View
   addView: (view) =>
     v = new Cu.View.ViewTile model: view
     @$el.append v.render().el
-
-  xaddViews: ->
-    # Fake for now
-    @$el.append """
-      <a href="/dataset/#{@model.id}/spreadsheet" class="view spreadsheet">View Spreadsheet</a>
-      <a href="/dataset/#{@model.id}/csvdownload" class="view csvdownload">Download CSV</a>
-    """

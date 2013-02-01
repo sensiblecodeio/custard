@@ -67,6 +67,13 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
   validate: (attrs) ->
     return "Please enter a name" if 'displayName' of attrs and attrs.displayName?.length < 1
 
+  statusUpdatedHuman: ->
+    updated = @get('status')?.updated
+    if updated?
+      prettyDate(updated)
+    else
+      'Never'
+
 Cu.Model.Dataset.setup()
 
 class Cu.Collection.DatasetList extends Backbone.Collection

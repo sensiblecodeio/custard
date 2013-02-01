@@ -21,6 +21,14 @@ zDbDataset = mongoose.model 'Dataset', datasetSchema
 class Dataset extends ModelBase
   @dbClass: zDbDataset
 
+  updateStatus: (status, callback) ->
+    @status =
+      type: status.type
+      message: status.message
+      updated: new Date()
+    @status.type = 'ok' unless status.type in ['ok', 'error']
+    @save callback
+
   @findAllByUserShortName: (name, callback) ->
     @dbClass.find {user: name}, callback
 
@@ -31,5 +39,5 @@ class Dataset extends ModelBase
     @dbClass.findOne {box: id, user: shortName}, callback
       
 module.exports = (dbObj) ->
-  zDbDataset = dbObj if dbObj?
+  Dataset.dbClass = zDbDataset = dbObj if dbObj?
   Dataset

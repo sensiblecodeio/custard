@@ -14,7 +14,7 @@ datasetSchema = new Schema
   displayName: String
   box: String
   views: [viewSchema]
-  #views: [{type: String, ref: 'View'}]
+  status: Schema.Types.Mixed
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 
@@ -35,8 +35,15 @@ class Dataset extends ModelBase
   @findOneByName: (shortName, dsName, callback) ->
     @dbClass.findOne {user: shortName, name: dsName}, callback
 
-  @findOneById: (id, shortName, callback) ->
-    @dbClass.findOne {box: id, user: shortName}, callback
+  @findOneById: (id, args...) ->
+    if typeof args[0] is 'function'
+      @dbClass.findOne {box: id}, (err, doc) =>
+        dataset = null
+        if doc?
+          dataset = Dataset.makeModelFromMongo doc
+        args[0](err, dataset)
+    else
+      @dbClass.findOne {box: id, user: args[0]}, args[1]
       
 module.exports = (dbObj) ->
   Dataset.dbClass = zDbDataset = dbObj if dbObj?

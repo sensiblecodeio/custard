@@ -2,6 +2,8 @@ request = require 'request'
 should = require 'should'
 settings = require '../settings.json'
 
+serverURL = process.env.CU_TEST_SERVER or settings.serverURL
+
 describe 'API', ->
   context "When I'm logged in", ->
     before (done) ->
@@ -12,11 +14,11 @@ describe 'API', ->
 
       # Set password & login
       request.post
-        uri: "#{settings.serverURL}/api/token/#{@token}"
+        uri: "#{serverURL}/api/token/#{@token}"
         form:
           password: @password
       , (err, res) =>
-        @loginURL = "#{settings.serverURL}/login"
+        @loginURL = "#{serverURL}/login"
         request.get @loginURL, =>
           request.post
             uri: @loginURL
@@ -42,7 +44,7 @@ describe 'API', ->
           before (done) ->
             @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
             request.post
-              uri: "#{settings.serverURL}/api/tools"
+              uri: "#{serverURL}/api/tools"
               form:
                 name: @toolName
                 type: 'view'
@@ -61,7 +63,7 @@ describe 'API', ->
 
       context 'GET /api/tools', ->
         before (done) ->
-          request.get "#{settings.serverURL}/api/tools", (err, res) =>
+          request.get "#{serverURL}/api/tools", (err, res) =>
             @body = res.body
             done()
 
@@ -82,7 +84,7 @@ describe 'API', ->
 
         before (done) ->
           request.post
-            uri: "#{settings.serverURL}/api/#{@user}/datasets"
+            uri: "#{serverURL}/api/#{@user}/datasets"
             form:
               displayName: 'Biscuit'
               box: String(Math.random() * Math.pow(2, 32))
@@ -101,30 +103,30 @@ describe 'API', ->
 
         context 'GET /api/:user/datasets/:id', ->
           it 'returns a single dataset', (done)  ->
-            request.get "#{settings.serverURL}/api/#{@user}/datasets/#{dataset.box}", (err, res) ->
+            request.get "#{serverURL}/api/#{@user}/datasets/#{dataset.box}", (err, res) ->
               dataset = JSON.parse res.body
               should.exist dataset.box
               done()
 
           it "404 errors if the dataset doesn't exist", (done) ->
-            request.get "#{settings.serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
+            request.get "#{serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
               res.should.have.status 404
               done()
 
           it "403 errors if the user doesn't exist", (done) ->
-            request.get "#{settings.serverURL}/api/MRINVISIBLE/datasets/#{dataset.box}", (err, res) ->
+            request.get "#{serverURL}/api/MRINVISIBLE/datasets/#{dataset.box}", (err, res) ->
               res.should.have.status 403
               done()
 
         context 'PUT /api/:user/datasets/:id', ->
           it 'changes the display name of a single dataset', (done) ->
             request.put
-              uri: "#{settings.serverURL}/api/#{@user}/datasets/#{dataset.box}"
+              uri: "#{serverURL}/api/#{@user}/datasets/#{dataset.box}"
               form:
                 displayName: 'Cheese'
             , (err, res) =>
               res.should.have.status 200
-              request.get "#{settings.serverURL}/api/#{@user}/datasets/#{dataset.box}", (err, res) ->
+              request.get "#{serverURL}/api/#{@user}/datasets/#{dataset.box}", (err, res) ->
                 dataset = JSON.parse res.body
                 dataset.displayName.should.equal 'Cheese'
                 done(err)
@@ -132,7 +134,7 @@ describe 'API', ->
           it 'changes the owner of a single dataset', (done) ->
             @newowner = 'ehg'
             request.put
-              uri: "#{settings.serverURL}/api/#{@user}/datasets/#{dataset.box}"
+              uri: "#{serverURL}/api/#{@user}/datasets/#{dataset.box}"
               form:
                 user: @newowner
             , (err, res) =>
@@ -140,18 +142,18 @@ describe 'API', ->
               done(err)
 
           it "that dataset doesn't appear in my list of datasets any more", (done) ->
-            request.get "#{settings.serverURL}/api/#{@user}/datasets", (err, res) ->
+            request.get "#{serverURL}/api/#{@user}/datasets", (err, res) ->
               res.body.should.not.include "#{dataset.box}"
               done()
 
           it "404 errors if the dataset doesn't exist", (done) ->
-            request.put "#{settings.serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
+            request.put "#{serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
               res.should.have.status 404
               done()
 
       context 'GET: /api/:user/datasets', ->
         it 'returns a list of datasets', (done) ->
-          request.get "#{settings.serverURL}/api/#{@user}/datasets", (err, res) ->
+          request.get "#{serverURL}/api/#{@user}/datasets", (err, res) ->
             datasets = JSON.parse res.body
             datasets.length.should.be.above 1
             done(err)
@@ -160,9 +162,9 @@ describe 'API', ->
       context "When I'm a staff member", ->
         before (done) ->
           # logout
-          request.get "#{settings.serverURL}/logout", done
+          request.get "#{serverURL}/logout", done
         before (done) ->
-          @loginURL = "#{settings.serverURL}/login"
+          @loginURL = "#{serverURL}/login"
           @user = "teststaff"
           @password = process.env.CU_TEST_STAFF_PASSWORD
           request.get @loginURL, =>
@@ -178,7 +180,7 @@ describe 'API', ->
           @newUser = "new-#{String(Math.random()*Math.pow(2,32))[0..6]}"
           @newPassword = "newpass"
           request.post
-            uri: "#{settings.serverURL}/api/#{@newUser}"
+            uri: "#{serverURL}/api/#{@newUser}"
             form:
               email: 'random@example.com'
               displayName: 'Ran Dom Test'
@@ -189,7 +191,7 @@ describe 'API', ->
             done(err)
         it '... and I can set the password', (done) ->
           request.post
-            uri: "#{settings.serverURL}/api/token/#{@token}"
+            uri: "#{serverURL}/api/token/#{@token}"
             form:
               password: @newPassword
           , (err, resp, body) ->

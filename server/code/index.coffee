@@ -133,7 +133,8 @@ checkIdent = (req, resp, next) ->
     data += buffer.toString()
   socket.on 'end', ->
     box = data.split(':')[3]
-    req.ident = box.trim()
+    if box?
+      req.ident = box.trim()
     next()
 
 # Middleware (for checking users)
@@ -205,6 +206,26 @@ app.post '/api/token/:token/?', (req, resp) ->
           return resp.send 500
     else
       return resp.send 404, error: 'No token/password specified'
+
+app.post '/api/status/?', checkIdent, (req, resp) ->
+  console.log "POST /api/status/ from ident #{req.ident}"
+  Dataset.findOneById req.ident, (err, dataset) ->
+    if err?
+      console.warn err
+      return resp.send 500, error: 'Error trying to find dataset'
+    else if not dataset
+      error = "Could not find a dataset with box: '#{req.ident}'"
+      console.warn error
+      return resp.send 404, error: error
+    else
+      dataset.updateStatus
+        type: req.body.type
+        message: req.body.message
+      , (err) ->
+        if err?
+          console.warn err
+          return resp.send 500, error: 'Error trying to update status'
+        return resp.send 200, status: 'ok'
 
 app.all '*', ensureAuthenticated
 

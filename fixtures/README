@@ -1,4 +1,0 @@
-Normally you create fixtures in here by using the node-replay
-module, but it is broken because it doesn't mv file from /tmp
-properly (when /tmp is a different filesystem).  To create new ones,
-copy them from /tmp by hand (or get drj to do it).

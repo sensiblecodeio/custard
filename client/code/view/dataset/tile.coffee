@@ -13,5 +13,6 @@ class Cu.View.DatasetTile extends Backbone.View
   render: ->
     @$el.html JST['dataset-tile']
       dataset: @model.toJSON()
+      statusUpdatedHuman: @model.statusUpdatedHuman()
       user: window.user.effective
     @

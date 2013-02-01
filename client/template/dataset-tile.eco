@@ -1,2 +1,7 @@
 <h3><%= @dataset.displayName %></h3>
 <p><i class="icon-user icon-white space"></i> <span>Author:</span> <%= @user.displayName %> </p>
+<% if @dataset.status?.type is 'error': %>
+<p title="<%= @statusUpdatedHuman %>"><i class="icon-exclamation-sign icon-white space"></i> Error: <%= @dataset.status.message %></p>
+<% else if @dataset.status?.type is 'ok': %>
+<p title="Message: <%= @dataset.status.message %>"><i class="icon-refresh icon-white space"></i> Refreshed <%= @statusUpdatedHuman %></p>
+<% end %>

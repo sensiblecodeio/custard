@@ -1,3 +1,4 @@
+net = require 'net'
 fs = require 'fs'
 path = require 'path'
 existsSync = fs.existsSync || path.existsSync
@@ -116,6 +117,24 @@ app.set 'views', 'server/template'
 app.engine 'html', ejs.renderFile
 app.set 'view engine', 'html'
 js.root = 'code'
+
+checkIdent = (req, resp, next) ->
+  remotePort = req.headers['x-real-port'] or req.connection.remotePort
+  localPort = req.headers['x-server-port']
+  socket = net.connect
+    port: 113
+    host: req.headers['x-server-ip']
+  , ->
+    socket.write "#{remotePort},#{localPort}\r\n"
+  data = ''
+  socket.on 'error', (err) ->
+    next()
+  socket.on 'data', (buffer) ->
+    data += buffer.toString()
+  socket.on 'end', ->
+    box = data.split(':')[3]
+    req.ident = box.trim()
+    next()
 
 # Middleware (for checking users)
 checkUserRights = (req, resp, next) ->

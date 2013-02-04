@@ -82,4 +82,4 @@ describe 'Use a plugin to create a new view', ->
 
           it 'the view stays hidden', ->
             naughty = browser.query("a.view[href='#{@viewPathname}']")
-            naughty.length.should.equal 0
+            should.not.exist naughty

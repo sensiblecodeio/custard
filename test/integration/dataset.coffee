@@ -87,19 +87,18 @@ describe 'Dataset', ->
 
         context 'when I click the "hide" button on the dataset', ->
           before (done) ->
-            browser.visit "#{url}/", ->
-              browser.wait ->
-                body = browser.query('body')
-                link = $(body).find(""".dataset:contains("#{randomname}") .delete""").first()[0]
-                browser.fire 'click', link, ->
-                  browser.wait done
+            body = browser.query('body')
+            link = $(body).find(""".dataset:contains("#{randomname}") .delete""").first()[0]
+            browser.fire 'click', link, ->
+              browser.wait done
 
           it 'the dataset disappears from the homepage immediately', ->
             browser.text().should.not.include randomname
 
-          it 'the dataset stays hidden when I revisit the homepage', (done) ->
-            browser.visit "#{url}/", ->
-              browser.wait ->
-                browser.text().should.not.include randomname
-                done()
+          context 'when I revisit the homepage', ->
+            before (done) ->
+              browser.visit "#{url}/", done
+
+            it 'the dataset stays hidden', ->
+              browser.text().should.not.include randomname
 

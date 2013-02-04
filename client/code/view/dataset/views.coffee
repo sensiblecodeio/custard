@@ -7,7 +7,7 @@ class Cu.View.DatasetViews extends Backbone.View
     @
 
   addViews: =>
-    @model.get('views').each @addView
+    @model.get('views').visible().each @addView
 
   addView: (view) =>
     v = new Cu.View.ViewTile model: view

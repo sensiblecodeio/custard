@@ -11,7 +11,7 @@ class Cu.View.DatasetGroup extends Backbone.View
     @$el.html view.render().el
 
   addViews: =>
-    @model.get('views').each @addView
+    @model.get('views').visible().each @addView
 
   addView: (view) =>
     v = new Cu.View.ViewTile model: view

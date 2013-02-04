@@ -64,3 +64,22 @@ describe 'Use a plugin to create a new view', ->
         it 'lists the new view', ->
           link = browser.query("a.view[href='#{@viewPathname}']")
           should.exist link
+
+        context 'when I click the "hide" button on the view', ->
+          before (done) ->
+            link = browser.query("a.view[href='#{@viewPathname}'] .delete")
+            browser.fire 'click', link, ->
+              browser.wait done
+
+          it 'the view disappears from the homepage immediately', ->
+            body = browser.query('body')
+            naughty = $(body).find("a.view[href='#{@viewPathname}']:visible")
+            naughty.length.should.equal 0
+
+        context 'when I revisit the homepage', ->
+          before (done) ->
+            browser.reload done
+
+          it 'the view stays hidden', ->
+            naughty = browser.query("a.view[href='#{@viewPathname}']")
+            should.not.exist naughty

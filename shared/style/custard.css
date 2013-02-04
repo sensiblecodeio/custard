@@ -353,7 +353,7 @@ a.view {
     text-decoration: none;
 }
 
-.dataset .delete {
+.dataset .delete, .view .delete {
     position: absolute;
     top: -6px;
     right: -6px;
@@ -373,11 +373,15 @@ a.view {
     border: 2px solid #fff;
 }
 
-.dataset:hover .delete {
+.view .delete {
+    background-color: #358ce0;
+}
+
+.dataset:hover .delete, .view:hover .delete {
     display: block;
 }
 
-.dataset .delete:hover {
+.dataset .delete:hover, .view .delete:hover {
     background-color: #e11b2c;
 }
 

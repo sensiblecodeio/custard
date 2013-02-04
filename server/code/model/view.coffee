@@ -8,6 +8,7 @@ datasetSchema = new Schema
   name: String
   displayName: String
   box: String
+  state: String
 
 zDbView = mongoose.model 'View', datasetSchema
 

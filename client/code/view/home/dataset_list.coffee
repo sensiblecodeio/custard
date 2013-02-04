@@ -6,7 +6,7 @@ class Cu.View.DatasetList extends Backbone.View
     @
 
   addDatasets: ->
-    @collection.each @addDataset
+    @collection.visible().each @addDataset
 
   addDataset: (dataset) =>
     view = new Cu.View.DatasetGroup model: dataset

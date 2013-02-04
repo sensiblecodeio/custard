@@ -93,11 +93,14 @@ describe 'Dataset', ->
               browser.wait done
 
           it 'the dataset disappears from the homepage immediately', ->
-            browser.text().should.not.include randomname
+            body = browser.query('body')
+            # find datasets with the specified title, within a *visible* parent group
+            naughty = $(body).find(""".dataset-group:visible .dataset:contains("#{randomname}")""")
+            naughty.length.should.equal 0
 
           context 'when I revisit the homepage', ->
             before (done) ->
-              browser.visit "#{url}/", done
+              browser.reload done
 
             it 'the dataset stays hidden', ->
               browser.text().should.not.include randomname

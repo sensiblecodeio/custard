@@ -4,7 +4,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     type: Backbone.HasMany
     key: 'views'
     relatedModel: 'Cu.Model.View'
-    collectionType: 'Cu.Model.ViewCollection'
+    collectionType: 'Cu.Collection.ViewList'
     reverseRelation:
       key: 'plugsInTo'
       includeInJSON: 'box'
@@ -79,4 +79,7 @@ Cu.Model.Dataset.setup()
 class Cu.Collection.DatasetList extends Backbone.Collection
   model: Cu.Model.Dataset
   url: -> "/api/#{window.user.effective.shortName}/datasets"
+  visible: ->
+    visibles = @filter (t) -> t.get('state') isnt 'deleted'
+    new Cu.Collection.DatasetList visibles
 

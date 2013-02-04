@@ -269,6 +269,7 @@ html, body {
 
 .dataset,
 .view {
+    position: relative;
     display: block;
     padding: 10px 10px 5px 10px;
     background-color: #358ce0;
@@ -350,6 +351,39 @@ a.view {
 .view:hover {
     background-color: #358ce0;
     text-decoration: none;
+}
+
+.dataset .delete {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: none;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    text-shadow: none;
+    background-color: #176dc2;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 14px;
+    border: 2px solid #fff;
+}
+
+.dataset:hover .delete {
+    display: block;
+}
+
+.dataset .delete:hover {
+    background-color: #e11b2c;
+}
+
+/* Don't want delete buttons on the dataset overview page */
+.dataset-overview .dataset .delete {
+    display: none;
 }
 
 .dataset-overview h4 {

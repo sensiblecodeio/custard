@@ -24,6 +24,8 @@ class Cu.View.EditableTitle extends Cu.View.Title
   initialize: ->
     @model.on 'change', @setDocumentTitle, @
     @setDocumentTitle(@model)
+    # set this so we can override it in Cu.View.ViewTitle
+    # (where the model to save is in fact the parent dataset's model)
     @modelToSave = @model
 
   nameClicked: (e) ->

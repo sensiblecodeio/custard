@@ -15,6 +15,7 @@ datasetSchema = new Schema
   box: String
   views: [viewSchema]
   status: Schema.Types.Mixed
+  state: String
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 

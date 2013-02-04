@@ -5,3 +5,4 @@
 <% else if @dataset.status?.type is 'ok': %>
 <p title="Message: <%= @dataset.status.message %>"><i class="icon-refresh icon-white space"></i> Refreshed <%= @statusUpdatedHuman %></p>
 <% end %>
+<span class="delete" title="Hide this dataset">&times;</span>

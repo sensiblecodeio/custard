@@ -17,7 +17,7 @@ describe 'Dataset', ->
     browser.fill '#username', 'ehg'
     browser.fill '#password', 'testing'
     browser.pressButton '#login', done
-    
+
   # This test relies on a Cheese dataset created in api.coffee!!
   context 'when I click on a Cheese dataset', ->
     before (done) ->
@@ -84,22 +84,22 @@ describe 'Dataset', ->
 
         it 'should show the new dataset new name', ->
           browser.text().should.include randomname
-      
-      context 'when I click the "hide" button on the dataset', ->
-        before (done) ->
-          browser.visit "#{url}/", ->
-            browser.wait ->
-              body = browser.query('body')
-              link = $(body).find(""".dataset:contains("#{randomname}") .delete""").first()[0]
-              console.log 'kitten'
-              browser.fire 'click', link, ->
-                browser.wait done
-        
-        it 'the dataset disappears from the homepage immediately', ->
-          browser.text().should.not.include randomname
-      
-        xit 'the dataset remains hidden when I next visit the homepage', ->
-          browser.visit "#{url}/", ->
-            browser.wait ->
-              browser.text().should.not.include randomname
+
+        context 'when I click the "hide" button on the dataset', ->
+          before (done) ->
+            browser.visit "#{url}/", ->
+              browser.wait ->
+                body = browser.query('body')
+                link = $(body).find(""".dataset:contains("#{randomname}") .delete""").first()[0]
+                browser.fire 'click', link, ->
+                  browser.wait done
+
+          it 'the dataset disappears from the homepage immediately', ->
+            browser.text().should.not.include randomname
+
+          it 'the dataset stays hidden when I revisit the homepage', (done) ->
+            browser.visit "#{url}/", ->
+              browser.wait ->
+                browser.text().should.not.include randomname
+                done()
 

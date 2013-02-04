@@ -4,7 +4,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     type: Backbone.HasMany
     key: 'views'
     relatedModel: 'Cu.Model.View'
-    collectionType: 'Cu.Model.ViewCollection'
+    collectionType: 'Cu.Collection.ViewList'
     reverseRelation:
       key: 'plugsInTo'
       includeInJSON: 'box'

@@ -32,7 +32,7 @@ class Cu.Model.View extends Backbone.RelationalModel
 
 Cu.Model.View.setup()
 
-class Cu.Model.ViewCollection extends Backbone.Collection
+class Cu.Collection.ViewList extends Backbone.Collection
   model: Cu.Model.View
   url: -> "/api/#{window.user.effective.shortName}/views"
   findById: (id) ->

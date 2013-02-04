@@ -23,8 +23,7 @@ class Cu.View.DatasetTile extends Backbone.View
   hideDataset: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @$el.parent().fadeOut ->
-      $(this).remove()
+    @$el.parent().fadeOut()
     @model.save {state: 'deleted'},
       error: (e) =>
         @$el.parent().show()

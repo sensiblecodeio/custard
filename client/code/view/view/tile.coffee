@@ -11,10 +11,10 @@ class Cu.View.ViewTile extends Backbone.View
     @$el.html JST['view-tile'] @model.toJSON()
 
     # :TODO: Make this suck less
-    if /spreadsheet/.test @model.get('name')
+    if /spreadsheet/i.test @model.get('name')
       @$el.addClass 'spreadsheet'
-    if /download/.test @model.get('name')
+    if /download/i.test @model.get('name')
       @$el.addClass 'download'
-    if /newdataset/.test @model.get('name')
+    if /newdataset/i.test @model.get('name')
       @$el.addClass 'source'
     @

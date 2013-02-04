@@ -10,4 +10,13 @@ class Cu.View.ToolContent extends Backbone.View
           url: "#{boxUrl}/#{@model.get 'box'}/#{token}"
 
       frag = encodeURIComponent JSON.stringify(obj)
-      @$el.html """<iframe src="#{boxUrl}/#{@model.get 'box'}/#{token}/http/##{frag}"></iframe>"""
+      @setupEasyXdm "#{boxUrl}/#{@model.get 'box'}/#{token}/http/##{frag}"
+
+  setupEasyXdm: (url) ->
+    transport = new easyXDM.Rpc
+      remote: url
+      container: 'fullscreen'
+    ,
+      local:
+        redirect: (url) ->
+          window.app.navigate url, trigger: true

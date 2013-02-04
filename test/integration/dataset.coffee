@@ -97,7 +97,7 @@ describe 'Dataset', ->
 
           context 'when I revisit the homepage', ->
             before (done) ->
-              browser.visit "#{url}/", done
+              browser.reload done
 
             it 'the dataset stays hidden', ->
               browser.text().should.not.include randomname

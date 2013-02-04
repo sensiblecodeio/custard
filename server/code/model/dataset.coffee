@@ -7,6 +7,7 @@ viewSchema = new Schema
   name: String
   displayName: String
   box: String
+  state: String
 
 datasetSchema = new Schema
   user: String  # Actually, the owner

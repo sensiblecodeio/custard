@@ -1,2 +1,3 @@
 <h3><%= @displayName %></h3>
 <!--<p><i class="icon-user icon-white space"></i> <span>Author:</span> ScraperWiki</p>-->
+<span class="delete" title="Hide this view">&times;</span>

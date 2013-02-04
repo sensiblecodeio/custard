@@ -4,6 +4,9 @@ class Cu.View.ViewTile extends Backbone.View
   attributes: ->
     href: "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get 'box'}"
 
+  events:
+    'click .delete': 'hideView'
+
   initialize: ->
     @model.on 'change', @render, this
 
@@ -18,3 +21,15 @@ class Cu.View.ViewTile extends Backbone.View
     if /newdataset/i.test @model.get('name')
       @$el.addClass 'source'
     @
+
+  hideView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    @$el.slideUp()
+    @model.set 'state', 'deleted'
+    console.log @model.toJSON()
+    console.log @model.get('plugsInTo').toJSON()
+    @model.get('plugsInTo').save {},
+      error: (e) =>
+        @$el.slideDown()
+        console.warn 'View could not be deleted!'

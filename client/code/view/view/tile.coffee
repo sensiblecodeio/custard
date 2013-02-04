@@ -27,8 +27,6 @@ class Cu.View.ViewTile extends Backbone.View
     e.stopPropagation()
     @$el.slideUp()
     @model.set 'state', 'deleted'
-    console.log @model.toJSON()
-    console.log @model.get('plugsInTo').toJSON()
     @model.get('plugsInTo').save {},
       error: (e) =>
         @$el.slideDown()

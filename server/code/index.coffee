@@ -119,10 +119,11 @@ js.root = 'code'
 
 checkIdent = (req, resp, next) ->
   remotePort = req.headers['x-real-port'] or req.connection.remotePort
-  localPort = req.headers['x-server-port']
+  localPort = req.headers['x-server-port'] or port
+  # TODO: Only accept idents from known IPs
   socket = net.connect
     port: 113
-    host: req.headers['x-server-ip']
+    host: req.headers['x-real-ip'] or req.connection.remoteAddress
   , ->
     socket.write "#{remotePort},#{localPort}\r\n"
   data = ''

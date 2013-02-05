@@ -65,12 +65,24 @@
 
 <p>The SQL endpoint accepts only <code>HTTP GET</code> requests with the following parameters:</p>
 
-<dl class="dl-horizontal">
-  <dt>q</dt>
-  <dd>The SQL query to execute. Multiple queries separated by a <code>;</code> are not allowed.</dd>
-  <dt>callback</dt>
-  <dd>[optional] A callback function with which to wrap the JSON response, for JSONP output.</dd>
-</dl>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>GET parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>q</code></td>
+    <td>The SQL query to execute. Multiple queries separated by a <code>;</code> are not allowed.</td>
+  </tr>
+  <tr>
+    <td><code>callback</code></td>
+    <td><span class="muted">[optional]</span> A callback function with which to wrap the JSON response, for JSONP output.</td>
+  </tr>
+</table>
+
+<p>The SQL endpoint returns a JSON list of objects; one object for each row in the result set.</p>
 
 <p>Example usage, with jQuery:</p>
 
@@ -84,4 +96,84 @@
   console.log(results)
 })</pre>
 
-<hr />
+<h3>Exec endpoint</h3>
+
+<p>You can execute commands remotely, without SSHing in, by using your box&rsquo;s <code>/exec</code> endpoint. The Exec endpoint accepts <code>HTTP POST</code> requests with two required body parameters:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>POST parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>cmd</code></td>
+    <td>The Unix command to execute inside the box. Multiple commands separated by a <code>;</code> <em>are</em> allowed. Commands are run from <code>/home/</code>.</td>
+  </tr>
+  <tr>
+    <td><code>apikey</code></td>
+    <td>The API Key of the box owner. (Hint: yours is <code><%= @user.apiKey %></code>)</td>
+  </tr>
+</table>
+
+<p class="well well-small"><span class="label label-important">Watch out!</span> The Exec endpoint allows potentially destructive access to your box. Never share your API Key with anyone.</p>
+
+<p>Because the Exec endpoint is secured using your <code>apikey</code>, there is no need to provide a <code>publish_token</code> in the URL. Eg:</p>
+
+<pre>$.ajax({
+  url: 'https://box.scraperwiki.com/example/exec', // note: no publish_token
+  type: 'POST',
+  data: {
+    'cmd': 'echo "hello world" > hello.txt; ls -hitlar',
+    'apikey': '<%= @user.apiKey %>'
+  }
+}).done(function(text){
+  console.log(text)
+})</pre>
+
+<p>Unlike the other box endpoints, the Exec endpoint returns plain text, rather than JSON.</p>
+
+<h3>File upload endpoint</h3>
+
+<p>Boxes come with a file upload endpoint, allowing you to write datasets or views that accept a user&rsquo;s files as input. The file upload endpoint accepts <code>HTTP POST</code> requests, and like the Exec endpoint, requires your <code>apikey</code> as a body parameter:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>POST parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>file</code></td>
+    <td>The file you wish to upload.</td>
+  </tr>
+  <tr>
+    <td><code>apikey</code></td>
+    <td>The API Key of the box owner. (Hint: yours is <code><%= @user.apiKey %></code>)</td>
+  </tr>
+  <tr>
+    <td><code>next</code></td>
+    <td>The URL to which users will be redirected once the files have been uploaded</td>
+  </tr>
+</table>
+
+<p>You will often use the file upload endpoint as the <code>action</code> attribute of a web form, like so:</p>
+
+<pre>&lt;!-- in /http/index.html --&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="http://x.scraperwiki.com/js/custard.js"&gt;&lt;/script&gt;
+&lt;form id="up" action="../../file/" method="POST" enctype="multipart/form-data"&gt;
+  &lt;input type="file" name="file" size="80" id="file"&gt;
+  &lt;input type="hidden" name="apikey" id="apikey"&gt;
+  &lt;input type="hidden" name="next" id="next"&gt;
+  &lt;input type="submit" value="Upload now!"&gt;
+&lt;/form&gt;
+&lt;script&gt;
+  settings = readSettings()
+  $('#next').val(window.location.pathname + 'done.html' + window.location.hash)
+  $('#apikey').val(settings.source.apikey)
+&lt;/script&gt;</pre>
+
+<p>The uploaded file will be put in the <code>/home/incoming/</code> directory.</p>

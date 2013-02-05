@@ -8,11 +8,12 @@
     <li><a data-nonpushstate href="#datasets-services">Unix services</a></li>
     <li class="nav-header">Views</li>
     <li><a data-nonpushstate href="#views-basics">View basics</a></li>
-    <li><a data-nonpushstate href="#views-styling">Styling</a></li>
+    <li><a data-nonpushstate href="#views-styling">Styling your view</a></li>
     <li><a data-nonpushstate href="#views-helper">Helper library</a></li>
     <li class="nav-header">Tools</li>
-    <li><a data-nonpushstate href="#">Home</a></li>
-    <li><a data-nonpushstate href="#">Library</a></li>
+    <li><a data-nonpushstate href="#tools-structure">Structure of a tool</a></li>
+    <li><a data-nonpushstate href="#tools-process">Development process</a></li>
+    <li><a data-nonpushstate href="#tools-submitting">Submitting your tool</a></li>
   </ul>
 </nav>
 
@@ -233,7 +234,7 @@ remove people.
 
 <hr />
 
-<h2 id="views-styling">Styling</h2>
+<h2 id="views-styling">Styling your view</h2>
 
 <p>It's important that views share the same styling and fit in with the rest of ScraperWiki.
 You'll want to include Bootstrap and our custom style sheet.
@@ -315,16 +316,27 @@ read query parameters or to get a URL for OAuth to redirect back to.</p>
 
 <pre>scraperwiki.tool.getURL()</pre>
 
+<hr />
+
+<h2 id="tools-structure">Structure of a tool</h2>
+
+<!-- tool directory layout -->
+
+<hr />
+
+<h2 id="tools-process">Development process</h2>
+
+<!-- VCS workflows: git pushing, github checking out and stuff -->
+
+<hr />
+
+<h2 id="tools-submitting">Submitting your tool</h2>
 
 
-<!-- Things to document or fix and document:
+
+<!-- Other things to document or fix and document:
 
 Status updates in datasets
-
-
-tool directory layout
-git repositories, where they are
-VCS workflows - git pushing, github checking out and stuff
 
 SMTP for other people
 

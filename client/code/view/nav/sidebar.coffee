@@ -18,7 +18,7 @@ class Cu.View.SideBar extends Backbone.View
     @
 
   clickedLink: (e) ->
-    $a = $(event.target).closest('a')
+    $a = $(e.target).closest('a')
     $a.addClass('active').parent().siblings().children('a').removeClass('active')
 
   toggleSidebarWidth: (e) ->

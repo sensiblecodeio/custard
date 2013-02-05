@@ -17,6 +17,11 @@ url = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{url}/login"
 browser = wd.remote()
 
+# Hacky way to extend browser.
+browser.trueURL = (cb) ->
+  browser.eval "window.location.href", cb
+  
+
 describe 'Tool RPC', ->
   before (done) ->
     browser.init
@@ -56,7 +61,7 @@ describe 'Tool RPC', ->
                     browser.window handle, done
 
       it 'redirects the host to the specified URL', (done) ->
-        browser.eval "window.location.href", (err, url) ->
+        browser.trueURL (err, url) ->
           url.should.equal url
           done()
 

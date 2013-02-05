@@ -4,6 +4,8 @@
 # wget http://selenium.googlecode.com/files/selenium-server-standalone-2.29.0.jar
 # Download ChromeDriver
 # wget http://chromedriver.googlecode.com/files/chromedriver_linux64_26.0.1383.0.zip
+# (and unzip it)
+# (On a Mac, or 32-bit Linux, you'll have to find and download a different binary)
 # Start Selenium server
 # java -jar selenium-server-standalone-2.29.0.jar -Dwebdriver.chrome.driver=<path to chromedriver>
 

@@ -1,23 +1,30 @@
 <nav class="well">
   <ul class="nav nav-list">
+    <li><a data-nonpushstate href="#scraperwiki-intro">Introduction</a></li>
     <li class="nav-header">Datasets</li>
-    <li><a data-nonpushstate href="#datasets-intro">Introduction</a></li>
     <li><a data-nonpushstate href="#datasets-basics">Dataset basics</a></li>
     <li><a data-nonpushstate href="#datasets-anatomy">Anatomy of a box</a></li>
     <li><a data-nonpushstate href="#datasets-endpoints">Box API endpoints</a></li>
     <li><a data-nonpushstate href="#datasets-services">Unix services</a></li>
     <li class="nav-header">Views</li>
-    <li><a data-nonpushstate href="#">Home</a></li>
-    <li><a data-nonpushstate href="#">Library</a></li>
+    <li><a data-nonpushstate href="#views-basics">View basics</a></li>
+    <li><a data-nonpushstate href="#views-styling">Styling</a></li>
+    <li><a data-nonpushstate href="#views-helper">Helper library</a></li>
     <li class="nav-header">Tools</li>
     <li><a data-nonpushstate href="#">Home</a></li>
     <li><a data-nonpushstate href="#">Library</a></li>
   </ul>
 </nav>
 
-<h2 id="datasets-intro">ScraperWiki is about datasets</h2>
+<h2 id="scraperwiki-intro">ScraperWiki is about datasets</h2>
 
-<p>The simplest dataset is just a SQLite database, with a bit of code to create it and possibly update it. On ScraperWiki, these files live inside what we call a <b>box</b> &ndash; essentially a Unix shell account on the web. Boxes are sandboxed from each other, and provided with a set of API endpoints for communicating with the outside world.</p>
+<p>The simplest dataset is just a SQLite database, with a bit of code to create it and possibly update it. </p>
+
+<p>On ScraperWiki, these files live inside what we call a <b>box</b> &ndash; essentially a Unix shell account on the web. Boxes are sandboxed from each other, and provided with a set of API endpoints for communicating with the outside world.</p>
+
+<p>Datasets can be analysed, visualised and exported using <b>views</b>. Each view is a separate box, and communicates with the dataset by making SQL queries and accessing files in the dataset over HTTP.</p>
+
+<p>Datasets and views can be packaged up for you or other people to reuse and customise as <b>tools</b>. Tools are just git repositories, which are automatically checked out into a blank box when they are used to make a dataset or a view.</p>
 
 <hr />
 
@@ -51,13 +58,13 @@ This will show you how to SSH in.</p>
 
 <h2 id="datasets-endpoints">Box API endpoints</h2>
 
-<h3>HTTP file endpoint</h3>
+<h3 id="datasets-endpoints-http">HTTP file endpoint</h3>
 
 <p>Files placed in the <code>~/http/</code> directory of your box will be served statically via the box&rsquo;s HTTP endpoint. So, a file at <code>~/http/index.html</code> will be accessible at <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/http/index.html</code></p>
 
 <p>The HTTP file endpoint is a great way to serve static web pages, client-side javascript apps, and downloadable files &ndash; especially when you&rsquo;re writing views, or setup screens for more complex datasets.</p>
 
-<h3>SQL data endpoint</h3>
+<h3 id="datasets-endpoints-sql">SQL data endpoint</h3>
 
 <p>If a SQLite file is named in the <code>database</code> key of <code>~/scraperwiki.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sqlite?q=select+*+from+sqlite_master</code>.</p>
 
@@ -94,7 +101,7 @@ This will show you how to SSH in.</p>
   console.log(results)
 })</pre>
 
-<h3>Exec endpoint</h3>
+<h3 id="datasets-endpoints-exec">Exec endpoint</h3>
 
 <p>You can execute commands remotely, without SSHing in, by using your box&rsquo;s <code>/exec</code> endpoint. The Exec endpoint accepts <code>HTTP POST</code> requests with two required body parameters:</p>
 
@@ -132,7 +139,7 @@ This will show you how to SSH in.</p>
 
 <p>Unlike the other box endpoints, the Exec endpoint returns plain text, rather than JSON.</p>
 
-<h3>File upload endpoint</h3>
+<h3 id="datasets-endpoint-file">File upload endpoint</h3>
 
 <p>Boxes come with a file upload endpoint, allowing you to write datasets or views that accept a user&rsquo;s files as input. The file upload endpoint accepts <code>HTTP POST</code> requests, and like the Exec endpoint, requires your <code>apikey</code> as a body parameter:</p>
 
@@ -161,7 +168,7 @@ This will show you how to SSH in.</p>
 
 <pre>&lt;!-- in /http/index.html --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="http://x.scraperwiki.com/js/custard.js"&gt;&lt;/script&gt;
+&lt;script src="https://x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
 &lt;form id="up" action="../../file/" method="POST" enctype="multipart/form-data"&gt;
   &lt;input type="file" name="file" size="80" id="file"&gt;
   &lt;input type="hidden" name="apikey" id="apikey"&gt;
@@ -211,13 +218,111 @@ remove people.
 
 -->
 
+<hr>
+
+<h2 id="views-basics">View basics</h2>
+
+<p>You can <b>create a new view</b> clicking on the <b>"Code a view!"</b> tool on a dataset overview page. This will show you how to SSH in.</p>
+
+<p class="well well-small"><span class="label label-info">Top tip!</span> You can find out how to SSH into any dataset or view by looking for its seven character identifier in the URL, and using it as the user name in your SSH command.</p>
+
+<p>A view is just HTML, starting at the file <code>http/index.html</code>. Visualisations are a combination of HTML, Javascript, and calls to run arbitary commands inside the box if you need them. The view loads inside an <code>iframe</code>.
+</p>
+
+<h2 id="views-styling">Styling</h2>
+
+<p>It's important that views share the same styling and fit in with the rest of ScraperWiki.
+You'll want to include Bootstrap and our custom style sheet.
+</p>
+
+<pre>&lt;link rel="stylesheet" href="http://x.scraperwiki.com/vendor/style/bootstrap.min.css"&gt; 
+&lt;link rel="stylesheet" href="http://x.scraperwiki.com/vendor/style/metro.bootstrap.css"&gt; 
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt; 
+&lt;script src="http://x.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;</pre>
+
+<p>Write your HTML in a way that <a href="http://twitter.github.com/bootstrap/base-css.html">works
+well with Boostrap</a>.
+</p>
+
+
+<h2 id="views-helper">Helper library</h2>
+
+<p>There's a client side Javascript library, which wraps a lot of the API
+endpoints and functions needed by views. You'll want to include it in
+your view's HTML <code>&lt;head&gt;</code>.</p>
+
+<pre>&lt;script src="https://x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
+
+<h3>Read settings</h3>
+
+<p>When somebody loads your view, ScraperWiki passes it a number of settings. The settings are
+in a URL encoded JSON object after the # in the URL. You can use this helper function
+to access them easier:
+
+<pre>
+scraperwiki.readSettings()
+</pre>
+
+<p>This will return a JSON object where <code>target</code> contains information about the box of the dataset being visualised
+and <code>source</code> contains information about the view's box.
+</p>
+
+<pre>{
+    "source": {
+        "apikey": "<%= @user.apiKey %>"
+        "token": "t5odv7of5l"
+        "url": "https://box.scraperwiki.com/fdtlza1/t5odv7of5l"
+    }, 
+    "target": {
+        "token": "a1pax8jk32"
+        "url": "https://box.scraperwiki.com/de3jikz/a1pax8jk32"
+    }
+}</pre>
+
+<p>For example, this gets the target dataset's <a href="#datasets-endpoint-sql">SQL data endpoint</a>.</p>
+
+<pre>
+scraperwiki.readSettings().target.url + "/sqlite"
+</pre>
+
+<h3>Basic info</h3>
+
+<p>ScraperWiki's URL is in <code>scraperwiki.baseUrl</code>, and the
+name of the current box is in <code>scraperwiki.boxName</code>.
+</p>
+
+<h3>Redirecting</h3>
+
+<p>Since you're in a secure iframe, you need to call a special function to 
+redirect the browser to another location. For example, this redirects to
+the dataset overview page:
+</p>
+
+<pre>var datasetUrl = scraperwiki.baseUrl + "/dataset/" + scraperwiki.boxName
+scraperwiki.tool.redirect(datasetUrl)</pre>
+
+<p>It's also useful for redirecting to OAuth endpoints.</p>
+
+<h3>Reading the URL</h3>
+
+<p>Sometimes you will need to the URL of the outer page, for example to
+read query parameters or to get a URL for OAuth to redirect back to.</p>
+
+<pre>scraperwiki.tool.getURL()</pre>
 
 
 
+<!-- Things to document or fix and document:
 
-<!-- Things to document:
+Status updates in datasets
 
-scraperwiki.tool.getURL()
+
+tool directory layout
+git repositories, where they are
+VCS workflows - git pushing, github checking out and stuff
+
+SMTP for other people
 
 -->
+
 

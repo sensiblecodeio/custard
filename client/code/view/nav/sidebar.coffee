@@ -14,7 +14,7 @@ class Cu.View.SideBar extends Backbone.View
     else if /\/tool/.test(loc)
       @$el.find('.my-tools a').addClass('active')
     else if /\/docs/.test(loc)
-      @$el.find('.docs a').addClass('active')
+      @$el.find('.help a').addClass('active')
     @
 
   clickedLink: (e) ->

@@ -115,7 +115,7 @@ class Cu.Router.Main extends Backbone.Router
     @appView.showView contentView
 
   docs: ->
-    titleView = new Cu.View.Title {text: 'Documentation'}
+    titleView = new Cu.View.Title {text: 'Developer Documentation'}
     contentView = new Cu.View.Docs()
     @titleView.showView titleView
     @appView.showView contentView

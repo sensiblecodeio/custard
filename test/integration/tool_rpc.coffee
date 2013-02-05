@@ -55,9 +55,11 @@ describe 'Tool RPC', ->
                   browser.windowHandle (err, handle) ->
                     browser.window handle, done
 
-
       it 'redirects the host to the specified URL', (done) ->
         browser.eval "window.location.href", (err, url) ->
           url.should.equal url
-          browser.quit()
           done()
+
+  after (done) ->
+    browser.quit ->
+      done()

@@ -478,6 +478,34 @@ div.fourohfour {
     margin: 15px 20px;
 }
 
+.docs {
+    position: relative;
+    padding: 15px 300px 15px 20px;
+    line-height: 24px; /* the default 21px is a bit tight for so much text */
+}
+
+.docs nav.well {
+    position: fixed;
+    top: 71px; /* 50px header + 1px border + 20px padding */
+    right: 20px;
+    width: 238px;
+    padding: 8px 0;
+    margin-bottom: 0;
+}
+
+.docs nav.well a {
+    font-size: 14px;
+}
+
+.docs .well {
+    margin-bottom: 15px;
+}
+
+.docs .well .label {
+    vertical-align: 2px;
+    margin: 0 5px 0 2px;
+}
+
 
 @media only screen and (min-width: 480px) {
 

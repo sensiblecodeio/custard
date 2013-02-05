@@ -73,7 +73,7 @@ This will show you how to SSH in.</p>
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>GET parameter</th>
+      <th>GET&nbsp;parameter</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -108,7 +108,7 @@ This will show you how to SSH in.</p>
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>POST parameter</th>
+      <th>POST&nbsp;parameter</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -146,7 +146,7 @@ This will show you how to SSH in.</p>
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>POST parameter</th>
+      <th>POST&nbsp;parameter</th>
       <th>Description</th>
     </tr>
   </thead>
@@ -183,6 +183,8 @@ This will show you how to SSH in.</p>
 
 <p>The uploaded file will be put in the <code>/home/incoming/</code> directory.</p>
 
+<hr />
+
 <h2 id="datasets-services">Unix services</h2>
 
 <h3>Third party libraries</h3>
@@ -218,7 +220,7 @@ remove people.
 
 -->
 
-<hr>
+<hr />
 
 <h2 id="views-basics">View basics</h2>
 
@@ -228,6 +230,8 @@ remove people.
 
 <p>A view is just HTML, starting at the file <code>http/index.html</code>. Visualisations are a combination of HTML, Javascript, and calls to run arbitary commands inside the box if you need them. The view loads inside an <code>iframe</code>.
 </p>
+
+<hr />
 
 <h2 id="views-styling">Styling</h2>
 
@@ -244,6 +248,7 @@ You'll want to include Bootstrap and our custom style sheet.
 well with Boostrap</a>.
 </p>
 
+<hr />
 
 <h2 id="views-helper">Helper library</h2>
 
@@ -285,10 +290,10 @@ and <code>source</code> contains information about the view's box.
 scraperwiki.readSettings().target.url + "/sqlite"
 </pre>
 
-<h3>Basic info</h3>
+<h3>Basic information</h3>
 
-<p>ScraperWiki's URL is in <code>scraperwiki.baseUrl</code>, and the
-name of the current box is in <code>scraperwiki.boxName</code>.
+<p>ScraperWiki's URL is in <code>scraperwiki.baseUrl</code> and the
+name of the current box is in <code>scraperwiki.boxName</code>
 </p>
 
 <h3>Redirecting</h3>

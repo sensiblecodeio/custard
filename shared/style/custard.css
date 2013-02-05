@@ -506,6 +506,10 @@ div.fourohfour {
     margin: 0 5px 0 2px;
 }
 
+.docs h3 {
+    margin-top: 20px;
+}
+
 
 @media only screen and (min-width: 480px) {
 

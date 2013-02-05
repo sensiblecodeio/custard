@@ -24,6 +24,7 @@ class Cu.Router.Main extends Backbone.Router
     # TODO: revert to standard routes?
     @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'main'
+    @route RegExp('docs/?'), 'docs'
     @route RegExp('tools/?'), 'tools'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
     @route RegExp('dataset/([^/]+)/settings/?'), 'datasetSettings'
@@ -110,5 +111,11 @@ class Cu.Router.Main extends Backbone.Router
   fourOhFour: ->
     titleView = new Cu.View.Title {text: '404: Not Found'}
     contentView = new Cu.View.FourOhFour()
+    @titleView.showView titleView
+    @appView.showView contentView
+
+  docs: ->
+    titleView = new Cu.View.Title {text: 'Documentation'}
+    contentView = new Cu.View.Docs()
     @titleView.showView titleView
     @appView.showView contentView

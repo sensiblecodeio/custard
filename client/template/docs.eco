@@ -5,6 +5,7 @@
     <li><a data-nonpushstate href="#datasets-basics">Dataset basics</a></li>
     <li><a data-nonpushstate href="#datasets-anatomy">Anatomy of a box</a></li>
     <li><a data-nonpushstate href="#datasets-endpoints">Box API endpoints</a></li>
+    <li><a data-nonpushstate href="#datasets-services">Unix services</a></li>
     <li class="nav-header">Views</li>
     <li><a data-nonpushstate href="#">Home</a></li>
     <li><a data-nonpushstate href="#">Library</a></li>
@@ -22,23 +23,20 @@
 
 <h2 id="datasets-basics">Dataset basics</h2>
 
-<p>You can <b>create a new dataset</b> by visiting the <a href="/tools">My Tools</a> page, and clicking on the <b>"Code a dataset!"</b> tool.</p>
+<p>You can <b>create a new dataset</b> by visiting the <a href="/tools">My Tools</a> page, and clicking on the <b>"Code a dataset!"</b> tool.
+This will show you how to SSH in.</p>
 
-<p>You can view and <b>edit your dataset&rsquo;s source code</b> over SSH. Find the dataset on the <a href="/">My Datasets</a> page, click it, then click the dataset&rsquo;s icon <em>again</em> on the dataset overview page. This will show you how to SSH into your dataset.</p>
-
-<p>Alternatively, you can use the <b>"View source"</b> tool, on your dataset&rsquo;s overview page, to see the same SSH instructions.</p>
+<p>For an existing dataset, you can use the <b>"View source"</b> tool, on your dataset&rsquo;s overview page, to see the same SSH instructions.</p>
 
 <p class="well well-small"><span class="label label-info">Top tip!</span> If you&rsquo;ve never used SSH before, <a href="http://en.wikipedia.org/wiki/Ssh-keygen">this page about generating SSH keys</a> will come in handy.</p>
-
-<p>You can <b>delete a dataset</b> by clicking the <b>&times;</b> icon next to the dataset on the <a href="/">My Datasets</a> page.</p>
 
 <hr />
 
 <h2 id="datasets-anatomy">Anatomy of a box</h2>
 
-<p>A box is a Unix user account on a ScraperWiki server (currently a Linode, but that might change). The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy.</p>
+<p>A box is a Unix user account on ScraperWiki's server cluster. The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy. Your home directory is always <code>/home/</code>. </p>
 
-<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>ssh</code>, <code>scp</code>, and <code>cron</code> work&mdash;excuse the pun&mdash;right out of the box. You have a permanent POSIX filesystem, limited to 500 MB storage across all the boxes you own.</p>
+<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), limited to 500 MB storage across all the boxes you own. </p>
 
 <p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/scraperwiki.json</code>. Eg:</p>
 
@@ -109,7 +107,7 @@
   </thead>
   <tr>
     <td><code>cmd</code></td>
-    <td>The Unix command to execute inside the box. Multiple commands separated by a <code>;</code> <em>are</em> allowed. Commands are run from <code>/home/</code>.</td>
+    <td>The Unix command to execute inside the box. Multiple commands separated by a <code>;</code> <em>are</em> allowed. Commands are run from <code>/</code>.</td>
   </tr>
   <tr>
     <td><code>apikey</code></td>
@@ -177,3 +175,49 @@
 &lt;/script&gt;</pre>
 
 <p>The uploaded file will be put in the <code>/home/incoming/</code> directory.</p>
+
+<h2 id="datasets-services">Unix services</h2>
+
+<h3>Third party libraries</h3>
+
+<p>We've installed many standard Unix tools.
+</p>
+
+<ul>
+    <li>Languages such as Python, R, Ruby, PHP, Node, Java and Clojure.</li>
+    <li>Scraping libraries such as Mechanize, Hpricot, Highrise, Zombie.</li>
+    <li>Data using libraries such as Zombie, NLTK, iCalendar.</li>
+    <li>Version control software such as git, Subversion and Mercurial.</li>
+    <li>Useful tools like GNU Screen, strace and curl.</li>
+    <li>Editors like vim and Emacs.</li>
+</ul>
+
+<h3>Cron</h3>
+
+<p>You can create a standard cron job using the <code>crontab</code> command.
+Unlike other facilities, this runs separately on each physical server in
+ScraperWiki's cluster. Currently you only have access to one server &ndash; this will
+change as we add more.
+</p>
+
+<h3>SSH</h3>
+
+<p>This is an ordinary SSH server, you can use <code>scp</code>,
+<code>sftp</code>, <code>git</code> over SSH and so on. Your keys are stored
+separately for each box in <code>/home/.ssh/</code>, so you can add and
+remove people.
+
+<!-- <h3>SMTP</h3>
+
+-->
+
+
+
+
+
+<!-- Things to document:
+
+scraperwiki.tool.getURL()
+
+-->
+

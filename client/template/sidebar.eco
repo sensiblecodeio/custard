@@ -16,7 +16,7 @@
 -->
 <li class="divider"></li>
 <li class="help secondary">
-    <a href="/docs" data-original-title="Help!"><img src="/image/help.gif" width="32" height="32" /><span>Documentation</span></a>
+    <a href="/docs" data-original-title="Help!"><img src="/image/help.gif" width="32" height="32" /><span>Developers</span></a>
 </li>
 <li class="data-services secondary">
     <a href="https://scraperwiki.com/dataservices" data-original-title="Data Services"><img src="/image/data-services.gif" width="32" height="32" /><span>Data Services</span></a>

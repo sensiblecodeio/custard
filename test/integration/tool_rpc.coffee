@@ -9,13 +9,13 @@
 # Start Selenium server
 # java -jar selenium-server-standalone-2.29.0.jar -Dwebdriver.chrome.driver=<path to chromedriver>
 
-wdSync = require 'wd'
+wd = require 'wd'
 should = require 'should'
 
 
 url = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{url}/login"
-browser = wdSync.remote()
+browser = wd.remote()
 
 describe 'Tool RPC', ->
   before (done) ->

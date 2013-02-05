@@ -13,8 +13,8 @@ wd = require 'wd'
 should = require 'should'
 
 
-url = 'http://localhost:3001' # DRY DRY DRY
-login_url = "#{url}/login"
+BASE_URL = 'http://localhost:3001' # DRY DRY DRY
+login_url = "#{BASE_URL}/login"
 browser = wd.remote()
 
 # Hacky way to extend browser.
@@ -45,24 +45,52 @@ describe 'Tool RPC', ->
 
   context "when create a dataset with the test app", ->
     before (done) ->
-      browser.get "#{url}/tools", ->
-        browser.waitForElementByCss '.test-app.tool', 4000, ->
-          browser.elementByCss '.test-app.tool', (err, link) ->
-            link.click done
+      browser.get "#{BASE_URL}/tools", =>
+        browser.waitForElementByCss '.test-app.tool', 4000, =>
+          browser.elementByCss '.test-app.tool', (err, link) =>
+            link.click =>
+              browser.waitForElementByCss 'iframe', 4000, =>
+                browser.trueURL (err, url) =>
+                  @toolURL = url
+                  done()
               
     context 'when the redirect button is pressed', ->
       before (done) ->
-        browser.waitForElementByCss 'iframe', 4000, ->
-          browser.frame 0, ->
-            browser.waitForElementByCss '#redirect', 4000, ->
-              browser.elementByCss '#redirect', (err, btn) ->
-                btn.click ->
-                  browser.windowHandle (err, handle) ->
-                    browser.window handle, done
+        browser.frame 0, ->
+          browser.waitForElementByCss '#redirect', 4000, ->
+            browser.elementByCss '#redirect', (err, btn) ->
+              btn.click ->
+                browser.windowHandle (err, handle) ->
+                  browser.window handle, done
 
       it 'redirects the host to the specified URL', (done) ->
         browser.trueURL (err, url) ->
-          url.should.equal url
+          url.should.equal "#{BASE_URL}/"
+          done()
+
+    context 'when the showURL button is pressed', ->
+      before (done) ->
+        browser.get @toolURL, ->
+          browser.waitForElementByCss 'iframe', 4000, ->
+            browser.frame 0, ->
+              browser.waitForElementByCss '#showURL', 4000, ->
+                browser.elementByCss '#showURL', (err, btn) ->
+                  btn.click ->
+                    browser.windowHandle (err, handle) ->
+                      browser.window handle, done
+
+      before (done) ->
+        browser.waitForElementByCss 'iframe', 4000, =>
+          browser.frame 0, =>
+            browser.waitForElementByCss '#textURL', 4000, =>
+              browser.elementByCss '#textURL', (err, el) =>
+                @elURL = el
+                done()
+
+
+      it 'shows the scraperwiki.com URL in an element', (done) ->
+        @elURL.text (err, text) =>
+          text.should.equal @toolURL
           done()
 
   after (done) ->

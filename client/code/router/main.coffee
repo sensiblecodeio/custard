@@ -57,7 +57,7 @@ class Cu.Router.Main extends Backbone.Router
     mod.fetch
       success: (model) =>
         titleView = new Cu.View.DatasetTitle {model: model}
-        contentView = new Cu.View.ToolContent {model: model}
+        contentView = new Cu.View.AppContent {model: model}
         @titleView.showView titleView
         @appView.showView contentView
       error: (x,y,z) ->
@@ -90,7 +90,7 @@ class Cu.Router.Main extends Backbone.Router
           success: =>
             v = dataset.get('views').findById(viewID)
             titleView = new Cu.View.ViewTitle {model: v}
-            contentView = new Cu.View.ViewContent {model: v}
+            contentView = new Cu.View.PluginContent {model: v}
             @titleView.showView titleView
             @appView.showView contentView
       error: (model, xhr, options) ->

@@ -279,7 +279,7 @@ and <code>source</code> contains information about the view's box.
     }
 }</pre>
 
-<p>For example, this gets the target dataset's <a href="#datasets-endpoint-sql">SQL data endpoint</a>.</p>
+<p>For example, this gets the target dataset's <a data-nonpushstate href="#datasets-endpoints-sql">SQL data endpoint</a>.</p>
 
 <pre>
 scraperwiki.readSettings().target.url + "/sqlite"

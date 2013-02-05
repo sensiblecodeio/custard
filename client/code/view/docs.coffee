@@ -3,6 +3,7 @@ class Cu.View.Docs extends Backbone.View
 
   events:
     'click nav a': 'navClick'
+    'click a[href^="#"]': 'navClick'
 
   render: ->
     @el.innerHTML = JST['docs']

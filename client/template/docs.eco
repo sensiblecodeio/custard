@@ -1,0 +1,87 @@
+<nav class="well">
+  <ul class="nav nav-list">
+    <li class="nav-header">Datasets</li>
+    <li class="active"><a href="#datasets-intro">Introduction</a></li>
+    <li><a href="#datasets-basics">Dataset basics</a></li>
+    <li><a href="#datasets-anatomy">Anatomy of a box</a></li>
+    <li><a href="#datasets-endpoints">Box API endpoints</a></li>
+    <li class="nav-header">Views</li>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Library</a></li>
+    <li class="nav-header">Tools</li>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Library</a></li>
+  </ul>
+</nav>
+
+<h2 id="datasets-intro">ScraperWiki is about datasets</h2>
+
+<p>The simplest dataset is just a SQLite database, with a bit of code to create it and possibly update it. On ScraperWiki, these files live inside what we call a <b>box</b> &ndash; essentially a Unix shell account on the web. Boxes are sandboxed from each other, and provided with a set of API endpoints for communicating with the outside world.</p>
+
+<hr />
+
+<h2 id="datasets-basics">Dataset basics</h2>
+
+<p>You can <b>create a new dataset</b> by visiting the <a href="/tools">My Tools</a> page, and clicking on the <b>"Code a dataset!"</b> tool.</p>
+
+<p>You can view and <b>edit your dataset&rsquo;s source code</b> over SSH. Find the dataset on the <a href="/">My Datasets</a> page, click it, then click the dataset&rsquo;s icon <em>again</em> on the dataset overview page. This will show you how to SSH into your dataset.</p>
+
+<p>Alternatively, you can use the <b>"View source"</b> tool, on your dataset&rsquo;s overview page, to see the same SSH instructions.</p>
+
+<p class="well well-small"><span class="label label-info">Top tip!</span> If you&rsquo;ve never used SSH before, <a href="http://en.wikipedia.org/wiki/Ssh-keygen">this page about generating SSH keys</a> will come in handy.</p>
+
+<p>You can <b>delete a dataset</b> by clicking the <b>&times;</b> icon next to the dataset on the <a href="/">My Datasets</a> page.</p>
+
+<hr />
+
+<h2 id="datasets-anatomy">Anatomy of a box</h2>
+
+<p>A box is a Unix user account on a ScraperWiki server (currently a Linode, but that might change). The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy.</p>
+
+<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>ssh</code>, <code>scp</code>, and <code>cron</code> work&mdash;excuse the pun&mdash;right out of the box. You have a permanent POSIX filesystem, limited to 500 MB storage across all the boxes you own.</p>
+
+<p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/scraperwiki.json</code>. Eg:</p>
+
+<pre>{
+  "database": "database.sqlite",
+  "publish_token": "t5odv7of5l"
+}</pre>
+
+<p>Your box&rsquo;s <code>publish_token</code> is used to secure its public-facing, read-only endpoints (<code>/http</code> and <code>/sqlite</code>). It should be alphanumeric and 10-30 characters long. Or, if you&rsquo;d prefer to make your box&rsquo;s contents public, you can set it to an empty string or remove its entry entirely from <code>~/scraperwiki.json</code>.</p>
+
+<hr />
+
+<h2 id="datasets-endpoints">Box API endpoints</h2>
+
+<h3>HTTP file endpoint</h3>
+
+<p>Files placed in the <code>~/http/</code> directory of your box will be served statically via the box&rsquo;s HTTP endpoint. So, a file at <code>~/http/index.html</code> will be accessible at <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/http/index.html</code></p>
+
+<p>The HTTP file endpoint is a great way to serve static web pages, client-side javascript apps, and downloadable files &ndash; especially when you&rsquo;re writing views, or setup screens for more complex datasets.</p>
+
+<h3>SQL data endpoint</h3>
+
+<p>If a SQLite file is named in the <code>database</code> key of <code>~/scraperwiki.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sqlite?q=select+*+from+sqlite_master</code>.</p>
+
+<p>The SQL endpoint accepts only <code>HTTP GET</code> requests with the following parameters:</p>
+
+<dl class="dl-horizontal">
+  <dt>q</dt>
+  <dd>The SQL query to execute. Multiple queries separated by a <code>;</code> are not allowed.</dd>
+  <dt>callback</dt>
+  <dd>[optional] A callback function with which to wrap the JSON response, for JSONP output.</dd>
+</dl>
+
+<p>Example usage, with jQuery:</p>
+
+<pre>$.ajax({
+  url: 'https://box.scraperwiki.com/example/t5odv7of5l/sqlite',
+  dataType: 'json',
+  data: {
+    'q': 'select * from sqlite_master'
+  }
+}).done(function(results){
+  console.log(results)
+})</pre>
+
+<hr />

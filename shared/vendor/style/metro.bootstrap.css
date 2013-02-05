@@ -53,6 +53,7 @@ code {
     padding: 4px 5px 2px 5px;
     font-family: Consolas, Courier, "Courier New", monospace;
     font-size: 0.9em;
+    line-height: 0.9em;
     color: #666;
     border: none;
 }

@@ -8,10 +8,13 @@ class Cu.View.SideBar extends Backbone.View
   render: ->
     @el.innerHTML = JST.sidebar()
     loc = window.location.pathname
+    # :TODO: Make this suck less
     if loc == '/' or /\/dataset/.test(loc)
       @$el.find('.my-datasets a').addClass('active')
     else if /\/tool/.test(loc)
       @$el.find('.my-tools a').addClass('active')
+    else if /\/docs/.test(loc)
+      @$el.find('.help a').addClass('active')
     @
 
   clickedLink: (e) ->

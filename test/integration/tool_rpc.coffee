@@ -57,11 +57,13 @@ describe 'Tool RPC', ->
     context 'when the redirect button is pressed', ->
       before (done) ->
         browser.frame 0, ->
-          browser.waitForElementByCss '#redirect', 4000, ->
-            browser.elementByCss '#redirect', (err, btn) ->
-              btn.click ->
-                browser.windowHandle (err, handle) ->
-                  browser.window handle, done
+          browser.waitForElementByCss 'iframe', 4000, =>
+            browser.frame 0, ->
+              browser.waitForElementByCss '#redirect', 4000, ->
+                browser.elementByCss '#redirect', (err, btn) ->
+                  btn.click ->
+                    browser.windowHandle (err, handle) ->
+                      browser.window handle, done
 
       it 'redirects the host to the specified URL', (done) ->
         browser.trueURL (err, url) ->
@@ -71,21 +73,25 @@ describe 'Tool RPC', ->
     context 'when the showURL button is pressed', ->
       before (done) ->
         browser.get @toolURL, ->
-          browser.waitForElementByCss 'iframe', 4000, ->
+          browser.waitForElementByCss 'iframe', 4004, ->
             browser.frame 0, ->
-              browser.waitForElementByCss '#showURL', 4000, ->
-                browser.elementByCss '#showURL', (err, btn) ->
-                  btn.click ->
-                    browser.windowHandle (err, handle) ->
-                      browser.window handle, done
+              browser.waitForElementByCss 'iframe', 4004, ->
+                browser.frame 0, ->
+                  browser.waitForElementByCss '#showURL', 4000, ->
+                    browser.elementByCss '#showURL', (err, btn) ->
+                      btn.click ->
+                        browser.windowHandle (err, handle) ->
+                          browser.window handle, done
 
       before (done) ->
         browser.waitForElementByCss 'iframe', 4000, =>
           browser.frame 0, =>
-            browser.waitForElementByCss '#textURL', 4000, =>
-              browser.elementByCss '#textURL', (err, el) =>
-                @elURL = el
-                done()
+            browser.waitForElementByCss 'iframe', 4000, =>
+              browser.frame 0, =>
+                browser.waitForElementByCss '#textURL', 4000, =>
+                  browser.elementByCss '#textURL', (err, el) =>
+                    @elURL = el
+                    done()
 
 
       it 'shows the scraperwiki.com URL in an element', (done) ->

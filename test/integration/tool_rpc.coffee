@@ -17,10 +17,36 @@ BASE_URL = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{BASE_URL}/login"
 browser = wd.remote()
 
-# Hacky way to extend browser.
-browser.trueURL = (cb) ->
+trueURL = (cb) ->
   browser.eval "window.location.href", cb
-  
+
+fill = (selector, text, cb) ->
+  browser.waitForElementByCss selector, 4000, ->
+    browser.elementByCss selector, (err, element) ->
+      browser.type element, text, cb
+
+click = (selector, cb) ->
+  browser.waitForElementByCss selector, 4000, ->
+    browser.elementByCss selector, (err, element) ->
+      element.click cb
+
+getText = (selector, cb) ->
+  browser.waitForElementByCss selector, 4000, ->
+    browser.elementByCss selector, (err, element) ->
+      element.text cb
+
+# We always switch to the first frame here!
+switchToFrame = (selector, cb) ->
+  browser.waitForElementByCss selector, 4000, ->
+    browser.frame 0, cb
+
+switchToTopFrame = (cb) ->
+  browser.windowHandle (err, handle) ->
+    browser.window handle, cb
+
+switchToBottomFrame = (cb) ->
+  switchToFrame 'iframe', ->
+    switchToFrame 'iframe', cb
 
 describe 'Tool RPC', ->
   before (done) ->
@@ -35,67 +61,42 @@ describe 'Tool RPC', ->
 
   before (done) ->
     browser.get login_url, ->
-      browser.elementByCss '#username', (err, userField) ->
-        browser.type userField, 'ehg', ->
-          browser.elementByCss '#password', (err, passField) ->
-            browser.type passField, 'testing', ->
-              browser.elementByCss '#login', (err, loginBtn) ->
-                loginBtn.click done
-  
+      fill '#username', 'ehg', ->
+        fill '#password', 'testing', ->
+          click '#login', done
 
   context "when create a dataset with the test app", ->
     before (done) ->
       browser.get "#{BASE_URL}/tools", =>
-        browser.waitForElementByCss '.test-app.tool', 4000, =>
-          browser.elementByCss '.test-app.tool', (err, link) =>
-            link.click =>
-              browser.waitForElementByCss 'iframe', 4000, =>
-                browser.trueURL (err, url) =>
-                  @toolURL = url
-                  done()
+        click '.test-app.tool', =>
+          browser.waitForElementByCss 'iframe', 4000, =>
+            trueURL (err, url) =>
+              @toolURL = url
+              done()
               
     context 'when the redirect button is pressed', ->
       before (done) ->
-        browser.frame 0, ->
-          browser.waitForElementByCss 'iframe', 4000, =>
-            browser.frame 0, ->
-              browser.waitForElementByCss '#redirect', 4000, ->
-                browser.elementByCss '#redirect', (err, btn) ->
-                  btn.click ->
-                    browser.windowHandle (err, handle) ->
-                      browser.window handle, done
+        switchToBottomFrame ->
+          click '#redirect', (err, btn) ->
+            switchToTopFrame done
 
       it 'redirects the host to the specified URL', (done) ->
-        browser.trueURL (err, url) ->
+        trueURL (err, url) ->
           url.should.equal "#{BASE_URL}/"
           done()
 
     context 'when the showURL button is pressed', ->
       before (done) ->
         browser.get @toolURL, ->
-          browser.waitForElementByCss 'iframe', 4004, ->
-            browser.frame 0, ->
-              browser.waitForElementByCss 'iframe', 4004, ->
-                browser.frame 0, ->
-                  browser.waitForElementByCss '#showURL', 4000, ->
-                    browser.elementByCss '#showURL', (err, btn) ->
-                      btn.click ->
-                        browser.windowHandle (err, handle) ->
-                          browser.window handle, done
+          switchToBottomFrame ->
+            click '#showURL', (err, btn) ->
+              switchToTopFrame done
 
       before (done) ->
-        browser.waitForElementByCss 'iframe', 4000, =>
-          browser.frame 0, =>
-            browser.waitForElementByCss 'iframe', 4000, =>
-              browser.frame 0, =>
-                browser.waitForElementByCss '#textURL', 4000, =>
-                  browser.elementByCss '#textURL', (err, el) =>
-                    @elURL = el
-                    done()
-
+        switchToBottomFrame done
 
       it 'shows the scraperwiki.com URL in an element', (done) ->
-        @elURL.text (err, text) =>
+        getText '#textURL', (err, text) =>
           text.should.equal @toolURL
           done()
 

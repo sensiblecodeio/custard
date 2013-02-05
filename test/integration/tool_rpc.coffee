@@ -23,7 +23,7 @@ describe 'Tool RPC', ->
       browserName:'chrome'
       'chrome.switches': ['--disable-extensions']
     , (err) ->
-      if err.code
+      if err
         console.warn err
         console.warn "Is your Selenium server running? (see tool_rpc.coffee for instructions)"
       done err

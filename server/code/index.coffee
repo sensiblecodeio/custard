@@ -233,12 +233,6 @@ app.get '/logout', (req, resp) ->
   req.logout()
   resp.redirect '/'
 
-app.get '/preview/:box/?', (req, resp) ->
-  resp.render 'preview',
-    user: JSON.stringify req.user.effective
-    boxName: req.params.box
-    boxServer: process.env.CU_BOX_SERVER
-
 # API!
 app.get '/api/tools/?', (req, resp) ->
   Tool.findAll (err, tools) ->

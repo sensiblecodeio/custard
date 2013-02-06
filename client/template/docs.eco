@@ -184,6 +184,31 @@ This will show you how to SSH in.</p>
 
 <p>The uploaded file will be put in the <code>/home/incoming/</code> directory.</p>
 
+<h3 id="datasets-endpoints-status">Dataset status API</h3>
+
+<p>The ScraperWiki website can display the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://x.scraperwiki.com/api/status</code>.</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>POST&nbsp;parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>type</code></td>
+    <td>Your dataset&rsquo;s status. Should either be <code>ok</code> or <code>error</code>.</td>
+  </tr>
+  <tr>
+    <td><code>message</code></td>
+    <td>A description, such as <code>Scraped 24 new tweets</code> or <code>Invalid password</code>.</td>
+  </tr>
+</table>
+
+<p>This API requires no <code>publish_token</code> or <code>apikey</code> because it automatically detects the credentials of the box from which it&rsquo;s called. Magic!</p>
+
+<p>The endpoint returns a JSON object with a single <code>success</code> key on success, or an <code>error</code> key on errors.</p>
+
 <hr />
 
 <h2 id="datasets-services">Unix services</h2>
@@ -291,10 +316,10 @@ and <code>source</code> contains information about the view's box.
 scraperwiki.readSettings().target.url + "/sqlite"
 </pre>
 
-<h3>Basic information</h3>
+<h3>Box name</h3>
 
-<p>ScraperWiki's URL is in <code>scraperwiki.baseUrl</code> and the
-name of the current box is in <code>scraperwiki.boxName</code>
+<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.boxName</code>.
+
 </p>
 
 <h3>Redirecting</h3>
@@ -304,7 +329,7 @@ redirect the browser to another location. For example, this redirects to
 the dataset overview page:
 </p>
 
-<pre>var datasetUrl = scraperwiki.baseUrl + "/dataset/" + scraperwiki.boxName
+<pre>var datasetUrl = "/dataset/" + scraperwiki.boxName
 scraperwiki.tool.redirect(datasetUrl)</pre>
 
 <p>It's also useful for redirecting to OAuth endpoints.</p>

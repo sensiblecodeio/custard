@@ -26,8 +26,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     if @_publishToken?
       callback @_publishToken
     else
-      @exec("cat ~/scraperwiki.json").success (data) ->
-        settings = JSON.parse data
+      @exec("cat ~/scraperwiki.json", {dataType: 'json'}).success (settings) ->
         @_publishToken = settings.publish_token
         callback @_publishToken
 
@@ -57,6 +56,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     settings =
       url: "#{boxurl}/exec"
       type: 'POST'
+      dataType: 'text'
       data:
         apikey: window.user.effective.apiKey
         cmd: cmd

@@ -24,6 +24,7 @@ class Cu.Model.Tool extends Backbone.Model
     settings =
       url: "#{boxurl}/exec"
       type: 'POST'
+      dataType: 'text'
       data:
         apikey: window.user.effective.apiKey
         cmd: cmd

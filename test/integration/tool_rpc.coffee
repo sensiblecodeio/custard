@@ -51,7 +51,7 @@ switchToBottomFrame = (cb) ->
 describe 'Tool RPC', ->
   before (done) ->
     browser.init
-      browserName:'chrome'
+      browserName: process.env.BROWSER ? 'chrome'
       'chrome.switches': ['--disable-extensions']
     , (err) ->
       if err
@@ -87,13 +87,14 @@ describe 'Tool RPC', ->
 
     context 'when the redirect external button is pressed', ->
       before (done) ->
-        switchToBottomFrame ->
-          click '#redirectExternal', (err, btn) ->
-            switchToTopFrame done
+        browser.get @toolURL, ->
+          switchToBottomFrame ->
+            click '#redirectExternal', (err, btn) ->
+              switchToTopFrame done
 
       it 'redirects the host to the specified URL', (done) ->
         trueURL (err, url) ->
-          url.should.equal 'https://github.com/'
+          url.should.equal 'http://www.google.com/robots.txt'
           done()
 
     context 'when the showURL button is pressed', ->

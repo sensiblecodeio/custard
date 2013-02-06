@@ -351,7 +351,33 @@ so you need to pass in a callback function.
 
 <h2 id="tools-structure">Structure of a tool</h2>
 
-<!-- tool directory layout -->
+<p>Tools are packaged datasets or views &ndash; files in a git repository which are built to run automatically when installed into a new box. By way of example, here are the contents of the <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">Spreadsheet upload tool</a>:</p>
+
+<pre class="prettyprint">code/
+ └ extract.py
+http/
+ ├ done.html
+ ├ index.html
+ └ style.css
+test/
+ ├ simple.py
+ └ tricky.py
+README.md
+scraperwiki.json</pre>
+
+<p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into it, and shows the <code>http/index.html</code> file to the user in an iframe. This <code>index.html</code> contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It works just like the <a href="views-basics">views</a> described above, and uses the <a href="#datasets-endpoints">box API endpoints</a> to select data and run server-side code.</p>
+
+<p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
+
+<pre class="prettyprint linenums">{
+  "displayName": "Upload a Spreadsheet",
+  "gitUrl": "git://github.com/scraperwiki/spreadsheet-download-tool.git",
+  "description": "Upload an Excel file or CSV"
+}</pre>
+
+<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
+
+<p>The <code>tool/</code> directory contains Python unit tests used during development. We suggest you write tests for your tools, expecially when listing them publically in the ScraperWiki Data Store.</p>
 
 <hr />
 

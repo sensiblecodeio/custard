@@ -21,14 +21,7 @@ wd40 = require('../wd40')(browser)
 
 describe 'Tool RPC', ->
   before (done) ->
-    browser.init
-      browserName: process.env.BROWSER ? 'chrome'
-      'chrome.switches': ['--disable-extensions']
-    , (err) ->
-      if err
-        console.warn err
-        console.warn "Is your Selenium server running? (see tool_rpc.coffee for instructions)"
-      done err
+    wd40.init done
 
   before (done) ->
     browser.get login_url, ->

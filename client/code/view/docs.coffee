@@ -8,6 +8,8 @@ class Cu.View.Docs extends Backbone.View
   render: ->
     @el.innerHTML = JST['docs']
       user: window.user.effective
+    $ ->
+      prettyPrint()
     @
 
   navClick: (e) ->

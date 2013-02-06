@@ -48,7 +48,7 @@ This will show you how to SSH in.</p>
 
 <p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/scraperwiki.json</code>. Eg:</p>
 
-<pre>{
+<pre class="prettyprint linenums">{
   "database": "database.sqlite",
   "publish_token": "t5odv7of5l"
 }</pre>
@@ -92,7 +92,7 @@ This will show you how to SSH in.</p>
 
 <p>Example usage, with jQuery:</p>
 
-<pre>$.ajax({
+<pre class="prettyprint linenums">$.ajax({
   url: 'https://box.scraperwiki.com/example/t5odv7of5l/sqlite',
   dataType: 'json',
   data: {
@@ -127,7 +127,7 @@ This will show you how to SSH in.</p>
 
 <p>Because the Exec endpoint is secured using your <code>apikey</code>, there is no need to provide a <code>publish_token</code> in the URL. Eg:</p>
 
-<pre>$.ajax({
+<pre class="prettyprint linenums">$.ajax({
   url: 'https://box.scraperwiki.com/example/exec', // note: no publish_token
   type: 'POST',
   data: {
@@ -167,7 +167,7 @@ This will show you how to SSH in.</p>
 
 <p>You will often use the file upload endpoint as the <code>action</code> attribute of a web form, like so:</p>
 
-<pre>&lt;!-- in /http/index.html --&gt;
+<pre class="prettyprint linenums">&lt;!-- in /http/index.html --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
 &lt;script src="https://x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
 &lt;form id="up" action="../../file/" method="POST" enctype="multipart/form-data"&gt;
@@ -265,7 +265,7 @@ remove people.
 You'll want to include Bootstrap and our custom style sheet.
 </p>
 
-<pre>&lt;link rel="stylesheet" href="http://x.scraperwiki.com/vendor/style/bootstrap.min.css"&gt; 
+<pre class="prettyprint">&lt;link rel="stylesheet" href="http://x.scraperwiki.com/vendor/style/bootstrap.min.css"&gt; 
 &lt;link rel="stylesheet" href="http://x.scraperwiki.com/vendor/style/metro.bootstrap.css"&gt; 
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt; 
 &lt;script src="http://x.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;</pre>
@@ -282,7 +282,7 @@ well with Boostrap</a>.
 endpoints and functions needed by views. You'll want to include it in
 your view's HTML <code>&lt;head&gt;</code>.</p>
 
-<pre>&lt;script src="https://x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
+<pre class="prettyprint">&lt;script src="https://x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
 
 <h3>Read settings</h3>
 
@@ -290,7 +290,7 @@ your view's HTML <code>&lt;head&gt;</code>.</p>
 in a URL encoded JSON object after the # in the URL. You can use this helper function
 to access them easier:
 
-<pre>
+<pre class="prettyprint">
 scraperwiki.readSettings()
 </pre>
 
@@ -298,7 +298,7 @@ scraperwiki.readSettings()
 and <code>source</code> contains information about the view's box.
 </p>
 
-<pre>{
+<pre class="prettyprint linenums">{
     "source": {
         "apikey": "<%= @user.apiKey %>"
         "token": "t5odv7of5l"
@@ -312,7 +312,7 @@ and <code>source</code> contains information about the view's box.
 
 <p>For example, this gets the target dataset's <a data-nonpushstate href="#datasets-endpoints-sql">SQL data endpoint</a>.</p>
 
-<pre>
+<pre class="prettyprint">
 scraperwiki.readSettings().target.url + "/sqlite"
 </pre>
 
@@ -329,7 +329,7 @@ redirect the browser to another location. For example, this redirects to
 the dataset overview page:
 </p>
 
-<pre>var datasetUrl = "/dataset/" + scraperwiki.boxName
+<pre class="prettyprint linenums">var datasetUrl = "/dataset/" + scraperwiki.boxName
 scraperwiki.tool.redirect(datasetUrl)</pre>
 
 <p>It's also useful for redirecting to OAuth endpoints.</p>
@@ -342,7 +342,7 @@ Getting the URL happens asynchronusly using <a href="http://easyxdm.net/wp/">XDM
 so you need to pass in a callback function.
 </p>
 
-<pre>scraperwiki.tool.getURL(function(url) {
+<pre class="prettyprint linenums">scraperwiki.tool.getURL(function(url) {
     console.log(url)
 })</pre>
 
@@ -351,7 +351,33 @@ so you need to pass in a callback function.
 
 <h2 id="tools-structure">Structure of a tool</h2>
 
-<!-- tool directory layout -->
+<p>Tools are packaged datasets or views &ndash; files in a git repository which are built to run automatically when installed into a new box. By way of example, here are the contents of the <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">Spreadsheet upload tool</a>:</p>
+
+<pre class="prettyprint">code/
+ └ extract.py
+http/
+ ├ done.html
+ ├ index.html
+ └ style.css
+test/
+ ├ simple.py
+ └ tricky.py
+README.md
+scraperwiki.json</pre>
+
+<p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into it, and shows the <code>http/index.html</code> file to the user in an iframe. This <code>index.html</code> contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It works just like the <a href="views-basics">views</a> described above, and uses the <a href="#datasets-endpoints">box API endpoints</a> to select data and run server-side code.</p>
+
+<p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
+
+<pre class="prettyprint linenums">{
+  "displayName": "Upload a Spreadsheet",
+  "gitUrl": "git://github.com/scraperwiki/spreadsheet-download-tool.git",
+  "description": "Upload an Excel file or CSV"
+}</pre>
+
+<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
+
+<p>The <code>tool/</code> directory contains Python unit tests used during development. We suggest you write tests for your tools, expecially when listing them publically in the ScraperWiki Data Store.</p>
 
 <hr />
 

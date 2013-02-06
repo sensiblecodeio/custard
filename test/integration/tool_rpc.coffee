@@ -74,15 +74,26 @@ describe 'Tool RPC', ->
               @toolURL = url
               done()
               
-    context 'when the redirect button is pressed', ->
+    context 'when the redirect internal button is pressed', ->
       before (done) ->
         switchToBottomFrame ->
-          click '#redirect', (err, btn) ->
+          click '#redirectInternal', (err, btn) ->
             switchToTopFrame done
 
       it 'redirects the host to the specified URL', (done) ->
         trueURL (err, url) ->
           url.should.equal "#{BASE_URL}/"
+          done()
+
+    context 'when the redirect external button is pressed', ->
+      before (done) ->
+        switchToBottomFrame ->
+          click '#redirectExternal', (err, btn) ->
+            switchToTopFrame done
+
+      it 'redirects the host to the specified URL', (done) ->
+        trueURL (err, url) ->
+          url.should.equal 'https://github.com/'
           done()
 
     context 'when the showURL button is pressed', ->

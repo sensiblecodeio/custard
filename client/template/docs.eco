@@ -177,7 +177,7 @@ This will show you how to SSH in.</p>
   &lt;input type="submit" value="Upload now!"&gt;
 &lt;/form&gt;
 &lt;script&gt;
-  settings = readSettings()
+  settings = scraperwiki.readSettings()
   $('#next').val(window.location.pathname + 'done.html' + window.location.hash)
   $('#apikey').val(settings.source.apikey)
 &lt;/script&gt;</pre>
@@ -311,10 +311,16 @@ scraperwiki.tool.redirect(datasetUrl)</pre>
 
 <h3>Reading the URL</h3>
 
-<p>Sometimes you will need to the URL of the outer page, for example to
-read query parameters or to get a URL for OAuth to redirect back to.</p>
+<p>Sometimes you will need the URL of the outer page, for example to
+read query parameters or to get a URL for OAuth to redirect back to.
+Getting the URL happens asynchronusly using <a href="http://easyxdm.net/wp/">XDM</a>,
+so you need to pass in a callback function.
+</p>
 
-<pre>scraperwiki.tool.getURL()</pre>
+<pre>scraperwiki.tool.getURL(function(url) {
+    console.log(url)
+})</pre>
+
 
 <hr />
 
@@ -332,9 +338,12 @@ read query parameters or to get a URL for OAuth to redirect back to.</p>
 
 <h2 id="tools-submitting">Submitting your tool</h2>
 
+<!-- Javascript console adding a tool -->
 
 
 <!-- Other things to document or fix and document:
+
+Exec endpoint helper
 
 Status updates in datasets
 

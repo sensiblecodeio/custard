@@ -16,37 +16,8 @@ should = require 'should'
 BASE_URL = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{BASE_URL}/login"
 browser = wd.remote()
+wd40 = require('../wd40')(browser)
 
-trueURL = (cb) ->
-  browser.eval "window.location.href", cb
-
-fill = (selector, text, cb) ->
-  browser.waitForElementByCss selector, 4000, ->
-    browser.elementByCss selector, (err, element) ->
-      browser.type element, text, cb
-
-click = (selector, cb) ->
-  browser.waitForElementByCss selector, 4000, ->
-    browser.elementByCss selector, (err, element) ->
-      element.click cb
-
-getText = (selector, cb) ->
-  browser.waitForElementByCss selector, 4000, ->
-    browser.elementByCss selector, (err, element) ->
-      element.text cb
-
-# We always switch to the first frame here!
-switchToFrame = (selector, cb) ->
-  browser.waitForElementByCss selector, 4000, ->
-    browser.frame 0, cb
-
-switchToTopFrame = (cb) ->
-  browser.windowHandle (err, handle) ->
-    browser.window handle, cb
-
-switchToBottomFrame = (cb) ->
-  switchToFrame 'iframe', ->
-    switchToFrame 'iframe', cb
 
 describe 'Tool RPC', ->
   before (done) ->
@@ -61,54 +32,54 @@ describe 'Tool RPC', ->
 
   before (done) ->
     browser.get login_url, ->
-      fill '#username', 'ehg', ->
-        fill '#password', 'testing', ->
-          click '#login', done
+      wd40.fill '#username', 'ehg', ->
+        wd40.fill '#password', 'testing', ->
+          wd40.click '#login', done
 
   context "when create a dataset with the test app", ->
     before (done) ->
       browser.get "#{BASE_URL}/tools", =>
-        click '.test-app.tool', =>
+        wd40.click '.test-app.tool', =>
           browser.waitForElementByCss 'iframe', 4000, =>
-            trueURL (err, url) =>
+            wd40.trueURL (err, url) =>
               @toolURL = url
               done()
               
     context 'when the redirect internal button is pressed', ->
       before (done) ->
-        switchToBottomFrame ->
-          click '#redirectInternal', (err, btn) ->
-            switchToTopFrame done
+        wd40.switchToBottomFrame ->
+          wd40.click '#redirectInternal', (err, btn) ->
+            wd40.switchToTopFrame done
 
       it 'redirects the host to the specified URL', (done) ->
-        trueURL (err, url) ->
+        wd40.trueURL (err, url) ->
           url.should.equal "#{BASE_URL}/"
           done()
 
     context 'when the redirect external button is pressed', ->
       before (done) ->
         browser.get @toolURL, ->
-          switchToBottomFrame ->
-            click '#redirectExternal', (err, btn) ->
-              switchToTopFrame done
+          wd40.switchToBottomFrame ->
+            wd40.click '#redirectExternal', (err, btn) ->
+              wd40.switchToTopFrame done
 
       it 'redirects the host to the specified URL', (done) ->
-        trueURL (err, url) ->
+        wd40.trueURL (err, url) ->
           url.should.equal 'http://www.google.com/robots.txt'
           done()
 
     context 'when the showURL button is pressed', ->
       before (done) ->
         browser.get @toolURL, ->
-          switchToBottomFrame ->
-            click '#showURL', (err, btn) ->
-              switchToTopFrame done
+          wd40.switchToBottomFrame ->
+            wd40.click '#showURL', (err, btn) ->
+              wd40.switchToTopFrame done
 
       before (done) ->
-        switchToBottomFrame done
+        wd40.switchToBottomFrame done
 
       it 'shows the scraperwiki.com URL in an element', (done) ->
-        getText '#textURL', (err, text) =>
+        wd40.getText '#textURL', (err, text) =>
           text.should.equal @toolURL
           done()
 

@@ -14,7 +14,11 @@ class Cu.View.ToolContent extends Backbone.View
     ,
       local:
         redirect: (url) ->
-          window.app.navigate url, trigger: true
+          isExternal = new RegExp('https?://')
+          if isExternal.test url
+            location.href = url
+          else
+            window.app.navigate url, trigger: true
         getURL: (cb) ->
           cb window.location.href
 

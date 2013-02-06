@@ -11,7 +11,6 @@ jQuery is required.
 scraperwiki = sw = { tool: {} }
 
 scraperwiki.boxName = window.location.pathname.split('/')[1]
-scraperwiki.baseUrl = window.location.origin
 
 # Call container iframe's API
 scraperwiki.tool.redirect = (location) ->
@@ -23,7 +22,7 @@ scraperwiki.tool.getURL = (cb) ->
 scraperwiki.exec = (cmd, success, error) ->
   settings = scraperwiki.readSettings()
   options =
-    url: "#{scraperwiki.baseUrl}/#{scraperwiki.boxName}/exec"
+    url: "#{window.location.protocol}//#{window.location.host}/#{scraperwiki.boxName}/exec"
     type: "POST"
     data:
       apikey: settings.source.apikey

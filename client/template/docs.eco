@@ -291,10 +291,10 @@ and <code>source</code> contains information about the view's box.
 scraperwiki.readSettings().target.url + "/sqlite"
 </pre>
 
-<h3>Basic information</h3>
+<h3>Box name</h3>
 
-<p>ScraperWiki's URL is in <code>scraperwiki.baseUrl</code> and the
-name of the current box is in <code>scraperwiki.boxName</code>
+<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.boxName</code>.
+
 </p>
 
 <h3>Redirecting</h3>
@@ -304,7 +304,7 @@ redirect the browser to another location. For example, this redirects to
 the dataset overview page:
 </p>
 
-<pre>var datasetUrl = scraperwiki.baseUrl + "/dataset/" + scraperwiki.boxName
+<pre>var datasetUrl = "/dataset/" + scraperwiki.boxName
 scraperwiki.tool.redirect(datasetUrl)</pre>
 
 <p>It's also useful for redirecting to OAuth endpoints.</p>

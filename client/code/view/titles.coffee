@@ -6,9 +6,7 @@ class Cu.View.Title extends Backbone.View
 
   render: ->
     tpl = """#{@options.text}"""
-    if window.user.effective?.logoUrl?
-      tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
-    @$el.html tpl
+    @$el.html whitelabel(tpl)
     @
 
   setDocumentTitle: (model) =>
@@ -78,9 +76,7 @@ class Cu.View.DatasetSettingsTitle extends Cu.View.Title
       <span class="slash">/</span>
       Settings
     """
-    if window.user.effective?.logoUrl?
-      tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
-    @$el.html tpl
+    @$el.html whitelabel(tpl)
     @
 
 
@@ -98,9 +94,7 @@ class Cu.View.DatasetTitle extends Cu.View.EditableTitle
       <span class="editable">#{@model.get 'displayName'}</span>
       <input type="text" id="txtName" style="display: none"/>
     """
-    if window.user.effective?.logoUrl?
-      tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
-    @$el.html tpl
+    @$el.html whitelabel(tpl)
     @
 
 class Cu.View.ViewTitle extends Cu.View.EditableTitle
@@ -122,7 +116,10 @@ class Cu.View.ViewTitle extends Cu.View.EditableTitle
       <span class="editable">#{@model.get 'displayName'}</span>
       <input type="text" id="txtName" style="display: none"/>
     """
-    if window.user.effective?.logoUrl?
-      tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
-    @$el.html tpl
+    @$el.html whitelabel(tpl)
     @
+
+whitelabel = (tpl) ->
+   if window.user.effective?.logoUrl?
+     tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
+   tpl

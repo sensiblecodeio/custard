@@ -33,6 +33,21 @@ scraperwiki.exec = (cmd, success, error) ->
     options.error = error
   $.ajax options
 
+scraperwiki.sql = (sql, success, error) ->
+  settings = scraperwiki.readSettings()
+  token = settings.token
+  options =
+    url: "#{window.location.protocol}//#{window.location.host}/#{scraperwiki.boxName}/#{token}/sqlite"
+    type: "GET"
+    dataType: "json"
+    data:
+      q: sql
+  if success?
+    options.success = success
+  if error?
+    options.error = error
+  $.ajax options
+
 scraperwiki.readSettings = ->
   return null if window.location.hash is ''
   hash = window.location.hash.substr(1)

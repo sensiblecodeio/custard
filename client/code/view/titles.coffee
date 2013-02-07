@@ -6,9 +6,7 @@ class Cu.View.Title extends Backbone.View
 
   render: ->
     tpl = """#{@options.text}"""
-    if window.user.effective?.logoUrl?
-      tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
-    @$el.html tpl
+    @$el.html whitelabel(tpl)
     @
 
   setDocumentTitle: (model) =>
@@ -69,6 +67,19 @@ class Cu.View.EditableTitle extends Cu.View.Title
     @editableNameEscaped() if event.keyCode is 27
 
 
+class Cu.View.DatasetSettingsTitle extends Cu.View.Title
+  render: ->
+    tpl = """
+      <a href="/">My Datasets</a>
+      <span class="slash">/</span>
+      <a href="/dataset/#{@model.get 'box'}/">#{@model.get 'displayName'}</a>
+      <span class="slash">/</span>
+      Settings
+    """
+    @$el.html whitelabel(tpl)
+    @
+
+
 class Cu.View.DatasetTitle extends Cu.View.EditableTitle
   #TODO: create BaseView to extend events, for the DRY
   events:
@@ -83,9 +94,7 @@ class Cu.View.DatasetTitle extends Cu.View.EditableTitle
       <span class="editable">#{@model.get 'displayName'}</span>
       <input type="text" id="txtName" style="display: none"/>
     """
-    if window.user.effective?.logoUrl?
-      tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
-    @$el.html tpl
+    @$el.html whitelabel(tpl)
     @
 
 class Cu.View.ViewTitle extends Cu.View.EditableTitle
@@ -107,7 +116,10 @@ class Cu.View.ViewTitle extends Cu.View.EditableTitle
       <span class="editable">#{@model.get 'displayName'}</span>
       <input type="text" id="txtName" style="display: none"/>
     """
-    if window.user.effective?.logoUrl?
-      tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
-    @$el.html tpl
+    @$el.html whitelabel(tpl)
     @
+
+whitelabel = (tpl) ->
+   if window.user.effective?.logoUrl?
+     tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
+   tpl

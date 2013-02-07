@@ -230,21 +230,24 @@ This will show you how to SSH in.</p>
 <h3>Cron</h3>
 
 <p>You can create a standard cron job using the <code>crontab</code> command.
-Unlike other facilities, this runs separately on each physical server in
+The <code>MAILTO</code> variable works as normal, and is a good way to get
+cron output via email.</p>
+
+<p>Unlike other facilities, this runs separately on each physical server in
 ScraperWiki's cluster. Currently you only have access to one server &ndash; this will
-change as we add more.
-</p>
+change as we add more.</p>
+
+<h3>SMTP</h3>
+
+<p>You can send email using SMTP via port 25 on <code>localhost</code>. This is intended
+for logging and alerting. Spam is against our Terms &amp; Conditions, and will not work.</p>
 
 <h3>SSH</h3>
 
 <p>This is an ordinary SSH server, you can use <code>scp</code>,
 <code>sftp</code>, <code>git</code> over SSH and so on. Your keys are stored
 separately for each box in <code>/home/.ssh/</code>, so you can add and
-remove people.
-
-<!-- <h3>SMTP</h3>
-
--->
+remove people.</p>
 
 <hr />
 

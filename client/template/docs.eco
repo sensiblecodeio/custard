@@ -6,6 +6,7 @@
     <li><a data-nonpushstate href="#datasets-anatomy">Anatomy of a box</a></li>
     <li><a data-nonpushstate href="#datasets-endpoints">Box API endpoints</a></li>
     <li><a data-nonpushstate href="#datasets-services">Unix services</a></li>
+    <li><a data-nonpushstate href="#datasets-git">Using Git with your box</a></li>
     <li class="nav-header">Views</li>
     <li><a data-nonpushstate href="#views-basics">View basics</a></li>
     <li><a data-nonpushstate href="#views-styling">Styling your view</a></li>
@@ -248,6 +249,30 @@ for logging and alerting. Spam is against our Terms &amp; Conditions, and will n
 <code>sftp</code>, <code>git</code> over SSH and so on. Your keys are stored
 separately for each box in <code>/home/.ssh/</code>, so you can add and
 remove people.</p>
+
+<hr />
+
+<h2 id="datasets-git">Using Git with your box</h2>
+
+<p>You can develop code locally and push it to your box using Git.</p>
+
+<p>Every box contains a Git repo at the root level (this is likely to change). You will want to make sure the following Git config variables are set:</p>
+
+<pre class="prettyprint linenums">$ git config --global receive.denyCurrentBranch "ignore"
+$ git config --global user.email "<%= @user.email[0] %>"
+$ git config --global user.name "<%= @user.displayName %>"
+</pre>
+
+<p>You can then clone to your local machine using:</p>
+
+<pre class="prettyprint linenums">$ git clone a1b2c3d@box.scraperwiki.com:. ./local-directory-name</pre>
+
+<p>Where <code>a1b2c3d</code> is the name of your box, and <code>./local-directory-name</code> is the directory in which you&rsquo;d like the local repo created.</p>
+
+<p>The box will not automatically update when you push your changes to it. You can either SSH in and run <code>git reset --hard</code> manually, or set an automatic post hook:</p>
+
+<pre class="prettyprint linenums">$ echo "cd ..; env -i git reset --hard" > ~/.git/hooks/post-receive
+$ chmod +x ~/.git/hooks/post-receive</pre>
 
 <hr />
 

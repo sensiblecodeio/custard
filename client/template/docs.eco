@@ -392,20 +392,42 @@ scraperwiki.json</pre>
 
 <h2 id="tools-submitting">Submitting your tool</h2>
 
-<p>To sumbit a completed tool (or work in progress!) to ScraperWiki, you should call our Tools API endpoint:</p>
+<p>To sumbit a completed tool (or work in progress!) to ScraperWiki, make a <code>HTTP POST</code> request to <code>/api/tools</code>, with the following body parameters:</p>
 
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>POST&nbsp;parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>name</code></td>
+    <td>A unique name for your tool. Should contain only alphanumeric characters and hyphens. This internal to ScraperWiki and will not be seen by end-users.</td>
+  </tr>
+  <tr>
+    <td><code>type</code></td>
+    <td>Either <code>importer</code> if your tool creates new datasets, or <code>view</code> if it visualises/exports existing datasets.</td>
+  </tr>
+  <tr>
+    <td><code>gitUrl</code></td>
+    <td>URL of your tool&rsquo;s Git repo, eg: <code>git://github.com/scraperwiki/spreadsheet-download-tool.git</code></td>
+  </tr>
+</table>
 
+<p>This API endpoint currently requires an active ScraperWiki login session. It is therefore easiest to call the API from the Javascript console in your web browser, while you are logged into ScraperWiki. eg:</p>
 
-<!-- Javascript console adding a tool -->
+<pre class="prettyprint">
+$.ajax({url: "api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}})
+</pre>
 
+<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#tools-structure">the structure outlined above</a>.</p>
+
+<p>ScraperWiki always pulls the latest code from the specified <code>gitUrl</code> when users use your tool. Datasets or views they have already created, however, will not be automatically updated.</p>
 
 <!-- Other things to document or fix and document:
 
 Exec endpoint helper
-
-Status updates in datasets
-
-SMTP for other people
 
 -->
 

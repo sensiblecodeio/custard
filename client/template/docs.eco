@@ -411,7 +411,27 @@ scraperwiki.json</pre>
 
 <h2 id="tools-process">Development process</h2>
 
-<!-- VCS workflows: git pushing, github checking out and stuff -->
+<p>When you&rsquo;re writing a new tool on your local machine, you&rsquo;ll probably want to preview your changes without officially committing them to the git repo. Since tools rely so heavily on the ScraperWiki platform, previewing locally isn&rsquo;t an option. But neither is comitting every change you make and initiating the tool again and again via the ScraperWiki web interface.</p>
+
+<p>It&rsquo;s for this reason that we&rsquo;ve built <a href="https://github.com/scraperwiki/swot">swot</a>: a tool for developing tools! Install it from our git repo:</p>
+
+<pre>$ git clone git://github.com/scraperwiki/swot.git</pre>
+
+<p>You will need a box to test your dataset or view in. Create one on ScraperWiki by using the "Code your own dataset!" or "Code your own view!" tool. You will be shown SSH instructions for the resulting box &ndash; make a note of the 7-character <code>box_name</code> and your <code>apikey</code>, and enter them into <code>swot</code> from within your local tool directory:</p>
+
+<pre>$ swot setup <em class="muted">&lt;box_name&gt;</em> <em class="muted">&lt;apikey&gt;</em></pre>
+
+<p>This automatically adds your SSH keys to the box, and saves some settings into <code>.swotconfig</code></p>
+
+<p>To get <code>swot</code> to watch your local directory for changes and automatically sync them up to the box on ScraperWiki, run:</p>
+
+<pre>$ swot watch</pre>
+
+<p>Note: a bug in node.js means this doesn&rsquo;t work on a Mac. Try manually synchronizing instead:</p>
+
+<pre>$ swot sync</pre>
+
+<p>Your changes will now be visible through the normal ScraperWiki interface, at <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
 
 <hr />
 

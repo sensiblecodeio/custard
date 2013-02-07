@@ -1,2 +1,6 @@
-<h3><%= if @manifest? then @manifest.displayName else @name %></h3>
-<p>by ScraperWiki</p>
+<% if @manifest?: %>
+  <h3><%= @manifest.displayName %></h3>
+  <p><%= @manifest.description %></p>
+<% else: %>
+  <h3><%= @name %></h3>
+<% end %>

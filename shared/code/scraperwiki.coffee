@@ -35,7 +35,7 @@ scraperwiki.exec = (cmd, success, error) ->
 
 scraperwiki.sql = (sql, success, error) ->
   settings = scraperwiki.readSettings()
-  token = settings.token
+  token = settings.source.token
   options =
     url: "#{window.location.protocol}//#{window.location.host}/#{scraperwiki.boxName}/#{token}/sqlite"
     type: "GET"

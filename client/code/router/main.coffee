@@ -56,7 +56,7 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
-        titleView = new Cu.View.DatasetTitle {model: model}
+        titleView = new Cu.View.DatasetSettingsTitle {model: model}
         contentView = new Cu.View.AppContent {model: model}
         @titleView.showView titleView
         @appView.showView contentView

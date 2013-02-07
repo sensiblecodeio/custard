@@ -69,6 +69,21 @@ class Cu.View.EditableTitle extends Cu.View.Title
     @editableNameEscaped() if event.keyCode is 27
 
 
+class Cu.View.DatasetSettingsTitle extends Cu.View.Title
+  render: ->
+    tpl = """
+      <a href="/">My Datasets</a>
+      <span class="slash">/</span>
+      <a href="/dataset/#{@model.get 'box'}/">#{@model.get 'displayName'}</a>
+      <span class="slash">/</span>
+      Settings
+    """
+    if window.user.effective?.logoUrl?
+      tpl = """<img src="#{window.user.effective.logoUrl}"> #{tpl}"""
+    @$el.html tpl
+    @
+
+
 class Cu.View.DatasetTitle extends Cu.View.EditableTitle
   #TODO: create BaseView to extend events, for the DRY
   events:

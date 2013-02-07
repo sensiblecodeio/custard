@@ -48,9 +48,14 @@ class Cu.Model.Tool extends Backbone.Model
 class Cu.Collection.Tools extends Backbone.Collection
   model: Cu.Model.Tool
   url: -> "/api/tools/"
+
   importers: ->
     importers = @filter (t) -> t.get('type') is 'importer'
     new Cu.Collection.Tools importers
+
   nonimporters: ->
     nonimporters = @filter (t) -> t.get('type') isnt 'importer'
     new Cu.Collection.Tools nonimporters
+
+  comparator: (model) ->
+    model.get('manifest')?.displayName

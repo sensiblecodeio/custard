@@ -1,39 +1,47 @@
-Browser = require 'zombie'
+wd = require 'wd'
 should = require 'should'
+
+browser = wd.remote()
+wd40 = require('../wd40')(browser)
 
 url = 'http://localhost:3001'
 login_url = "#{url}/login"
 
 describe 'Home page (logged in)', ->
-  browser = new Browser()
-  browser.waitDuration = "10s"
+  before (done) ->
+    wd40.init ->
+      browser.get login_url, done
 
   before (done) ->
-    browser.visit login_url, done
+    wd40.fill '#username', 'ehg', ->
+      wd40.fill '#password', 'testing', ->
+        wd40.click '#login', done
 
   before (done) ->
-    browser.fill '#username', 'ehg'
-    browser.fill '#password', 'testing'
-    browser.pressButton '#login', done
+    browser.waitForElementByCss '#userlinks', 4000, done
 
-  it 'contains the scraperwiki logo', ->
-    h = browser.text('#header h1')
-    h.should.equal 'ScraperWiki'
+  it 'contains the scraperwiki logo', (done) ->
+    wd40.getText '#header h1', (err, h) ->
+      h.should.equal 'ScraperWiki'
+      done()
 
-  it 'contains a list of my datasets', ->
-    datasets = browser.queryAll('.dataset')
-    should.exist datasets
-    datasets.length.should.be.above 2
-
+  it 'contains a list of my datasets', (done) ->
+    browser.waitForVisibleByCss '.dataset', 4000, ->
+      browser.elementsByCss '.dataset', (err, datasets) ->
+        should.exist datasets
+        datasets.length.should.be.above 2
+        done()
 
   context 'when I am on the tools page', ->
     before (done) ->
-      browser.visit "#{url}/tools", done
+      browser.get "#{url}/tools", done
 
-    it 'shows the tools I can use to create datasets', ->
-      tools = browser.queryAll '.my-tools .tool'
-      tools.length.should.be.above 0
+    it 'shows the tools I can use to create datasets', (done) ->
+      browser.waitForVisibleByCss '.my-tools .tool', 4000, ->
+        browser.elementsByCss '.my-tools .tool', (err, tools) ->
+          tools.length.should.be.above 0
+          done()
 
-    xit 'shows the "Code your own Dataset" tool', ->
-      tools = browser.queryAll '.dataset-tools .tool'
-      $(tools).text().toLowerCase().should.include 'code your own dataset'
+  after (done) ->
+    browser.quit ->
+      done()

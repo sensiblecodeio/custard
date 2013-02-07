@@ -35,9 +35,10 @@ scraperwiki.exec = (cmd, success, error) ->
 
 scraperwiki.sql = (sql, success, error) ->
   settings = scraperwiki.readSettings()
-  token = settings.source.token
+  # Points to the dataset box, when used from either the dataset or a view.
+  boxSettings = settings.target ? settings.source
   options =
-    url: "#{window.location.protocol}//#{window.location.host}/#{scraperwiki.boxName}/#{token}/sqlite"
+    url: "#{boxSettings.url}/sql/"
     type: "GET"
     dataType: "json"
     data:

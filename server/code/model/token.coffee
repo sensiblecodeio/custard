@@ -17,6 +17,8 @@ class Token extends ModelBase
     @dbClass.findOne {token: token}, (err, token) ->
       if err?
         callback err, null
+      else if not token?
+        callback 'Not found', null
       else
         newToken = new Token
         _.extend newToken, token.toObject()

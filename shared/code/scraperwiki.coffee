@@ -19,6 +19,9 @@ scraperwiki.tool.redirect = (location) ->
 scraperwiki.tool.getURL = (cb) ->
   parent.scraperwiki.xdm.getURL(cb)
 
+scraperwiki.tool.rename = (name) ->
+  parent.scraperwiki.xdm.rename(scraperwiki.boxName, name)
+
 scraperwiki.exec = (cmd, success, error) ->
   settings = scraperwiki.readSettings()
   options =

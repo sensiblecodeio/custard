@@ -75,6 +75,18 @@ describe 'Tool RPC', ->
           text.should.equal @toolURL
           done()
 
+    context 'when the rename button is pressed', ->
+      before (done) ->
+        browser.get @toolURL, ->
+          wd40.switchToBottomFrame ->
+            wd40.click '#rename', (err, btn) ->
+              wd40.switchToTopFrame done
+
+      it 'renames the dataset', (done) ->
+        wd40.getText '#title', (err, text) ->
+          text.should.include 'Test Dataset (renamed)'
+          done()
+
   after (done) ->
     browser.quit ->
       done()

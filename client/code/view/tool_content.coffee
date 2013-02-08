@@ -21,6 +21,12 @@ class Cu.View.ToolContent extends Backbone.View
             window.app.navigate url, trigger: true
         getURL: (cb) ->
           cb window.location.href
+        rename: (box, name) ->
+          mod = Cu.Model.Dataset.findOrCreate box: box
+          mod.fetch
+            success: (model, resp, options) ->
+              model.set 'displayName', name
+              model.save()
 
 class Cu.View.AppContent extends Cu.View.ToolContent
   settings: (callback) ->

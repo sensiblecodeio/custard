@@ -83,9 +83,7 @@ describe 'Tool RPC', ->
               wd40.switchToTopFrame done
 
       it 'renames the dataset', (done) ->
-        wd40.getText '#title', (err, text) ->
-          text.should.include 'Test Dataset (renamed)'
-          done()
+        wd40.waitForText 'Test Dataset (renamed)', done
 
   after (done) ->
     browser.quit ->

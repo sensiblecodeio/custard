@@ -68,6 +68,9 @@ class Cu.View.EditableTitle extends Cu.View.Title
 
 
 class Cu.View.DatasetSettingsTitle extends Cu.View.Title
+  initialize: ->
+    @model.on 'change', @render, this
+
   render: ->
     tpl = """
       <a href="/">My Datasets</a>

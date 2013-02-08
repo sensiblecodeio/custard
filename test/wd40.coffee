@@ -42,6 +42,21 @@ class Wd40
     Wd40.switchToFrame 'iframe', ->
       Wd40.switchToFrame 'iframe', cb
 
+  @waitForText: (text, cb) ->
+    endTime = Date.now() + 4000
+    poll = ->
+      browser.text 'body', (err, result) ->
+        if err
+          return cb err
+        if result.indexOf(text) > -1
+          cb null
+        else
+          if Date.now() > endTime
+            cb new Error("Element didn't appear")
+          else
+            setTimeout poll, 200
+    poll()
+
 module.exports = (b) ->
   browser = b
   Wd40

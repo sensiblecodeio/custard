@@ -474,6 +474,8 @@ $.ajax({url: "api/tools", type: "POST", data: {name: "spreadsheet-download", typ
 
 Exec endpoint helper
 
+In tool development, mention that you can use other workflows (e.g. editing files in box)
+
 -->
 
 

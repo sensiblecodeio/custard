@@ -472,7 +472,11 @@ $.ajax({url: "api/tools", type: "POST", data: {name: "spreadsheet-download", typ
 
 <!-- Other things to document or fix and document:
 
+scraperwiki.tool.rename
+
 Exec endpoint helper
+
+In tool development, mention that you can use other workflows (e.g. editing files in box)
 
 -->
 

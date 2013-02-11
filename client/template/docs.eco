@@ -481,6 +481,9 @@ In tool development, mention that you can use other workflows (e.g. editing file
 Explain how to add username:password@, with a github read-only user, if you want
 to make a tool that is from a private repository.
 
+Making the example print this would be good:
+$.ajax({url: "api/tools", type: "POST", data: {name: "twitter-follows", type: "importer", gitUrl: "git:// github.com/scraperwiki/twitter-follows-tool.git"}}).complete(function(r) { console.log(r.responseText) })
+
 
 -->
 

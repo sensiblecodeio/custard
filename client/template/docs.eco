@@ -68,7 +68,7 @@ This will show you how to SSH in.</p>
 
 <h3 id="datasets-endpoints-sql">SQL data endpoint</h3>
 
-<p>If a SQLite file is named in the <code>database</code> key of <code>~/scraperwiki.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sqlite?q=select+*+from+sqlite_master</code>.</p>
+<p>If a SQLite file is named in the <code>database</code> key of <code>~/box.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sqlite?q=select+*+from+sqlite_master</code>.</p>
 
 <p>The SQL endpoint accepts only <code>HTTP GET</code> requests with the following parameters:</p>
 

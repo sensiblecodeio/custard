@@ -468,6 +468,8 @@ $.ajax({url: "api/tools", type: "POST", data: {name: "spreadsheet-download", typ
 
 <p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#tools-structure">the structure outlined above</a>.</p>
 
+<p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="important">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
+
 <p>ScraperWiki always pulls the latest code from the specified <code>gitUrl</code> when users use your tool. Datasets or views they have already created, however, will not be automatically updated.</p>
 
 <!-- Other things to document or fix and document:

@@ -248,9 +248,11 @@ app.post '/api/tools/?', (req, resp) ->
   tool.gitClone dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
     console.log err, stdout, stderr
     if err?
+      console.warn err
       return resp.send 500, error: "Error cloning your tool's Git repo"
     tool.loadManifest (err) ->
       if err?
+        console.warn err
         tool.deleteRepo ->
           return resp.send 500, error: "Error trying to load your tool's manifest"
       else

@@ -85,6 +85,15 @@ describe 'Tool RPC', ->
       it 'renames the dataset', (done) ->
         wd40.waitForText 'Test Dataset (renamed)', done
 
+    context 'when the alert button is pressed', ->
+      before (done) ->
+        browser.get @toolURL, ->
+          wd40.switchToBottomFrame ->
+            wd40.click '#alert', done
+
+      it 'shows an alert', (done) ->
+        browser.waitForElementByCss '.alert', 4000, done
+
   after (done) ->
     browser.quit ->
       done()

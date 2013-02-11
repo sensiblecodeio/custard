@@ -478,6 +478,10 @@ Exec endpoint helper
 
 In tool development, mention that you can use other workflows (e.g. editing files in box)
 
+Explain how to add username:password@, with a github read-only user, if you want
+to make a tool that is from a private repository.
+
+
 -->
 
 

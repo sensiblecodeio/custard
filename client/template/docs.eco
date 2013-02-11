@@ -463,7 +463,7 @@ scraperwiki.json</pre>
 <p>This API endpoint currently requires an active ScraperWiki login session. It is therefore easiest to call the API from the Javascript console in your web browser, while you are logged into ScraperWiki. eg:</p>
 
 <pre class="prettyprint">
-$.ajax({url: "api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
+$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
 </pre>
 
 <p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#tools-structure">the structure outlined above</a>.</p>

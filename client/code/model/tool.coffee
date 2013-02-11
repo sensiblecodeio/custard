@@ -9,14 +9,16 @@ class Cu.Model.Tool extends Backbone.Model
       else
         @exec("cd; rm -r http && git clone #{@get 'gitUrl'} tool --depth 1 && ln -s tool/http http").complete callback
 
+  # DUP
   publishToken: (callback) ->
     if @_publishToken?
       callback @_publishToken
     else
-      @exec("cat ~/scraperwiki.json", {dataType: 'json'}).success (settings) ->
+      @exec("cat ~/box.json", {dataType: 'json'}).success (settings) ->
         @_publishToken = settings.publish_token
         callback @_publishToken
 
+  # DUP
   exec: (cmd, args) ->
     # Returns an ajax object, onto which you can
     # chain .success and .error callbacks

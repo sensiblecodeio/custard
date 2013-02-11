@@ -10,7 +10,7 @@ class Cu.Model.View extends Backbone.RelationalModel
     if @_publishToken?
       callback @_publishToken
     else
-      @exec("cat ~/scraperwiki.json").success (data) ->
+      @exec("cat ~/box.json").success (data) ->
         settings = JSON.parse data
         @_publishToken = settings.publish_token
         callback @_publishToken

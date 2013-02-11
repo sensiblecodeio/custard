@@ -26,7 +26,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     if @_publishToken?
       callback @_publishToken
     else
-      @exec("cat ~/scraperwiki.json", {dataType: 'json'}).success (settings) ->
+      @exec("cat ~/box.json", {dataType: 'json'}).success (settings) ->
         @_publishToken = settings.publish_token
         callback @_publishToken
 

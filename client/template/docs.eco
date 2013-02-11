@@ -346,9 +346,7 @@ scraperwiki.readSettings().target.url + "/sqlite"
 
 <h3>Read box name</h3>
 
-<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.boxName</code>.
-
-</p>
+<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.boxName</code>.</p>
 
 <h3>Redirecting</h3>
 
@@ -373,6 +371,14 @@ so you need to pass in a callback function.
 <pre class="prettyprint linenums">scraperwiki.tool.getURL(function(url) {
     console.log(url)
 })</pre>
+
+<h3>Rename a dataset / view</h3>
+
+<p>By default, datasets or views created by a tool adopt the name of the tool itself. You can change the name using the <code>scraperwiki.tool.rename()</code> function. It takes one argument: a string to which the dataset or view should be renamed. For example:</p>
+
+<pre class="prettyprint linenums">var username = "@scraperwiki"
+scraperwiki.tool.rename(username + "'s twitter followers")</pre>
+
 
 <h3>SQL API wrapper</h3>
 
@@ -538,8 +544,6 @@ $.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", ty
 <p>ScraperWiki always pulls the latest code from the specified <code>gitUrl</code> when users use your tool. Datasets or views they have already created, however, will not be automatically updated.</p>
 
 <!-- Other things to document or fix and document:
-
-scraperwiki.tool.rename
 
 In tool development, mention that you can use other workflows (e.g. editing files in box)
 

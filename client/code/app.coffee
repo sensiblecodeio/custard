@@ -1,4 +1,6 @@
 #= require namespace
+# Must come before any model that uses the mixin
+#= require model/boxable
 #= require_tree model
 #= require_tree router
 #= require_tree view

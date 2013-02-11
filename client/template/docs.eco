@@ -47,14 +47,14 @@ This will show you how to SSH in.</p>
 
 <p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), limited to 500 MB storage across all the boxes you own. </p>
 
-<p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/scraperwiki.json</code>. Eg:</p>
+<p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/box.json</code>. Eg:</p>
 
 <pre class="prettyprint linenums">{
   "database": "database.sqlite",
   "publish_token": "t5odv7of5l"
 }</pre>
 
-<p>Your box&rsquo;s <code>publish_token</code> is used to secure its public-facing, read-only endpoints (<code>/http</code> and <code>/sqlite</code>). It should be alphanumeric and 10-30 characters long. Or, if you&rsquo;d prefer to make your box&rsquo;s contents public, you can set it to an empty string or remove its entry entirely from <code>~/scraperwiki.json</code>.</p>
+<p>Your box&rsquo;s <code>publish_token</code> is used to secure its public-facing, read-only endpoints (<code>/http</code> and <code>/sqlite</code>). It should be alphanumeric and 10-30 characters long. Or, if you&rsquo;d prefer to make your box&rsquo;s contents public, you can set it to an empty string or remove its entry entirely from <code>~/box.json</code>.</p>
 
 <hr />
 
@@ -68,7 +68,7 @@ This will show you how to SSH in.</p>
 
 <h3 id="datasets-endpoints-sql">SQL data endpoint</h3>
 
-<p>If a SQLite file is named in the <code>database</code> key of <code>~/scraperwiki.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sqlite?q=select+*+from+sqlite_master</code>.</p>
+<p>If a SQLite file is named in the <code>database</code> key of <code>~/box.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sqlite?q=select+*+from+sqlite_master</code>.</p>
 
 <p>The SQL endpoint accepts only <code>HTTP GET</code> requests with the following parameters:</p>
 
@@ -256,7 +256,7 @@ remove people.</p>
 
 <p>You can develop code locally and push it to your box using Git.</p>
 
-<p>Every box contains a Git repo at the root level (this is likely to change). You will want to make sure the following Git config variables are set:</p>
+<p>Every box contains a Git repo in the <code>~/tool/</code> directory. You will want to make sure the following Git config variables are set:</p>
 
 <pre class="prettyprint linenums">$ git config --global receive.denyCurrentBranch "ignore"
 $ git config --global user.email "<%= @user.email[0] %>"
@@ -265,14 +265,14 @@ $ git config --global user.name "<%= @user.displayName %>"
 
 <p>You can then clone to your local machine using:</p>
 
-<pre class="prettyprint linenums">$ git clone a1b2c3d@box.scraperwiki.com:. ./local-directory-name</pre>
+<pre class="prettyprint linenums">$ git clone a1b2c3d@box.scraperwiki.com:tool ./local-directory-name</pre>
 
 <p>Where <code>a1b2c3d</code> is the name of your box, and <code>./local-directory-name</code> is the directory in which you&rsquo;d like the local repo created.</p>
 
 <p>The box will not automatically update when you push your changes to it. You can either SSH in and run <code>git reset --hard</code> manually, or set an automatic post hook:</p>
 
-<pre class="prettyprint linenums">$ echo "cd ..; env -i git reset --hard" > ~/.git/hooks/post-receive
-$ chmod +x ~/.git/hooks/post-receive</pre>
+<pre class="prettyprint linenums">$ echo "cd ..; env -i git reset --hard" > ~/tool/.git/hooks/post-receive
+$ chmod +x ~/tool/.git/hooks/post-receive</pre>
 
 <hr />
 
@@ -463,16 +463,25 @@ scraperwiki.json</pre>
 <p>This API endpoint currently requires an active ScraperWiki login session. It is therefore easiest to call the API from the Javascript console in your web browser, while you are logged into ScraperWiki. eg:</p>
 
 <pre class="prettyprint">
-$.ajax({url: "api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}})
+$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
 </pre>
 
 <p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#tools-structure">the structure outlined above</a>.</p>
+
+<p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="important">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
 
 <p>ScraperWiki always pulls the latest code from the specified <code>gitUrl</code> when users use your tool. Datasets or views they have already created, however, will not be automatically updated.</p>
 
 <!-- Other things to document or fix and document:
 
+scraperwiki.tool.rename
+
 Exec endpoint helper
+
+In tool development, mention that you can use other workflows (e.g. editing files in box)
+
+Explain how to add username:password@, with a github read-only user, if you want
+to make a tool that is from a private repository.
 
 -->
 

@@ -379,7 +379,6 @@ so you need to pass in a callback function.
 <pre class="prettyprint linenums">var username = "@scraperwiki"
 scraperwiki.tool.rename(username + "'s twitter followers")</pre>
 
-
 <h3>SQL API wrapper</h3>
 
 <p>The ScraperWiki helper library includes a convenient wrapper around the target box&rsquo;s SQL API: <code>scraperwiki.sql()</code>. The function takes three arguments:</p> 
@@ -445,6 +444,35 @@ scraperwiki.tool.rename(username + "'s twitter followers")</pre>
 }, function(jqXHR, textStatus, errorThrown){
     console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
 })</pre>
+
+<h3>Show alerts</h3>
+
+<p><code>scraperwiki.alert()</code> takes three arguments and displays an alert bar at the top of your dataset / view:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>title</code></td>
+    <td>A string to be shown in bold at the start of the alert. eg: "Could not authenticate with Twitter"</td>
+  </tr>
+  <tr>
+    <td><code>message</code></td>
+    <td>A string to be shown after the title, usually to explain the alert or give the user some help. eg: "Please double-check your username and password"</td>
+  </tr>
+  <tr>
+    <td><code>level</code></td>
+    <td><span class="muted">[optional]</span> An optional boolean to control the appearance of the alert. True values will cause the alert to be shown in red (<code>.alert-error</code>); false values will cause it to be shown in the default yellow.</td>
+  </tr>
+</table>
+
+<p>Example usage:</p>
+
+<pre class="prettyprint">scraperwiki.alert("Could not authenticate with Twitter", "Please check your username and password", 1)</pre>
 
 <hr />
 

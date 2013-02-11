@@ -61,3 +61,9 @@ scraperwiki.readSettings = ->
     return null
   return settings
 
+scraperwiki.alert = (title, message, level=0) ->
+  # [title] and [message] should be html strings. The first is displayed in bold.
+  # If [level] is a truthful value, the alert is printed in red.
+  $a = $('<div>').addClass('alert').prependTo('body')
+  $a.addClass('alert-error') if level
+  $a.html """<button type="button" class="close" data-dismiss="alert">×</button> <strong>#{title}</strong> #{message}"""

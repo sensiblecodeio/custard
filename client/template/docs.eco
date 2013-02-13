@@ -348,7 +348,7 @@ scraperwiki.readSettings().target.url + "/sqlite"
 
 <h3>Read box name</h3>
 
-<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.boxName</code>.</p>
+<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.box</code>.</p>
 
 <h3>Redirecting</h3>
 
@@ -357,7 +357,7 @@ redirect the browser to another location. For example, this redirects to
 the dataset overview page:
 </p>
 
-<pre class="prettyprint linenums">var datasetUrl = "/dataset/" + scraperwiki.boxName
+<pre class="prettyprint linenums">var datasetUrl = "/dataset/" + scraperwiki.box
 scraperwiki.tool.redirect(datasetUrl)</pre>
 
 <p>It's also useful for redirecting to OAuth endpoints.</p>

@@ -5,7 +5,7 @@ class Cu.View.ToolContent extends Backbone.View
   initialize: ->
     @settings (settings) =>
       frag = encodeURIComponent JSON.stringify(settings)
-      @setupEasyXdm "#{@boxUrl}/#{@model.get 'box'}/#{settings.source.token}/container.html##{frag}"
+      @setupEasyXdm "#{@boxUrl}/#{@model.get 'box'}/#{settings.source.publishToken}/container.html##{frag}"
 
   setupEasyXdm: (url) ->
     transport = new easyXDM.Rpc

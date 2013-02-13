@@ -10,7 +10,7 @@ jQuery is required.
 # Can use short sw.tool.thing() or long scraperwiki.tool.thing()
 scraperwiki = sw = { tool: {} }
 
-scraperwiki.boxName = window.location.pathname.split('/')[1]
+scraperwiki.box = window.location.pathname.split('/')[1]
 
 # Call container iframe's API
 scraperwiki.tool.redirect = (location) ->
@@ -20,12 +20,12 @@ scraperwiki.tool.getURL = (cb) ->
   parent.scraperwiki.xdm.getURL(cb)
 
 scraperwiki.tool.rename = (name) ->
-  parent.scraperwiki.xdm.rename(scraperwiki.boxName, name)
+  parent.scraperwiki.xdm.rename(scraperwiki.box, name)
 
 scraperwiki.exec = (cmd, success, error) ->
   settings = scraperwiki.readSettings()
   options =
-    url: "#{window.location.protocol}//#{window.location.host}/#{scraperwiki.boxName}/exec"
+    url: "#{window.location.protocol}//#{window.location.host}/#{scraperwiki.box}/exec"
     type: "POST"
     data:
       apikey: settings.source.apikey

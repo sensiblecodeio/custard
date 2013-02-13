@@ -447,6 +447,10 @@ scraperwiki.tool.rename(username + "'s twitter followers")</pre>
     console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
 })</pre>
 
+<h3>Escaping strings for shell commands</h3>
+
+<p><code>scraperwiki.shellEscape()</code> returns a string with single-quotes escaped. This will come in useful when you&rsquo;re executing commands via the <code>scraperwiki.exec()</code> method.</p>
+
 <h3>Show alerts</h3>
 
 <p><code>scraperwiki.alert()</code> takes three arguments and displays an alert bar at the top of your dataset / view:</p>

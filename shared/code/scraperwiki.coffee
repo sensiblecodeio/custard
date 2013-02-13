@@ -36,6 +36,9 @@ scraperwiki.exec = (cmd, success, error) ->
     options.error = error
   $.ajax options
 
+scraperwiki.shellEscape = (command) ->
+  "'" + command.replace(/'/g,"'\\''") + "'"
+
 scraperwiki.sql = (sql, success, error) ->
   settings = scraperwiki.readSettings()
   # Points to the dataset box, when used from either the dataset or a view.

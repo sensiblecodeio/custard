@@ -330,12 +330,14 @@ and <code>source</code> contains information about the view's box.
 
 <pre class="prettyprint linenums">{
     "source": {
-        "apikey": "<%= @user.apiKey %>"
-        "token": "t5odv7of5l"
+        "apikey": "<%= @user.apiKey %>",
+        "publishToken": "t5odv7of5l",
+        "box": "fdtlza1",
         "url": "https://box.scraperwiki.com/fdtlza1/t5odv7of5l"
     }, 
     "target": {
-        "token": "a1pax8jk32"
+        "publishToken": "a1pax8jk32",
+        "box": "de3jikz",
         "url": "https://box.scraperwiki.com/de3jikz/a1pax8jk32"
     }
 }</pre>

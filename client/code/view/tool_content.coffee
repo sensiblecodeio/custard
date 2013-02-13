@@ -30,23 +30,26 @@ class Cu.View.ToolContent extends Backbone.View
 
 class Cu.View.AppContent extends Cu.View.ToolContent
   settings: (callback) ->
-    @model.publishToken (token) =>
+    @model.publishToken (publishToken) =>
       callback
         source:
           apikey: window.user.effective.apiKey
-          url: "#{@boxUrl}/#{@model.get 'box'}/#{token}"
-          token: token
+          url: "#{@boxUrl}/#{@model.get 'box'}/#{publishToken}"
+          publishToken: publishToken
+          box: @model.get 'box'
 
 class Cu.View.PluginContent extends Cu.View.ToolContent
   settings: (callback) ->
-    @model.publishToken (view_token) =>
+    @model.publishToken (viewToken) =>
       dataset = @model.get 'plugsInTo'
-      dataset.publishToken (dataset_token) =>
+      dataset.publishToken (datasetToken) =>
         callback
           source:
             apikey: window.user.effective.apiKey
             url: "#{@boxUrl}/#{@model.get 'box'}/#{view_token}"
-            token: view_token
+            publishToken: viewToken
+            box: @model.get 'box'
           target:
             url: "#{@boxUrl}/#{dataset.get 'box'}/#{dataset_token}"
-            token: dataset_token
+            publishToken: datasetToken
+            box: dataset.get 'box'

@@ -46,7 +46,7 @@ class Cu.View.PluginContent extends Cu.View.ToolContent
         callback
           source:
             apikey: window.user.effective.apiKey
-            url: "#{@boxUrl}/#{@model.get 'box'}/#{view_token}"
+            url: "#{@boxUrl}/#{@model.get 'box'}/#{viewToken}"
             publishToken: viewToken
             box: @model.get 'box'
           target:

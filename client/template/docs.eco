@@ -60,6 +60,8 @@ This will show you how to SSH in.</p>
 
 <h2 id="datasets-endpoints">Box API endpoints</h2>
 
+<p class="well well-small"><span class="label label-important"> Watch out for 403s!</span>We currently only supply <code>Access-Control-Allow-Origin</code> in our API responses, no other CORS headers. Don&rsquo;t preflight your AJAX requests.</p>
+
 <h3 id="datasets-endpoints-http">HTTP file endpoint</h3>
 
 <p>Files placed in the <code>~/http/</code> directory of your box will be served statically via the box&rsquo;s HTTP endpoint. So, a file at <code>~/http/index.html</code> will be accessible at <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/http/index.html</code></p>

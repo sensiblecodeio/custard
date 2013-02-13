@@ -50,6 +50,6 @@ class Cu.View.PluginContent extends Cu.View.ToolContent
             publishToken: viewToken
             box: @model.get 'box'
           target:
-            url: "#{@boxUrl}/#{dataset.get 'box'}/#{dataset_token}"
+            url: "#{@boxUrl}/#{dataset.get 'box'}/#{datasetToken}"
             publishToken: datasetToken
             box: dataset.get 'box'

@@ -60,6 +60,8 @@ This will show you how to SSH in.</p>
 
 <h2 id="datasets-endpoints">Box API endpoints</h2>
 
+<p class="well well-small"><span class="label label-important"> Watch out for 403s!</span>We currently only supply <code>Access-Control-Allow-Origin</code> in our API responses, no other CORS headers. Don&rsquo;t preflight your AJAX requests.</p>
+
 <h3 id="datasets-endpoints-http">HTTP file endpoint</h3>
 
 <p>Files placed in the <code>~/http/</code> directory of your box will be served statically via the box&rsquo;s HTTP endpoint. So, a file at <code>~/http/index.html</code> will be accessible at <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/http/index.html</code></p>
@@ -328,12 +330,14 @@ and <code>source</code> contains information about the view's box.
 
 <pre class="prettyprint linenums">{
     "source": {
-        "apikey": "<%= @user.apiKey %>"
-        "token": "t5odv7of5l"
+        "apikey": "<%= @user.apiKey %>",
+        "publishToken": "t5odv7of5l",
+        "box": "fdtlza1",
         "url": "https://box.scraperwiki.com/fdtlza1/t5odv7of5l"
     }, 
     "target": {
-        "token": "a1pax8jk32"
+        "publishToken": "a1pax8jk32",
+        "box": "de3jikz",
         "url": "https://box.scraperwiki.com/de3jikz/a1pax8jk32"
     }
 }</pre>
@@ -344,11 +348,9 @@ and <code>source</code> contains information about the view's box.
 scraperwiki.readSettings().target.url + "/sqlite"
 </pre>
 
-<h3>Box name</h3>
+<h3>Read box name</h3>
 
-<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.boxName</code>.
-
-</p>
+<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.box</code>.</p>
 
 <h3>Redirecting</h3>
 
@@ -357,12 +359,12 @@ redirect the browser to another location. For example, this redirects to
 the dataset overview page:
 </p>
 
-<pre class="prettyprint linenums">var datasetUrl = "/dataset/" + scraperwiki.boxName
+<pre class="prettyprint linenums">var datasetUrl = "/dataset/" + scraperwiki.box
 scraperwiki.tool.redirect(datasetUrl)</pre>
 
 <p>It's also useful for redirecting to OAuth endpoints.</p>
 
-<h3>Reading the URL</h3>
+<h3>Read the URL</h3>
 
 <p>Sometimes you will need the URL of the outer page, for example to
 read query parameters or to get a URL for OAuth to redirect back to.
@@ -374,6 +376,111 @@ so you need to pass in a callback function.
     console.log(url)
 })</pre>
 
+<h3>Rename a dataset / view</h3>
+
+<p>By default, datasets or views created by a tool adopt the name of the tool itself. You can change the name using the <code>scraperwiki.tool.rename()</code> function. It takes one argument: a string to which the dataset or view should be renamed. For example:</p>
+
+<pre class="prettyprint linenums">var username = "@scraperwiki"
+scraperwiki.tool.rename(username + "'s twitter followers")</pre>
+
+<h3>SQL API wrapper</h3>
+
+<p>The ScraperWiki helper library includes a convenient wrapper around the target box&rsquo;s SQL API: <code>scraperwiki.sql()</code>. The function takes three arguments:</p> 
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>command</code></td>
+    <td>The SQL query to execute in the target box.</td>
+  </tr>
+  <tr>
+    <td><code>success(data, textStatus, jqXHR)</code></td>
+    <td>A callback to run on success.</td>
+  </tr>
+  <tr>
+    <td><code>error(jqXHR, textStatus, errorThrown)</code></td>
+    <td>A callback to run on error.</td>
+  </tr>
+</table>
+
+<p>Example usage:</p>
+
+<pre class="prettyprint linenums">scraperwiki.sql("select * from tweets", function(data, textStatus, jqXHR) {
+    console.log('Great! Here are your tweets:', data)
+}, function(jqXHR, textStatus, errorThrown){
+    console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
+})</pre>
+
+<h3>Exec API wrapper</h3>
+
+<p>The ScraperWiki helper library also includes a convenient wrapper around the <em>source</em> box&rsquo;s Exec API: <code>scraperwiki.exec()</code>. The function takes three arguments:</p> 
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>command</code></td>
+    <td>The shell command to execute in the <em>source</em> box.</td>
+  </tr>
+  <tr>
+    <td><code>success(data, textStatus, jqXHR)</code></td>
+    <td>A callback to run on success.</td>
+  </tr>
+  <tr>
+    <td><code>error(jqXHR, textStatus, errorThrown)</code></td>
+    <td>A callback to run on error.</td>
+  </tr>
+</table>
+
+<p>Example usage:</p>
+
+<pre class="prettyprint linenums">scraperwiki.exec("cd; ./code.py", function(data, textStatus, jqXHR) {
+    console.log('Code.py exited successfully:', data)
+}, function(jqXHR, textStatus, errorThrown){
+    console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
+})</pre>
+
+<h3>Escaping strings for shell commands</h3>
+
+<p><code>scraperwiki.shellEscape()</code> returns a string with single-quotes escaped (more for convenience than security). This will come in useful when you&rsquo;re executing commands via the <code>scraperwiki.exec()</code> method.</p>
+
+<h3>Show alerts</h3>
+
+<p><code>scraperwiki.alert()</code> takes three arguments and displays an alert bar at the top of your dataset / view:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>title</code></td>
+    <td>A string to be shown in bold at the start of the alert. eg: "Could not authenticate with Twitter"</td>
+  </tr>
+  <tr>
+    <td><code>message</code></td>
+    <td>A string to be shown after the title, usually to explain the alert or give the user some help. eg: "Please double-check your username and password"</td>
+  </tr>
+  <tr>
+    <td><code>level</code></td>
+    <td><span class="muted">[optional]</span> An optional boolean to control the appearance of the alert. True values will cause the alert to be shown in red (<code>.alert-error</code>); false values will cause it to be shown in the default yellow.</td>
+  </tr>
+</table>
+
+<p>Example usage:</p>
+
+<pre class="prettyprint">scraperwiki.alert("Could not authenticate with Twitter", "Please check your username and password", 1)</pre>
 
 <hr />
 
@@ -413,6 +520,8 @@ scraperwiki.json</pre>
 
 <p>When you&rsquo;re writing a new tool on your local machine, you&rsquo;ll probably want to preview your changes without officially committing them to the git repo. Since tools rely so heavily on the ScraperWiki platform, previewing locally isn&rsquo;t an option. But neither is comitting every change you make and initiating the tool again and again via the ScraperWiki web interface.</p>
 
+<h3>Local development</h3>
+
 <p>It&rsquo;s for this reason that we&rsquo;ve built <a href="https://github.com/scraperwiki/swot">swot</a>: a tool for developing tools! Install it from our git repo:</p>
 
 <pre>$ git clone git://github.com/scraperwiki/swot.git</pre>
@@ -432,6 +541,10 @@ scraperwiki.json</pre>
 <pre>$ swot sync</pre>
 
 <p>Your changes will now be visible through the normal ScraperWiki interface, at <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
+
+<h3>Remote development</h3>
+
+<p>If you&rsquo;d prefer to edit the live code directly in a box, you can SSH in, and use <code>vim</code> or <code>emacs</code>. You&rsquo;ll need to configure your environment there, separately for each tool you&rsquo;re making.</p>
 
 <hr />
 
@@ -463,28 +576,11 @@ scraperwiki.json</pre>
 <p>This API endpoint currently requires an active ScraperWiki login session. It is therefore easiest to call the API from the Javascript console in your web browser, while you are logged into ScraperWiki. eg:</p>
 
 <pre class="prettyprint">
-$.ajax({url: "api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}})
+$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
 </pre>
 
 <p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#tools-structure">the structure outlined above</a>.</p>
 
+<p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="text-error">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
+
 <p>ScraperWiki always pulls the latest code from the specified <code>gitUrl</code> when users use your tool. Datasets or views they have already created, however, will not be automatically updated.</p>
-
-<!-- Other things to document or fix and document:
-
-scraperwiki.tool.rename
-
-Exec endpoint helper
-
-In tool development, mention that you can use other workflows (e.g. editing files in box)
-
-Explain how to add username:password@, with a github read-only user, if you want
-to make a tool that is from a private repository.
-
-Making the example print this would be good:
-$.ajax({url: "api/tools", type: "POST", data: {name: "twitter-follows", type: "importer", gitUrl: "git:// github.com/scraperwiki/twitter-follows-tool.git"}}).complete(function(r) { console.log(r.responseText) })
-
-
--->
-
-

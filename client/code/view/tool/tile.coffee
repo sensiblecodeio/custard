@@ -13,12 +13,16 @@ class Cu.View.ToolTile extends Backbone.View
     @$el.addClass @model.get('name')
     @
 
+  checkInstall: (e) ->
+    @install(e) unless @active
+
 class Cu.View.AppTile extends Cu.View.ToolTile
   events:
-    'click' : 'install'
+    'click' : 'checkInstall'
 
   install: (e) ->
     e.preventDefault()
+    @active = true
     @$el.addClass 'loading'
 
     @model.install (jqXHR, text) =>
@@ -27,7 +31,7 @@ class Cu.View.AppTile extends Cu.View.ToolTile
         user: user.shortName
         name: @model.get 'name'
         displayName: @model.get('manifest').displayName
-        box: @model.get 'boxName'
+        box: @model.get 'box'
 
       dataset.new = true
 
@@ -37,15 +41,18 @@ class Cu.View.AppTile extends Cu.View.ToolTile
           delete dataset.new
           window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
         error: (model, xhr, options) ->
+          @active = false
           @$el.removeClass 'loading'
           console.warn "Error saving dataset (xhr status: #{xhr.status} #{xhr.statusText})"
 
 class Cu.View.PluginTile extends Cu.View.ToolTile
   events:
-    'click' : 'install'
+    'click' : 'checkInstall'
 
   install: (e) ->
     e.preventDefault()
+    @active = true
+
     @$el.addClass 'loading'
     dataset = Cu.Model.Dataset.findOrCreate
       user: window.user.effective.shortName
@@ -57,5 +64,6 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
           console.warn 'Error', err if err?
           window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
       error: (model, xhr, options) ->
+        @active = false
         @$el.removeClass 'loading'
         console.warn xhr

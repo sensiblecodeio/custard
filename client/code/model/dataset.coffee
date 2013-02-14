@@ -1,4 +1,6 @@
 class Cu.Model.Dataset extends Backbone.RelationalModel
+  Cu.Boxable.mixin this
+
   idAttribute: 'box'
   relations: [
     type: Backbone.HasMany
@@ -22,14 +24,6 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
   name: ->
     @get('displayName') or @get('name') or 'no name'
 
-  publishToken: (callback) ->
-    if @_publishToken?
-      callback @_publishToken
-    else
-      @exec("cat ~/scraperwiki.json", {dataType: 'json'}).success (settings) ->
-        @_publishToken = settings.publish_token
-        callback @_publishToken
-
   installPlugin: (name, callback) ->
     # get tool, install tool
     tools.fetch
@@ -40,29 +34,13 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
             user: user.shortName
             name: tool.get 'name'
             displayName: tool.get('manifest').displayName
-            box: tool.get 'boxName'
+            box: tool.get 'box'
           @save {},
             success:=>
-              newView = @get('views').findById tool.get 'boxName'
+              newView = @get('views').findById tool.get 'box'
               callback null, newView
       error: (model_, xhr_, err) =>
         callback err
-
-  exec: (cmd, args) ->
-    # Returns an ajax object, onto which you can
-    # chain .success and .error callbacks
-    boxname = @get 'box'
-    boxurl = "#{window.boxServer}/#{boxname}"
-    settings =
-      url: "#{boxurl}/exec"
-      type: 'POST'
-      dataType: 'text'
-      data:
-        apikey: window.user.effective.apiKey
-        cmd: cmd
-    if args?
-      $.extend settings, args
-    $.ajax settings
 
   validate: (attrs) ->
     return "Please enter a name" if 'displayName' of attrs and attrs.displayName?.length < 1

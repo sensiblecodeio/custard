@@ -18,10 +18,10 @@ describe 'Model: Tool', ->
 
   it 'can generate a random boxname', ->
     @tool._generateBoxName()
-    name = @tool.get 'boxName'
+    name = @tool.get 'box'
     name.length.should.equal 7
     @tool._generateBoxName()
-    name.should.not.equal @tool.get('boxName')
+    name.should.not.equal @tool.get('box')
 
   context 'when a dataset tool is installed', ->
     before (done) ->
@@ -38,7 +38,7 @@ describe 'Model: Tool', ->
     it 'creates a box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "#{base_url}/box/#{@tool.get 'boxName'}"
+        url: "#{base_url}/box/#{@tool.get 'box'}"
         data:
           apikey: sinon.match /.+/
 
@@ -48,7 +48,7 @@ describe 'Model: Tool', ->
     it 'git clones the tool into the box', ->
       called = @ajax.calledWith
         type: 'POST'
-        url: "#{base_url}/#{@tool.get 'boxName'}/exec"
+        url: "#{base_url}/#{@tool.get 'box'}/exec"
         data:
           apikey: sinon.match /.+/
           cmd: sinon.match /.*git clone.*/

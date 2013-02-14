@@ -27,6 +27,7 @@ scraperwiki.exec = (cmd, success, error) ->
   options =
     url: "#{window.location.protocol}//#{window.location.host}/#{scraperwiki.box}/exec"
     type: "POST"
+    dataType: "text"
     data:
       apikey: settings.source.apikey
       cmd: cmd

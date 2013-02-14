@@ -37,7 +37,7 @@ scraperwiki.exec = (cmd, success, error) ->
   $.ajax options
 
 scraperwiki.shellEscape = (command) ->
-  "'" + command.replace(/'/g,"'\\''") + "'"
+  "'#{command.replace(/'/g,"'\"'\"'")}'"
 
 scraperwiki.sql = (sql, success, error) ->
   settings = scraperwiki.readSettings()

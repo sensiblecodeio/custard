@@ -263,25 +263,40 @@ remove people.</p>
 
 <h2 id="datasets-git">Using Git with your box</h2>
 
-<p>You can develop code locally and push it to your box using Git.</p>
+<p>Every box contains a Git repo in the <code>~/tool/</code> directory. 
+You can either work on it on your laptop (locally) or in the box (remotely).</p>
 
-<p>Every box contains a Git repo in the <code>~/tool/</code> directory. You will want to make sure the following Git config variables are set:</p>
+<h3>Local development</h3>
 
-<pre class="prettyprint linenums">$ git config --global receive.denyCurrentBranch "ignore"
-$ git config --global user.email "<%= @user.email[0] %>"
-$ git config --global user.name "<%= @user.displayName %>"
+<p>To develop code locally and push it to your box using Git, you need this
+configuration setting inside the box.</p>
+
+<pre class="prettyprint">git config --global receive.denyCurrentBranch "ignore"
 </pre>
 
 <p>You can then clone to your local machine using:</p>
 
-<pre class="prettyprint linenums">$ git clone a1b2c3d@box.scraperwiki.com:tool ./local-directory-name</pre>
+<pre class="prettyprint">git clone a1b2c3d@box.scraperwiki.com:tool ./tool</pre>
 
 <p>Where <code>a1b2c3d</code> is the name of your box, and <code>./local-directory-name</code> is the directory in which you&rsquo;d like the local repo created.</p>
 
-<p>The box will not automatically update when you push your changes to it. You can either SSH in and run <code>git reset --hard</code> manually, or set an automatic post hook:</p>
+<p>The box will not automatically update when you push your changes to it. You
+can either SSH in and run <code>git reset --hard</code> manually, or set an
+automatic post hook inside the box:</p>
 
-<pre class="prettyprint linenums">$ echo "cd ..; env -i git reset --hard" > ~/tool/.git/hooks/post-receive
-$ chmod +x ~/tool/.git/hooks/post-receive</pre>
+<pre class="prettyprint">echo "cd ..; env -i git reset --hard" > ~/tool/.git/hooks/post-receive
+chmod +x ~/tool/.git/hooks/post-receive</pre>
+
+<h3>Remote development</h3>
+
+<p>You can SSH into the box, edit the code there, and commit it.
+You will need to set the following Git config variables in each box:</p>
+
+<pre class="prettyprint">git config --global user.email "<%= @user.email[0] %>"
+git config --global user.name "<%= @user.displayName %>"</pre>
+
+<p>For less important code, you can just use version control locally inside
+the box. For other code, you can add a remote and push/pull to it.</p>
 
 <hr />
 
@@ -531,21 +546,21 @@ scraperwiki.json</pre>
 
 <p>It&rsquo;s for this reason that we&rsquo;ve built <a href="https://github.com/scraperwiki/swot">swot</a>: a tool for developing tools! Install it from our git repo:</p>
 
-<pre>$ git clone git://github.com/scraperwiki/swot.git</pre>
+<pre>git clone git://github.com/scraperwiki/swot.git</pre>
 
 <p>You will need a box to test your dataset or view in. Create one on ScraperWiki by using the "Code your own dataset!" or "Code your own view!" tool. You will be shown SSH instructions for the resulting box &ndash; make a note of the 7-character <code>box_name</code> and your <code>apikey</code>, and enter them into <code>swot</code> from within your local tool directory:</p>
 
-<pre>$ swot setup <em class="muted">&lt;box_name&gt;</em> <em class="muted">&lt;apikey&gt;</em></pre>
+<pre>swot setup <em class="muted">&lt;box_name&gt;</em> <em class="muted">&lt;apikey&gt;</em></pre>
 
 <p>This automatically adds your SSH keys to the box, and saves some settings into <code>.swotconfig</code></p>
 
 <p>To get <code>swot</code> to watch your local directory for changes and automatically sync them up to the box on ScraperWiki, run:</p>
 
-<pre>$ swot watch</pre>
+<pre>swot watch</pre>
 
 <p>Note: a bug in node.js means this doesn&rsquo;t work on a Mac. Try manually synchronizing instead:</p>
 
-<pre>$ swot sync</pre>
+<pre>swot sync</pre>
 
 <p>Your changes will now be visible through the normal ScraperWiki interface, at <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
 

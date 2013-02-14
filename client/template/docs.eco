@@ -230,6 +230,13 @@ This will show you how to SSH in.</p>
     <li>Editors like vim and Emacs.</li>
 </ul>
 
+<p>You can install anything else you need in the box. Use a language-specific
+package manager (e.g. pip, gem) or download the source and compile it. For
+example, to get a Python package, do this:
+
+<pre class="prettyprint">pip install --user &lt;packagename&gt;
+</pre>
+
 <h3>Cron</h3>
 
 <p>You can create a standard cron job using the <code>crontab</code> command.

@@ -296,7 +296,31 @@ You will need to set the following Git config variables in each box:</p>
 git config --global user.name "<%= @user.displayName %>"</pre>
 
 <p>For less important code, you can just use version control locally inside
-the box. For other code, you can add a remote and push/pull to it.</p>
+the box. For more important code, add a remote and push/pull to it.
+Full instructions are in Github's help on
+<a href="https://help.github.com/articles/create-a-repo">Creating a repository</a>.
+In short, do this:
+</p>
+
+<pre class="prettyprint">git remote add origin https://github.com/username/teach-example-tool.git
+git push origin master</pre>
+
+<p>You'll find you need to keep typing in your Github password, or set up
+a new SSH private key for each box. Agent forward is a much better and
+easier solution. In short, set up a local SSH agent, and add this to <code>~/.ssh/config</code>:
+</a>
+
+<pre class="prettyprint">Host box
+HostName box.scraperwiki.com
+ForwardAgent yes</pre>
+
+<p>Full instructions are in Github's help on
+<a href="https://help.github.com/articles/using-ssh-agent-forwarding">Using SSH agent forwarding</a>.
+</p>
+
+<p class="well well-small"><span class="label label-info">Top tip!</span>
+As a bonus, you can then also simply do <code>ssh &lt;box_name&gt;@box</code> to connect to any box.
+</p>
 
 <hr />
 

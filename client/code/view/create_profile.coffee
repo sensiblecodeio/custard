@@ -31,7 +31,7 @@ class Cu.View.CreateProfile extends Backbone.View
     if shortName!=''
       $button.attr('disabled', true).addClass('loading').html('Creating Profile&hellip;')
       $.ajax
-        url: "#{location.origin}/api/#{shortName}/"
+        url: "#{location.protocol}//#{location.host}/api/#{shortName}/"
         data:
           shortName: shortName
           displayName: displayName
@@ -40,7 +40,7 @@ class Cu.View.CreateProfile extends Backbone.View
         dataType: 'json'
         success: (newProfile) =>
           @createCobaltProfile newProfile, (cobaltProfile) =>
-            url = "#{location.origin}/set-password/#{newProfile.token}"
+            url = "#{location.protocol}//#{location.host}/set-password/#{newProfile.token}"
             @$el.children('form').html "<div class=\"alert alert-success\"><strong>New profile &ldquo;#{newProfile.shortName}&rdquo; created.</strong><br/>They can set their password <a href=\"#{url}\" title=\"#{url}\">here</a>.</div>"
         error: (jqxhr, textStatus, errorThrown) ->
           if errorThrown == 'Forbidden'

@@ -144,7 +144,9 @@ a.tile:last-child {
 a.tile h3 {
   margin: 10px 10px 5px 10px;
   font-weight: normal;
-  line-height: 1em;
+  text-align: center;
+  font-size: 21px;
+  line-height: 21px;
 }
 
 a.tile .hide {

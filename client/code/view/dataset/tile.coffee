@@ -18,6 +18,7 @@ class Cu.View.DatasetTile extends Backbone.View
       dataset: @model.toJSON()
       statusUpdatedHuman: @model.statusUpdatedHuman()
       user: window.user.effective
+      views: @model.get('views').visible().toJSON()
     @
 
   hideDataset: (e) ->

@@ -9,5 +9,5 @@ class Cu.View.DatasetList extends Backbone.View
     @collection.visible().each @addDataset
 
   addDataset: (dataset) =>
-    view = new Cu.View.DatasetGroup model: dataset
+    view = new Cu.View.DatasetTile model: dataset
     @$el.append view.render().el

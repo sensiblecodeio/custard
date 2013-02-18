@@ -108,7 +108,7 @@ code {
 input.search-query,
 input[type="search"],
 .navbar-search .search-query {
-  background-image: url(../image/scraperstrap-search.png);
+  background-image: url(../image/icon-input-search.png);
   background-position: 8px 6px;
   background-repeat: no-repeat;
   padding-left: 30px;

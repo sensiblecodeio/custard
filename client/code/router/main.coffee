@@ -12,7 +12,7 @@ class Cu.Router.Main extends Backbone.Router
 
   initialize: ->
     @appView = new Cu.AppView '#content'
-    @titleView = new Cu.AppView '#title'
+    @titleView = new Cu.AppView '#subnav-path'
     @navView ?= new Cu.View.Nav()
 
     # Move somewhere better

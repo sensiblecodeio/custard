@@ -133,7 +133,9 @@ body.fullscreen .container {
 div.login-page,
 div.create-profile,
 div.set-password,
-div.fourohfour {}
+div.fourohfour {
+  padding-left: 20px;
+}
 
 .docs {
   position: relative;

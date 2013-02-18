@@ -149,6 +149,24 @@ input[type="search"],
   margin-top: 8px;
 }
 
+/* Icons inside of coloured buttons should be white by default */
+
+.btn-primary [class^="icon-"],
+.btn-primary [class*=" icon-"],
+.btn-success [class^="icon-"],
+.btn-success [class*=" icon-"],
+.btn-danger [class^="icon-"],
+.btn-danger [class*=" icon-"] {
+  background-image: url("../vendor/image/glyphicons-halflings-white.png");
+}
+
+/* Icons with a class of .space get spacing (useful in buttons) */
+
+[class^="icon-"].space,
+[class*=" icon-"].space {
+    margin-right: 0.2em;
+}
+
 /* Improve close button spacing on alerts */
 
 .alert .close {

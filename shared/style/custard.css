@@ -183,23 +183,23 @@ div.fourohfour {}
     margin: 2px 20px 0 0; /* 2px margin-top + 30px line-height = 32px line-height of #subnav-path */
   }
 
-  header nav {
+  #header nav {
     display: block;
     position: absolute;
     top: 0;
     right: 20px;
   }
 
-  header nav li {
+  #header nav li {
     float: left;
     list-style: none;
   }
 
-  header nav li + li {
+  #header nav li + li {
     margin-left: 30px;
   }
 
-  header nav li a {
+  #header nav li a {
     display: block;
     color: #666;
     line-height: 50px;
@@ -210,12 +210,12 @@ div.fourohfour {}
     text-shadow: 0 1px 0 white;
   }
 
-  header nav li a:hover {
+  #header nav li a:hover {
     color: #333;
     text-decoration: none;
   }
 
-  header nav li img {
+  #header nav li img {
     margin-left: 5px;
     vertical-align: -5px;
     -webkit-border-radius: 2px;

@@ -137,35 +137,30 @@ div.fourohfour {
   padding-left: 20px;
 }
 
-.docs {
-  position: relative;
-  padding-right: 300px;
+div.docs {
+  padding: 0 20px;
   line-height: 24px; /* the default 21px is a bit tight for so much text */
 }
 
-.docs nav.well {
-  position: fixed;
-  top: 100px; /* this needs be changed!! */
-  right: 20px;
-  width: 238px;
+div.docs nav.well {
   padding: 8px 0;
   margin-bottom: 0;
 }
 
-.docs nav.well a {
+div.docs nav.well a {
   font-size: 14px;
 }
 
-.docs .well {
+div.docs .well {
   margin-bottom: 15px;
 }
 
-.docs .well .label {
+div.docs .well .label {
   vertical-align: 2px;
   margin: 0 5px 0 2px;
 }
 
-.docs h3 {
+div.docs h3 {
   margin-top: 20px;
 }
 
@@ -226,8 +221,29 @@ div.fourohfour {
     box-shadow: 0 1px 0 #fff;
   }
 
+  div.docs nav.well {
+    float: right;
+    margin: 0 0 20px 20px;
+  }
+
 }
 
-@media only screen and (min-width: 920px) { }
+@media only screen and (min-width: 920px) {
+
+  div.docs {
+    position: relative;
+    padding-right: 300px;
+  }
+
+  div.docs nav.well {
+    float: none;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    width: 238px;
+  }
+
+}
 
 @media only screen and (min-width: 1220px) { }

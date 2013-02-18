@@ -1,7 +1,124 @@
+/*  ScraperWiki styles are built for small devices first.
+    Then, as the screen gets bigger, base styles are overridden.
+    
+    We follow a roughly column-based layout, where columns are 280px wide, 
+    with a 20px gutter. Our breakpoints are therefore 620px, 920px and 1120px.
+    
+    Floating columns to the left means they'll break above and below each other
+    on narrow screens. The responsive .container class will make sure they stay
+    centred on the user's screen. */
+
 html, body {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* A .container style is set in scraperwiki.css, which most pages will use.
+   Some tools, however, might look better full screen. When this happens,
+   the other .container elements (eg: header) should get 100% width too. */
+
+body.fullscreen .container {
+  width: 100%;
+}
+
+#header {
+  display: block;
+  background-color: #f6f6f6;
+  border-bottom: 1px solid #e6e6e6;
+  line-height: 50px;
+  font-size: 18px;
+  height: 50px;
+  width: 100%;
+}
+
+#header .container {
+  margin-bottom: 0;
+  position: relative;
+}
+
+#logo {
+  margin-left: 20px;
+}
+
+#header nav {
+  display: none; /* :TODO: work out how to display nav for small devices */
+}
+
+#subnav {
+  margin-bottom: 0;
+  margin-top: 20px;
+  text-align: center; /* we'll override this for large-screened devices later */
+}
+
+#subnav-path {
+  line-height: 32px;
+}
+
+#subnav h1 {
+  margin: 0;
+  font-weight: normal;
+  line-height: 32px;
+}
+
+#subnav-path > .btn-group > a {
+  color: #333;
+  font-size: 24px;
+  line-height: 32px;
+  padding: 0 4px;
+}
+
+#subnav-path > .context-switch > a {
+  position: relative;
+  margin-left: -4px;
+  padding-right: 20px;
+  /* these bits help the button look good on narrow screens */
+  width: 260px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
+}
+
+#subnav-path > .context-switch > a:hover,
+#subnav-path > .context-switch.open > a {
+  border-color: #ccc;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: -4px;
+  margin-bottom: -4px;
+  text-decoration: none;
+}
+
+#subnav-path > .context-switch > a .caret {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  margin-top: -1px;
+}
+
+#subnav-path > .context-switch > a img {
+  vertical-align: top;
+  margin-right: 9px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 0 #fff;
+  box-shadow: 0 1px 0 #fff;
+}
+
+#subnav-path .slash {
+  font-size: 24px;
+  color: #ccc;
+  display: inline-block;
+  padding: 1px;
+  vertical-align: middle;
+}
+
+#subnav-options .btn-group + .btn-group {
+  margin-left: 10px;
+}
+
+#subnav-options .search-query {
+  width: 100px;
 }
 
 #content p.loading {
@@ -13,50 +130,102 @@ html, body {
     font-size: 20px;
 }
 
-#fullscreen {
-    width: 100%;
-    height: 600px;
-}
-
-#fullscreen iframe {
-    border: none;
-    width: 100%;
-    height: 100%;
-}
-
 div.login-page,
 div.create-profile,
 div.set-password,
 div.fourohfour {}
 
 .docs {
-    position: relative;
-    padding-right: 300px;
-    line-height: 24px; /* the default 21px is a bit tight for so much text */
+  position: relative;
+  padding-right: 300px;
+  line-height: 24px; /* the default 21px is a bit tight for so much text */
 }
 
 .docs nav.well {
-    position: fixed;
-    top: 100px; /* this needs be changed!! */
-    right: 20px;
-    width: 238px;
-    padding: 8px 0;
-    margin-bottom: 0;
+  position: fixed;
+  top: 100px; /* this needs be changed!! */
+  right: 20px;
+  width: 238px;
+  padding: 8px 0;
+  margin-bottom: 0;
 }
 
 .docs nav.well a {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .docs .well {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .docs .well .label {
-    vertical-align: 2px;
-    margin: 0 5px 0 2px;
+  vertical-align: 2px;
+  margin: 0 5px 0 2px;
 }
 
 .docs h3 {
-    margin-top: 20px;
+  margin-top: 20px;
 }
+
+@media only screen and (min-width: 620px) {
+
+  #subnav {
+    text-align: left;
+  }
+
+  #subnav-path {
+    float: left;
+    margin: 0 0 0 20px;
+  }
+
+  #subnav-options {
+    float: right;
+    margin: 2px 20px 0 0; /* 2px margin-top + 30px line-height = 32px line-height of #subnav-path */
+  }
+
+  header nav {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 20px;
+  }
+
+  header nav li {
+    float: left;
+    list-style: none;
+  }
+
+  header nav li + li {
+    margin-left: 30px;
+  }
+
+  header nav li a {
+    display: block;
+    color: #666;
+    line-height: 50px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 0 white;
+  }
+
+  header nav li a:hover {
+    color: #333;
+    text-decoration: none;
+  }
+
+  header nav li img {
+    margin-left: 5px;
+    vertical-align: -5px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 #fff;
+  }
+
+}
+
+@media only screen and (min-width: 920px) { }
+
+@media only screen and (min-width: 1220px) { }

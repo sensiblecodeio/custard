@@ -121,6 +121,79 @@ body.fullscreen .container {
   width: 100px;
 }
 
+a.tile {
+  position: relative;
+  display: block;
+  float: left;
+  margin: 20px 0 0 20px;
+  width: 280px;
+  height: 140px;
+  background-color: #15af90;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+a.tile:hover {
+  text-decoration: none;
+}
+
+a.tile:last-child {
+  margin-bottom: 20px;
+}
+
+a.tile h3 {
+  margin: 10px 10px 5px 10px;
+  font-weight: normal;
+  line-height: 1em;
+}
+
+a.tile .hide {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  display: none;
+  height: 0;
+  width: 22px;
+  padding-top: 22px;
+  overflow: hidden;
+  background: #15af90 url(../vendor/image/glyphicons-halflings-white.png) no-repeat -308px 4px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
+  border: 2px solid #fff;
+}
+
+.tile:hover .hide {
+  display: block;
+}
+
+.tile .hide:hover {
+  background-color: #e11b2c;
+}
+
+.tile ul {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+  display: table;
+  width: 100%;
+}
+
+.tile li {
+  display: table-cell;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  line-height: 40px;
+  background-color: rgba(0,0,0,0.1);
+  color: rgba(255,255,255,0.8);
+}
+
+.tile li + li {
+  border-left: 1px solid rgba(255,255,255,0.5);
+}
+
 #content p.loading {
     margin-top: 100px;
     padding-top: 50px;

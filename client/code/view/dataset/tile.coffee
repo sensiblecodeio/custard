@@ -1,5 +1,5 @@
 class Cu.View.DatasetTile extends Backbone.View
-  className: 'dataset'
+  className: 'dataset tile'
   tagName: 'a'
   attributes: ->
     if @options.details?

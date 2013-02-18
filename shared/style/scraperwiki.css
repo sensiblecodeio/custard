@@ -108,7 +108,7 @@ code {
 input.search-query,
 input[type="search"],
 .navbar-search .search-query {
-  background-image: url(../img/scraperstrap-search.png);
+  background-image: url(../image/scraperstrap-search.png);
   background-position: 8px 6px;
   background-repeat: no-repeat;
   padding-left: 30px;
@@ -462,51 +462,51 @@ input[type="color"],
   -moz-box-shadow: none;
   box-shadow: none;
   color: #333;
-  background: #E6E6E6 url(../img/loader-btn-default.gif) 8px 6px no-repeat;
+  background: #E6E6E6 url(../image/loader-btn-default.gif) 8px 6px no-repeat;
   padding-left: 30px;
 }
 
 .btn-primary.loading {
   color: #ffffff;
   background-color: #0044cc;
-  background-image: url(../img/loader-btn-primary.gif);
+  background-image: url(../image/loader-btn-primary.gif);
 }
 
 .btn-warning.loading {
   color: #ffffff;
   background-color: #f89406;
-  background-image: url(../img/loader-btn-warning.gif);
+  background-image: url(../image/loader-btn-warning.gif);
 }
 
 .btn-danger.loading {
   color: #ffffff;
   background-color: #bd362f;
-  background-image: url(../img/loader-btn-danger.gif);
+  background-image: url(../image/loader-btn-danger.gif);
 }
 
 .btn-success.loading {
   color: #ffffff;
   background-color: #51a351;
-  background-image: url(../img/loader-btn-success.gif);
+  background-image: url(../image/loader-btn-success.gif);
 }
 
 .btn-info.loading {
   color: #ffffff;
   background-color: #2f96b4;
-  background-image: url(../img/loader-btn-info.gif);
+  background-image: url(../image/loader-btn-info.gif);
 }
 
 .btn-inverse.loading {
   color: #ffffff;
   background-color: #222222;
-  background-image: url(../img/loader-btn-inverse.gif);
+  background-image: url(../image/loader-btn-inverse.gif);
 }
 
 .btn-link.loading {
   color: #333333;
   text-decoration: none;
   background-color: transparent;
-  background-image: url(../img/loader-btn-link.gif);
+  background-image: url(../image/loader-btn-link.gif);
 }
 
 .btn-large.loading {

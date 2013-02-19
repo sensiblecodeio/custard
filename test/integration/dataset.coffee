@@ -44,9 +44,9 @@ describe 'Dataset', ->
 
     context 'when I click the title', ->
       before (done) ->
-        @input = browser.query '#title input'
-        @a = browser.query '#title .editable'
-        browser.fire 'click', browser.query('#title .editable'), done
+        @input = browser.query '#subnav-path input'
+        @a = browser.query '#subnav-path .editable'
+        browser.fire 'click', browser.query('#subnav-path .editable'), done
 
       it 'an input box appears', ->
         should.exist @input
@@ -54,23 +54,23 @@ describe 'Dataset', ->
 
       context 'when I fill in the input box and press enter', ->
         before (done) ->
-          browser.fill '#title input', randomname, ->
+          browser.fill '#subnav-path input', randomname, ->
             browser.evaluate """
               var e = jQuery.Event("keypress")
               e.which = 13
               e.keyCode = 13
-              $('#title input').trigger(e)
+              $('#subnav-path input').trigger(e)
             """
             browser.wait done
 
         it 'hides the input box and shows the title', ->
-          @input = browser.query '#title input'
-          @a = browser.query '#title .editable'
+          @input = browser.query '#subnav-path input'
+          @a = browser.query '#subnav-path .editable'
           $(@a).is(':visible').should.be.true
           $(@input).is(':visible').should.be.false
 
         it 'has updated the title', (done) ->
-          @a = browser.query '#title .editable'
+          @a = browser.query '#subnav-path .editable'
           $(@a).text().should.equal randomname
           done()
 
@@ -88,7 +88,7 @@ describe 'Dataset', ->
         context 'when I click the "hide" button on the dataset', ->
           before (done) ->
             body = browser.query('body')
-            link = $(body).find(""".dataset:contains("#{randomname}") .delete""").first()[0]
+            link = $(body).find(""".dataset:contains("#{randomname}") .hide""").first()[0]
             browser.fire 'click', link, ->
               browser.wait done
 

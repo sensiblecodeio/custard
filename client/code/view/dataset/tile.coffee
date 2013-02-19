@@ -1,5 +1,5 @@
 class Cu.View.DatasetTile extends Backbone.View
-  className: 'dataset'
+  className: 'dataset tile'
   tagName: 'a'
   attributes: ->
     if @options.details?
@@ -8,7 +8,7 @@ class Cu.View.DatasetTile extends Backbone.View
       href: "/dataset/#{@model.attributes.box}"
   
   events:
-    'click .delete': 'hideDataset'
+    'click .hide': 'hideDataset'
 
   initialize: ->
     @model.on 'change', @render, this
@@ -18,13 +18,14 @@ class Cu.View.DatasetTile extends Backbone.View
       dataset: @model.toJSON()
       statusUpdatedHuman: @model.statusUpdatedHuman()
       user: window.user.effective
+      views: @model.get('views').visible().toJSON()
     @
 
   hideDataset: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @$el.parent().fadeOut()
+    @$el.fadeOut()
     @model.save {state: 'deleted'},
       error: (e) =>
-        @$el.parent().show()
+        @$el.show()
         console.warn 'Dataset could not be deleted!'

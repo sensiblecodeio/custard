@@ -18,10 +18,10 @@ describe 'Home page (logged in)', ->
         wd40.click '#login', done
 
   before (done) ->
-    browser.waitForElementByCss '#userlinks', 4000, done
+    browser.waitForElementByCss '.dataset-list', 4000, done
 
   it 'contains the scraperwiki logo', (done) ->
-    wd40.getText '#header h1', (err, h) ->
+    wd40.getText '#logo', (err, h) ->
       h.should.equal 'ScraperWiki'
       done()
 
@@ -32,13 +32,13 @@ describe 'Home page (logged in)', ->
         datasets.length.should.be.above 2
         done()
 
-  context 'when I am on the tools page', ->
+  xcontext 'when I click the "new dataset" button', ->
     before (done) ->
-      browser.get "#{url}/tools", done
+      wd40.click '.new-dataset', done
 
     it 'shows the tools I can use to create datasets', (done) ->
-      browser.waitForVisibleByCss '.my-tools .tool', 4000, ->
-        browser.elementsByCss '.my-tools .tool', (err, tools) ->
+      browser.waitForVisibleByCss '#chooser .tool', 4000, ->
+        browser.elementsByCss '#chooser .tool', (err, tools) ->
           tools.length.should.be.above 0
           done()
 

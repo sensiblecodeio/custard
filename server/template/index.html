@@ -5,49 +5,53 @@
 <!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
-    <meta charset="utf-8">
-    <title>ScraperWiki</title>
-    <meta name="description" content="">
-    <meta name="author" content="ScraperWiki Ltd">
-    <!-- http://t.co/dKP3o1e -->
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/vendor/style/bootstrap.min.css">
-    <link rel="stylesheet" href="/vendor/style/metro.bootstrap.css">
-    <link rel="stylesheet" href="/vendor/style/prettify.css">
-    <link rel="stylesheet" href="/style/custard.css">
-    <!--[if (lt IE 9) & (!IEMobile)]> <script src="vendor/js/selectivizr-min.js"></script> <![endif]-->
-    <script src="/vendor/js/modernizr.custom.2.6.2.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.js"></script>
-    <script src="/vendor/js/bootstrap.min.js"></script>
-    <script src="/vendor/js/320andup.helper.js"></script>
-    <script src="/vendor/js/underscore.js"></script>
-    <script src="/vendor/js/backbone.js"></script>
-    <script src="/vendor/js/backbone-relational.js"></script>
-    <script src="/vendor/js/prettydate.js"></script>
-    <script src="/vendor/js/prettify.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/easyXDM/2.4.17.1/easyXDM.min.js"></script>
-    <script>
-      window.user = <%- user %>
-      window.boxServer = "<%- boxServer %>"
-    </script>
-    <%- templates %>
-    <%- scripts %>
-    <script src="/vendor/js/nibbler.js"></script>
-
-    <meta http-equiv="cleartype" content="on">
+  <meta charset="utf-8">
+  <title>ScraperWiki</title>
+  <meta name="description" content="">
+  <meta name="author" content="ScraperWiki Ltd">
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta http-equiv="cleartype" content="on">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/vendor/style/bootstrap.min.css">
+  <link rel="stylesheet" href="/style/scraperwiki.css">
+  <link rel="stylesheet" href="/vendor/style/prettify.css">
+  <link rel="stylesheet" href="/style/custard.css">
+  <!--[if (lt IE 9) & (!IEMobile)]> <script src="vendor/js/selectivizr-min.js"></script> <![endif]-->
+  <script src="/vendor/js/modernizr.custom.2.6.2.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.js"></script>
+  <script src="/vendor/js/bootstrap.min.js"></script>
+  <script src="/vendor/js/320andup.helper.js"></script>
+  <script src="/vendor/js/underscore.js"></script>
+  <script src="/vendor/js/backbone.js"></script>
+  <script src="/vendor/js/backbone-relational.js"></script>
+  <script src="/vendor/js/prettydate.js"></script>
+  <script src="/vendor/js/prettify.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/easyXDM/2.4.17.1/easyXDM.min.js"></script>
+  <script>
+    window.user = <%- user %>
+    window.boxServer = "<%- boxServer %>"
+  </script>
+  <%- templates %>
+  <%- scripts %>
+  <script src="/vendor/js/nibbler.js"></script>
 </head>
 <body>
+  <div id="app">
     <header id="header">
-        <h1><a id="logo" href="/">ScraperWiki</a></h1>
+      <div class="container">
+        <a id="logo" href="/">ScraperWiki</a>
+        <nav></nav>
+      </div>
     </header>
-    <nav id="nav">
-    </nav>
-    <div id="title">
+    <div id="subnav" class="container">
+      <div class="btn-toolbar" id="subnav-path"></div>
+      <div class="btn-toolbar" id="subnav-options"></div>
     </div>
-    <div id="content">
+    <div id="content" class="container">
     </div>
+  </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 class Cu.View.Title extends Backbone.View
-  tagName: 'h2'
+  tagName: 'h1'
 
   initialize: ->
     @setDocumentTitle()

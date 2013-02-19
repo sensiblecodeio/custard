@@ -1,454 +1,203 @@
+/*  ScraperWiki styles are built for small devices first.
+    Then, as the screen gets bigger, base styles are overridden.
+    
+    We follow a roughly column-based layout, where columns are 280px wide, 
+    with a 20px gutter. Our breakpoints are therefore 620px, 920px and 1120px.
+    
+    Floating columns to the left means they'll break above and below each other
+    on narrow screens. The responsive .container class will make sure they stay
+    centred on the user's screen. */
+
 html, body {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* A .container style is set in scraperwiki.css, which most pages will use.
+   Some tools, however, might look better full screen. When this happens,
+   the other .container elements (eg: header) should get 100% width too. */
+
+body.fullscreen .container {
+  width: 100%;
 }
 
 #header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    height: 50px;
-    border-bottom: 1px solid #ccc;
-    background: #f1f1f1 url(/image/noise-f1f1f1.gif) 0 0 repeat;
+  display: block;
+  background-color: #f6f6f6;
+  border-bottom: 1px solid #e6e6e6;
+  line-height: 50px;
+  font-size: 18px;
+  height: 50px;
+  width: 100%;
 }
 
-#header h1 {
-    margin: 0;
+#header .container {
+  margin-bottom: 0;
+  position: relative;
 }
 
-#header h1 a {
-    float: left;
-    overflow: hidden;
-    padding-top: 50px;
-    height: 0;
-    width: 190px;
-    background: transparent url(/image/logo-f1f1f1.gif) 10px 10px no-repeat;
+#logo {
+  margin-left: 20px;
 }
 
-#toggle-sitelinks,
-#toggle-userlinks {
-    float: right;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    line-height: 46px;
+#header nav {
+  display: none; /* :TODO: work out how to display nav for small devices */
 }
 
-#header a.active {
-    background-color: #fff;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #fff;
-    margin: 0 -1px -1px -1px;
+#subnav {
+  margin-bottom: 0;
+  margin-top: 20px;
+  text-align: center; /* we'll override this for large-screened devices later */
 }
 
-#sitelinks .user {
-    display: none;
+#subnav-path {
+  line-height: 32px;
 }
 
-#nav {
-    padding-top: 51px;
+#subnav h1 {
+  margin: 0;
+  font-weight: normal;
+  line-height: 32px;
 }
 
-#sidebar,
-#sitelinks,
-#userlinks {
-    display: none;
-    list-style: none;
-    margin: 0;
+#subnav-path > .btn-group > a {
+  color: #333;
+  font-size: 24px;
+  line-height: 32px;
+  padding: 0 4px;
 }
 
-#sidebar.open,
-#sitelinks.open,
-#userlinks.open {
-    display: block;
+#subnav-path > .context-switch > a {
+  position: relative;
+  margin-left: -4px;
+  padding-right: 20px;
+  /* these bits help the button look good on narrow screens */
+  width: 260px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
 }
 
-#sidebar a,
-#sitelinks a,
-#userlinks a,
-#sidebar label {
-    display: block;
-    padding: 9px 10px;
+#subnav-path > .context-switch > a:hover,
+#subnav-path > .context-switch.open > a {
+  border-color: #ccc;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: -4px;
+  margin-bottom: -4px;
+  text-decoration: none;
 }
 
-#sidebar a,
-#sitelinks a,
-#sidebar label {
-    color: #666;
-    text-shadow: 0 1px 0 #fff;
+#subnav-path > .context-switch > a .caret {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  margin-top: -1px;
 }
 
-#sidebar a:hover,
-#sitelinks a:hover,
-#userlinks a:hover {
-    text-decoration: none;
+#subnav-path > .context-switch > a img {
+  vertical-align: top;
+  margin-right: 9px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 0 #fff;
+  box-shadow: 0 1px 0 #fff;
 }
 
-#sidebar a:hover,
-#sitelinks a:hover,
-#sidebar label:hover {
-    color: #333;
+#subnav-path .slash {
+  font-size: 24px;
+  color: #ccc;
+  display: inline-block;
+  padding: 1px;
+  vertical-align: middle;
 }
 
-#sidebar a,
-#sidebar label {
-    padding: 9px 15px;
-    line-height: 32px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+#subnav-options .btn-group + .btn-group {
+  margin-left: 10px;
 }
 
-#sidebar a img,
-#sidebar label img {
-    vertical-align: top;
-    margin: 0 10px 0 0;
+#subnav-options .search-query {
+  width: 100px;
 }
 
-#sidebar input {
-    margin: 0;
-    vertical-align: 1px;
-    width: 170px;
+a.tile {
+  position: relative;
+  display: block;
+  float: left;
+  margin: 20px 0 0 20px;
+  width: 280px;
+  height: 140px;
+  background-color: #15af90;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
-#userlinks i {
-    margin-right: 8px;
+a.tile:hover {
+  text-decoration: none;
 }
 
-#sitelinks .user img,
-#toggle-userlinks img,
-#toggle-sitelinks img {
-    -webkit-box-shadow: 0 1px 0 #fff;
-    -moz-box-shadow: 0 1px 0 #fff;
-    box-shadow: 0 1px 0 #fff;
+a.tile:last-child {
+  margin-bottom: 20px;
 }
 
-#sitelinks .user img {
-    vertical-align: top;
-    margin: 0 0 0 5px;
+a.tile h3 {
+  margin: 10px 10px 5px 10px;
+  font-weight: normal;
+  text-align: center;
+  font-size: 21px;
+  line-height: 21px;
 }
 
-.dropdown-menu li.header {
-    font-size: 14px;
-    font-weight: bold;
-    color: #666;
-    padding: 5px 10px;
+a.tile .hide {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  display: none;
+  height: 0;
+  width: 22px;
+  padding-top: 22px;
+  overflow: hidden;
+  background: #15af90 url(../vendor/image/glyphicons-halflings-white.png) no-repeat -308px 4px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  border-radius: 14px;
+  border: 2px solid #fff;
 }
 
-#userlinks li.context img {
-    margin-right: 5px;
+.tile:hover .hide {
+  display: block;
 }
 
-#userlinks i.icon-ok {
-    text-indent: -9000px;
-    float: right;
-    margin-top: 3px;
+.tile .hide:hover {
+  background-color: #e11b2c;
 }
 
-#userlinks #context-search.loading {
-    background: transparent url(/image/context-search-loader.gif) 195px center no-repeat;
-}
-
-#userlinks #context-search input {
-    border: none;
-    padding: 0;
-    width: auto;
-    margin: 0;
-    height: 24px;
-    line-height: 24px;
-    color: #333;
-    vertical-align: bottom;
-    background: transparent;
-}
-
-#userlinks #context-search input:focus {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-}
-
-#userlinks li.last {
-    margin-top: 10px;
-    padding: 10px 10px 5px 10px;
-    border-top: 1px solid #ccc;
-}
-
-#userlinks .btn-primary {
-    margin-left: 5px;
-}
-
-#toggle-sidebar-width {
-    display: none;
-}
-
-#title {
-    padding: 9px 10px 12px 15px;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-#title h2 {
-    font-size: 21px;
-    margin: 0;
-}
-
-#title h2 a {
-    color: #000;
-}
-
-#title h2 .slash {
-    margin: 0 3px;
-    color: #999;
-}
-
-#title h2 input {
-    padding: 0;
-    margin: 0;
-    background: #fff;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: 30px;
-    vertical-align: 0;
-    padding: 0 5px;
-    margin: -2px 0 -2px -6px;
-    min-width: 260px;
-    height: 30px;
-    color: #000;
-}
-
-#title h2 .editable {
-    cursor: pointer;
-    padding-right: 10px;
-}
-
-#title h2 .editable:hover {
-    text-decoration: underline;
-    padding-right: 0;
-}
-
-#title h2 .editable:hover:after,
-#title h2 .editable.saved:after {
-    content: "";
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    background: transparent url("../vendor/image/glyphicons-halflings.png") 0 -72px no-repeat;
-    margin-left: 5px;
-}
-
-#title h2 .editable.saved:after {
-    background-position: -288px 0;
-}
-
-#title h2 img {
-  height: 32px;
-  vertical-align: -8px;
-  margin-right: 5px;
-}
-
-.dataset-list {
-    padding: 0 15px 20px 0;
-    overflow: auto;
-}
-
-.dataset-group,
-.my-tools .tool {
-    width: 280px;
-    margin: 15px 0 0 20px;
-    float: left;
-}
-
-.dataset-overview > div {
-    width: 280px;
-    padding: 15px 20px;
-    float: left;
-}
-
-.dataset,
-.view {
-    position: relative;
-    display: block;
-    padding: 10px 10px 5px 10px;
-    background-color: #358ce0;
-    color: #fff;
-    cursor: pointer;
-    text-shadow: 0 1px 1px #176dc2;
-    background-image: url(/image/watermark-dataset.png);
-    background-position: 97% 100%;
-    background-repeat: no-repeat;
-}
-
-.view {
-    background-image: none;
-}
-
-.view.spreadsheet {
-    background-image: url(/image/watermark-spreadsheet.png);
-}
-
-.view.download {
-    background-image: url(/image/watermark-download.png);
-}
-
-.view.source {
-    background-image: url(/image/watermark-viewsource.png);
-}
-
-.dataset:hover,
-.view:hover {
-    text-decoration: none;
-    background-color: #176dc2;
-    color: #fff;
-}
-
-.dataset h3,
-.view h3 {
-    margin: 0 0 5px 0;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.dataset h3 a,
-.view h3 a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.dataset p,
-.view p {
-    font-size: 14px;
-    line-height: 18px;
-    margin-bottom: 5px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.dataset p i,
-.view p i {
-    opacity: 0.7;
-}
-
-.view {
-    display: block;
-    margin-top: 1px;
-    background-color: #5baeff;
-    color: #fff;
-    text-shadow: 0 1px 1px #176dc2;
-    cursor: pointer;
-    font-size: 18px;
-    line-height: 21px;
-}
-
-a.view {
-    font-weight: bold;
-}
-
-.view:hover {
-    background-color: #358ce0;
-    text-decoration: none;
-}
-
-.dataset .delete, .view .delete {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    display: none;
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: bold;
-    text-align: center;
-    color: #fff;
-    text-shadow: none;
-    background-color: #176dc2;
-    -webkit-border-radius: 14px;
-    -moz-border-radius: 14px;
-    border-radius: 14px;
-    border: 2px solid #fff;
-}
-
-.view .delete {
-    background-color: #358ce0;
-}
-
-.dataset:hover .delete, .view:hover .delete {
-    display: block;
-}
-
-.dataset .delete:hover, .view .delete:hover {
-    background-color: #e11b2c;
-}
-
-/* Don't want delete buttons on the dataset overview page */
-.dataset-overview .dataset .delete {
-    display: none;
-}
-
-.dataset-overview h4 {
-    font-size: 14px;
-    line-height: 16px;
-    text-transform: uppercase;
-    color: rgb(153, 153, 153);
-    font-weight: normal;
-    margin: 0 0 15px 0;
-}
-
-.dataset-overview .dataset h3 {
-    font-size: 24px;
-    line-height: 28px;
-    margin-bottom: 10px;
-}
-
-.dataset-overview .view,
-.dataset-overview .tool {
-    margin-bottom: 15px;
-}
-
-.dataset-overview .dataset-description {
-    margin-top: 15px;
-}
-
-.tool {
-    display: block;
-    background-color: #eee;
-    border: 1px solid #ccc;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.tool:hover {
-    background-color: #ddd;
-    border-color: #bbb;
-    text-decoration: none;
-}
-
-.tool.loading {
-    background-image: url('/image/tool-loader-eee.gif');
-    background-position: 230px 15px;
-    background-repeat: no-repeat;
-}
+div.dataset-overview .tile .hide {
+  display: none; /* don't want to see the hide button on dataset overview page */
+} 
 
-.tool.loading:hover {
-    background-image: url('/image/tool-loader-ddd.gif');
+.tile ul {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+  display: table;
+  width: 100%;
 }
 
-.tool h3 {
-    margin: 0 0 5px 0;
-    font-weight: normal;
-    color: #666;
+.tile li {
+  display: table-cell;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  line-height: 40px;
+  background-color: rgba(0,0,0,0.1);
+  color: rgba(255,255,255,0.8);
 }
 
-.tool p {
-    color: #999;
-    margin: 0;
-    font-size: 14px;
-    line-height: 16px;
+.tile li + li {
+  border-left: 1px solid rgba(255,255,255,0.5);
 }
 
 #content p.loading {
@@ -460,398 +209,120 @@ a.view {
     font-size: 20px;
 }
 
-#fullscreen {
-    width: 100%;
-    height: 600px;
-}
-
-#fullscreen iframe {
-    border: none;
-    width: 100%;
-    height: 100%;
-}
-
 div.login-page,
 div.create-profile,
 div.set-password,
 div.fourohfour {
-    margin: 15px 20px;
+  padding-left: 20px;
 }
 
-.docs {
+div.docs {
+  padding: 0 20px;
+  line-height: 24px; /* the default 21px is a bit tight for so much text */
+}
+
+div.docs nav.well {
+  padding: 8px 0;
+  margin-bottom: 0;
+}
+
+div.docs nav.well a {
+  font-size: 14px;
+}
+
+div.docs .well {
+  margin-bottom: 15px;
+}
+
+div.docs .well .label {
+  vertical-align: 2px;
+  margin: 0 5px 0 2px;
+}
+
+div.docs h3 {
+  margin-top: 20px;
+}
+
+@media only screen and (min-width: 620px) {
+
+  #subnav {
+    text-align: left;
+  }
+
+  #subnav-path {
+    float: left;
+    margin: 0 0 0 20px;
+  }
+
+  #subnav-options {
+    float: right;
+    margin: 2px 20px 0 0; /* 2px margin-top + 30px line-height = 32px line-height of #subnav-path */
+  }
+
+  #header nav {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 20px;
+  }
+
+  #header nav li {
+    float: left;
+    list-style: none;
+  }
+
+  #header nav li + li {
+    margin-left: 30px;
+  }
+
+  #header nav li a {
+    display: block;
+    color: #666;
+    line-height: 50px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 0 white;
+  }
+
+  #header nav li a:hover {
+    color: #333;
+    text-decoration: none;
+  }
+
+  #header nav li img {
+    margin-left: 5px;
+    vertical-align: -5px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 #fff;
+  }
+
+  div.docs nav.well {
+    float: right;
+    margin: 0 0 20px 20px;
+  }
+
+}
+
+@media only screen and (min-width: 920px) {
+
+  div.docs {
     position: relative;
-    padding: 15px 300px 15px 20px;
-    line-height: 24px; /* the default 21px is a bit tight for so much text */
-}
+    padding-right: 300px;
+  }
 
-.docs nav.well {
-    position: fixed;
-    top: 71px; /* 50px header + 1px border + 20px padding */
+  div.docs nav.well {
+    float: none;
+    margin: 0;
+    position: absolute;
+    top: 0;
     right: 20px;
     width: 238px;
-    padding: 8px 0;
-    margin-bottom: 0;
-}
-
-.docs nav.well a {
-    font-size: 14px;
-}
-
-.docs .well {
-    margin-bottom: 15px;
-}
-
-.docs .well .label {
-    vertical-align: 2px;
-    margin: 0 5px 0 2px;
-}
-
-.docs h3 {
-    margin-top: 20px;
-}
-
-
-@media only screen and (min-width: 480px) {
+  }
 
 }
 
-@media only screen and (min-width: 600px) {
-
-}
-
-@media only screen and (max-width: 767px) {
-
-    #userlinks {
-        position: static;
-        top: auto;
-        left: auto;
-        float: none;
-        min-width: none;
-        padding: 0;
-        margin: 0;
-        border: none;
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-    }
-
-    #sidebar,
-    #sitelinks,
-    #userlinks {
-        -webkit-box-shadow: 0 2px 15px rgba(0,0,0,0.3);
-        -moz-box-shadow: 0 2px 15px rgba(0,0,0,0.3);
-        box-shadow: 0 2px 15px rgba(0,0,0,0.3);
-    }
-
-    #sidebar li,
-    #sitelinks li,
-    #userlinks li {
-        border-bottom: 1px solid #e5e5e5;
-    }
-
-    #sidebar li.divider {
-        border-bottom: none;
-    }
-
-    #userlinks > li > a {
-        color: #666;
-    }
-
-    #userlinks > li > a:hover {
-        color: #fff;
-    }
-
-    #userlinks .divider {
-        display: none;
-    }
-
-    #userlinks li.last {
-        margin-top: 0;
-        padding: 10px;
-        border-top: none;
-        text-align: right;
-    }
-
-}
-
-@media only screen and (min-width: 768px) {
-
-    #content {
-        position: relative;
-        padding: 51px 0 0 191px;
-    }
-
-    .thin-sidebar #content {
-        padding-left: 62px;
-    }
-
-    #fullscreen {
-        position: fixed;
-        top: 51px;
-        right: 0;
-        bottom: 0;
-        left: 191px;
-        z-index: 90;
-        width: auto;
-        height: auto;
-    }
-
-    .thin-sidebar #fullscreen {
-        left: 62px;
-    }
-
-    #header {
-        background: transparent;
-    }
-
-    #header h1 {
-        float: none;
-        width: 190px;
-        height: 50px;
-        background: #f1f1f1 url(/image/noise-f1f1f1.gif) 0 0 repeat;
-    }
-
-    #header h1 a {
-        border-right: 1px solid #ccc;
-    }
-
-    #header h1 a:hover,
-    #header h1 a.active:hover {
-        background-color: #eaeaea;
-        background-color: rgba(0,0,0,0.02);
-    }
-
-    #header h1 a:active,
-    #header h1 a.active:active {
-        background-position: 10px 11px;
-    }
-
-    #header h1 a.active {
-        background-color: transparent;
-        border-bottom: none;
-        border-right: 1px solid #ccc;
-    }
-
-    .thin-sidebar #header h1 {
-        width: 62px;
-    }
-
-    .thin-sidebar #header h1 a {
-        width: 62px;
-        background-image: url(/image/logo-f1f1f1-thin.gif);
-    }
-
-    #toggle-sitelinks,
-    #toggle-userlinks {
-        display: none;
-    }
-
-    #nav {
-        position: fixed;
-        top: 0;
-        left: 191px;
-        right: 0;
-        z-index: 101;
-        padding-top: 0;
-        background-color: #fff;
-    }
-
-    .thin-sidebar #nav {
-        left: 63px;
-    }
-
-    #sidebar {
-        display: block;
-        position: fixed;
-        top: 51px;
-        left: 0;
-        bottom: 0;
-        width: 190px;
-        padding-top: 5px;
-        border-right: 1px solid rgb(204, 204, 204);
-        background: #f1f1f1 url(/image/noise-f1f1f1.gif) 0 0 repeat;
-    }
-
-    .thin-sidebar #sidebar {
-        width: 62px;
-    }
-
-    #sidebar li {
-        margin: 2px 0;
-    }
-
-    #sidebar a,
-    #sidebar label {
-        padding: 7px 9px;
-        margin: 0 6px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-    }
-
-    #sidebar a.active,
-    #sidebar label.active {
-        padding: 6px 8px;
-        background: #f6f6f6;
-        border: 1px solid #ddd;
-    }
-
-    #sidebar a:hover,
-    #sidebar a.active:hover,
-    #sidebar label:hover  {
-        padding: 6px 8px;
-        background-color: #fcfcfc;
-        border: 1px solid #ddd;
-    }
-
-    #sidebar input {
-        width: 98px;
-    }
-
-    #sidebar li.divider {
-        margin: 5px 0;
-        border-bottom: 1px solid #ccc;
-    }
-
-    #sidebar li.secondary a {
-        color: #999;
-    }
-
-    #sidebar .tooltip {
-        font-size: 14px;
-        white-space: nowrap;
-    }
-
-    #sidebar .tooltip.in {
-        opacity: 0.99;
-        filter: alpha(opacity=100);
-    }
-
-    .thin-sidebar #sidebar a span {
-        display: none;
-    }
-
-    .thin-sidebar #sidebar a img {
-        margin-right: 0;
-    }
-
-    #sitelinks {
-        display: block;
-        text-align: right;
-    }
-
-    #sitelinks li {
-        display: inline-block;
-    }
-
-    #sitelinks a {
-        display: inline-block;
-        line-height: 32px;
-    }
-
-    #sitelinks .user {
-        display: inline;
-    }
-
-    #sitelinks .user .caret {
-        margin-left: 2px;
-        vertical-align: 10%;
-        border-top-color: #999;
-    }
-
-    #userlinks {
-        left: auto;
-        right: 20px;
-        top: 40px;
-    }
-
-    #userlinks a {
-        padding: 5px 15px;
-        font-size: 14px;
-    }
-
-    #userlinks .dropdown-tail-outline {
-        left: auto;
-        right: 27px;
-    }
-
-    #userlinks .dropdown-tail {
-        left: auto;
-        right: 28px;
-    }
-
-    .dropdown-menu li.header {
-        padding: 5px 15px;
-    }
-
-    #toggle-sidebar-width {
-        display: block;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        color: #999;
-        padding: 5px 10px 5px 5px;
-        text-shadow: 0 1px 0 #fff;
-        line-height: 32px;
-        height: 32px;
-        text-align: right;
-        cursor: w-resize;
-    }
-
-    .thin-sidebar #toggle-sidebar-width {
-        cursor: e-resize;
-        text-align: center;
-        padding-right: 5px;
-    }
-
-    #toggle-sidebar-width .bar {
-        margin-left: 1px;
-    }
-
-    #toggle-sidebar-width span {
-        float: left;
-        margin-left: 10px;
-    }
-
-    #toggle-sidebar-width span,
-    .thin-sidebar #toggle-sidebar-width span,
-    .thin-sidebar #toggle-sidebar-width:hover span {
-        display: none;
-    }
-
-    #toggle-sidebar-width:hover span {
-        display: inline;
-        margin-right: 5px;
-    }
-
-    #title {
-        position: fixed;
-        top: 0;
-        left: 190px;
-        z-index: 101;
-        padding: 0 0 0 20px;
-        border-bottom: none;
-    }
-
-    .thin-sidebar #title {
-        left: 62px;
-    }
-
-    #title h2 {
-        line-height: 50px;
-    }
-
-}
-
-@media only screen and (min-width: 992px) {
-
-}
-
-@media only screen and (min-width: 1382px) {
-
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-
-}
+@media only screen and (min-width: 1220px) { }

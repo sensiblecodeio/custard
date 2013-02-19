@@ -5,54 +5,36 @@
 <!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
-    <meta charset="utf-8">
-    <title>ScraperWiki</title>
-    <meta name="description" content="">
-    <meta name="author" content="ScraperWiki Ltd">
-    <!-- http://t.co/dKP3o1e -->
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/vendor/style/bootstrap.min.css">
-    <link rel="stylesheet" href="/vendor/style/metro.bootstrap.css">
-    <link rel="stylesheet" href="/style/custard.css">
-    <!--[if (lt IE 9) & (!IEMobile)]> <script src="vendor/js/selectivizr-min.js"></script> <![endif]-->
-    <script src="/vendor/js/modernizr.custom.2.6.2.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-    <script src="/vendor/js/bootstrap.min.js"></script>
-    <script src="/vendor/js/320andup.helper.js"></script>
-    <meta http-equiv="cleartype" content="on">
+  <meta charset="utf-8">
+  <title>ScraperWiki</title>
+  <meta name="description" content="">
+  <meta name="author" content="ScraperWiki Ltd">
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta http-equiv="cleartype" content="on">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/vendor/style/bootstrap.min.css">
+  <link rel="stylesheet" href="/style/scraperwiki.css">
+  <link rel="stylesheet" href="/style/custard.css">
+  <!--[if (lt IE 9) & (!IEMobile)]> <script src="vendor/js/selectivizr-min.js"></script> <![endif]-->
+  <script src="/vendor/js/modernizr.custom.2.6.2.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <script src="/vendor/js/bootstrap.min.js"></script>
+  <script src="/vendor/js/320andup.helper.js"></script>
 </head>
 <body>
+  <div id="app">
     <header id="header">
-        <h1><a id="logo" href="#sidebar">ScraperWiki</a></h1>
+      <div class="container">
+        <a id="logo" href="/">ScraperWiki</a>
+        <nav>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="https://scraperwiki.com/dataservices">Data Services</a></li>
+            <li><a href="/docs">Help</a></li>
+            <li><a href="/">Log In</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
-    <nav id="nav">
-        <ul id="sidebar">
-            <li class="my-datasets">
-                <a href="/" data-original-title="My Datasets"><img src="/image/datasets.gif" width="32" height="32" /><span>My Datasets</span></a>
-            </li>
-            <li class="my-tools">
-                <a href="/tools" data-original-title="My Tools"><img src="/image/tools.gif" width="32" height="32" /><span>My Tools</span></a>
-            </li>
-            <li class="divider"></li>
-            <li class="help secondary">
-                <a href="https://scraperwiki.com/help" data-original-title="Help!"><img src="/image/help.gif" width="32" height="32" /><span>Help!</span></a>
-            </li>
-            <li class="data-services secondary">
-                <a href="https://scraperwiki.com/dataservices" data-original-title="Data Services"><img src="/image/data-services.gif" width="32" height="32" /><span>Data Services</span></a>
-            </li>
-            <li class="about secondary">
-                <a href="https://scraperwiki.com/about" data-original-title="About ScraperWiki"><img src="/image/about.gif" width="32" height="32" /><span>About ScraperWiki</span></a>
-            </li>
-            <li id="toggle-sidebar-width" data-original-title="Expand"><span>Collapse</span><i class="bar">|</i><i class="bar">|</i><i class="bar">|</i></li>
-        </ul>
-        <ul id="sitelinks">
-            <li class="login">
-                <a href="/login">Log in</a>
-            </li>
-        </ul>
-    </nav>
-    <div id="title">
-        <h2>Log In</h2>
-    </div>

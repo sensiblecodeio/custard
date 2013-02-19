@@ -34,7 +34,7 @@ describe 'Use a plugin to create a new view', ->
         result.should.include "#{url}/dataset/"
         @datasetUrl = result
 
-      context 'when I click on the Code Your Own View tool', ->
+      xcontext 'when I click on the Code Your Own View tool', ->
         before (done) ->
           link = browser.query('a.code-your-own-view')
           browser.fire 'click', link, ->
@@ -49,7 +49,7 @@ describe 'Use a plugin to create a new view', ->
           result.should.match RegExp('dataset/[^/]+/view/[^/]+')
           @viewPathname = browser.location.pathname
 
-      context "when I return to the dataset's page", ->
+      xcontext "when I return to the dataset's page", ->
         before (done) ->
           browser.visit @datasetUrl, done
 
@@ -57,7 +57,7 @@ describe 'Use a plugin to create a new view', ->
           link = browser.query("a.view[href='#{@viewPathname}']")
           should.exist link
 
-      context "when I return to the dataset list", ->
+      xcontext "when I return to the dataset list", ->
         before (done) ->
           browser.visit "#{url}/", done
 

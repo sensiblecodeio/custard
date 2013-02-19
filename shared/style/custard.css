@@ -173,6 +173,10 @@ a.tile .hide {
   background-color: #e11b2c;
 }
 
+div.dataset-overview .tile .hide {
+  display: none; /* don't want to see the hide button on dataset overview page */
+} 
+
 .tile ul {
   position: absolute;
   bottom: 0;

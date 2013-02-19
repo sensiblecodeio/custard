@@ -17,9 +17,10 @@ describe 'New dataset tool', ->
     browser.fill '#password', 'testing'
     browser.pressButton '#login', done
 
-  context 'when I am on the tools page', ->
+  xcontext 'when I click the "new dataset" button', ->
     before (done) ->
-      browser.visit "#{url}/tools", done
+      browser.fire 'click', '.new-dataset', ->
+        browser.waitForVisibleByCss '#chooser .tool', 4000, done
 
     context 'when I click on the newdataset tool', ->
       before (done) ->

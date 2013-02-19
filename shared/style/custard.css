@@ -141,6 +141,23 @@ a.tile:last-child {
   margin-bottom: 20px;
 }
 
+a.tile.new-dataset {
+  line-height: 120px;
+  text-align: center;
+  font-size: 80px;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+a.tile.new-dataset:hover {
+  background-color: #53997f;
+}
+
+a.tile.new-dataset:active {
+  position: relative;
+  top: 1px;
+}
+
 a.tile h3 {
   margin: 10px 10px 5px 10px;
   font-weight: normal;

@@ -56,6 +56,20 @@ scraperwiki.sql = (sql, success, error) ->
     options.error = error
   $.ajax options
 
+scraperwiki.sql.meta = (success, error) ->
+  settings = scraperwiki.readSettings()
+  # Points to the dataset box, when used from either the dataset or a view.
+  boxSettings = settings.target ? settings.source
+  options =
+    url: "#{boxSettings.url}/sql/meta"
+    type: "GET"
+    dataType: "json"
+  if success?
+    options.success = success
+  if error?
+    options.error = error
+  $.ajax options
+
 scraperwiki.readSettings = ->
   return null if window.location.hash is ''
   hash = window.location.hash.substr(1)

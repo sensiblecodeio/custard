@@ -94,6 +94,22 @@ describe 'Tool RPC', ->
       it 'shows an alert', (done) ->
         browser.waitForElementByCss '.alert', 4000, done
 
-  after (done) ->
-    browser.quit ->
-      done()
+    context 'when the sql metadata button is pressed', ->
+      before (done) ->
+        browser.get @toolURL, ->
+          wd40.switchToBottomFrame ->
+            wd40.click '#sqlmetadata', ->
+              browser.waitForElementByCss '#sqlMetaDataText', 4000, done
+
+      it 'displays json', (done) ->
+        wd40.getText '#sqlMetaDataText', (err, text) =>
+          JSON.parse text
+          text.should.not.be.empty
+          done()
+
+      it 'returns the correct tables', (done) ->
+        wd40.getText '#sqlMetaDataText', (err, text) =>
+          obj = JSON.parse text
+          should.exist obj?.table?.SurLeTable
+          should.exist obj?.table?.VoirLeLapin
+          done()

@@ -39,6 +39,7 @@ class Cu.Router.Main extends Backbone.Router
         contentView = new Cu.View.DatasetList {collection: window.datasets}
         @titleView.showView titleView
         @appView.showView contentView
+        window.tools.fetch()
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 

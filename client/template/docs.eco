@@ -290,12 +290,29 @@ chmod +x ~/tool/.git/hooks/post-receive</pre>
 <h3>Remote development</h3>
 
 <p>You can SSH into the box, edit the code there, and commit it.
-You will need to set the following Git config variables in each box:</p>
+Git needs to know who you are. To automatically tell it for every box, add this
+to your local <code>~/.ssh/config</code>.
+</p>
 
-<pre class="prettyprint">git config --global user.email "<%= @user.email[0] %>"
-git config --global user.name "<%= @user.displayName %>"</pre>
+<pre class="prettyprint">SendEnv LANG LC_* EDITOR GIT_*</pre>
 
-<p>For less important code, you can just use version control locally inside
+<p>And add this to your local <code>~/.bashrc</code> or equivalent.
+
+<pre class="prettyprint">export GIT_AUTHOR_EMAIL=<%= @user.email[0] %>
+export GIT_AUTHOR_NAME='<%= @user.displayName %>'
+export GIT_COMMITTER_EMAIL=<%= @user.email[0] %>
+export GIT_COMMITTER_NAME='<%= @user.displayName %>'</pre>
+
+<p>SSH will then pass those environment variables through, and Git will
+use them to record when you make commits inside the box. 
+
+<p class="well well-small"><span class="label label-info">Top tip!</span>
+You can pass any environment variables you like to your box using <code>SendEnv</code>.
+For example, use <code>EDITOR</code> to get the text editor that you're used
+to. Make sure you <code>export</code> the variable.
+</p>
+
+<p>For less important code, just use version control locally inside
 the box. For more important code, add a remote and push/pull to it.
 Full instructions are in Github's help on
 <a href="https://help.github.com/articles/create-a-repo">Creating a repository</a>.
@@ -319,7 +336,7 @@ ForwardAgent yes</pre>
 </p>
 
 <p class="well well-small"><span class="label label-info">Top tip!</span>
-As a bonus, you can then also simply do <code>ssh &lt;box_name&gt;@box</code> to connect to any box.
+As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to connect to any box.
 </p>
 
 <hr />

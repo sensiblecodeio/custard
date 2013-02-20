@@ -8,6 +8,11 @@ class Cu.View.DatasetList extends Backbone.View
     # :TODO: This is such a hack - we need to find a better way
     @$el.append '<a class="new-dataset tile" title="Add a new dataset">+</a>'
     @addDatasets()
+
+    # Fetch tools here so #chooser appears immediately after click
+    window.tools.fetch
+      error: ->
+        console.log "couldn't fetch tools!!" # Need to handle this later!!
     @
 
   addDatasets: ->
@@ -18,4 +23,6 @@ class Cu.View.DatasetList extends Backbone.View
     @$el.append view.render().el
 
   showChooser: ->
-    console.log 'showChooser()'
+    # :TODO: This assumes window.tools.fetch worked in @render()
+    t = new Cu.View.ToolList {collection: window.tools}
+    $('body').append t.render().el

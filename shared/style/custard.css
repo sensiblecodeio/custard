@@ -217,6 +217,60 @@ div.dataset-overview .tile .hide {
   border-left: 1px solid rgba(255,255,255,0.5);
 }
 
+
+
+#chooser {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0,0,0,0.9);
+  overflow: auto;
+}
+
+#chooser h2 {
+  margin: 70px 20px 10px 20px;
+  color: #fff;
+  font-size: 21px;
+  text-shadow: 0 1px 3px #000;
+}
+
+#chooser a.close {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 20px;
+  font-size: 32px;
+  line-height: 32px;
+  color: white;
+  opacity: 0.8;
+  float: none;
+  text-shadow: 0 3px 6px #000;
+}
+
+#chooser a.close:hover {
+  opacity: 1;
+}
+
+a.tool {
+  float: left;
+  display: table; /* this won't work in IE6/7 */
+  width: 280px;
+  height: 100px;
+  margin: 0 0 0 20px;
+  color: #fff;
+  text-shadow: 0 3px 6px #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.tool:last-child {
+  margin-bottom: 20px;
+}
+
 #content p.loading {
     margin-top: 100px;
     padding-top: 50px;

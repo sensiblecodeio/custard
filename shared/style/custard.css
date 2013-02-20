@@ -228,8 +228,6 @@ div.dataset-overview .tile .hide {
   border-left: 1px solid rgba(255,255,255,0.5);
 }
 
-
-
 #chooser {
   position: fixed;
   top: 0;
@@ -280,6 +278,65 @@ a.tool {
 
 a.tool:last-child {
   margin-bottom: 20px;
+}
+
+a.tool div {
+  display: table-cell; /* this won't work in IE6/7 */
+  vertical-align: middle;
+}
+
+a.tool .tool-info {
+  padding-left: 15px; /* 15px spacing between icon and title/description */
+  padding-right: 10px; /* 10px here + 20px margin in a.tool = 30px visual spacing between columns */
+}
+
+a.tool .tool-icon {
+  width: 60px;
+  max-width: 60px;
+}
+
+a.tool .tool-icon-outer {
+  display: block;
+  width: 60px;
+  height: 64px;
+  margin-right: 15px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 3px 6px #000;
+  -moz-box-shadow: 0 3px 6px #000;
+  border-box-shadow: 0 3px 6px #000;
+  background-color: #777;
+}
+
+a.tool .tool-icon-inner {
+  content: "";
+  display: block;
+  height: 60px;
+  width: 60px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #aaa;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  line-height: 60px;
+  font-size: 36px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  text-align: center;
+  font-weight: bold;
+}
+
+a.tool h3 {
+  margin: 0 0 3px 0;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+a.tool p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 #content p.loading {

@@ -1,7 +1,10 @@
 bcrypt = require 'bcrypt'
 mongoose = require 'mongoose'
+async = require 'async'
+request = require 'request'
 
 ModelBase = require 'model/base'
+Box = require('model/box')()
 
 userSchema = new mongoose.Schema
   shortName: {type: String, unique: true}
@@ -12,6 +15,7 @@ userSchema = new mongoose.Schema
   isStaff: Boolean
   created: {type: Date, default: Date.now}
   logoUrl: String
+  sshKeys: [String]
 
 zDbUser = mongoose.model 'User', userSchema
 
@@ -41,6 +45,27 @@ class User extends ModelBase
       @password = hash
       @save callback
 
+  # Sends a list of box sshkeys to cobalt for each box a user
+  # can access, so cobalt can overwite the authorized_keys for a box
+  @distributeUserKeys: (shortName, callback) ->
+    Box.findAllByUser shortName, (err, boxen) ->
+      async.forEach boxen, (box, boxCb) ->
+        # call cobalt with list of sshkeys of box
+        # sshkeys <--> user <--> box
+        Box.findUsersByName box.name, (err, users) ->
+          boxKeys = []
+          async.forEach users, (userName, userCb) ->
+            User.findByShortName userName, (err, user) ->
+              boxKeys = boxKeys.concat user.sshKeys
+              userCb()
+          , ->
+            request.post
+              uri: "#{process.env.CU_BOX_SERVER}/#{box.name}/sshkeys"
+              form:
+                keys: boxKeys
+            , boxCb
+      , callback
+
   @findByShortName: (shortName, callback) ->
     @dbClass.findOne {shortName: shortName}, (err, user) =>
       if err?
@@ -60,6 +85,8 @@ rand32 = ->
 fresh_apikey = ->
   [rand32(), rand32()].join('-')
 
-module.exports = (dbObj) ->
-  zDbUser = dbObj if dbObj?
+exports.User = User
+
+exports.dbInject = (dbObj) ->
+  User.dbClass = zDbUser = dbObj if dbObj?
   User

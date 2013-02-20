@@ -1,7 +1,12 @@
 mongoose = require 'mongoose'
+sinon = require 'sinon'
 should = require 'should'
 
-User = require('model/user')()
+request = require 'request'
+
+User = require('model/user').dbInject()
+
+Box = require('model/box')()
 
 describe 'User', ->
   before ->
@@ -38,17 +43,50 @@ describe 'User', ->
             correct.should.be.true
             done()
 
+  context 'when trying to find a user', ->
+    it 'can find one by its shortname', (done) ->
+      # TODO: Stub actual DB calls?
+      User.findByShortName 'ickletest', (err, user) ->
+        should.exist user
+        user.displayName.should.equal 'Mr Ickle Test'
+        done()
 
-   context 'when trying to find a user', ->
-     it 'can find one by its shortname', (done) ->
-       # TODO: Stub actual DB calls?
-       User.findByShortName 'ickletest', (err, user) ->
-         should.exist user
-         user.displayname.should.equal 'Mr Ickle Test'
-         done()
+    it "returns null when the user doesn't exist", (done) ->
+      User.findByShortName 'NONEXIST', (err, user) ->
+        should.not.exist err
+        should.not.exist user
+        done()
 
-     it "returns null when the user doesn't exist", (done) ->
-       User.findByShortName 'NONEXIST', (err, user) ->
-         should.not.exist err
-         should.not.exist user
-         done()
+  describe 'SSH keys', ->
+    context 'POST /api/<user>/sshkeys', ->
+      before ->
+        @pigBox = new Box
+          users: ['ickletest']
+          name: 'pigbox'
+        @luxuryPigBox = new Box
+          users: ['ehg', 'ickletest']
+          name: 'luxurypigbox'
+        @request = sinon.stub(request, 'post').callsArg(1)
+
+      before (done) ->
+        @pigBox.save (err) =>
+          @luxuryPigBox.save (err) ->
+            done null
+
+      context 'when distributing the keys of ickletest', ->
+        before (done) ->
+          User.distributeUserKeys 'ickletest', done
+
+        it "posts to pigbox with ickletest's ssh keys", ->
+          correctArgs = @request.calledWith
+            uri: "#{process.env.CU_BOX_SERVER}/pigbox/sshkeys"
+            form:
+              keys: ['a', 'b', 'c']
+          correctArgs.should.be.true
+
+        it "posts to luxurypigbox with ehg's and ickletest's ssh keys", ->
+          correctArgs = @request.calledWith
+            uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
+            form:
+              keys: ['d', 'e', 'f', 'a', 'b', 'c']
+          correctArgs.should.be.true

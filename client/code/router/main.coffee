@@ -69,7 +69,6 @@ class Cu.Router.Main extends Backbone.Router
       error: (model, xhr, options) ->
         console.warn xhr
 
-
   view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate
       user: window.user.effective.shortName

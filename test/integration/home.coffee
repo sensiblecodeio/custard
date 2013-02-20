@@ -32,12 +32,12 @@ describe 'Home page (logged in)', ->
         datasets.length.should.be.above 2
         done()
 
-  xcontext 'when I click the "new dataset" button', ->
+  context 'when I click the "new dataset" button', ->
     before (done) ->
       wd40.click '.new-dataset', done
 
     it 'shows the tools I can use to create datasets', (done) ->
-      browser.waitForVisibleByCss '#chooser .tool', 4000, ->
+      browser.waitForElementByCss '#chooser .tool', 4000, ->
         browser.elementsByCss '#chooser .tool', (err, tools) ->
           tools.length.should.be.above 0
           done()

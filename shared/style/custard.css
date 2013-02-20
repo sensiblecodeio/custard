@@ -14,6 +14,17 @@ html, body {
   height: 100%;
 }
 
+/* This is here to avoid double scrollbars when #chooser is shown */
+
+#app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+}
+
 /* A .container style is set in scraperwiki.css, which most pages will use.
    Some tools, however, might look better full screen. When this happens,
    the other .container elements (eg: header) should get 100% width too. */
@@ -141,6 +152,23 @@ a.tile:last-child {
   margin-bottom: 20px;
 }
 
+a.tile.new-dataset {
+  line-height: 120px;
+  text-align: center;
+  font-size: 80px;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+a.tile.new-dataset:hover {
+  background-color: #53997f;
+}
+
+a.tile.new-dataset:active {
+  position: relative;
+  top: 1px;
+}
+
 a.tile h3 {
   margin: 10px 10px 5px 10px;
   font-weight: normal;
@@ -198,6 +226,122 @@ div.dataset-overview .tile .hide {
 
 .tile li + li {
   border-left: 1px solid rgba(255,255,255,0.5);
+}
+
+#chooser {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0,0,0,0.9);
+  overflow: auto;
+}
+
+#chooser h2 {
+  margin: 70px 20px 10px 20px;
+  color: #fff;
+  font-size: 24px;
+  text-shadow: 0 1px 3px #000;
+}
+
+#chooser a.close {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 20px;
+  font-size: 32px;
+  line-height: 32px;
+  color: white;
+  opacity: 0.8;
+  float: none;
+  text-shadow: 0 3px 6px #000;
+}
+
+#chooser a.close:hover {
+  opacity: 1;
+}
+
+a.tool {
+  float: left;
+  display: table; /* this won't work in IE6/7 */
+  width: 280px;
+  height: 100px;
+  margin: 0 0 0 20px;
+  color: #fff;
+  text-shadow: 0 3px 6px #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.tool:active {
+  position: relative;
+  top: 1px;
+}
+
+a.tool:last-child {
+  margin-bottom: 20px;
+}
+
+a.tool div {
+  display: table-cell; /* this won't work in IE6/7 */
+  vertical-align: middle;
+}
+
+a.tool .tool-info {
+  padding-left: 15px; /* 15px spacing between icon and title/description */
+  padding-right: 10px; /* 10px here + 20px margin in a.tool = 30px visual spacing between columns */
+}
+
+a.tool .tool-icon {
+  width: 60px;
+  max-width: 60px;
+}
+
+a.tool .tool-icon-outer {
+  display: block;
+  width: 60px;
+  height: 64px;
+  margin-right: 15px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 3px 6px #000;
+  -moz-box-shadow: 0 3px 6px #000;
+  border-box-shadow: 0 3px 6px #000;
+  background-color: #777;
+}
+
+a.tool .tool-icon-inner {
+  content: "";
+  display: block;
+  height: 60px;
+  width: 60px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-color: #aaa;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  line-height: 60px;
+  font-size: 36px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  text-align: center;
+  font-weight: bold;
+}
+
+a.tool h3 {
+  margin: 0 0 3px 0;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+a.tool p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 #content p.loading {

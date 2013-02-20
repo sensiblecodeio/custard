@@ -1,3 +1,4 @@
+<ul>
 <li><a href="/">Data Hub</a></li>
 <li><a href="#">Tool Shop</a></li>
 <li><a href="/docs">Help</a></li>
@@ -9,3 +10,4 @@
 <% else: %>
 <li><a href="/login" data-nonpushstate>Log In</a></li>
 <% end %>
+</ul>

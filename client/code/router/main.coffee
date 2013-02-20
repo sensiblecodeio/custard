@@ -39,16 +39,7 @@ class Cu.Router.Main extends Backbone.Router
         contentView = new Cu.View.DatasetList {collection: window.datasets}
         @titleView.showView titleView
         @appView.showView contentView
-      error: (x,y,z) ->
-        console.warn 'ERRROR', x, y, z
-
-  tools: ->
-    window.tools.fetch
-      success: =>
-        titleView = new Cu.View.Title {text: 'My Tools'}
-        contentView = new Cu.View.ToolList {collection: window.tools}
-        @titleView.showView titleView
-        @appView.showView contentView
+        window.tools.fetch()
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 
@@ -77,7 +68,6 @@ class Cu.Router.Main extends Backbone.Router
             console.warn 'ERRROR', x, y, z
       error: (model, xhr, options) ->
         console.warn xhr
-
 
   view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate

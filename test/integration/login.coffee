@@ -66,11 +66,8 @@ describe 'Login', ->
         browser.pressButton '#login', ->
           browser.wait done
 
-      xit 'shows my name', ->
+      it 'shows my name', ->
         browser.text('#subnav-path').should.include 'Mr Ickle Test'
-
-      xit 'shows my datasets', ->
-        browser.text('#subnav-path').should.include 'Data Hub'
 
       xcontext 'when I logout', ->
         before (done) ->

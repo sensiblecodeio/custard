@@ -1,33 +1,41 @@
-$ = jQuery = require 'jquery'
-Browser = require 'zombie'
+wd = require 'wd'
 should = require 'should'
 
-url = 'http://localhost:3001' # DRY DRY DRY
+browser = wd.remote()
+wd40 = require('../wd40')(browser)
+
+url = 'http://localhost:3001'
 login_url = "#{url}/login"
 
 describe 'New dataset tool', ->
-  browser = new Browser()
-  browser.waitDuration = "10s"
+  before (done) ->
+    wd40.init ->
+      browser.get login_url, done
 
   before (done) ->
-    browser.visit login_url, done
+    wd40.fill '#username', 'ehg', ->
+      wd40.fill '#password', 'testing', ->
+        wd40.click '#login', done
 
   before (done) ->
-    browser.fill '#username', 'ehg'
-    browser.fill '#password', 'testing'
-    browser.pressButton '#login', done
+    browser.waitForElementByCss '.dataset-list', 4000, done
 
-  xcontext 'when I click the "new dataset" button', ->
+  context 'when I click the "new dataset" button', ->
     before (done) ->
-      browser.fire 'click', '.new-dataset', ->
-        browser.waitForVisibleByCss '#chooser .tool', 4000, done
+      wd40.click '.new-dataset', ->
+        browser.waitForElementByCss '#chooser .tool', 4000, done
 
     context 'when I click on the newdataset tool', ->
       before (done) ->
-        link = browser.query('.newdataset.tool')
-        browser.fire 'click', link, ->
-          browser.wait done
+        wd40.click '.newdataset.tool', =>
+          browser.waitForElementByTagName 'iframe', 10000, =>
+            browser.url (err, url) =>
+              @currentUrl = url
+              done()
 
       it 'takes me to the dataset settings page', ->
-        result = browser.location.href
-        result.should.match new RegExp("#{url}/dataset/[^/]+/settings")
+        @currentUrl.should.match new RegExp("#{url}/dataset/[^/]+/settings")
+
+  after (done) ->
+    browser.quit ->
+      done()

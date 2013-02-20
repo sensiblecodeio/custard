@@ -19,7 +19,7 @@ class Cu.View.DatasetList extends Backbone.View
 
   showChooser: ->
     # :TODO: We shouldn't be fetching tools in here.
-    if window.tools is null
+    if window.tools.length == 0
       window.tools.fetch
         success: ->
           t = new Cu.View.ToolList {collection: window.tools}

@@ -8,7 +8,7 @@ class Cu.View.ToolList extends Backbone.View
   render: ->
     # :TODO: should this go in a template?
     @container = $('<div class="container">')
-    @container.append('<h2>Create a new dataset</h2>')
+    @container.append('<h2>Create a new dataset&hellip;</h2>')
     @container.append('<a class="close">&times;</a>')
     @addTools()
     @$el.hide().append(@container).fadeIn(100)

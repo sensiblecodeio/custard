@@ -276,6 +276,11 @@ a.tool {
   cursor: pointer;
 }
 
+a.tool:active {
+  position: relative;
+  top: 1px;
+}
+
 a.tool:last-child {
   margin-bottom: 20px;
 }

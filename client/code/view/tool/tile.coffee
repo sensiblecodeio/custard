@@ -16,9 +16,13 @@ class Cu.View.ToolTile extends Backbone.View
   checkInstall: (e) ->
     @install(e) unless @active
 
+  clicked: (e) ->
+    e.stopPropagation()
+    @checkInstall e
+
 class Cu.View.AppTile extends Cu.View.ToolTile
   events:
-    'click' : 'checkInstall'
+    'click' : 'clicked'
 
   install: (e) ->
     e.preventDefault()
@@ -40,6 +44,8 @@ class Cu.View.AppTile extends Cu.View.ToolTile
         success: ->
           delete dataset.new
           window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
+          $('#chooser').fadeOut 200, ->
+            $(this).remove()
         error: (model, xhr, options) ->
           @active = false
           @$el.removeClass 'loading'
@@ -47,7 +53,7 @@ class Cu.View.AppTile extends Cu.View.ToolTile
 
 class Cu.View.PluginTile extends Cu.View.ToolTile
   events:
-    'click' : 'checkInstall'
+    'click' : 'clicked'
 
   install: (e) ->
     e.preventDefault()

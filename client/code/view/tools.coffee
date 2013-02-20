@@ -3,7 +3,6 @@ class Cu.View.ToolList extends Backbone.View
 
   events:
     'click .close': 'closeChooser'
-    'click .tool': 'clickTool'
     'click': 'closeChooser'
 
   render: ->
@@ -31,7 +30,3 @@ class Cu.View.ToolList extends Backbone.View
     @$el.fadeOut 200, ->
         $(this).remove()
     $(window).off('keyup')
-
-  clickTool: (e) ->
-    e.stopPropagation()
-    console.log 'clicked!!'

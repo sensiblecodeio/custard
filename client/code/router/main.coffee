@@ -12,7 +12,7 @@ class Cu.Router.Main extends Backbone.Router
 
   initialize: ->
     @appView = new Cu.AppView '#content'
-    @titleView = new Cu.AppView '#subnav-path'
+    @subnavView = new Cu.AppView '#subnav'
     @navView ?= new Cu.View.Nav()
 
     # Move somewhere better
@@ -35,10 +35,10 @@ class Cu.Router.Main extends Backbone.Router
   main: ->
     window.datasets.fetch
       success: =>
-        titleView = new Cu.View.Title {text: 'My Datasets'}
         contentView = new Cu.View.DatasetList {collection: window.datasets}
-        @titleView.showView titleView
+        subnavView = new Cu.View.DataHubNav
         @appView.showView contentView
+        @subnavView.showView subnavView
         window.tools.fetch()
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
@@ -47,10 +47,10 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
-        titleView = new Cu.View.DatasetSettingsTitle {model: model}
+        subnavView = new Cu.View.DatasetSettingsNav {model: model}
         contentView = new Cu.View.AppContent {model: model}
-        @titleView.showView titleView
         @appView.showView contentView
+        @subnavView.showView subnavView
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 
@@ -60,10 +60,10 @@ class Cu.Router.Main extends Backbone.Router
       success: (model, resp, options) =>
         window.tools.fetch
           success: =>
-            titleView = new Cu.View.DatasetTitle {model: model}
             contentView = new Cu.View.DatasetOverview { model: model, tools: window.tools }
-            @titleView.showView titleView
+            subnavView = new Cu.View.DatasetNav {model: model}
             @appView.showView contentView
+            @subnavView.showView subnavView
           error: (x,y,z) ->
             console.warn 'ERRROR', x, y, z
       error: (model, xhr, options) ->
@@ -79,33 +79,33 @@ class Cu.Router.Main extends Backbone.Router
         window.tools.fetch
           success: =>
             v = dataset.get('views').findById(viewID)
-            titleView = new Cu.View.ViewTitle {model: v}
             contentView = new Cu.View.PluginContent {model: v}
-            @titleView.showView titleView
+            subnavView = new Cu.View.ViewNav {model: v}
             @appView.showView contentView
+            @subnavView.showView subnavView
       error: (model, xhr, options) ->
         console.warn xhr
 
   createProfile: ->
-    titleView = new Cu.View.Title {text: 'Create Profile'}
+    titleView = new Cu.View.Subnav {text: 'Create Profile'}
     contentView = new Cu.View.CreateProfile()
-    @titleView.showView titleView
     @appView.showView contentView
+    @subnavView.showView subnavView
 
   setPassword: ->
-    titleView = new Cu.View.Title {text: 'Set your password'}
+    subnavView = new Cu.View.Subnav {text: 'Set your password'}
     contentView = new Cu.View.SetPassword()
-    @titleView.showView titleView
     @appView.showView contentView
+    @subnavView.showView subnavView
 
   fourOhFour: ->
-    titleView = new Cu.View.Title {text: '404: Not Found'}
+    subnavView = new Cu.View.Subnav {text: '404: Not Found'}
     contentView = new Cu.View.FourOhFour()
-    @titleView.showView titleView
     @appView.showView contentView
+    @subnavView.showView subnavView
 
   docs: ->
-    titleView = new Cu.View.Title {text: 'Developer Documentation'}
+    subnavView = new Cu.View.Subnav {text: 'Developer Documentation'}
     contentView = new Cu.View.Docs()
-    @titleView.showView titleView
     @appView.showView contentView
+    @subnavView.showView subnavView

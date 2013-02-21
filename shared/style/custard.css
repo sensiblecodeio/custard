@@ -117,7 +117,7 @@ body.fullscreen .container {
   text-align: left;
 }
 
-#subnav-path > .context-switch > a {
+#subnav-path > .context-switch > .btn {
   padding-right: 20px;
 }
 

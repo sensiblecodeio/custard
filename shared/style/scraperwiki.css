@@ -544,6 +544,17 @@ input[type="color"],
   background-position: 8px 2px\9; /* override for IE6-8 which don't support background-size */
 }
 
+/* Disable text selection for buttons */
+
+.btn {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 /* Responsive sizing for .containers */
 
 .container {

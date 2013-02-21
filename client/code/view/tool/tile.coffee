@@ -38,6 +38,20 @@ class Cu.View.ToolTile extends Backbone.View
       manifest.color = '#b0df18'
     model.set 'manifest', manifest
 
+  showLoading: ->
+    $inner = @$el.find('.tool-icon-inner')
+    $inner.empty().css('background-image', 'none')
+    Spinners.create($inner, {
+      radius: 7,
+      height: 8,
+      width: 2.5,
+      dashes: 12,
+      opacity: 1,
+      padding: 3,
+      rotation: 1000,
+      color: '#fff'
+    }).play()
+
 class Cu.View.AppTile extends Cu.View.ToolTile
   events:
     'click' : 'clicked'
@@ -45,7 +59,7 @@ class Cu.View.AppTile extends Cu.View.ToolTile
   install: (e) ->
     e.preventDefault()
     @active = true
-    @$el.addClass 'loading'
+    @showLoading()
 
     @model.install (jqXHR, text) =>
       user = window.user.effective
@@ -66,8 +80,7 @@ class Cu.View.AppTile extends Cu.View.ToolTile
             $(this).remove()
         error: (model, xhr, options) ->
           @active = false
-          @$el.removeClass 'loading'
-          console.warn "Error saving dataset (xhr status: #{xhr.status} #{xhr.statusText})"
+          console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
 
 class Cu.View.PluginTile extends Cu.View.ToolTile
   events:
@@ -76,8 +89,8 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
   install: (e) ->
     e.preventDefault()
     @active = true
+    @showLoading()
 
-    @$el.addClass 'loading'
     dataset = Cu.Model.Dataset.findOrCreate
       user: window.user.effective.shortName
       box: @options.dataset.id

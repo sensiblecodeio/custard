@@ -114,6 +114,12 @@ input[type="search"],
   padding-left: 30px;
 }
 
+input.search-query.loading,
+input[type="search"].loading,
+.navbar-search .search-query.loading {
+  background-image: url(../image/loader-input-search.gif);
+}
+
 .navbar-search .search-query {
   font-size: 14px;
   line-height: 20px;

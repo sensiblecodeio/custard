@@ -69,16 +69,20 @@ describe 'Login', ->
       it 'shows my name', ->
         browser.text('#subnav-path').should.include 'Mr Ickle Test'
 
-      xcontext 'when I logout', ->
+      context 'when I logout', ->
         before (done) ->
-          browser.fire 'click', browser.query('#userlink'), ->
-            browser.fire 'click', browser.query('#userlinks .btn-primary'), done
+          browser.clickLink '#header .logout a', done
 
         it 'redirects me to the login page', ->
           browser.location.href.should.equal "#{BASE_URL}/login"
 
-        context 'when I visit the index page', ->
-          it 'should still present a login form'
+        context 'when I revisit the index page', ->
+          before (done) ->
+            browser.visit BASE_URL, done
+
+          it 'should still present a login form', ->
+            should.exist browser.query('.login-page form')
+            should.not.exist browser.query('.dataset-list')
 
      xcontext 'when I try to login with my email address as my username', ->
 

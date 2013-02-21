@@ -473,6 +473,14 @@ div.docs h3 {
     box-shadow: 0 1px 0 #fff;
   }
 
+  #header nav li.logout a {
+    color: #933;
+  }
+
+  #header nav li.logout a:hover {
+    color: #b00;
+  }
+
   div.docs nav.well {
     float: right;
     margin: 0 0 20px 20px;

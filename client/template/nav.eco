@@ -3,11 +3,8 @@
 <li><a href="#">Tool Shop</a></li>
 <li><a href="/docs">Help</a></li>
 <% if @displayName: %>
-<li><a href="#">
-  <%= @displayName %>
-  <img src="<%= @avatarUrl %>" width="24" height="24" alt="<%= @displayName %>" />
-</a></li>
+<li class="logout"><a href="/logout" data-nonpushstate>Log out</a></li>
 <% else: %>
-<li><a href="/login" data-nonpushstate>Log In</a></li>
+<li class="login"><a href="/login" data-nonpushstate>Log in</a></li>
 <% end %>
 </ul>

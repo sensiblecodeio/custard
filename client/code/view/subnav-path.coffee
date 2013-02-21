@@ -8,6 +8,7 @@ class Cu.View.Subnav extends Backbone.View
       </div>""")
     @
 
+
 class Cu.View.DataHubNav extends Backbone.View
   events:
     'click .context-switch li': 'liClick'
@@ -116,8 +117,64 @@ class Cu.View.DataHubNav extends Backbone.View
       results.remove()
 
 
-class Cu.View.DatasetNav extends Backbone.View
-  # This view should be passed a dataset model!
+class Cu.View.EditableSubnav extends Backbone.View
+  initialize: ->
+    @model.on 'change', @setDocumentTitle, @
+    # set this so we can override it in Cu.View.ViewSubnav
+    # (where the model to save is in fact the parent dataset's model)
+    @modelToSave = @model
+
+  nameClicked: (e) ->
+    e.preventDefault()
+    $a = @$el.find('.editable')
+    $a.next()
+      .val(@model.get 'displayName')
+      .css('width', $a.width() + 20)
+      .show 0, ->
+        @focus()
+    $a.hide()
+
+  editableNameBlurred: ->
+    $label = @$el.find('.editable')
+    $input = $label.next()
+    @newName = $.trim($input.val())
+    @oldName = $label.text()
+    if @newName == '' or @newName == $label.text()
+      $label.show().next().hide()
+    else
+      $input.hide()
+      $label.text(@newName).show()
+      @model.set 'displayName', @newName
+      @modelToSave.save {},
+        success: =>
+          $label.addClass 'saved'
+          setTimeout ->
+            $label.removeClass 'saved'
+          , 1000
+        error: (e) =>
+          $label.text(@oldName).addClass 'error'
+          setTimeout ->
+            $label.removeClass 'error'
+          , 1000
+          @model.set 'displayName', @oldName
+          console.warn 'error saving new name', e
+
+  editableNameEscaped: (e) ->
+    e.preventDefault()
+    @$el.find('.editable').show().next().hide()
+
+  keypressOnEditableName: (event) ->
+    @editableNameBlurred() if event.keyCode is 13
+    @editableNameEscaped() if event.keyCode is 27
+
+
+class Cu.View.DatasetNav extends Cu.View.EditableSubnav
+  #TODO: create BaseView to extend events, for the DRY
+  events:
+    'click .editable': 'nameClicked'
+    'blur #editable-input': 'editableNameBlurred'
+    'keypress #editable-input': 'keypressOnEditableName'
+
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -129,8 +186,9 @@ class Cu.View.DatasetNav extends Backbone.View
         <div class="btn-group">
           <span class="slash">/</span>
         </div>
-        <div class="btn-group editable">
-          <a class="btn btn-link">#{@model.get 'displayName'}</a>
+        <div class="btn-group">
+          <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
+          <input type="text" id="editable-input" style="display: none"/>
         </div>
       </div>""")
     @
@@ -155,13 +213,18 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
           <span class="slash">/</span>
         </div>
         <div class="btn-group">
-          <a class="btn btn-link">Settings</a>
+          <span class="btn btn-link">Settings</span>
         </div>
       </div>""")
     @
 
-class Cu.View.ViewNav extends Backbone.View
-  # This view should be passed a view model!
+class Cu.View.ViewNav extends Cu.View.EditableSubnav
+  #TODO: create BaseView to extend events, for the DRY
+  events:
+    'click .editable': 'nameClicked'
+    'blur #editable-input': 'editableNameBlurred'
+    'keypress #editable-input': 'keypressOnEditableName'
+
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -179,8 +242,9 @@ class Cu.View.ViewNav extends Backbone.View
         <div class="btn-group">
           <span class="slash">/</span>
         </div>
-        <div class="btn-group editable">
-          <a class="btn btn-link">#{@model.get 'displayName'}</a>
+        <div class="btn-group">
+          <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
+          <input type="text" id="editable-input" style="display: none"/>
         </div>
       </div>""")
     @

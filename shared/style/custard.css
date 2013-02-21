@@ -72,11 +72,39 @@ body.fullscreen .container {
   line-height: 32px;
 }
 
-#subnav-path > .btn-group > a {
+#subnav-path > .btn-group > .btn {
   color: #333;
   font-size: 24px;
   line-height: 32px;
   padding: 0 4px;
+}
+
+#subnav-path #editable-input {
+  color: #333;
+  font-size: 24px;
+  line-height: 32px;
+  padding: 0 4px;
+  margin: 0;
+  height: 32px;
+}
+
+#subnav-path .editable:hover:after,
+#subnav-path .editable.saved:after,
+#subnav-path .editable.error:after {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: transparent url("../vendor/image/glyphicons-halflings.png") 0 -72px no-repeat;
+    margin-left: 5px;
+}
+
+#subnav-path .editable.saved:after {
+    background-position: -288px 0;
+}
+
+#subnav-path .editable.error:after {
+  background-position: 0 -120px;
 }
 
 #subnav-path > h1 > a {

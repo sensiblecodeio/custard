@@ -20,7 +20,7 @@
 
 <h2 id="scraperwiki-intro">ScraperWiki is about datasets</h2>
 
-<p>The simplest dataset is just a SQLite database, with a bit of code to create it and possibly update it. </p>
+<p>The simplest dataset is just an SQLite database, with a bit of code to create it and possibly update it. </p>
 
 <p>On ScraperWiki, these files live inside what we call a <b>box</b> &ndash; essentially a Unix shell account on the web. Boxes are sandboxed from each other, and provided with a set of API endpoints for communicating with the outside world.</p>
 
@@ -70,7 +70,7 @@ This will show you how to SSH in.</p>
 
 <h3 id="datasets-endpoints-sql">SQL data endpoint</h3>
 
-<p>If a SQLite file is named in the <code>database</code> key of <code>~/box.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sqlite?q=select+*+from+sqlite_master</code>.</p>
+<p>If an SQLite file is named in the <code>database</code> key of <code>~/box.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sqlite?q=select+*+from+sqlite_master</code>.</p>
 
 <p>The SQL endpoint accepts only <code>HTTP GET</code> requests with the following parameters:</p>
 

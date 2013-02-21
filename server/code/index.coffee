@@ -15,6 +15,7 @@ mongoStore = require('connect-mongo')(express)
 flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
+uuid = require 'uuid'
 
 {User} = require 'model/user'
 Dataset = require('model/dataset')()
@@ -330,6 +331,7 @@ app.post '/api/:user/?', checkStaff, (req, resp) ->
     shortName: req.params.user
     displayName: req.body.displayName
     email: [req.body.email]
+    apikey: uuid.v4()
   if req.body.logoUrl?
     newUser.logoUrl = req.body.logoUrl
 
@@ -343,6 +345,16 @@ app.post '/api/:user/?', checkStaff, (req, resp) ->
         userobj.token = token
         return resp.json 201, userobj
 
+app.post '/api/:user/sshkeys/?', (req, resp) ->
+  User.findByShortName req.params.user, (err, user) ->
+    user.sshKeys.push req.body.key
+    user.save (err) ->
+      User.distributeUserKeys user.shortName, (err) ->
+        console.log err
+        if err?
+          resp.send 500, error: err
+        else
+          resp.send 200, success: 'ok'
 
 app.get '*', (req, resp) ->
   resp.render 'index',

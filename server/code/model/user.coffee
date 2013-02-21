@@ -62,8 +62,9 @@ class User extends ModelBase
             request.post
               uri: "#{process.env.CU_BOX_SERVER}/#{box.name}/sshkeys"
               form:
-                keys: boxKeys
-            , boxCb
+                keys: JSON.stringify boxKeys
+            , (err, res, body) ->
+              boxCb err
       , callback
 
   @findByShortName: (shortName, callback) ->

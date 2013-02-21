@@ -8,20 +8,6 @@ class Cu.View.CreateProfile extends Backbone.View
     @el.innerHTML = JST['create-profile']()
     @
 
-  # Temporary Cobalt creation
-
-  # Request to Cobalt here?
-  createCobaltProfile: (profile, callback) ->
-    $.ajax
-      url: "#{window.boxServer}/#{profile.shortName}"
-      type: 'POST'
-      dataType: 'json'
-      data:
-        apikey: window.user.real.apiKey
-        newApikey: profile.apikey
-      success: (cobaltProfile) =>
-        callback cobaltProfile
-
   createProfile: (e) ->
     e.preventDefault()
     displayName = $('#displayname').val()
@@ -39,9 +25,8 @@ class Cu.View.CreateProfile extends Backbone.View
         type: 'POST'
         dataType: 'json'
         success: (newProfile) =>
-          @createCobaltProfile newProfile, (cobaltProfile) =>
-            url = "#{location.protocol}//#{location.host}/set-password/#{newProfile.token}"
-            @$el.children('form').html "<div class=\"alert alert-success\"><strong>New profile &ldquo;#{newProfile.shortName}&rdquo; created.</strong><br/>They can set their password <a href=\"#{url}\" title=\"#{url}\">here</a>.</div>"
+          url = "#{location.protocol}//#{location.host}/set-password/#{newProfile.token}"
+          @$el.children('form').html "<div class=\"alert alert-success\"><strong>New profile &ldquo;#{newProfile.shortName}&rdquo; created.</strong><br/>They can set their password <a href=\"#{url}\" title=\"#{url}\">here</a>.</div>"
         error: (jqxhr, textStatus, errorThrown) ->
           if errorThrown == 'Forbidden'
             alert("Hmmm... computer says no. Is your API key a valid staff key?")

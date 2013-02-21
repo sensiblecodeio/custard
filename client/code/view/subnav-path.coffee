@@ -53,15 +53,16 @@ class Cu.View.DataHubNav extends Backbone.View
 
   showChooser: ->
     # :TODO: We shouldn't be fetching tools in here.
+    # :TODO: This is duplicated in view/dataset/overview.coffee (for creating Views)
     if window.tools.length == 0
       window.tools.fetch
         success: ->
-          t = new Cu.View.ToolList {collection: window.tools}
+          t = new Cu.View.ToolList {collection: window.tools, type: 'importers'}
           $('body').append t.render().el
         error: (x,y,z) ->
           console.warn 'ERRROR', x, y, z
     else
-      t = new Cu.View.ToolList {collection: window.tools}
+      t = new Cu.View.ToolList {collection: window.tools, type: 'importers'}
       $('body').append t.render().el
 
   focusContextSearch: ->

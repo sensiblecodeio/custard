@@ -292,7 +292,7 @@ div.dataset-overview .tile .hide {
   text-shadow: 0 1px 3px #000;
 }
 
-#chooser a.close {
+#chooser .close {
   display: block;
   position: absolute;
   top: 0;
@@ -302,11 +302,10 @@ div.dataset-overview .tile .hide {
   line-height: 32px;
   color: white;
   opacity: 0.8;
-  float: none;
   text-shadow: 0 3px 6px #000;
 }
 
-#chooser a.close:hover {
+#chooser .close:hover {
   opacity: 1;
 }
 
@@ -392,6 +391,16 @@ a.tool p {
 
 a.tool canvas {
   vertical-align: -6px; /* assumes an ajax loading spinner 38px high */
+}
+
+div.dataset-views {
+  float: left;
+  width: 280px;
+  margin: 20px 0 0 20px;
+}
+
+div.dataset-views h4 {
+  margin-top: 0;
 }
 
 #content p.loading {

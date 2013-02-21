@@ -1,13 +1,28 @@
 class Cu.View.DatasetOverview extends Backbone.View
   className: 'dataset-overview'
-  
+
+  events:
+    'click .new-view': 'showChooser'
+
   render: ->
-    detailsView = new Cu.View.DatasetDetails model: @model
-    @$el.append detailsView.render().el
+    datasetTileView = new Cu.View.DatasetTile
+      model: @model
+      details: true
+    @$el.append datasetTileView.render().el
     viewsView = new Cu.View.DatasetViews model: @model
     @$el.append viewsView.render().el
-    toolsView = new Cu.View.DatasetTools
-      model: @model
-      collection: @options.tools
-    @$el.append toolsView.render().el
     @
+
+  showChooser: ->
+    # :TODO: We shouldn't be fetching tools in here.
+    # :TODO: This is duplicated in view/subnav-path.coffee (for creating Datasets)
+    if window.tools.length == 0
+      window.tools.fetch
+        success: ->
+          t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters'}
+          $('body').append t.render().el
+        error: (x,y,z) ->
+          console.warn 'ERRROR', x, y, z
+    else
+      t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters'}
+      $('body').append t.render().el

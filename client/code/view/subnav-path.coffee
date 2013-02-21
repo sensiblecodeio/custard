@@ -6,18 +6,25 @@ class Cu.View.DataHubNav extends Backbone.View
     'click .new-dataset': 'showChooser'
 
   render: ->
-    @$el.html("""
-      <div class="btn-toolbar" id="subnav-path">
-        <h1 class="btn-group context-switch">
+    if window.user.real.isStaff?
+      h1 = """<h1 class="btn-group context-switch">
           <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
             <img src="#{window.user.effective.avatarUrl}" width="32" height="32" />#{window.user.effective.displayName}&rsquo;s data hub<span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li class="search"><input type="search" placeholder="Switch profile&hellip;"></li>
-            <li><a href="#">Another action</a></li>
+            <!--<li><a href="#">Another action</a></li>-->
           </ul>
-        </h1>
-      </div>
+        </h1>"""
+    else
+      h1 = """<h1 class="btn-group">
+          <a class="btn btn-link">
+            <img src="#{window.user.effective.avatarUrl}" width="32" height="32" />#{window.user.effective.displayName}&rsquo;s data hub
+          </a>
+        </h1>"""
+
+    @$el.html("""
+      <div class="btn-toolbar" id="subnav-path">#{h1}</div>
       <div class="btn-toolbar" id="subnav-options">
         <div class="btn-group">
           <a class="btn new-dataset"><i class="icon-plus"></i> New Dataset</a>

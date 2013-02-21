@@ -142,6 +142,15 @@ body.fullscreen .container {
   width: 75%;
 }
 
+.context-switch .dropdown-menu > .context-search-result > a {
+  line-height: 24px;
+  height: 24px;
+}
+
+.context-switch .context-search-result img {
+  margin-right: 5px;
+}
+
 #subnav-options .btn-group + .btn-group {
   margin-left: 10px;
 }

@@ -140,7 +140,7 @@ describe 'Switch', ->
       @browser.fill '#password', staff_pass
       @browser.pressButton '#login', done
 
-  xcontext 'when a staff member switches context', ->
+  context 'when a staff member switches context', ->
     before (done) ->
       @browser.visit "#{BASE_URL}/switch/#{nonstaff_user}", =>
         @browser.wait done
@@ -152,16 +152,16 @@ describe 'Switch', ->
       @browser.text('.dataset-list').should.include dataset_name
 
     it "has the switched to profile's name", ->
-      @browser.text('.user').should.include 'Mr Ickle Test'
+      @browser.text('h1').should.include 'Mr Ickle Test'
 
     it "shows a gravatar", ->
-      img = @browser.query('.user a img')
+      img = @browser.query('h1 img')
       img.src.should.include 'gravatar'
 
     it "shows the context search box", ->
-      should.exist @browser.document.getElementById('context-search')
+      should.exist @browser.query('.context-switch')
 
-  xcontext 'when a non-staff member attempts to switch context', ->
+  context 'when a non-staff member attempts to switch context', ->
     before (done) ->
       @browser = new Browser()
       @browser.visit BASE_URL, =>
@@ -173,14 +173,14 @@ describe 'Switch', ->
               @browser.wait done
 
     it "hasn't changed who I am", ->
-      @browser.text('.user').should.include 'Mr Ickle Test'
-      @browser.text('.user').should.not.include 'Staff Test'
+      @browser.text('h1').should.include 'Mr Ickle Test'
+      @browser.text('h1').should.not.include 'Staff Test'
 
     it "still shows me my datasets", ->
       @browser.text('.dataset-list').should.include dataset_name
 
-    it "doesn't show the context search box", ->
-      should.not.exist @browser.document.getElementById('context-search')
+    it "doesn't show the context switching popup", ->
+      should.not.exist @browser.query('.context-switch')
 
 describe 'Whitelabel', ->
 

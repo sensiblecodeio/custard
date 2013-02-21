@@ -390,9 +390,9 @@ a.tool .tool-icon-inner {
 }
 
 a.tool h3 {
-  margin: 0 0 3px 0;
+  margin: 0 0 5px 0;
   font-size: 18px;
-  line-height: 24px;
+  line-height: 18px;
 }
 
 a.tool p {

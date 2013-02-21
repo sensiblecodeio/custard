@@ -15,7 +15,8 @@
     "connect-flash": "~0.1.0",
     "underscore": "~1.4.3",
     "eco": "~1.1.0-rc-3",
-    "rimraf": "~2.1.1"
+    "rimraf": "~2.1.1",
+    "ident-express": "*"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

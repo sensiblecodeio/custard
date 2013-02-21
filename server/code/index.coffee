@@ -14,6 +14,7 @@ mongoose = require 'mongoose'
 mongoStore = require('connect-mongo')(express)
 flash = require 'connect-flash'
 eco = require 'eco'
+checkIdent = require 'ident-express'
 
 {User} = require 'model/user'
 Dataset = require('model/dataset')()
@@ -116,26 +117,6 @@ app.set 'views', 'server/template'
 app.engine 'html', ejs.renderFile
 app.set 'view engine', 'html'
 js.root = 'code'
-
-checkIdent = (req, resp, next) ->
-  remotePort = req.headers['x-real-port'] or req.connection.remotePort
-  localPort = req.headers['x-server-port'] or port
-  # TODO: Only accept idents from known IPs
-  socket = net.connect
-    port: 113
-    host: req.headers['x-real-ip'] or req.connection.remoteAddress
-  , ->
-    socket.write "#{remotePort},#{localPort}\r\n"
-  data = ''
-  socket.on 'error', (err) ->
-    next()
-  socket.on 'data', (buffer) ->
-    data += buffer.toString()
-  socket.on 'end', ->
-    box = data.split(':')[3]
-    if box?
-      req.ident = box.trim()
-    next()
 
 # Middleware (for checking users)
 checkUserRights = (req, resp, next) ->

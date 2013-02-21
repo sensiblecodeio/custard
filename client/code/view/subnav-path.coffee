@@ -1,4 +1,12 @@
 class Cu.View.Subnav extends Backbone.View
+  render: ->
+    @$el.html("""
+      <div class="btn-toolbar" id="subnav-path">
+        <h1 class="btn-group">
+          <a class="btn btn-link" href="#{@options.url or window.location.href}">#{@options.text}</a>
+        </h1>
+      </div>""")
+    @
 
 class Cu.View.DataHubNav extends Backbone.View
   events:
@@ -109,6 +117,7 @@ class Cu.View.DataHubNav extends Backbone.View
 
 
 class Cu.View.DatasetNav extends Backbone.View
+  # This view should be passed a dataset model!
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -121,12 +130,13 @@ class Cu.View.DatasetNav extends Backbone.View
           <span class="slash">/</span>
         </div>
         <div class="btn-group editable">
-          <a class="btn btn-link">[dataset.displayName]</a>
+          <a class="btn btn-link">#{@model.get 'displayName'}</a>
         </div>
       </div>""")
     @
 
 class Cu.View.DatasetSettingsNav extends Backbone.View
+  # This view should be passed a dataset model!
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -139,7 +149,7 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
           <span class="slash">/</span>
         </div>
         <div class="btn-group">
-          <a class="btn btn-link">[dataset.displayName]</a>
+          <a class="btn btn-link" href="/dataset/#{@model.get 'box'}">#{@model.get 'displayName'}</a>
         </div>
         <div class="btn-group">
           <span class="slash">/</span>
@@ -151,6 +161,7 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
     @
 
 class Cu.View.ViewNav extends Backbone.View
+  # This view should be passed a view model!
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -163,13 +174,13 @@ class Cu.View.ViewNav extends Backbone.View
           <span class="slash">/</span>
         </div>
         <div class="btn-group">
-          <a class="btn btn-link">[dataset.displayName]</a>
+          <a class="btn btn-link" href="/dataset/#{@model.get('plugsInTo').get 'box'}">#{@model.get('plugsInTo').get 'displayName'}</a>
         </div>
         <div class="btn-group">
           <span class="slash">/</span>
         </div>
         <div class="btn-group editable">
-          <a class="btn btn-link">[view.displayName]</a>
+          <a class="btn btn-link">#{@model.get 'displayName'}</a>
         </div>
       </div>""")
     @

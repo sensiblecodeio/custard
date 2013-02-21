@@ -135,6 +135,7 @@ body.fullscreen .container {
   -webkit-box-shadow: 0 0 1px #666;
   box-shadow: 0 0 1px #666;
   height: 32px;
+  min-width: 32px;
 }
 
 #subnav-path .slash {

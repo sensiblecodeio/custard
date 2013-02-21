@@ -26,8 +26,8 @@ describe 'API', ->
               username: @user
               password: @password
           , (err, res) =>
-              @loginResponse = res
-              done(err)
+            @loginResponse = res
+            done(err)
 
     it 'managed to log in', ->
       should.exist @loginResponse
@@ -156,7 +156,17 @@ describe 'API', ->
           request.get "#{serverURL}/api/#{@user}/datasets", (err, res) ->
             datasets = JSON.parse res.body
             datasets.length.should.be.above 1
-            done(err)
+            done err
+
+      context 'POST: /api/:user/sshkeys', ->
+        it 'returns ok', (done) ->
+          request.post
+            uri: "#{serverURL}/api/#{@user}/sshkeys"
+            form:
+              key: 'key'
+          , (err, res) ->
+            res.body.should.include 'ok'
+            done err
 
     describe 'Users', ->
       context "When I'm a staff member", ->
@@ -174,8 +184,8 @@ describe 'API', ->
                 username: @user
                 password: @password
             , (err, res) =>
-                @loginResponse = res
-                done(err)
+              @loginResponse = res
+              done(err)
         it 'allows me to create a new profile', (done) ->
           @newUser = "new-#{String(Math.random()*Math.pow(2,32))[0..6]}"
           @newPassword = "newpass"
@@ -195,6 +205,5 @@ describe 'API', ->
             form:
               password: @newPassword
           , (err, resp, body) ->
-             resp.should.have.status 200
-             done(err)
-
+            resp.should.have.status 200
+            done(err)

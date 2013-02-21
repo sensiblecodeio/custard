@@ -21,7 +21,7 @@ class Cu.Model.Tool extends Backbone.Model
   _generateBoxName: ->
     r = Math.random() * Math.pow(10,9)
     n = Nibbler.b32encode(String.fromCharCode(r>>24,(r>>16)&0xff,(r>>8)&0xff,r&0xff)).replace(/[=]/g,'').toLowerCase()
-    @set 'box', n
+    @set 'box', n, silent: true
 
 class Cu.Collection.Tools extends Backbone.Collection
   model: Cu.Model.Tool

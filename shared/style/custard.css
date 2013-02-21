@@ -344,6 +344,10 @@ a.tool p {
   line-height: 18px;
 }
 
+a.tool canvas {
+  vertical-align: -6px; /* assumes an ajax loading spinner 38px high */
+}
+
 #content p.loading {
     margin-top: 100px;
     padding-top: 50px;

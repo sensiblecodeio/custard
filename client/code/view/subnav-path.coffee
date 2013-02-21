@@ -15,6 +15,7 @@ class Cu.View.DataHubNav extends Backbone.View
     'click .new-dataset': 'showChooser'
     'focus .context-switch input': 'focusContextSearch'
     'keyup .context-switch input': 'keyupContextSearch'
+    'keyup #subnav-options .search-query': 'keyupPageSearch'
 
   render: ->
     if window.user.real.isStaff?
@@ -115,6 +116,22 @@ class Cu.View.DataHubNav extends Backbone.View
         $('.context-switch input').addClass 'loading'
     else if t == ''
       results.remove()
+
+  keyupPageSearch: (e) ->
+    $input = $(e.target)
+    if e.keyCode is 27
+      $('.dataset.tile').show()
+      $input.val('').blur()
+    else
+      t = $input.val()
+      if t != ''
+        $('.dataset.tile').each ->
+          if $(this).children('h3').text().toUpperCase().indexOf(t.toUpperCase()) >= 0
+            $(this).show()
+          else
+            $(this).hide()
+      else if t == ''
+        $('.dataset.tile').show()
 
 
 class Cu.View.EditableSubnav extends Backbone.View

@@ -14,17 +14,6 @@ html, body {
   height: 100%;
 }
 
-/* This is here to avoid double scrollbars when #chooser is shown */
-
-#app {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: auto;
-}
-
 /* A .container style is set in scraperwiki.css, which most pages will use.
    Some tools, however, might look better full screen. When this happens,
    the other .container elements (eg: header) should get 100% width too. */

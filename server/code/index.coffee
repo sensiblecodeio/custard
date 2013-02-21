@@ -15,6 +15,7 @@ mongoStore = require('connect-mongo')(express)
 flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
+uuid = require 'uuid'
 
 {User} = require 'model/user'
 Dataset = require('model/dataset')()
@@ -330,6 +331,7 @@ app.post '/api/:user/?', checkStaff, (req, resp) ->
     shortName: req.params.user
     displayName: req.body.displayName
     email: [req.body.email]
+    apikey: uuid.v4()
   if req.body.logoUrl?
     newUser.logoUrl = req.body.logoUrl
 

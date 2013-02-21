@@ -43,17 +43,6 @@ class Cu.Router.Main extends Backbone.Router
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 
-  datasetSettings: (box) ->
-    mod = Cu.Model.Dataset.findOrCreate box: box
-    mod.fetch
-      success: (model) =>
-        subnavView = new Cu.View.DatasetSettingsNav {model: model}
-        contentView = new Cu.View.AppContent {model: model}
-        @appView.showView contentView
-        @subnavView.showView subnavView
-      error: (x,y,z) ->
-        console.warn 'ERRROR', x, y, z
-
   dataset: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
@@ -68,6 +57,17 @@ class Cu.Router.Main extends Backbone.Router
             console.warn 'ERRROR', x, y, z
       error: (model, xhr, options) ->
         console.warn xhr
+
+  datasetSettings: (box) ->
+    mod = Cu.Model.Dataset.findOrCreate box: box
+    mod.fetch
+      success: (model) =>
+        subnavView = new Cu.View.DatasetSettingsNav {model: model}
+        contentView = new Cu.View.AppContent {model: model}
+        @appView.showView contentView
+        @subnavView.showView subnavView
+      error: (x,y,z) ->
+        console.warn 'ERRROR', x, y, z
 
   view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate

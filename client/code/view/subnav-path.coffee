@@ -11,7 +11,7 @@ class Cu.View.DataHubNav extends Backbone.View
     if window.user.real.isStaff?
       h1 = """<h1 class="btn-group context-switch">
           <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-            <img src="#{window.user.effective.avatarUrl}" width="32" height="32" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub<span class="caret"></span>
+            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub<span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li class="search"><input type="search" placeholder="Switch profile&hellip;"></li>
@@ -21,7 +21,7 @@ class Cu.View.DataHubNav extends Backbone.View
     else
       h1 = """<h1 class="btn-group">
           <a class="btn btn-link">
-            <img src="#{window.user.effective.avatarUrl}" width="32" height="32" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub
+            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub
           </a>
         </h1>"""
 
@@ -89,14 +89,14 @@ class Cu.View.DataHubNav extends Backbone.View
         for runnerup in runnersup
           li.after """<li class="context-search-result">
             <a href="/switch/#{runnerup.shortName}/" data-nonpushstate>
-              <img src="#{runnerup.avatarUrl or '/image/avatar.png'}" width="24" height="24" alt="#{runnerup.shortName}" />
+              <img src="#{runnerup.logoUrl or runnerup.avatarUrl or '/image/avatar.png'}" alt="#{runnerup.shortName}" />
               #{runnerup.displayName or runnerup.shortName}
             </a>
           </li>"""
         for tophit in tophits
           li.after """<li class="context-search-result">
             <a href="/switch/#{tophit.shortName}/" data-nonpushstate>
-              <img src="#{tophit.avatarUrl or '/image/avatar.png'}" width="24" height="24" alt="#{tophit.shortName}" />
+              <img src="#{tophit.logoUrl or tophit.avatarUrl or '/image/avatar.png'}" alt="#{tophit.shortName}" />
               #{tophit.displayName or tophit.shortName}
             </a>
           </li>"""
@@ -114,7 +114,7 @@ class Cu.View.DatasetNav extends Backbone.View
       <div class="btn-toolbar" id="subnav-path">
         <h1 class="btn-group">
           <a class="btn btn-link">
-            <img src="#{window.user.effective.avatarUrl}" width="32" height="32" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
+            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
           </a>
         </h1>
         <div class="btn-group">
@@ -132,7 +132,7 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
       <div class="btn-toolbar" id="subnav-path">
         <h1 class="btn-group">
           <a class="btn btn-link">
-            <img src="#{window.user.effective.avatarUrl}" width="32" height="32" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
+            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
           </a>
         </h1>
         <div class="btn-group">
@@ -156,7 +156,7 @@ class Cu.View.ViewNav extends Backbone.View
       <div class="btn-toolbar" id="subnav-path">
         <h1 class="btn-group">
           <a class="btn btn-link">
-            <img src="#{window.user.effective.avatarUrl}" width="32" height="32" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
+            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
           </a>
         </h1>
         <div class="btn-group">

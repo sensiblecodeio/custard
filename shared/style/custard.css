@@ -117,6 +117,7 @@ body.fullscreen .container {
   border-radius: 2px;
   -webkit-box-shadow: 0 0 1px #666;
   box-shadow: 0 0 1px #666;
+  height: 32px;
 }
 
 #subnav-path .slash {
@@ -149,6 +150,7 @@ body.fullscreen .container {
 
 .context-switch .context-search-result img {
   margin-right: 5px;
+  height: 24px;
 }
 
 #subnav-options .btn-group + .btn-group {

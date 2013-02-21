@@ -59,7 +59,7 @@ body.fullscreen .container {
 #subnav {
   margin-bottom: 0;
   margin-top: 20px;
-  text-align: center; /* we'll override this for large-screened devices later */
+  text-align: center; /* We'll override this for large-screened devices later */
 }
 
 #subnav-path {
@@ -79,15 +79,18 @@ body.fullscreen .container {
   padding: 0 4px;
 }
 
-#subnav-path > .context-switch > a {
+#subnav-path > h1 > a {
   position: relative;
   margin-left: -4px;
-  padding-right: 20px;
-  /* these bits help the button look good on narrow screens */
+  /* We'll override these next settings for large-screened devices later */
   width: 260px;
   text-overflow: ellipsis;
   overflow: hidden;
   text-align: left;
+}
+
+#subnav-path > .context-switch > a {
+  padding-right: 20px;
 }
 
 #subnav-path > .context-switch > a:hover,
@@ -107,13 +110,14 @@ body.fullscreen .container {
   margin-top: -1px;
 }
 
-#subnav-path > .context-switch > a img {
+#subnav-path > h1 > a img {
   vertical-align: top;
   margin-right: 9px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  -webkit-box-shadow: 0 1px 0 #fff;
-  box-shadow: 0 1px 0 #fff;
+  -webkit-box-shadow: 0 0 1px #666;
+  box-shadow: 0 0 1px #666;
+  height: 32px;
 }
 
 #subnav-path .slash {
@@ -122,6 +126,31 @@ body.fullscreen .container {
   display: inline-block;
   padding: 1px;
   vertical-align: middle;
+}
+
+.context-switch .dropdown-menu {
+  width: 100%;
+  left: -3px;
+}
+
+.context-switch .dropdown-menu .search {
+  text-align: center;
+  padding: 7px 0 10px 0
+}
+
+.context-switch .dropdown-menu .search input {
+  margin-bottom: 0;
+  width: 75%;
+}
+
+.context-switch .dropdown-menu > .context-search-result > a {
+  line-height: 24px;
+  height: 24px;
+}
+
+.context-switch .context-search-result img {
+  margin-right: 5px;
+  height: 24px;
 }
 
 #subnav-options .btn-group + .btn-group {
@@ -344,6 +373,10 @@ a.tool p {
   line-height: 18px;
 }
 
+a.tool canvas {
+  vertical-align: -6px; /* assumes an ajax loading spinner 38px high */
+}
+
 #content p.loading {
     margin-top: 100px;
     padding-top: 50px;
@@ -444,6 +477,14 @@ div.docs h3 {
     box-shadow: 0 1px 0 #fff;
   }
 
+  #header nav li.logout a {
+    color: #933;
+  }
+
+  #header nav li.logout a:hover {
+    color: #b00;
+  }
+
   div.docs nav.well {
     float: right;
     margin: 0 0 20px 20px;
@@ -452,6 +493,12 @@ div.docs h3 {
 }
 
 @media only screen and (min-width: 920px) {
+
+  #subnav-path > h1 > a {
+    width: auto;
+    text-overflow: none;
+    overflow: visible;
+  }
 
   div.docs {
     position: relative;

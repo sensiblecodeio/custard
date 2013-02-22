@@ -48,8 +48,8 @@ class User extends ModelBase
   # Sends a list of box sshkeys to cobalt for each box a user
   # can access, so cobalt can overwite the authorized_keys for a box
   @distributeUserKeys: (shortName, callback) ->
-    Box.findAllByUser shortName, (err, boxen) ->
-      async.forEach boxen, (box, boxCb) ->
+    Box.findAllByUser shortName, (err, boxes) ->
+      async.forEach boxes, (box, boxCb) ->
         # call cobalt with list of sshkeys of box
         # sshkeys <--> user <--> box
         Box.findUsersByName box.name, (err, users) ->
@@ -64,7 +64,9 @@ class User extends ModelBase
               form:
                 keys: JSON.stringify boxKeys
             , (err, res, body) ->
-              boxCb err
+              obj = JSON.parse body
+              return boxCb obj.error if obj.error?
+              return boxCb err
       , callback
 
   @findByShortName: (shortName, callback) ->

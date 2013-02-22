@@ -8,7 +8,11 @@ class Cu.Model.Tool extends Backbone.Model
       if status != 'success'
         callback ajaxObj, status
       else
-        @exec("cd; rm -r http && git clone #{@get 'gitUrl'} tool --depth 1 && ln -s tool/http http").complete callback
+        # Update ssh keys, quite hacky
+        # TODO: remove when we have moved the box creation endpoint
+        # into custard
+        @_update_sshkeys().complete (ajaxObj, status) =>
+          @exec("cd; rm -r http && git clone #{@get 'gitUrl'} tool --depth 1 && ln -s tool/http http").complete callback
 
   _create_box: ->
     @_generateBoxName()
@@ -22,6 +26,13 @@ class Cu.Model.Tool extends Backbone.Model
     r = Math.random() * Math.pow(10,9)
     n = Nibbler.b32encode(String.fromCharCode(r>>24,(r>>16)&0xff,(r>>8)&0xff,r&0xff)).replace(/[=]/g,'').toLowerCase()
     @set 'box', n, silent: true
+
+  _update_sshkeys: ->
+    $.ajax
+      type: 'POST'
+      url: "/api/#{window.user.effective.shortName}/sshkeys"
+      data:
+        key: null
 
 class Cu.Collection.Tools extends Backbone.Collection
   model: Cu.Model.Tool

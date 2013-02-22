@@ -346,12 +346,12 @@ app.post '/api/:user/?', checkStaff, (req, resp) ->
         return resp.json 201, userobj
 
 app.post '/api/:user/sshkeys/?', (req, resp) ->
-  User.findByShortName req.params.user, (err, user) ->
+  User.findByShortName req.user.effective.shortName, (err, user) ->
     user.sshKeys.push req.body.key
     user.save (err) ->
       User.distributeUserKeys user.shortName, (err) ->
-        console.log err
         if err?
+          console.warn "SSHKEY ERROR: #{err}"
           resp.send 500, error: err
         else
           resp.send 200, success: 'ok'

@@ -35,10 +35,22 @@ body.fullscreen .container {
 #header .container {
   margin-bottom: 0;
   position: relative;
+  background: transparent url(../image/header-highlight.png) 0 0 no-repeat;
 }
 
 #logo {
+  display: inline-block;
+  width: 180px;
+  height: 50px;
+  line-height: 50px;
   margin-left: 20px;
+  text-indent: -9000px;
+  outline: none;
+  background: transparent url(../image/header-logo.png) 0 11px no-repeat;
+}
+
+#logo:active {
+  background-position: 0 12px;
 }
 
 #header nav {

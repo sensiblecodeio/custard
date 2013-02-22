@@ -186,11 +186,11 @@ class Cu.View.EditableSubnav extends Backbone.View
 
   editableNameEscaped: (e) ->
     e.preventDefault()
-    @$el.find('.editable').show().next().hide()
+    @$el.find('.editable').show().next().val('').hide()
 
-  keypressOnEditableName: (event) ->
-    @editableNameBlurred() if event.keyCode is 13
-    @editableNameEscaped() if event.keyCode is 27
+  keypressOnEditableName: (e) ->
+    @editableNameBlurred(e) if e.keyCode is 13
+    @editableNameEscaped(e) if e.keyCode is 27
 
 
 class Cu.View.DatasetNav extends Cu.View.EditableSubnav
@@ -199,7 +199,7 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
   events:
     'click .editable': 'nameClicked'
     'blur #editable-input': 'editableNameBlurred'
-    'keypress #editable-input': 'keypressOnEditableName'
+    'keyup #editable-input': 'keypressOnEditableName'
 
   render: ->
     @$el.html("""
@@ -254,7 +254,7 @@ class Cu.View.ViewNav extends Cu.View.EditableSubnav
   events:
     'click .editable': 'nameClicked'
     'blur #editable-input': 'editableNameBlurred'
-    'keypress #editable-input': 'keypressOnEditableName'
+    'keyup #editable-input': 'keypressOnEditableName'
 
   render: ->
     @$el.html("""

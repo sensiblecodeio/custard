@@ -102,20 +102,24 @@ class Cu.View.DataHubNav extends Backbone.View
             tophits.push user
           else if m1 > 0 or m2 > 0
             runnersup.push user
-        for runnerup in runnersup
-          li.after """<li class="context-search-result">
-            <a href="/switch/#{runnerup.shortName}/" data-nonpushstate>
-              <img src="#{runnerup.logoUrl or runnerup.avatarUrl or '/image/avatar.png'}" alt="#{runnerup.shortName}" />
-              #{runnerup.displayName or runnerup.shortName}
-            </a>
-          </li>"""
-        for tophit in tophits
-          li.after """<li class="context-search-result">
-            <a href="/switch/#{tophit.shortName}/" data-nonpushstate>
-              <img src="#{tophit.logoUrl or tophit.avatarUrl or '/image/avatar.png'}" alt="#{tophit.shortName}" />
-              #{tophit.displayName or tophit.shortName}
-            </a>
-          </li>"""
+        if runnersup.length + tophits.length > 0
+          for runnerup in runnersup
+            li.after """<li class="context-search-result">
+              <a href="/switch/#{runnerup.shortName}/" data-nonpushstate>
+                <img src="#{runnerup.logoUrl or runnerup.avatarUrl or '/image/avatar.png'}" alt="#{runnerup.shortName}" />
+                #{runnerup.displayName or runnerup.shortName}
+              </a>
+            </li>"""
+          for tophit in tophits
+            li.after """<li class="context-search-result">
+              <a href="/switch/#{tophit.shortName}/" data-nonpushstate>
+                <img src="#{tophit.logoUrl or tophit.avatarUrl or '/image/avatar.png'}" alt="#{tophit.shortName}" />
+                #{tophit.displayName or tophit.shortName}
+              </a>
+            </li>"""
+        else
+          # No users match the search term!
+          li.after """<li class="context-search-result no-matches">No results for &ldquo;#{t}&rdquo;</li>"""
       else
         # Oops! window.users isn't ready yet. Show loading spinner.
         # (It'll be hidden by the ajax success call in @focusContextSearch())

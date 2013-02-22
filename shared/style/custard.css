@@ -177,6 +177,13 @@ body.fullscreen .container {
 .context-switch .context-search-result img {
   margin-right: 5px;
   height: 24px;
+  min-width: 24px;
+}
+
+.context-switch .no-matches {
+  text-align: center;
+  padding-bottom: 5px;
+  color: #999;
 }
 
 #subnav-options .btn-group + .btn-group {

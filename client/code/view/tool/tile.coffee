@@ -33,9 +33,15 @@ class Cu.View.ToolTile extends Backbone.View
     else if manifest.displayName.indexOf('Upload') == 0
       manifest.icon = '/image/tool-icon-spreadsheet-upload.png'
       manifest.color = '#029745'
+    else if manifest.displayName.indexOf('Download') == 0
+      manifest.icon = '/image/tool-icon-spreadsheet-upload.png'
+      manifest.color = '#029745'
     else if manifest.displayName.indexOf('Test') == 0
       manifest.icon = '/image/tool-icon-test.png'
       manifest.color = '#b0df18'
+    else if manifest.displayName.indexOf('table') > -1
+      manifest.icon = '/image/tool-icon-data-table.png'
+      manifest.color = '#f6b730'
     model.set 'manifest', manifest
 
   showLoading: ->

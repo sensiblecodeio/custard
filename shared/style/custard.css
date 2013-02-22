@@ -417,14 +417,40 @@ div.dataset-views a.tool .tool-icon-outer {
   border-box-shadow: none;
 }
 
-div.dataset-views {
+div.dataset-overview .about,
+div.dataset-overview .actions {
   float: left;
   width: 280px;
   margin: 20px 0 0 20px;
 }
 
-div.dataset-views h4 {
-  margin-top: 0;
+div.dataset-overview h4 {
+  margin: 0 0 15px 0;
+  font-weight: normal;
+  color: #999;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+div.dataset-overview a.tile {
+  margin: 0;
+}
+
+div.dataset-overview .dataset-views {
+  margin-bottom: 20px;
+}
+
+div.dataset-overview .actions .btn-large {
+  padding-top: 7px; /* compensate for really big <img> in button */
+  padding-bottom: 7px;
+  width: 230px; /* make it more substantial */
+}
+
+div.dataset-overview .actions .btn-large img {
+  vertical-align: -6px;
+  margin-right: 10px;
+  height: 24px;
+  width: 24px;
 }
 
 #content p.loading {
@@ -553,6 +579,12 @@ div.docs h3 {
     width: auto;
     text-overflow: none;
     overflow: visible;
+  }
+
+  /* This is a bit of a hack to make the dataset overview page easier to parse */
+  /* It breaks the 20+280+20+280… grid system, but it looks better */
+  div.dataset-overview .actions {
+    margin-left: 40px; /* vs the default 20px */
   }
 
   div.docs {

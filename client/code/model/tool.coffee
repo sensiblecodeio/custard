@@ -11,8 +11,8 @@ class Cu.Model.Tool extends Backbone.Model
         # Update ssh keys, quite hacky
         # TODO: remove when we have moved the box creation endpoint
         # into custard
-        @_update_sshkeys().complete (ajaxObj, status) =>
-          @exec("cd; rm -r http && git clone #{@get 'gitUrl'} tool --depth 1 && ln -s tool/http http").complete callback
+        @_update_sshkeys()
+        @exec("cd; rm -r http && git clone #{@get 'gitUrl'} tool --depth 1 && ln -s tool/http http").complete callback
 
   _create_box: ->
     @_generateBoxName()

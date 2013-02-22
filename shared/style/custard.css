@@ -14,17 +14,6 @@ html, body {
   height: 100%;
 }
 
-/* This is here to avoid double scrollbars when #chooser is shown */
-
-#app {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: auto;
-}
-
 /* A .container style is set in scraperwiki.css, which most pages will use.
    Some tools, however, might look better full screen. When this happens,
    the other .container elements (eg: header) should get 100% width too. */
@@ -62,6 +51,14 @@ body.fullscreen .container {
   text-align: center; /* We'll override this for large-screened devices later */
 }
 
+.subnav-wrapper > hr { /* used on dataset overview pages etc to visually separate header from content */
+  float: left;
+  clear: both;
+  width: 100%;
+  margin: 10px 0 0 0;
+  border-top-color: #eee; /* slightly lighter than normal bootstrap hr's */
+}
+
 #subnav-path {
   line-height: 32px;
 }
@@ -72,11 +69,39 @@ body.fullscreen .container {
   line-height: 32px;
 }
 
-#subnav-path > .btn-group > a {
+#subnav-path > .btn-group > .btn {
   color: #333;
   font-size: 24px;
   line-height: 32px;
   padding: 0 4px;
+}
+
+#subnav-path #editable-input {
+  color: #333;
+  font-size: 24px;
+  line-height: 32px;
+  padding: 0 4px;
+  margin: 0;
+  height: 32px;
+}
+
+#subnav-path .editable:hover:after,
+#subnav-path .editable.saved:after,
+#subnav-path .editable.error:after {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: transparent url("../vendor/image/glyphicons-halflings.png") 0 -72px no-repeat;
+    margin-left: 5px;
+}
+
+#subnav-path .editable.saved:after {
+    background-position: -288px 0;
+}
+
+#subnav-path .editable.error:after {
+  background-position: 0 -120px;
 }
 
 #subnav-path > h1 > a {
@@ -89,7 +114,7 @@ body.fullscreen .container {
   text-align: left;
 }
 
-#subnav-path > .context-switch > a {
+#subnav-path > .context-switch > .btn {
   padding-right: 20px;
 }
 
@@ -118,6 +143,7 @@ body.fullscreen .container {
   -webkit-box-shadow: 0 0 1px #666;
   box-shadow: 0 0 1px #666;
   height: 32px;
+  min-width: 32px;
 }
 
 #subnav-path .slash {
@@ -275,7 +301,7 @@ div.dataset-overview .tile .hide {
   text-shadow: 0 1px 3px #000;
 }
 
-#chooser a.close {
+#chooser .close {
   display: block;
   position: absolute;
   top: 0;
@@ -285,11 +311,10 @@ div.dataset-overview .tile .hide {
   line-height: 32px;
   color: white;
   opacity: 0.8;
-  float: none;
   text-shadow: 0 3px 6px #000;
 }
 
-#chooser a.close:hover {
+#chooser .close:hover {
   opacity: 1;
 }
 
@@ -359,12 +384,13 @@ a.tool .tool-icon-inner {
   text-shadow: 0 1px 2px rgba(0,0,0,0.3);
   text-align: center;
   font-weight: bold;
+  color: #fff;
 }
 
 a.tool h3 {
-  margin: 0 0 3px 0;
+  margin: 0 0 5px 0;
   font-size: 18px;
-  line-height: 24px;
+  line-height: 18px;
 }
 
 a.tool p {
@@ -375,6 +401,56 @@ a.tool p {
 
 a.tool canvas {
   vertical-align: -6px; /* assumes an ajax loading spinner 38px high */
+}
+
+div.dataset-views a.tool {
+  margin: 15px 0 15px 0;
+  text-shadow: none;
+  color: #333;
+  height: auto;
+  float: none;
+}
+
+div.dataset-views a.tool .tool-icon-outer {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  border-box-shadow: none;
+}
+
+div.dataset-overview .about,
+div.dataset-overview .actions {
+  float: left;
+  width: 280px;
+  margin: 20px 0 0 20px;
+}
+
+div.dataset-overview h4 {
+  margin: 0 0 15px 0;
+  font-weight: normal;
+  color: #999;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+div.dataset-overview a.tile {
+  margin: 0;
+}
+
+div.dataset-overview .dataset-views {
+  margin-bottom: 20px;
+}
+
+div.dataset-overview .actions .btn-large {
+  padding-top: 7px; /* compensate for really big <img> in button */
+  padding-bottom: 7px;
+  width: 230px; /* make it more substantial */
+}
+
+div.dataset-overview .actions .btn-large img {
+  vertical-align: -6px;
+  margin-right: 10px;
+  height: 24px;
+  width: 24px;
 }
 
 #content p.loading {
@@ -390,11 +466,11 @@ div.login-page,
 div.create-profile,
 div.set-password,
 div.fourohfour {
-  padding-left: 20px;
+  padding: 20px 0 0 20px;
 }
 
 div.docs {
-  padding: 0 20px;
+  padding: 20px 20px 0 20px;
   line-height: 24px; /* the default 21px is a bit tight for so much text */
 }
 
@@ -426,14 +502,19 @@ div.docs h3 {
     text-align: left;
   }
 
+  .subnav-wrapper {
+    margin: 0 20px; /* indent #subnav-path and #subnav-options like everything else */
+    min-height: 34px;
+  }
+
   #subnav-path {
     float: left;
-    margin: 0 0 0 20px;
+    margin: 0;
   }
 
   #subnav-options {
     float: right;
-    margin: 2px 20px 0 0; /* 2px margin-top + 30px line-height = 32px line-height of #subnav-path */
+    margin: 2px 0 0 0; /* 2px margin-top + 30px line-height = 32px line-height of #subnav-path */
   }
 
   #header nav {
@@ -500,6 +581,12 @@ div.docs h3 {
     overflow: visible;
   }
 
+  /* This is a bit of a hack to make the dataset overview page easier to parse */
+  /* It breaks the 20+280+20+280… grid system, but it looks better */
+  div.dataset-overview .actions {
+    margin-left: 40px; /* vs the default 20px */
+  }
+
   div.docs {
     position: relative;
     padding-right: 300px;
@@ -509,7 +596,7 @@ div.docs h3 {
     float: none;
     margin: 0;
     position: absolute;
-    top: 0;
+    top: 30px;
     right: 20px;
     width: 238px;
   }

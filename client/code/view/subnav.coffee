@@ -1,11 +1,26 @@
 class Cu.View.Subnav extends Backbone.View
+  className: 'subnav-wrapper'
+
+  render: ->
+    @$el.html("""
+      <div class="btn-toolbar" id="subnav-path">
+        <h1 class="btn-group">
+          <a class="btn btn-link" href="#{@options.url or window.location.href}">#{@options.text}</a>
+        </h1>
+      </div>
+      <hr>""")
+    @
+
 
 class Cu.View.DataHubNav extends Backbone.View
+  className: 'subnav-wrapper'
+
   events:
     'click .context-switch li': 'liClick'
     'click .new-dataset': 'showChooser'
     'focus .context-switch input': 'focusContextSearch'
     'keyup .context-switch input': 'keyupContextSearch'
+    'keyup #subnav-options .search-query': 'keyupPageSearch'
 
   render: ->
     if window.user.real.isStaff?
@@ -43,15 +58,16 @@ class Cu.View.DataHubNav extends Backbone.View
 
   showChooser: ->
     # :TODO: We shouldn't be fetching tools in here.
+    # :TODO: This is duplicated in view/dataset/overview.coffee (for creating Views)
     if window.tools.length == 0
       window.tools.fetch
         success: ->
-          t = new Cu.View.ToolList {collection: window.tools}
+          t = new Cu.View.ToolList {collection: window.tools, type: 'importers'}
           $('body').append t.render().el
         error: (x,y,z) ->
           console.warn 'ERRROR', x, y, z
     else
-      t = new Cu.View.ToolList {collection: window.tools}
+      t = new Cu.View.ToolList {collection: window.tools, type: 'importers'}
       $('body').append t.render().el
 
   focusContextSearch: ->
@@ -107,8 +123,84 @@ class Cu.View.DataHubNav extends Backbone.View
     else if t == ''
       results.remove()
 
+  keyupPageSearch: (e) ->
+    $input = $(e.target)
+    if e.keyCode is 27
+      $('.dataset.tile').show()
+      $input.val('').blur()
+    else
+      t = $input.val()
+      if t != ''
+        $('.dataset.tile').each ->
+          if $(this).children('h3').text().toUpperCase().indexOf(t.toUpperCase()) >= 0
+            $(this).show()
+          else
+            $(this).hide()
+      else if t == ''
+        $('.dataset.tile').show()
 
-class Cu.View.DatasetNav extends Backbone.View
+
+class Cu.View.EditableSubnav extends Backbone.View
+  className: 'subnav-wrapper'
+
+  initialize: ->
+    @model.on 'change', @setDocumentTitle, @
+    # set this so we can override it in Cu.View.ViewSubnav
+    # (where the model to save is in fact the parent dataset's model)
+    @modelToSave = @model
+
+  nameClicked: (e) ->
+    e.preventDefault()
+    $a = @$el.find('.editable')
+    $a.next()
+      .val(@model.get 'displayName')
+      .css('width', $a.width() + 30)
+      .show 0, ->
+        @focus()
+    $a.hide()
+
+  editableNameBlurred: ->
+    $label = @$el.find('.editable')
+    $input = $label.next()
+    @newName = $.trim($input.val())
+    @oldName = $label.text()
+    if @newName == '' or @newName == $label.text()
+      $label.show().next().hide()
+    else
+      $input.hide()
+      $label.text(@newName).show()
+      @model.set 'displayName', @newName
+      @modelToSave.save {},
+        success: =>
+          $label.addClass 'saved'
+          setTimeout ->
+            $label.removeClass 'saved'
+          , 1000
+        error: (e) =>
+          $label.text(@oldName).addClass 'error'
+          setTimeout ->
+            $label.removeClass 'error'
+          , 1000
+          @model.set 'displayName', @oldName
+          console.warn 'error saving new name', e
+
+  editableNameEscaped: (e) ->
+    e.preventDefault()
+    @$el.find('.editable').show().next().val('').hide()
+
+  keypressOnEditableName: (e) ->
+    @editableNameBlurred(e) if e.keyCode is 13
+    @editableNameEscaped(e) if e.keyCode is 27
+
+
+class Cu.View.DatasetNav extends Cu.View.EditableSubnav
+  className: 'subnav-wrapper'
+
+  events:
+    'click .editable': 'nameClicked'
+    'blur #editable-input': 'editableNameBlurred'
+    'keyup #editable-input': 'keypressOnEditableName'
+
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -120,13 +212,18 @@ class Cu.View.DatasetNav extends Backbone.View
         <div class="btn-group">
           <span class="slash">/</span>
         </div>
-        <div class="btn-group editable">
-          <a class="btn btn-link">[dataset.displayName]</a>
+        <div class="btn-group">
+          <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
+          <input type="text" id="editable-input" style="display: none"/>
         </div>
-      </div>""")
+      </div>
+      <hr>""")
     @
 
 class Cu.View.DatasetSettingsNav extends Backbone.View
+  # This view should be passed a dataset model!
+  className: 'subnav-wrapper'
+
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -139,18 +236,26 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
           <span class="slash">/</span>
         </div>
         <div class="btn-group">
-          <a class="btn btn-link">[dataset.displayName]</a>
+          <a class="btn btn-link" href="/dataset/#{@model.get 'box'}">#{@model.get 'displayName'}</a>
         </div>
         <div class="btn-group">
           <span class="slash">/</span>
         </div>
         <div class="btn-group">
-          <a class="btn btn-link">Settings</a>
+          <span class="btn btn-link">Settings</span>
         </div>
-      </div>""")
+      </div>
+      <hr>""")
     @
 
-class Cu.View.ViewNav extends Backbone.View
+class Cu.View.ViewNav extends Cu.View.EditableSubnav
+  className: 'subnav-wrapper'
+
+  events:
+    'click .editable': 'nameClicked'
+    'blur #editable-input': 'editableNameBlurred'
+    'keyup #editable-input': 'keypressOnEditableName'
+
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -163,13 +268,15 @@ class Cu.View.ViewNav extends Backbone.View
           <span class="slash">/</span>
         </div>
         <div class="btn-group">
-          <a class="btn btn-link">[dataset.displayName]</a>
+          <a class="btn btn-link" href="/dataset/#{@model.get('plugsInTo').get 'box'}">#{@model.get('plugsInTo').get 'displayName'}</a>
         </div>
         <div class="btn-group">
           <span class="slash">/</span>
         </div>
-        <div class="btn-group editable">
-          <a class="btn btn-link">[view.displayName]</a>
+        <div class="btn-group">
+          <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
+          <input type="text" id="editable-input" style="display: none"/>
         </div>
-      </div>""")
+      </div>
+      <hr>""")
     @

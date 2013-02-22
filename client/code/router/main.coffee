@@ -43,6 +43,18 @@ class Cu.Router.Main extends Backbone.Router
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 
+  dataset: (box) ->
+    mod = Cu.Model.Dataset.findOrCreate box: box
+    mod.fetch
+      success: (model, resp, options) =>
+        contentView = new Cu.View.DatasetOverview {model: model}
+        subnavView = new Cu.View.DatasetNav {model: model}
+        @appView.showView contentView
+        @subnavView.showView subnavView
+        window.tools.fetch()
+      error: (model, xhr, options) ->
+        console.warn xhr
+
   datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
@@ -54,21 +66,6 @@ class Cu.Router.Main extends Backbone.Router
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 
-  dataset: (box) ->
-    mod = Cu.Model.Dataset.findOrCreate box: box
-    mod.fetch
-      success: (model, resp, options) =>
-        window.tools.fetch
-          success: =>
-            contentView = new Cu.View.DatasetOverview { model: model, tools: window.tools }
-            subnavView = new Cu.View.DatasetNav {model: model}
-            @appView.showView contentView
-            @subnavView.showView subnavView
-          error: (x,y,z) ->
-            console.warn 'ERRROR', x, y, z
-      error: (model, xhr, options) ->
-        console.warn xhr
-
   view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate
       user: window.user.effective.shortName
@@ -76,6 +73,7 @@ class Cu.Router.Main extends Backbone.Router
 
     dataset.fetch
       success: (dataset, resp, options) =>
+        # :TODO: Why do we fetch tools here?? ~Z
         window.tools.fetch
           success: =>
             v = dataset.get('views').findById(viewID)

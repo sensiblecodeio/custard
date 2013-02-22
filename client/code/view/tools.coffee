@@ -8,8 +8,11 @@ class Cu.View.ToolList extends Backbone.View
   render: ->
     # :TODO: should this go in a template?
     @container = $('<div class="container">')
-    @container.append('<h2>Create a new dataset&hellip;</h2>')
-    @container.append('<a class="close">&times;</a>')
+    if @options.type == 'importers'
+      @container.append('<h2>Create a new dataset&hellip;</h2>')
+    else
+      @container.append('<h2>What would you like to do?</h2>')
+    @container.append('<span class="close">&times;</span>')
     @addTools()
     @$el.hide().append(@container).fadeIn(100)
 
@@ -20,10 +23,16 @@ class Cu.View.ToolList extends Backbone.View
     @
 
   addTools: ->
-    @collection.importers().each @addTool
+    if @options.type == 'importers'
+      @collection.importers().each @addTool
+    else
+      @collection.nonimporters().each @addTool
 
   addTool: (tool) =>
-    view = new Cu.View.AppTile model: tool
+    if @options.type == 'importers'
+      view = new Cu.View.AppTile model: tool
+    else
+      view = new Cu.View.PluginTile { model: tool, dataset: @options.dataset }
     @container.append view.render().el
 
   closeChooser: ->

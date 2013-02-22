@@ -64,7 +64,9 @@ class User extends ModelBase
               form:
                 keys: JSON.stringify boxKeys
             , (err, res, body) ->
-              boxCb err
+              obj = JSON.parse body
+              return boxCb obj.error if obj.error?
+              return boxCb err
       , callback
 
   @findByShortName: (shortName, callback) ->

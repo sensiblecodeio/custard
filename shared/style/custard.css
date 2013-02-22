@@ -223,6 +223,11 @@ a.tile {
   text-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
+a.view.tile {
+  height: auto;
+  float: none;
+}
+
 a.tile:hover {
   text-decoration: none;
 }
@@ -256,6 +261,11 @@ a.tile h3 {
   line-height: 21px;
 }
 
+a.view.tile h3 {
+  margin: 0;
+  padding: 10px;
+}
+
 a.tile .hide {
   position: absolute;
   top: -7px;
@@ -272,15 +282,15 @@ a.tile .hide {
   border: 2px solid #fff;
 }
 
-.tile:hover .hide {
+a.tile:hover .hide {
   display: block;
 }
 
-.tile .hide:hover {
+a.tile .hide:hover {
   background-color: #e11b2c;
 }
 
-div.dataset-overview .tile .hide {
+div.dataset-overview .dataset .hide {
   display: none; /* don't want to see the hide button on dataset overview page */
 }
 
@@ -458,6 +468,10 @@ div.dataset-overview h4 {
 
 div.dataset-overview a.tile {
   margin: 0;
+}
+
+div.dataset-overview a.view.tile {
+  margin: 0 0 20px 0; /* this is a mess - can it be combined with styles further up?? */
 }
 
 div.dataset-overview .dataset-views {

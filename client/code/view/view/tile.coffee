@@ -1,5 +1,5 @@
 class Cu.View.ViewTile extends Backbone.View
-  className: 'view'
+  className: 'view tile'
   tagName: 'a'
   attributes: ->
     href: "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get 'box'}"

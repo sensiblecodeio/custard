@@ -23,7 +23,6 @@ class Cu.View.ToolTile extends Backbone.View
 
   # :TODO: Horrible kludge to avoid tool manifest changes right now (we've done worse)
   monkeypatchIconManifest: (model) ->
-    console.log 'model', model
     manifest = model.get 'manifest'
     if manifest.displayName.indexOf('Code') == 0
       manifest.icon = '/image/tool-icon-code.png'

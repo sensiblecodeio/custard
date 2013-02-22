@@ -106,6 +106,8 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
         dataset.installPlugin @model.get('name'), (err, view) =>
           console.warn 'Error', err if err?
           window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
+          $('#chooser').fadeOut 200, ->
+            $(this).remove()
       error: (model, xhr, options) ->
         @active = false
         @$el.removeClass 'loading'

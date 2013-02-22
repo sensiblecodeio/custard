@@ -1,9 +1,9 @@
 /*  ScraperWiki styles are built for small devices first.
     Then, as the screen gets bigger, base styles are overridden.
-    
-    We follow a roughly column-based layout, where columns are 280px wide, 
+
+    We follow a roughly column-based layout, where columns are 280px wide,
     with a 20px gutter. Our breakpoints are therefore 620px, 920px and 1120px.
-    
+
     Floating columns to the left means they'll break above and below each other
     on narrow screens. The responsive .container class will make sure they stay
     centred on the user's screen. */
@@ -20,6 +20,11 @@ html, body {
 
 body.fullscreen .container {
   width: 100%;
+}
+
+#fullscreen iframe {
+  width: 100%;
+  height: 100%;
 }
 
 #header {
@@ -277,7 +282,7 @@ a.tile .hide {
 
 div.dataset-overview .tile .hide {
   display: none; /* don't want to see the hide button on dataset overview page */
-} 
+}
 
 .tile ul {
   position: absolute;
@@ -526,6 +531,18 @@ div.docs h3 {
     min-height: 34px;
   }
 
+  .fullscreen .subnav-wrapper {
+    margin: 0;
+  }
+
+  .fullscreen #subnav-path {
+    margin-left: 20px;
+  }
+
+  .fullscreen #subnav-options {
+    margin-right: 20px;
+  }
+
   #subnav-path {
     float: left;
     margin: 0;
@@ -583,6 +600,14 @@ div.docs h3 {
 
   #header nav li.logout a:hover {
     color: #b00;
+  }
+
+  #fullscreen {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   div.docs nav.well {

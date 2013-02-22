@@ -3,6 +3,7 @@ class Cu.View.ToolContent extends Backbone.View
   boxUrl: window.boxServer
 
   initialize: ->
+    $('body').addClass('fullscreen')
     @settings (settings) =>
       frag = encodeURIComponent JSON.stringify(settings)
       @setupEasyXdm "#{@boxUrl}/#{@model.get 'box'}/#{settings.source.publishToken}/container.html##{frag}"
@@ -27,6 +28,10 @@ class Cu.View.ToolContent extends Backbone.View
             success: (model, resp, options) ->
               model.set 'displayName', name
               model.save()
+
+  close: ->
+    $('body').removeClass('fullscreen')
+    super()
 
 class Cu.View.AppContent extends Cu.View.ToolContent
   settings: (callback) ->

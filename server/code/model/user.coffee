@@ -64,7 +64,10 @@ class User extends ModelBase
               form:
                 keys: JSON.stringify boxKeys
             , (err, res, body) ->
-              obj = JSON.parse body
+              try
+                obj = JSON.parse body
+              catch e
+                return boxCb e
               return boxCb obj.error if obj.error?
               return boxCb err
       , callback

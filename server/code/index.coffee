@@ -222,31 +222,35 @@ app.get '/api/tools/?', (req, resp) ->
 
 app.post '/api/tools/?', (req, resp) ->
   body = req.body
-  tool = new Tool
-    name: body.name
-    type: body.type
-    gitUrl: body.gitUrl
+  Tool.findOneByName body.name, (err, tool) ->
+    isNew = not tool?
+    if tool is null
+      tool = new Tool
+        name: body.name
+        type: body.type
+        gitUrl: body.gitUrl
 
-  tool.gitClone dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
-    console.log err, stdout, stderr
-    if err?
-      console.warn err
-      return resp.send 500, error: "Error cloning your tool's Git repo"
-    tool.loadManifest (err) ->
+    tool.gitCloneOrPull dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
+      console.log err, stdout, stderr
       if err?
         console.warn err
-        tool.deleteRepo ->
-          return resp.send 500, error: "Error trying to load your tool's manifest"
-      else
-        tool.save (err) ->
-          Tool.findOneById tool.id, (err, tool) ->
+        return resp.send 500, error: "Error cloning/updating your tool's Git repo"
+      tool.loadManifest (err) ->
+        if err?
+          console.warn err
+          tool.deleteRepo ->
+            return resp.send 500, error: "Error trying to load your tool's manifest"
+        else
+          tool.save (err) ->
             console.warn err if err?
-            if err?
-              console.warn err
-              return resp.send 500, error: 'Error trying to find datasets'
-            else
-              return resp.send 201, tool
-
+            Tool.findOneById tool._id, (err, tool) ->
+              console.warn err if err?
+              if err?
+                console.warn err
+                return resp.send 500, error: 'Error trying to find datasets'
+              else
+                code = if isNew then 201 else 200
+                return resp.send code, tool
 
 app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->

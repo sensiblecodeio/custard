@@ -37,12 +37,10 @@ describe 'API', ->
 
     describe 'Tools', ->
       context 'POST /api/tools', ->
+        before ->
+          @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
         context 'when I create a tool', ->
-          response = null
-          dataset = null
-
           before (done) ->
-            @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
             request.post
               uri: "#{serverURL}/api/tools"
               form:
@@ -50,16 +48,39 @@ describe 'API', ->
                 type: 'view'
                 gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
             , (err, res) =>
-              response = res
+              @response = res
               @tool = JSON.parse res.body
               done()
 
           it 'creates a new tool', ->
-            response.should.have.status 201
+            @response.should.have.status 201
 
           it 'returns the newly created tool', ->
             should.exist @tool.name
             @tool.name.should.equal @toolName
+
+        context 'when I update a tool', ->
+          before (done) ->
+            request.post
+              uri: "#{serverURL}/api/tools"
+              form:
+                name: @toolName
+                type: 'view'
+                gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
+            , (err, res) =>
+              @response = res
+              @tool = JSON.parse res.body
+              done()
+
+          it 'updates the tool', ->
+            @response.should.have.status 200
+
+          # We should check whether the manifest has been updated,
+          # but it's hard.
+          xit 'returns the updated tool', ->
+            @tool.manifest.displayName.should.equal 'View Data 2'
+
+          it "doesn't allow me to update the type"
 
       context 'GET /api/tools', ->
         before (done) ->

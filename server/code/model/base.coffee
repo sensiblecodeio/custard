@@ -24,6 +24,7 @@ class ModelBase
     if not @dbInstance?
       @dbInstance = new @constructor.dbClass(@)
       @id = @dbInstance._id
+      @_id = @dbInstance._id #TODO: we should use ONE of these
     else
       for k of @dbInstance
         @dbInstance[k] = @[k] if @hasOwnProperty k

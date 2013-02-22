@@ -22,12 +22,17 @@ zDbTool = mongoose.model 'Tool', toolSchema
 class Tool extends ModelBase
   @dbClass: zDbTool
 
-  gitClone: (options, callback) ->
+  gitCloneOrPull: (options, callback) ->
     @directory = "#{options.dir}/#{@name}"
-    child_process.exec "git clone #{@gitUrl} #{@directory}", callback
+    fs.exists @directory, (exists) =>
+      if not exists
+        cmd = "git clone #{@gitUrl} #{@directory}"
+      else
+        cmd = "cd #{@directory}; git pull"
+      child_process.exec cmd, callback
 
   loadManifest: (callback) ->
-    exists @directory, (isok) =>
+    fs.exists @directory, (isok) =>
       if not isok
         callback 'not cloned'
         return
@@ -45,7 +50,18 @@ class Tool extends ModelBase
     rimraf @directory, callback
 
   @findOneById: (id, callback) ->
-    @dbClass.findOne {_id: id}, callback
+    @dbClass.findOne {_id: id}, (err, doc) =>
+      if doc is null
+        callback err, null
+      else
+        callback null, @makeModelFromMongo doc
+
+  @findOneByName: (name, callback) ->
+    @dbClass.findOne {name: name}, (err, doc) =>
+      if doc is null
+        callback err, null
+      else
+        callback null, @makeModelFromMongo doc
 
 module.exports = (dbObj) ->
   Tool.dbClass = zDbTool = dbObj if dbObj?

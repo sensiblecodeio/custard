@@ -28,7 +28,7 @@ class Cu.View.DatasetOverview extends Backbone.View
 
   showChooser: ->
     # :TODO: We shouldn't be fetching tools in here.
-    # :TODO: This is duplicated in view/subnav-path.coffee (for creating Datasets)
+    # :TODO: This is duplicated in view/subnav.coffee (for creating Datasets)
     if window.tools.length == 0
       window.tools.fetch
         success: ->

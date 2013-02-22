@@ -29,7 +29,10 @@ class Cu.View.ToolList extends Backbone.View
       @collection.nonimporters().each @addTool
 
   addTool: (tool) =>
-    view = new Cu.View.AppTile model: tool
+    if @options.type == 'importers'
+      view = new Cu.View.AppTile model: tool
+    else
+      view = new Cu.View.PluginTile { model: tool, dataset: @options.dataset }
     @container.append view.render().el
 
   closeChooser: ->

@@ -12,17 +12,17 @@ class Cu.View.DatasetViews extends Backbone.View
         window.tools.fetch
           success: =>
             window.tools.basics().each (tool) =>
-              view = new Cu.View.AppTile model: tool
+              view = new Cu.View.PluginTile { model: tool, dataset: @model }
               @$el.find('h4').after view.render().el
           error: =>
             @$el.find('h4').after """<p class="alert alert-error">Sorry! The Tool Shop is currently unavailable.</p>"""
       else
         window.tools.basics().each (tool) =>
-          view = new Cu.View.AppTile model: tool
+          view = new Cu.View.PluginTile model: { model: tool, dataset: @model }
           @$el.append view.render().el
     @$el.append """<span class="btn btn-large new-view">See more tools&hellip;</span>"""
     @
 
   addView: (view) =>
-    v = new Cu.View.ViewTile model: view
+    v = new Cu.View.PluginTile { model: view, dataset: @model }
     @$el.append v.render().el

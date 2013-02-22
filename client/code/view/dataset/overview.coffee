@@ -19,10 +19,10 @@ class Cu.View.DatasetOverview extends Backbone.View
     if window.tools.length == 0
       window.tools.fetch
         success: ->
-          t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters'}
+          t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters', dataset: @model}
           $('body').append t.render().el
         error: (x,y,z) ->
           console.warn 'ERRROR', x, y, z
     else
-      t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters'}
+      t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters', dataset: @model}
       $('body').append t.render().el

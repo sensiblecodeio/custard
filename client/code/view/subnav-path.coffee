@@ -1,15 +1,20 @@
 class Cu.View.Subnav extends Backbone.View
+  className: 'subnav-wrapper'
+
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
         <h1 class="btn-group">
           <a class="btn btn-link" href="#{@options.url or window.location.href}">#{@options.text}</a>
         </h1>
-      </div>""")
+      </div>
+      <hr>""")
     @
 
 
 class Cu.View.DataHubNav extends Backbone.View
+  className: 'subnav-wrapper'
+
   events:
     'click .context-switch li': 'liClick'
     'click .new-dataset': 'showChooser'
@@ -136,6 +141,8 @@ class Cu.View.DataHubNav extends Backbone.View
 
 
 class Cu.View.EditableSubnav extends Backbone.View
+  className: 'subnav-wrapper'
+
   initialize: ->
     @model.on 'change', @setDocumentTitle, @
     # set this so we can override it in Cu.View.ViewSubnav
@@ -187,7 +194,8 @@ class Cu.View.EditableSubnav extends Backbone.View
 
 
 class Cu.View.DatasetNav extends Cu.View.EditableSubnav
-  #TODO: create BaseView to extend events, for the DRY
+  className: 'subnav-wrapper'
+
   events:
     'click .editable': 'nameClicked'
     'blur #editable-input': 'editableNameBlurred'
@@ -208,11 +216,14 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
           <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
           <input type="text" id="editable-input" style="display: none"/>
         </div>
-      </div>""")
+      </div>
+      <hr>""")
     @
 
 class Cu.View.DatasetSettingsNav extends Backbone.View
   # This view should be passed a dataset model!
+  className: 'subnav-wrapper'
+
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -233,11 +244,13 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
         <div class="btn-group">
           <span class="btn btn-link">Settings</span>
         </div>
-      </div>""")
+      </div>
+      <hr>""")
     @
 
 class Cu.View.ViewNav extends Cu.View.EditableSubnav
-  #TODO: create BaseView to extend events, for the DRY
+  className: 'subnav-wrapper'
+
   events:
     'click .editable': 'nameClicked'
     'blur #editable-input': 'editableNameBlurred'
@@ -264,5 +277,6 @@ class Cu.View.ViewNav extends Cu.View.EditableSubnav
           <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
           <input type="text" id="editable-input" style="display: none"/>
         </div>
-      </div>""")
+      </div>
+      <hr>""")
     @

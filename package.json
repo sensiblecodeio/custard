@@ -40,7 +40,9 @@
     "mkdirp": "~0.3.4",
     "backbone-relational": "~0.7.0",
     "jsdom": "~0.3.4",
-    "wd": "0.0.30"
+    "wd": "0.0.30",
+    "database-cleaner": "~0.7.0",
+    "mongodb": "~1.2.12"
   },
   "engines": {
     "node": "~0.8.x",

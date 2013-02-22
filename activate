@@ -28,6 +28,9 @@ deactivate () {
 }
 
 mocha () {
+    # Clean DB out and load fixtures
+    coffee cleaner.coffee
+    mongofixtures cu-test fixtures.js
     # Consider pushing to external program.
     eval last=\${$#}
 

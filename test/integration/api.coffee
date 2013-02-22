@@ -176,7 +176,7 @@ describe 'API', ->
         it 'returns a list of datasets', (done) ->
           request.get "#{serverURL}/api/#{@user}/datasets", (err, res) ->
             datasets = JSON.parse res.body
-            datasets.length.should.be.above 1
+            datasets.length.should.be.above 0
             done err
 
       context 'POST: /api/:user/sshkeys', ->

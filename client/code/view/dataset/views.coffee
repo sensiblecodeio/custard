@@ -18,7 +18,7 @@ class Cu.View.DatasetViews extends Backbone.View
             @$el.find('h4').after """<p class="alert alert-error">Sorry! The Tool Shop is currently unavailable.</p>"""
       else
         window.tools.basics().each (tool) =>
-          view = new Cu.View.PluginTile model: { model: tool, dataset: @model }
+          view = new Cu.View.PluginTile { model: tool, dataset: @model }
           @$el.append view.render().el
     @$el.append """<span class="btn btn-large new-view">See more tools&hellip;</span>"""
     @

@@ -154,7 +154,7 @@ class Cu.View.EditableSubnav extends Backbone.View
     $a = @$el.find('.editable')
     $a.next()
       .val(@model.get 'displayName')
-      .css('width', $a.width() + 20)
+      .css('width', $a.width() + 30)
       .show 0, ->
         @focus()
     $a.hide()

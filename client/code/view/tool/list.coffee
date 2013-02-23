@@ -6,15 +6,14 @@ class Cu.View.ToolList extends Backbone.View
     'click': 'closeChooser'
 
   render: ->
-    # :TODO: should this go in a template?
+    @$el.hide().append('<span class="close">&times;</span>')
+
+    headerView = new Cu.View.ToolListHeader {type: @options.type}
+    @$el.append headerView.render().el
+
     @container = $('<div class="container">')
-    if @options.type == 'importers'
-      @container.append('<h2>Create a new dataset&hellip;</h2>')
-    else
-      @container.append('<h2>What would you like to do?</h2>')
-    @container.append('<span class="close">&times;</span>')
     @addTools()
-    @$el.hide().append(@container).fadeIn(100)
+    @$el.append(@container).fadeIn(100)
 
     # :TODO: this is probably the wrong place to be binding an event
     $(window).on 'keyup', (e) =>

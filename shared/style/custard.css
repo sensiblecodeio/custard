@@ -328,11 +328,35 @@ div.dataset-overview .dataset .hide {
   overflow: auto;
 }
 
-#chooser h2 {
-  margin: 70px 20px 10px 20px;
+#chooser .header {
+  margin-top: 67px;
+  position: relative;
+}
+
+#chooser .header h2 {
+  float: left;
+  margin: 0 0 0 20px;
   color: #fff;
   font-size: 24px;
   text-shadow: 0 1px 3px #000;
+}
+
+#chooser .header .btn-toolbar {
+  float: right;
+  margin: 5px 20px 0 0;
+}
+
+#chooser .header .search-query {
+  border-color: #4e4e4e;
+  background-color: #222;
+  border-width: 2px;
+  box-shadow: none;
+  color: white;
+}
+
+#chooser .header .search-query:focus {
+  border-color: #6c6c6c;
+  background-color: #2e2e2e;
 }
 
 #chooser .close {

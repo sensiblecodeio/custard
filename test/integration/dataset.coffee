@@ -30,16 +30,12 @@ describe 'Dataset', ->
       result = browser.location.href
       result.should.match /\/dataset\/(\w+)/
 
-    it 'shows the tools I can use on this dataset', ->
-      tools = browser.queryAll '.dataset-tools .tool'
-      tools.length.should.be.above 0
-
-    xit 'shows the "Code your own View" tool', ->
-      tools = browser.queryAll '.dataset-tools .tool'
-      $(tools).text().toLowerCase().should.include 'code your own view'
+    it 'shows two tools I can use on this dataset', ->
+      tools = browser.queryAll '.dataset-views .tool'
+      tools.length.should.equal 2
 
     it 'has not shown the input box', ->
-      @input = browser.query '#header h2 input'
+      @input = browser.query '#subnav-path input'
       $(@input).is(':visible').should.be.false
 
     context 'when I click the title', ->
@@ -56,7 +52,7 @@ describe 'Dataset', ->
         before (done) ->
           browser.fill '#subnav-path input', randomname, ->
             browser.evaluate """
-              var e = jQuery.Event("keypress")
+              var e = jQuery.Event("keyup")
               e.which = 13
               e.keyCode = 13
               $('#subnav-path input').trigger(e)

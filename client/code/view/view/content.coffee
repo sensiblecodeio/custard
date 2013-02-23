@@ -1,4 +1,4 @@
-class Cu.View.ToolContent extends Backbone.View
+class Cu.View.ViewContent extends Backbone.View
   id: 'fullscreen'
   boxUrl: window.boxServer
 
@@ -33,7 +33,7 @@ class Cu.View.ToolContent extends Backbone.View
     $('body').removeClass('fullscreen')
     super()
 
-class Cu.View.AppContent extends Cu.View.ToolContent
+class Cu.View.AppContent extends Cu.View.ViewContent
   settings: (callback) ->
     @model.publishToken (publishToken) =>
       callback
@@ -43,7 +43,7 @@ class Cu.View.AppContent extends Cu.View.ToolContent
           publishToken: publishToken
           box: @model.get 'box'
 
-class Cu.View.PluginContent extends Cu.View.ToolContent
+class Cu.View.PluginContent extends Cu.View.ViewContent
   settings: (callback) ->
     @model.publishToken (viewToken) =>
       dataset = @model.get 'plugsInTo'

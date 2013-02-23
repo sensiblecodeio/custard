@@ -294,26 +294,47 @@ div.dataset-overview .dataset .hide {
   display: none; /* don't want to see the hide button on dataset overview page */
 }
 
-.tile ul {
+.tile ul li {
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: 0;
-  margin: 0;
-  display: table;
-  width: 100%;
-}
-
-.tile li {
-  display: table-cell;
-  text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.5);
-  line-height: 40px;
-  background-color: rgba(0,0,0,0.1);
+  right: 0;
+  display: block;
+  font-size: 14px;
+  line-height: 34px;
   color: rgba(255,255,255,0.8);
+  border-top: 1px solid rgba(255,255,255,0.5);
+  background-color: rgba(0,0,0,0.1);
+  cursor: help;
+  -webkit-transition: color linear 0.1s;
+     -moz-transition: color linear 0.1s;
+       -o-transition: color linear 0.1s;
+          transition: color linear 0.1s;
 }
 
-.tile li + li {
+.tile:hover ul li {
+  color: #fff;
+}
+
+.tile li.status {
+  padding: 0 45px 0 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tile li.error {
+  background-color: #e11b2c;
+  color: #fff;
+}
+
+.tile li.views {
+  left: auto;
+  right: 0;
+  width: 35px;
+  font-weight: bold;
+  text-align: center;
+  border-top: none;
   border-left: 1px solid rgba(255,255,255,0.5);
 }
 

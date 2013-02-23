@@ -1,16 +1,16 @@
 <h3><%= @dataset.displayName %></h3>
 <ul>
-  <li class="views"><%= @views.length %> view<% if @views.length != 1: %>s<% end %></li>
   <% if @dataset.status?.type is 'error': %>
-  <li class="status error" title="Error: <%= @dataset.status.message %> (<%= @statusUpdatedHuman %>)">Error</li>
+  <li class="status error" title="<%= @dataset.status.message %> (<%= @statusUpdatedHuman %>)"><i class="icon-exclamation-sign icon-white"></i> <%= @dataset.status.message %></li>
   <% else if @dataset.status?.type is 'ok': %>
     <% if @dataset.status?.message: %>
-    <li class="status ok" title="OK: <%= @dataset.status.message %> (<%= @statusUpdatedHuman %>)">OK</li>
+    <li class="status ok" title="<%= @dataset.status.message %> (<%= @statusUpdatedHuman %>)"><i class="icon-ok icon-white"></i> <%= @dataset.status.message %></li>
     <% else: %>
-    <li class="status ok" title="Refreshed <%= @statusUpdatedHuman %>">OK</li>
+    <li class="status ok" title="Refreshed <%= @statusUpdatedHuman %>"><i class="icon-ok icon-white"></i> Refreshed <%= @statusUpdatedHuman %></li>
     <% end %>
   <% else: %>
   <li class="status unknown">Unknown status</li>
   <% end %>
+  <li class="views" title="<%= @views.length %> view<% if @views.length != 1: %>s<% end %>"><%= @views.length %></li>
 </ul>
 <span class="hide" title="Hide this dataset">Hide</span>

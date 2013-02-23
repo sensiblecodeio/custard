@@ -32,6 +32,12 @@ describe 'Home page (logged in)', ->
         datasets.length.should.be.above 2
         done()
 
+  it 'each dataset has a visible status', (done) ->
+    browser.elementsByCss '.dataset .status', (err, elements) ->
+      should.exist elements
+      elements.length.should.be.above 2
+      done()
+
   context 'when I click the "new dataset" button', ->
     before (done) ->
       wd40.click '.new-dataset', done

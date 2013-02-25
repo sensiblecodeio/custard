@@ -70,7 +70,7 @@ This will show you how to SSH in.</p>
 
 <h3 id="datasets-endpoints-sql">SQL data endpoint</h3>
 
-<p>If an SQLite file is named in the <code>database</code> key of <code>~/box.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sqlite?q=select+*+from+sqlite_master</code>.</p>
+<p>If an SQLite file is named in the <code>database</code> key of <code>~/box.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql?q=select+*+from+sqlite_master</code>.</p>
 
 <p>The SQL endpoint accepts only <code>HTTP GET</code> requests with the following parameters:</p>
 
@@ -93,17 +93,18 @@ This will show you how to SSH in.</p>
 
 <p>The SQL endpoint returns a JSON list of objects; one object for each row in the result set.</p>
 
-<p>Example usage, with jQuery:</p>
+<p>You can also see metadata about your database by making a <code>HTTP GET</code> request to <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql/meta</code>. The meta endpoint returns a JSON object like this:</p>
 
-<pre class="prettyprint linenums">$.ajax({
-  url: 'https://box.scraperwiki.com/example/t5odv7of5l/sqlite',
-  dataType: 'json',
-  data: {
-    'q': 'select * from sqlite_master'
+<pre class="prettyprint">{
+  "databaseType": "sqlite3", 
+  "table": {
+    "deals": {
+      "columnNames": [ "deal_id", "ref_no", "deal_name", "status", "created", "updated", "price" ], 
+      "type": "table"
+    }
   }
-}).done(function(results){
-  console.log(results)
-})</pre>
+}
+</pre>
 
 <h3 id="datasets-endpoints-exec">Exec endpoint</h3>
 

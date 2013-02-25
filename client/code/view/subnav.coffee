@@ -160,6 +160,7 @@ class Cu.View.EditableSubnav extends Backbone.View
 
   initialize: ->
     @model.on 'change', @setDocumentTitle, @
+    @model.on 'change', @render, this
     # set this so we can override it in Cu.View.ViewSubnav
     # (where the model to save is in fact the parent dataset's model)
     @modelToSave = @model
@@ -216,6 +217,9 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
     'blur #editable-input': 'editableNameBlurred'
     'keyup #editable-input': 'keypressOnEditableName'
 
+  initialize: ->
+    @model.on 'change', @render, this
+
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -238,6 +242,9 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
 class Cu.View.DatasetSettingsNav extends Backbone.View
   # This view should be passed a dataset model!
   className: 'subnav-wrapper'
+
+  initialize: ->
+    @model.on 'change', @render, this
 
   render: ->
     @$el.html("""
@@ -265,6 +272,10 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
 
 class Cu.View.ViewNav extends Cu.View.EditableSubnav
   className: 'subnav-wrapper'
+
+  initialize: ->
+    @model.on 'change', @setDocumentTitle, @
+    @model.on 'change', @render, this
 
   events:
     'click .editable': 'nameClicked'

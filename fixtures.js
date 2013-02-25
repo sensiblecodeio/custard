@@ -45,6 +45,7 @@ exports.tokens = [
 
 exports.tools = [
 { name: "newdataset", type: "importer", gitUrl: "https://github.com/scraperwiki/newdataset-tool.git", manifest: { description: "Create a new, empty dataset", gitUrl: "https://github.com/scraperwiki/newdataset-tool.git", displayName: "Code a dataset!" } },
+{ name: "test-app", type: "importer", gitUrl: "https://github.com/scraperwiki/test-app-tool.git", manifest: { description: "Test app", gitUrl: "https://github.com/scraperwiki/test-app-tool.git", displayName: "Test app" } },
 { name: "spreadsheet-download", type: "view", gitUrl: "https://github.com/scraperwiki/spreadsheet-download-tool", manifest: { description: "Download your dataset as an Excel file", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git", displayName: "Download as spreadsheet" } },
 { name: "newview", type: "view", gitUrl: "git://github.com/scraperwiki/newview-tool.git", manifest: { description: "Visualise or export your dataset however you'd like. A blank slate. Get creative!", gitUrl: "git://github.com/scraperwiki/newview-tool.git", displayName: "Code your own view!" } },
 { name: "view-source", type: "view", gitUrl: "git://github.com/scraperwiki/view-source-tool.git", manifest: { description: "Find out how to see the code that powers your dataset", gitUrl: "https://github.com/scraperwiki/view-source-tool.git", displayName: "View source" } },
@@ -55,7 +56,8 @@ exports.tools = [
 ]
 
 exports.datasets = [
-{ "box" : "3006375730", "displayName" : "Cheese", "user" : "ickletest", "views" : [ ] }
+{ "box" : "3006375730", "displayName" : "Cheese", "user" : "ickletest", "views" : [ ] },
+{ "box" : "3006375731", "displayName" : "Apricot", "user" : "ehg", "views" : [ ] }
 ]
 //
 //exports.boxes = [

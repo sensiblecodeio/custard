@@ -11,6 +11,17 @@ class Cu.View.Subnav extends Backbone.View
       <hr>""")
     @
 
+  # THIS IS NOT USED
+  # TODO: actually inherit >:/
+  setDocumentTitle: (model) =>
+    if model?
+      t = "#{model.get 'displayName'} | "
+    else if @options.text
+      t = "#{@options.text} | "
+    else
+      t = ''
+    window.document.title = """#{t}ScraperWiki"""
+
 
 class Cu.View.DataHubNav extends Backbone.View
   className: 'subnav-wrapper'

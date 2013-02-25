@@ -29,13 +29,13 @@ describe 'Home page (logged in)', ->
     browser.waitForVisibleByCss '.dataset', 4000, ->
       browser.elementsByCss '.dataset', (err, datasets) ->
         should.exist datasets
-        datasets.length.should.be.above 2
+        datasets.length.should.be.above 0
         done()
 
   it 'each dataset has a visible status', (done) ->
     browser.elementsByCss '.dataset .status', (err, elements) ->
       should.exist elements
-      elements.length.should.be.above 2
+      elements.length.should.be.above 0
       done()
 
   context 'when I click the "new dataset" button', ->

@@ -30,13 +30,19 @@ describe 'Tool RPC', ->
 
   context "when create a dataset with the test app", ->
     before (done) ->
-      browser.get "#{BASE_URL}/tools", =>
-        wd40.click '.test-app.tool', =>
-          browser.waitForElementByCss 'iframe', 4000, =>
-            wd40.trueURL (err, url) =>
-              @toolURL = url
-              done()
-              
+      browser.waitForElementByCss '.dataset-list', 4000, done
+
+    before (done) ->
+      wd40.click '.new-dataset', ->
+        browser.waitForElementByCss '#chooser', 4000, done
+
+    before (done) ->
+      wd40.click '.test-app.tool', =>
+        browser.waitForElementByCss 'iframe', 4000, =>
+          wd40.trueURL (err, url) =>
+            @toolURL = url
+            done()
+
     context 'when the redirect internal button is pressed', ->
       before (done) ->
         wd40.switchToBottomFrame ->

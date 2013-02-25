@@ -484,6 +484,17 @@ scraperwiki.tool.rename(username + "'s twitter followers")</pre>
     console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
 })</pre>
 
+<p>The SQL metadata API also has a wrapper, which takes a <code>success</code> and <code>error</code> callbacks, like the main SQL function above. Example usage:</p>
+
+<pre class="prettyprint linenums">scraperwiki.sql.meta(function(metadata, textStatus, jqXHR) {
+    for(tableName in metadata.table){
+      console.log('table:', tableName, 'columns:', metadata.table[tableName].columnNames)
+    }
+}, function(jqXHR, textStatus, errorThrown){
+    console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
+})
+</pre>
+
 <h3>Exec API wrapper</h3>
 
 <p>The ScraperWiki helper library also includes a convenient wrapper around the <em>source</em> box&rsquo;s Exec API: <code>scraperwiki.exec()</code>. The function takes three arguments:</p> 

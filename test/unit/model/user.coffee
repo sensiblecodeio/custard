@@ -66,7 +66,8 @@ describe 'User', ->
         @luxuryPigBox = new Box
           users: ['ehg', 'ickletest']
           name: 'luxurypigbox'
-        @request = sinon.stub(request, 'post').callsArg(1)
+        @request = sinon.stub request, 'post', (opt, cb) ->
+          cb null, null, null
 
       before (done) ->
         @pigBox.save (err) =>

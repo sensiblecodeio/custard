@@ -351,7 +351,7 @@ app.post '/api/:user/?', checkStaff, (req, resp) ->
 
 app.post '/api/:user/sshkeys/?', (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->
-    user.sshKeys.push req.body.key
+    user.sshKeys.push req.body.key if req.body.key?
     user.save (err) ->
       User.distributeUserKeys user.shortName, (err) ->
         if err?

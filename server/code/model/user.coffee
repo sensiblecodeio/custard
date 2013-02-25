@@ -68,7 +68,7 @@ class User extends ModelBase
                 obj = JSON.parse body
               catch e
                 return boxCb e
-              return boxCb obj.error if obj.error?
+              return boxCb obj?.error if obj?.error?
               return boxCb err
       , callback
 

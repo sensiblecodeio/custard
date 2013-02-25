@@ -1,2 +1,2 @@
 <h3><%= @displayName %></h3>
-<span class="hide" title="Hide this dataset">Hide</span>
+<span class="hide" title="Hide this view">Hide</span>

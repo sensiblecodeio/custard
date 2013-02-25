@@ -397,17 +397,17 @@ and <code>source</code> contains information about the view's box.
 </p>
 
 <pre class="prettyprint linenums">{
-    "source": {
-        "apikey": "<%= @user.apiKey %>",
-        "publishToken": "t5odv7of5l",
-        "box": "fdtlza1",
-        "url": "https://box.scraperwiki.com/fdtlza1/t5odv7of5l"
-    }, 
-    "target": {
-        "publishToken": "a1pax8jk32",
-        "box": "de3jikz",
-        "url": "https://box.scraperwiki.com/de3jikz/a1pax8jk32"
-    }
+  "source": {
+    "apikey": "<%= @user.apiKey %>",
+    "publishToken": "t5odv7of5l",
+    "box": "fdtlza1",
+    "url": "https://box.scraperwiki.com/fdtlza1/t5odv7of5l"
+  }, 
+  "target": {
+    "publishToken": "a1pax8jk32",
+    "box": "de3jikz",
+    "url": "https://box.scraperwiki.com/de3jikz/a1pax8jk32"
+  }
 }</pre>
 
 <p>For example, this gets the target dataset's <a data-nonpushstate href="#datasets-endpoints-sql">SQL data endpoint</a>.</p>
@@ -441,7 +441,7 @@ so you need to pass in a callback function.
 </p>
 
 <pre class="prettyprint linenums">scraperwiki.tool.getURL(function(url) {
-    console.log(url)
+  console.log(url)
 })</pre>
 
 <h3>Rename a dataset / view</h3>
@@ -487,11 +487,11 @@ scraperwiki.tool.rename(username + "'s twitter followers")</pre>
 <p>The SQL metadata API also has a wrapper, which takes a <code>success</code> and <code>error</code> callbacks, like the main SQL function above. Example usage:</p>
 
 <pre class="prettyprint linenums">scraperwiki.sql.meta(function(metadata, textStatus, jqXHR) {
-    for(tableName in metadata.table){
-      console.log('table:', tableName, 'columns:', metadata.table[tableName].columnNames)
-    }
+  for(tableName in metadata.table){
+    console.log('table:', tableName, 'columns:', metadata.table[tableName].columnNames)
+  }
 }, function(jqXHR, textStatus, errorThrown){
-    console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
+  console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
 })
 </pre>
 

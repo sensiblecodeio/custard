@@ -204,7 +204,11 @@ This will show you how to SSH in.</p>
   </tr>
   <tr>
     <td><code>message</code></td>
-    <td>A description, such as <code>Scraped 24 new tweets</code> or <code>Invalid password</code>.</td>
+    <td><span class="muted">[optional]</span> 
+    An optional description, such as <code>Scraped 24 new tweets</code> or <code>Invalid password</code>.
+    If not specified, the ScraperWiki website instead shows "Refreshed" or "Error" followed by how long ago
+    the status was updated.
+    </td>
   </tr>
 </table>
 

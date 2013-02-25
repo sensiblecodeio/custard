@@ -1,7 +1,11 @@
 <h3><%= @dataset.displayName %></h3>
 <ul>
   <% if @dataset.status?.type is 'error': %>
-  <li class="status error" title="<%= @dataset.status.message %> (<%= @statusUpdatedHuman %>)"><i class="icon-exclamation-sign icon-white"></i> <%= @dataset.status.message %></li>
+    <% if @dataset.status?.message: %>
+    <li class="status error" title="<%= @dataset.status.message %> (<%= @statusUpdatedHuman %>)"><i class="icon-exclamation-sign icon-white"></i> <%= @dataset.status.message %></li>
+    <% else: %>
+    <li class="status error" title="Error <%= @statusUpdatedHuman %>"><i class="icon-exclamation-sign icon-white"></i> Error <%= @statusUpdatedHuman %></li>
+    <% end %>
   <% else if @dataset.status?.type is 'ok': %>
     <% if @dataset.status?.message: %>
     <li class="status ok" title="<%= @dataset.status.message %> (<%= @statusUpdatedHuman %>)"><i class="icon-ok icon-white"></i> <%= @dataset.status.message %></li>

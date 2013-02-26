@@ -669,8 +669,9 @@ div.docs h3 {
   }
 
   div.docs nav.well {
-    float: right;
-    margin: 0 0 20px 20px;
+    position: static;
+    float: left;
+    margin: 0 20px 20px 0;
   }
 
 }
@@ -691,7 +692,10 @@ div.docs h3 {
 
   div.docs {
     position: relative;
-    padding-right: 300px;
+  }
+
+  div.docs .wrapper {
+    padding-left: 280px;
   }
 
   div.docs nav.well {
@@ -699,8 +703,14 @@ div.docs h3 {
     margin: 0;
     position: absolute;
     top: 30px;
-    right: 20px;
-    width: 238px;
+    left: 20px;
+    width: 240px;
+  }
+
+  div.docs nav.well.affix {
+    position: fixed;
+    top: 30px;
+    left: auto;
   }
 
 }

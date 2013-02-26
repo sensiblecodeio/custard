@@ -10,6 +10,7 @@ class Cu.View.Docs extends Backbone.View
       user: window.user.effective
     $ ->
       prettyPrint()
+      $('nav.well').affix({offset: 120})
     @
 
   navClick: (e) ->

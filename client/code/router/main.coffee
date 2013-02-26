@@ -105,13 +105,13 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.showView subnavView
 
   developerDocs: ->
-    subnavView = new Cu.View.Subnav {text: 'Developer Documentation'}
+    subnavView = new Cu.View.DocsNav {section: 'developer'}
     contentView = new Cu.View.DeveloperDocs()
     @appView.showView contentView
     @subnavView.showView subnavView
 
   corporateDocs: ->
-    subnavView = new Cu.View.Subnav {text: 'Corporate Documentation'}
+    subnavView = new Cu.View.DocsNav {section: 'corporate'}
     contentView = new Cu.View.CorporateDocs()
     @appView.showView contentView
     @subnavView.showView subnavView

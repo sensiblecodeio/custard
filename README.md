@@ -19,6 +19,9 @@ The tests require a specially patched version of zombie:
     cd ../custard
     npm link zombie     # Makes custard use our local copy of zombie
 
+## Install mongo
+
+    sudo apt-get mongodb
 
 # Every time you need to develop custard:
 
@@ -33,6 +36,13 @@ The tests require a specially patched version of zombie:
 
     # You'll also need swops-secret and you'll need to git pull it
     # every now and then.
+
+    # Some of the tests may need to start a selenium server.
+
+    # Some of the tests may need a local mongo DB server
+    # running.
+
+    mongo --dbpath=mongo
 
 # Tests
 

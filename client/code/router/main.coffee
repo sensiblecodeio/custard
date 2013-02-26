@@ -24,7 +24,9 @@ class Cu.Router.Main extends Backbone.Router
     # TODO: revert to standard routes?
     @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'main'
-    @route RegExp('docs/?'), 'docs'
+    @route RegExp('docs/?'), 'developerDocs'
+    @route RegExp('docs/corporate/?'), 'corporateDocs'
+    @route RegExp('docs/developer/?'), 'developerDocs'
     @route RegExp('tools/?'), 'tools'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
     @route RegExp('dataset/([^/]+)/settings/?'), 'datasetSettings'
@@ -102,8 +104,14 @@ class Cu.Router.Main extends Backbone.Router
     @appView.showView contentView
     @subnavView.showView subnavView
 
-  docs: ->
+  developerDocs: ->
     subnavView = new Cu.View.Subnav {text: 'Developer Documentation'}
-    contentView = new Cu.View.Docs()
+    contentView = new Cu.View.DeveloperDocs()
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  corporateDocs: ->
+    subnavView = new Cu.View.Subnav {text: 'Corporate Documentation'}
+    contentView = new Cu.View.CorporateDocs()
     @appView.showView contentView
     @subnavView.showView subnavView

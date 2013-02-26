@@ -1,0 +1,27 @@
+<nav class="well">
+  <ul class="nav nav-list">
+    <li><a data-nonpushstate href="#scraperwiki-intro">Introduction</a></li>
+    <li class="nav-header">Datasets</li>
+    <li><a data-nonpushstate href="#datasets-basics">Dataset basics</a></li>
+    <li><a data-nonpushstate href="#datasets-anatomy">Anatomy of a box</a></li>
+  </ul>
+</nav>
+
+<div class="wrapper">
+
+<h2 id="scraperwiki-intro">ScraperWiki &lt;3 Corporates</h2>
+
+<p>The simplest dataset is just an SQLite database, with a bit of code to create it and possibly update it. </p>
+
+<p>Datasets and views can be packaged up for you or other people to reuse and customise as <b>tools</b>. Tools are just git repositories, which are automatically checked out into a blank box when they are used to make a dataset or a view.</p>
+
+<hr />
+
+<h2 id="datasets-basics">Dataset basics</h2>
+
+<p>You can <b>create a new dataset</b> by visiting the <a href="/tools">My Tools</a> page, and clicking on the <b>"Code a dataset!"</b> tool.
+This will show you how to SSH in.</p>
+
+<p class="well well-small"><span class="label label-info">Top tip!</span> If you&rsquo;ve never used SSH before, <a href="http://en.wikipedia.org/wiki/Ssh-keygen">this page about generating SSH keys</a> will come in handy.</p>
+
+</div>

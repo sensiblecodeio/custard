@@ -6,7 +6,7 @@ class Cu.View.Docs extends Backbone.View
     'click a[href^="#"]': 'navClick'
 
   render: ->
-    @el.innerHTML = JST['docs']
+    @el.innerHTML = JST[@template]
       user: window.user.effective
     $ ->
       prettyPrint()
@@ -19,3 +19,9 @@ class Cu.View.Docs extends Backbone.View
       $('html, body').animate
         scrollTop: $(e.target.hash).offset().top - 70
       , 250
+
+class Cu.View.DeveloperDocs extends Cu.View.Docs
+  template: 'docs-developer'
+
+class Cu.View.CorporateDocs extends Cu.View.Docs
+  template: 'docs-corporate'

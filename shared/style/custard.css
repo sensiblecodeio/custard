@@ -152,7 +152,7 @@ body.fullscreen .container {
   margin-top: -1px;
 }
 
-#subnav-path > h1 > a img {
+#subnav-path > .btn-group > a img {
   vertical-align: top;
   margin-right: 9px;
   -webkit-border-radius: 2px;

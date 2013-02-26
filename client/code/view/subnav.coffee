@@ -223,11 +223,11 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
-        <h1 class="btn-group">
+        <div class="btn-group">
           <a class="btn btn-link">
             <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
           </a>
-        </h1>
+        </div>
         <div class="btn-group">
           <span class="slash">/</span>
         </div>
@@ -303,6 +303,32 @@ class Cu.View.ViewNav extends Cu.View.EditableSubnav
           <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
           <input type="text" id="editable-input" style="display: none"/>
         </div>
+      </div>
+      <hr>""")
+    @
+
+class Cu.View.DocsNav extends Backbone.View
+  className: 'subnav-wrapper'
+
+  render: ->
+    if @options.section == 'corporate'
+      url = '/docs/corporate/'
+      name = 'Corporate'
+    else
+      url = '/docs/developer/'
+      name = 'Developer'
+
+    @$el.html("""
+      <div class="btn-toolbar" id="subnav-path">
+        <h1 class="btn-group">
+          <a class="btn btn-link" href="/docs">Documentation</a>
+        </h1>
+        <div class="btn-group">
+          <span class="slash">/</span>
+        </div>
+        <h1 class="btn-group" style="margin-left: 7px">
+          <a class="btn btn-link" href="#{url}">#{name}</a>
+        </h1>
       </div>
       <hr>""")
     @

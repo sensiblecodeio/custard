@@ -203,6 +203,10 @@ body.fullscreen .container {
   color: #999;
 }
 
+#subnav-options {
+  list-style: none; /* for when #subnav-options is a list element, eg: docs pages */
+}
+
 #subnav-options .btn-group + .btn-group {
   margin-left: 10px;
 }

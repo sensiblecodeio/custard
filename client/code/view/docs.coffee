@@ -22,7 +22,7 @@ class Cu.View.Docs extends Backbone.View
   makePrettyLike: ->
     prettyPrint()
     $('nav.well').affix({offset: 110})
-    $('body').scrollspy(target: 'nav.well ul.nav')
+    $('body').scrollspy()
 
 class Cu.View.DeveloperDocs extends Cu.View.Docs
   template: 'docs-developer'

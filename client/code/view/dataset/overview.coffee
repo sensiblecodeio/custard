@@ -14,7 +14,7 @@ class Cu.View.DatasetOverview extends Backbone.View
       details: true
     $aboutDiv.append datasetTileView.render().el
 
-    $actionDiv.html '<h4>Analyse and export this data:</h4>'
+    $actionDiv.html '<h4>Do something this data:</h4>'
     viewsView = new Cu.View.DatasetViews model: @model
     $actionDiv.append viewsView.render().el
     if @model.get('views').visible().length > 0

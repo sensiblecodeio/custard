@@ -14,6 +14,7 @@ class Cu.View.Docs extends Backbone.View
   navClick: (e) ->
     e.preventDefault()
     if $(e.target.hash).length > 0
+      app.navigate(window.location.pathname + e.target.hash)
       $('html, body').animate
         scrollTop: $(e.target.hash).offset().top - 70
       , 250

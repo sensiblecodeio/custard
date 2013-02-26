@@ -15,6 +15,10 @@ toolSchema = new Schema
   type: String
   gitUrl: String
   manifest: Schema.Types.Mixed
+  created:
+    type: Date
+    default: Date.now
+  updated: Date
 
 zDbTool = mongoose.model 'Tool', toolSchema
 
@@ -47,6 +51,10 @@ class Tool extends ModelBase
 
   deleteRepo: (callback) ->
     rimraf @directory, callback
+
+  save: (callback) ->
+    @updated = Date.now()
+    super callback
 
   @findOneById: (id, callback) ->
     @dbClass.findOne {_id: id}, (err, doc) =>

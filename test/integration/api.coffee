@@ -55,11 +55,19 @@ describe 'API', ->
           it 'creates a new tool', ->
             @response.should.have.status 201
 
+          it 'records a "created" timestamp', ->
+            should.exist @tool.created
+
           it 'returns the newly created tool', ->
             should.exist @tool.name
             @tool.name.should.equal @toolName
 
         context 'when I update a tool', ->
+          before (done) ->
+            # short pause, to make sure the updated 
+            # timestamp is after the created one
+            setTimeout done, 1
+
           before (done) ->
             request.post
               uri: "#{serverURL}/api/tools"
@@ -74,6 +82,11 @@ describe 'API', ->
 
           it 'updates the tool', ->
             @response.should.have.status 200
+
+          it 'shows a recent "updated" timestamp', ->
+            should.exist @tool.created
+            should.exist @tool.updated
+            @tool.updated.should.be.above @tool.created
 
           # We should check whether the manifest has been updated,
           # but it's hard.

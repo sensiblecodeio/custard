@@ -8,9 +8,7 @@ class Cu.View.Docs extends Backbone.View
   render: ->
     @el.innerHTML = JST[@template]
       user: window.user.effective
-    $ ->
-      prettyPrint()
-      $('nav.well').affix({offset: 120})
+    setTimeout @makePrettyLike, 100
     @
 
   navClick: (e) ->
@@ -19,6 +17,11 @@ class Cu.View.Docs extends Backbone.View
       $('html, body').animate
         scrollTop: $(e.target.hash).offset().top - 70
       , 250
+
+  makePrettyLike: ->
+    prettyPrint()
+    $('nav.well').affix({offset: 110})
+    $('body').scrollspy()
 
 class Cu.View.DeveloperDocs extends Cu.View.Docs
   template: 'docs-developer'

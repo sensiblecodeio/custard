@@ -330,5 +330,9 @@ class Cu.View.DocsNav extends Backbone.View
           <a class="btn btn-link" href="#{url}">#{name}</a>
         </h1>
       </div>
+      <ul class="nav nav-pills" id="subnav-options">
+        <li#{if name == 'Developer' then ' class="active"' else ''}><a href="/docs/developer/">Developer Docs</a></li>
+        <li#{if name == 'Corporate' then ' class="active"' else ''}><a href="/docs/corporate/">Corporate FAQs</a></li>
+      </ul>
       <hr>""")
     @

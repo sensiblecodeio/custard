@@ -552,7 +552,7 @@ div.fourohfour {
 }
 
 div.docs {
-  padding: 20px 20px 0 20px;
+  padding: 10px 20px 20px 20px;
   line-height: 24px; /* the default 21px is a bit tight for so much text */
 }
 
@@ -702,7 +702,7 @@ div.docs h3 {
     float: none;
     margin: 0;
     position: absolute;
-    top: 30px;
+    top: 20px;
     left: 20px;
     width: 240px;
   }

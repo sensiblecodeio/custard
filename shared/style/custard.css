@@ -525,7 +525,7 @@ div.dataset-overview .dataset-views {
 div.dataset-overview .actions .btn-large {
   padding-top: 7px; /* compensate for really big <img> in button */
   padding-bottom: 7px;
-  width: 230px; /* make it more substantial */
+  width: 240px; /* make it more substantial */
 }
 
 div.dataset-overview .actions .btn-large img {

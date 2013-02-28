@@ -1,27 +1,94 @@
 <nav class="well">
   <ul class="nav nav-list">
-    <li><a data-nonpushstate href="#scraperwiki-intro">Introduction</a></li>
+    <li><a data-nonpushstate href="#intro">Introduction</a></li>
     <li class="nav-header">Datasets</li>
-    <li><a data-nonpushstate href="#datasets-basics">Dataset basics</a></li>
-    <li><a data-nonpushstate href="#datasets-anatomy">Anatomy of a box</a></li>
+    <li><a data-nonpushstate href="#pricing">Pricing</a></li>
+    <li><a data-nonpushstate href="#pricing">Service Levels</a></li> <!-- including  financial recompense -->
+    <li><a data-nonpushstate href="#location">Location</a></li> 
+    <li><a data-nonpushstate href="#backups">Backups and disaster recovery</a></li>
+    <li><a data-nonpushstate href="#training">Training</a></li> 
+    <li><a data-nonpushstate href="#training">Invoicing</a></li>  <!-- ordering -->
+    <!-- information assurance level -->
+    <!-- onboarding / offboarding -->
+    <!-- getting data in and out - restoring data, migrating -->
+    <!-- adding users-->
+    <!-- maintenance windows -->
+    <!-- customisation - includes data services? --> 
+    <!-- roadmap - schedule for deprecation -->
+    <!-- termination - typically year notice. open source -->
+    <!-- client side requirements - bandwidth, browsers -->
+    <!-- trial service --> 
+    <!-- where hosted -->
+    <!-- http://gcloud.civilservice.gov.uk/supplier-zone/assurance/g-cloud-definitions/ -->
   </ul>
 </nav>
 
 <div class="wrapper">
 
-<h2 id="scraperwiki-intro">ScraperWiki &lt;3 Corporates</h2>
+<h2 id="intro">ScraperWiki &lt;3 Corporates</h2>
 
-<p>The simplest dataset is just an SQLite database, with a bit of code to create it and possibly update it. </p>
+<p>ScraperWiki helps people manage datasets, and the tools needed to get, clean
+and analyse data.</p>
 
-<p>Datasets and views can be packaged up for you or other people to reuse and customise as <b>tools</b>. Tools are just git repositories, which are automatically checked out into a blank box when they are used to make a dataset or a view.</p>
+<p>This page describes the <b>corporate</b> version of ScraperWiki, covering
+matters relevant to legal, IT and financial staff. Levels of service for
+non-corporate level customers are lower, and are described in separate terms
+and conditions. End user documentation is also separate.</p>
+
+<p>We undertake to describe all aspects of our service clearly and
+transparently. If you have any questions, please get in touch and help us 
+improve this living document.</p>
 
 <hr />
 
-<h2 id="datasets-basics">Dataset basics</h2>
+<h2 id="hosting">Location</h2>
 
-<p>You can <b>create a new dataset</b> by visiting the <a href="/tools">My Tools</a> page, and clicking on the <b>"Code a dataset!"</b> tool.
-This will show you how to SSH in.</p>
+<p>Our servers are hosted with cloud provider Linode, at its London datacentre.
+For current status, and uptime history, see our server monitoring at 
+<a href="http://status.scraperwiki.com/">status.scraperwiki.com</a>.
+</p>
 
-<p class="well well-small"><span class="label label-info">Top tip!</span> If you&rsquo;ve never used SSH before, <a href="http://en.wikipedia.org/wiki/Ssh-keygen">this page about generating SSH keys</a> will come in handy.</p>
+
+<h2 id="backups">Backups and disaster recovery</h2>
+
+<p>All dataset files and data are stored on a distributed GlusterFS filesystem,
+mirrored with two copies. Metadata is stored in a MongoDB cluster on MongoHQ’s
+cloud service.
+</p>
+
+<p>Our backup strategy is based on two tiers of backups, one on Linode, and the
+other redundantly on Amazon S3.</p>
+
+<p>These are four sequentially worse disaster situations, with recovery times
+indicated.</p>
+
+<ol>
+<li>Individual machines are designed to be ephemeral, and provision is fully
+automated. We can rebuild individual machines in about <b>20 minutes</b>, and the
+whole cluster in under <b>2 hours</b>. MongoDB is backed up to Amazon S3, where we can
+restore in under <b>1 hour</b>.
+</li>
+<li>Should multiple GlusterFS servers fail, or a software bug damage the
+GlusterFS servers, we have a Linode whole machine image backup of them. This is
+a daily rotating backup, which can be recovered within about <b>an hour</b>.
+</li>
+<li>We make daily rotating differential encrypted backups of the GlusterFS
+filesystem using Duplicity, with weekly full backups. These are stored in
+Amazon S3. We can restore the whole filesystem in under <b>1 day</b>, and corporate
+plan customers in under <b>2 hours</b>.
+</li>
+<li>Should Linode’s London data centre fail, they have additional data centres
+in the US and Japan which we can restore to in under <b>1 day</b> for all user, under
+2 hours for corporate customers.
+</li>
+<li>
+If the whole of Linode fails, then we will recover to a new cluster on Amazon
+EC2. This will currently require updating of some systems administration
+scripts, so will take <b>2 days</b>.
+</li>
+</ol>
+
+
+<!-- <p class="well well-small"><span class="label label-info">Top tip!</span> If you&rsquo;ve never used SSH before, <a href="http://en.wikipedia.org/wiki/Ssh-keygen">this page about generating SSH keys</a> will come in handy.</p> -->
 
 </div>

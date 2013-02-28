@@ -1,5 +1,5 @@
 class Cu.View.FourOhFour extends Backbone.View
-  className: "fourohfour"
+  className: "fourohfour error-page"
 
   render: ->
     @el.innerHTML = JST['fourohfour']()

@@ -54,8 +54,13 @@ class Cu.Router.Main extends Backbone.Router
         @appView.showView contentView
         @subnavView.showView subnavView
         window.tools.fetch()
-      error: (model, xhr, options) ->
+      error: (model, xhr, options) =>
+        # TODO: factor into function
         console.warn xhr
+        contentView = new Cu.View.Error text: "Sorry, we couldn't find that dataset"
+        subnavView = new Cu.View.Subnav text: "Dataset not found"
+        @appView.showView contentView
+        @subnavView.showView subnavView
 
   datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box

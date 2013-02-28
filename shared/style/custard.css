@@ -191,6 +191,10 @@ body.fullscreen .container {
   height: 24px;
 }
 
+.context-switch .context-search-result.selected {
+  background-color: #bdf;
+}
+
 .context-switch .context-search-result img {
   margin-right: 5px;
   height: 24px;

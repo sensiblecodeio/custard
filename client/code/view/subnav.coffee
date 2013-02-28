@@ -31,6 +31,7 @@ class Cu.View.DataHubNav extends Backbone.View
     'click .new-dataset': 'showChooser'
     'focus .context-switch input': 'focusContextSearch'
     'keyup .context-switch input': 'keyupContextSearch'
+    'mouseenter .context-search-result': 'hoverContextSearchResult'
     'keyup #subnav-options .search-query': 'keyupPageSearch'
 
   render: ->
@@ -95,6 +96,19 @@ class Cu.View.DataHubNav extends Backbone.View
         console.warn 'Could not query users API', errorThrown
 
   keyupContextSearch: (e) ->
+    if e.which == 40
+      e.preventDefault()
+      @highlightNextResult()
+    else if e.which == 38
+      e.preventDefault()
+      @highlightPreviousResult()
+    else if e.which == 13
+      e.preventDefault()
+      @activateHighlightedResult()
+    else
+      @refreshContextResults()
+
+  refreshContextResults: ->
     li = $('.context-switch li.search')
     input = li.children('input')
     t = input.val()
@@ -137,6 +151,32 @@ class Cu.View.DataHubNav extends Backbone.View
         $('.context-switch input').addClass 'loading'
     else if t == ''
       results.remove()
+
+  highlightNextResult: ->
+    $selected = $('.context-search-result.selected')
+    if $selected.length
+      if $selected.next('.context-search-result').length
+        $selected.removeClass('selected').next('.context-search-result').addClass('selected')
+    else
+      $('.context-search-result').first().addClass('selected')
+
+  highlightPreviousResult: ->
+    $selected = $('.context-search-result.selected')
+    if $selected.length
+      if $selected.prev('.context-search-result').length
+        $selected.removeClass('selected').prev('.context-search-result').addClass('selected')
+    else
+      $('.context-search-result').last().addClass('selected')
+
+  activateHighlightedResult: ->
+    $selected = $('.context-search-result.selected')
+    if $selected.length
+      window.location = $('a', $selected).attr('href')
+    else
+      @highlightNextResult()
+
+  hoverContextSearchResult: ->
+    $('.context-search-result.selected').removeClass('selected')
 
   keyupPageSearch: (e) ->
     $input = $(e.target)

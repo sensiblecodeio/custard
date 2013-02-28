@@ -21,7 +21,13 @@ The tests require a specially patched version of zombie:
 
 ## Install mongo
 
+On Debian or Ubuntu:
+
     sudo apt-get mongodb
+
+On Mac OSX:
+
+    brew install mongodb
 
 # Every time you need to develop custard:
 

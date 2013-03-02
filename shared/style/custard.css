@@ -307,7 +307,7 @@ div.dataset-overview .dataset .hide {
   display: none; /* don't want to see the hide button on dataset overview page */
 }
 
-.tile ul li {
+.tile > ul > li {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -318,19 +318,18 @@ div.dataset-overview .dataset .hide {
   color: rgba(255,255,255,0.8);
   border-top: 1px solid rgba(255,255,255,0.5);
   background-color: rgba(0,0,0,0.1);
-  cursor: help;
   -webkit-transition: color linear 0.1s;
      -moz-transition: color linear 0.1s;
        -o-transition: color linear 0.1s;
           transition: color linear 0.1s;
 }
 
-.tile:hover ul li {
+.tile:hover > ul > li {
   color: #fff;
 }
 
 .tile li.status {
-  padding: 0 45px 0 10px;
+  padding: 0 55px 0 10px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -341,14 +340,51 @@ div.dataset-overview .dataset .hide {
   color: #fff;
 }
 
-.tile li.views {
+.tile li.actions {
   left: auto;
   right: 0;
-  width: 35px;
-  font-weight: bold;
-  text-align: center;
+  width: 45px;
   border-top: none;
   border-left: 1px solid rgba(255,255,255,0.5);
+  text-shadow: none;
+}
+
+.tile li.actions > a {
+  display: block;
+  text-indent: -9000px;
+  background: transparent url(../image/tile-options-white.png) 50% 50% no-repeat;
+  opacity: 0.7;
+  -webkit-transition: opacity linear 0.1s;
+     -moz-transition: opacity linear 0.1s;
+       -o-transition: opacity linear 0.1s;
+          transition: opacity linear 0.1s;
+}
+
+.tile:hover li.actions > a {
+  opacity: 1;
+}
+
+.tile li.actions .dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  right: 5px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+.tile li.actions .dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  right: 6px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
 }
 
 #chooser {
@@ -509,8 +545,8 @@ div.dataset-views a.tool .tool-icon-outer {
   border-box-shadow: none;
 }
 
-div.dataset-overview .about,
-div.dataset-overview .actions {
+div.dataset-overview div.about,
+div.dataset-overview div.actions {
   float: left;
   width: 280px;
   margin: 20px 0 0 20px;
@@ -700,7 +736,7 @@ div.docs h3 {
 
   /* This is a bit of a hack to make the dataset overview page easier to parse */
   /* It breaks the 20+280+20+280… grid system, but it looks better */
-  div.dataset-overview .actions {
+  div.dataset-overview div.actions {
     margin-left: 40px; /* vs the default 20px */
   }
 

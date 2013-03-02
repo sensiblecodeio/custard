@@ -15,6 +15,13 @@
   <% else: %>
   <li class="status unknown">Unknown status</li>
   <% end %>
-  <li class="views" title="<%= @views.length %> view<% if @views.length != 1: %>s<% end %>"><%= @views.length %></li>
+  <li class="actions">
+    <a class="dropdown-toggle" data-toggle="dropdown">Options</a>
+    <ul class="dropdown-menu pull-right">
+      <li><a><i class="space icon-pencil"></i> Rename dataset</a></li>
+      <li><a><i class="space icon-user"></i> Transfer ownership</a></li>
+      <li><a><i class="space icon-arrow-down"></i> SSH in or Git clone</a></li>
+    </ul>
+  </li>
 </ul>
 <span class="hide" title="Hide this dataset">Hide</span>

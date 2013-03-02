@@ -9,6 +9,7 @@ class Cu.View.DatasetTile extends Backbone.View
   
   events:
     'click .hide': 'hideDataset'
+    'click .dropdown-menu a': 'dropdownMenuItemClick'
 
   initialize: ->
     @model.on 'change', @render, this
@@ -27,3 +28,7 @@ class Cu.View.DatasetTile extends Backbone.View
       error: (e) =>
         @$el.show()
         console.warn 'Dataset could not be deleted!'
+
+  dropdownMenuItemClick: (e) ->
+    e.preventDefault()
+    e.stopPropagation()

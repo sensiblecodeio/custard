@@ -20,7 +20,7 @@
     <ul class="dropdown-menu pull-right">
       <li><a><i class="space icon-pencil"></i> Rename dataset</a></li>
       <li><a><i class="space icon-user"></i> Transfer ownership</a></li>
-      <li><a><i class="space icon-arrow-down"></i> SSH in or Git clone</a></li>
+      <li><a><i class="space icon-arrow-down"></i> Git clone or SSH in</a></li>
     </ul>
   </li>
 </ul>

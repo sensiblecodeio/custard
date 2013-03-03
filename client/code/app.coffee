@@ -10,7 +10,7 @@ $ ->
   Backbone.history.start {pushState: on}
 
   if Backbone.history and Backbone.history._hasPushState
-    $(document).delegate "a:not([href^=http])", "click", (evt) ->
+    $(document).delegate "a[href]:not([href^=http])", "click", (evt) ->
       unless $(@).is '[data-nonpushstate]'
         unless evt.metaKey or evt.ctrlKey
           href = $(@).attr "href"

@@ -268,7 +268,8 @@ a.tile.new-dataset:active {
 }
 
 a.tile h3 {
-  margin: 10px 10px 5px 10px;
+  margin: 0;
+  padding: 10px 10px 5px 10px;
   font-weight: normal;
   font-size: 21px;
   line-height: 21px;
@@ -301,10 +302,6 @@ a.tile:hover .hide {
 
 a.tile .hide:hover {
   background-color: #e11b2c;
-}
-
-div.dataset-overview .dataset .hide {
-  display: none; /* don't want to see the hide button on dataset overview page */
 }
 
 .tile > ul > li {
@@ -382,9 +379,23 @@ div.dataset-overview .dataset .hide {
   right: 6px;
   display: inline-block;
   border-right: 6px solid transparent;
-  border-bottom: 6px solid #ffffff;
+  border-bottom: 6px solid #fff;
   border-left: 6px solid transparent;
   content: '';
+}
+
+.tile li.actions .dropdown-menu > li > a {
+  padding-left: 15px; /* down from the default of 20px */
+  padding-right: 15px;
+}
+
+div.dataset-overview .about .tile .hide,
+div.dataset-overview .about .tile .actions {
+  display: none; /* don't want to see the hide button or actions menu on dataset overview page */
+}
+
+div.dataset-overview .about .tile li.status {
+  padding-right: 10px; /* down from 55px, because there's no actions menu to avoid */
 }
 
 #chooser {
@@ -562,6 +573,7 @@ div.dataset-overview h4 {
 
 div.dataset-overview a.tile {
   margin: 0;
+  float: none;
 }
 
 div.dataset-overview a.view.tile {
@@ -583,6 +595,50 @@ div.dataset-overview .actions .btn-large img {
   margin-right: 10px;
   height: 24px;
   width: 24px;
+}
+
+div.dataset-overview ul.dataset-actions {
+  position: relative;
+  border-top: 1px solid #ddd;
+  margin: 15px 0;
+  padding: 5px 0 0 5px;
+  list-style: none;
+}
+
+div.dataset-overview ul.dataset-actions:before {
+  position: absolute;
+  top: -7px;
+  left: 5px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+div.dataset-overview ul.dataset-actions:after {
+  position: absolute;
+  top: -6px;
+  left: 6px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #fff;
+  border-left: 6px solid transparent;
+  content: '';
+}
+
+div.dataset-overview ul.dataset-actions a {
+  cursor: pointer;
+  color: #666;
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 26px;
+  display: block;
+}
+
+div.dataset-overview ul.dataset-actions a:hover {
+  color: #000;
 }
 
 #content p.loading {

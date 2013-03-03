@@ -8,10 +8,9 @@ class Cu.View.DatasetActions extends Backbone.View
 
   render: ->
     @$el.html """
-      <li><a class="hide-dataset"><i class="space icon-remove"></i> Hide dataset</a></li>
-      <li><a class="rename-dataset"><i class="space icon-pencil"></i> Rename dataset</a></li>
-      <li><a class="transfer-dataset"><i class="space icon-user"></i> Transfer ownership</a></li>
-      <li><a class="ssh-git"><i class="space icon-arrow-down"></i> Git clone or SSH in</a></li>"""
+      <li><a class="rename-dataset"><img src="/image/icon-rename.png" width="16" height="16" /> Rename dataset</a></li>
+      <li><a class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</a></li>
+      <li><a class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Hide dataset</a></li>"""
     @
 
   hideDataset: ->

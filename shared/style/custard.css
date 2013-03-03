@@ -387,6 +387,12 @@ a.tile .hide:hover {
 .tile li.actions .dropdown-menu > li > a {
   padding-left: 15px; /* down from the default of 20px */
   padding-right: 15px;
+  line-height: 21px; /* down from the default of 24px */
+}
+
+.tile li.actions .dropdown-menu a img {
+  vertical-align: -3px;
+  margin-right: 3px;
 }
 
 div.dataset-overview .about .tile .hide,
@@ -601,14 +607,13 @@ div.dataset-overview ul.dataset-actions {
   position: relative;
   border-top: 1px solid #ddd;
   margin: 15px 0;
-  padding: 5px 0 0 5px;
   list-style: none;
 }
 
 div.dataset-overview ul.dataset-actions:before {
   position: absolute;
   top: -7px;
-  left: 5px;
+  left: 7px;
   display: inline-block;
   border-right: 7px solid transparent;
   border-bottom: 7px solid #ccc;
@@ -620,7 +625,7 @@ div.dataset-overview ul.dataset-actions:before {
 div.dataset-overview ul.dataset-actions:after {
   position: absolute;
   top: -6px;
-  left: 6px;
+  left: 8px;
   display: inline-block;
   border-right: 6px solid transparent;
   border-bottom: 6px solid #fff;
@@ -633,12 +638,22 @@ div.dataset-overview ul.dataset-actions a {
   color: #666;
   text-decoration: none;
   font-size: 15px;
-  line-height: 26px;
+  line-height: 32px;
   display: block;
+  border-bottom: 1px solid #eee;
 }
 
 div.dataset-overview ul.dataset-actions a:hover {
-  color: #000;
+  color: #333;
+}
+
+div.dataset-overview ul.dataset-actions a.hide-dataset:hover {
+  color: #e11b2c;
+}
+
+div.dataset-overview ul.dataset-actions img {
+  vertical-align: -3px;
+  margin: 0 3px 0 6px;
 }
 
 #content p.loading {

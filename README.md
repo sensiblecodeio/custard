@@ -53,7 +53,16 @@ Then on all platforms:
 
 # Tests
 
-We love them.
+We love them. First download Selenium:
+
+    wget http://selenium.googlecode.com/files/selenium-server-standalone-2.29.0.jar
+    (linux) wget http://chromedriver.googlecode.com/files/chromedriver_linux64_26.0.1383.0.zip
+    (mac) wget https://chromedriver.googlecode.com/files/chromedriver_mac_26.0.1383.0.zip
+    unzip chromedriver
+
+Then start a Selenium server:
+
+    java -jar selenium-server-standalone-2.29.0.jar -Dwebdriver.chrome.driver=chromedriver
 
 To run the tests:
 
@@ -67,8 +76,5 @@ or one of these:
 
 or even ehg's special:
     mocha test
-
-For the integration tests, you'll need selenium running. See instructions in 
-test/integration/tool_rpc.coffee
 
 

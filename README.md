@@ -19,10 +19,7 @@ The tests require a specially patched version of zombie:
     cd ../custard
     npm link zombie     # Makes custard use our local copy of zombie
 
-## Install mongo
-
-    # Some of the tests may need a local mongo DB server
-    # running.
+## Install mongodb
 
 On Debian or Ubuntu:
 
@@ -32,10 +29,10 @@ On Mac OSX:
 
     brew install mongodb
 
+Then on all platforms:
 
     mkdir mongo
     npm install pow-mongodb-fixtures -g
-
     mongod --dbpath=mongo
 
 # Every time you need to develop custard:
@@ -53,7 +50,6 @@ On Mac OSX:
     # every now and then.
 
     # Some of the tests may need to start a selenium server.
-
 
 # Tests
 

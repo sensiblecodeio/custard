@@ -29,7 +29,8 @@ mongoose.connect process.env.CU_DB
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
 # More cargo cult from https://github.com/LearnBoost/mongoose/issues/306
-mongoose.connection.db.serverConfig.connection.autoReconnect = true
+# (doesn't work)
+# mongoose.connection.db.serverConfig.connection.autoReconnect = true
 
 
 assets.jsCompilers.eco =

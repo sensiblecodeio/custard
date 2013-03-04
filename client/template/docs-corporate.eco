@@ -6,20 +6,24 @@
     <li><a data-nonpushstate href="#pricing">Service Levels</a></li> <!-- including  financial recompense -->
     <li><a data-nonpushstate href="#location">Location</a></li> 
     <li><a data-nonpushstate href="#backups">Backups and disaster recovery</a></li>
-    <li><a data-nonpushstate href="#training">Training</a></li> 
-    <li><a data-nonpushstate href="#training">Invoicing</a></li>  <!-- ordering -->
+    <li><a data-nonpushstate href="#leaving">Leaving ScraperWiki</a></li>
+
+
+    <!-- <li><a data-nonpushstate href="#training">Training</a></li>  -->
+    <!-- <li><a data-nonpushstate href="#invoicing">Invoicing</a></li>   -->
+    <!-- ordering -->
     <!-- information assurance level -->
     <!-- onboarding / offboarding -->
-    <!-- getting data in and out - restoring data, migrating -->
+    <!-- getting data in - restoring data, migrating -->
     <!-- adding users-->
     <!-- maintenance windows -->
     <!-- customisation - includes data services? --> 
     <!-- roadmap - schedule for deprecation -->
-    <!-- termination - typically year notice. open source -->
     <!-- client side requirements - bandwidth, browsers -->
     <!-- trial service --> 
     <!-- where hosted -->
     <!-- http://gcloud.civilservice.gov.uk/supplier-zone/assurance/g-cloud-definitions/ -->
+    <!-- standards used -->
   </ul>
 </nav>
 
@@ -88,7 +92,46 @@ scripts, so will take <b>2 days</b>.
 </li>
 </ol>
 
+<!--
+Service Levels: means
+ Hosting of data and scrapers in a secure (free from risk of loss or theft by
+unauthorised parties) environment.
+ Service availability (up-time) greater than or equal to 99.5%. Should the service level not be met in any one month, the monthly charge will be reduced according to the Refund Scale.
+ Delivery of quality, error free, well documented scraper code
+ 100 % accurate scraping of data sources.
+ Continued development of the Data Tools to allow creation of scrapers for different sources according to the roadmap schedule to be able to meet 90% Agra datasets by Oct 2013.
+-->
 
 <!-- <p class="well well-small"><span class="label label-info">Top tip!</span> If you&rsquo;ve never used SSH before, <a href="http://en.wikipedia.org/wiki/Ssh-keygen">this page about generating SSH keys</a> will come in handy.</p> -->
 
+<h2 id="leaving">Leaving ScraperWiki</h2>
+
+<p>We endeavour to keep your custom by offering excellent service, not by 
+locking you in.</p.
+
+<p>Your data and files are available programmatically at all times, via our
+APIs and using the SFTP file transfer protocol. You can use this to make your
+own backups, or to migrate data off ScraperWiki.</p>
+
+<p>Scrapers and views are written using standard open source tools and
+protocols, making it relatively easy to migrate individual applications to your
+own Linux servers.</p>
+
+<p>In addition, the ScraperWiki platform itself and the core tools are all open
+source (see our <a href="http://github.com/scraperwiki">Github account</a>).
+This gives you the ultimate protection of being able to host it yourself, or 
+pay another organisation to host it for you.
+</p>
+
+
+
+
+    <!-- termination - typically year notice. open source -->
+
 </div>
+
+
+
+
+
+

@@ -21,6 +21,9 @@ The tests require a specially patched version of zombie:
 
 ## Install mongo
 
+    # Some of the tests may need a local mongo DB server
+    # running.
+
 On Debian or Ubuntu:
 
     sudo apt-get mongodb
@@ -28,6 +31,12 @@ On Debian or Ubuntu:
 On Mac OSX:
 
     brew install mongodb
+
+
+    mkdir mongo
+    npm install pow-mongodb-fixtures -g
+
+    mongod --dbpath=mongo
 
 # Every time you need to develop custard:
 
@@ -45,10 +54,6 @@ On Mac OSX:
 
     # Some of the tests may need to start a selenium server.
 
-    # Some of the tests may need a local mongo DB server
-    # running.
-
-    mongo --dbpath=mongo
 
 # Tests
 

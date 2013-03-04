@@ -1,12 +1,4 @@
-# Test using Selenium WebDriver with wd bindings
-# Quick instructions
-# Download Selenium WebDriver
-#     wget http://selenium.googlecode.com/files/selenium-server-standalone-2.29.0.jar
-# Download and unzip ChromeDriver
-#     (linux) wget http://chromedriver.googlecode.com/files/chromedriver_linux64_26.0.1383.0.zip
-#     (mac) curl -o https://chromedriver.googlecode.com/files/chromedriver_mac_26.0.1383.0.zip
-# Start Selenium server
-#     java -jar selenium-server-standalone-2.29.0.jar -Dwebdriver.chrome.driver=<path to chromedriver>
+# See custard/README.md for Selenium setup instructions
 
 wd = require 'wd'
 should = require 'should'

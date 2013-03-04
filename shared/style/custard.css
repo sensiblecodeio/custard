@@ -78,6 +78,7 @@ body.fullscreen .container {
 
 #subnav-path {
   line-height: 32px;
+  text-rendering: optimizelegibility;
 }
 
 #subnav h1 {
@@ -121,7 +122,11 @@ body.fullscreen .container {
   background-position: 0 -120px;
 }
 
-#subnav-path > h1 > a {
+#subnav-path > .btn-group:first-child > .btn:first-child {
+  margin-left: -4px;
+}
+
+#subnav-path > .context-switch > a {
   position: relative;
   margin-left: -4px;
   /* We'll override these next settings for large-screened devices later */
@@ -191,10 +196,15 @@ body.fullscreen .container {
   height: 24px;
 }
 
+.context-switch .context-search-result.selected {
+  background-color: #bdf;
+}
+
 .context-switch .context-search-result img {
   margin-right: 5px;
   height: 24px;
   min-width: 24px;
+  vertical-align: -7px;
 }
 
 .context-switch .no-matches {
@@ -682,7 +692,7 @@ div.docs h3 {
 
 @media only screen and (min-width: 920px) {
 
-  #subnav-path > h1 > a {
+  #subnav-path > .context-switch > a {
     width: auto;
     text-overflow: none;
     overflow: visible;

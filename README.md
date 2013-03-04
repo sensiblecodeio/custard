@@ -68,4 +68,7 @@ or one of these:
 or even ehg's special:
     mocha test
 
+For the integration tests, you'll need selenium running. See instructions in 
+test/integration/tool_rpc.coffee
+
 

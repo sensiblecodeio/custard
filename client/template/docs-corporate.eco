@@ -64,12 +64,17 @@ visualisations.
 <p>ScraperWiki supports any open source programming language &ndash; Python, R, Perl,
 Java and so on.  Schema-light SQL datasets (based on SQLite or PostgreSQL).
 Integration between datasets and views using web-standards based SQL API, which
-returns JSON over a REST interface. Run arbitrary other Unix software where
-needed (e.g. Abby Reader or similar) &ndash; a full virtual Unix shell account.
-Full POSIX filesystem.  Integrates with SSH, SFTP, SCP, Git, Subversion and
+returns JSON over a REST interface. Full POSIX filesystem.  Integrates with SSH, SFTP, SCP, Git, Subversion and
 other standard Unix tools.  Data export over HTTP, data visualisation using
 HTML/Javascript working with any of the backend languages.
 </p>
+
+<p class="well well-small"><span class="label label-info">Top tip!</span> 
+You can run any other Unix software where needed, including binary only
+software (e.g. Abbyy's PDF reader) &ndash; each dataset is a full virtual
+Linux shell account.
+</p> 
+
 
 <h2 id="backups">Backups / disaster recovery</h2>
 
@@ -108,8 +113,6 @@ scripts, so will take <b>2 days</b>.
 </li>
 </ol>
 
-<!-- <p class="well well-small"><span class="label label-info">Top tip!</span> If you&rsquo;ve never used SSH before, <a href="http://en.wikipedia.org/wiki/Ssh-keygen">this page about generating SSH keys</a> will come in handy.</p> -->
-
 <h2 id="leaving">Should you wish to leave</h2>
 
 <p>We try to keep your custom by offering excellent service, not by locking you
@@ -128,9 +131,11 @@ This gives you the ultimate protection of being able to host it yourself, or
 pay another organisation to host it for you.
 </p>
 
-<p>Should it be required for compliance or other reasons, data can be purged or
+<p class="well well-small"><span class="label label-important">Purge data!</span> 
+Should it be required for compliance or other reasons, data can be 
 destroyed. This can be done at any time by administrators of the account, or by
-asking us to.</p>
+asking us to. It will remain in backups until they are rotated out.
+</p>
 
 <!-- TODO: -->
 

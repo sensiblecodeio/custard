@@ -25,8 +25,11 @@ Tool = require('model/tool')()
 
 # Set up database connection
 mongoose.connect process.env.CU_DB
+# Doesn't seem to do much.
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
+# More cargo cult from https://github.com/LearnBoost/mongoose/issues/306
+mongoose.connection.db.serverConfig.connection.autoReconnect = true
 
 
 assets.jsCompilers.eco =

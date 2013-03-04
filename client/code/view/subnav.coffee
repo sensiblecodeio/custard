@@ -257,9 +257,6 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
     'blur #editable-input': 'editableNameBlurred'
     'keyup #editable-input': 'keypressOnEditableName'
 
-  initialize: ->
-    @model.on 'change', @render, this
-
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -312,10 +309,6 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
 
 class Cu.View.ViewNav extends Cu.View.EditableSubnav
   className: 'subnav-wrapper'
-
-  initialize: ->
-    @model.on 'change', @setDocumentTitle, @
-    @model.on 'change', @render, this
 
   events:
     'click .editable': 'nameClicked'

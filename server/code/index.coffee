@@ -139,18 +139,23 @@ checkStaff = (req, resp, next) ->
 # :todo: more flexible implementation that checks group membership and stuff
 checkSwitchUserRights = checkStaff
 
+# Render the main client side app
+renderClientApp = (req, resp) ->
+  resp.render 'index',
+    scripts: js 'app'
+    templates: js 'template/index'
+    user: JSON.stringify( req.user or {} )
+    boxServer: process.env.CU_BOX_SERVER
+
 # Render login page
 app.get '/login/?', (req, resp) ->
   resp.render 'login',
     errors: req.flash('error')
 
 # Allow set-password to be visited by anons
-app.get '/set-password/:token/?', (req, resp) ->
-  resp.render 'index',
-    scripts: js 'app'
-    templates: js 'template/index'
-    user: JSON.stringify( req.user or {} )
-    boxServer: process.env.CU_BOX_SERVER
+app.get '/set-password/:token/?', renderClientApp
+app.get '/signup/?*', renderClientApp
+app.get '/', renderClientApp
 
 # Switch is protected by a specific function.
 app.get '/switch/:username/?', checkSwitchUserRights, (req, resp) ->
@@ -222,6 +227,17 @@ app.get '/logout', (req, resp) ->
   resp.redirect '/'
 
 # API!
+app.post '/api/signup/?', (req, resp) ->
+  User.signUp
+    name: req.body.name
+    username: req.body.username
+    email: req.body.email
+  , (err, user) ->
+    if err?
+      resp.send 500, error: err
+    else
+      resp.send 201, user
+
 app.get '/api/tools/?', (req, resp) ->
   Tool.findAll (err, tools) ->
     resp.send 200, tools
@@ -366,13 +382,8 @@ app.post '/api/:user/sshkeys/?', (req, resp) ->
         else
           resp.send 200, success: 'ok'
 
-app.get '*', (req, resp) ->
-  resp.render 'index',
-    scripts: js 'app'
-    templates: js 'template/index'
-    user: JSON.stringify req.user
-    boxServer: process.env.CU_BOX_SERVER
-
+# Catch all other routes, send to client app
+app.get '*', renderClientApp
 
 # Define Port
 port = process.env.CU_PORT or 3001

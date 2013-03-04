@@ -1,12 +1,51 @@
 mongoose = require 'mongoose'
 sinon = require 'sinon'
 should = require 'should'
+_ = require 'underscore'
 
 request = require 'request'
 
 User = require('model/user').dbInject()
-
 Box = require('model/box')()
+
+describe 'User (client)', ->
+  helper = require '../helper'
+  helper.evalConcatenatedFile 'client/code/model/user.coffee'
+
+  describe 'Validation', ->
+    before ->
+      @attrs =
+        displayName: 'Tabby Testerson'
+        shortName: 'tabbytest'
+        email: 'tabby@example.org'
+
+    beforeEach ->
+      @user = new Cu.Model.User
+      @attrs = _.clone @attrs
+
+      @eventSpy = sinon.spy()
+      #@user.bind 'invalid', (a,b) =>
+      #  console.log 'WOT', @user.validationError
+      @user.bind 'invalid', @eventSpy
+
+    it 'saves when all fields are valid', ->
+      @user.set @attrs, validate: true
+      @eventSpy.called.should.be.false
+
+    it 'errors when name is not valid', ->
+      @attrs.displayName = '<script>evil</script>'
+      @user.set @attrs, validate: true
+      @eventSpy.calledOnce.should.be.true
+
+    it 'errors when shortName is not valid', ->
+      @attrs.shortName = 'glurble merp merp!!$$$!"$"£%$£^'
+      @user.set @attrs, validate: true
+      @eventSpy.calledOnce.should.be.true
+
+    it 'errors when email is not valid', ->
+      @attrs.email = 'tabby@example.org'
+      @user.set @attrs, validate: true
+      @eventSpy.calledOnce.should.be.true
 
 describe 'User', ->
   before ->

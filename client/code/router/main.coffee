@@ -45,6 +45,12 @@ class Cu.Router.Main extends Backbone.Router
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 
+  signUp: (plan) ->
+    contentView = new Cu.View.SignUp
+    subnavView = new Cu.View.Subnav {text: "#{plan} sign up"}
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
   dataset: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch

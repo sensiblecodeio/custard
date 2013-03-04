@@ -1,0 +1,20 @@
+<div id="form-container">
+  <p>
+    Name:
+    <input type="text" id="name">
+  </p>
+  <p>
+    Username:
+    <input type="text" id="username">
+  </p>
+  <p>
+    Email:
+    <input type="text" id="email">
+  </p>
+  <input type="submit" id="go" value="Go!!">
+</div>
+
+<div id="thanks" style="display:none">
+Thanks!
+We've emailed you a link to set you password. Click it!
+</div>

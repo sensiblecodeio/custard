@@ -5,6 +5,23 @@ settings = require '../settings.json'
 serverURL = process.env.CU_TEST_SERVER or settings.serverURL
 
 describe 'API', ->
+  context "When I'm not logged in", ->
+    describe 'Sign up', ->
+      context 'POST /api/signup', ->
+        before (done) ->
+          request.post
+            uri: "#{serverURL}/api/signup"
+            form:
+              name: 'Tabatha Testerson'
+              username: 'tabbytest'
+              email: 'tabby@example.org'
+          , (err, res, body) =>
+            @res = res
+            done()
+
+        it 'returns ok', ->
+          @res.should.include 'ok'
+
   context "When I'm logged in", ->
     before (done) ->
       @token = '339231725782156'

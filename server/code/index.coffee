@@ -25,6 +25,8 @@ Tool = require('model/tool')()
 
 # Set up database connection
 mongoose.connect process.env.CU_DB
+mongoose.connection.on 'error', (err) ->
+  console.warn "MONGOOSE CONNECTION ERROR #{err}"
 
 
 assets.jsCompilers.eco =

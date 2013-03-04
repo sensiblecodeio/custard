@@ -1,0 +1,5 @@
+<div id="plans">
+  <a href="/signup/free" class="free">Free</a>
+  <a href="/signup/cheap" class="cheap">Cheap</a>
+  <a href="/signup/expensive" class="expensive">Expensive</a>
+</div>

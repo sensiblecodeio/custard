@@ -33,8 +33,21 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
+    @route RegExp('signup/([^/]+)/?'), 'signUp'
 
   main: ->
+    if window.user.effective?
+      @homeLoggedIn()
+    else
+      @homeAnonymous()
+
+  homeAnonymous: ->
+    contentView = new Cu.View.Pricing
+    subnavView = new Cu.View.Subnav {text: 'Pricing'}
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  homeLoggedIn: ->
     window.datasets.fetch
       success: =>
         contentView = new Cu.View.DatasetList {collection: window.datasets}

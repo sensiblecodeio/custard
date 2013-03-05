@@ -26,3 +26,8 @@ class Cu.AppView
     @currentView.render()
 
     $(@selector).html @currentView.el
+
+  hideView: (view) ->
+    @currentView?.close()
+    $(@selector).empty()
+    

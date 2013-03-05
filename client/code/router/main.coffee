@@ -43,9 +43,8 @@ class Cu.Router.Main extends Backbone.Router
 
   homeAnonymous: ->
     contentView = new Cu.View.Pricing
-    subnavView = new Cu.View.Subnav {text: 'Pricing'}
     @appView.showView contentView
-    @subnavView.showView subnavView
+    @subnavView.hideView()
 
   homeLoggedIn: ->
     window.datasets.fetch

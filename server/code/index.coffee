@@ -228,6 +228,7 @@ app.post '/api/status/?', checkIdent, (req, resp) ->
           return resp.send 500, error: 'Error trying to update status'
         return resp.send 200, status: 'ok'
 
+############ AUTHENTICATED ############
 app.all '*', ensureAuthenticated
 
 app.get '/logout', (req, resp) ->

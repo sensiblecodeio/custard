@@ -1,4 +1,10 @@
 class Cu.Model.User extends Backbone.Model
+  idAttribute: 'shortName'
+  url: -> "/api/user/"
+
+  #TODO: hack
+  isNew: -> true
+
   validate: (attrs) ->
     errors = {}
     if not @validDisplayName attrs

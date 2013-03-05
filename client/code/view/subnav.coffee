@@ -340,6 +340,29 @@ class Cu.View.ViewNav extends Cu.View.EditableSubnav
       <hr>""")
     @
 
+class Cu.View.SignUpNav extends Backbone.View
+  className: 'subnav-wrapper'
+
+  render: ->
+    # Assumes @options.plan is set
+    plan = @options.plan
+    plan = plan.toUpperCase()[0] + plan.toLowerCase()[1..]
+
+    @$el.html("""
+      <div class="btn-toolbar" id="subnav-path">
+        <h1 class="btn-group">
+          <a class="btn btn-link" href="/">Sign Up</a>
+        </h1>
+        <div class="btn-group">
+          <span class="slash">/</span>
+        </div>
+        <h1 class="btn-group" style="margin-left: 7px">
+          <a class="btn btn-link" href="#{window.location.href}">#{plan}</a>
+        </h1>
+      </div>
+      <hr>""")
+    @
+
 class Cu.View.DocsNav extends Backbone.View
   className: 'subnav-wrapper'
 

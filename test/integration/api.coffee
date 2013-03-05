@@ -7,20 +7,20 @@ serverURL = process.env.CU_TEST_SERVER or settings.serverURL
 describe 'API', ->
   context "When I'm not logged in", ->
     describe 'Sign up', ->
-      context 'POST /api/signup', ->
+      context 'POST /api/<username>', ->
         before (done) ->
           request.post
-            uri: "#{serverURL}/api/signup"
+            uri: "#{serverURL}/api/user/"
             form:
-              name: 'Tabatha Testerson'
-              username: 'tabbytest'
+              shortName: 'tabbytest'
+              displayName: 'Tabatha Testerson'
               email: 'tabby@example.org'
           , (err, res, body) =>
-            @res = res
+            @body = body
             done()
 
         it 'returns ok', ->
-          @res.should.include 'ok'
+          @body.should.include 'tabbytest'
 
   context "When I'm logged in", ->
     before (done) ->
@@ -81,7 +81,7 @@ describe 'API', ->
 
         context 'when I update a tool', ->
           before (done) ->
-            # short pause, to make sure the updated 
+            # short pause, to make sure the updated
             # timestamp is after the created one
             setTimeout done, 1
 
@@ -237,13 +237,15 @@ describe 'API', ->
             , (err, res) =>
               @loginResponse = res
               done(err)
+
         it 'allows me to create a new profile', (done) ->
           @newUser = "new-#{String(Math.random()*Math.pow(2,32))[0..6]}"
           @newPassword = "newpass"
           request.post
-            uri: "#{serverURL}/api/#{@newUser}"
+            uri: "#{serverURL}/api/user"
             form:
-              email: 'random@example.com'
+              shortName: @newUser
+              email: 'random@example.org'
               displayName: 'Ran Dom Test'
           , (err, resp, body) =>
             obj = JSON.parse body

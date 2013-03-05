@@ -125,7 +125,8 @@ This will show you how to SSH in.</p>
   </tr>
   <tr>
     <td><code>apikey</code></td>
-    <td>The API Key of the box owner. (Hint: yours is <code><%= @user.apiKey %></code>)</td>
+    <td>The API Key of the box owner.
+      <% if @user?.apiKey: %>(Hint: yours is <code><%= @user.apiKey %></code>)<% end %></td>
   </tr>
 </table>
 
@@ -138,7 +139,7 @@ This will show you how to SSH in.</p>
   type: 'POST',
   data: {
     'cmd': 'echo "hello world" > hello.txt; ls -hitlar',
-    'apikey': '<%= @user.apiKey %>'
+    'apikey': '<%= @user?.apiKey or '<span class="muted">&lt;your-apikey&gt;</span>' %>'
   }
 }).done(function(text){
   console.log(text)
@@ -163,7 +164,8 @@ This will show you how to SSH in.</p>
   </tr>
   <tr>
     <td><code>apikey</code></td>
-    <td>The API Key of the box owner. (Hint: yours is <code><%= @user.apiKey %></code>)</td>
+    <td>The API Key of the box owner.
+      <% if @user?.apiKey: %>(Hint: yours is <code><%= @user.apiKey %></code>)<% end %></td>
   </tr>
   <tr>
     <td><code>next</code></td>
@@ -305,10 +307,11 @@ to your local <code>~/.ssh/config</code>.
 
 <p>And add this to your local <code>~/.bashrc</code> or equivalent.
 
-<pre class="prettyprint">export GIT_AUTHOR_EMAIL=<%= @user.email[0] %>
-export GIT_AUTHOR_NAME='<%= @user.displayName %>'
-export GIT_COMMITTER_EMAIL=<%= @user.email[0] %>
-export GIT_COMMITTER_NAME='<%= @user.displayName %>'</pre>
+<pre class="prettyprint">export GIT_AUTHOR_EMAIL=<%= if @user?.email then @user.email[0] else '<span class="muted">example@example.org</span>'%>
+export GIT_AUTHOR_NAME='<%= @user?.displayName or '<span class="muted">A. N. Example</span>' %>'
+export GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL
+export GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
+</pre>
 
 <p>SSH will then pass those environment variables through, and Git will
 use them to record when you make commits inside the box. 
@@ -400,7 +403,7 @@ and <code>source</code> contains information about the view's box.
 
 <pre class="prettyprint linenums">{
   "source": {
-    "apikey": "<%= @user.apiKey %>",
+    "apikey": "<%= @user?.apiKey or '<span class="muted">&lt;your-apikey&gt;</span>' %>"
     "publishToken": "t5odv7of5l",
     "box": "fdtlza1",
     "url": "https://box.scraperwiki.com/fdtlza1/t5odv7of5l"

@@ -203,8 +203,14 @@ app.post '/api/user/?', (req, resp) ->
     requestingUser: req.user?.real
   , (err, user) ->
     if err?
+      if err.action is 'save' and /duplicate key/.test err.err
+        err =
+          code: "username-duplicate"
+          error: "Username is already taken"
+      if not err.error
+        err.error = err.err
       console.warn err
-      return resp.send 500, error: "Error saving user: #{err}"
+      return resp.json 500, err
     else
       return resp.json 201, user
 

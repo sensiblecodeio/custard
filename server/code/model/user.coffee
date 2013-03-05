@@ -115,7 +115,8 @@ class User extends ModelBase
 
     new User(newUser).save (err) ->
       if err?
-        callback "Error saving user: #{err}", null
+        err.action = 'save'
+        callback err, null
 
       User.findByShortName newUser.shortName, (err, user) ->
         if user?
@@ -128,13 +129,15 @@ class User extends ModelBase
             if opts.requestingUser?.isStaff is true
               userobj.token = token
               if err?
-                callback "Error emailing user: #{err}", null
+                err.action = 'token'
+                callback err, null
               else
                 callback null, userobj
             else
               signUpEmail user, token, (err) ->
                 if err?
-                  callback "Error emailing user: #{err}", null
+                  err.action = "email"
+                  callback err, null
                 else
                   callback null, userobj
         else

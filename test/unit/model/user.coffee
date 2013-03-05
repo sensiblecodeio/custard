@@ -24,8 +24,6 @@ describe 'User (client)', ->
       @attrs = _.clone @attrs
 
       @eventSpy = sinon.spy()
-      #@user.bind 'invalid', (a,b) =>
-      #  console.log 'WOT', @user.validationError
       @user.bind 'invalid', @eventSpy
 
     it 'saves when all fields are valid', ->
@@ -47,7 +45,7 @@ describe 'User (client)', ->
       @user.set @attrs, validate: true
       @eventSpy.calledOnce.should.be.true
 
-describe 'User', ->
+describe 'User (Server)', ->
   before ->
     mongoose.connect process.env.CU_DB
 
@@ -87,7 +85,7 @@ describe 'User', ->
       # TODO: Stub actual DB calls?
       User.findByShortName 'ickletest', (err, user) ->
         should.exist user
-        user.displayName.should.equal 'Mr Ickle Test'
+        user.displayName.should.equal 'Ickle Test'
         done()
 
     it "returns null when the user doesn't exist", (done) ->
@@ -130,3 +128,33 @@ describe 'User', ->
             form:
               keys: ['d', 'e', 'f', 'a', 'b', 'c']
           correctArgs.should.be.true
+
+  describe 'Validation', ->
+    beforeEach ->
+      @user = new User
+        shortName: 'testoo'
+        displayName: 'Test Testerson'
+        email: ['test@example.org']
+
+    it 'should save if all fields are valid', (done) ->
+      @user.save (err) ->
+        should.not.exist err
+        done()
+
+    it 'should not save if the shortName is invalid', (done) ->
+      @user.shortName = 'Test !!!!'
+      @user.save (err) ->
+        should.exist err
+        done()
+
+    it 'should not save if the displayName is invalid', (done) ->
+      @user.displayName = '<script>BAD</script>'
+      @user.save (err) ->
+        should.exist err
+        done()
+
+    it 'should not save if the email is invalid', (done) ->
+      @user.email = ['notanemail']
+      @user.save (err) ->
+        should.exist err
+        done()

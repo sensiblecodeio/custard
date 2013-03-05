@@ -180,11 +180,6 @@ app.post "/login", (req, resp) ->
     failureFlash: true
   )(req,resp)
 
-# TODO: sort out nice way of serving templates
-app.get '/tpl/:page', (req, resp) ->
-  resp.render req.params.page,
-    user: req.user
-
 # Set a password using a token.
 # TODO: :token should be in POST body
 app.post '/api/token/:token/?', (req, resp) ->
@@ -200,6 +195,35 @@ app.post '/api/token/:token/?', (req, resp) ->
           return resp.send 500
     else
       return resp.send 404, error: 'No token/password specified'
+
+app.post '/api/user/?', (req, resp) ->
+  newUser =
+    shortName: req.body.shortName
+    displayName: req.body.displayName
+    email: [req.body.email]
+    apikey: uuid.v4()
+    accountLevel: 'free'
+
+  if req.body.logoUrl?
+    newUser.logoUrl = req.body.logoUrl
+
+  new User(newUser).save (err) ->
+    if err?
+      console.warn err
+      return resp.send 500, error: "Error saving user: #{err}"
+
+    User.findByShortName newUser.shortName, (err, user) ->
+      console.warn err if err?
+      if user?
+        token = String(Math.random()).replace('0.', '')
+        new Token({token: token, shortName: user.shortName}).save (err) ->
+          # 201 Created, RFC2616
+          userobj = user.objectify()
+          if req.user?.real?.isStaff?
+            userobj.token = token
+          return resp.json 201, userobj
+      else
+        return resp.send 500, error: "Can't find user"
 
 app.post '/api/status/?', checkIdent, (req, resp) ->
   console.log "POST /api/status/ from ident #{req.ident}"
@@ -228,17 +252,6 @@ app.get '/logout', (req, resp) ->
   resp.redirect '/'
 
 # API!
-app.post '/api/signup/?', (req, resp) ->
-  User.signUp
-    name: req.body.name
-    username: req.body.username
-    email: req.body.email
-  , (err, user) ->
-    if err?
-      resp.send 500, error: err
-    else
-      resp.send 201, user
-
 app.get '/api/tools/?', (req, resp) ->
   Tool.findAll (err, tools) ->
     resp.send 200, tools
@@ -350,27 +363,6 @@ app.get '/api/user/?', checkStaff, (req, resp) ->
       result = for u in users when u.shortName
         getSessionUser u
       return resp.send 200, result
-
-
-# :todo: you should POST to /api/user/ to create a user, not /api/<username>
-app.post '/api/:user/?', checkStaff, (req, resp) ->
-  newUser =
-    shortName: req.params.user
-    displayName: req.body.displayName
-    email: [req.body.email]
-    apikey: uuid.v4()
-  if req.body.logoUrl?
-    newUser.logoUrl = req.body.logoUrl
-
-  new User(newUser).save (err) ->
-    console.warn err if err?
-    User.findByShortName newUser.shortName, (err, user) ->
-      token = String(Math.random()).replace('0.', '')
-      new Token({token: token, shortName: user.shortName}).save (err) ->
-        # 201 Created, RFC2616
-        userobj = user.objectify()
-        userobj.token = token
-        return resp.json 201, userobj
 
 app.post '/api/:user/sshkeys/?', (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->

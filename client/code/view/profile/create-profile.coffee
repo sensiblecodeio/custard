@@ -17,7 +17,7 @@ class Cu.View.CreateProfile extends Backbone.View
     if shortName!=''
       $button.attr('disabled', true).addClass('loading').html('Creating Profile&hellip;')
       $.ajax
-        url: "#{location.protocol}//#{location.host}/api/#{shortName}/"
+        url: "#{location.protocol}//#{location.host}/api/user/"
         data:
           shortName: shortName
           displayName: displayName

@@ -47,7 +47,7 @@ describe 'User (client)', ->
       @user.set @attrs, validate: true
       @eventSpy.calledOnce.should.be.true
 
-describe 'User', ->
+describe 'User (Server)', ->
   before ->
     mongoose.connect process.env.CU_DB
 
@@ -87,7 +87,7 @@ describe 'User', ->
       # TODO: Stub actual DB calls?
       User.findByShortName 'ickletest', (err, user) ->
         should.exist user
-        user.displayName.should.equal 'Mr Ickle Test'
+        user.displayName.should.equal 'Ickle Test'
         done()
 
     it "returns null when the user doesn't exist", (done) ->

@@ -90,7 +90,6 @@ verify = (username, password, done) ->
 
 
 app.configure ->
-
   app.use express.bodyParser()
   app.use express.cookieParser( process.env.CU_SESSION_SECRET )
   app.use express.session
@@ -173,7 +172,6 @@ app.get '/switch/:username/?', checkSwitchUserRights, (req, resp) ->
       resp.end()
 
 app.post "/login", (req, resp) ->
-  # console.log req.body # XXX debug only, shows passwords, please remove
   passport.authenticate("local",
     successRedirect: "/"
     failureRedirect: "/login"

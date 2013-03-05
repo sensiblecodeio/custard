@@ -17,7 +17,8 @@
     "eco": "~1.1.0-rc-3",
     "rimraf": "~2.1.1",
     "ident-express": "*",
-    "uuid": "~1.4.0"
+    "uuid": "~1.4.0",
+    "nodemailer": "~0.3.43"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

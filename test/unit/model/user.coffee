@@ -158,3 +158,19 @@ describe 'User (Server)', ->
       @user.save (err) ->
         should.exist err
         done()
+
+  describe 'Adding a user', ->
+    context 'when add is called', ->
+      before (done) ->
+        @user.add
+          shortName: 'testerson'
+          displayName: 'Test Testerson Esq.'
+          email: ['test@example.org']
+        , done
+
+      # TODO: stub database
+      xit 'saves the user to the database'
+
+      # TODO: stub nodemailer
+      xit 'emails the user', ->
+        @emailStub.calledOnce.should.be.true

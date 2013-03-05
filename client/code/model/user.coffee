@@ -11,10 +11,19 @@ class Cu.Model.User extends Backbone.Model
       return errors
 
   validDisplayName: (attrs) ->
-    'displayName' of attrs and /^[a-zA-Z0-9-. ]+$/g.test attrs.displayName
+    if not 'displayName' of attrs
+      return true
+    else
+      return /^[a-zA-Z0-9-. ]+$/g.test attrs.displayName
 
   validShortName: (attrs) ->
-    'shortName' of attrs and /^[a-zA-Z0-9-.]+$/g.test attrs.shortName
+    if not 'shortName' of attrs
+      return true
+    else
+      return /^[a-zA-Z0-9-.]+$/g.test attrs.shortName
 
   validEmail: (attrs) ->
-    'email' of attrs and /^[a-zA-Z0-9-@.]+$/g.test attrs.email
+    if not 'email' of attrs
+      return true
+    else
+      return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+$/gi.test attrs.email

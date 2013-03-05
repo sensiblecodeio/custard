@@ -26,15 +26,17 @@ and conditions. End user documentation is also separate.</p>
 transparently. If you have any questions, please get in touch and help us 
 improve this living document.</p>
 
+<hr />
+
 <h2 id="type">Type of cloud service</h2>
 
-<p>ScraperWiki is a hybrid of SaaS and PaaS. It provides end user tools like a
+<p>ScraperWiki is a hybrid of <abbr title="Software as a Service">SaaS</abbr> and <abbr title="Platform as a Service">PaaS</abbr>. It provides end user tools like a
 SaaS, yet allows visibility and customisation of all source code like a PaaS.
 This is because data tools need to be <b>easy</b> for anyone to use in most cases, yet
 <b>powerful</b> enough for those who can program to handle edge cases when needed.
 </p>
 
-<p>ScraperWiki is deployed in a Public Cloud model. It is hosted on IaaS
+<p>ScraperWiki is deployed in a Public Cloud model. It is hosted on <abbr title="Infrastructure as a Service">IaaS</abbr>
 servers at cloud provider <a href="http://www.linode.com/">Linode</a>, at its
 London datacentre. We meet the tiering standards that Linode meet.
 </p>
@@ -51,6 +53,8 @@ particular, customers can contract third parties to adapt, extend or write new
 data tools and applications which run on the platform, as they want.
 </p>
 
+<hr />
+
 <h2 id="what">Languages / protocols</h2>
 
 <p>ScraperWiki is a web platform for data science. Subscribers to ScraperWiki can
@@ -61,20 +65,19 @@ that in a common format (Excel, JSON, CSV), or as interactive web
 visualisations.
 </p>
 
-<p>ScraperWiki supports any open source programming language &ndash; Python, R, Perl,
-Java and so on.  Schema-light SQL datasets (based on SQLite or PostgreSQL).
-Integration between datasets and views using web-standards based SQL API, which
-returns JSON over a REST interface. Full POSIX filesystem.  Integrates with SSH, SFTP, SCP, Git, Subversion and
-other standard Unix tools.  Data export over HTTP, data visualisation using
-HTML/Javascript working with any of the backend languages.
-</p>
+<p>ScraperWiki supports:</p>
+<ul>
+  <li>Any open source programming language &ndash; Python, R, Perl, Java and so on.</li>
+  <li>Schema-light SQL datasets (based on SQLite or PostgreSQL).</li>
+  <li>Integration between datasets and views using web-standards based SQL API, which returns JSON over a REST interface.</li>
+  <li>Full POSIX filesystem.</li>
+  <li>External integration via SSH, SFTP, SCP, Git, Subversion and other standard Unix tools.</li>
+  <li>Data export over HTTP, data visualisation using HTML/Javascript working with any of the backend languages.</li>
+</ul>
 
-<p class="well well-small"><span class="label label-info">Top tip!</span> 
-You can run any other Unix software where needed, including binary only
-software (e.g. Abbyy's PDF reader) &ndash; each dataset is a full virtual
-Linux shell account.
-</p> 
+<p class="well well-small"><span class="label label-info">Good to know!</span> Each dataset is a full virtual Linux shell account, meaning you can run any other Unix software you like, including binary-only software (e.g. Abbyy's PDF reader).</p>
 
+<hr />
 
 <h2 id="backups">Backups / disaster recovery</h2>
 
@@ -87,31 +90,60 @@ cloud service.
 other redundantly on Amazon S3. These are five sequentially worse disaster
 situations, with recovery times indicated.</p>
 
-<ol>
-<li>Individual machines are designed to be ephemeral, and provision is fully
-automated. We can rebuild individual machines in about <b>20 minutes</b>, and the
-whole cluster in under <b>2 hours</b>. MongoDB is backed up to Amazon S3, where we can
-restore in under <b>1 hour</b>.
-</li>
-<li>Should multiple GlusterFS servers fail, or a software bug damage the
-GlusterFS servers, we have a Linode whole machine image backup of them. This is
-a daily rotating backup, which can be recovered within about <b>an hour</b>.
-</li>
-<li>We make daily rotating differential encrypted backups of the GlusterFS
-filesystem using Duplicity, with weekly full backups. These are stored in
-Amazon S3. We can restore the whole filesystem in under <b>1 day</b>, and corporate
-plan customers in under <b>2 hours</b>.
-</li>
-<li>Should Linode’s London data centre fail, they have additional data centres
-in the US and Japan which we can restore to in under <b>1 day</b> for all user, under
-2 hours for corporate customers.
-</li>
-<li>
-If the whole of Linode fails, then we will recover to a new cluster on Amazon
-EC2. This will currently require updating of some systems administration
-scripts, so will take <b>2 days</b>.
-</li>
-</ol>
+<style type="text/css">
+.disasters td {
+  vertical-align: middle;
+}
+td.disaster-summary,
+td.disaster-estimate {
+  font-weight: bold;
+  text-align: center;
+}
+td.disaster-description {
+  font-size: 14px;
+  line-height: 20px;
+}
+.troublesome td {
+  background-color: #FFFAE8;
+  border-color: #E9E1C3;
+}
+.bad td {
+  background-color: #FFE5C5;
+  border-color: #E9CBA7;
+}
+.terrible td {
+  background-color: #FFC793;
+  border-color: #E6A971;
+}
+</style>
+
+<table class="table table-bordered disasters">
+  <tr>
+    <td class="disaster-summary">Single machine failure</td>
+    <td class="disaster-description">We can automatically rebuild individual machines in about <b>20 minutes</b>, and the whole cluster in under <b>2 hours</b>.
+      Machines containing persistent filesystems can be recovered from daily images within about <b>1 hour</b>.
+      MongoDB is backed up to Amazon S3, where we can restore in under <b>1 hour</b>.</td>
+    <td class="disaster-estimate">~1&nbsp;hour</td>
+  </tr>
+  <tr class="troublesome">
+    <td class="disaster-summary">Filesystem failure</td>
+    <td class="disaster-description">Should multiple GlusterFS servers fail, or a software bug damage the GlusterFS filesystem, we have daily rotating differential encrypted backups of the GlusterFS filesystem using Duplicity, with weekly full backups. These are stored in Amazon S3. We can restore the whole filesystem in under <b>1 day</b>, and corporate plan customers in under <b>2 hours</b>.</td>
+    <td class="disaster-estimate">&lt;2&nbsp;hours</td>
+  </tr>
+  <tr class="bad">
+    <td class="disaster-summary">Datacentre failure</td>
+    <td class="disaster-description">Should Linode’s London data centre fail, they have additional data centres in the US and Japan which we can restore to in under <b>1 day</b> for all user, <b>under 2 hours</b> for corporate customers.</td>
+    <td class="disaster-estimate">&lt;1&nbsp;day</td>
+  </tr>
+  <tr class="terrible">
+    <td class="disaster-summary">Linode failure</td>
+    <td class="disaster-description">If the whole of Linode fails, then we will recover to a new cluster on Amazon EC2. This will currently require updating of some systems administration scripts, so will take <b>2 days</b>.</td>
+    <td class="disaster-estimate">2&nbsp;days</td>
+  </tr>
+</table>
+
+
+<hr />
 
 <h2 id="leaving">Should you wish to leave</h2>
 

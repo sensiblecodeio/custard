@@ -1,5 +1,5 @@
-<div id="plans">
-  <a href="/signup/free" class="free">Free</a>
-  <a href="/signup/cheap" class="cheap">Cheap</a>
-  <a href="/signup/expensive" class="expensive">Expensive</a>
+<div id="plans" class="hero-unit">
+  <a href="/signup/free" class="free btn btn-large">Free</a>
+  <a href="/signup/cheap" class="cheap btn btn-large btn-primary">Cheap</a>
+  <a href="/signup/expensive" class="expensive btn btn-large">Expensive</a>
 </div>

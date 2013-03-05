@@ -1,17 +1,19 @@
-<div id="form-container">
-  <p>
-    Name:
-    <input type="text" id="name">
-  </p>
-  <p>
-    Username:
-    <input type="text" id="username">
-  </p>
-  <p>
-    Email:
-    <input type="text" id="email">
-  </p>
-  <input type="submit" id="go" value="Go!!">
+<form class="form-horizontal" style="margin-top: 20px">
+  <div class="control-group">
+    <label for="name" class="control-label">Name:</label>
+    <div class="controls"><input type="text" id="name" /></div>
+  </div>
+  <div class="control-group">
+    <label for="username" class="control-label">Username:</label>
+    <div class="controls"><input type="text" id="username" /></div>
+  </div>
+  <div class="control-group">
+    <label for="email" class="control-label">Email:</label>
+    <div class="controls"><input type="text" id="email" /></div>
+  </div>
+  <div class="control-group">
+    <div class="controls"><button class="btn btn-primary" type="submit" id="go"><i class="icon-ok space"></i> Create Account</button></div>
+  </div>
 </div>
 
 <div id="thanks" style="display:none">

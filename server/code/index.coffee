@@ -152,9 +152,10 @@ app.get '/login/?', (req, resp) ->
   resp.render 'login',
     errors: req.flash('error')
 
-# Allow set-password to be visited by anons
+# Allow set-password, signup, docs, etc, to be visited by anons
 app.get '/set-password/:token/?', renderClientApp
 app.get '/signup/?*', renderClientApp
+app.get '/docs/?*', renderClientApp
 app.get '/', renderClientApp
 
 # Switch is protected by a specific function.

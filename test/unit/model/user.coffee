@@ -41,7 +41,7 @@ describe 'User (client)', ->
       @eventSpy.calledOnce.should.be.true
 
     it 'errors when email is not valid', ->
-      @attrs.email = 'tabby@example.org'
+      @attrs.email = 'tabby@example.org@DROP TABLES;'
       @user.set @attrs, validate: true
       @eventSpy.calledOnce.should.be.true
 

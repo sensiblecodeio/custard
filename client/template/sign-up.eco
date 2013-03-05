@@ -1,4 +1,4 @@
-<form class="form-horizontal" style="margin-top: 20px">
+<form class="form-horizontal">
   <div class="control-group">
     <label for="displayName" class="control-label">Name:</label>
     <div class="controls"><input type="text" id="displayName" /></div>
@@ -16,7 +16,7 @@
   </div>
 </form>
 
-<div id="thanks" style="display:none">
-Thanks!
+<div id="thanks" class="alert alert-success" style="display:none">
+<strong>Thanks!</strong>
 We've emailed you a link to set you password. Click it!
 </div>

@@ -561,6 +561,7 @@ div.dataset-overview .actions .btn-large img {
 div.login-page,
 div.create-profile,
 div.set-password,
+div.sign-up,
 div.error-page {
   padding: 20px;
 }

@@ -13,6 +13,8 @@ userSchema = new mongoose.Schema
   password: String # encrypted, see setPassword method
   apikey: {type: String, unique: true}
   isStaff: Boolean
+  accountLevel: String
+  trialStarted: {type: Date, default: Date.now}
   created: {type: Date, default: Date.now}
   logoUrl: String
   sshKeys: [String]

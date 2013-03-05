@@ -592,6 +592,19 @@ div.docs h3 {
   margin-top: 20px;
 }
 
+div.pricing {
+  padding: 0 20px;
+  text-align: center;
+}
+
+div.pricing .hero-unit {
+  background-color: #FFF7BB;
+}
+
+div.pricing .btn + .btn {
+  margin-left: 12px;
+}
+
 @media only screen and (min-width: 620px) {
 
   #subnav {

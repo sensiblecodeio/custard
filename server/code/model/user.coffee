@@ -28,6 +28,19 @@ class User extends ModelBase
       @apikey = fresh_apikey()
     @
 
+  save: (callback) ->
+    error = @validate()
+    if error?
+      callback error
+    else
+      super callback
+
+  validate: ->
+    # TODO: proper regex, share validation across server & client
+    return 'invalid shortName' unless /^[a-zA-Z0-9-]+$/g.test @shortName
+    return 'invalid displayName' unless /^[a-zA-Z0-9- ]+$/g.test @displayName
+    return 'invalid email' unless /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/gi.test @email[0]
+
   checkPassword: (password, callback) ->
     User.findByShortName @shortName, (err, user) ->
       console.warn err if err?

@@ -1,6 +1,5 @@
 class Cu.Model.User extends Backbone.Model
   validate: (attrs) ->
-
     return 'invalid name' unless @validDisplayName attrs
     return 'invalid username' unless @validShortName attrs
     return 'invalid email' unless @validEmail attrs

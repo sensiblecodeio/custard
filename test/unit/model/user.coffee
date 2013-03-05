@@ -130,3 +130,33 @@ describe 'User (Server)', ->
             form:
               keys: ['d', 'e', 'f', 'a', 'b', 'c']
           correctArgs.should.be.true
+
+  describe 'Validation', ->
+    beforeEach ->
+      @user = new User
+        shortName: 'testoo'
+        displayName: 'Test Testerson'
+        email: ['test@example.org']
+
+    it 'should save if all fields are valid', (done) ->
+      @user.save (err) ->
+        should.not.exist err
+        done()
+
+    it 'should not save if the shortName is invalid', (done) ->
+      @user.shortName = 'Test !!!!'
+      @user.save (err) ->
+        should.exist err
+        done()
+
+    it 'should not save if the displayName is invalid', (done) ->
+      @user.displayName = '<script>BAD</script>'
+      @user.save (err) ->
+        should.exist err
+        done()
+
+    it 'should not save if the email is invalid', (done) ->
+      @user.email = ['notanemail']
+      @user.save (err) ->
+        should.exist err
+        done()

@@ -24,8 +24,6 @@ describe 'User (client)', ->
       @attrs = _.clone @attrs
 
       @eventSpy = sinon.spy()
-      #@user.bind 'invalid', (a,b) =>
-      #  console.log 'WOT', @user.validationError
       @user.bind 'invalid', @eventSpy
 
     it 'saves when all fields are valid', ->

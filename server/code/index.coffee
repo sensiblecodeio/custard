@@ -179,11 +179,6 @@ app.post "/login", (req, resp) ->
     failureFlash: true
   )(req,resp)
 
-# TODO: sort out nice way of serving templates
-app.get '/tpl/:page', (req, resp) ->
-  resp.render req.params.page,
-    user: req.user
-
 # Set a password using a token.
 # TODO: :token should be in POST body
 app.post '/api/token/:token/?', (req, resp) ->
@@ -256,17 +251,6 @@ app.get '/logout', (req, resp) ->
   resp.redirect '/'
 
 # API!
-app.post '/api/signup/?', (req, resp) ->
-  User.signUp
-    name: req.body.name
-    username: req.body.username
-    email: req.body.email
-  , (err, user) ->
-    if err?
-      resp.send 500, error: err
-    else
-      resp.send 201, user
-
 app.get '/api/tools/?', (req, resp) ->
   Tool.findAll (err, tools) ->
     resp.send 200, tools

@@ -39,8 +39,8 @@ class User extends ModelBase
 
   validate: ->
     # TODO: proper regex, share validation across server & client
-    return 'invalid shortName' unless /^[a-zA-Z0-9-]+$/g.test @shortName
-    return 'invalid displayName' unless /^[a-zA-Z0-9- ]+$/g.test @displayName
+    return 'invalid shortName' unless /^[a-zA-Z0-9-.]+$/g.test @shortName
+    return 'invalid displayName' unless /^[a-zA-Z0-9-. ]+$/g.test @displayName
     return 'invalid email' unless /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/gi.test @email[0]
 
   checkPassword: (password, callback) ->

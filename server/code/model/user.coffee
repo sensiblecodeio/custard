@@ -2,9 +2,13 @@ bcrypt = require 'bcrypt'
 mongoose = require 'mongoose'
 async = require 'async'
 request = require 'request'
+uuid = require 'uuid'
 
 ModelBase = require 'model/base'
 Box = require('model/box')()
+Token = require('model/token')()
+
+{signUpEmail} = require 'lib/email'
 
 userSchema = new mongoose.Schema
   shortName: {type: String, unique: true}
@@ -96,6 +100,45 @@ class User extends ModelBase
         callback null, @makeModelFromMongo user
       else
         callback null, null
+
+  # Add and email the user
+  @add: (opts, callback) ->
+    newUser =
+      shortName: opts.newUser.shortName
+      displayName: opts.newUser.displayName
+      email: [opts.newUser.email]
+      apikey: uuid.v4()
+      accountLevel: 'free'
+
+    if opts.logoUrl?
+      newUser.logoUrl = opts.logoUrl
+
+    new User(newUser).save (err) ->
+      if err?
+        callback "Error saving user: #{err}", null
+
+      User.findByShortName newUser.shortName, (err, user) ->
+        if user?
+          token = String(Math.random()).replace('0.', '')
+          new Token({token: token, shortName: user.shortName}).save (err) ->
+            # 201 Created, RFC2616
+            userobj = user.objectify()
+            # TODO: sort out email templates so we can enable this
+            # Don't email if staff are creating at the moment
+            if opts.requestingUser?.isStaff is true
+              userobj.token = token
+              if err?
+                callback "Error emailing user: #{err}", null
+              else
+                callback null, userobj
+            else
+              signUpEmail user, token, (err) ->
+                if err?
+                  callback "Error emailing user: #{err}", null
+                else
+                  callback null, userobj
+        else
+          callback "Can't find user", null
 
 rand32 = ->
   # 32 bits of lovely randomness.

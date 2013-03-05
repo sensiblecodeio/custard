@@ -15,7 +15,6 @@ mongoStore = require('connect-mongo')(express)
 flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
-uuid = require 'uuid'
 
 {User} = require 'model/user'
 Dataset = require('model/dataset')()
@@ -90,7 +89,6 @@ verify = (username, password, done) ->
 
 
 app.configure ->
-
   app.use express.bodyParser()
   app.use express.cookieParser( process.env.CU_SESSION_SECRET )
   app.use express.session
@@ -173,7 +171,6 @@ app.get '/switch/:username/?', checkSwitchUserRights, (req, resp) ->
       resp.end()
 
 app.post "/login", (req, resp) ->
-  # console.log req.body # XXX debug only, shows passwords, please remove
   passport.authenticate("local",
     successRedirect: "/"
     failureRedirect: "/login"
@@ -196,34 +193,20 @@ app.post '/api/token/:token/?', (req, resp) ->
     else
       return resp.send 404, error: 'No token/password specified'
 
+# Add a user
 app.post '/api/user/?', (req, resp) ->
-  newUser =
-    shortName: req.body.shortName
-    displayName: req.body.displayName
-    email: [req.body.email]
-    apikey: uuid.v4()
-    accountLevel: 'free'
-
-  if req.body.logoUrl?
-    newUser.logoUrl = req.body.logoUrl
-
-  new User(newUser).save (err) ->
+  User.add
+    newUser:
+      shortName: req.body.shortName
+      displayName: req.body.displayName
+      email: [req.body.email]
+    requestingUser: req.user?.real
+  , (err, user) ->
     if err?
       console.warn err
       return resp.send 500, error: "Error saving user: #{err}"
-
-    User.findByShortName newUser.shortName, (err, user) ->
-      console.warn err if err?
-      if user?
-        token = String(Math.random()).replace('0.', '')
-        new Token({token: token, shortName: user.shortName}).save (err) ->
-          # 201 Created, RFC2616
-          userobj = user.objectify()
-          if req.user?.real?.isStaff?
-            userobj.token = token
-          return resp.json 201, userobj
-      else
-        return resp.send 500, error: "Can't find user"
+    else
+      return resp.json 201, user
 
 app.post '/api/status/?', checkIdent, (req, resp) ->
   console.log "POST /api/status/ from ident #{req.ident}"

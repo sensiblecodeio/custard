@@ -13,12 +13,19 @@ describe 'Sign up', ->
 
   context 'when I enter my details and click go', ->
     before (done) ->
-      wd40.fill '#name', 'Tabatha Testington', ->
-        wd40.fill '#username', 'tabbytest', ->
+      wd40.fill '#displayName', 'Tabatha Testington', ->
+        wd40.fill '#shortName', 'tabbytest', ->
           wd40.fill '#email', 'tabby@example.org', ->
             wd40.click '#go', done
 
-    it 'hides the form and says thanks', (done) ->
-      wd40.trueURL (err, url) ->
-        url.should.include '/signup/thanks'
-        done()
+    it 'hides the form', (done) ->
+        browser.elementByCss 'form.form-horizontal', (err, input) ->
+          browser.isVisible input, (err, visible) ->
+            visible.should.be.false
+            done()
+
+    it 'says thanks', (done) ->
+        browser.elementByCss '#thanks', (err, input) ->
+          browser.isVisible input, (err, visible) ->
+            visible.should.be.true
+            done()

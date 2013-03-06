@@ -22,7 +22,7 @@ describe 'API', ->
         it 'returns ok', ->
           @body.should.include 'tabbytest'
 
-  context "When I'm logged in", ->
+  context "When I have set my password", ->
     before (done) ->
       @token = '339231725782156'
       @user = 'ickletest'
@@ -34,23 +34,7 @@ describe 'API', ->
         uri: "#{serverURL}/api/token/#{@token}"
         form:
           password: @password
-      , (err, res) =>
-        @loginURL = "#{serverURL}/login"
-        request.get @loginURL, =>
-          request.post
-            uri: @loginURL
-            form:
-              username: @user
-              password: @password
-          , (err, res) =>
-            @loginResponse = res
-            done(err)
-
-    it 'managed to log in', ->
-      should.exist @loginResponse
-      # check we're being redirected to /, as opposed to /login
-      @loginResponse.body.should.include 'Redirecting to /'
-      @loginResponse.body.should.not.include 'Redirecting to /login'
+      , done
 
     describe 'Tools', ->
       context 'POST /api/tools', ->
@@ -64,7 +48,7 @@ describe 'API', ->
                 name: @toolName
                 type: 'view'
                 gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
-            , (err, res) =>
+            , (err, res, body) =>
               @response = res
               @tool = JSON.parse res.body
               done()

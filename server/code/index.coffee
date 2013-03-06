@@ -186,7 +186,13 @@ app.post '/api/token/:token/?', (req, resp) ->
       User.findByShortName token.shortName, (err, user) ->
         if user?
           user.setPassword req.body.password, ->
-            return resp.send 200, user
+            sessionUser =
+              real: getSessionUser user
+              effective: getSessionUser user
+            req.user = sessionUser
+            req.session.save()
+            req.login sessionUser, ->
+              return resp.send 200, user
         else
           console.warn "no User with shortname #{token.shortname} for Token #{token.token}"
           return resp.send 500

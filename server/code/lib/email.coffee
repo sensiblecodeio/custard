@@ -3,7 +3,11 @@ nodemailer = require("nodemailer")
 #TODO: html email (templates?)
 #
 exports.signUpEmail = (user, token, callback) ->
-  transport = nodemailer.createTransport "sendmail"
+  transport = nodemailer.createTransport 'SMTP'
+    service: "SendGrid"
+    auth:
+      user: process.env.CU_SENDGRID_USER
+      pass: process.env.CU_SENDGRID_PASS
 
   mailOptions =
     from: 'feedback@scraperwiki.com'

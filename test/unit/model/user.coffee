@@ -162,10 +162,11 @@ describe 'User (Server)', ->
   describe 'Adding a user', ->
     context 'when add is called', ->
       before (done) ->
-        @user.add
-          shortName: 'testerson'
-          displayName: 'Test Testerson Esq.'
-          email: ['test@example.org']
+        User.add
+          newUser:
+            shortName: 'testerson'
+            displayName: 'Test Testerson Esq.'
+            email: ['test@example.org']
         , done
 
       # TODO: stub database

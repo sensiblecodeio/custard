@@ -26,11 +26,25 @@ class Cu.View.SignUp extends Backbone.View
         console.log model, response, options
         $('form').hide()
         $('#thanks').show()
-      error: (model, response, options) ->
+      error: (model, response, options) =>
         console.warn model, response, options
-        $('#go', @$el).removeClass('loading').html('<i class="icon-ok space"></i> Create Account')
-        for key of response
-          $("##{key}").after("""<span class="help-inline">#{response[key]}</span>""").parents('.control-group').addClass('error')
+        if response.responseText
+          # Probably an xhr object.
+          xhr = response
+          jsonResponse = JSON.parse xhr.responseText
+          $div = $("""<div class="alert alert-error" id="hghg"><strong>#{jsonResponse.error or "Something went wrong"}<strong></div>""")
+          @$el.prepend $div
+          if jsonResponse.code == 'username-duplicate'
+            # :todo: Add password reset link.
+            $div.append(""" Is that you? If we had a password reset link, we'd give it to you now.""")
+          else
+            # Don't really know what the error is, so say something technical and geeky.
+            $div.append("""<code>#{JSON.stringify jsonResponse}</code>""")
+        else
+          # probably a thing returned by the model validate method.
+          $('#go', @$el).removeClass('loading').html('<i class="icon-ok space"></i> Create Account')
+          for key of response
+            $("##{key}").after("""<span class="help-inline">#{response[key]}</span>""").parents('.control-group').addClass('error')
 
   cleanUpForm: ->
     $('.control-group.error', @$el).removeClass('error').find('.help-inline').remove()

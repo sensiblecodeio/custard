@@ -169,9 +169,13 @@ class Cu.View.DataHubNav extends Backbone.View
       $('.context-search-result').last().addClass('selected')
 
   activateHighlightedResult: ->
+    $results = $('.context-search-result')
     $selected = $('.context-search-result.selected')
     if $selected.length
       window.location = $('a', $selected).attr('href')
+    else if $results.length == 1
+      $first = $results.first().addClass('selected')
+      window.location = $('a', $first).attr('href')
     else
       @highlightNextResult()
 

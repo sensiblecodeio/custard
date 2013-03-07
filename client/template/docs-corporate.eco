@@ -41,12 +41,12 @@ servers at cloud provider <a href="http://www.linode.com/">Linode</a>, at its
 London datacentre. We meet the tiering standards that Linode meet.
 </p>
 
-<p>We currently scale by provisioning for the entire platform as required, as
-we are a platform for collaboration on (relatively) small amounts of data. We
-outsource any large data volumes to other providers. By default we offer
-non-guaranteed performance, we can offer guaranteed for a larger cost.
-Utilisation reporting, where there are restrictions, is built into the platform
-and its API.</p>
+<p>We currently scale by provisioning as required, as we are a platform for
+collaboration on (relatively) small amounts of data. We outsource any very
+large data volumes to other providers. By default we offer non-guaranteed
+performance, we can offer guaranteed for a larger cost.  Utilisation reporting,
+where there are restrictions, is built into the platform and its API.
+</p>
 
 <p>Our platform can be freely used by our customers in any way they like. In
 particular, customers can contract third parties to adapt, extend or write new

@@ -186,7 +186,13 @@ app.post '/api/token/:token/?', (req, resp) ->
       User.findByShortName token.shortName, (err, user) ->
         if user?
           user.setPassword req.body.password, ->
-            return resp.send 200, user
+            sessionUser =
+              real: getSessionUser user
+              effective: getSessionUser user
+            req.user = sessionUser
+            req.session.save()
+            req.login sessionUser, ->
+              return resp.send 200, user
         else
           console.warn "no User with shortname #{token.shortname} for Token #{token.token}"
           return resp.send 500
@@ -195,6 +201,9 @@ app.post '/api/token/:token/?', (req, resp) ->
 
 # Add a user
 app.post '/api/user/?', (req, resp) ->
+  if not req.user?.real?.isStaff
+    if req.body.inviteCode isnt process.env.CU_INVITE_CODE
+      return resp.send 403, error: 'Invalid invite code'
   User.add
     newUser:
       shortName: req.body.shortName

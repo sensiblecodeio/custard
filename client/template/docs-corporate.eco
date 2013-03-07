@@ -127,7 +127,7 @@ td.disaster-description {
   </tr>
   <tr class="troublesome">
     <td class="disaster-summary">Filesystem failure</td>
-    <td class="disaster-description">Should multiple GlusterFS servers fail, or a software bug damage the GlusterFS filesystem, we have daily rotating differential encrypted backups of the GlusterFS filesystem using Duplicity, with weekly full backups. These are stored in Amazon S3. We can restore the whole filesystem in under <b>1 day</b>, and corporate plan customers in under <b>2 hours</b>.</td>
+    <td class="disaster-description">Should multiple GlusterFS servers fail, or a software bug damages the GlusterFS filesystem, we have daily rotating differential encrypted backups of the GlusterFS filesystem using Duplicity, with weekly full backups. These are stored in Amazon S3. We can restore the whole filesystem in under <b>1 day</b>, and corporate plan customers in under <b>2 hours</b>.</td>
     <td class="disaster-estimate">&lt;2&nbsp;hours</td>
   </tr>
   <tr class="bad">

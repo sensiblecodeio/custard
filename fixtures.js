@@ -39,7 +39,7 @@ exports.users = [
 exports.tokens = [
 {
   token: "339231725782156",
-    shortName: "ickletest"
+  shortName: "ickletest"
 }
 ]
 

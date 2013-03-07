@@ -60,9 +60,15 @@ describe 'API', ->
           it 'records a "created" timestamp', ->
             should.exist @tool.created
 
+          it 'records the owner', ->
+            should.exist @tool.user
+
           it 'returns the newly created tool', ->
             should.exist @tool.name
             @tool.name.should.equal @toolName
+
+          it 'is owned by me', ->
+            @user.should.equal @tool.user
 
         context 'when I update a tool', ->
           before (done) ->

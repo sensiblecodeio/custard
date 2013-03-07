@@ -12,6 +12,7 @@ toolSchema = new Schema
   name:
     type: String
     index: unique: true
+  user: String
   type: String
   gitUrl: String
   manifest: Schema.Types.Mixed

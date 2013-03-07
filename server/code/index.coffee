@@ -262,8 +262,13 @@ app.post '/api/tools/?', (req, resp) ->
     if tool is null
       tool = new Tool
         name: body.name
+        user: req.user.effective.shortName
         type: body.type
         gitUrl: body.gitUrl
+    # :todo: Should edit the fields of tool, using the key/value
+    # pairs in req.body (_.update tool, body). So that for
+    # example the gitUrl can be changed and we git clone from the
+    # new one.
 
     tool.gitCloneOrPull dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
       console.log err, stdout, stderr

@@ -1,3 +1,4 @@
+_ = require 'underscore'
 request = require 'request'
 should = require 'should'
 settings = require '../settings.json'
@@ -5,6 +6,8 @@ settings = require '../settings.json'
 serverURL = process.env.CU_TEST_SERVER or settings.serverURL
 
 describe 'API', ->
+  before ->
+    @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
   context "When I'm not logged in", ->
     describe 'Sign up', ->
       context 'POST /api/<username>', ->
@@ -39,8 +42,6 @@ describe 'API', ->
 
     describe 'Tools', ->
       context 'POST /api/tools', ->
-        before ->
-          @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
         context 'when I create a tool', ->
           before (done) ->
             request.post
@@ -107,17 +108,23 @@ describe 'API', ->
         before (done) ->
           request.get "#{serverURL}/api/tools", (err, res) =>
             @body = res.body
+            @tools = JSON.parse @body
             done()
 
         it 'returns a list of tools', ->
-          tools = JSON.parse @body
-          tools.length.should.be.above 0
+          @tools.length.should.be.above 0
+
+        it "includes my tool", ->
+          should.exist(_.find @tools, (x) => x.name == @toolName)
+
+        it "includes public tools", ->
+          should.exist(_.find @tools, (x) => x.name == "test-app")
+          console.log @tools
 
         it 'returns the right fields', ->
-          tools = JSON.parse @body
-          should.exist tools[0].name
-          should.exist tools[0].gitUrl
-          should.exist tools[0].type
+          should.exist @tools[0].name
+          should.exist @tools[0].gitUrl
+          should.exist @tools[0].type
 
     describe 'Datasets', ->
       context 'when I create a dataset', ->
@@ -210,44 +217,53 @@ describe 'API', ->
             res.body.should.include 'ok'
             done err
 
-    describe 'Users', ->
-      context "When I'm a staff member", ->
-        before (done) ->
-          # logout
-          request.get "#{serverURL}/logout", done
-        before (done) ->
-          @loginURL = "#{serverURL}/login"
-          @user = "teststaff"
-          @password = process.env.CU_TEST_STAFF_PASSWORD
-          request.get @loginURL, =>
-            request.post
-              uri: @loginURL
-              form:
-                username: @user
-                password: @password
-            , (err, res) =>
-              @loginResponse = res
-              done(err)
+  describe 'Logging in as a different user', ->
+    context "When I'm a staff member", ->
+      before (done) ->
+        # logout
+        request.get "#{serverURL}/logout", done
+      before (done) ->
+        @loginURL = "#{serverURL}/login"
+        @user = "teststaff"
+        @password = process.env.CU_TEST_STAFF_PASSWORD
+        request.get @loginURL, =>
+          request.post
+            uri: @loginURL
+            form:
+              username: @user
+              password: @password
+          , (err, res) =>
+            @loginResponse = res
+            done(err)
 
-        it 'allows me to create a new profile', (done) ->
-          @newUser = "new-#{String(Math.random()*Math.pow(2,32))[0..6]}"
-          @newPassword = "newpass"
-          request.post
-            uri: "#{serverURL}/api/user"
-            form:
-              shortName: @newUser
-              email: 'random@example.org'
-              displayName: 'Ran Dom Test'
-          , (err, resp, body) =>
-            obj = JSON.parse body
-            @token = obj.token
-            resp.should.have.status 201
-            done(err)
-        it '... and I can set the password', (done) ->
-          request.post
-            uri: "#{serverURL}/api/token/#{@token}"
-            form:
-              password: @newPassword
-          , (err, resp, body) ->
-            resp.should.have.status 200
-            done(err)
+      before (done) ->
+        request.get "#{serverURL}/api/tools", (err, res) =>
+          @body = res.body
+          @tools = JSON.parse @body
+          done()
+
+      it "does not see ickletest's tool in tool list", ->
+        should.not.exist(_.find @tools, (x) => x.name == @toolName)
+
+      it 'allows me to create a new profile', (done) ->
+        @newUser = "new-#{String(Math.random()*Math.pow(2,32))[0..6]}"
+        @newPassword = "newpass"
+        request.post
+          uri: "#{serverURL}/api/user"
+          form:
+            shortName: @newUser
+            email: 'random@example.org'
+            displayName: 'Ran Dom Test'
+        , (err, resp, body) =>
+          obj = JSON.parse body
+          @token = obj.token
+          resp.should.have.status 201
+          done(err)
+      it '... and I can set the password', (done) ->
+        request.post
+          uri: "#{serverURL}/api/token/#{@token}"
+          form:
+            password: @newPassword
+        , (err, resp, body) ->
+          resp.should.have.status 200
+          done(err)

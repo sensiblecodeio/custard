@@ -71,6 +71,14 @@ class Tool extends ModelBase
       else
         callback null, @makeModelFromMongo doc
 
+  @findForUser: (shortName, cb) ->
+    @dbClass.find $or: [{user: shortName}, {public: true}], (err, docs) =>
+      if docs is null
+        cb err, null
+      else
+        result = (@makeModelFromMongo(doc) for doc in docs)
+        cb null, result
+
 module.exports = (dbObj) ->
   Tool.dbClass = zDbTool = dbObj if dbObj?
   Tool

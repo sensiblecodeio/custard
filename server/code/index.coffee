@@ -252,7 +252,8 @@ app.get '/logout', (req, resp) ->
 
 # API!
 app.get '/api/tools/?', (req, resp) ->
-  Tool.findAll (err, tools) ->
+  Tool.findForUser req.user.effective.shortName, (err, tools) ->
+    console.log "API about to return"
     resp.send 200, tools
 
 app.post '/api/tools/?', (req, resp) ->

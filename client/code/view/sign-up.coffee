@@ -21,18 +21,22 @@ class Cu.View.SignUp extends Backbone.View
       shortName: $('#shortName').val()
       email: $('#email').val()
       displayName: $('#displayName').val()
+      inviteCode: $('#inviteCode').val()
     ,
       success: (model, response, options) ->
         console.log model, response, options
         $('form').hide()
         $('#thanks').show()
       error: (model, response, options) =>
+        $('#go', @$el).removeClass('loading').html('Go!')
+
         console.warn model, response, options
         if response.responseText
           # Probably an xhr object.
           xhr = response
           jsonResponse = JSON.parse xhr.responseText
           $div = $("""<div class="alert alert-error" id="hghg"><strong>#{jsonResponse.error or "Something went wrong"}<strong></div>""")
+          #TODO: don't prepend, as we end up with multiple alerts
           @$el.prepend $div
           if jsonResponse.code == 'username-duplicate'
             # :todo: Add password reset link.

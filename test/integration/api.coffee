@@ -15,6 +15,7 @@ describe 'API', ->
               shortName: 'tabbytest'
               displayName: 'Tabatha Testerson'
               email: 'tabby@example.org'
+              inviteCode: process.env.CU_INVITE_CODE
           , (err, res, body) =>
             @body = body
             done()

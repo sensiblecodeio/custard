@@ -201,6 +201,9 @@ app.post '/api/token/:token/?', (req, resp) ->
 
 # Add a user
 app.post '/api/user/?', (req, resp) ->
+  if not req.user?.real?.isStaff
+    if req.body.inviteCode isnt process.env.CU_INVITE_CODE
+      return resp.send 403, error: 'Invalid invite code'
   User.add
     newUser:
       shortName: req.body.shortName

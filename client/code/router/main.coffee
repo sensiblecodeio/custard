@@ -110,7 +110,7 @@ class Cu.Router.Main extends Backbone.Router
         console.warn xhr
 
   createProfile: ->
-    titleView = new Cu.View.Subnav {text: 'Create Profile'}
+    subnavView = new Cu.View.Subnav {text: 'Create Profile'}
     contentView = new Cu.View.CreateProfile()
     @appView.showView contentView
     @subnavView.showView subnavView

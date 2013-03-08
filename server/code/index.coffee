@@ -266,6 +266,7 @@ app.post '/api/tools/?', (req, resp) ->
         user: req.user.effective.shortName
         type: body.type
         gitUrl: body.gitUrl
+        public: body.public
     # :todo: Should edit the fields of tool, using the key/value
     # pairs in req.body (_.update tool, body). So that for
     # example the gitUrl can be changed and we git clone from the

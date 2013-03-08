@@ -42,7 +42,7 @@ describe 'API', ->
 
     describe 'Tools', ->
       context 'POST /api/tools', ->
-        context 'when I create a tool', ->
+        context 'when I create a private tool', ->
           before (done) ->
             request.post
               uri: "#{serverURL}/api/tools"
@@ -50,6 +50,7 @@ describe 'API', ->
                 name: @toolName
                 type: 'view'
                 gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
+                #public: false <--- defaults to false
             , (err, res, body) =>
               @response = res
               @tool = JSON.parse res.body
@@ -71,38 +72,53 @@ describe 'API', ->
           it 'is owned by me', ->
             @user.should.equal @tool.user
 
-        context 'when I update a tool', ->
-          before (done) ->
-            # short pause, to make sure the updated
-            # timestamp is after the created one
-            setTimeout done, 1
+          context 'when I update that tool', ->
+            before (done) ->
+              # short pause, to make sure the updated
+              # timestamp is after the created one
+              setTimeout done, 1
 
+            before (done) ->
+              request.post
+                uri: "#{serverURL}/api/tools"
+                form:
+                  name: @toolName
+                  type: 'view'
+                  gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
+              , (err, res) =>
+                @response = res
+                @tool = JSON.parse res.body
+                done()
+
+            it 'updates the tool', ->
+              @response.should.have.status 200
+
+            it 'shows a recent "updated" timestamp', ->
+              should.exist @tool.created
+              should.exist @tool.updated
+              @tool.updated.should.be.above @tool.created
+
+            # We should check whether the manifest has been updated,
+            # but it's hard.
+            xit 'returns the updated tool', ->
+              @tool.manifest.displayName.should.equal 'View Data 2'
+
+        context 'When I create a public tool', ->
           before (done) ->
             request.post
               uri: "#{serverURL}/api/tools"
               form:
-                name: @toolName
+                name: "#{@toolName}-public"
                 type: 'view'
-                gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
-            , (err, res) =>
+                gitUrl: 'git://github.com/scraperwiki/test-app-tool.git'
+                public: true
+            , (err, res, body) =>
               @response = res
               @tool = JSON.parse res.body
               done()
 
-          it 'updates the tool', ->
-            @response.should.have.status 200
-
-          it 'shows a recent "updated" timestamp', ->
-            should.exist @tool.created
-            should.exist @tool.updated
-            @tool.updated.should.be.above @tool.created
-
-          # We should check whether the manifest has been updated,
-          # but it's hard.
-          xit 'returns the updated tool', ->
-            @tool.manifest.displayName.should.equal 'View Data 2'
-
-          it "doesn't allow me to update the type"
+          it 'creates a new tool', ->
+            @response.should.have.status 201
 
       context 'GET /api/tools', ->
         before (done) ->
@@ -119,7 +135,6 @@ describe 'API', ->
 
         it "includes public tools", ->
           should.exist(_.find @tools, (x) => x.name == "test-app")
-          console.log @tools
 
         it 'returns the right fields', ->
           should.exist @tools[0].name
@@ -242,8 +257,11 @@ describe 'API', ->
           @tools = JSON.parse @body
           done()
 
-      it "does not see ickletest's tool in tool list", ->
+      it "does not see ickletest's private tool in tool list", ->
         should.not.exist(_.find @tools, (x) => x.name == @toolName)
+
+      it "does see ickletest's public tool in tool list", ->
+        should.exist(_.find @tools, (x) => x.name == "#{@toolName}-public")
 
       it 'allows me to create a new profile', (done) ->
         @newUser = "new-#{String(Math.random()*Math.pow(2,32))[0..6]}"

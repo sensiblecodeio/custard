@@ -15,6 +15,7 @@ toolSchema = new Schema
   user: String
   type: String
   gitUrl: String
+  public: {type: Boolean, default: false}
   manifest: Schema.Types.Mixed
   created:
     type: Date

@@ -1,3 +1,4 @@
+_ = require 'underscore'
 util = require 'util'
 sinon = require 'sinon'
 should = require 'should'
@@ -28,19 +29,52 @@ describe 'Server model: Dataset', ->
   Dataset = require('model/dataset')(TestDb)
 
   before ->
-    @dataset = new Dataset name: 'test'
+    @dataset = new Dataset
+      name: 'test'
+      box: 'box'
+      tool: 'tool'
+      displayName: 'Test'
 
   context 'when dataset.save is called', ->
-    before (done) ->
+    beforeEach ->
+      @vDataset = _.clone @dataset
       @saveSpy = sinon.spy TestDb.prototype, 'save'
-      @dataset.save done
 
-    after ->
+    afterEach ->
       TestDb.prototype.save.restore()
       @saveSpy = null
 
-    it 'calls mongoose save method', ->
-      @saveSpy.calledOnce.should.be.true
+    it 'calls mongoose save method if all fields are valid', (done) ->
+      @vDataset.save =>
+        @saveSpy.calledOnce.should.be.true
+        done()
+
+    # TODO:
+    # What does invalid mean? tool doesn't exist?
+    # user doesn't have access to tool?
+    it "it doesn't call save if the tool is invalid", (done) ->
+      @vDataset.tool = ''
+      @vDataset.save =>
+        @saveSpy.called.should.be.false
+        done()
+
+    it "it doesn't call save if the displayName is invalid", (done) ->
+      @vDataset.displayName = ''
+      @vDataset.save =>
+        @saveSpy.called.should.be.false
+        done()
+
+    it "it doesn't call save if the box is invalid", (done) ->
+      @vDataset.box = ''
+      @vDataset.save =>
+        @saveSpy.called.should.be.false
+        done()
+
+    it "it doesn't call save if the name is invalid", (done) ->
+      @vDataset.name = ''
+      @vDataset.save =>
+        @saveSpy.called.should.be.false
+        done()
 
   context 'when dataset.updateStatus is called', ->
     context 'with an error', ->
@@ -114,4 +148,3 @@ describe 'Server model: Dataset', ->
 
       it 'saves the status', ->
         @saveSpy.calledOnce.should.be.true
-

@@ -23,6 +23,12 @@ zDbDataset = mongoose.model 'Dataset', datasetSchema
 class Dataset extends ModelBase
   @dbClass: zDbDataset
 
+  validate: ->
+    return 'no name' unless @name? and @name.length > 0
+    return 'no box' unless @box? and @box.length > 0
+    return 'no tool' unless @tool? and @tool.length > 0
+    return 'no display name' unless @displayName? and @displayName.length > 0
+
   updateStatus: (status, callback) ->
     @status =
       type: status.type
@@ -46,7 +52,7 @@ class Dataset extends ModelBase
         args[0](err, dataset)
     else
       @dbClass.findOne {box: id, user: args[0]}, args[1]
-      
+
 module.exports = (dbObj) ->
   Dataset.dbClass = zDbDataset = dbObj if dbObj?
   Dataset

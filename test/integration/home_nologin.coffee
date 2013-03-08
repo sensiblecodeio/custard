@@ -34,5 +34,5 @@ describe 'Home page (logged in)', ->
 
     it 'takes me to the sign up page', (done) ->
       wd40.trueURL (err, url) ->
-        url.should.include '/signup/free'
+        url.should.include '/signup/hacker'
         done()

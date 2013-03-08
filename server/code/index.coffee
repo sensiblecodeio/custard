@@ -289,7 +289,7 @@ app.post '/api/tools/?', (req, resp) ->
               console.warn err if err?
               if err?
                 console.warn err
-                return resp.send 500, error: 'Error trying to find datasets'
+                return resp.send 500, error: 'Error trying to find tool'
               else
                 code = if isNew then 201 else 200
                 return resp.send code, tool

@@ -21,6 +21,10 @@ class ModelBase
     return res
 
   save: (callback) ->
+    err = if @validate? then @validate() else null
+    if err?
+      return callback err
+
     if not @dbInstance?
       @dbInstance = new @constructor.dbClass(@)
       @id = @dbInstance._id

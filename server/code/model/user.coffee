@@ -34,13 +34,6 @@ class User extends ModelBase
       @apikey = fresh_apikey()
     @
 
-  save: (callback) ->
-    error = @validate()
-    if error?
-      callback error
-    else
-      super callback
-
   validate: ->
     # TODO: proper regex, share validation across server & client
     return 'invalid shortName' unless /^[a-zA-Z0-9-.]+$/g.test @shortName

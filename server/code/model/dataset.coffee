@@ -10,13 +10,14 @@ viewSchema = new Schema
   state: String
 
 datasetSchema = new Schema
+  box: String
   user: String  # Actually, the owner
+  tool: String
   name: String
   displayName: String
-  box: String
-  views: [viewSchema]
   status: Schema.Types.Mixed
   state: String
+  views: [viewSchema]
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 

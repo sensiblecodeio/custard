@@ -348,13 +348,16 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
 app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   data = req.body
   dataset = new Dataset
+    box: data.box
     user: req.user.effective.shortName
+    tool: req.body.tool
     name: data.name
     displayName: data.displayName
-    box: data.box
 
   dataset.save (err) ->
-    console.warn err if err?
+    if err?
+      console.warn err
+      return resp.send 400, error: "Error saving dataset: #{err}"
     Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
       console.warn err if err?
       resp.send 200, dataset

@@ -15,6 +15,9 @@ fakeWindow = ->
   global.Backbone.$ = global.$
   global.Nibbler = require 'nibbler'
 
+  # Disable BR warnings we don't care about if we're unit testing
+  global.Backbone.Relational.showWarnings = false
+
   exports.evalConcatenatedFile "client/code/namespace.coffee"
 
 

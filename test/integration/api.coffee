@@ -150,9 +150,11 @@ describe 'API', ->
           request.post
             uri: "#{serverURL}/api/#{@user}/datasets"
             form:
+              name: 'baconface'
               displayName: 'Biscuit'
+              tool: 'test-app'
               box: String(Math.random() * Math.pow(2, 32))
-          , (err, res) ->
+          , (err, res, body) ->
             response = res
             dataset = JSON.parse res.body
             done()

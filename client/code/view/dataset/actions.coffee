@@ -5,6 +5,7 @@ class Cu.View.DatasetActions extends Backbone.View
   events:
     'click .hide-dataset': 'hideDataset'
     'click .rename-dataset': 'renameDataset'
+    'click .git-ssh': 'showSSH'
 
   render: ->
     @$el.html """
@@ -23,3 +24,6 @@ class Cu.View.DatasetActions extends Backbone.View
 
   renameDataset: ->
     $('#subnav-path .editable').trigger('click')
+
+  showSSH: ->
+    alert("This hasn't been implemented yet. Sorry.")

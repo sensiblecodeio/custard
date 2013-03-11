@@ -11,6 +11,7 @@ class Cu.View.DatasetTile extends Backbone.View
     'click .hide': 'hideDataset'
     'click .dropdown-menu a': 'dropdownMenuItemClick'
     'click .rename-dataset': 'renameDatasetClick'
+    'click .git-ssh': 'showSSH'
 
   initialize: ->
     @model.on 'change', @render, this
@@ -41,3 +42,10 @@ class Cu.View.DatasetTile extends Backbone.View
     setTimeout ->
       $('#subnav-path .editable').trigger('click')
     , 300
+
+  showSSH: ->
+    alert("This hasn't been implemented yet. Sorry.")
+    @closeDropdownMenu()
+
+  closeDropdownMenu: ->
+    @$el.find('.actions').removeClass('open')

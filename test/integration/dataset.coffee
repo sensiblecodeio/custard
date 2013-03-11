@@ -18,8 +18,11 @@ describe 'Dataset', ->
       wd40.fill '#password', 'testing', -> wd40.click '#login', done # This test relies on a Cheese dataset created in api.coffee!!
   context 'when I click on an Apricot dataset', ->
     before (done) ->
-      browser.elementByPartialLinkText 'Apricot', (err, link) ->
-        link.click done
+      # wait for tiles to fade in
+      setTimeout ->
+        browser.elementByPartialLinkText 'Apricot', (err, link) ->
+          link.click done
+      , 500
 
     it 'takes me to the Apricot dataset page', (done) ->
       wd40.trueURL (err, result) ->

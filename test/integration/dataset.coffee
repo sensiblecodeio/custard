@@ -35,22 +35,25 @@ describe 'Dataset', ->
         done()
 
     it 'has not shown the input box', (done) ->
-      browser.elementByCss '#subnav-path input', (err, input) ->
+      browser.elementByCss '#editable-input', (err, input) ->
         browser.isVisible input, (err, visible) ->
           visible.should.be.false
           done()
 
     context 'when I click the title', ->
       before (done) ->
-        browser.elementByCssIfExists '#subnav-path input', (err, input) =>
-          @input = input
-          browser.elementByCssIfExists '#subnav-path .editable', (err, a) =>
-            @a = a
-            wd40.click '#subnav-path .editable', done
+        browser.elementByCssIfExists '#editable-input', (err, wrapper) =>
+          @wrapper = wrapper
+          browser.elementByCssIfExists '#editable-input input', (err, input) =>
+            @input = input
+            browser.elementByCssIfExists '#subnav-path .editable', (err, a) =>
+              @a = a
+              wd40.click '#subnav-path .editable', done
 
       it 'an input box appears', (done) ->
         should.exist @input
-        browser.isVisible @input, (err, visible) ->
+        should.exist @wrapper
+        browser.isVisible @wrapper, (err, visible) ->
           visible.should.be.true
           done()
 
@@ -61,14 +64,16 @@ describe 'Dataset', ->
               done()
 
         before (done) ->
-          browser.elementByCssIfExists '#subnav-path input', (err, input) =>
-            @input = input
-            browser.elementByCssIfExists '#subnav-path .editable', (err, a) =>
-              @a = a
-              done()
+          browser.elementByCssIfExists '#editable-input', (err, wrapper) =>
+            @wrapper = wrapper
+            browser.elementByCssIfExists '#editable-input input', (err, input) =>
+              @input = input
+              browser.elementByCssIfExists '#subnav-path .editable', (err, a) =>
+                @a = a
+                done()
 
         it 'hides the input box and shows the title', (done) ->
-          browser.isVisible @input, (err, inputVisible) =>
+          browser.isVisible @wrapper, (err, inputVisible) =>
             inputVisible.should.be.false
             browser.isVisible @a, (err, aVisible) =>
               aVisible.should.be.true

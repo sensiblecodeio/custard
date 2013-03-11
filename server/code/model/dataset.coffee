@@ -55,6 +55,11 @@ class Dataset extends ModelBase
     else
       @dbClass.findOne {box: id, user: args[0]}, args[1]
 
-module.exports = (dbObj) ->
-  Dataset.dbClass = zDbDataset = dbObj if dbObj?
+  @findAllByTool: (toolname, callback) ->
+    @dbClass.find {tool: toolname}, callback
+
+exports.Dataset = Dataset
+
+exports.dbInject = (dbObj) ->
+  Dataset.dbClass = zDbDataset = dbObj
   Dataset

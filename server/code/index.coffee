@@ -17,8 +17,7 @@ eco = require 'eco'
 checkIdent = require 'ident-express'
 
 {User} = require 'model/user'
-Dataset = require('model/dataset')()
-View = require('model/view')()
+{Dataset} = require 'model/dataset'
 Token = require('model/token')()
 Tool = require('model/tool')()
 

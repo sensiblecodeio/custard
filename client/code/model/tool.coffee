@@ -49,7 +49,8 @@ class Cu.Collection.Tools extends Backbone.Collection
     new Cu.Collection.Tools nonimporters
 
   basics: ->
-    basics = @filter (t) -> t.get('name') in ['spreadsheet-download', 'datatables-view-tool']
+    basics = @filter (t) ->
+      t.get('name') in ['spreadsheet-download', 'datatables-view-tool']
     new Cu.Collection.Tools basics
 
   comparator: (model) ->

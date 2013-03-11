@@ -212,22 +212,22 @@ class Cu.View.EditableSubnav extends Backbone.View
   nameClicked: (e) ->
     e.preventDefault()
     $a = @$el.find('.editable')
-    $a.next()
-      .val(@model.get 'displayName')
-      .css('width', $a.width() + 30)
-      .show 0, ->
-        @focus()
+    $a.next().show(0, ->
+      $(@).children('input').focus()
+    ).children('input').val(@model.get 'displayName').css('width', $a.width() + 30)
     $a.hide()
 
   editableNameBlurred: ->
     $label = @$el.find('.editable')
-    $input = $label.next()
+    $wrapper = $label.next()
+    $input = $wrapper.children('input')
     @newName = $.trim($input.val())
     @oldName = $label.text()
     if @newName == '' or @newName == $label.text()
-      $label.show().next().hide()
+      $label.show()
+      $wrapper.hide()
     else
-      $input.hide()
+      $wrapper.hide()
       $label.text(@newName).show()
       @model.set 'displayName', @newName
       @modelToSave.save {},
@@ -246,7 +246,7 @@ class Cu.View.EditableSubnav extends Backbone.View
 
   editableNameEscaped: (e) ->
     e.preventDefault()
-    @$el.find('.editable').show().next().val('').hide()
+    @$el.find('.editable').show().next().hide().children('input').val('')
 
   keypressOnEditableName: (e) ->
     @editableNameBlurred(e) if e.keyCode is 13
@@ -258,8 +258,8 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
 
   events:
     'click .editable': 'nameClicked'
-    'blur #editable-input': 'editableNameBlurred'
-    'keyup #editable-input': 'keypressOnEditableName'
+    'blur #editable-input input': 'editableNameBlurred'
+    'keyup #editable-input input': 'keypressOnEditableName'
 
   render: ->
     @$el.html("""
@@ -274,7 +274,10 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
         </div>
         <div class="btn-group">
           <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
-          <input type="text" id="editable-input" style="display: none"/>
+          <span class="input-append" id="editable-input">
+            <input type="text">
+            <button class="btn">Save</button>
+          </span>
         </div>
       </div>
       <hr>""")
@@ -316,8 +319,8 @@ class Cu.View.ViewNav extends Cu.View.EditableSubnav
 
   events:
     'click .editable': 'nameClicked'
-    'blur #editable-input': 'editableNameBlurred'
-    'keyup #editable-input': 'keypressOnEditableName'
+    'blur #editable-input input': 'editableNameBlurred'
+    'keyup #editable-input input': 'keypressOnEditableName'
 
   render: ->
     @$el.html("""
@@ -338,7 +341,10 @@ class Cu.View.ViewNav extends Cu.View.EditableSubnav
         </div>
         <div class="btn-group">
           <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
-          <input type="text" id="editable-input" style="display: none"/>
+          <span class="input-append" id="editable-input">
+            <input type="text">
+            <button class="btn">Save</button>
+          </span>
         </div>
       </div>
       <hr>""")

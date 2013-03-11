@@ -95,12 +95,21 @@ body.fullscreen .container {
 }
 
 #subnav-path #editable-input {
+  margin: 0; /* remove default margin-bottom 10px on .input-appends */
+  display: none; /* hide by default; show on .editable click */
+}
+
+#subnav-path #editable-input input {
   color: #333;
   font-size: 24px;
   line-height: 32px;
   padding: 0 4px;
   margin: 0;
   height: 32px;
+}
+
+#subnav-path #editable-input button {
+  padding: 6px 10px; /* rather than default 4px 12px, to line up with taller input */
 }
 
 #subnav-path .editable:hover:after,

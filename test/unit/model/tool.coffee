@@ -2,14 +2,16 @@ sinon = require 'sinon'
 should = require 'should'
 helper = require '../helper'
 
+helper.evalConcatenatedFile 'client/code/model/boxable.coffee'
 helper.evalConcatenatedFile 'client/code/model/tool.coffee'
 base_url = process.env.CU_BOX_SERVER
 username = 'cotest'
 
-describe 'Model: Tool', ->
+describe 'Model: Tool (Client)', ->
   before ->
     @tool = new Cu.Model.Tool
       name: 'highrise'
+      gitUrl: 'git://someurl'
 
     @spy = sinon.spy @tool, '_generateBoxName'
 
@@ -46,11 +48,10 @@ describe 'Model: Tool', ->
       @spy.called.should.be.true
 
     it 'git clones the tool into the box', ->
-      called = @ajax.calledWith
+      called = @ajax.calledWithMatch
         type: 'POST'
         url: "#{base_url}/#{@tool.get 'box'}/exec"
         data:
           apikey: sinon.match /.+/
-          cmd: sinon.match /.*git clone.*/
-
+          cmd: sinon.match /^.*git clone.*$/
       called.should.be.true

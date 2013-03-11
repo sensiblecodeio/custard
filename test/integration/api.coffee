@@ -1,3 +1,4 @@
+_ = require 'underscore'
 request = require 'request'
 should = require 'should'
 settings = require '../settings.json'
@@ -5,7 +6,27 @@ settings = require '../settings.json'
 serverURL = process.env.CU_TEST_SERVER or settings.serverURL
 
 describe 'API', ->
-  context "When I'm logged in", ->
+  before ->
+    @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
+  context "When I'm not logged in", ->
+    describe 'Sign up', ->
+      context 'POST /api/<username>', ->
+        before (done) ->
+          request.post
+            uri: "#{serverURL}/api/user/"
+            form:
+              shortName: 'tabbytest'
+              displayName: 'Tabatha Testerson'
+              email: 'tabby@example.org'
+              inviteCode: process.env.CU_INVITE_CODE
+          , (err, res, body) =>
+            @body = body
+            done()
+
+        it 'returns ok', ->
+          @body.should.include 'tabbytest'
+
+  context "When I have set my password", ->
     before (done) ->
       @token = '339231725782156'
       @user = 'ickletest'
@@ -17,29 +38,11 @@ describe 'API', ->
         uri: "#{serverURL}/api/token/#{@token}"
         form:
           password: @password
-      , (err, res) =>
-        @loginURL = "#{serverURL}/login"
-        request.get @loginURL, =>
-          request.post
-            uri: @loginURL
-            form:
-              username: @user
-              password: @password
-          , (err, res) =>
-            @loginResponse = res
-            done(err)
-
-    it 'managed to log in', ->
-      should.exist @loginResponse
-      # check we're being redirected to /, as opposed to /login
-      @loginResponse.body.should.include 'Redirecting to /'
-      @loginResponse.body.should.not.include 'Redirecting to /login'
+      , done
 
     describe 'Tools', ->
       context 'POST /api/tools', ->
-        before ->
-          @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
-        context 'when I create a tool', ->
+        context 'when I create a private tool', ->
           before (done) ->
             request.post
               uri: "#{serverURL}/api/tools"
@@ -47,7 +50,8 @@ describe 'API', ->
                 name: @toolName
                 type: 'view'
                 gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
-            , (err, res) =>
+                #public: false <--- defaults to false
+            , (err, res, body) =>
               @response = res
               @tool = JSON.parse res.body
               done()
@@ -58,58 +62,84 @@ describe 'API', ->
           it 'records a "created" timestamp', ->
             should.exist @tool.created
 
+          it 'records the owner', ->
+            should.exist @tool.user
+
           it 'returns the newly created tool', ->
             should.exist @tool.name
             @tool.name.should.equal @toolName
 
-        context 'when I update a tool', ->
-          before (done) ->
-            # short pause, to make sure the updated 
-            # timestamp is after the created one
-            setTimeout done, 1
+          it 'is owned by me', ->
+            @user.should.equal @tool.user
 
+          context 'when I update that tool', ->
+            before (done) ->
+              # short pause, to make sure the updated
+              # timestamp is after the created one
+              setTimeout done, 1
+
+            before (done) ->
+              request.post
+                uri: "#{serverURL}/api/tools"
+                form:
+                  name: @toolName
+                  type: 'view'
+                  gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
+              , (err, res) =>
+                @response = res
+                @tool = JSON.parse res.body
+                done()
+
+            it 'updates the tool', ->
+              @response.should.have.status 200
+
+            it 'shows a recent "updated" timestamp', ->
+              should.exist @tool.created
+              should.exist @tool.updated
+              @tool.updated.should.be.above @tool.created
+
+            # We should check whether the manifest has been updated,
+            # but it's hard.
+            xit 'returns the updated tool', ->
+              @tool.manifest.displayName.should.equal 'View Data 2'
+
+        context 'When I create a public tool', ->
           before (done) ->
             request.post
               uri: "#{serverURL}/api/tools"
               form:
-                name: @toolName
+                name: "#{@toolName}-public"
                 type: 'view'
-                gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
-            , (err, res) =>
+                gitUrl: 'git://github.com/scraperwiki/test-app-tool.git'
+                public: true
+            , (err, res, body) =>
               @response = res
               @tool = JSON.parse res.body
               done()
 
-          it 'updates the tool', ->
-            @response.should.have.status 200
-
-          it 'shows a recent "updated" timestamp', ->
-            should.exist @tool.created
-            should.exist @tool.updated
-            @tool.updated.should.be.above @tool.created
-
-          # We should check whether the manifest has been updated,
-          # but it's hard.
-          xit 'returns the updated tool', ->
-            @tool.manifest.displayName.should.equal 'View Data 2'
-
-          it "doesn't allow me to update the type"
+          it 'creates a new tool', ->
+            @response.should.have.status 201
 
       context 'GET /api/tools', ->
         before (done) ->
           request.get "#{serverURL}/api/tools", (err, res) =>
             @body = res.body
+            @tools = JSON.parse @body
             done()
 
         it 'returns a list of tools', ->
-          tools = JSON.parse @body
-          tools.length.should.be.above 0
+          @tools.length.should.be.above 0
+
+        it "includes my tool", ->
+          should.exist(_.find @tools, (x) => x.name == @toolName)
+
+        it "includes public tools", ->
+          should.exist(_.find @tools, (x) => x.name == "test-app")
 
         it 'returns the right fields', ->
-          tools = JSON.parse @body
-          should.exist tools[0].name
-          should.exist tools[0].gitUrl
-          should.exist tools[0].type
+          should.exist @tools[0].name
+          should.exist @tools[0].gitUrl
+          should.exist @tools[0].type
 
     describe 'Datasets', ->
       context 'when I create a dataset', ->
@@ -120,9 +150,11 @@ describe 'API', ->
           request.post
             uri: "#{serverURL}/api/#{@user}/datasets"
             form:
+              name: 'baconface'
               displayName: 'Biscuit'
+              tool: 'test-app'
               box: String(Math.random() * Math.pow(2, 32))
-          , (err, res) ->
+          , (err, res, body) ->
             response = res
             dataset = JSON.parse res.body
             done()
@@ -202,42 +234,56 @@ describe 'API', ->
             res.body.should.include 'ok'
             done err
 
-    describe 'Users', ->
-      context "When I'm a staff member", ->
-        before (done) ->
-          # logout
-          request.get "#{serverURL}/logout", done
-        before (done) ->
-          @loginURL = "#{serverURL}/login"
-          @user = "teststaff"
-          @password = process.env.CU_TEST_STAFF_PASSWORD
-          request.get @loginURL, =>
-            request.post
-              uri: @loginURL
-              form:
-                username: @user
-                password: @password
-            , (err, res) =>
-              @loginResponse = res
-              done(err)
-        it 'allows me to create a new profile', (done) ->
-          @newUser = "new-#{String(Math.random()*Math.pow(2,32))[0..6]}"
-          @newPassword = "newpass"
+  describe 'Logging in as a different user', ->
+    context "When I'm a staff member", ->
+      before (done) ->
+        # logout
+        request.get "#{serverURL}/logout", done
+      before (done) ->
+        @loginURL = "#{serverURL}/login"
+        @user = "teststaff"
+        @password = process.env.CU_TEST_STAFF_PASSWORD
+        request.get @loginURL, =>
           request.post
-            uri: "#{serverURL}/api/#{@newUser}"
+            uri: @loginURL
             form:
-              email: 'random@example.com'
-              displayName: 'Ran Dom Test'
-          , (err, resp, body) =>
-            obj = JSON.parse body
-            @token = obj.token
-            resp.should.have.status 201
+              username: @user
+              password: @password
+          , (err, res) =>
+            @loginResponse = res
             done(err)
-        it '... and I can set the password', (done) ->
-          request.post
-            uri: "#{serverURL}/api/token/#{@token}"
-            form:
-              password: @newPassword
-          , (err, resp, body) ->
-            resp.should.have.status 200
-            done(err)
+
+      before (done) ->
+        request.get "#{serverURL}/api/tools", (err, res) =>
+          @body = res.body
+          @tools = JSON.parse @body
+          done()
+
+      it "does not see ickletest's private tool in tool list", ->
+        should.not.exist(_.find @tools, (x) => x.name == @toolName)
+
+      it "does see ickletest's public tool in tool list", ->
+        should.exist(_.find @tools, (x) => x.name == "#{@toolName}-public")
+
+      it 'allows me to create a new profile', (done) ->
+        @newUser = "new-#{String(Math.random()*Math.pow(2,32))[0..6]}"
+        @newPassword = "newpass"
+        request.post
+          uri: "#{serverURL}/api/user"
+          form:
+            shortName: @newUser
+            email: 'random@example.org'
+            displayName: 'Ran Dom Test'
+        , (err, resp, body) =>
+          obj = JSON.parse body
+          @token = obj.token
+          resp.should.have.status 201
+          done(err)
+      it '... and I can set the password', (done) ->
+        request.post
+          uri: "#{serverURL}/api/token/#{@token}"
+          form:
+            password: @newPassword
+        , (err, resp, body) ->
+          resp.should.have.status 200
+          done(err)

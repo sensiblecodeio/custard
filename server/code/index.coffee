@@ -15,16 +15,20 @@ mongoStore = require('connect-mongo')(express)
 flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
-uuid = require 'uuid'
 
 {User} = require 'model/user'
-Dataset = require('model/dataset')()
-View = require('model/view')()
+{Dataset} = require 'model/dataset'
 Token = require('model/token')()
 Tool = require('model/tool')()
 
 # Set up database connection
 mongoose.connect process.env.CU_DB
+# Doesn't seem to do much.
+mongoose.connection.on 'error', (err) ->
+  console.warn "MONGOOSE CONNECTION ERROR #{err}"
+# More cargo cult from https://github.com/LearnBoost/mongoose/issues/306
+# (doesn't work)
+# mongoose.connection.db.serverConfig.connection.autoReconnect = true
 
 
 assets.jsCompilers.eco =
@@ -84,7 +88,6 @@ verify = (username, password, done) ->
 
 
 app.configure ->
-
   app.use express.bodyParser()
   app.use express.cookieParser( process.env.CU_SESSION_SECRET )
   app.use express.session
@@ -133,18 +136,24 @@ checkStaff = (req, resp, next) ->
 # :todo: more flexible implementation that checks group membership and stuff
 checkSwitchUserRights = checkStaff
 
-# Render login page
-app.get '/login/?', (req, resp) ->
-  resp.render 'login',
-    errors: req.flash('error')
-
-# Allow set-password to be visited by anons
-app.get '/set-password/:token/?', (req, resp) ->
+# Render the main client side app
+renderClientApp = (req, resp) ->
   resp.render 'index',
     scripts: js 'app'
     templates: js 'template/index'
     user: JSON.stringify( req.user or {} )
     boxServer: process.env.CU_BOX_SERVER
+
+# Render login page
+app.get '/login/?', (req, resp) ->
+  resp.render 'login',
+    errors: req.flash('error')
+
+# Allow set-password, signup, docs, etc, to be visited by anons
+app.get '/set-password/:token/?', renderClientApp
+app.get '/signup/?*', renderClientApp
+app.get '/docs/?*', renderClientApp
+app.get '/', renderClientApp
 
 # Switch is protected by a specific function.
 app.get '/switch/:username/?', checkSwitchUserRights, (req, resp) ->
@@ -161,17 +170,11 @@ app.get '/switch/:username/?', checkSwitchUserRights, (req, resp) ->
       resp.end()
 
 app.post "/login", (req, resp) ->
-  # console.log req.body # XXX debug only, shows passwords, please remove
   passport.authenticate("local",
     successRedirect: "/"
     failureRedirect: "/login"
     failureFlash: true
   )(req,resp)
-
-# TODO: sort out nice way of serving templates
-app.get '/tpl/:page', (req, resp) ->
-  resp.render req.params.page,
-    user: req.user
 
 # Set a password using a token.
 # TODO: :token should be in POST body
@@ -182,12 +185,42 @@ app.post '/api/token/:token/?', (req, resp) ->
       User.findByShortName token.shortName, (err, user) ->
         if user?
           user.setPassword req.body.password, ->
-            return resp.send 200, user
+            sessionUser =
+              real: getSessionUser user
+              effective: getSessionUser user
+            req.user = sessionUser
+            req.session.save()
+            req.login sessionUser, ->
+              return resp.send 200, user
         else
           console.warn "no User with shortname #{token.shortname} for Token #{token.token}"
           return resp.send 500
     else
       return resp.send 404, error: 'No token/password specified'
+
+# Add a user
+app.post '/api/user/?', (req, resp) ->
+  if not req.user?.real?.isStaff
+    if req.body.inviteCode isnt process.env.CU_INVITE_CODE
+      return resp.send 403, error: 'Invalid invite code'
+  User.add
+    newUser:
+      shortName: req.body.shortName
+      displayName: req.body.displayName
+      email: [req.body.email]
+    requestingUser: req.user?.real
+  , (err, user) ->
+    if err?
+      if err.action is 'save' and /duplicate key/.test err.err
+        err =
+          code: "username-duplicate"
+          error: "Username is already taken"
+      if not err.error
+        err.error = err.err
+      console.warn err
+      return resp.json 500, err
+    else
+      return resp.json 201, user
 
 app.post '/api/status/?', checkIdent, (req, resp) ->
   console.log "POST /api/status/ from ident #{req.ident}"
@@ -209,6 +242,7 @@ app.post '/api/status/?', checkIdent, (req, resp) ->
           return resp.send 500, error: 'Error trying to update status'
         return resp.send 200, status: 'ok'
 
+############ AUTHENTICATED ############
 app.all '*', ensureAuthenticated
 
 app.get '/logout', (req, resp) ->
@@ -217,7 +251,8 @@ app.get '/logout', (req, resp) ->
 
 # API!
 app.get '/api/tools/?', (req, resp) ->
-  Tool.findAll (err, tools) ->
+  Tool.findForUser req.user.effective.shortName, (err, tools) ->
+    console.log "API about to return"
     resp.send 200, tools
 
 app.post '/api/tools/?', (req, resp) ->
@@ -227,8 +262,14 @@ app.post '/api/tools/?', (req, resp) ->
     if tool is null
       tool = new Tool
         name: body.name
+        user: req.user.effective.shortName
         type: body.type
         gitUrl: body.gitUrl
+        public: body.public
+    # :todo: Should edit the fields of tool, using the key/value
+    # pairs in req.body (_.update tool, body). So that for
+    # example the gitUrl can be changed and we git clone from the
+    # new one.
 
     tool.gitCloneOrPull dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
       console.log err, stdout, stderr
@@ -247,7 +288,7 @@ app.post '/api/tools/?', (req, resp) ->
               console.warn err if err?
               if err?
                 console.warn err
-                return resp.send 500, error: 'Error trying to find datasets'
+                return resp.send 500, error: 'Error trying to find tool'
               else
                 code = if isNew then 201 else 200
                 return resp.send code, tool
@@ -306,13 +347,16 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
 app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   data = req.body
   dataset = new Dataset
+    box: data.box
     user: req.user.effective.shortName
+    tool: req.body.tool
     name: data.name
     displayName: data.displayName
-    box: data.box
 
   dataset.save (err) ->
-    console.warn err if err?
+    if err?
+      console.warn err
+      return resp.send 400, error: "Error saving dataset: #{err}"
     Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
       console.warn err if err?
       resp.send 200, dataset
@@ -328,27 +372,6 @@ app.get '/api/user/?', checkStaff, (req, resp) ->
         getSessionUser u
       return resp.send 200, result
 
-
-# :todo: you should POST to /api/user/ to create a user, not /api/<username>
-app.post '/api/:user/?', checkStaff, (req, resp) ->
-  newUser =
-    shortName: req.params.user
-    displayName: req.body.displayName
-    email: [req.body.email]
-    apikey: uuid.v4()
-  if req.body.logoUrl?
-    newUser.logoUrl = req.body.logoUrl
-
-  new User(newUser).save (err) ->
-    console.warn err if err?
-    User.findByShortName newUser.shortName, (err, user) ->
-      token = String(Math.random()).replace('0.', '')
-      new Token({token: token, shortName: user.shortName}).save (err) ->
-        # 201 Created, RFC2616
-        userobj = user.objectify()
-        userobj.token = token
-        return resp.json 201, userobj
-
 app.post '/api/:user/sshkeys/?', (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->
     user.sshKeys.push req.body.key if req.body.key?
@@ -360,13 +383,8 @@ app.post '/api/:user/sshkeys/?', (req, resp) ->
         else
           resp.send 200, success: 'ok'
 
-app.get '*', (req, resp) ->
-  resp.render 'index',
-    scripts: js 'app'
-    templates: js 'template/index'
-    user: JSON.stringify req.user
-    boxServer: process.env.CU_BOX_SERVER
-
+# Catch all other routes, send to client app
+app.get '*', renderClientApp
 
 # Define Port
 port = process.env.CU_PORT or 3001

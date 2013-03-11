@@ -169,9 +169,13 @@ class Cu.View.DataHubNav extends Backbone.View
       $('.context-search-result').last().addClass('selected')
 
   activateHighlightedResult: ->
+    $results = $('.context-search-result')
     $selected = $('.context-search-result.selected')
     if $selected.length
       window.location = $('a', $selected).attr('href')
+    else if $results.length == 1
+      $first = $results.first().addClass('selected')
+      window.location = $('a', $first).attr('href')
     else
       @highlightNextResult()
 
@@ -257,9 +261,6 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
     'blur #editable-input': 'editableNameBlurred'
     'keyup #editable-input': 'keypressOnEditableName'
 
-  initialize: ->
-    @model.on 'change', @render, this
-
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -313,10 +314,6 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
 class Cu.View.ViewNav extends Cu.View.EditableSubnav
   className: 'subnav-wrapper'
 
-  initialize: ->
-    @model.on 'change', @setDocumentTitle, @
-    @model.on 'change', @render, this
-
   events:
     'click .editable': 'nameClicked'
     'blur #editable-input': 'editableNameBlurred'
@@ -343,6 +340,29 @@ class Cu.View.ViewNav extends Cu.View.EditableSubnav
           <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
           <input type="text" id="editable-input" style="display: none"/>
         </div>
+      </div>
+      <hr>""")
+    @
+
+class Cu.View.SignUpNav extends Backbone.View
+  className: 'subnav-wrapper'
+
+  render: ->
+    # Assumes @options.plan is set
+    plan = @options.plan
+    plan = plan.toUpperCase()[0] + plan.toLowerCase()[1..]
+
+    @$el.html("""
+      <div class="btn-toolbar" id="subnav-path">
+        <h1 class="btn-group">
+          <a class="btn btn-link" href="/">Sign Up</a>
+        </h1>
+        <div class="btn-group">
+          <span class="slash">/</span>
+        </div>
+        <h1 class="btn-group" style="margin-left: 7px">
+          <a class="btn btn-link" href="#{window.location.href}">#{plan}</a>
+        </h1>
       </div>
       <hr>""")
     @

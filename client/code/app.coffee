@@ -1,6 +1,8 @@
 #= require namespace
 # Must come before any model that uses the mixin
 #= require model/boxable
+#= require model/tool
+#= require model/view
 #= require_tree model
 #= require_tree router
 #= require_tree view
@@ -26,3 +28,8 @@ class Cu.AppView
     @currentView.render()
 
     $(@selector).html @currentView.el
+
+  hideView: (view) ->
+    @currentView?.close()
+    $(@selector).empty()
+    

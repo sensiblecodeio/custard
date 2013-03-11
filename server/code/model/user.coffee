@@ -2,9 +2,13 @@ bcrypt = require 'bcrypt'
 mongoose = require 'mongoose'
 async = require 'async'
 request = require 'request'
+uuid = require 'uuid'
 
 ModelBase = require 'model/base'
 Box = require('model/box')()
+Token = require('model/token')()
+
+{signUpEmail} = require 'lib/email'
 
 userSchema = new mongoose.Schema
   shortName: {type: String, unique: true}
@@ -13,6 +17,8 @@ userSchema = new mongoose.Schema
   password: String # encrypted, see setPassword method
   apikey: {type: String, unique: true}
   isStaff: Boolean
+  accountLevel: String
+  trialStarted: {type: Date, default: Date.now}
   created: {type: Date, default: Date.now}
   logoUrl: String
   sshKeys: [String]
@@ -27,6 +33,12 @@ class User extends ModelBase
     if not ('apikey' of obj)
       @apikey = fresh_apikey()
     @
+
+  validate: ->
+    # TODO: proper regex, share validation across server & client
+    return 'invalid shortName' unless /^[a-zA-Z0-9-.]+$/g.test @shortName
+    return 'invalid displayName' unless /^[a-zA-Z0-9-. ]+$/g.test @displayName
+    return 'invalid email' unless /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/gi.test @email[0]
 
   checkPassword: (password, callback) ->
     User.findByShortName @shortName, (err, user) ->
@@ -81,6 +93,48 @@ class User extends ModelBase
         callback null, @makeModelFromMongo user
       else
         callback null, null
+
+  # Add and email the user
+  @add: (opts, callback) ->
+    newUser =
+      shortName: opts.newUser.shortName
+      displayName: opts.newUser.displayName
+      email: [opts.newUser.email]
+      apikey: uuid.v4()
+      accountLevel: 'free'
+
+    if opts.logoUrl?
+      newUser.logoUrl = opts.logoUrl
+
+    new User(newUser).save (err) ->
+      if err?
+        err.action = 'save'
+        callback err, null
+
+      User.findByShortName newUser.shortName, (err, user) ->
+        if user?
+          token = String(Math.random()).replace('0.', '')
+          new Token({token: token, shortName: user.shortName}).save (err) ->
+            # 201 Created, RFC2616
+            userobj = user.objectify()
+            # TODO: sort out email templates so we can enable this
+            # Don't email if staff are creating at the moment
+            if opts.requestingUser?.isStaff is true
+              userobj.token = token
+              if err?
+                err.action = 'token'
+                callback err, null
+              else
+                callback null, userobj
+            else
+              signUpEmail user, token, (err) ->
+                if err?
+                  err.action = "email"
+                  callback err, null
+                else
+                  callback null, userobj
+        else
+          callback "Can't find user", null
 
 rand32 = ->
   # 32 bits of lovely randomness.

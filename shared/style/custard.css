@@ -235,6 +235,13 @@ a.tile {
   background-color: #15af90;
   color: #fff;
   text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  -webkit-box-shadow:  0px 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow:  0px 1px 2px rgba(0, 0, 0, 0.3);
+  -webkit-transition: box-shadow 0.1s linear, -webkit-box-shadow 0.1s linear, top 0.1s linear;
+  -moz-transition: box-shadow 0.1s linear, top 0.1s linear;
+  -ms-transition: box-shadow 0.1s linear, top 0.1s linear;
+  -o-transition: box-shadow 0.1s linear, top 0.1s linear;
+  transition: box-shadow 0.1s linear, top 0.1s linear;
 }
 
 a.view.tile {
@@ -244,27 +251,44 @@ a.view.tile {
 
 a.tile:hover {
   text-decoration: none;
+  top: -1px;
+  -webkit-box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 a.tile:last-child {
   margin-bottom: 20px;
 }
 
-a.tile.new-dataset {
-  line-height: 120px;
-  text-align: center;
-  font-size: 80px;
-  font-weight: 200;
-  cursor: pointer;
-}
-
-a.tile.new-dataset:hover {
-  background-color: #53997f;
-}
-
-a.tile.new-dataset:active {
+a.new-dataset-tile {
   position: relative;
-  top: 1px;
+  display: block;
+  float: left;
+  margin: 20px 0 0 20px;
+  padding-top: 40px;
+  width: 276px; /* 280px - 4px border */
+  height: 96px; /* 140px - 4px border - 40px padding-top */
+  text-align: center;
+  cursor: pointer;
+  color: #aaa;
+  border: 2px dashed #ddd;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  font-size: 21px;
+  line-height: 26px;
+  text-decoration: none;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  -ms-transition: all 0.1s linear;
+  -o-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+
+a.new-dataset-tile:hover {
+  border-color: #74b9ef;
+  color: #238FE4;
+  background-color: #F8FBFD;
 }
 
 a.tile h3 {
@@ -668,8 +692,9 @@ div.dataset-overview ul.dataset-actions img {
 div.login-page,
 div.create-profile,
 div.set-password,
-div.fourohfour {
-  padding: 20px 0 0 20px;
+div.sign-up,
+div.error-page {
+  padding: 20px;
 }
 
 div.docs {
@@ -697,6 +722,19 @@ div.docs .well .label {
 
 div.docs h3 {
   margin-top: 20px;
+}
+
+div.pricing {
+  padding: 0 20px;
+  text-align: center;
+}
+
+div.pricing .hero-unit {
+  background-color: #FDE598;
+}
+
+div.pricing .btn + .btn {
+  margin-left: 12px;
 }
 
 @media only screen and (min-width: 620px) {

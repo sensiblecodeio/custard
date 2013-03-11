@@ -1,27 +1,36 @@
+_ = require 'underscore'
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
 ModelBase = require 'model/base'
 
 viewSchema = new Schema
+  box: String
+  tool: String
   name: String
   displayName: String
-  box: String
   state: String
 
 datasetSchema = new Schema
+  box: String
   user: String  # Actually, the owner
+  tool: String
   name: String
   displayName: String
-  box: String
-  views: [viewSchema]
   status: Schema.Types.Mixed
   state: String
+  views: [viewSchema]
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 
 class Dataset extends ModelBase
   @dbClass: zDbDataset
+
+  validate: ->
+    return 'no name' unless @name? and @name.length > 0
+    return 'no box' unless @box? and @box.length > 0
+    return 'no tool' unless @tool? and @tool.length > 0
+    return 'no display name' unless @displayName? and @displayName.length > 0
 
   updateStatus: (status, callback) ->
     @status =
@@ -46,7 +55,25 @@ class Dataset extends ModelBase
         args[0](err, dataset)
     else
       @dbClass.findOne {box: id, user: args[0]}, args[1]
-      
-module.exports = (dbObj) ->
-  Dataset.dbClass = zDbDataset = dbObj if dbObj?
+
+  @findAllByTool: (toolName, callback) ->
+    @dbClass.find {tool: toolName}, callback
+
+Dataset.View =
+  findAllByTool: (toolName, callback) ->
+    Dataset.dbClass.find 'views.tool': toolName, (err, docs) ->
+      # convert from dataset to its views...
+      listoflists = _.map docs, (item) ->
+        item.views
+      # concatenate into one giant list...
+      onelist = _.reduce listoflists, ((a, b) -> a.concat(b)), []
+      # then filter.
+      result = _.filter onelist, (item) ->
+        item.tool is toolName
+      callback null, result
+
+exports.Dataset = Dataset
+
+exports.dbInject = (dbObj) ->
+  Dataset.dbClass = zDbDataset = dbObj
   Dataset

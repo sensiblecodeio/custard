@@ -1,0 +1,26 @@
+<form class="form-horizontal">
+  <div class="control-group">
+    <label for="displayName" class="control-label">Name:</label>
+    <div class="controls"><input type="text" id="displayName" /></div>
+  </div>
+  <div class="control-group">
+    <label for="shortName" class="control-label">Username:</label>
+    <div class="controls"><input type="text" id="shortName" /></div>
+  </div>
+  <div class="control-group">
+    <label for="email" class="control-label">Email:</label>
+    <div class="controls"><input type="text" id="email" /></div>
+  </div>
+  <div class="control-group">
+    <label for="inviteCode" class="control-label">Invite code:</label>
+    <div class="controls"><input type="text" id="inviteCode" /></div>
+  </div>
+  <div class="control-group">
+    <div class="controls"><button class="btn btn-primary" type="submit" id="go"><i class="icon-ok space"></i> Create Account</button></div>
+  </div>
+</form>
+
+<div id="thanks" class="alert alert-success" style="display:none">
+<strong>Thanks!</strong>
+We've emailed you a link to set you password. Click it!
+</div>

@@ -1,21 +1,24 @@
-Browser = require 'zombie'
+wd = require 'wd'
 should = require 'should'
 request = require 'request'
+browser = wd.remote()
+wd40 = require('../wd40')(browser)
 
 BASE_URL = 'http://localhost:3001'
+LOGIN_URL = "#{BASE_URL}/login"
 
 # Overview
 # Login as teststaff, create a profile called ickletest, attempt to login.
 #
 # Switching logs in as user A, adds a dataset using the API.
-# Then we switch to zombie to switch the context.
+# Then we switch to a browser to switch the context.
 #
 # TODO: move Switching out into its own test file
 
 login  = (username, password, callback) ->
-  request.get "#{BASE_URL}/login", ->
+  request.get LOGIN_URL, ->
     request.post
-      uri: "#{BASE_URL}/login"
+      uri: LOGIN_URL
       form:
         username: username
         password: password
@@ -40,10 +43,12 @@ createProfile = (options, done) ->
       , done
 
 describe 'Login', ->
-  browser = null
+  before (done) ->
+    wd40.init ->
+      console.log browser
+      browser.get LOGIN_URL, done
 
   before (done) ->
-    browser = new Browser()
     createProfile
       shortName: 'ickletest'
       displayName: 'Mr Ickle Test'
@@ -53,36 +58,28 @@ describe 'Login', ->
 
   context 'when I visit the homepage', ->
     before (done) ->
-      browser.visit BASE_URL, done
-
-    context 'when I am not logged in', ->
-      it 'shows me a login form', ->
-        should.exist browser.query('form')
+      browser.get LOGIN_URL, done
 
     context 'when I try to login with valid details', ->
       before (done) ->
-        browser.fill '#username', 'ickletest'
-        browser.fill '#password', 'toottoot'
-        browser.pressButton '#login', ->
-          browser.wait done
+        wd40.fill '#username', 'ickletest', ->
+          wd40.fill '#password', 'toottoot', ->
+            wd40.click '#login', ->
+              browser.wait done
 
-      it 'shows my name', ->
-        browser.text('#subnav-path').should.include 'Mr Ickle Test'
+      it 'shows my name', (done) ->
+        wd40.text '#subnav-path', (err, text) ->
+          text.should.include 'Mr Ickle Test'
+          done()
 
       context 'when I logout', ->
         before (done) ->
-          browser.clickLink '#header .logout a', done
+          wd40.click '#header .logout a', done
 
-        it 'redirects me to the login page', ->
-          browser.location.href.should.equal "#{BASE_URL}/login"
-
-        context 'when I revisit the index page', ->
-          before (done) ->
-            browser.visit BASE_URL, done
-
-          it 'should still present a login form', ->
-            should.exist browser.query('.login-page form')
-            should.not.exist browser.query('.dataset-list')
+        it 'redirects me to the login page', (done) ->
+          wd40.trueURL (err, url) ->
+            url.should.equal LOGIN_URL
+            done()
 
      xcontext 'when I try to login with my email address as my username', ->
 
@@ -100,22 +97,28 @@ describe 'Password', ->
           form: form
         , (err, resp, body) =>
           obj = JSON.parse body
-          @browser = new Browser()
-          @browser.visit "#{BASE_URL}/set-password/#{obj.token}", =>
-            @browser.wait done
+          @token = obj.token
+          done()
 
-    it 'shows a page with a password field', ->
-      should.exist @browser.query('#password')
+    before (done) ->
+      browser.deleteAllCookies done
+
+    before (done) ->
+      browser.get "#{BASE_URL}/set-password/#{@token}", done
+
+    it 'shows a page with a password field', (done) ->
+      browser.elementByCssIfExists '#password', (err, element) ->
+        should.exist element
+        done()
 
     context 'when I fill in my new password', ->
       before (done) ->
-        @browser.fill '#password', newPass
-        @browser.pressButton '#content .btn-primary', =>
-          @browser.wait done
+        browser.fill '#password', newPass ->
+          browser.click '#content .btn-primary', (err, btn) ->
+            btn.click done
 
-      it 'sets my password', ->
-        should.exist @browser.query('.alert-success')
-
+      it 'sets my password', (done) ->
+        browser.waitForVisibleByCss '.alert-success', 4000, done
 
 describe 'Switch', ->
 
@@ -137,54 +140,70 @@ describe 'Switch', ->
       , done
 
   before (done) ->
-    @browser = new Browser()
+    browser.deleteAllCookies done
+
+  before (done) ->
     # Log in as B via zombie
-    @browser.visit BASE_URL, =>
-      @browser.fill '#username', staff_user
-      @browser.fill '#password', staff_pass
-      @browser.pressButton '#login', done
+    browser.get LOGIN_URL, ->
+      wd40.fill '#username', staff_user, ->
+        wd40.fill '#password', staff_pass, ->
+          wd40.pressButton '#login', done
 
   context 'when a staff member switches context', ->
     before (done) ->
-      @browser.visit "#{BASE_URL}/switch/#{nonstaff_user}", =>
-        @browser.wait done
+      browser.get "#{BASE_URL}/switch/#{nonstaff_user}", done
 
-    it 'redirected to home page', ->
-      @browser.location.href.should.equal "#{BASE_URL}/"
+    it 'redirected to home page', (done) ->
+      wd40.trueURL (err, url) ->
+        url.should.equal "#{BASE_URL}/"
+        done()
 
-    it 'shows me datasets of the profile into which I have switched', ->
-      @browser.text('.dataset-list').should.include dataset_name
+    it 'shows me datasets of the profile into which I have switched', (done) ->
+      wd40.text '.dataset-list', (err, text) ->
+        text.should.include dataset_name
+        done()
 
-    it "has the switched to profile's name", ->
-      @browser.text('h1').should.include 'Mr Ickle Test'
+    it "has the switched to profile's name", (done) ->
+      wd40.text 'h1', (err, text) ->
+        text.should.include 'Mr Ickle Test'
+        done()
 
-    it "shows a gravatar", ->
-      img = @browser.query('h1 img')
-      img.src.should.include 'gravatar'
+    it 'shows a gravatar', (done) ->
+      browser.elementByCssIfExists 'h1 img', (err, img) ->
+        img.src.should.include 'gravatar'
+        done()
 
-    it "shows the context search box", ->
-      should.exist @browser.query('.context-switch')
+    it 'shows the context search box', (done) ->
+      browser.waitForVisibleByCss '.context-switch', 4000, done
 
   context 'when a non-staff member attempts to switch context', ->
     before (done) ->
-      @browser = new Browser()
-      @browser.visit BASE_URL, =>
-        @browser.fill '#username', nonstaff_user
-        @browser.fill '#password', nonstaff_pass
-        @browser.pressButton '#login', =>
-          @browser.visit "#{BASE_URL}/switch/#{staff_user}", =>
-            @browser.visit BASE_URL, =>
-              @browser.wait done
+      browser.deleteAllCookies done
 
-    it "hasn't changed who I am", ->
-      @browser.text('h1').should.include 'Mr Ickle Test'
-      @browser.text('h1').should.not.include 'Staff Test'
+    before (done) ->
+      browser.get LOGIN_URL, ->
+        wd40.fill '#username', nonstaff_user, ->
+          wd40.fill '#password', nonstaff_pass, ->
+            wd40.click '#login', ->
+              wd40.get "#{BASE_URL}/switch/#{staff_user}", ->
+                wd40.get BASE_URL, done
 
-    it "still shows me my datasets", ->
-      @browser.text('.dataset-list').should.include dataset_name
+    it "hasn't changed who I am", (done) ->
+      wd40.text 'h1', (err, text) ->
+        text.should.include 'Mr Ickle Test'
+        wd40.text 'h1', (err, text) ->
+          text.should.not.include 'Staff Test'
+          done()
 
-    it "doesn't show the context switching popup", ->
-      should.not.exist @browser.query('.context-switch')
+    it 'still shows me my datasets', (done) ->
+      wd40.text '.dataset-list', (err, text) ->
+        text.should.include dataset_name
+        done()
+
+    it "doesn't show the context switching popup", (done) ->
+      browser.isVisible '.context-switch', (err, visible) ->
+        visible.should.be.true
+        done()
 
 describe 'Whitelabel', ->
 
@@ -201,14 +220,16 @@ describe 'Whitelabel', ->
 
   context 'when I log in to a corporate account', ->
     before (done) ->
-      @browser = new Browser()
-      @browser.visit BASE_URL, =>
-        @browser.fill '#username', corpProfile.shortName
-        @browser.fill '#password', corpProfile.password
-        @browser.pressButton '#login', =>
-          @browser.visit BASE_URL, =>
-            @browser.wait done
+      browser.deleteAllCookies done
 
-    it 'shows my corporate logo somewhere', ->
-      @browser.html().should.include """src="#{corpProfile.logoUrl}"""
+    before (done) ->
+      browser.get BASE_URL, ->
+        wd40.fill '#username', corpProfile.shortName, ->
+          wd40.fill '#password', corpProfile.password, ->
+            wd40.click '#login', ->
+              browser.get BASE_URL, done
 
+    it 'shows my corporate logo somewhere', (done) ->
+      browser.source (err, source) ->
+        source.should.include """src="#{corpProfile.logoUrl}"""
+        done()

@@ -1,4 +1,4 @@
-class Cu.Model.Tool extends Backbone.Model
+class Cu.Model.Tool extends Backbone.RelationalModel
   Cu.Boxable.mixin this
 
   idAttribute: 'name'
@@ -34,6 +34,8 @@ class Cu.Model.Tool extends Backbone.Model
       data:
         key: null
 
+Cu.Model.Tool.setup()
+
 class Cu.Collection.Tools extends Backbone.Collection
   model: Cu.Model.Tool
   url: -> "/api/tools/"
@@ -47,7 +49,8 @@ class Cu.Collection.Tools extends Backbone.Collection
     new Cu.Collection.Tools nonimporters
 
   basics: ->
-    basics = @filter (t) -> t.get('name') in ['spreadsheet-download', 'datatables-view-tool']
+    basics = @filter (t) ->
+      t.get('name') in ['spreadsheet-download', 'datatables-view-tool']
     new Cu.Collection.Tools basics
 
   comparator: (model) ->

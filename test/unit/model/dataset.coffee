@@ -1,3 +1,4 @@
+_ = require 'underscore'
 util = require 'util'
 sinon = require 'sinon'
 should = require 'should'
@@ -5,12 +6,21 @@ should = require 'should'
 
 describe 'Client model: Dataset', ->
   helper = require '../helper'
-  helper.evalConcatenatedFile 'client/code/app.coffee'
+  helper.evalConcatenatedFile 'client/code/model/tool.coffee'
+  helper.evalConcatenatedFile 'client/code/model/view.coffee'
+  helper.evalConcatenatedFile 'client/code/model/dataset.coffee'
+
   describe 'URL', ->
     beforeEach ->
       @box = 'blah'
-      obj = {user: 'test', box: @box}
-      @dataset = Cu.Model.Dataset.findOrCreate obj
+      @tool = Cu.Model.Tool.findOrCreate
+        name: 'test-app'
+        displayName: 'Test App'
+
+      @dataset = Cu.Model.Dataset.findOrCreate
+        user: 'test'
+        box: @box
+        tool: 'test-app'
 
     it 'has an URL of /api/test/datasets/{id} if the dataset is new', ->
       @dataset.new = true
@@ -20,27 +30,64 @@ describe 'Client model: Dataset', ->
       @dataset.new = false # We shouldn't have to set this...
       @dataset.url().should.include @box
 
+    it 'has a related tool', ->
+      tool = @dataset.get('tool')
+      tool.get('displayName').should.equal 'Test App'
+
 describe 'Server model: Dataset', ->
   class TestDb
     save: (callback) ->
       callback null
 
-  Dataset = require('model/dataset')(TestDb)
+  Dataset = require('model/dataset').dbInject TestDb
 
   before ->
-    @dataset = new Dataset name: 'test'
+    @dataset = new Dataset
+      name: 'test'
+      box: 'box'
+      tool: 'tool'
+      displayName: 'Test'
 
   context 'when dataset.save is called', ->
-    before (done) ->
+    beforeEach ->
+      @vDataset = _.clone @dataset
       @saveSpy = sinon.spy TestDb.prototype, 'save'
-      @dataset.save done
 
-    after ->
+    afterEach ->
       TestDb.prototype.save.restore()
       @saveSpy = null
 
-    it 'calls mongoose save method', ->
-      @saveSpy.calledOnce.should.be.true
+    it 'calls mongoose save method if all fields are valid', (done) ->
+      @vDataset.save =>
+        @saveSpy.calledOnce.should.be.true
+        done()
+
+    # TODO:
+    # What does invalid mean? tool doesn't exist?
+    # user doesn't have access to tool?
+    it "it doesn't call save if the tool is invalid", (done) ->
+      @vDataset.tool = ''
+      @vDataset.save =>
+        @saveSpy.called.should.be.false
+        done()
+
+    it "it doesn't call save if the displayName is invalid", (done) ->
+      @vDataset.displayName = ''
+      @vDataset.save =>
+        @saveSpy.called.should.be.false
+        done()
+
+    it "it doesn't call save if the box is invalid", (done) ->
+      @vDataset.box = ''
+      @vDataset.save =>
+        @saveSpy.called.should.be.false
+        done()
+
+    it "it doesn't call save if the name is invalid", (done) ->
+      @vDataset.name = ''
+      @vDataset.save =>
+        @saveSpy.called.should.be.false
+        done()
 
   context 'when dataset.updateStatus is called', ->
     context 'with an error', ->
@@ -114,4 +161,3 @@ describe 'Server model: Dataset', ->
 
       it 'saves the status', ->
         @saveSpy.calledOnce.should.be.true
-

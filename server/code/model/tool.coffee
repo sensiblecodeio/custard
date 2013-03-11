@@ -1,10 +1,15 @@
 child_process = require 'child_process'
 fs = require 'fs'
 exists = fs.exists or path.exists
+
+async = require 'async'
+request = require 'request'
 rimraf = require 'rimraf'
 
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
+
+{Dataset} = require 'model/dataset'
 
 ModelBase = require 'model/base'
 
@@ -12,8 +17,10 @@ toolSchema = new Schema
   name:
     type: String
     index: unique: true
+  user: String
   type: String
   gitUrl: String
+  public: {type: Boolean, default: false}
   manifest: Schema.Types.Mixed
   created:
     type: Date
@@ -33,6 +40,24 @@ class Tool extends ModelBase
       else
         cmd = "cd #{@directory}; git pull"
       child_process.exec cmd, callback
+
+  updateInstances: (done) ->
+    # updates all of the boxes on cobalt that use this tool.
+    if @type == 'importer'
+      M = Dataset
+    else if @type == 'view'
+      M = Dataset.View
+    else
+      console.warn "unexpected tool type"
+      done "tooltypewrong"
+    M.findAllByTool @name, (err, datasets) ->
+      async.forEach datasets, (item, cb) ->
+        request.post
+          uri: "#{process.env.CU_BOX_SERVER}/#{item.box}/exec"
+          form:
+            cmd: "cd ~/tool && git pull >> tool-update.log 2>&1"
+        , cb
+      , done
 
   loadManifest: (callback) ->
     fs.exists @directory, (isok) =>
@@ -69,6 +94,14 @@ class Tool extends ModelBase
         callback err, null
       else
         callback null, @makeModelFromMongo doc
+
+  @findForUser: (shortName, cb) ->
+    @dbClass.find $or: [{user: shortName}, {public: true}], (err, docs) =>
+      if docs is null
+        cb err, null
+      else
+        result = (@makeModelFromMongo(doc) for doc in docs)
+        cb null, result
 
 module.exports = (dbObj) ->
   Tool.dbClass = zDbTool = dbObj if dbObj?

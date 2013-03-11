@@ -33,8 +33,20 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
+    @route RegExp('signup/([^/]+)/?'), 'signUp'
 
   main: ->
+    if window.user.effective?
+      @homeLoggedIn()
+    else
+      @homeAnonymous()
+
+  homeAnonymous: ->
+    contentView = new Cu.View.Pricing
+    @appView.showView contentView
+    @subnavView.hideView()
+
+  homeLoggedIn: ->
     window.datasets.fetch
       success: =>
         contentView = new Cu.View.DatasetList {collection: window.datasets}
@@ -45,6 +57,12 @@ class Cu.Router.Main extends Backbone.Router
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
 
+  signUp: (plan) ->
+    contentView = new Cu.View.SignUp
+    subnavView = new Cu.View.SignUpNav {plan: plan}
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
   dataset: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
@@ -54,8 +72,12 @@ class Cu.Router.Main extends Backbone.Router
         @appView.showView contentView
         @subnavView.showView subnavView
         window.tools.fetch()
-      error: (model, xhr, options) ->
-        console.warn xhr
+      error: (model, xhr, options) =>
+        # TODO: factor into function
+        contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"
+        subnavView = new Cu.View.Subnav text: "Dataset not found"
+        @appView.showView contentView
+        @subnavView.showView subnavView
 
   datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
@@ -66,7 +88,11 @@ class Cu.Router.Main extends Backbone.Router
         @appView.showView contentView
         @subnavView.showView subnavView
       error: (x,y,z) ->
-        console.warn 'ERRROR', x, y, z
+        # TODO: factor into function
+        contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"
+        subnavView = new Cu.View.Subnav text: "Dataset not found"
+        @appView.showView contentView
+        @subnavView.showView subnavView
 
   view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate
@@ -87,7 +113,7 @@ class Cu.Router.Main extends Backbone.Router
         console.warn xhr
 
   createProfile: ->
-    titleView = new Cu.View.Subnav {text: 'Create Profile'}
+    subnavView = new Cu.View.Subnav {text: 'Create Profile'}
     contentView = new Cu.View.CreateProfile()
     @appView.showView contentView
     @subnavView.showView subnavView

@@ -25,7 +25,7 @@ class Cu.View.SetPassword extends Backbone.View
         type: 'POST'
         dataType: 'json'
         success: (profile) =>
-          @$el.children('form').html """<div class="alert alert-success"><strong>Thanks for setting your password.</strong> <a href="/" data-nonpushstate>Click here to see your data!</a></div>"""
+          window.location = '/'
         error: (jqxhr, textStatus, errorThrown) =>
           console.warn "#{textStatus}: #{errorThrown}"
           @$el.children('form').prepend """<div class="alert"><strong>Oh no! Something went wrong.</strong> Are you sure you clicked the right link?</div>"""

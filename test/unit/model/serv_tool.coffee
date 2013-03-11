@@ -2,32 +2,50 @@ child_process = require 'child_process'
 fs = require 'fs'
 
 mkdirp = require 'mkdirp'
+request = require 'request'
 sinon = require 'sinon'
 should = require 'should'
+_ = require 'underscore'
 
-class TestDb
-  class Model
-    constructor: (obj) ->
-      for k of obj
-        @[k] = obj[k]
+class Model
+  constructor: (obj) ->
+    for k of obj
+      @[k] = obj[k]
+  toObject: -> @
 
-    toObject: -> @
-
+class MockDb
   save: (callback) ->
     callback null
+
+class TestDb extends MockDb
   @find: (_args, callback) ->
-    callback null, [ new Model(name: 'test'),
-      new Model(name: 'test2')
+    callback null, [ new Model(name: 'dataset-tool', type: 'importer'),
+      new Model(name: 'view-tool', type: 'view')
     ]
+  # Only works when searching for name properties.
+  @findOne: (args, callback) ->
+    @find {}, (err, all) ->
+      callback null, _.findWhere all, name: args.name
+
+class DatasetDb extends MockDb
+  @find: (args, callback) ->
+    callback null, [
+      new Model
+        name: 'dataset1'
+        tool: 'dataset-tool'
+        box: 'ds-box'
+        views: [ new Model(name: 'view1', tool: 'view-tool', box: 'view-box') ]
+      ]
 
 Tool = require('model/tool')(TestDb)
+Dataset = require('model/dataset').dbInject DatasetDb
 
 describe 'Server model: Tool', ->
 
   before ->
-    @saveSpy = sinon.spy TestDb.prototype, 'save'
+    @saveSpy = sinon.spy MockDb.prototype, 'save'
     @findSpy = sinon.spy TestDb, 'find'
-    @tool = new Tool name: 'test'
+    @tool = new Tool name: 'dataset-tool'
     mkdirp.sync 'test/tmp/repos'
 
   context 'when tool.save is called', ->
@@ -45,7 +63,7 @@ describe 'Server model: Tool', ->
 
     it 'should return Tool results', ->
       @results[0].should.be.an.instanceOf Tool
-      @results[0].name.should.equal 'test'
+      @results[0].name.should.equal 'dataset-tool'
       @results.length.should.equal 2
 
   context 'when loading from git', ->
@@ -131,3 +149,27 @@ describe 'Server model: Tool', ->
       it 'should have a gitUrl', ->
         should.exist @tool.manifest.gitUrl
 
+  context 'when tool.updateInstances is called', ->
+    before (done) ->
+      @requestStub = sinon.stub(request, 'post').callsArg(1)
+      Tool.findOneByName 'dataset-tool', (err, tool) =>
+        tool.updateInstances ->
+          Tool.findOneByName 'view-tool', (err, tool) =>
+            tool.updateInstances done
+
+    it 'has updated the dataset boxes', ->
+      pulledInDSBox = @requestStub.calledWithMatch
+        uri: sinon.match /ds-box/
+        form:
+          cmd: sinon.match /git pull/
+      pulledInDSBox.should.be.true
+
+    it 'has updated the view boxes', ->
+      pulledInViewBox = @requestStub.calledWithMatch
+        uri: sinon.match /view-box/
+        form:
+          cmd: sinon.match /git pull/
+      pulledInViewBox.should.be.true
+      
+    after ->
+      request.post.restore()

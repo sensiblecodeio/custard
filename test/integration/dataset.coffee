@@ -15,7 +15,7 @@ describe 'Dataset', ->
 
   before (done) ->
     wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', -> wd40.click '#login', done # This test relies on a Cheese dataset created in api.coffee!!
+      wd40.fill '#password', 'testing', -> wd40.click '#login', done
   context 'when I click on an Apricot dataset', ->
     before (done) ->
       # wait for tiles to fade in

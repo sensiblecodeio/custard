@@ -1,4 +1,4 @@
-class Cu.Model.Tool extends Backbone.Model
+class Cu.Model.Tool extends Backbone.RelationalModel
   Cu.Boxable.mixin this
 
   idAttribute: 'name'
@@ -33,6 +33,8 @@ class Cu.Model.Tool extends Backbone.Model
       url: "/api/#{window.user.effective.shortName}/sshkeys"
       data:
         key: null
+
+Cu.Model.Tool.setup()
 
 class Cu.Collection.Tools extends Backbone.Collection
   model: Cu.Model.Tool

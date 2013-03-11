@@ -6,12 +6,21 @@ should = require 'should'
 
 describe 'Client model: Dataset', ->
   helper = require '../helper'
-  helper.evalConcatenatedFile 'client/code/app.coffee'
+  helper.evalConcatenatedFile 'client/code/model/tool.coffee'
+  helper.evalConcatenatedFile 'client/code/model/view.coffee'
+  helper.evalConcatenatedFile 'client/code/model/dataset.coffee'
+
   describe 'URL', ->
     beforeEach ->
       @box = 'blah'
-      obj = {user: 'test', box: @box}
-      @dataset = Cu.Model.Dataset.findOrCreate obj
+      @tool = Cu.Model.Tool.findOrCreate
+        name: 'test-app'
+        displayName: 'Test App'
+
+      @dataset = Cu.Model.Dataset.findOrCreate
+        user: 'test'
+        box: @box
+        tool: 'test-app'
 
     it 'has an URL of /api/test/datasets/{id} if the dataset is new', ->
       @dataset.new = true
@@ -20,6 +29,10 @@ describe 'Client model: Dataset', ->
     it 'has an URL of /api/test/datasets if the dataset is not new', ->
       @dataset.new = false # We shouldn't have to set this...
       @dataset.url().should.include @box
+
+    it 'has a related tool', ->
+      tool = @dataset.get('tool')
+      tool.get('displayName').should.equal 'Test App'
 
 describe 'Server model: Dataset', ->
   class TestDb

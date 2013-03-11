@@ -3,13 +3,20 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
 
   idAttribute: 'box'
   relations: [
-    type: Backbone.HasMany
-    key: 'views'
-    relatedModel: 'Cu.Model.View'
-    collectionType: 'Cu.Collection.ViewList'
-    reverseRelation:
-      key: 'plugsInTo'
-      includeInJSON: 'box'
+    {
+      type: Backbone.HasMany
+      key: 'views'
+      relatedModel: Cu.Model.View
+      collectionType: Cu.Collection.ViewList
+      reverseRelation:
+        key: 'plugsInTo'
+        includeInJSON: 'box'
+    }
+    {
+      type: Backbone.HasOne
+      key: 'tool'
+      relatedModel: Cu.Model.Tool
+    }
   ]
 
   url: ->

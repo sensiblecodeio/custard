@@ -2,6 +2,14 @@ class Cu.Model.View extends Backbone.RelationalModel
   Cu.Boxable.mixin this
 
   idAttribute: 'box'
+  relations: [
+    {
+      type: Backbone.HasOne
+      key: 'tool'
+      relatedModel: Cu.Model.Tool
+    }
+  ]
+
   url: ->
     if @isNew()
       "/api/#{window.user.effective.shortName}/views"

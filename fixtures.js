@@ -46,6 +46,7 @@ exports.tokens = [
 exports.tools = [
 { name: "newdataset", public: true, type: "importer", gitUrl: "https://github.com/scraperwiki/newdataset-tool.git", manifest: { description: "Create a new, empty dataset", gitUrl: "https://github.com/scraperwiki/newdataset-tool.git", displayName: "Code a dataset!" } },
 { name: "test-app", public: true, type: "importer", gitUrl: "https://github.com/scraperwiki/test-app-tool.git", manifest: { description: "Test app", gitUrl: "https://github.com/scraperwiki/test-app-tool.git", displayName: "Test app" } },
+{ name: "test-plugin", public: true, type: "view", gitUrl: "https://github.com/scraperwiki/test-plugin-tool.git", manifest: { description: "Test plugin", gitUrl: "https://github.com/scraperwiki/test-plugin-tool.git", displayName: "Test plugin" } },
 { name: "spreadsheet-download", public: true, type: "view", gitUrl: "https://github.com/scraperwiki/spreadsheet-download-tool", manifest: { description: "Download your dataset as an Excel file", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git", displayName: "Download as spreadsheet" } },
 { name: "newview", public: true, type: "view", gitUrl: "git://github.com/scraperwiki/newview-tool.git", manifest: { description: "Visualise or export your dataset however you'd like. A blank slate. Get creative!", gitUrl: "git://github.com/scraperwiki/newview-tool.git", displayName: "Code your own view!" } },
 { name: "view-source", public: true, type: "view", gitUrl: "git://github.com/scraperwiki/view-source-tool.git", manifest: { description: "Find out how to see the code that powers your dataset", gitUrl: "https://github.com/scraperwiki/view-source-tool.git", displayName: "View source" } },
@@ -56,8 +57,9 @@ exports.tools = [
 ]
 
 exports.datasets = [
-{ "box" : "3006375730", "displayName" : "Cheese", "user" : "ickletest", "views" : [ ] },
-{ "box" : "3006375731", "displayName" : "Apricot", "user" : "ehg", "views" : [ ] }
+{ "box" : "3006375730", "tool": "test-app", "displayName" : "Cheese", "user" : "ickletest", "views" : [] },
+{ "box" : "3006375731", "tool": "test-app", "displayName" : "Apricot", "user" : "ehg", "views" : [] },
+{ "box" : "3006375815", "tool": "test-app", "displayName" : "Prune", "user" : "ehg", "views" : [  { "name": "viwewe", "displayName": "A View", "box": "abox", "state": "state", "tool": "test-plugin" } ] }
 ]
 //
 //exports.boxes = [

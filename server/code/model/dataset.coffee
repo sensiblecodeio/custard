@@ -4,9 +4,10 @@ Schema = mongoose.Schema
 ModelBase = require 'model/base'
 
 viewSchema = new Schema
+  box: String
+  tool: String
   name: String
   displayName: String
-  box: String
   state: String
 
 datasetSchema = new Schema

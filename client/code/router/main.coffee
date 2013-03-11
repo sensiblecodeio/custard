@@ -74,8 +74,7 @@ class Cu.Router.Main extends Backbone.Router
         window.tools.fetch()
       error: (model, xhr, options) =>
         # TODO: factor into function
-        console.warn xhr
-        contentView = new Cu.View.Error text: "Sorry, we couldn't find that dataset"
+        contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"
         subnavView = new Cu.View.Subnav text: "Dataset not found"
         @appView.showView contentView
         @subnavView.showView subnavView
@@ -89,7 +88,11 @@ class Cu.Router.Main extends Backbone.Router
         @appView.showView contentView
         @subnavView.showView subnavView
       error: (x,y,z) ->
-        console.warn 'ERRROR', x, y, z
+        # TODO: factor into function
+        contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"
+        subnavView = new Cu.View.Subnav text: "Dataset not found"
+        @appView.showView contentView
+        @subnavView.showView subnavView
 
   view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate

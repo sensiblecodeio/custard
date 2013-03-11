@@ -5,27 +5,33 @@ mkdirp = require 'mkdirp'
 sinon = require 'sinon'
 should = require 'should'
 
-class TestDb
-  class Model
-    constructor: (obj) ->
-      for k of obj
-        @[k] = obj[k]
+class Model
+  constructor: (obj) ->
+    for k of obj
+      @[k] = obj[k]
+  toObject: -> @
 
-    toObject: -> @
-
+class MockDb
   save: (callback) ->
     callback null
+
+class TestDb extends MockDb
   @find: (_args, callback) ->
     callback null, [ new Model(name: 'test'),
       new Model(name: 'test2')
     ]
 
+class DatasetDb extends MockDb
+class ViewDb extends MockDb
+
 Tool = require('model/tool')(TestDb)
+Dataset = require('model/dataset')(DatasetDb)
+View = require('model/view')(ViewDb)
 
 describe 'Server model: Tool', ->
 
   before ->
-    @saveSpy = sinon.spy TestDb.prototype, 'save'
+    @saveSpy = sinon.spy MockDb.prototype, 'save'
     @findSpy = sinon.spy TestDb, 'find'
     @tool = new Tool name: 'test'
     mkdirp.sync 'test/tmp/repos'
@@ -131,3 +137,8 @@ describe 'Server model: Tool', ->
       it 'should have a gitUrl', ->
         should.exist @tool.manifest.gitUrl
 
+  context 'when tool.updateInstances is called', ->
+    before (done) ->
+      done()
+
+    it 'updates all instances'

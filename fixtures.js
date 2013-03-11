@@ -33,6 +33,13 @@ exports.users = [
   password: '$2a$10$zGJXsNwhOBvze9GDm.jeEuLBX.TciRIKxNXfslxe5TZ.9/fDgpeDu',
   apikey: process.env.COTEST_STAFF_API_KEY,
   isStaff: true
+},
+{
+  shortName: 'zarino',
+  email: ['zarino@scraperwiki.com'],
+  displayName: 'Zarino Testington',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: process.env.COTEST_USER_API_KEY
 }
 ];
 
@@ -59,7 +66,12 @@ exports.tools = [
 exports.datasets = [
 { "box" : "3006375730", "tool": "test-app", "displayName" : "Cheese", "user" : "ickletest", "views" : [] },
 { "box" : "3006375731", "tool": "test-app", "displayName" : "Apricot", "user" : "ehg", "views" : [] },
-{ "box" : "3006375815", "tool": "test-app", "displayName" : "Prune", "user" : "ehg", "views" : [  { "name": "viwewe", "displayName": "A View", "box": "abox", "state": "state", "tool": "test-plugin" } ] }
+{ "box" : "3006375815", "tool": "test-app", "displayName" : "Prune", "user" : "ehg", "views" : [  { "name": "viwewe", "displayName": "A View", "box": "abox", "state": "state", "tool": "test-plugin" } ] },
+{ "box" : "3006375816", "tool": "test-app", "displayName" : "Kittens", "user" : "zarino", "views" : [  { "name": "table1", "displayName": "View in a Table", "box": "400857239", "state": "state", "tool": "test-plugin" } ] },
+{ "box" : "3006375818", "tool": "test-app", "displayName" : "Puppies", "user" : "zarino", "views" : [] },
+{ "box" : "3006375819", "tool": "test-app", "displayName" : "Piglets", "user" : "zarino", "views" : [] },
+{ "box" : "3006375821", "tool": "test-app", "displayName" : "Chicks", "user" : "zarino", "views" : [] },
+{ "box" : "3006375823", "tool": "test-app", "displayName" : "Bobcats", "user" : "zarino", "views" : [] }
 ]
 //
 //exports.boxes = [

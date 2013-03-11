@@ -6,13 +6,13 @@ class Cu.View.DatasetList extends Backbone.View
       $('#subnav .new-dataset').trigger('click') # :TODO: this is nasty and hacky
 
   render: ->
-    @$el.append '<a class="new-dataset tile" title="Add a new dataset">+</a>'
+    @$el.append $('<a class="new-dataset tile" title="Add a new dataset">+</a>').hide().fadeIn(150)
     @addDatasets()
     @
 
   addDatasets: ->
     @collection.visible().each @addDataset
 
-  addDataset: (dataset) =>
+  addDataset: (dataset, i) =>
     view = new Cu.View.DatasetTile model: dataset
-    @$el.append view.render().el
+    @$el.append $(view.render().el).hide().delay(i*75 + 100).fadeIn(150)

@@ -39,7 +39,7 @@ describe 'Server model: Dataset', ->
     save: (callback) ->
       callback null
 
-  Dataset = require('model/dataset')(TestDb)
+  Dataset = require('model/dataset').dbInject TestDb
 
   before ->
     @dataset = new Dataset

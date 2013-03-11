@@ -1,10 +1,15 @@
 child_process = require 'child_process'
 fs = require 'fs'
 exists = fs.exists or path.exists
+
+async = require 'async'
+request = require 'request'
 rimraf = require 'rimraf'
 
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
+
+{Dataset} = require 'model/dataset'
 
 ModelBase = require 'model/base'
 
@@ -35,6 +40,25 @@ class Tool extends ModelBase
       else
         cmd = "cd #{@directory}; git pull"
       child_process.exec cmd, callback
+
+  updateInstances: (done) ->
+    # updates all of the boxes on cobalt that use this tool.
+    if @type == 'importer'
+      Dataset.findAllByTool @name, (err, datasets) ->
+        async.forEach datasets, (item, cb) ->
+          request.post
+            uri: "#{process.env.CU_BOX_SERVER}/#{item.box}/exec"
+            form:
+              cmd: "cd ~/tool && git pull >> tool-update.log 2>&1"
+          , cb
+        , done
+    else if @type == 'view'
+      console.warn "VIEW updateInstances NOT IMPLEMENTED"
+      done "notimplemented"
+    else
+      console.warn "unexpected tool type"
+      done "tooltypewrong"
+
 
   loadManifest: (callback) ->
     fs.exists @directory, (isok) =>

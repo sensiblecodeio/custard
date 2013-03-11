@@ -2,8 +2,10 @@ child_process = require 'child_process'
 fs = require 'fs'
 
 mkdirp = require 'mkdirp'
+request = require 'request'
 sinon = require 'sinon'
 should = require 'should'
+_ = require 'underscore'
 
 class Model
   constructor: (obj) ->
@@ -17,15 +19,23 @@ class MockDb
 
 class TestDb extends MockDb
   @find: (_args, callback) ->
-    callback null, [ new Model(name: 'test'),
-      new Model(name: 'test2')
+    callback null, [ new Model(name: 'dataset-tool', type: 'importer'),
+      new Model(name: 'view-tool', type: 'view')
     ]
+  # Only works when searching for name properties.
+  @findOne: (args, callback) ->
+    @find {}, (err, all) ->
+      callback null, _.findWhere all, name: args.name
 
 class DatasetDb extends MockDb
+  @find: (args, callback) ->
+    callback null, [ new Model(name: 'dataset1', tool: 'dataset-tool', box: 'ds-box') ]
 class ViewDb extends MockDb
+  @find: (args, callback) ->
+    callback null, [ new Model(name: 'view1', tool: 'view-tool', box: 'view-box') ]
 
 Tool = require('model/tool')(TestDb)
-Dataset = require('model/dataset')(DatasetDb)
+Dataset = require('model/dataset').dbInject DatasetDb
 View = require('model/view')(ViewDb)
 
 describe 'Server model: Tool', ->
@@ -33,7 +43,7 @@ describe 'Server model: Tool', ->
   before ->
     @saveSpy = sinon.spy MockDb.prototype, 'save'
     @findSpy = sinon.spy TestDb, 'find'
-    @tool = new Tool name: 'test'
+    @tool = new Tool name: 'dataset-tool'
     mkdirp.sync 'test/tmp/repos'
 
   context 'when tool.save is called', ->
@@ -51,7 +61,7 @@ describe 'Server model: Tool', ->
 
     it 'should return Tool results', ->
       @results[0].should.be.an.instanceOf Tool
-      @results[0].name.should.equal 'test'
+      @results[0].name.should.equal 'dataset-tool'
       @results.length.should.equal 2
 
   context 'when loading from git', ->
@@ -139,6 +149,17 @@ describe 'Server model: Tool', ->
 
   context 'when tool.updateInstances is called', ->
     before (done) ->
-      done()
+      @requestStub = sinon.stub(request, 'post').callsArg(1)
+      Tool.findOneByName 'dataset-tool', (err, tool) =>
+        @tool = tool
+        @tool.updateInstances done
 
-    it 'updates all instances'
+    it 'updates all instances', ->
+      pulledInBox = @requestStub.calledWithMatch
+        uri: sinon.match /ds-box/
+        form:
+          cmd: sinon.match /git pull/
+      pulledInBox.should.be.true
+      
+    after ->
+      request.post.restore()

@@ -1,3 +1,4 @@
+_ = require 'underscore'
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
@@ -55,8 +56,21 @@ class Dataset extends ModelBase
     else
       @dbClass.findOne {box: id, user: args[0]}, args[1]
 
-  @findAllByTool: (toolname, callback) ->
-    @dbClass.find {tool: toolname}, callback
+  @findAllByTool: (toolName, callback) ->
+    @dbClass.find {tool: toolName}, callback
+
+Dataset.View =
+  findAllByTool: (toolName, callback) ->
+    Dataset.dbClass.find 'views.tool': toolName, (err, docs) ->
+      # convert from dataset to its views...
+      listoflists = _.map docs, (item) ->
+        item.views
+      # concatenate into one giant list...
+      onelist = _.reduce listoflists, ((a, b) -> a.concat(b)), []
+      # then filter.
+      result = _.filter onelist, (item) ->
+        item.tool is toolName
+      callback null, result
 
 exports.Dataset = Dataset
 

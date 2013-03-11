@@ -44,21 +44,20 @@ class Tool extends ModelBase
   updateInstances: (done) ->
     # updates all of the boxes on cobalt that use this tool.
     if @type == 'importer'
-      Dataset.findAllByTool @name, (err, datasets) ->
-        async.forEach datasets, (item, cb) ->
-          request.post
-            uri: "#{process.env.CU_BOX_SERVER}/#{item.box}/exec"
-            form:
-              cmd: "cd ~/tool && git pull >> tool-update.log 2>&1"
-          , cb
-        , done
+      M = Dataset
     else if @type == 'view'
-      console.warn "VIEW updateInstances NOT IMPLEMENTED"
-      done "notimplemented"
+      M = Dataset.View
     else
       console.warn "unexpected tool type"
       done "tooltypewrong"
-
+    M.findAllByTool @name, (err, datasets) ->
+      async.forEach datasets, (item, cb) ->
+        request.post
+          uri: "#{process.env.CU_BOX_SERVER}/#{item.box}/exec"
+          form:
+            cmd: "cd ~/tool && git pull >> tool-update.log 2>&1"
+        , cb
+      , done
 
   loadManifest: (callback) ->
     fs.exists @directory, (isok) =>

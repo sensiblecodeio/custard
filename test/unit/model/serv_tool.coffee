@@ -29,14 +29,16 @@ class TestDb extends MockDb
 
 class DatasetDb extends MockDb
   @find: (args, callback) ->
-    callback null, [ new Model(name: 'dataset1', tool: 'dataset-tool', box: 'ds-box') ]
-class ViewDb extends MockDb
-  @find: (args, callback) ->
-    callback null, [ new Model(name: 'view1', tool: 'view-tool', box: 'view-box') ]
+    callback null, [
+      new Model
+        name: 'dataset1'
+        tool: 'dataset-tool'
+        box: 'ds-box'
+        views: [ new Model(name: 'view1', tool: 'view-tool', box: 'view-box') ]
+      ]
 
 Tool = require('model/tool')(TestDb)
 Dataset = require('model/dataset').dbInject DatasetDb
-View = require('model/view')(ViewDb)
 
 describe 'Server model: Tool', ->
 
@@ -151,15 +153,23 @@ describe 'Server model: Tool', ->
     before (done) ->
       @requestStub = sinon.stub(request, 'post').callsArg(1)
       Tool.findOneByName 'dataset-tool', (err, tool) =>
-        @tool = tool
-        @tool.updateInstances done
+        tool.updateInstances ->
+          Tool.findOneByName 'view-tool', (err, tool) =>
+            tool.updateInstances done
 
-    it 'updates all instances', ->
-      pulledInBox = @requestStub.calledWithMatch
+    it 'has updated the dataset boxes', ->
+      pulledInDSBox = @requestStub.calledWithMatch
         uri: sinon.match /ds-box/
         form:
           cmd: sinon.match /git pull/
-      pulledInBox.should.be.true
+      pulledInDSBox.should.be.true
+
+    it 'has updated the view boxes', ->
+      pulledInViewBox = @requestStub.calledWithMatch
+        uri: sinon.match /view-box/
+        form:
+          cmd: sinon.match /git pull/
+      pulledInViewBox.should.be.true
       
     after ->
       request.post.restore()

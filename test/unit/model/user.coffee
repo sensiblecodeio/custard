@@ -13,30 +13,37 @@ describe 'User (client)', ->
   helper.evalConcatenatedFile 'client/code/model/user.coffee'
 
   describe 'Validation', ->
-    before ->
+    beforeEach ->
+      @user = new Cu.Model.User
       @attrs =
         displayName: 'Tabby Testerson'
         shortName: 'tabbytest'
         email: 'tabby@example.org'
 
-    beforeEach ->
-      @user = new Cu.Model.User
-      @attrs = _.clone @attrs
-
       @eventSpy = sinon.spy()
-      @user.bind 'invalid', @eventSpy
+      @user.on 'invalid', @eventSpy
 
     it 'saves when all fields are valid', ->
       @user.set @attrs, validate: true
       @eventSpy.called.should.be.false
 
-    it 'errors when name is not valid', ->
+    it 'errors when displayName is not valid', ->
       @attrs.displayName = '<script>evil</script>'
       @user.set @attrs, validate: true
       @eventSpy.calledOnce.should.be.true
 
-    it 'errors when shortName is not valid', ->
+    it 'errors when shortName contains invalid characters', ->
       @attrs.shortName = 'glurble merp merp!!$$$!"$"£%$£^'
+      @user.set @attrs, validate: true
+      @eventSpy.calledOnce.should.be.true
+
+    it 'errors when shortName is less than 3 characters', ->
+      @attrs.shortName = 'gl'
+      @user.set @attrs, validate: true
+      @eventSpy.calledOnce.should.be.true
+
+    it 'errors when shortName is more than 24 characters', ->
+      @attrs.shortName = 'aaaaaaaaaaaaaaaaaaaaaaaaa'
       @user.set @attrs, validate: true
       @eventSpy.calledOnce.should.be.true
 
@@ -141,8 +148,20 @@ describe 'User (Server)', ->
         should.not.exist err
         done()
 
-    it 'should not save if the shortName is invalid', (done) ->
+    it 'should not save if the shortName contains invalid chars', (done) ->
       @user.shortName = 'Test !!!!'
+      @user.save (err) ->
+        should.exist err
+        done()
+
+    it 'should not save if the shortName is less than 3 chars', (done) ->
+      @user.shortName = 'Te'
+      @user.save (err) ->
+        should.exist err
+        done()
+
+    it 'should not save if the shortName is more than 24 chars', (done) ->
+      @user.shortName = 'aaaaaaaaaaaaaaaaaaaaaaaaa'
       @user.save (err) ->
         should.exist err
         done()

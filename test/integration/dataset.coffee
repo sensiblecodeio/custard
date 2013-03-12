@@ -88,6 +88,10 @@ describe 'Dataset', ->
         before (done) ->
           browser.get "#{url}/", done
 
+        # wait for animation :(
+        before (done) ->
+          setTimeout done, 500
+
         it 'should display the home page', (done) ->
           browser.url (err, url) ->
             url.should.match /\/$/

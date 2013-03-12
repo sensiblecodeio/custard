@@ -7,6 +7,7 @@ class Cu.Model.View extends Backbone.RelationalModel
       type: Backbone.HasOne
       key: 'tool'
       relatedModel: Cu.Model.Tool
+      includeInJSON: 'name'
     }
   ]
 

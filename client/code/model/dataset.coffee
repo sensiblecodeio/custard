@@ -16,6 +16,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
       type: Backbone.HasOne
       key: 'tool'
       relatedModel: Cu.Model.Tool
+      includeInJSON: 'name'
     }
   ]
 
@@ -42,6 +43,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
             name: tool.get 'name'
             displayName: tool.get('manifest').displayName
             box: tool.get 'box'
+            tool: tool
           @save {},
             success:=>
               newView = @get('views').findById tool.get 'box'

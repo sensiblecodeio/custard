@@ -57,11 +57,15 @@ class Dataset extends ModelBase
       @dbClass.findOne {box: id, user: args[0]}, args[1]
 
   @findAllByTool: (toolName, callback) ->
-    @dbClass.find {tool: toolName}, callback
+    @dbClass.find {tool: toolName, state: {$ne: 'deleted'}}, callback
 
 Dataset.View =
   findAllByTool: (toolName, callback) ->
-    Dataset.dbClass.find 'views.tool': toolName, (err, docs) ->
+    Dataset.dbClass.find
+      'views.tool': toolName
+      state:
+        $ne: 'deleted'
+    , (err, docs) ->
       # convert from dataset to its views...
       listoflists = _.map docs, (item) ->
         item.views

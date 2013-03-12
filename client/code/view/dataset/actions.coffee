@@ -5,11 +5,13 @@ class Cu.View.DatasetActions extends Backbone.View
   events:
     'click .hide-dataset': 'hideDataset'
     'click .rename-dataset': 'renameDataset'
+    'click .dataset-settings': 'datasetSettings'
     'click .git-ssh': 'showSSH'
 
   render: ->
     @$el.html """
       <li><a class="rename-dataset"><img src="/image/icon-rename.png" width="16" height="16" /> Rename dataset</a></li>
+      <li><a class="dataset-settings"><img src="/image/icon-settings.png" width="16" height="16" /> Edit dataset settings</a></li>
       <li><a class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</a></li>
       <li><a class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Hide dataset</a></li>"""
     @
@@ -27,3 +29,7 @@ class Cu.View.DatasetActions extends Backbone.View
 
   showSSH: ->
     alert("This hasn't been implemented yet. Sorry.")
+
+  datasetSettings: ->
+    # :TODO: this is a bit of a hack
+    $('a.dataset.tile').trigger('click')

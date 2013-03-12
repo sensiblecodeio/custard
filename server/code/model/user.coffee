@@ -28,12 +28,6 @@ zDbUser = mongoose.model 'User', userSchema
 class User extends ModelBase
   @dbClass: zDbUser
 
-  constructor: (obj) ->
-    super obj
-    if not ('apikey' of obj)
-      @apikey = fresh_apikey()
-    @
-
   validate: ->
     # TODO: proper regex, share validation across server & client
     return 'invalid shortName' unless /^[a-zA-Z0-9-.]+$/g.test @shortName
@@ -135,15 +129,6 @@ class User extends ModelBase
                   callback null, userobj
         else
           callback "Can't find user", null
-
-rand32 = ->
-  # 32 bits of lovely randomness.
-  # It so happens that Math.random() only generates 32 random
-  # bits on V8 (on node.js and Chrome).
-  Math.floor(Math.random() * Math.pow(2, 32))
-
-fresh_apikey = ->
-  [rand32(), rand32()].join('-')
 
 exports.User = User
 

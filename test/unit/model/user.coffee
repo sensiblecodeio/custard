@@ -148,8 +148,20 @@ describe 'User (Server)', ->
         should.not.exist err
         done()
 
-    it 'should not save if the shortName is invalid', (done) ->
+    it 'should not save if the shortName contains invalid chars', (done) ->
       @user.shortName = 'Test !!!!'
+      @user.save (err) ->
+        should.exist err
+        done()
+
+    it 'should not save if the shortName is less than 3 chars', (done) ->
+      @user.shortName = 'Te'
+      @user.save (err) ->
+        should.exist err
+        done()
+
+    it 'should not save if the shortName is more than 24 chars', (done) ->
+      @user.shortName = 'aaaaaaaaaaaaaaaaaaaaaaaaa'
       @user.save (err) ->
         should.exist err
         done()

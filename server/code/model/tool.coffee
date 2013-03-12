@@ -9,6 +9,7 @@ rimraf = require 'rimraf'
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
+{User} = require 'model/user'
 {Dataset} = require 'model/dataset'
 
 ModelBase = require 'model/base'
@@ -52,11 +53,16 @@ class Tool extends ModelBase
       done "tooltypewrong"
     M.findAllByTool @name, (err, datasets) ->
       async.forEach datasets, (item, cb) ->
-        request.post
-          uri: "#{process.env.CU_BOX_SERVER}/#{item.box}/exec"
-          form:
-            cmd: "cd ~/tool && git pull >> tool-update.log 2>&1"
-        , cb
+        User.findByShortName item.user, (err, user) ->
+          if err? or not user?
+            cb err or "no user"
+          else
+            request.post
+              uri: "#{process.env.CU_BOX_SERVER}/#{item.box}/exec"
+              form:
+                apikey: user.apikey
+                cmd: "cd ~/tool && git pull >> tool-update.log 2>&1"
+            , cb
       , done
 
   loadManifest: (callback) ->

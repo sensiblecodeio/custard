@@ -37,8 +37,16 @@ class DatasetDb extends MockDb
         views: [ new Model(name: 'view1', tool: 'view-tool', box: 'view-box') ]
       ]
 
+class UserDb extends MockDb
+  @findOne: (args, callback) ->
+    callback null, new Model
+      name: 'testington'
+      apikey: process.env.COTEST_USER_API_KEY
+      displayName: 'Lord Test Testington'
+
 Tool = require('model/tool')(TestDb)
 Dataset = require('model/dataset').dbInject DatasetDb
+User = require('model/user').dbInject UserDb
 
 describe 'Server model: Tool', ->
 
@@ -161,6 +169,7 @@ describe 'Server model: Tool', ->
       pulledInDSBox = @requestStub.calledWithMatch
         uri: sinon.match /ds-box/
         form:
+          apikey: sinon.match new RegExp(process.env.COTEST_USER_API_KEY)
           cmd: sinon.match /git pull/
       pulledInDSBox.should.be.true
 
@@ -168,8 +177,9 @@ describe 'Server model: Tool', ->
       pulledInViewBox = @requestStub.calledWithMatch
         uri: sinon.match /view-box/
         form:
+          apikey: sinon.match new RegExp(process.env.COTEST_USER_API_KEY)
           cmd: sinon.match /git pull/
       pulledInViewBox.should.be.true
-      
+
     after ->
       request.post.restore()

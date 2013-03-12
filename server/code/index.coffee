@@ -270,7 +270,10 @@ app.post '/api/tools/?', (req, resp) ->
     # pairs in req.body (_.update tool, body). So that for
     # example the gitUrl can be changed and we git clone from the
     # new one.
-
+    # Start updating the tool instances (datasets and views)
+    console.log "Starting to update tool instances..."
+    tool.updateInstances (err, res) ->
+      console.log "Finished updating tool instances. #{err} #{res}"
     tool.gitCloneOrPull dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
       console.log err, stdout, stderr
       if err?

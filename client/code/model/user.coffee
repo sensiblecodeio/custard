@@ -26,7 +26,7 @@ class Cu.Model.User extends Backbone.Model
     if not 'shortName' of attrs
       return true
     else
-      return /^[a-zA-Z0-9-.]+$/g.test attrs.shortName
+      return /^[a-zA-Z0-9-.]{3,24}$/g.test attrs.shortName
 
   validEmail: (attrs) ->
     if not 'email' of attrs

@@ -24,7 +24,10 @@ class Cu.View.ToolTile extends Backbone.View
   # :TODO: Horrible kludge to avoid tool manifest changes right now (we've done worse)
   monkeypatchIconManifest: (model) ->
     manifest = model.get 'manifest'
-    if manifest.displayName.indexOf('Code') == 0
+    if manifest.displayName.indexOf('in your browser') > -1
+      manifest.icon = '/image/tool-icon-classic.png'
+      manifest.color = '#6AAFD1'
+    else if manifest.displayName.indexOf('Code') == 0
       manifest.icon = '/image/tool-icon-code.png'
       manifest.color = '#555'
     else if manifest.displayName.indexOf('Twitter') > -1

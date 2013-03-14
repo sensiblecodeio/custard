@@ -1,6 +1,6 @@
 <ul>
 <li><a href="/">Data Hub</a></li>
-<li><a href="#">Tool Packs</a></li>
+<li><a href="/tools/people-pack">Tool Packs</a></li>
 <li><a href="/docs">Help</a></li>
 <% if @displayName: %>
 <li class="logout"><a href="/logout" data-nonpushstate>Log out</a></li>

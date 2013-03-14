@@ -27,7 +27,8 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('docs/?'), 'developerDocs'
     @route RegExp('docs/corporate/?'), 'corporateDocs'
     @route RegExp('docs/developer/?'), 'developerDocs'
-    @route RegExp('tools/?'), 'tools'
+    @route RegExp('tools/?'), 'toolShop'
+    @route RegExp('tools/people-pack/?'), 'peoplePack'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
     @route RegExp('dataset/([^/]+)/settings/?'), 'datasetSettings'
     @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
@@ -111,6 +112,15 @@ class Cu.Router.Main extends Backbone.Router
             @subnavView.showView subnavView
       error: (model, xhr, options) ->
         console.warn xhr
+
+  toolShop: ->
+    app.navigate '/tools/people-pack/', true
+
+  peoplePack: ->
+    subnavView = new Cu.View.ToolShopNav {name: 'People Pack', url: '/tools/people-pack'}
+    contentView = new Cu.View.PeoplePack()
+    @appView.showView contentView
+    @subnavView.showView subnavView
 
   createProfile: ->
     subnavView = new Cu.View.Subnav {text: 'Create Profile'}

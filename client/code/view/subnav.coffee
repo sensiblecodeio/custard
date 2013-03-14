@@ -402,3 +402,22 @@ class Cu.View.DocsNav extends Backbone.View
       </ul>
       <hr>""")
     @
+
+class Cu.View.ToolShopNav extends Backbone.View
+  className: 'subnav-wrapper'
+
+  render: ->
+    @$el.html("""
+      <div class="btn-toolbar" id="subnav-path">
+        <h1 class="btn-group">
+          <a class="btn btn-link" href="/tools">Tool Shop</a>
+        </h1>
+        <div class="btn-group">
+          <span class="slash">/</span>
+        </div>
+        <h1 class="btn-group" style="margin-left: 7px">
+          <a class="btn btn-link" href="#{@options.url}">#{@options.name}</a>
+        </h1>
+      </div>
+      <hr>""")
+    @

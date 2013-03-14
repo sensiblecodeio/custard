@@ -702,7 +702,8 @@ div.login-page,
 div.create-profile,
 div.set-password,
 div.sign-up,
-div.error-page {
+div.error-page,
+div.toolpack {
   padding: 20px;
 }
 

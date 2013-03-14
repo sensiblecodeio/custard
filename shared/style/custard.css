@@ -707,6 +707,12 @@ div.toolpack {
   padding: 20px;
 }
 
+div.home > a {
+  display: block;
+  margin: 20px 0 0 20px;
+  background: #eee;
+}
+
 div.docs {
   padding: 10px 20px 20px 20px;
   line-height: 24px; /* the default 21px is a bit tight for so much text */

@@ -27,6 +27,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('docs/?'), 'developerDocs'
     @route RegExp('docs/corporate/?'), 'corporateDocs'
     @route RegExp('docs/developer/?'), 'developerDocs'
+    @route RegExp('pricing/?'), 'pricing'
     @route RegExp('tools/?'), 'toolShop'
     @route RegExp('tools/people-pack/?'), 'peoplePack'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
@@ -43,7 +44,7 @@ class Cu.Router.Main extends Backbone.Router
       @homeAnonymous()
 
   homeAnonymous: ->
-    contentView = new Cu.View.Pricing
+    contentView = new Cu.View.Home
     @appView.showView contentView
     @subnavView.hideView()
 
@@ -57,6 +58,12 @@ class Cu.Router.Main extends Backbone.Router
         window.tools.fetch()
       error: (x,y,z) ->
         console.warn 'ERRROR', x, y, z
+
+  pricing: ->
+    subnavView = new Cu.View.Subnav {text: 'Pricing'}
+    contentView = new Cu.View.Pricing()
+    @appView.showView contentView
+    @subnavView.showView subnavView
 
   signUp: (plan) ->
     contentView = new Cu.View.SignUp

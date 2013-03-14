@@ -6,33 +6,28 @@ wd40 = require('../wd40')(browser)
 
 url = 'http://localhost:3001'
 
-# TODO: Should be in separate pricing test?
-describe 'Home page (logged in)', ->
+describe 'Home page (not logged in)', ->
   before (done) ->
     wd40.init ->
       browser.get url, done
 
-  it 'shows me a free plan', (done) ->
-    browser.elementByCssIfExists '#plans .free', (err, free) ->
-      should.exist free
+  before (done) =>
+    wd40.getText 'body', (err, text) =>
+      @bodyText = text
       done()
 
-  it 'shows me a cheap plan', (done) ->
-    browser.elementByCssIfExists '#plans .cheap', (err, free) ->
-      should.exist free
-      done()
+  it 'tells me about the platform for data science', =>
+    @bodyText.toLowerCase().should.include 'platform for data science'
 
-  it 'shows me an expensive plan', (done) ->
-    browser.elementByCssIfExists '#plans .expensive', (err, free) ->
-      should.exist free
-      done()
-
-  context 'when I click the free plan', ->
-    before (done) ->
-      browser.elementByCssIfExists '#plans .free', (err, free) ->
-        free.click done
-
-    it 'takes me to the sign up page', (done) ->
-      wd40.trueURL (err, url) ->
-        url.should.include '/signup/hacker'
+  it 'gives me a link to sign up for an account', (done) ->
+    browser.elementByPartialLinkText 'Sign up', (err, link) ->
+      should.exist link
+      link.getAttribute 'href', (err, href) ->
+        href.should.include '/pricing'
         done()
+
+  it 'tells me about ScraperWiki Data Services', =>
+    @bodyText.toLowerCase().should.include 'scraperwiki data services'
+
+  it 'tells me about the people pack', =>
+    @bodyText.toLowerCase().should.include 'people pack'

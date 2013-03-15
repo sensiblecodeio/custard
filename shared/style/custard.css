@@ -57,6 +57,10 @@ body.fullscreen .container {
   background-position: 0 12px;
 }
 
+.fullscreen #logo {
+  margin-left: 20px;
+}
+
 #header nav {
   display: none; /* :TODO: work out how to display nav for small devices */
 }
@@ -756,6 +760,10 @@ div.pricing .btn + .btn {
     position: absolute;
     top: 0;
     right: 0;
+  }
+
+  .fullscreen #header nav {
+    right: 20px;
   }
 
   #header nav li {

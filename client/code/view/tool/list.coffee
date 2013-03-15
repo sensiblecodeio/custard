@@ -11,7 +11,9 @@ class Cu.View.ToolList extends Backbone.View
     headerView = new Cu.View.ToolListHeader {type: @options.type}
     @$el.append headerView.render().el
 
+    # :TODO: Euch, DOM generation in jQuery. Unclean.
     @container = $('<div class="container">')
+    @row = $('<div class="row">').appendTo(@container)
     @addTools()
     @$el.append(@container).fadeIn(100)
 
@@ -32,7 +34,7 @@ class Cu.View.ToolList extends Backbone.View
       view = new Cu.View.AppTile model: tool
     else
       view = new Cu.View.PluginTile { model: tool, dataset: @options.dataset }
-    @container.append view.render().el
+    @row.append view.render().el
 
   closeChooser: ->
     @$el.fadeOut 200, ->

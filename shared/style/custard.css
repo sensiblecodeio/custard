@@ -493,11 +493,9 @@ div.dataset-overview .about .tile li.status {
 }
 
 a.tool {
-  float: left;
   display: table; /* this won't work in IE6/7 */
-  width: 280px;
   height: 100px;
-  margin: 0 0 0 20px;
+  margin-bottom: 0; /* override the default 20px margin-bottom on .swcol */
   color: #fff;
   text-shadow: 0 3px 6px #000;
   text-decoration: none;

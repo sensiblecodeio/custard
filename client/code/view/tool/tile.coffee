@@ -1,5 +1,5 @@
 class Cu.View.ToolTile extends Backbone.View
-  className: 'tool'
+  className: 'tool swcol'
   tagName: 'a'
 
   attributes: ->

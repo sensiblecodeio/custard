@@ -13,7 +13,7 @@
     "ejs": "~0.8.3",
     "connect-mongo": "~0.2.0",
     "connect-flash": "~0.1.0",
-    "underscore": "~1.4.3",
+    "underscore": "~1.4.4",
     "eco": "~1.1.0-rc-3",
     "rimraf": "~2.1.1",
     "ident-express": "*",

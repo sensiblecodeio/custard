@@ -38,7 +38,7 @@ body.fullscreen .container {
 }
 
 #header .container {
-  margin-bottom: 0;
+  margin-top: 0;
   position: relative;
   background: transparent url(../image/header-highlight.png) 0 0 no-repeat;
 }
@@ -48,7 +48,6 @@ body.fullscreen .container {
   width: 180px;
   height: 50px;
   line-height: 50px;
-  margin-left: 20px;
   text-indent: -9000px;
   outline: none;
   background: transparent url(../image/header-logo.png) 0 11px no-repeat;
@@ -238,8 +237,6 @@ a.tile {
   position: relative;
   display: block;
   float: left;
-  margin: 20px 0 0 20px;
-  width: 280px;
   height: 140px;
   background-color: #15af90;
   color: #fff;
@@ -273,7 +270,6 @@ a.new-dataset-tile {
   position: relative;
   display: block;
   float: left;
-  margin: 20px 0 0 20px;
   padding-top: 40px;
   width: 276px; /* 280px - 4px border */
   height: 96px; /* 140px - 4px border - 40px padding-top */
@@ -455,7 +451,7 @@ div.dataset-overview .about .tile li.status {
 
 #chooser .header h2 {
   float: left;
-  margin: 0 0 0 20px;
+  margin: 0;
   color: #fff;
   font-size: 24px;
   text-shadow: 0 1px 3px #000;
@@ -463,7 +459,7 @@ div.dataset-overview .about .tile li.status {
 
 #chooser .header .btn-toolbar {
   float: right;
-  margin: 5px 20px 0 0;
+  margin: 5px 0 0 0;
 }
 
 #chooser .header .search-query {
@@ -501,7 +497,7 @@ a.tool {
   display: table; /* this won't work in IE6/7 */
   width: 280px;
   height: 100px;
-  margin: 0 0 0 20px;
+  margin: 0 20px 0 0;
   color: #fff;
   text-shadow: 0 3px 6px #000;
   text-decoration: none;
@@ -582,7 +578,7 @@ a.tool canvas {
 }
 
 div.dataset-views a.tool {
-  margin: 15px 0 15px 0;
+  margin: 15px 0;
   text-shadow: none;
   color: #333;
   height: auto;
@@ -593,13 +589,6 @@ div.dataset-views a.tool .tool-icon-outer {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   border-box-shadow: none;
-}
-
-div.dataset-overview div.about,
-div.dataset-overview div.actions {
-  float: left;
-  width: 280px;
-  margin: 20px 0 0 20px;
 }
 
 div.dataset-overview h4 {
@@ -615,18 +604,11 @@ div.dataset-overview a.tile {
   float: none;
 }
 
-div.dataset-overview a.view.tile {
-  margin: 0 0 20px 0; /* this is a mess - can it be combined with styles further up?? */
-}
-
-div.dataset-overview .dataset-views {
-  margin-bottom: 20px;
-}
-
 div.dataset-overview .actions .btn-large {
   padding-top: 7px; /* compensate for really big <img> in button */
   padding-bottom: 7px;
   width: 240px; /* make it more substantial */
+  margin-top: 20px;
 }
 
 div.dataset-overview .actions .btn-large img {
@@ -698,23 +680,13 @@ div.dataset-overview ul.dataset-actions img {
     font-size: 20px;
 }
 
-div.login-page,
-div.create-profile,
-div.set-password,
-div.sign-up,
-div.error-page,
-div.toolpack {
-  padding: 20px;
-}
-
 div.home > a {
   display: block;
-  margin: 20px 0 0 20px;
+  margin-bottom: 20px;
   background: #eee;
 }
 
 div.docs {
-  padding: 10px 20px 20px 20px;
   line-height: 24px; /* the default 21px is a bit tight for so much text */
 }
 
@@ -740,12 +712,8 @@ div.docs h3 {
   margin-top: 20px;
 }
 
-div.pricing {
-  padding: 0 20px;
-  text-align: center;
-}
-
 div.pricing .hero-unit {
+  text-align: center;
   background-color: #FDE598;
 }
 
@@ -760,7 +728,6 @@ div.pricing .btn + .btn {
   }
 
   .subnav-wrapper {
-    margin: 0 20px; /* indent #subnav-path and #subnav-options like everything else */
     min-height: 34px;
   }
 
@@ -790,7 +757,7 @@ div.pricing .btn + .btn {
     display: block;
     position: absolute;
     top: 0;
-    right: 20px;
+    right: 0;
   }
 
   #header nav li {
@@ -877,8 +844,8 @@ div.pricing .btn + .btn {
     float: none;
     margin: 0;
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 0;
+    left: 0;
     width: 240px;
   }
 

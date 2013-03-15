@@ -564,8 +564,8 @@ input[type="color"],
 /* Responsive sizing for .containers */
 
 .container {
-    margin-bottom: 20px;
-    width: 320px;
+    margin-top: 20px;
+    width: 280px;
     -moz-transition: width 0.5s;
     -webkit-transition: width 0.5s;
     -o-transition: width 0.5s;
@@ -577,7 +577,7 @@ input[type="color"],
    so we're going to feed them all the 920px style. */
 
 .container {
-   width: 920px\9;
+   width: 880px\9;
 }
 
 .navbar .container {
@@ -585,20 +585,26 @@ input[type="color"],
   overflow: visible;
 }
 
+.swcol {
+  float: left;
+  width: 280px;
+  margin: 0 0 20px 20px;
+}
+
 @media only screen and (min-width: 620px) {
     .container {
-        width: 620px;
+        width: 580px;
     }
 }
 
 @media only screen and (min-width: 920px) {
     .container {
-        width: 920px;
+        width: 880px;
     }
 }
 
 @media only screen and (min-width: 1220px) {
     .container {
-        width: 1220px;
+        width: 1180px;
     }
 }

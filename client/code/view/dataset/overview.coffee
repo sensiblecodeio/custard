@@ -1,12 +1,12 @@
 class Cu.View.DatasetOverview extends Backbone.View
-  className: 'dataset-overview'
+  className: 'dataset-overview row'
 
   events:
     'click .new-view': 'showChooser'
 
   render: ->
-    $aboutDiv = $('<div class="about">')
-    $actionDiv = $('<div class="actions">')
+    $aboutDiv = $('<div class="about swcol">')
+    $actionDiv = $('<div class="actions swcol">')
 
     $aboutDiv.html '<h4>About this data:</h4>'
     datasetTileView = new Cu.View.DatasetTile

@@ -1,0 +1,42 @@
+#!/usr/bin/env coffee
+# Created 2013-03-18
+# Set every user to the "unlimited" (which isn't really!) plan
+
+async = require 'async'
+mongoose = require 'mongoose'
+request = require 'request'
+
+# This is the a fake User schema
+Schema = mongoose.Schema
+userSchema = new Schema
+  shortName: {type: String, unique: true}
+  email: [String]
+  displayName: String
+  password: String # encrypted, see setPassword method
+  apikey: {type: String, unique: true}
+  isStaff: Boolean
+  accountLevel: String
+  trialStarted: {type: Date, default: Date.now}
+  created: {type: Date, default: Date.now}
+  logoUrl: String
+  sshKeys: [String]
+
+User = mongoose.model 'User', userSchema
+
+main = ->
+  if not process.argv[2]?
+    console.log "Please specify a Mongo DB connection thingy"
+    process.exit 4
+  mongo = process.argv[2]
+  process.stdout.write "Connecting to #{mongo}..."
+  mongoose.connect mongo
+  process.stdout.write "\rConnected    \n"
+  each = (user, cb) ->
+    user.accountLevel = "grandfather"
+    console.log user
+    user.save ->
+      cb null, user
+  User.find {}, null, {}, (err, users) ->
+    async.map users, each, process.exit
+
+main()

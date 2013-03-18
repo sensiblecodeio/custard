@@ -17,7 +17,7 @@ describe 'Home page (not logged in)', ->
       done()
 
   it 'tells me about the platform for data science', =>
-    @bodyText.toLowerCase().should.include 'platform for data science'
+    @bodyText.toLowerCase().should.include 'data science'
 
   it 'gives me a link to sign up for an account', (done) ->
     browser.elementByPartialLinkText 'Sign up', (err, link) ->
@@ -27,7 +27,4 @@ describe 'Home page (not logged in)', ->
         done()
 
   it 'tells me about ScraperWiki Data Services', =>
-    @bodyText.toLowerCase().should.include 'scraperwiki data services'
-
-  it 'tells me about the people pack', =>
-    @bodyText.toLowerCase().should.include 'people pack'
+    @bodyText.toLowerCase().should.include 'data services'

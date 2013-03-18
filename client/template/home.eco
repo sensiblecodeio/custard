@@ -1,14 +1,19 @@
-<a href="/pricing">
-  <h2><strong>ScraperWiki</strong> A platform for Data Science <em>Sign up &gt;</em></h2>
+<a href="/pricing" class="banner signup">
+  <h1>Liberate Your Data!</h1>
+  <ul class="features">
+    <li>Scrape web pages and APIs</li>
+    <li>Import Excel files, PDFs and more</li>
+    <li>Central ScraperWiki data hub</li>
+    <li>Sort, filter and visualise</li>
+    <li>Export and download for analysis</li>
+  </ul>
+  <h2>All the tools&nbsp;and&nbsp;services you&nbsp;need to do data&nbsp;science&nbsp;on&nbsp;the&nbsp;web. <em>Sign up <i class="icon-arrow-right"></i></em></h2>
 </a>
-<a href="https://scraperwiki.com/dataservices/">
-  <h2>Liberate Your Data!</h2>
-  <h3>with ScraperWiki Data Services</h3>
+<!--
+<a href="https://scraperwiki.com/dataservices/" class="banner dataservices">
+  <h2>Call in the professionals</h2>
+  <h3>ScraperWiki Data Services</h3>
   <p>Our data scientists help B2B Media customers extract value from internal and external data.</p>
   <p><em>Find out more &gt;</em></p>
 </a>
-<a href="/tools/people-pack/">
-  <small>Coming soon</small>
-  <h2>Gather insights about the people that matter to you or your business.</h2>
-  <p><em>See the People Pack &gt;</em></p>
-</a>
+-->

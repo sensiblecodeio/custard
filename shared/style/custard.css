@@ -760,6 +760,83 @@ div.home .signup h2 i {
   vertical-align: -1px;
 }
 
+div.pricing {
+  margin-left: -20px;
+}
+
+div.pricing .plan {
+  position: relative;
+  padding-bottom: 20px;
+  text-align: center;
+  background-color: #ffdf5e;
+  color: #330;
+  -webkit-box-shadow:  0px 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow:  0px 1px 2px rgba(0, 0, 0, 0.3);
+  -webkit-transition: box-shadow 0.1s linear, -webkit-box-shadow 0.1s linear, top 0.1s linear;
+  -moz-transition: box-shadow 0.1s linear, top 0.1s linear;
+  -ms-transition: box-shadow 0.1s linear, top 0.1s linear;
+  -o-transition: box-shadow 0.1s linear, top 0.1s linear;
+  transition: box-shadow 0.1s linear, top 0.1s linear;
+}
+
+div.pricing .plan:hover {
+  text-decoration: none;
+  top: -1px;
+  -webkit-box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+div.pricing .plan.explorer {
+  background-color: #FDECA8;
+}
+
+div.pricing .plan h2 {
+  margin: 15px 10px 5px 10px;
+}
+
+div.pricing .plan .cost {
+  font-size: 21px;
+  line-height: 24px;
+}
+
+div.pricing .plan .cost small {
+  opacity: 0.5;
+  margin-left: 2px;
+}
+
+div.pricing .plan p {
+  margin: 0 20px 10px 20px;
+}
+
+div.pricing .plan p.muted {
+  font-size: 12px;
+  line-height: 16px;
+  color: inherit;
+  opacity: 0.5;
+  margin-bottom: 15px;
+}
+
+div.pricing .cta {
+  background: #fff;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  padding: 5px 15px 6px 15px;
+  text-shadow: none;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+
+div.pricing .cta:hover {
+  background: #E6A809;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.7);
+}
+
+div.pricing .corporate {
+  margin-left: 20px;
+  clear: both;
+}
+
 div.docs {
   line-height: 24px; /* the default 21px is a bit tight for so much text */
 }
@@ -784,15 +861,6 @@ div.docs .well .label {
 
 div.docs h3 {
   margin-top: 20px;
-}
-
-div.pricing .hero-unit {
-  text-align: center;
-  background-color: #FDE598;
-}
-
-div.pricing .btn + .btn {
-  margin-left: 12px;
 }
 
 @media only screen and (min-width: 620px) {

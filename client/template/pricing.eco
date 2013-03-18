@@ -1,6 +1,25 @@
-<div id="plans" class="hero-unit">
-  <h1 style="margin-bottom: 40px; text-shadow: 0 1px 0 #fff;">Open for business</h1>
-  <a href="/signup/specialist" class="expensive btn btn-large">Specialist <span class="muted">&ndash; $29</span></a>
-  <a href="/signup/developer" class="cheap btn btn-large btn-primary">Developer <span style="opacity: 0.7">&ndash; $9</span></a>
-  <a href="/signup/hacker" class="free btn btn-large">Hacker <span class="muted">&ndash; Free</span></a>
-</div>
+<a class="plan datascientist swcol" href="/signup/datascientist">
+  <h2>Data Scientist</h2>
+  <p class="cost">$29<small>/mth</small></p>
+  <p>Unlimited datasets</p>
+  <p class="muted">up to a maximum of 5GB<br/>storage, 5hrs CPU/day</p>
+  <span class="cta">Sign Up</span>
+</a>
+
+<a class="plan explorer swcol" href="/signup/explorer">
+  <h2>Explorer</h2>
+  <p class="cost">$9<small>/mth</small></p>
+  <p>10 datasets</p>
+  <p class="muted">up to a maximum of 200MB<br/>storage, 1hr CPU/day</p>
+  <span class="cta">Sign Up</span>
+</a>
+
+<!--<a class="plan community swcol" href="/signup/community">
+  <h2>Community</h2>
+  <p class="cost">Free</p>
+  <p>3 datasets</p>
+  <p class="muted">up to a maximum of 10MB<br/>storage, 0.5hrs CPU/day</p>
+  <span class="cta">Sign Up</span>
+</a>-->
+
+<p class="corporate">We also have team-level and division-level <strong>corporate plans</strong>, including sub-accounts, SLA, dedicated hardware, and hourly backups. <a href="https://scraperwiki.com/dataservices">Contact us for details.</a></p>

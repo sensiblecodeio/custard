@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ScraperWiki Bootstrap Test Suite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A test suite for the ScraperWiki Bootstrap theme">
+    <link href="//x.scraperwiki.com/vendor/style/bootstrap.min.css" rel="stylesheet">
+    <link href="//x.scraperwiki.com/style/scraperwiki.css" rel="stylesheet" id="scraperstrap-css">
+    <style>
+    .row { margin-bottom: 40px; }
+    .span3 h3 { margin-top: 0; }
+    .bs-docs-separator { margin: 40px 0 39px; }
+
+    #scraperstrap {
+      position: fixed;
+      top: 10px;
+      right: 0;
+      padding: 10px 20px;
+    }
+
+    #scraperstrap input {
+      margin: 0 0 2px 3px;
+    }
+
+    .alerts .alert, .progress-bars .progress {
+      margin-bottom: 20px;
+    }
+
+    section.dropdowns .span9 > .pull-left {
+      margin-right: 20px;
+    }
+    section.dropdowns .dropdown > .dropdown-menu,
+    section.dropdowns .dropup > .dropdown-menu {
+      display: block;
+      position: static;
+      margin-bottom: 5px;
+    }
+
+    .the-icons {
+      margin-left: 0;
+      list-style: none;
+    }
+    .the-icons li {
+      float: left;
+      width: 25%;
+      line-height: 25px;
+      font-size: 12px;
+    }
+    .the-icons i:hover {
+      background-color: rgba(255,0,0,.25);
+    }
+
+    .icons-container {
+      background-color: #666;
+      color: #fff;
+    }
+    .icons-container .the-icons {
+      margin-top: 5px;
+    }
+    </style>
+    <!--[if lt IE 9]><script src="vendor/js/html5shiv.js"></script><![endif]-->
+  </head>
+
+  <body>
+
+  <label id="scraperstrap">Enable ScraperWiki styles <input type="checkbox" checked></label>
+
+  <div class="container">
+
+    <h3 style="margin-top: 40px;" class="muted">Bootstrap sample sheet</h3>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3 id="headings">Headings</h3>
+      </div>
+      <div class="span9">
+        <h1>h1. Heading 1</h1>
+        <h2>h2. Heading 2</h2>
+        <h3>h3. Heading 3</h3>
+        <h4>h4. Heading 4</h4>
+        <h5>h5. Heading 5</h5>
+        <h6>h6. Heading 6</h6>
+        <div class="page-header">
+          <h1>Example page header <small>Subtext for header</small></h1>
+        </div>
+        <div class="page-header">
+          <h2>Example page header <small>Subtext for header</small></h2>
+        </div>
+        <div class="page-header">
+          <h3>Example page header <small>Subtext for header</small></h3>
+        </div>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3 id="body-copy">Body copy</h3>
+      </div>
+      <div class="span9">
+        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+        <p>Cum sociis natoque penatibus et magnis dis <a href="#">parturient montes</a>, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+        <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit non mi porta <a href="#">gravida at eget</a> metus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Lead body copy</h3>
+      </div>
+      <div class="span9">
+        <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.</p>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3 id="emphasis">Emphasis</h3>
+      </div>
+      <div class="span9">
+        <p><small>This line of text is meant to be treated as fine print.</small></p>
+        <p>The following snippet of text is <strong>rendered as bold text</strong>.</p>
+        <p>The following snippet of text is <em>rendered as italicized text</em>.</p>
+        <p class="muted">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p>
+        <p class="text-warning">Etiam porta sem malesuada magna mollis euismod.</p>
+        <p class="text-error">Donec ullamcorper nulla non metus auctor fringilla.</p>
+        <p class="text-info">Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis.</p>
+        <p class="text-success">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3 id="alignment">Alignment</h3>
+      </div>
+      <div class="span9">
+        <p class="text-left">Left aligned text.</p>
+        <p class="text-center">Center aligned text.</p>
+        <p class="text-right">Right aligned text.</p>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3 id="blockquotes">Blockquotes</h3>
+      </div>
+      <div class="span9">
+        <blockquote>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+        </blockquote>
+        <blockquote>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+        </blockquote>
+        <blockquote class="pull-right">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+        </blockquote>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Unordered lists</h3>
+      </div>
+      <div class="span9">
+        <ul>
+          <li>Lorem ipsum dolor sit amet</li>
+          <li>Consectetur adipiscing elit</li>
+          <li>Integer molestie lorem at massa</li>
+          <li>Facilisis in pretium nisl aliquet</li>
+          <li>Nulla volutpat aliquam velit
+            <ul>
+              <li>Phasellus iaculis neque</li>
+              <li>Purus sodales ultricies</li>
+              <li>Vestibulum laoreet porttitor sem</li>
+              <li>Ac tristique libero volutpat at</li>
+            </ul>
+          </li>
+          <li>Faucibus porta lacus fringilla vel</li>
+          <li>Aenean sit amet erat nunc</li>
+          <li>Eget porttitor lorem</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Ordered lists</h>
+      </div>
+      <div class="span9">
+        <ol>
+          <li>Lorem ipsum dolor sit amet</li>
+          <li>Consectetur adipiscing elit</li>
+          <li>Integer molestie lorem at massa</li>
+          <li>Facilisis in pretium nisl aliquet</li>
+          <li>Nulla volutpat aliquam velit</li>
+          <li>Faucibus porta lacus fringilla vel</li>
+          <li>Aenean sit amet erat nunc</li>
+          <li>Eget porttitor lorem</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Unstyled list</h3>
+      </div>
+      <div class="span9">
+        <ul class="unstyled">
+          <li>Lorem ipsum dolor sit amet</li>
+          <li>Consectetur adipiscing elit</li>
+          <li>Integer molestie lorem at massa</li>
+          <li>Facilisis in pretium nisl aliquet</li>
+          <li>Nulla volutpat aliquam velit
+            <ul>
+              <li>Phasellus iaculis neque</li>
+              <li>Purus sodales ultricies</li>
+              <li>Vestibulum laoreet porttitor sem</li>
+              <li>Ac tristique libero volutpat at</li>
+            </ul>
+          </li>
+          <li>Faucibus porta lacus fringilla vel</li>
+          <li>Aenean sit amet erat nunc</li>
+          <li>Eget porttitor lorem</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Inline lists</h3>
+      </div>
+      <div class="span9">
+        <ul class="inline">
+          <li>Lorem ipsum</li>
+          <li>Phasellus iaculis</li>
+          <li>Nulla volutpat</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Description lists</h3>
+      </div>
+      <div class="span9">
+        <dl>
+          <dt>Description lists</dt>
+          <dd>A description list is perfect for defining terms.</dd>
+          <dt>Euismod</dt>
+          <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
+          <dd>Donec id elit non mi porta gravida at eget metus.</dd>
+          <dt>Malesuada porta</dt>
+          <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Horizontal description lists</h3>
+      </div>
+      <div class="span9">
+        <dl class="dl-horizontal">
+          <dt>Description lists</dt>
+          <dd>A description list is perfect for defining terms.</dd>
+          <dt>Euismod</dt>
+          <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
+          <dd>Donec id elit non mi porta gravida at eget metus.</dd>
+          <dt>Malesuada porta</dt>
+          <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+          <dt>Felis euismod semper eget lacinia</dt>
+          <dd>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Code</h3>
+      </div>
+      <div class="span9">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore <code>&lt;foobar&gt;</code> aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat <code>&lt;foobar&gt;</code> pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <pre>{
+  "id": 12,
+  "name": "Example of a block-level code block",
+  "description": "Block level code blocks are created with &lt;pre&gt; tags and can span multiple lines. White space inside of &lt;pre&gt; elements is displayed, so make sure there aren't extra spaces or line-breaks at the start and end of lines."
+}</pre>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Labels &amp; badges</h3>
+      </div>
+      <div class="span9">
+        <div class="pull-left">
+          <p><span class="label">Default</span></p>
+          <p><span class="label label-success">Success</span></p>
+          <p><span class="label label-warning">Warning</span></p>
+          <p><span class="label label-important">Important</span></p>
+          <p><span class="label label-info">Info</span></p>
+          <p><span class="label label-inverse">Inverse</span></p>
+        </div>
+        <div class="pull-left" style="margin-left: 40px;">
+          <p><span class="badge">1</span></p>
+          <p><span class="badge badge-success">2</span></p>
+          <p><span class="badge badge-warning">4</span></p>
+          <p><span class="badge badge-important">6</span></p>
+          <p><span class="badge badge-info">8</span></p>
+          <p><span class="badge badge-inverse">10</span></p>
+        </div>
+        <div class="pull-left" style="margin-left: 40px;">
+          <p style="clear:both"><span class="label label-info">Info</span> This is an example of an inline label!</p>
+          <button class="btn">View messages <span class="badge">14</span></button> &nbsp; <button class="btn" disabled="disabled">Delete user <span class="label">Staff-only</span></button>
+        </div>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row alerts">
+      <div class="span3">
+        <h3>Alerts</h3>
+      </div>
+      <div class="span9">
+        <div class="alert">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>Warning!</strong> Best check yo self, you're not looking too good.
+        </div>
+        <div class="alert alert-block">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <h4>Warning!</h4>
+          <p>Best check yo self, you're not looking too good. Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+        </div>
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>Oh snap!</strong> Change a few things up and try submitting again.
+        </div>
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>Well done!</strong> You successfully read this important alert message.
+        </div>
+        <div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+        </div>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Wells</h3>
+      </div>
+      <div class="span9">
+        <div class="well well-small">Well with minimal padding.</div>
+        <div class="well">Well with default padding.</div>
+        <div class="well well-large">Well with extra padding.</div>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Plain table</h3>
+      </div>
+      <div class="span9">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Striped table</h3>
+      </div>
+      <div class="span9">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Bordered table</h3>
+      </div>
+      <div class="span9">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="2">1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@TwBootstrap</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td colspan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Condensed table</h3>
+      </div>
+      <div class="span9">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td colspan="2">Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Coloured rows</h3>
+      </div>
+      <div class="span9">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Product</th>
+              <th>Payment Taken</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="success">
+              <td>1</td>
+              <td>TB - Monthly</td>
+              <td>01/04/2012</td>
+              <td>Approved</td>
+            </tr>
+            <tr class="error">
+              <td>2</td>
+              <td>TB - Monthly</td>
+              <td>02/04/2012</td>
+              <td>Declined</td>
+            </tr>
+            <tr class="warning">
+              <td>3</td>
+              <td>TB - Monthly</td>
+              <td>03/04/2012</td>
+              <td>Pending</td>
+            </tr>
+            <tr class="info">
+              <td>4</td>
+              <td>TB - Monthly</td>
+              <td>04/04/2012</td>
+              <td>Call in to confirm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Form controls</h3>
+      </div>
+      <div class="span9">
+        <form class="form-inline">
+          <input type="text" placeholder="Text input">
+          <span class="help-inline">Inline help text</span>
+        </form>
+        <form>
+          <p><input type="text" placeholder="Disabled input here..." disabled></p>
+          <p><span class="uneditable-input">Fake, uneditable input</span></p>
+          <p><input type="search" placeholder="Search&hellip;"></p>
+          <p><textarea rows="3"></textarea></p>
+        </form>
+        <form>
+          <label class="checkbox">
+            <input type="checkbox" value="">
+            Option one is this and that&mdash;be sure to include why it's great
+          </label>
+          <br>
+          <label class="radio">
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+            Option one is this and that&mdash;be sure to include why it's great
+          </label>
+          <label class="radio">
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+            Option two can be something else and selecting it will deselect option one
+          </label>
+        </form>
+        <form>
+          <label class="checkbox inline">
+            <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
+          </label>
+          <label class="checkbox inline">
+            <input type="checkbox" id="inlineCheckbox2" value="option2"> 2
+          </label>
+          <label class="checkbox inline">
+            <input type="checkbox" id="inlineCheckbox3" value="option3"> 3
+          </label>
+        </form>
+        <form>
+          <select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+          <br>
+          <select multiple="multiple">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </form>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Extended form controls</h3>
+      </div>
+      <div class="span9">
+        <form>
+          <div class="input-prepend">
+            <span class="add-on">@</span>
+            <input class="span2" id="prependedInput" type="text" placeholder="Username">
+          </div> &nbsp;&nbsp;&nbsp;
+          <div class="input-append">
+            <input class="span2" id="appendedInput" type="text">
+            <span class="add-on">.00</span>
+          </div> &nbsp;&nbsp;&nbsp;
+          <div class="input-prepend input-append">
+            <span class="add-on">$</span>
+            <input class="span2" id="appendedPrependedInput" type="text">
+            <span class="add-on">.00</span>
+          </div>
+          <div class="input-append">
+            <input class="span2" id="appendedInputButton" type="text">
+            <button class="btn" type="button">Go!</button>
+          </div> &nbsp;&nbsp;&nbsp;
+          <div class="input-append">
+            <input class="span2" id="appendedInputButtons" type="text">
+            <button class="btn" type="button">Search</button>
+            <button class="btn" type="button">Options</button>
+          </div>
+          <br>
+          <div class="input-append">
+            <input class="span2" id="appendedInputButton" type="text">
+            <button class="btn" type="button">Go <i class="icon-chevron-right"></i></button>
+          </div> &nbsp;&nbsp;&nbsp;
+          <div class="input-append">
+            <input class="span2" id="appendedInputButton" type="text">
+            <button class="btn btn-primary" type="button">Go <i class="icon-chevron-right icon-white"></i></button>
+          </div> &nbsp;&nbsp;&nbsp;
+          <br>
+          <div class="input-append">
+            <input class="span2" id="appendedDropdownButton" type="text">
+            <div class="btn-group">
+              <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </div>
+          </div> &nbsp;&nbsp;&nbsp;
+          <div class="input-prepend">
+            <div class="btn-group">
+              <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </div>
+            <input class="span2" id="prependedDropdownButton" type="text">
+          </div>
+          <br>
+          <div class="input-prepend">
+            <div class="btn-group">
+              <button class="btn" tabindex="-1">Action</button>
+              <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </div>
+            <input type="text" class="input-medium">
+          </div>
+          <div class="input-append">
+            <input type="text" class="input-medium">
+            <div class="btn-group">
+              <button class="btn" tabindex="-1">Action</button>
+              <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Input sizes</h3>
+      </div>
+      <div class="span9">
+        <form>
+          <div class="controls docs-input-sizes">
+            <input class="input-mini" type="text" placeholder=".input-mini">
+            <input class="input-small" type="text" placeholder=".input-small">
+            <input class="input-medium" type="text" placeholder=".input-medium">
+            <input class="input-large" type="text" placeholder=".input-large">
+            <input class="input-xlarge" type="text" placeholder=".input-xlarge">
+            <input class="input-xxlarge" type="text" placeholder=".input-xxlarge">
+            <input class="input-block-level" type="text" placeholder=".input-block-level">
+          </div>
+        </form>
+        <form>
+          <div class="controls">
+            <input class="span5" type="text" placeholder=".span5">
+          </div>
+          <div class="controls controls-row">
+            <input class="span4" type="text" placeholder=".span4">
+            <input class="span1" type="text" placeholder=".span1">
+          </div>
+          <div class="controls controls-row">
+            <input class="span3" type="text" placeholder=".span3">
+            <input class="span2" type="text" placeholder=".span2">
+          </div>
+          <div class="controls controls-row">
+            <input class="span2" type="text" placeholder=".span2">
+            <input class="span3" type="text" placeholder=".span3">
+          </div>
+          <div class="controls controls-row">
+            <input class="span1" type="text" placeholder=".span1">
+            <input class="span4" type="text" placeholder=".span4">
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Form validation</h3>
+      </div>
+      <div class="span9">
+        <form class="form-horizontal">
+          <div class="control-group warning">
+            <label class="control-label" for="inputWarning">Input with warning</label>
+            <div class="controls">
+              <input type="text" id="inputWarning">
+              <span class="help-inline">Something may have gone wrong</span>
+            </div>
+          </div>
+          <div class="control-group error">
+            <label class="control-label" for="inputError">Input with error</label>
+            <div class="controls">
+              <input type="text" id="inputError">
+              <span class="help-inline">Please correct the error</span>
+            </div>
+          </div>
+          <div class="control-group info">
+            <label class="control-label" for="inputInfo">Input with info</label>
+            <div class="controls">
+              <input type="text" id="inputInfo">
+              <span class="help-inline">Username is taken</span>
+            </div>
+          </div>
+          <div class="control-group success">
+            <label class="control-label" for="inputSuccess">Input with success</label>
+            <div class="controls">
+              <input type="text" id="inputSuccess">
+              <span class="help-inline">Woohoo!</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Search form</h3>
+      </div>
+      <div class="span9">
+        <form class="form-search">
+          <input type="text" class="input-medium search-query">
+          <button type="submit" class="btn">Search</button>
+          <div class="input-append" style="margin-left: 20px;">
+            <input type="text" class="span2 search-query">
+            <button type="submit" class="btn">Search</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Inline form</h3>
+      </div>
+      <div class="span9">
+        <form class="form-inline">
+          <input type="text" class="input-small" placeholder="Email">
+          <input type="password" class="input-small" placeholder="Password">
+          <label class="checkbox">
+            <input type="checkbox"> Remember me
+          </label>
+          <button type="submit" class="btn">Sign in</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Horizontal form</h3>
+      </div>
+      <div class="span9">
+        <form class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label" for="inputEmail">Email</label>
+            <div class="controls">
+              <input type="text" id="inputEmail" placeholder="Email">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">Password</label>
+            <div class="controls">
+              <input type="password" id="inputPassword" placeholder="Password">
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox"> Remember me
+              </label>
+              <button type="submit" class="btn">Sign in</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Form actions</h3>
+      </div>
+      <div class="span9">
+        <form>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Buttons</h3>
+      </div>
+      <div class="span9">
+        <p>
+          <button type="button" class="btn">Default</button> &nbsp;
+          <button type="button" class="btn btn-primary">Primary</button> &nbsp;
+          <button type="button" class="btn btn-info">Info</button> &nbsp;
+          <button type="button" class="btn btn-success">Success</button> &nbsp;
+          <button type="button" class="btn btn-warning">Warning</button> &nbsp;
+          <button type="button" class="btn btn-danger">Danger</button> &nbsp;
+          <button type="button" class="btn btn-inverse">Inverse</button> &nbsp;
+          <button type="button" class="btn btn-link">Link</button>
+        </p>
+        <p>
+          <button type="button" class="btn" disabled>Default</button> &nbsp;
+          <button type="button" class="btn btn-primary" disabled>Primary</button> &nbsp;
+          <button type="button" class="btn btn-info" disabled>Info</button> &nbsp;
+          <button type="button" class="btn btn-success" disabled>Success</button> &nbsp;
+          <button type="button" class="btn btn-warning" disabled>Warning</button> &nbsp;
+          <button type="button" class="btn btn-danger" disabled>Danger</button> &nbsp;
+          <button type="button" class="btn btn-inverse" disabled>Inverse</button> &nbsp;
+          <button type="button" class="btn btn-link" disabled>Link</button>
+        </p>
+
+        <p>
+          <button type="button" class="btn loading">Loading&hellip;</button> &nbsp;
+          <button type="button" class="btn loading btn-primary">Loading&hellip;</button> &nbsp;
+          <button type="button" class="btn loading btn-info">Loading&hellip;</button> &nbsp;
+          <button type="button" class="btn loading btn-success">Loading&hellip;</button>
+        </p>
+        <p>
+          <button type="button" class="btn loading btn-warning">Loading&hellip;</button> &nbsp;
+          <button type="button" class="btn loading btn-danger">Loading&hellip;</button> &nbsp;
+          <button type="button" class="btn loading btn-inverse">Loading&hellip;</button> &nbsp;
+          <button type="button" class="btn loading btn-link">Loading&hellip;</button>
+        </p>
+
+        <p style="margin-top: 25px;">
+          <a class="btn" href="">Link</a> &nbsp;
+          <button class="btn" type="submit">Button</button> &nbsp;
+          <input class="btn" type="button" value="Input"> &nbsp;
+          <input class="btn" type="submit" value="Submit">
+        </p>
+
+        <p style="margin-top: 25px;">
+          <button type="button" class="btn btn-large btn-primary">Large button</button> &nbsp;
+          <button type="button" class="btn btn-large">Large button</button> &nbsp;
+          <button type="button" class="btn btn-large"><i class="icon-ok"></i> Large button</button> &nbsp;
+          <button type="button" class="btn btn-large loading">Loading&hellip;</button>
+        </p>
+        <p>
+          <button type="button" class="btn btn-primary">Default button</button> &nbsp;
+          <button type="button" class="btn">Default button</button> &nbsp;
+          <button type="button" class="btn"><i class="icon-ok"></i> Default button</button> &nbsp;
+          <button type="button" class="btn loading">Loading&hellip;</button>
+        </p>
+        <p>
+          <button type="button" class="btn btn-small btn-primary">Small button</button> &nbsp;
+          <button type="button" class="btn btn-small">Small button</button> &nbsp;
+          <button type="button" class="btn btn-small"><i class="icon-ok"></i> Small button</button> &nbsp;
+          <button type="button" class="btn btn-small loading">Loading&hellip;</button>
+        </p>
+        <p>
+          <button type="button" class="btn btn-mini btn-primary">Mini button</button> &nbsp;
+          <button type="button" class="btn btn-mini">Mini button</button> &nbsp;
+          <button type="button" class="btn btn-mini"><i class="icon-ok"></i> Mini button</button> &nbsp;
+          <button type="button" class="btn btn-mini loading">Loading&hellip;</button>
+        </p>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Button groups</h3>
+      </div>
+      <div class="span9">
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn">Left</button>
+            <button class="btn">Middle</button>
+            <button class="btn">Right</button>
+          </div>
+          <div class="btn-group" style="margin-left: 10px">
+            <a class="btn" href="#"><i class="icon-align-left"></i></a>
+            <a class="btn" href="#"><i class="icon-align-center"></i></a>
+            <a class="btn" href="#"><i class="icon-align-right"></i></a>
+            <a class="btn" href="#"><i class="icon-align-justify"></i></a>
+          </div>
+        </div>
+        <div class="btn-group btn-group-vertical">
+          <button type="button" class="btn"><i class="icon-align-left"></i></button>
+          <button type="button" class="btn"><i class="icon-align-center"></i></button>
+          <button type="button" class="btn"><i class="icon-align-right"></i></button>
+          <button type="button" class="btn"><i class="icon-align-justify"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Dropdown buttons</h3>
+      </div>
+      <div class="span9">
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">Danger <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Warning <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">Success <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">Inverse <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn">Action</button>
+            <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary">Action</button>
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-danger">Danger</button>
+            <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-warning">Warning</button>
+            <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-success">Success</button>
+            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-info">Info</button>
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-inverse">Inverse</button>
+            <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="btn-toolbar" style="margin-top: 25px;">
+          <div class="btn-group">
+            <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">Large button <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-large">Large action</button>
+            <button class="btn btn-large dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn dropdown-toggle" data-toggle="dropdown">Default button <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn">Default action</button>
+            <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">Small button <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-small">Small action</button>
+            <button class="btn btn-small dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">Mini button <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-mini">Mini action</button>
+            <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="btn-toolbar" style="margin-top: 25px;">
+          <div class="btn-group dropup">
+            <button class="btn">Dropup</button>
+            <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+          <div class="btn-group dropup">
+            <button class="btn primary">Right dropup</button>
+            <button class="btn primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu pull-right">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row dropdowns">
+      <div class="span3">
+        <h3>Dropdown menus</h3>
+      </div>
+      <div class="span9">
+        <div class="pull-left">
+          <p class="muted">Default</p>
+          <div class="dropdown clearfix">
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+              <li><a tabindex="-1" href="#">Action</a></li>
+              <li><a tabindex="-1" href="#">Another action</a></li>
+              <li class="disabled"><a tabindex="-1" href="#">Disabled action</a></li>
+              <li><a tabindex="-1" href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">More options</a>
+                <ul class="dropdown-menu">
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pull-left">
+          <p class="muted">Dropup</p>
+          <div class="dropup">
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+              <li><a tabindex="-1" href="#">Action</a></li>
+              <li><a tabindex="-1" href="#">Another action</a></li>
+              <li class="disabled"><a tabindex="-1" href="#">Disabled action</a></li>
+              <li><a tabindex="-1" href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">More options</a>
+                <ul class="dropdown-menu">
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pull-left">
+          <p class="muted">Left submenu</p>
+          <div class="dropdown">
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+              <li><a tabindex="-1" href="#">Action</a></li>
+              <li><a tabindex="-1" href="#">Another action</a></li>
+              <li class="disabled"><a tabindex="-1" href="#">Disabled action</a></li>
+              <li><a tabindex="-1" href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li class="dropdown-submenu pull-left">
+                <a tabindex="-1" href="#">More options</a>
+                <ul class="dropdown-menu">
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                  <li><a tabindex="-1" href="#">Second level link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <span class="clearfix"></span>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Nav tabs</h3>
+      </div>
+      <div class="span9">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Help</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </li>
+          <li class="disabled"><a href="#">Disabled link</a></li>
+        </ul>
+        <div class="tabs-below">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Help</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li>
+            <li class="disabled"><a href="#">Disabled link</a></li>
+          </ul>
+        </div>
+        <div class="tabs-left">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Help</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li>
+            <li class="disabled"><a href="#">Disabled link</a></li>
+          </ul>
+        </div>
+        <div class="tabs-right clearfix">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Help</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li>
+            <li class="disabled"><a href="#">Disabled link</a></li>
+          </ul>
+        </div>
+        <ul class="nav nav-tabs nav-stacked">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Messages</a></li>
+          <li class="disabled"><a href="#">Disabled link</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Nav pills</h3>
+      </div>
+      <div class="span9">
+        <ul class="nav nav-pills">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Help</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </li>
+          <li class="disabled"><a href="#">Disabled link</a></li>
+        </ul>
+        <ul class="nav nav-pills nav-stacked">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Messages</a></li>
+          <li class="disabled"><a href="#">Disabled link</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Nav list</h3>
+      </div>
+      <div class="span9">
+        <div class="well" style="max-width: 340px; padding: 8px 0;">
+          <ul class="nav nav-list">
+            <li class="nav-header">List header</li>
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li><a href="#">Applications</a></li>
+            <li class="nav-header">Another list header</li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="span3">
+        <h3>Nav bars</h3>
+      </div>
+      <div class="span9">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="#">Title</a>
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="navbar-search pull-left" action="">
+                <input type="text" class="search-query span2" placeholder="Search">
+              </form>
+              <ul class="nav pull-right">
+                <li><a href="#">Link</a></li>
+                <li class="divider-vertical"></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="navbar navbar-inverse" style="margin-bottom: 0;">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="#">Title</a>
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="navbar-search pull-left" action="">
+                <input type="text" class="search-query span2" placeholder="Search">
+              </form>
+              <ul class="nav pull-right">
+                <li><a href="#">Link</a></li>
+                <li class="divider-vertical"></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Breadcrumbs</h3>
+      </div>
+      <div class="span9">
+        <ul class="breadcrumb">
+          <li class="active">Home</li>
+        </ul>
+        <ul class="breadcrumb">
+          <li><a href="#">Home</a> <span class="divider">/</span></li>
+          <li class="active">Library</li>
+        </ul>
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+          <li><a href="#">Home</a> <span class="divider">/</span></li>
+          <li><a href="#">Library</a> <span class="divider">/</span></li>
+          <li class="active">Data</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Pagination</h3>
+      </div>
+      <div class="span9">
+        <div class="pagination pagination-centered pagination-large">
+          <ul>
+            <li class="disabled"><a href="#">«</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">»</a></li>
+          </ul>
+        </div>
+        <div class="pagination pagination-centered">
+          <ul>
+            <li class="disabled"><a href="#">«</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">»</a></li>
+         </ul>
+        </div>
+        <div class="pagination pagination-centered pagination-small">
+          <ul>
+            <li class="disabled"><a href="#">«</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">»</a></li>
+          </ul>
+        </div>
+        <div class="pagination pagination-centered pagination-mini">
+          <ul>
+            <li class="disabled"><a href="#">«</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">»</a></li>
+          </ul>
+        </div>
+        <ul class="pager">
+          <li><a href="#">Previous</a></li>
+          <li><a href="#">Next</a></li>
+        </ul>
+        <ul class="pager">
+          <li class="previous"><a href="#">← Older</a></li>
+          <li class="next"><a href="#">Newer →</a></li>
+        </ul>
+        <ul class="pager">
+          <li class="previous disabled"><a href="#">← Older</a></li>
+          <li class="next"><a href="#">Newer →</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="row progress-bars">
+      <div class="span3">
+        <h3>Progress bars</h3>
+      </div>
+      <div class="span9">
+        <div class="progress">
+          <div class="bar" style="width: 16.66%"></div>
+        </div>
+        <div class="progress progress-info">
+          <div class="bar" style="width: 33.33%"></div>
+        </div>
+        <div class="progress progress-success">
+          <div class="bar" style="width: 50%"></div>
+        </div>
+        <div class="progress progress-warning">
+          <div class="bar" style="width: 66.66%"></div>
+        </div>
+        <div class="progress progress-danger" style="margin-bottom: 40px;">
+          <div class="bar" style="width: 83.33%"></div>
+        </div>
+        <div class="progress progress-striped">
+          <div class="bar" style="width: 16.66%"></div>
+        </div>
+        <div class="progress progress-striped progress-info">
+          <div class="bar" style="width: 33.33%"></div>
+        </div>
+        <div class="progress progress-striped progress-success">
+          <div class="bar" style="width: 50%"></div>
+        </div>
+        <div class="progress progress-striped progress-warning">
+          <div class="bar" style="width: 66.66%"></div>
+        </div>
+        <div class="progress progress-striped progress-danger" style="margin-bottom: 40px;">
+          <div class="bar" style="width: 83.33%"></div>
+        </div>
+        <div class="progress progress-striped active" style="margin-bottom: 40px;">
+          <div class="bar" style="width: 45%"></div>
+        </div>
+        <div class="progress">
+          <div class="bar bar-success" style="width: 35%"></div>
+          <div class="bar bar-warning" style="width: 20%"></div>
+          <div class="bar bar-danger" style="width: 10%"></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="bs-docs-separator">
+
+    <section class="row">
+      <div class="span3">
+        <h3>Icons</h3>
+      </div>
+      <div class="span9">
+        <ul class="the-icons clearfix">
+          <li><i class="icon-glass"></i> icon-glass</li>
+          <li><i class="icon-music"></i> icon-music</li>
+          <li><i class="icon-search"></i> icon-search</li>
+          <li><i class="icon-envelope"></i> icon-envelope</li>
+          <li><i class="icon-heart"></i> icon-heart</li>
+          <li><i class="icon-star"></i> icon-star</li>
+          <li><i class="icon-star-empty"></i> icon-star-empty</li>
+          <li><i class="icon-user"></i> icon-user</li>
+          <li><i class="icon-film"></i> icon-film</li>
+          <li><i class="icon-th-large"></i> icon-th-large</li>
+          <li><i class="icon-th"></i> icon-th</li>
+          <li><i class="icon-th-list"></i> icon-th-list</li>
+          <li><i class="icon-ok"></i> icon-ok</li>
+          <li><i class="icon-remove"></i> icon-remove</li>
+          <li><i class="icon-zoom-in"></i> icon-zoom-in</li>
+          <li><i class="icon-zoom-out"></i> icon-zoom-out</li>
+          <li><i class="icon-off"></i> icon-off</li>
+          <li><i class="icon-signal"></i> icon-signal</li>
+          <li><i class="icon-cog"></i> icon-cog</li>
+          <li><i class="icon-trash"></i> icon-trash</li>
+          <li><i class="icon-home"></i> icon-home</li>
+          <li><i class="icon-file"></i> icon-file</li>
+          <li><i class="icon-time"></i> icon-time</li>
+          <li><i class="icon-road"></i> icon-road</li>
+          <li><i class="icon-download-alt"></i> icon-download-alt</li>
+          <li><i class="icon-download"></i> icon-download</li>
+          <li><i class="icon-upload"></i> icon-upload</li>
+          <li><i class="icon-inbox"></i> icon-inbox</li>
+
+          <li><i class="icon-play-circle"></i> icon-play-circle</li>
+          <li><i class="icon-repeat"></i> icon-repeat</li>
+          <li><i class="icon-refresh"></i> icon-refresh</li>
+          <li><i class="icon-list-alt"></i> icon-list-alt</li>
+          <li><i class="icon-lock"></i> icon-lock</li>
+          <li><i class="icon-flag"></i> icon-flag</li>
+          <li><i class="icon-headphones"></i> icon-headphones</li>
+          <li><i class="icon-volume-off"></i> icon-volume-off</li>
+          <li><i class="icon-volume-down"></i> icon-volume-down</li>
+          <li><i class="icon-volume-up"></i> icon-volume-up</li>
+          <li><i class="icon-qrcode"></i> icon-qrcode</li>
+          <li><i class="icon-barcode"></i> icon-barcode</li>
+          <li><i class="icon-tag"></i> icon-tag</li>
+          <li><i class="icon-tags"></i> icon-tags</li>
+          <li><i class="icon-book"></i> icon-book</li>
+          <li><i class="icon-bookmark"></i> icon-bookmark</li>
+          <li><i class="icon-print"></i> icon-print</li>
+          <li><i class="icon-camera"></i> icon-camera</li>
+          <li><i class="icon-font"></i> icon-font</li>
+          <li><i class="icon-bold"></i> icon-bold</li>
+          <li><i class="icon-italic"></i> icon-italic</li>
+          <li><i class="icon-text-height"></i> icon-text-height</li>
+          <li><i class="icon-text-width"></i> icon-text-width</li>
+          <li><i class="icon-align-left"></i> icon-align-left</li>
+          <li><i class="icon-align-center"></i> icon-align-center</li>
+          <li><i class="icon-align-right"></i> icon-align-right</li>
+          <li><i class="icon-align-justify"></i> icon-align-justify</li>
+          <li><i class="icon-list"></i> icon-list</li>
+
+          <li><i class="icon-indent-left"></i> icon-indent-left</li>
+          <li><i class="icon-indent-right"></i> icon-indent-right</li>
+          <li><i class="icon-facetime-video"></i> icon-facetime-video</li>
+          <li><i class="icon-picture"></i> icon-picture</li>
+          <li><i class="icon-pencil"></i> icon-pencil</li>
+          <li><i class="icon-map-marker"></i> icon-map-marker</li>
+          <li><i class="icon-adjust"></i> icon-adjust</li>
+          <li><i class="icon-tint"></i> icon-tint</li>
+          <li><i class="icon-edit"></i> icon-edit</li>
+          <li><i class="icon-share"></i> icon-share</li>
+          <li><i class="icon-check"></i> icon-check</li>
+          <li><i class="icon-move"></i> icon-move</li>
+          <li><i class="icon-step-backward"></i> icon-step-backward</li>
+          <li><i class="icon-fast-backward"></i> icon-fast-backward</li>
+          <li><i class="icon-backward"></i> icon-backward</li>
+          <li><i class="icon-play"></i> icon-play</li>
+          <li><i class="icon-pause"></i> icon-pause</li>
+          <li><i class="icon-stop"></i> icon-stop</li>
+          <li><i class="icon-forward"></i> icon-forward</li>
+          <li><i class="icon-fast-forward"></i> icon-fast-forward</li>
+          <li><i class="icon-step-forward"></i> icon-step-forward</li>
+          <li><i class="icon-eject"></i> icon-eject</li>
+          <li><i class="icon-chevron-left"></i> icon-chevron-left</li>
+          <li><i class="icon-chevron-right"></i> icon-chevron-right</li>
+          <li><i class="icon-plus-sign"></i> icon-plus-sign</li>
+          <li><i class="icon-minus-sign"></i> icon-minus-sign</li>
+          <li><i class="icon-remove-sign"></i> icon-remove-sign</li>
+          <li><i class="icon-ok-sign"></i> icon-ok-sign</li>
+
+          <li><i class="icon-question-sign"></i> icon-question-sign</li>
+          <li><i class="icon-info-sign"></i> icon-info-sign</li>
+          <li><i class="icon-screenshot"></i> icon-screenshot</li>
+          <li><i class="icon-remove-circle"></i> icon-remove-circle</li>
+          <li><i class="icon-ok-circle"></i> icon-ok-circle</li>
+          <li><i class="icon-ban-circle"></i> icon-ban-circle</li>
+          <li><i class="icon-arrow-left"></i> icon-arrow-left</li>
+          <li><i class="icon-arrow-right"></i> icon-arrow-right</li>
+          <li><i class="icon-arrow-up"></i> icon-arrow-up</li>
+          <li><i class="icon-arrow-down"></i> icon-arrow-down</li>
+          <li><i class="icon-share-alt"></i> icon-share-alt</li>
+          <li><i class="icon-resize-full"></i> icon-resize-full</li>
+          <li><i class="icon-resize-small"></i> icon-resize-small</li>
+          <li><i class="icon-plus"></i> icon-plus</li>
+          <li><i class="icon-minus"></i> icon-minus</li>
+          <li><i class="icon-asterisk"></i> icon-asterisk</li>
+          <li><i class="icon-exclamation-sign"></i> icon-exclamation-sign</li>
+          <li><i class="icon-gift"></i> icon-gift</li>
+          <li><i class="icon-leaf"></i> icon-leaf</li>
+          <li><i class="icon-fire"></i> icon-fire</li>
+          <li><i class="icon-eye-open"></i> icon-eye-open</li>
+          <li><i class="icon-eye-close"></i> icon-eye-close</li>
+          <li><i class="icon-warning-sign"></i> icon-warning-sign</li>
+          <li><i class="icon-plane"></i> icon-plane</li>
+          <li><i class="icon-calendar"></i> icon-calendar</li>
+          <li><i class="icon-random"></i> icon-random</li>
+          <li><i class="icon-comment"></i> icon-comment</li>
+          <li><i class="icon-magnet"></i> icon-magnet</li>
+
+          <li><i class="icon-chevron-up"></i> icon-chevron-up</li>
+          <li><i class="icon-chevron-down"></i> icon-chevron-down</li>
+          <li><i class="icon-retweet"></i> icon-retweet</li>
+          <li><i class="icon-shopping-cart"></i> icon-shopping-cart</li>
+          <li><i class="icon-folder-close"></i> icon-folder-close</li>
+          <li><i class="icon-folder-open"></i> icon-folder-open</li>
+          <li><i class="icon-resize-vertical"></i> icon-resize-vertical</li>
+          <li><i class="icon-resize-horizontal"></i> icon-resize-horizontal</li>
+          <li><i class="icon-hdd"></i> icon-hdd</li>
+          <li><i class="icon-bullhorn"></i> icon-bullhorn</li>
+          <li><i class="icon-bell"></i> icon-bell</li>
+          <li><i class="icon-certificate"></i> icon-certificate</li>
+          <li><i class="icon-thumbs-up"></i> icon-thumbs-up</li>
+          <li><i class="icon-thumbs-down"></i> icon-thumbs-down</li>
+          <li><i class="icon-hand-right"></i> icon-hand-right</li>
+          <li><i class="icon-hand-left"></i> icon-hand-left</li>
+          <li><i class="icon-hand-up"></i> icon-hand-up</li>
+          <li><i class="icon-hand-down"></i> icon-hand-down</li>
+          <li><i class="icon-circle-arrow-right"></i> icon-circle-arrow-right</li>
+          <li><i class="icon-circle-arrow-left"></i> icon-circle-arrow-left</li>
+          <li><i class="icon-circle-arrow-up"></i> icon-circle-arrow-up</li>
+          <li><i class="icon-circle-arrow-down"></i> icon-circle-arrow-down</li>
+          <li><i class="icon-globe"></i> icon-globe</li>
+          <li><i class="icon-wrench"></i> icon-wrench</li>
+          <li><i class="icon-tasks"></i> icon-tasks</li>
+          <li><i class="icon-filter"></i> icon-filter</li>
+          <li><i class="icon-briefcase"></i> icon-briefcase</li>
+          <li><i class="icon-fullscreen"></i> icon-fullscreen</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="icons-container">
+  <div class="container">
+
+    <section class="row">
+      <div class="span3">
+        <h3>White icons</h3>
+      </div>
+      <div class="span9">
+        <ul class="the-icons clearfix">
+          <li><i class="icon-white icon-glass"></i> icon-glass</li>
+          <li><i class="icon-white icon-music"></i> icon-music</li>
+          <li><i class="icon-white icon-search"></i> icon-search</li>
+          <li><i class="icon-white icon-envelope"></i> icon-envelope</li>
+          <li><i class="icon-white icon-heart"></i> icon-heart</li>
+          <li><i class="icon-white icon-star"></i> icon-star</li>
+          <li><i class="icon-white icon-star-empty"></i> icon-star-empty</li>
+          <li><i class="icon-white icon-user"></i> icon-user</li>
+          <li><i class="icon-white icon-film"></i> icon-film</li>
+          <li><i class="icon-white icon-th-large"></i> icon-th-large</li>
+          <li><i class="icon-white icon-th"></i> icon-th</li>
+          <li><i class="icon-white icon-th-list"></i> icon-th-list</li>
+          <li><i class="icon-white icon-ok"></i> icon-ok</li>
+          <li><i class="icon-white icon-remove"></i> icon-remove</li>
+          <li><i class="icon-white icon-zoom-in"></i> icon-zoom-in</li>
+          <li><i class="icon-white icon-zoom-out"></i> icon-zoom-out</li>
+          <li><i class="icon-white icon-off"></i> icon-off</li>
+          <li><i class="icon-white icon-signal"></i> icon-signal</li>
+          <li><i class="icon-white icon-cog"></i> icon-cog</li>
+          <li><i class="icon-white icon-trash"></i> icon-trash</li>
+          <li><i class="icon-white icon-home"></i> icon-home</li>
+          <li><i class="icon-white icon-file"></i> icon-file</li>
+          <li><i class="icon-white icon-time"></i> icon-time</li>
+          <li><i class="icon-white icon-road"></i> icon-road</li>
+          <li><i class="icon-white icon-download-alt"></i> icon-download-alt</li>
+          <li><i class="icon-white icon-download"></i> icon-download</li>
+          <li><i class="icon-white icon-upload"></i> icon-upload</li>
+          <li><i class="icon-white icon-inbox"></i> icon-inbox</li>
+
+          <li><i class="icon-white icon-play-circle"></i> icon-play-circle</li>
+          <li><i class="icon-white icon-repeat"></i> icon-repeat</li>
+          <li><i class="icon-white icon-refresh"></i> icon-refresh</li>
+          <li><i class="icon-white icon-list-alt"></i> icon-list-alt</li>
+          <li><i class="icon-white icon-lock"></i> icon-lock</li>
+          <li><i class="icon-white icon-flag"></i> icon-flag</li>
+          <li><i class="icon-white icon-headphones"></i> icon-headphones</li>
+          <li><i class="icon-white icon-volume-off"></i> icon-volume-off</li>
+          <li><i class="icon-white icon-volume-down"></i> icon-volume-down</li>
+          <li><i class="icon-white icon-volume-up"></i> icon-volume-up</li>
+          <li><i class="icon-white icon-qrcode"></i> icon-qrcode</li>
+          <li><i class="icon-white icon-barcode"></i> icon-barcode</li>
+          <li><i class="icon-white icon-tag"></i> icon-tag</li>
+          <li><i class="icon-white icon-tags"></i> icon-tags</li>
+          <li><i class="icon-white icon-book"></i> icon-book</li>
+          <li><i class="icon-white icon-bookmark"></i> icon-bookmark</li>
+          <li><i class="icon-white icon-print"></i> icon-print</li>
+          <li><i class="icon-white icon-camera"></i> icon-camera</li>
+          <li><i class="icon-white icon-font"></i> icon-font</li>
+          <li><i class="icon-white icon-bold"></i> icon-bold</li>
+          <li><i class="icon-white icon-italic"></i> icon-italic</li>
+          <li><i class="icon-white icon-text-height"></i> icon-text-height</li>
+          <li><i class="icon-white icon-text-width"></i> icon-text-width</li>
+          <li><i class="icon-white icon-align-left"></i> icon-align-left</li>
+          <li><i class="icon-white icon-align-center"></i> icon-align-center</li>
+          <li><i class="icon-white icon-align-right"></i> icon-align-right</li>
+          <li><i class="icon-white icon-align-justify"></i> icon-align-justify</li>
+          <li><i class="icon-white icon-list"></i> icon-list</li>
+
+          <li><i class="icon-white icon-indent-left"></i> icon-indent-left</li>
+          <li><i class="icon-white icon-indent-right"></i> icon-indent-right</li>
+          <li><i class="icon-white icon-facetime-video"></i> icon-facetime-video</li>
+          <li><i class="icon-white icon-picture"></i> icon-picture</li>
+          <li><i class="icon-white icon-pencil"></i> icon-pencil</li>
+          <li><i class="icon-white icon-map-marker"></i> icon-map-marker</li>
+          <li><i class="icon-white icon-adjust"></i> icon-adjust</li>
+          <li><i class="icon-white icon-tint"></i> icon-tint</li>
+          <li><i class="icon-white icon-edit"></i> icon-edit</li>
+          <li><i class="icon-white icon-share"></i> icon-share</li>
+          <li><i class="icon-white icon-check"></i> icon-check</li>
+          <li><i class="icon-white icon-move"></i> icon-move</li>
+          <li><i class="icon-white icon-step-backward"></i> icon-step-backward</li>
+          <li><i class="icon-white icon-fast-backward"></i> icon-fast-backward</li>
+          <li><i class="icon-white icon-backward"></i> icon-backward</li>
+          <li><i class="icon-white icon-play"></i> icon-play</li>
+          <li><i class="icon-white icon-pause"></i> icon-pause</li>
+          <li><i class="icon-white icon-stop"></i> icon-stop</li>
+          <li><i class="icon-white icon-forward"></i> icon-forward</li>
+          <li><i class="icon-white icon-fast-forward"></i> icon-fast-forward</li>
+          <li><i class="icon-white icon-step-forward"></i> icon-step-forward</li>
+          <li><i class="icon-white icon-eject"></i> icon-eject</li>
+          <li><i class="icon-white icon-chevron-left"></i> icon-chevron-left</li>
+          <li><i class="icon-white icon-chevron-right"></i> icon-chevron-right</li>
+          <li><i class="icon-white icon-plus-sign"></i> icon-plus-sign</li>
+          <li><i class="icon-white icon-minus-sign"></i> icon-minus-sign</li>
+          <li><i class="icon-white icon-remove-sign"></i> icon-remove-sign</li>
+          <li><i class="icon-white icon-ok-sign"></i> icon-ok-sign</li>
+
+          <li><i class="icon-white icon-question-sign"></i> icon-question-sign</li>
+          <li><i class="icon-white icon-info-sign"></i> icon-info-sign</li>
+          <li><i class="icon-white icon-screenshot"></i> icon-screenshot</li>
+          <li><i class="icon-white icon-remove-circle"></i> icon-remove-circle</li>
+          <li><i class="icon-white icon-ok-circle"></i> icon-ok-circle</li>
+          <li><i class="icon-white icon-ban-circle"></i> icon-ban-circle</li>
+          <li><i class="icon-white icon-arrow-left"></i> icon-arrow-left</li>
+          <li><i class="icon-white icon-arrow-right"></i> icon-arrow-right</li>
+          <li><i class="icon-white icon-arrow-up"></i> icon-arrow-up</li>
+          <li><i class="icon-white icon-arrow-down"></i> icon-arrow-down</li>
+          <li><i class="icon-white icon-share-alt"></i> icon-share-alt</li>
+          <li><i class="icon-white icon-resize-full"></i> icon-resize-full</li>
+          <li><i class="icon-white icon-resize-small"></i> icon-resize-small</li>
+          <li><i class="icon-white icon-plus"></i> icon-plus</li>
+          <li><i class="icon-white icon-minus"></i> icon-minus</li>
+          <li><i class="icon-white icon-asterisk"></i> icon-asterisk</li>
+          <li><i class="icon-white icon-exclamation-sign"></i> icon-exclamation-sign</li>
+          <li><i class="icon-white icon-gift"></i> icon-gift</li>
+          <li><i class="icon-white icon-leaf"></i> icon-leaf</li>
+          <li><i class="icon-white icon-fire"></i> icon-fire</li>
+          <li><i class="icon-white icon-eye-open"></i> icon-eye-open</li>
+          <li><i class="icon-white icon-eye-close"></i> icon-eye-close</li>
+          <li><i class="icon-white icon-warning-sign"></i> icon-warning-sign</li>
+          <li><i class="icon-white icon-plane"></i> icon-plane</li>
+          <li><i class="icon-white icon-calendar"></i> icon-calendar</li>
+          <li><i class="icon-white icon-random"></i> icon-random</li>
+          <li><i class="icon-white icon-comment"></i> icon-comment</li>
+          <li><i class="icon-white icon-magnet"></i> icon-magnet</li>
+
+          <li><i class="icon-white icon-chevron-up"></i> icon-chevron-up</li>
+          <li><i class="icon-white icon-chevron-down"></i> icon-chevron-down</li>
+          <li><i class="icon-white icon-retweet"></i> icon-retweet</li>
+          <li><i class="icon-white icon-shopping-cart"></i> icon-shopping-cart</li>
+          <li><i class="icon-white icon-folder-close"></i> icon-folder-close</li>
+          <li><i class="icon-white icon-folder-open"></i> icon-folder-open</li>
+          <li><i class="icon-white icon-resize-vertical"></i> icon-resize-vertical</li>
+          <li><i class="icon-white icon-resize-horizontal"></i> icon-resize-horizontal</li>
+          <li><i class="icon-white icon-hdd"></i> icon-hdd</li>
+          <li><i class="icon-white icon-bullhorn"></i> icon-bullhorn</li>
+          <li><i class="icon-white icon-bell"></i> icon-bell</li>
+          <li><i class="icon-white icon-certificate"></i> icon-certificate</li>
+          <li><i class="icon-white icon-thumbs-up"></i> icon-thumbs-up</li>
+          <li><i class="icon-white icon-thumbs-down"></i> icon-thumbs-down</li>
+          <li><i class="icon-white icon-hand-right"></i> icon-hand-right</li>
+          <li><i class="icon-white icon-hand-left"></i> icon-hand-left</li>
+          <li><i class="icon-white icon-hand-up"></i> icon-hand-up</li>
+          <li><i class="icon-white icon-hand-down"></i> icon-hand-down</li>
+          <li><i class="icon-white icon-circle-arrow-right"></i> icon-circle-arrow-right</li>
+          <li><i class="icon-white icon-circle-arrow-left"></i> icon-circle-arrow-left</li>
+          <li><i class="icon-white icon-circle-arrow-up"></i> icon-circle-arrow-up</li>
+          <li><i class="icon-white icon-circle-arrow-down"></i> icon-circle-arrow-down</li>
+          <li><i class="icon-white icon-globe"></i> icon-globe</li>
+          <li><i class="icon-white icon-wrench"></i> icon-wrench</li>
+          <li><i class="icon-white icon-tasks"></i> icon-tasks</li>
+          <li><i class="icon-white icon-filter"></i> icon-filter</li>
+          <li><i class="icon-white icon-briefcase"></i> icon-briefcase</li>
+          <li><i class="icon-white icon-fullscreen"></i> icon-fullscreen</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+  </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script src="//x.scraperwiki.com/vendor/js/bootstrap.min.js"></script>
+    <script>
+    $('#scraperstrap input').on('change', function(){
+      if(this.checked) {
+        $('<link>').attr({
+          rel: "stylesheet",
+          type: "text/css",
+          href: "//x.scraperwiki.com/style/scraperwiki.css",
+          id: "scraperstrap-css"
+        }).appendTo('head')
+      } else {
+        $('#scraperstrap-css').remove()
+      }
+    })
+    </script>
+  </body>
+</html>

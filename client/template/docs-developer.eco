@@ -377,6 +377,8 @@ You'll want to include Bootstrap and our custom style sheet.
 well with Boostrap</a>.
 </p>
 
+<p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap are rendered on ScraperWiki.</p>
+
 <hr />
 
 <h2 id="views-helper">Helper library</h2>

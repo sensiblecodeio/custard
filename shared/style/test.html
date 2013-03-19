@@ -5,8 +5,8 @@
     <title>ScraperWiki Bootstrap Test Suite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A test suite for the ScraperWiki Bootstrap theme">
-    <link href="//x.scraperwiki.com/vendor/style/bootstrap.min.css" rel="stylesheet">
-    <link href="//x.scraperwiki.com/style/scraperwiki.css" rel="stylesheet" id="scraperstrap-css">
+    <link href="/vendor/style/bootstrap.min.css" rel="stylesheet">
+    <link href="/style/scraperwiki.css" rel="stylesheet" id="scraperstrap-css">
     <style>
     .row { margin-bottom: 40px; }
     .span3 h3 { margin-top: 0; }
@@ -2020,14 +2020,14 @@
   </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-    <script src="//x.scraperwiki.com/vendor/js/bootstrap.min.js"></script>
+    <script src="/vendor/js/bootstrap.min.js"></script>
     <script>
     $('#scraperstrap input').on('change', function(){
       if(this.checked) {
         $('<link>').attr({
           rel: "stylesheet",
           type: "text/css",
-          href: "//x.scraperwiki.com/style/scraperwiki.css",
+          href: "/style/scraperwiki.css",
           id: "scraperstrap-css"
         }).appendTo('head')
       } else {

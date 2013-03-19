@@ -7,7 +7,6 @@ url = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{url}/login"
 
 describe 'Dataset SSH Details', ->
-
   before (done) ->
     wd40.init ->
       browser.get login_url, done
@@ -28,7 +27,7 @@ describe 'Dataset SSH Details', ->
       before (done) ->
         wd40.click '.dataset-actions .git-ssh', done
 
-      it 'an modal window appears', (done) =>
+      it 'a modal window appears', (done) =>
         wd40.getText '.modal', (err, text) =>
           @modalTextContent = text.toLowerCase()
           done()
@@ -71,6 +70,28 @@ describe 'Dataset SSH Details', ->
           it 'the modal window tells me how to SSH in', =>
             @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
           
+
+  context 'when I click on the list of datasets', ->
+    before (done) ->
+      browser.get "#{url}/", done
+
+    context 'when I click the "SSH in" menu link', ->
+      before (done) ->
+        browser.elementByCss '.dataset.tile .dropdown-toggle', (err, settingsLink) =>
+          settingsLink.click =>
+            wd40.click '.dataset.tile .git-ssh', done
+
+      it 'a modal window appears', (done) =>
+        wd40.getText '.modal', (err, text) =>
+          @modalTextContent = text.toLowerCase()
+          done()
+
+      it 'the modal window does not ask for my SSH key', =>
+        @modalTextContent.should.not.include 'add your ssh key:'
+
+      it 'the modal window tells me how to SSH in', =>
+        @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
+
 
 
 

@@ -30,7 +30,7 @@ describe 'View SSH Details', ->
           settingsLink.click =>
             wd40.click '.view.tile .git-ssh', done
 
-      it 'an modal window appears', (done) =>
+      it 'a modal window appears', (done) =>
         wd40.getText '.modal', (err, text) =>
           @modalTextContent = text.toLowerCase()
           done()

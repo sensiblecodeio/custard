@@ -66,7 +66,6 @@ getSessionUser = (user) ->
     apiKey: user.apikey
     isStaff: user.isStaff
     avatarUrl: "/image/avatar.png"
-    sshKeys: user.sshKeys
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")
@@ -387,6 +386,10 @@ app.post '/api/:user/sshkeys/?', (req, resp) ->
           resp.send 500, error: err
         else
           resp.send 200, success: 'ok'
+
+app.get '/api/:user/sshkeys/?', (req, resp) ->
+  User.findByShortName req.user.effective.shortName, (err, user) ->
+    resp.send 200, user.sshKeys
 
 # Catch all other routes, send to client app
 app.get '*', renderClientApp

@@ -66,6 +66,7 @@ getSessionUser = (user) ->
     apiKey: user.apikey
     isStaff: user.isStaff
     avatarUrl: "/image/avatar.png"
+    sshKeys: user.sshKeys
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")

@@ -18,7 +18,7 @@ class Cu.View.DatasetActions extends Backbone.View
     # we have to manually bind the modal submit click handler,
     # because backbone events (above) are bound to ul.dataset-actions,
     # and our modal is a child of the body.
-    $(document).on 'click', '#add-ssh-key', @showSSH
+    $(document).on 'click', '#add-ssh-key', @addSSHKey
     @
 
   hideDataset: ->
@@ -33,7 +33,10 @@ class Cu.View.DatasetActions extends Backbone.View
     $('#subnav-path .editable').trigger('click')
 
   showOrAddSSH: =>
-    @addSSH()
+    if window.user.effective?.sshKeys?.length > 0
+      @showSSH()
+    else
+      @addSSH()
 
   addSSH: =>
     @modalWindow = $(JST['modal-add-ssh']())
@@ -41,8 +44,21 @@ class Cu.View.DatasetActions extends Backbone.View
       @modalWindow.remove()
 
   showSSH: =>
-    console.log 'foo'
-    @modalWindow.html "DONE"
+    @modalWindow = $(JST['modal-ssh']())
+    @modalWindow.modal().on 'hidden', =>
+      @modalWindow.remove()
+  
+  addSSHKey: =>
+    key = @modalWindow.find('textarea').val()
+
+    $.ajax
+      url: "/api/#{window.user.effective.shortName}/sshkeys",
+      type: "POST",
+      data: {key: key}
+
+    window.user.effective.sshKeys.push key
+    
+    @modalWindow.html $(JST['modal-ssh']()).html()
 
   datasetSettings: ->
     # :TODO: this is a bit of a hack

@@ -43,8 +43,35 @@ describe 'Dataset SSH Details', ->
         before (done) ->
           wd40.fill '#ssh-key', 'ssh-rsa AAAAB3Nza...ezneI9HWBOzHnh foo@bar.local', ->
             wd40.click '#add-ssh-key', done
-
-        it 'the modal window no longer asks for my SSH key', (done) ->
-          wd40.getText '.modal', (err, text) ->
-            text.toLowerCase().should.not.include 'add your ssh key:'
+        
+        before (done) =>
+          wd40.getText '.modal', (err, text) =>
+            @modalTextContent = text.toLowerCase()
             done()
+
+        it 'the modal window no longer asks for my SSH key', =>
+          @modalTextContent.should.not.include 'add your ssh key:'
+
+        xit 'the modal window tells me how to SSH in', =>
+          @modalTextContent.should.include '@box.scraperwiki.com'
+        
+        context 'when I close the modal, and reopen it', ->
+          before (done) =>
+            wd40.click '#done', =>
+              wd40.click '.dataset-actions .git-ssh', =>
+                wd40.getText '.modal', (err, text) =>
+                  @modalTextContent = text.toLowerCase()
+                  done()
+
+          it 'the modal window does not ask for my SSH key', =>
+            @modalTextContent.should.not.include 'add your ssh key:'
+
+          xit 'the modal window tells me how to SSH in', =>
+            @modalTextContent.should.include '@box.scraperwiki.com'
+          
+
+
+
+
+
+

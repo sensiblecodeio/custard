@@ -1,0 +1,13 @@
+<div class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>SSH in!</h3>
+  </div>
+  <div class="modal-body">
+    <h4>Run this in your terminal:</h4>
+    <pre class="prettyprint">ssh foobar@box.scraperwiki.com</pre>
+  </div>
+  <div class="modal-footer">
+    <a class="btn btn-primary" data-dismiss="modal" id="done">Done</a>
+  </div>
+</div>

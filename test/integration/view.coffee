@@ -94,18 +94,19 @@ describe 'View', ->
             text.should.include randomname
             done()
 
-        xcontext 'when I click the "hide" button on the view', ->
+        context 'when I click the "hide" button on the view', ->
           before (done) ->
-            browser.elementByPartialLinkText randomname, (err, dataset) =>
-              @dataset = dataset
-              browser.moveTo @dataset, =>
-                @dataset.elementByCss '.hide', (err, hide) ->
-                  hide.click done
+            browser.elementByPartialLinkText randomname, (err, view) =>
+              @view = view
+              @view.elementByCss '.dropdown-toggle', (err, settingsLink) =>
+                settingsLink.click =>
+                  @view.elementByCss '.hide-view', (err, hideLink) ->
+                    hideLink.click done
 
           it 'the view disappears from the dataset page immediately', (done) ->
             # TODO: write a waitForInvisible function
             setTimeout =>
-              @dataset.isVisible (err, visible) ->
+              @view.isVisible (err, visible) ->
                 visible.should.be.false
                 done()
             , 400

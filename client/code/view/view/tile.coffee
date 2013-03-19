@@ -5,7 +5,9 @@ class Cu.View.ViewTile extends Backbone.View
     href: "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get 'box'}"
 
   events:
-    'click .hide': 'hideView'
+    'click .hide-view': 'hideView'
+    'click .dropdown-menu a': 'dropdownMenuItemClick'
+    'click .rename-view': 'renameViewClick'
 
   initialize: ->
     @model.on 'change', @render, this
@@ -22,12 +24,24 @@ class Cu.View.ViewTile extends Backbone.View
       @$el.addClass 'source'
     @
 
-  hideView: (e) ->
+  dropdownMenuItemClick: (e) ->
     e.preventDefault()
     e.stopPropagation()
+
+  hideView: (e) ->
     @$el.slideUp()
     @model.set 'state', 'deleted'
     @model.get('plugsInTo').save {},
       error: (e) =>
         @$el.slideDown()
         console.warn 'View could not be deleted!'
+
+  renameViewClick: ->
+    # This is a bit of a hack, to avoid writing yet another rename widget.
+    # Hopefully it'll also teach people they can directly edit dataset names.
+    window.app.navigate "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get('box')}", trigger: true
+    setTimeout ->
+      $('#subnav-path .editable').trigger('click')
+    , 300
+
+

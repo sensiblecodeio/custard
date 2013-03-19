@@ -94,7 +94,29 @@ describe 'View', ->
             text.should.include randomname
             done()
 
-        context 'when I click the "hide" button on the view', ->
+        context 'when I click the "rename" link on the view', ->
+          before (done) ->
+            browser.elementByPartialLinkText randomname, (err, view) =>
+              @view = view
+              @view.elementByCss '.dropdown-toggle', (err, settingsLink) =>
+                settingsLink.click =>
+                  @view.elementByCss '.rename-view', (err, renameLink) ->
+                    renameLink.click done
+
+          it "goes to the view page", (done) ->
+            browser.url (err, currentUrl) =>
+              currentUrl.should.match new RegExp("#{url}/dataset/[^/]+/view/[^/]+")
+              done()
+
+          it "has shown the rename input box", (done) ->
+            browser.waitForVisibleByCss '#editable-input', 4000, done
+
+          after (done) ->
+            browser.elementByPartialLinkText 'Prune', (err, link) ->
+              link.click done
+
+
+        context 'when I click the "hide" link on the view', ->
           before (done) ->
             browser.elementByPartialLinkText randomname, (err, view) =>
               @view = view

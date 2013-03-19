@@ -8,7 +8,8 @@ exports.users = [
   displayName: 'Test Testofferson',
   password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
   apikey: process.env.COTEST_USER_API_KEY,
-  isStaff: false
+  isStaff: false,
+  sshKeys: []
 },
 {
   shortName: 'teststaff',
@@ -16,7 +17,8 @@ exports.users = [
   displayName: 'General Test Testington',
   password: '$2a$10$CFjsDLWeS1x5BiX0mLulnOH97vop1KwUmzPnx5NvmZ1oda.LZNXNm',
   apikey: process.env.COTEST_STAFF_API_KEY,
-  isStaff: true
+  isStaff: true,
+  sshKeys: []
 },
 {
   shortName: 'ehg',
@@ -24,7 +26,8 @@ exports.users = [
   displayName: 'Chris Blower',
   password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
   apikey: process.env.COTEST_USER_API_KEY,
-  isStaff: true
+  isStaff: true,
+  sshKeys: []
 },
 {
   shortName: 'ickletest',
@@ -32,14 +35,16 @@ exports.users = [
   displayName: 'Ickle Test',
   password: '$2a$10$zGJXsNwhOBvze9GDm.jeEuLBX.TciRIKxNXfslxe5TZ.9/fDgpeDu',
   apikey: process.env.COTEST_STAFF_API_KEY,
-  isStaff: true
+  isStaff: true,
+  sshKeys: []
 },
 {
   shortName: 'zarino',
   email: ['zarino@scraperwiki.com'],
   displayName: 'Zarino Testington',
   password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
-  apikey: process.env.COTEST_USER_API_KEY
+  apikey: process.env.COTEST_USER_API_KEY,
+  sshKeys: []
 }
 ];
 
@@ -66,7 +71,7 @@ exports.tools = [
 exports.datasets = [
 { "box" : "3006375730", "tool": "test-app", "displayName" : "Cheese", "user" : "ickletest", "views" : [] },
 { "box" : "3006375731", "tool": "test-app", "displayName" : "Apricot", "user" : "ehg", "views" : [] },
-{ "box" : "3006375815", "tool": "test-app", "displayName" : "Prune", "user" : "ehg", "views" : [  { "name": "viwewe", "displayName": "Graph of Prunes", "box": "abox", "state": "state", "tool": "test-plugin" } ] },
+{ "box" : "3006375815", "tool": "test-app", "displayName" : "Prune", "user" : "ehg", "views" : [  { "name": "viwewe", "displayName": "Graph of Prunes", "box": "4008115731", "state": "state", "tool": "test-plugin" } ] },
 { "box" : "3006375816", "tool": "test-app", "displayName" : "Kittens", "user" : "zarino", "views" : [  { "name": "table1", "displayName": "View in a Table", "box": "400857239", "state": "state", "tool": "test-plugin" } ], "status": { "updated": "2013-03-12T08:23:00.000Z", "message": "Fully up to date", "type": "ok" } },
 { "box" : "3006375818", "tool": "test-app", "displayName" : "Puppies", "user" : "zarino", "views" : [], "status": { "updated": "2013-03-12T07:20:00.000Z", "message": "Fully up to date", "type": "ok" } },
 { "box" : "3006375819", "tool": "test-app", "displayName" : "Piglets", "user" : "zarino", "views" : [], "status": { "updated": "2013-01-10T10:23:00.000Z", "message": "No piglets detected", "type": "error" } },

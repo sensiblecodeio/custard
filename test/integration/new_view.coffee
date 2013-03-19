@@ -1,85 +1,51 @@
-$ = jQuery = require 'jquery'
-Browser = require 'zombie'
+wd = require 'wd'
 should = require 'should'
 
-url = 'http://localhost:3001' # DRY DRY DRY
+browser = wd.remote()
+wd40 = require('../wd40')(browser)
+
+url = 'http://localhost:3001'
 login_url = "#{url}/login"
 
-describe 'Use a plugin to create a new view', ->
-  browser = new Browser()
-  browser.waitDuration = "10s"
+describe 'New view tool', ->
+  before (done) ->
+    wd40.init ->
+      browser.get login_url, done
 
   before (done) ->
-    browser.visit login_url, done
-    @datasetUrl = null
-    @viewPathname = null
+    wd40.fill '#username', 'ehg', ->
+      wd40.fill '#password', 'testing', ->
+        wd40.click '#login', done
 
-  before (done) ->
-    browser.fill '#username', 'ehg'
-    browser.fill '#password', 'testing'
-    browser.pressButton '#login', ->
-      browser.wait done
+  context 'when I click on an Apricot dataset', ->
+    before (done) ->
+      # wait for tiles to fade in
+      setTimeout ->
+        browser.elementByPartialLinkText 'Apricot', (err, link) ->
+          link.click done
+      , 500
 
-  context 'when I am on the datasets page', ->
+    it 'takes me to the Apricot dataset page', (done) ->
+      wd40.trueURL (err, result) ->
+        result.should.match /\/dataset\/(\w+)/
+        done()
 
-    context 'when I click on a dataset', ->
+    context 'when I click the "new view" button', ->
       before (done) ->
-        link = browser.query('a.dataset')
-        browser.fire 'click', link, ->
-          browser.wait 1000, ->
-            browser.wait done
+        wd40.click '.new-view', ->
+          browser.waitForElementByCss '#chooser .tool', 4000, done
 
-      it "takes me to the dataset's page", ->
-        result = browser.location.href
-        result.should.include "#{url}/dataset/"
-        @datasetUrl = result
-
-      xcontext 'when I click on the Code Your Own View tool', ->
+      context 'when I click on the newview tool', ->
         before (done) ->
-          link = browser.query('a.code-your-own-view')
-          browser.fire 'click', link, ->
-            # Zarino isn't quite sure why we have
-            # two levels of .wait() in here, but he's
-            # going to leave it in just in case.
-            browser.wait 1000, ->
-              browser.wait done
+          wd40.click '.newview.tool', =>
+            browser.waitForElementByTagName 'iframe', 10000, =>
+              browser.url (err, url) =>
+                @currentUrl = url
+                done()
 
-        it 'takes me to the new view', ->
-          result = browser.location.href
-          result.should.match RegExp('dataset/[^/]+/view/[^/]+')
-          @viewPathname = browser.location.pathname
+        it 'takes me to the view page', ->
+          @currentUrl.should.match new RegExp("#{url}/dataset/[^/]+/view/[^/]+")
 
-      xcontext "when I return to the dataset's page", ->
-        before (done) ->
-          browser.visit @datasetUrl, done
-
-        it 'lists the new view', ->
-          link = browser.query("a.view[href='#{@viewPathname}']")
-          should.exist link
-
-      xcontext "when I return to the dataset list", ->
-        before (done) ->
-          browser.visit "#{url}/", done
-
-        it 'lists the new view', ->
-          link = browser.query("a.view[href='#{@viewPathname}']")
-          should.exist link
-
-        context 'when I click the "hide" button on the view', ->
-          before (done) ->
-            link = browser.query("a.view[href='#{@viewPathname}'] .delete")
-            browser.fire 'click', link, ->
-              browser.wait done
-
-          it 'the view disappears from the homepage immediately', ->
-            body = browser.query('body')
-            naughty = $(body).find("a.view[href='#{@viewPathname}']:visible")
-            naughty.length.should.equal 0
-
-        context 'when I revisit the homepage', ->
-          before (done) ->
-            browser.reload done
-
-          it 'the view stays hidden', ->
-            naughty = browser.query("a.view[href='#{@viewPathname}']")
-            should.not.exist naughty
+    after (done) ->
+      browser.quit ->
+        done()

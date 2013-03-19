@@ -5,7 +5,7 @@
   </div>
   <div class="modal-body">
     <h4>Run this in your terminal:</h4>
-    <pre class="prettyprint">ssh foobar@box.scraperwiki.com</pre>
+    <pre class="prettyprint">ssh <%= @box %>@box.scraperwiki.com</pre>
   </div>
   <div class="modal-footer">
     <a class="btn btn-primary" data-dismiss="modal" id="done">Done</a>

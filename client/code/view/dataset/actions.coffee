@@ -44,7 +44,7 @@ class Cu.View.DatasetActions extends Backbone.View
       @modalWindow.remove()
 
   showSSH: =>
-    @modalWindow = $(JST['modal-ssh']())
+    @modalWindow = $(JST['modal-ssh'] box: @model.get('box'))
     @modalWindow.modal().on 'hidden', =>
       @modalWindow.remove()
   
@@ -58,7 +58,7 @@ class Cu.View.DatasetActions extends Backbone.View
 
     window.user.effective.sshKeys.push key
     
-    @modalWindow.html $(JST['modal-ssh']()).html()
+    @modalWindow.html $(JST['modal-ssh'] box: @model.get('box')).html()
 
   datasetSettings: ->
     # :TODO: this is a bit of a hack

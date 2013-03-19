@@ -52,22 +52,24 @@ describe 'Dataset SSH Details', ->
         it 'the modal window no longer asks for my SSH key', =>
           @modalTextContent.should.not.include 'add your ssh key:'
 
-        xit 'the modal window tells me how to SSH in', =>
-          @modalTextContent.should.include '@box.scraperwiki.com'
+        it 'the modal window tells me how to SSH in', =>
+          @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
         
         context 'when I close the modal, and reopen it', ->
           before (done) =>
             wd40.click '#done', =>
-              wd40.click '.dataset-actions .git-ssh', =>
-                wd40.getText '.modal', (err, text) =>
-                  @modalTextContent = text.toLowerCase()
-                  done()
+              setTimeout =>
+                wd40.click '.dataset-actions .git-ssh', =>
+                  wd40.getText '.modal', (err, text) =>
+                    @modalTextContent = text.toLowerCase()
+                    done()
+              , 400
 
           it 'the modal window does not ask for my SSH key', =>
             @modalTextContent.should.not.include 'add your ssh key:'
 
-          xit 'the modal window tells me how to SSH in', =>
-            @modalTextContent.should.include '@box.scraperwiki.com'
+          it 'the modal window tells me how to SSH in', =>
+            @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
           
 
 

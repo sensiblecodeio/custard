@@ -597,6 +597,10 @@ input[type="color"],
     transition: width 0.5s;
 }
 
+.navbar .container {
+  margin-top: 0;
+}
+
 /* IE7/8 don't support @media queries. 4% of ScraperWiki's visitors
    in 2012 used IE7/8. 97% of them had a screen width of 1024px or more,
    so we're going to feed them all the 920px style. */

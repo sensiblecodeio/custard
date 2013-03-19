@@ -1,2 +1,11 @@
 <h3><%= @displayName %></h3>
-<span class="hide" title="Hide this view">Hide</span>
+<ul>
+  <li class="actions">
+    <a class="dropdown-toggle" data-toggle="dropdown">Options</a>
+    <ul class="dropdown-menu pull-right">
+      <li><a class="rename-view"><img src="/image/icon-rename.png" width="16" height="16" /> Rename view</a></li>
+      <li><a class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</a></li>
+      <li><a class="hide-view"><img src="/image/icon-cross.png" width="16" height="16"> Hide view</a></li>
+    </ul>
+  </li>
+</ul>

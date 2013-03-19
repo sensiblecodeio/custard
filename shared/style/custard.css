@@ -379,6 +379,10 @@ a.tile .hide:hover {
   text-shadow: none;
 }
 
+.tile.view .actions {
+  line-height: 41px;
+}
+
 .tile li.actions > a {
   display: block;
   text-indent: -9000px;

@@ -29,7 +29,7 @@ describe 'Dataset SSH Details', ->
         wd40.click '.dataset-actions .git-ssh', done
 
       it 'an modal window appears', (done) =>
-        wd40.getText '#modal', (err, text) =>
+        wd40.getText '.modal', (err, text) =>
           @modalTextContent = text.toLowerCase()
           done()
         
@@ -45,6 +45,6 @@ describe 'Dataset SSH Details', ->
             wd40.click '#add-ssh-key', done
 
         it 'the modal window no longer asks for my SSH key', (done) ->
-          wd40.getText '#modal', (err, text) ->
+          wd40.getText '.modal', (err, text) ->
             text.toLowerCase().should.not.include 'add your ssh key:'
             done()

@@ -6,7 +6,7 @@ class Cu.View.DatasetActions extends Backbone.View
     'click .hide-dataset': 'hideDataset'
     'click .rename-dataset': 'renameDataset'
     'click .dataset-settings': 'datasetSettings'
-    'click .git-ssh': 'showSSH'
+    'click .git-ssh': 'showOrAddSSH'
 
   render: ->
     @$el.html """
@@ -14,6 +14,11 @@ class Cu.View.DatasetActions extends Backbone.View
       <li><a class="dataset-settings"><img src="/image/icon-settings.png" width="16" height="16" /> Edit dataset settings</a></li>
       <li><a class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</a></li>
       <li><a class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Hide dataset</a></li>"""
+    
+    # we have to manually bind the modal submit click handler,
+    # because backbone events (above) are bound to ul.dataset-actions,
+    # and our modal is a child of the body.
+    $(document).on 'click', '#add-ssh-key', @showSSH
     @
 
   hideDataset: ->
@@ -27,8 +32,17 @@ class Cu.View.DatasetActions extends Backbone.View
   renameDataset: ->
     $('#subnav-path .editable').trigger('click')
 
-  showSSH: ->
-    alert("This hasn't been implemented yet. Sorry.")
+  showOrAddSSH: =>
+    @addSSH()
+
+  addSSH: =>
+    @modalWindow = $(JST['modal-add-ssh']())
+    @modalWindow.modal().on 'hidden', =>
+      @modalWindow.remove()
+
+  showSSH: =>
+    console.log 'foo'
+    @modalWindow.html "DONE"
 
   datasetSettings: ->
     # :TODO: this is a bit of a hack

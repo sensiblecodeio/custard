@@ -37,6 +37,23 @@
       margin-bottom: 5px;
     }
 
+    .modal-overlay-background {
+      background-color: #333;
+      padding-top: 40px;
+    }
+
+    h3#modals {
+      color: #fff;
+    }
+
+    .container .popover {
+      position: relative;
+      display: block;
+      float: left;
+      width: 260px;
+      margin: 20px;
+    }
+
     .the-icons {
       margin-left: 0;
       list-style: none;
@@ -1698,6 +1715,72 @@
           <div class="bar bar-warning" style="width: 20%"></div>
           <div class="bar bar-danger" style="width: 10%"></div>
         </div>
+      </div>
+    </section>
+
+  </div>
+  <div class="modal-overlay-background">
+  <div class="container">
+
+    <section class="row progress-bars">
+      <div class="span3">
+        <h3 id="modals">Modals</h3>
+      </div>
+      <div class="span9">
+        <div class="modal" style="position: relative; top: auto; left: auto; right: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>Modal header</h3>
+          </div>
+          <div class="modal-body">
+            <p>One fine body…</p>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn">Close</a>
+            <a href="#" class="btn btn-primary">Save changes</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  </div>
+  <div class="container">
+
+    <section class="row">
+      <div class="span3">
+        <h3 id="popovers">Popovers</h3>
+      </div>
+      <div class="span9" style="margin-top: -10px; margin-bottom: -10px">
+        <div class="popover top">
+          <div class="arrow"></div>
+          <h3 class="popover-title">Popover top</h3>
+          <div class="popover-content">
+            <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+          </div>
+        </div>
+        <div class="popover right">
+          <div class="arrow"></div>
+          <h3 class="popover-title">Popover right</h3>
+          <div class="popover-content">
+            <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+          </div>
+        </div>
+        <div class="popover bottom">
+          <div class="arrow"></div>
+          <h3 class="popover-title">Popover bottom</h3>
+          <div class="popover-content">
+            <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+          </div>
+        </div>
+        <div class="popover left">
+          <div class="arrow"></div>
+          <h3 class="popover-title">Popover left</h3>
+          <div class="popover-content">
+            <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+          </div>
+        </div>
+        <div class="clearfix"></div>
       </div>
     </section>
 

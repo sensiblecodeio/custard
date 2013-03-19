@@ -205,7 +205,7 @@ class Cu.View.EditableSubnav extends Backbone.View
   initialize: ->
     @model.on 'change', @setDocumentTitle, @
     @model.on 'change', @render, this
-    # set this so we can override it in Cu.View.ViewSubnav
+    # set this so we can override it in Cu.View.ViewNav
     # (where the model to save is in fact the parent dataset's model)
     @modelToSave = @model
 
@@ -230,6 +230,7 @@ class Cu.View.EditableSubnav extends Backbone.View
       $wrapper.hide()
       $label.text(@newName).show()
       @model.set 'displayName', @newName
+      console.log 'modelToSave', @modelToSave
       @modelToSave.save {},
         success: =>
           $label.addClass 'saved'
@@ -315,6 +316,12 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
     @
 
 class Cu.View.ViewNav extends Cu.View.EditableSubnav
+  initialize: ->
+    super()
+    # override @modelToSave for Cu.View.EditableSubnav, 
+    # as the view is saved by saving its dataset
+    @modelToSave = @model.get 'plugsInTo'
+
   className: 'subnav-wrapper'
 
   events:

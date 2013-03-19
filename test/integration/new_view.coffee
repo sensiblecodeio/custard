@@ -46,6 +46,6 @@ describe 'New view tool', ->
         it 'takes me to the view page', ->
           @currentUrl.should.match new RegExp("#{url}/dataset/[^/]+/view/[^/]+")
 
-    after (done) ->
-      browser.quit ->
-        done()
+  after (done) ->
+    browser.quit ->
+      done()

@@ -5,7 +5,7 @@ window.Cu =
   Router: {}
   Helpers:
     # :TODO: this should be in its own file
-    showOrAddSSH: (box) =>
+    showOrAddSSH: (box, displayName, type) =>
       $.ajax
         url: "/api/#{window.user.effective.shortName}/sshkeys"
         success: (sshKeys) ->
@@ -33,11 +33,11 @@ window.Cu =
                 type: "POST",
                 data: {key: key}
               
-              modalWindow.html $(JST['modal-ssh'] box: box).html()
+              modalWindow.html $(JST['modal-ssh'] {box: box, displayName: displayName, type: type}).html()
               clip = new ZeroClipboard $('.zeroclipboard')[0], { moviePath: "/vendor/js/ZeroClipboard.swf" }
               clip.on "complete", -> $(@).html '<i class="icon-ok space"></i> Copied!'
           else
-            modalWindow = $(JST['modal-ssh'] box: box)
+            modalWindow = $(JST['modal-ssh'] {box: box, displayName: displayName, type: type})
             modalWindow.modal()
             modalWindow.on 'hidden', ->
               modalWindow.remove()

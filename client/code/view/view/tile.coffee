@@ -9,7 +9,7 @@ class Cu.View.ViewTile extends Backbone.View
     'click .dropdown-menu a': 'dropdownMenuItemClick'
     'click .rename-view': 'renameViewClick'
     'click .git-ssh': ->
-      Cu.Helpers.showOrAddSSH @model.get('box')
+      Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'view'
 
   initialize: ->
     @model.on 'change', @render, this

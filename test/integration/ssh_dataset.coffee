@@ -89,6 +89,9 @@ MII...0tXU=
             @modalTextContent = text.toLowerCase()
             done()
 
+        it 'the modal title says "ssh into your Apricot dataset"', =>
+          @modalTextContent.should.include 'apricot dataset'
+
         it 'the modal window no longer asks for my SSH key', =>
           @modalTextContent.should.not.include 'add your ssh key:'
 

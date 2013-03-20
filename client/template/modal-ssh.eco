@@ -1,7 +1,7 @@
 <div class="modal hide fade">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>SSH in!</h3>
+    <h3>SSH into your <%= @displayName %> <%= @type%>!</h3>
   </div>
   <div class="modal-body">
     <a class="btn btn-small zeroclipboard pull-right" style="margin-top: 5px;" data-clipboard-target="ssh-commands">Copy to clipboard</a>

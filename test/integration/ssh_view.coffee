@@ -51,6 +51,9 @@ describe 'View SSH Details', ->
             @modalTextContent = text.toLowerCase()
             done()
 
+        it 'the modal title says "ssh into your Graph of Prunes view"', =>
+          @modalTextContent.should.include 'graph of prunes view'
+
         it 'the modal window no longer asks for my SSH key', =>
           @modalTextContent.should.not.include 'add your ssh key:'
 

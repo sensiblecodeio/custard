@@ -7,7 +7,7 @@ class Cu.View.DatasetActions extends Backbone.View
     'click .rename-dataset': 'renameDataset'
     'click .dataset-settings': 'datasetSettings'
     'click .git-ssh': ->
-      Cu.Helpers.showOrAddSSH @model.get('box')
+      Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'dataset'
 
   render: ->
     @$el.html """

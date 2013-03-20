@@ -229,9 +229,18 @@ describe 'API', ->
           request.post
             uri: "#{serverURL}/api/#{@user}/sshkeys"
             form:
-              key: 'key'
+              key: '  ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local\n\n'
           , (err, res) ->
             res.body.should.include 'ok'
+            done err
+
+      context 'GET: /api/:user/sshkeys', ->
+        it 'returns the key with whitespace trim', (done) ->
+          request.get
+            uri: "#{serverURL}/api/#{@user}/sshkeys"
+          , (err, res) ->
+            keys = JSON.parse res.body
+            keys.should.eql ['ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local']
             done err
 
   describe 'Logging in as a different user', ->

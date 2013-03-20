@@ -378,7 +378,10 @@ app.get '/api/user/?', checkStaff, (req, resp) ->
 
 app.post '/api/:user/sshkeys/?', (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->
-    user.sshKeys.push req.body.key if req.body.key?
+    if not req.body.key?
+      return resp.send 400, error: 'Specify key'
+    user.sshKeys.push req.body.key.trim()
+    console.log "**** sshKeys are", user.sshKeys
     user.save (err) ->
       User.distributeUserKeys user.shortName, (err) ->
         if err?

@@ -46,6 +46,9 @@ class Cu.View.ToolTile extends Backbone.View
     else if n.indexOf('table') > -1
       manifest.icon = '/image/tool-icon-data-table.png'
       manifest.color = '#f6b730'
+    else if n.indexOf('query with sql') == 0
+      manifest.icon = '/image/tool-icon-sql.png'
+      manifest.color = '#17959d'
     model.set 'manifest', manifest
 
   showLoading: ->

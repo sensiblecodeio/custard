@@ -55,7 +55,7 @@ describe 'Platform-specific SSH instructions', ->
   context 'when I use a Linux computer to view SSH instructions', ->
     before (done) ->
       browser.refresh ->
-        browser.eval "window.navigator = {platform: 'MacIntel'}", ->
+        browser.eval "window.navigator = {platform: 'Linux i686'}", ->
           wd40.click '.dataset-actions .git-ssh', ->
             browser.waitForVisibleByCss '.modal', 4000, done
 

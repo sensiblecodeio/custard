@@ -4,9 +4,24 @@
     <h3>Add your SSH key:</h3>
   </div>
   <div class="modal-body">
-    <h4>Run this in your terminal:</h4>
+
+    <% if window.navigator.platform.indexOf("Win")!=-1: %>
+    <h4>Run these commands in <a href="https://openhatch.org/missions/windows-setup/install-git-bash" target="_blank">Git Bash</a>:</h4>
+    <pre class="prettyprint">[ -e ~/.ssh/id_rsa.pub ] || ssh-keygen -f ~/.ssh/id_rsa
+clip < ~/.ssh/id_rsa.pub</pre>
+
+    <% else if window.navigator.platform.indexOf("Mac")!=-1: %>
+    <h4>Run this in your Mac&rsquo;s Terminal:</h4>
     <pre class="prettyprint">[ -e ~/.ssh/id_rsa.pub ] || ssh-keygen -f ~/.ssh/id_rsa
 pbcopy < ~/.ssh/id_rsa.pub</pre>
+    
+    <% else: %>
+    <h4>Run these commands in your terminal:</h4>
+    <pre class="prettyprint">sudo apt-get install xclip
+[ -e ~/.ssh/id_rsa.pub ] || ssh-keygen -f ~/.ssh/id_rsa
+xclip -sel clip < ~/.ssh/id_rsa.pub</pre>
+
+    <% end %>
     <label for="ssh-key"><h4>Then paste in here:</h4></label>
     <textarea id="ssh-key" style="width: 515px; height: 50px;"></textarea>
   </div>

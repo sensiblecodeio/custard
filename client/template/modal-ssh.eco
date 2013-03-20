@@ -7,6 +7,7 @@
     <a class="btn btn-small zeroclipboard pull-right" style="margin-top: 5px;" data-clipboard-target="ssh-commands">Copy to clipboard</a>
     <h4>Run this in your terminal:</h4>
     <pre class="prettyprint" id="ssh-commands">ssh <%= @box %>@box.scraperwiki.com</pre>
+    <p><span class="label label-info">Top tip!</span> Read <a href="/docs/developer/" target="_blank" data-nonpushstate>our developer documentation</a> for more information about SSHing into your <%= @type %>s.</p>
   </div>
   <div class="modal-footer">
     <a class="btn btn-primary" data-dismiss="modal" id="done">Done</a>

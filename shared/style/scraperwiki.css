@@ -451,6 +451,37 @@ input[type="search"] {
           border-radius: 30px;
 }
 
+/* A new textarea-append style, like input-append but for taller textareas */
+/* Currently only works for textareas followed by a single .btn element */
+
+.textarea-append {
+  position: relative;
+  margin-bottom: 10px;
+  display: inline-block;
+  font-size: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.textarea-append textarea {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0;
+  -webkit-border-radius: 2px 0 0 2px;
+  -moz-border-radius: 2px 0 0 2px;
+  border-radius: 2px 0 0 2px;
+}
+
+.textarea-append textarea + .btn:last-child {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  -webkit-border-radius: 0 2px 2px 0;
+  -moz-border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0;
+  border-left: none;
+}
+
 /* Shorter transitions to make the site feel snappier */
 
 textarea,

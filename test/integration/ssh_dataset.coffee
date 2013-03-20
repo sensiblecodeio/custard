@@ -94,8 +94,9 @@ describe 'Dataset SSH Details', ->
 
   context 'when I click on the list of datasets', ->
     before (done) ->
-      browser.get "#{url}/", done
-
+      browser.get "#{url}/", ->
+        setTimeout done, 500
+    
     context 'when I click the "SSH in" menu link', ->
       before (done) ->
         browser.elementByCss '.dataset.tile .dropdown-toggle', (err, settingsLink) =>

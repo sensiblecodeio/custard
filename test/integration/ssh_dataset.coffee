@@ -31,7 +31,7 @@ describe 'Dataset SSH Details', ->
         wd40.getText '.modal', (err, text) =>
           @modalTextContent = text.toLowerCase()
           done()
-        
+
       it 'the modal window asks for my SSH key', =>
         @modalTextContent.should.include 'add your ssh key:'
 
@@ -41,11 +41,26 @@ describe 'Dataset SSH Details', ->
       it 'the modal includes a "copy to clipboard" button', =>
         @modalTextContent.should.include 'copy to clipboard'
 
+      context 'when I press submit with no SSH key', ->
+        before (done) ->
+          wd40.click '#add-ssh-key', done
+
+        before (done) =>
+          wd40.getText '.modal', (err, text) =>
+            @modalTextContent = text.toLowerCase()
+            done()
+
+        it 'the modal window asks for my SSH key', =>
+          @modalTextContent.should.include 'add your ssh key:'
+
+        it 'the modal window gives an error', =>
+          @modalTextContent.should.include 'please supply an ssh key'
+
       context 'when I paste my ssh key into the box and press submit', ->
         before (done) ->
           wd40.fill '#ssh-key', 'ssh-rsa AAAAB3Nza...ezneI9HWBOzHnh foo@bar.local', ->
             wd40.click '#add-ssh-key', done
-        
+
         before (done) =>
           wd40.getText '.modal', (err, text) =>
             @modalTextContent = text.toLowerCase()
@@ -59,7 +74,7 @@ describe 'Dataset SSH Details', ->
 
         it 'the modal includes a "copy to clipboard" button', =>
           @modalTextContent.should.include 'copy to clipboard'
-        
+
         context 'when I close the modal, and reopen it', ->
           before (done) =>
             wd40.click '#done', =>
@@ -75,7 +90,7 @@ describe 'Dataset SSH Details', ->
 
           it 'the modal window tells me how to SSH in', =>
             @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
-          
+
 
   context 'when I click on the list of datasets', ->
     before (done) ->

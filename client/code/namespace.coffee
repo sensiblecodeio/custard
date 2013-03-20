@@ -19,7 +19,11 @@ window.Cu =
               clip.on "complete", -> $(@).html '<i class="icon-ok space"></i> Copied!'
 
             $(document).on 'click', '#add-ssh-key', ->
+              $('.modal .text-error').remove()
               key = modalWindow.find('textarea').val()
+              if $.trim(key) == ''
+                $('#ssh-key').after('<p class="text-error">Please supply an SSH key!</p>')
+                return
 
               $.ajax
                 url: "/api/#{window.user.effective.shortName}/sshkeys",

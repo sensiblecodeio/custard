@@ -31,7 +31,9 @@ window.Cu =
               clip.on "complete", -> $(@).html '<i class="icon-ok space"></i> Copied!'
           else
             modalWindow = $(JST['modal-ssh'] box: box)
-            modalWindow.modal().on 'hidden', =>
+            modalWindow.modal()
+            modalWindow.on 'hidden', ->
               modalWindow.remove()
-            clip = new ZeroClipboard $('.zeroclipboard')[0], { moviePath: "/vendor/js/ZeroClipboard.swf" }
-            clip.on "complete", -> $(@).html '<i class="icon-ok space"></i> Copied!'
+            modalWindow.on 'shown', ->
+              clip = new ZeroClipboard $('.zeroclipboard')[0], { moviePath: "/vendor/js/ZeroClipboard.swf" }
+              clip.on "complete", -> $(@).html '<i class="icon-ok space"></i> Copied!'

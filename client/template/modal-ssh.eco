@@ -4,8 +4,9 @@
     <h3>SSH in!</h3>
   </div>
   <div class="modal-body">
+    <a class="btn btn-small zeroclipboard pull-right" style="margin-top: 5px;" data-clipboard-target="ssh-commands">Copy to clipboard</a>
     <h4>Run this in your terminal:</h4>
-    <pre class="prettyprint">ssh <%= @box %>@box.scraperwiki.com</pre>
+    <pre class="prettyprint" id="ssh-commands">ssh <%= @box %>@box.scraperwiki.com</pre>
   </div>
   <div class="modal-footer">
     <a class="btn btn-primary" data-dismiss="modal" id="done">Done</a>

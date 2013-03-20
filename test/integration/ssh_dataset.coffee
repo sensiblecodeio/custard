@@ -56,6 +56,9 @@ describe 'Dataset SSH Details', ->
 
         it 'the modal window tells me how to SSH in', =>
           @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
+
+        it 'the modal includes a "copy to clipboard" button', =>
+          @modalTextContent.should.include 'copy to clipboard'
         
         context 'when I close the modal, and reopen it', ->
           before (done) =>

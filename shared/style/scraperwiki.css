@@ -561,6 +561,31 @@ input[type="color"],
   user-select: none;
 }
 
+/* Make modals and popovers look cleaner */
+
+.modal, .popover {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+.popover {
+  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.popover-content {
+  font-size: 14px; /* reset popover fontsize back to Bootstrap default 14px; */
+  line-height: 20px;
+}
+
+.popover-content > :last-child,
+.modal-content > :last-child {
+  margin-bottom: 0; /* avoids extra space at bottom of popovers/modals */
+} 
+ 
+
 /* Responsive sizing for .containers */
 
 .container {
@@ -570,6 +595,10 @@ input[type="color"],
     -webkit-transition: width 0.5s;
     -o-transition: width 0.5s;
     transition: width 0.5s;
+}
+
+.navbar .container {
+  margin-top: 0;
 }
 
 /* IE7/8 don't support @media queries. 4% of ScraperWiki's visitors

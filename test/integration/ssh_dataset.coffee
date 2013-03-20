@@ -34,9 +34,12 @@ describe 'Dataset SSH Details', ->
         
       it 'the modal window asks for my SSH key', =>
         @modalTextContent.should.include 'add your ssh key:'
-        
+
       it 'the modal tells me the command I should run', =>
         @modalTextContent.should.include 'ssh-keygen'
+
+      it 'the modal includes a "copy to clipboard" button', =>
+        @modalTextContent.should.include 'copy to clipboard'
 
       context 'when I paste my ssh key into the box and press submit', ->
         before (done) ->

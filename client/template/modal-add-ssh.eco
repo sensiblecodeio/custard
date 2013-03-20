@@ -5,19 +5,21 @@
   </div>
   <div class="modal-body">
 
+    <a class="btn btn-small zeroclipboard pull-right" style="margin-top: 5px;" data-clipboard-target="ssh-commands">Copy to clipboard</a>
+
     <% if window.navigator.platform.indexOf("Win")!=-1: %>
     <h4>Run these commands in <a href="https://openhatch.org/missions/windows-setup/install-git-bash" target="_blank">Git Bash</a>:</h4>
-    <pre class="prettyprint">[ -e ~/.ssh/id_rsa.pub ] || ssh-keygen -f ~/.ssh/id_rsa
+    <pre class="prettyprint" id="ssh-commands">[ -e ~/.ssh/id_rsa.pub ] || ssh-keygen -f ~/.ssh/id_rsa
 clip < ~/.ssh/id_rsa.pub</pre>
 
     <% else if window.navigator.platform.indexOf("Mac")!=-1: %>
     <h4>Run this in your Mac&rsquo;s Terminal:</h4>
-    <pre class="prettyprint">[ -e ~/.ssh/id_rsa.pub ] || ssh-keygen -f ~/.ssh/id_rsa
+    <pre class="prettyprint" id="ssh-commands">[ -e ~/.ssh/id_rsa.pub ] || ssh-keygen -f ~/.ssh/id_rsa
 pbcopy < ~/.ssh/id_rsa.pub</pre>
     
     <% else: %>
     <h4>Run these commands in your terminal:</h4>
-    <pre class="prettyprint">sudo apt-get install xclip
+    <pre class="prettyprint" id="ssh-commands">sudo apt-get install xclip
 [ -e ~/.ssh/id_rsa.pub ] || ssh-keygen -f ~/.ssh/id_rsa
 xclip -sel clip < ~/.ssh/id_rsa.pub</pre>
 

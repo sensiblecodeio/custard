@@ -6,7 +6,7 @@
     <li><a data-nonpushstate href="#datasets-anatomy">Anatomy of a box</a></li>
     <li><a data-nonpushstate href="#datasets-endpoints">Box API endpoints</a></li>
     <li><a data-nonpushstate href="#datasets-services">Unix services</a></li>
-    <li><a data-nonpushstate href="#datasets-git">Using Git with your box</a></li>
+    <li><a data-nonpushstate href="#datasets-git">Developing with Git and SSH</a></li>
     <li class="nav-header">Views</li>
     <li><a data-nonpushstate href="#views-basics">View basics</a></li>
     <li><a data-nonpushstate href="#views-styling">Styling your view</a></li>
@@ -277,7 +277,7 @@ remove people.</p>
 
 <hr />
 
-<h2 id="datasets-git">Using Git with your box</h2>
+<h2 id="datasets-git">Developing with Git and SSH</h2>
 
 <p>Every box contains a Git repo in the <code>~/tool/</code> directory.
 You can either work on it on your laptop (locally) or in the box (remotely).</p>

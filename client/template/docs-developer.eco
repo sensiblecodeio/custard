@@ -221,6 +221,13 @@ This will show you how to SSH in.</p>
 
 <p>The endpoint returns a JSON object with a single <code>success</code> key on success, or an <code>error</code> key on errors.</p>
 
+<p>Here's some example code in Python, calling the endpoint.</p>
+
+<pre class="prettyprint">
+requests.post("https://x.scraperwiki.com/api/status", data={'type':'ok'})
+requests.post("https://x.scraperwiki.com/api/status", data={'type':'error', 'message':'Source website broken'})
+</pre>
+
 <hr />
 
 <h2 id="datasets-services">Unix services</h2>

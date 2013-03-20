@@ -56,6 +56,29 @@ describe 'Dataset SSH Details', ->
         it 'the modal window gives an error', =>
           @modalTextContent.should.include 'please supply an ssh key'
 
+      context 'when I paste my private ssh key into the box and press submit', ->
+        before (done) ->
+          wd40.fill '#ssh-key', '''-----BEGIN RSA PRIVATE KEY-----
+MII...0tXU=
+-----END RSA PRIVATE KEY-----
+''', ->
+            wd40.click '#add-ssh-key', done
+
+        before (done) =>
+          wd40.getText '.modal', (err, text) =>
+            @modalTextContent = text.toLowerCase()
+            done()
+
+        it 'the modal window asks for my SSH key', =>
+          @modalTextContent.should.include 'add your ssh key:'
+
+        it 'the modal window gives an error', =>
+          @modalTextContent.should.include 'private key'
+          
+        after (done) =>
+          wd40.clear '#ssh-key', done
+        
+
       context 'when I paste my ssh key into the box and press submit', ->
         before (done) ->
           wd40.fill '#ssh-key', 'ssh-rsa AAAAB3Nza...ezneI9HWBOzHnh foo@bar.local', ->

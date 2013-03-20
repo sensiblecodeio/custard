@@ -19,6 +19,11 @@ class Wd40
       browser.elementByCss selector, (err, element) ->
         browser.type element, text, cb
 
+  @clear: (selector, cb) ->
+    browser.waitForElementByCss selector, 4000, ->
+      browser.elementByCss selector, (err, element) ->
+        browser.clear element, cb
+
   @click: (selector, cb) ->
     browser.waitForElementByCss selector, 4000, ->
       browser.elementByCss selector, (err, element) ->

@@ -23,6 +23,9 @@ window.Cu =
               key = modalWindow.find('textarea').val()
               if $.trim(key) == ''
                 $('#ssh-key').after('<p class="text-error">Please supply an SSH key!</p>')
+                return                
+              if /PRIVATE KEY/.test key
+                $('#ssh-key').after('<p class="text-error">Oops! That looks like your private key. Please paste in the contents of your public key, <code>id_rsa.pub</code>.</p>')
                 return
 
               $.ajax

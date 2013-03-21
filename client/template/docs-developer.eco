@@ -391,8 +391,8 @@ well with Boostrap</a>.
 <h2 id="views-helper">Helper library</h2>
 
 <p>There's a client side Javascript library, which wraps a lot of the API
-endpoints and functions needed by views. You'll want to include it in
-your view's HTML <code>&lt;head&gt;</code>.</p>
+endpoints and functions needed by views. It requires jQuery. You'll want to include it in
+your view's HTML <code>&lt;head&gt;</code>, after you load jQuery.</p>
 
 <pre class="prettyprint">&lt;script src="https://x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
 

@@ -645,6 +645,10 @@ input[type="color"],
   overflow: visible;
 }
 
+body {
+  padding: 20px;
+}
+
 .swcol {
   float: left;
   width: 280px;

@@ -44,6 +44,6 @@ class Cu.View.ViewTile extends Backbone.View
     window.app.navigate "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get('box')}", trigger: true
     setTimeout ->
       $('#subnav-path .editable').trigger('click')
-    , 300
+    , 1200
 
 

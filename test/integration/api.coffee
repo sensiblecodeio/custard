@@ -42,7 +42,7 @@ describe 'API', ->
 
     describe 'Tools', ->
       context 'POST /api/tools', ->
-        context 'when I create a private tool', ->
+        context 'when I create a tool (without specifying privacy)', ->
           before (done) ->
             request.post
               uri: "#{serverURL}/api/tools"
@@ -50,7 +50,6 @@ describe 'API', ->
                 name: @toolName
                 type: 'view'
                 gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
-                #public: false <--- defaults to false
             , (err, res, body) =>
               @response = res
               @tool = JSON.parse res.body
@@ -71,6 +70,9 @@ describe 'API', ->
 
           it 'is owned by me', ->
             @user.should.equal @tool.user
+
+          it 'is private', ->
+            @tool.public.should.be.false
 
           context 'when I update that tool', ->
             before (done) ->
@@ -93,6 +95,9 @@ describe 'API', ->
             it 'updates the tool', ->
               @response.should.have.status 200
 
+            it 'is still private', ->
+              @tool.public.should.be.false
+
             it 'shows a recent "updated" timestamp', ->
               should.exist @tool.created
               should.exist @tool.updated
@@ -102,6 +107,26 @@ describe 'API', ->
             # but it's hard.
             xit 'returns the updated tool', ->
               @tool.manifest.displayName.should.equal 'View Data 2'
+
+        context 'When I create a private tool', ->
+          before (done) ->
+            request.post
+              uri: "#{serverURL}/api/tools"
+              form:
+                name: "#{@toolName}-private"
+                type: 'view'
+                gitUrl: 'git://github.com/scraperwiki/test-app-tool.git'
+                public: false
+            , (err, res, body) =>
+              @response = res
+              @tool = JSON.parse res.body
+              done()
+
+          it 'creates a new tool', ->
+            @response.should.have.status 201
+
+          it 'is private', ->
+            @tool.public.should.be.false
 
         context 'When I create a public tool', ->
           before (done) ->
@@ -120,6 +145,9 @@ describe 'API', ->
           it 'creates a new tool', ->
             @response.should.have.status 201
 
+          it 'is public', ->
+            @tool.public.should.be.true
+
       context 'GET /api/tools', ->
         before (done) ->
           request.get "#{serverURL}/api/tools", (err, res) =>
@@ -130,8 +158,14 @@ describe 'API', ->
         it 'returns a list of tools', ->
           @tools.length.should.be.above 0
 
-        it "includes my tool", ->
+        it "includes my first tool", ->
           should.exist(_.find @tools, (x) => x.name == @toolName)
+
+        it "includes my private tool", ->
+          should.exist(_.find @tools, (x) => x.name == "#{@toolName}-private")
+
+        it "includes my public tool", ->
+          should.exist(_.find @tools, (x) => x.name == "#{@toolName}-public")
 
         it "includes public tools", ->
           should.exist(_.find @tools, (x) => x.name == "test-app")
@@ -270,6 +304,9 @@ describe 'API', ->
 
       it "does not see ickletest's private tool in tool list", ->
         should.not.exist(_.find @tools, (x) => x.name == @toolName)
+
+      it "does not see ickletest's private tool in tool list", ->
+        should.not.exist(_.find @tools, (x) => x.name == "#{@toolName}-private")
 
       it "does see ickletest's public tool in tool list", ->
         should.exist(_.find @tools, (x) => x.name == "#{@toolName}-public")

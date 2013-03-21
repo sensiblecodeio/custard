@@ -117,6 +117,24 @@ MII...0tXU=
           it 'the modal window tells me how to SSH in', =>
             @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
 
+          it 'the modal window lets me add another SSH key', =>
+            @modalTextContent.should.include 'add another ssh key'
+
+          context 'when I click the "Add another SSH key" button', ->
+            before (done) ->
+              wd40.click '#add-another-ssh-key', done
+
+            before (done) =>
+              wd40.getText '.modal', (err, text) =>
+                @modalTextContent = text.toLowerCase()
+                done()
+
+            it 'the modal window asks for my SSH key', =>
+              @modalTextContent.should.include 'add your ssh key:'
+
+            it 'the modal tells me the command I should run', =>
+              @modalTextContent.should.include 'ssh-keygen'
+
 
   context 'when I click on the list of datasets', ->
     before (done) ->
@@ -139,10 +157,5 @@ MII...0tXU=
 
       it 'the modal window tells me how to SSH in', =>
         @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
-
-
-
-
-
 
 

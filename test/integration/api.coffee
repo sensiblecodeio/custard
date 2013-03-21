@@ -302,7 +302,7 @@ describe 'API', ->
           @tools = JSON.parse @body
           done()
 
-      it "does not see ickletest's private tool in tool list", ->
+      it "does not see ickletest's first tool in tool list", ->
         should.not.exist(_.find @tools, (x) => x.name == @toolName)
 
       it "does not see ickletest's private tool in tool list", ->

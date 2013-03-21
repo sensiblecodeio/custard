@@ -394,7 +394,7 @@ well with Boostrap</a>.
 endpoints and functions needed by views. It requires jQuery. You'll want to include it in
 your view's HTML <code>&lt;head&gt;</code>, after you load jQuery.</p>
 
-<pre class="prettyprint">&lt;script src="https://x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
+<pre class="prettyprint">&lt;script src="//x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
 
 <h3>Read settings</h3>
 

@@ -9,6 +9,7 @@
   -o-transition: padding 0.5s;
   transition: padding 0.5s;
 }
+
 .hero-unit h1 {
   font-size: 36px;
   margin-bottom: 10px;
@@ -17,6 +18,7 @@
   -o-transition: all 0.5s;
   transition: all 0.5s;
 }
+
 .hero-unit .lead {
   font-size: 18px;
   line-height: 24px;
@@ -26,6 +28,7 @@
   -o-transition: all 0.5s;
   transition: all 0.5s;
 }
+
 .btn-primary .muted {
   color: inherit;
   opacity: 0.7;

@@ -1,6 +1,8 @@
 <ul>
 <li><a href="/">Data Hub</a></li>
+<% if window.user.effective?.isStaff: %>
 <li><a href="/tools/people-pack">Tool Packs</a></li>
+<% end %>
 <li><a href="/docs">Help</a></li>
 <% if @displayName: %>
 <li class="logout"><a href="/logout" data-nonpushstate>Log out</a></li>

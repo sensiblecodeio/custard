@@ -1,3 +1,368 @@
-<p>Get ahead of the competition with marketing, lead gen and HR tools in the ScraperWiki <strong>People Pack</strong>.</p>
+<style>
 
-<p class="muted">Coming soon!</p>
+.hero-unit {
+  text-align: center;
+  background-color: #ffc;
+  padding: 20px;
+  -moz-transition: padding 0.5s;
+  -webkit-transition: padding 0.5s;
+  -o-transition: padding 0.5s;
+  transition: padding 0.5s;
+}
+.hero-unit h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.hero-unit .lead {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 10px 0 15px 0;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.btn-primary .muted {
+  color: inherit;
+  opacity: 0.7;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+  font-weight: 200;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+}
+
+.case-study {
+  margin: 20px 0;
+}
+
+.case-study .media-body h4 {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0;
+}
+
+.case-study .media-body p {
+  font-size: 14px;
+  line-height: 16px;
+  margin-bottom: 0;
+}
+
+.case-study strong {
+  font-weight: normal;
+  background-color: #ffc;
+  background-color: rgba(255,255,0,0.2);
+  padding: 1px 4px;
+}
+
+#tools {
+  margin-left: -20px;
+}
+
+.tool {
+  display: table; /* this won't work in IE6/7 */
+  height: 100px;
+  margin-bottom: 0; /* override the default 20px margin-bottom on .swcol */
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.tool:last-child {
+  margin-bottom: 20px;
+}
+
+.tool div {
+  display: table-cell; /* this won't work in IE6/7 */
+  vertical-align: middle;
+}
+
+.tool .tool-info {
+  padding-left: 15px; /* 15px spacing between icon and title/description */
+  padding-right: 10px; /* 10px here + 20px margin in a.tool = 30px visual spacing between columns */
+}
+
+.tool .tool-icon {
+  width: 60px;
+  max-width: 60px;
+}
+
+.tool .tool-icon-outer {
+  display: block;
+  width: 60px;
+  height: 64px;
+  margin-right: 15px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.tool .tool-icon-inner {
+  display: block;
+  height: 60px;
+  width: 60px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.tool h3 {
+  font-size: 16px;
+  line-height: 18px;
+  margin: 0 0 5px 0;
+}
+
+.tool p {
+  margin: 0;
+}
+
+
+@media only screen and (min-width: 620px) {
+
+  .hero-unit {
+    padding: 30px;
+  }
+
+  .hero-unit h1 {
+    font-size: 42px;
+  }
+
+  .hero-unit .lead {
+    font-size: 21px;
+    line-height: 26px;
+  }
+
+  h2 {
+    font-size: 28px;
+    line-height: 32px;
+    text-align: left;
+  }
+
+}
+
+
+@media only screen and (min-width: 920px) {
+
+  .hero-unit {
+    padding: 50px;
+  }
+
+  .hero-unit h1 {
+    font-size: 60px;
+  }
+
+  .hero-unit .lead {
+    font-size: 28px;
+    line-height: 32px;
+    margin: 20px 0 30px 0;
+  }
+
+  h2 {
+    font-size: 31.5px;
+    line-height: 40px;
+  }
+
+  .case-study {
+    float: left;
+    width: 30%;
+    margin-right: 5%;
+    margin-bottom: 30px;
+  }
+  
+  .case-study.last {
+    margin-right: 0;
+  }
+
+}
+
+
+@media only screen and (min-width: 1220px) {
+
+  .hero-unit {
+    padding: 60px;
+  }
+
+  .hero-unit h1 {
+    font-size: 70px;
+  }
+
+  .hero-unit .lead {
+    font-size: 32px;
+    line-height: 36px;
+    margin: 20px 0 30px 0;
+  }
+
+  .hero-unit .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+  
+  .case-study {
+    margin-bottom: 40px;
+  }
+
+}
+
+</style>
+
+<div class="hero-unit">
+  <h1>Build markets with web&nbsp;data</h1>
+  <p class="lead">The essential tool pack for understanding your market<br/>and building business&nbsp;relationships.</p>
+  <button class="btn btn-large btn-primary">Buy the People Pack <span class="muted">&ndash;&nbsp;$100/mo</span></button>
+</div>
+
+<h2>Combine our tools for your specific market:</h2>
+
+<div class="case-study first">
+  <blockquote>
+    <p>I uploaded a spreadsheet of my target market&rsquo;s biggest influencers, and then used the <strong>Twitter follower tool</strong> to find out who they follow, so I could market my client&rsquo;s new product.</p>
+    <p>ScraperWiki&rsquo;s People Pack measurably increased my client&rsquo;s sales in a previously un-tapped market. Priceless.</p>
+  </blockquote>
+  <div class="person media">
+    <img src="//placehold.it/42x42" width="42" height="42" class="pull-left">
+    <div class="media-body">
+      <h4 class="media-heading">Rob Nightingale</h4>
+      <p>Business Development Specialist</p>
+    </div>
+  </div>
+</div>
+
+<div class="case-study">
+  <blockquote>
+    <p>It&rsquo;s my job to build meaningful communities around products. The ScraperWiki People Pack helps me do that, quickly and efficiently.</p>
+    <p>Most recently, I fed names from the <strong>Eventbrite Attendee scraper</strong> into the <strong>LinkedIn Group tool</strong>, to find out the key hotspots where my target community hangs out online.</p>
+  </blockquote>
+  <div class="person media">
+    <img src="//placehold.it/42x42" width="42" height="42" class="pull-left">
+    <div class="media-body">
+      <h4 class="media-heading">Zach Beauvais</h4>
+      <p>Community Manager</p>
+    </div>
+  </div>
+</div>
+
+<div class="case-study last">
+  <blockquote>
+    <p>ScraperWiki, and the People Pack, are invaluable tools in my B2B business development workflow.</p>
+    <p>I use the <strong>LinkedIn Company tool</strong> to monitor the employees at target companies. Then, when someone joins or leaves a company, I get <strong>Android Push Notifications</strong> so I can instantly get in touch and keep building the relationship.</p>
+  </blockquote>
+  <div class="person media">
+    <img src="//placehold.it/42x42" width="42" height="42" class="pull-left">
+    <div class="media-body">
+      <h4 class="media-heading">Aine McGuire</h4>
+      <p>Chief Marketing Officer</p>
+    </div>
+  </div>
+</div>
+
+<span class="clearfix"></span>
+
+<h2>ScraperWiki People Pack includes:</h2>
+
+<div id="tools">
+  <div class="tool swcol">
+    <div class="tool-icon">
+      <span class="tool-icon-outer" style="background-color: <%= chroma.interpolate("#0F53B8", "#000", .3, 'hsl') %>">
+        <span class="tool-icon-inner" style="background-color: #0F53B8; background-image: url(/image/tool-icon-linkedin-people.png)"></span>
+      </span>
+    </div>
+    <div class="tool-info">
+      <h3>LinkedIn Profile Search</h3>
+      <p>Find people on LinkedIn and save all their details.</p>
+    </div>
+  </div>
+
+  <div class="tool swcol">
+    <div class="tool-icon">
+      <span class="tool-icon-outer" style="background-color: <%= chroma.interpolate("#0F53B8", "#000", .3, 'hsl') %>">
+        <span class="tool-icon-inner" style="background-color: #0F53B8; background-image: url(/image/tool-icon-linkedin-companies.png)"></span>
+      </span>
+    </div>
+    <div class="tool-info">
+      <h3>LinkedIn Companies</h3>
+      <p>Keep track of who works at any company on LinkedIn.</p>
+    </div>
+  </div>
+
+  <div class="tool swcol">
+    <div class="tool-icon">
+      <span class="tool-icon-outer" style="background-color: <%= chroma.interpolate("#3cf", "#000", .3, 'hsl') %>">
+        <span class="tool-icon-inner" style="background-color: #3cf; background-image: url(/image/tool-icon-twitter.png)"></span>
+      </span>
+    </div>
+    <div class="tool-info">
+      <h3>Twitter Followers</h3>
+      <p>Find out who follows, or is followed by, a set of Twitter users.</p>
+    </div>
+  </div>
+
+  <div class="tool swcol">
+    <div class="tool-icon">
+      <span class="tool-icon-outer" style="background-color: <%= chroma.interpolate("#fa0", "#000", .3, 'hsl') %>">
+        <span class="tool-icon-inner" style="background-color: #fa0; background-image: url(/image/tool-icon-events.png)"></span>
+      </span>
+    </div>
+    <div class="tool-info">
+      <h3>Event Attendees</h3>
+      <p>Scrape names and personal info from Eventbrite and Meetup attendee lists.</p>
+    </div>
+  </div>
+
+  <div class="tool swcol">
+    <div class="tool-icon">
+      <span class="tool-icon-outer" style="background-color: <%= chroma.interpolate("#0F53B8", "#000", .3, 'hsl') %>">
+        <span class="tool-icon-inner" style="background-color: #0F53B8; background-image: url(/image/tool-icon-linkedin-groups.png)"></span>
+      </span>
+    </div>
+    <div class="tool-info">
+      <h3>LinkedIn Groups</h3>
+      <p>Find out which groups a set of LinkedIn users members of.</p>
+    </div>
+  </div>
+
+  <div class="tool swcol">
+    <div class="tool-icon">
+      <span class="tool-icon-outer" style="background-color: <%= chroma.interpolate("#39DB53", "#000", .3, 'hsl') %>">
+        <span class="tool-icon-inner" style="background-color: #39DB53; background-image: url(/image/tool-icon-report.png)"></span>
+      </span>
+    </div>
+    <div class="tool-info">
+      <h3>Social Impact Report</h3>
+      <p>Powerful, at-a-glance summaries for Twitter and LinkedIn datasets.</p>
+    </div>
+  </div>
+
+  <div class="tool swcol">
+    <div class="tool-icon">
+      <span class="tool-icon-outer" style="background-color: <%= chroma.interpolate("#B144DB", "#000", .3, 'hsl') %>">
+        <span class="tool-icon-inner" style="background-color: #B144DB; background-image: url(/image/tool-icon-network.png)"></span>
+      </span>
+    </div>
+    <div class="tool-info">
+      <h3>Social Network Graph</h3>
+      <p>Instantly spot patterns and paths through Twitter or LinkedIn networks.</p>
+    </div>
+  </div>
+
+  <div class="tool swcol">
+    <div class="tool-icon">
+      <span class="tool-icon-outer" style="background-color: <%= chroma.interpolate("#fd0", "#000", .3, 'hsl') %>">
+        <span class="tool-icon-inner" style="background-color: #fd0; background-image: url(/image/tool-icon-notifications.png)"></span>
+      </span>
+    </div>
+    <div class="tool-info">
+      <h3>Push Notifications</h3>
+      <p>Get emails, text messages or mobile notifications when a dataset changes.</p>
+    </div>
+    </div>
+  </div>
+
+</div>

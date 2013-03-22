@@ -550,7 +550,6 @@ a.tool .tool-icon-outer {
 }
 
 a.tool .tool-icon-inner {
-  content: "";
   display: block;
   height: 60px;
   width: 60px;

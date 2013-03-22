@@ -18,6 +18,12 @@ p {
   margin-bottom: 14px;
 }
 
+/* Spacing between multiple paragraphs in a blockquote */
+
+blockquote p + p {
+  margin-top: 10px;
+}
+
 /* Fixes for other stuff because of font size change :-( */
 
 .navbar .nav .dropdown-toggle .caret {

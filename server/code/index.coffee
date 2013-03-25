@@ -15,6 +15,7 @@ mongoStore = require('connect-mongo')(express)
 flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
+request = require 'request'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
@@ -242,6 +243,12 @@ app.post '/api/status/?', checkIdent, (req, resp) ->
           console.warn err
           return resp.send 500, error: 'Error trying to update status'
         return resp.send 200, status: 'ok'
+
+app.post '/recurly/?', (req, resp) ->
+  token = req.body.params.recurly_token
+  request.get "https://api.recurly.com/v2/recurly_js/result/#{token}", (err, resp, body) ->
+    console.log err, body
+
 
 ############ AUTHENTICATED ############
 app.all '*', ensureAuthenticated

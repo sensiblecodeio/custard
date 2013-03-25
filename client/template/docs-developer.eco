@@ -498,7 +498,37 @@ scraperwiki.tool.rename(username + "'s twitter followers")</pre>
     console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
 })</pre>
 
-<p>The SQL metadata API also has a wrapper, which takes a <code>success</code> and <code>error</code> callbacks, like the main SQL function above. Example usage:</p>
+<p>
+The SQL API is intended to accept a common subset of ANSI SQL. Keep queries as
+simple as possible; avoid database specific SQL. If in doubt, make sure you&rsquo;re
+compatible with at least SQLite (the current database) and PostgreSQL (the most likely future alternative).
+</p>
+
+<p>
+We've spotted the following:
+</p>
+
+<ul>
+<li>
+use <code>"</code> to escape column names, rather than <code>`</code> or <code>[</code> (see <a
+href="http://www.sqlite.org/lang_keywords.html">SQLite Keywords</a>).
+</li>
+
+<li>
+DROP tables rather than deleting the SQLite file
+</li>
+
+<li>
+Use the metadata API (below) to discover table and column names, rather than the
+SQLite-specific <code>sqlite_master</code>.
+</li>
+</ul>
+
+<h3>SQL metadata API wrapper</h3>
+
+<p>This API should be used to discover table and column names rather than the SQLite-specific <code>sqlite_master</code>.</p>
+
+<p>It takes <code>success</code> and <code>error</code> callbacks, like the main SQL function above. Example usage:</p>
 
 <pre class="prettyprint linenums">scraperwiki.sql.meta(function(metadata, textStatus, jqXHR) {
   for(tableName in metadata.table){

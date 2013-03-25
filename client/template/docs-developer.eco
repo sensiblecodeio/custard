@@ -70,6 +70,10 @@ This will show you how to SSH in.</p>
 
 <p>The HTTP file endpoint is a great way to serve static web pages, client-side javascript apps, and downloadable files &ndash; especially when you&rsquo;re writing views, or setup screens for more complex datasets.</p>
 
+<p>The file's MIME type is worked out from its extension, using <a
+href="https://github.com/git-mirror/nginx/blob/master/conf/mime.types">a standard set of rules</a>
+supplied with nginx.</p>
+
 <h3 id="datasets-endpoints-sql">SQL data endpoint</h3>
 
 <p>If an SQLite file is named in the <code>database</code> key of <code>~/box.json</code>, you can query it using the read-only SQL endpoint like so: <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql?q=select+*+from+sqlite_master</code>.</p>

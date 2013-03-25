@@ -97,7 +97,9 @@ supplied with nginx.</p>
   </tr>
 </table>
 
-<p>The SQL endpoint returns a JSON list of objects; one object for each row in the result set.</p>
+<p>The SQL endpoint returns a JSON list of objects; one object for each row in the result set. Although JSON officially
+has no order, the keys in these objects are in the same order as the columns in the SQL database.
+</p>
 
 <p>You can also see metadata about your database by making a <code>HTTP GET</code> request to <code>https://box.scraperwiki.com/<em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql/meta</code>. The meta endpoint returns a JSON object like this:</p>
 

@@ -37,6 +37,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
     @route RegExp('signup/([^/]+)/?'), 'signUp'
+    @route RegExp('subscribe/([^/]+)/?'), 'subscribe'
 
   main: ->
     if window.user.effective?
@@ -68,6 +69,12 @@ class Cu.Router.Main extends Backbone.Router
 
   signUp: (plan) ->
     contentView = new Cu.View.SignUp
+    subnavView = new Cu.View.SignUpNav {plan: plan}
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  subscribe: (plan) ->
+    contentView = new Cu.View.Subscribe {plan: plan}
     subnavView = new Cu.View.SignUpNav {plan: plan}
     @appView.showView contentView
     @subnavView.showView subnavView

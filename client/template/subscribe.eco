@@ -1,0 +1,35 @@
+<script src="/vendor/js/recurly.js"></script>
+<link href="/vendor/css/recurly.css" rel="stylesheet" type="text/css" />
+<script>
+    Recurly.config({
+        subdomain: '{{subdomain}}'
+        , currency: 'USD'
+        , country: 'GB'
+        , VATPercent: '20'
+    });
+    Recurly.buildSubscriptionForm({
+        target: '#recurly-subscribe'
+        , planCode: '<%= @plan %>'
+        , accountCode: 'a1b2c3d4e5'
+        , successURL: '/confirm_subscription/'
+        , distinguishContactFromBillingInfo: true
+        , collectCompany: true
+        , enableCoupons: false
+        , enableAddOns: false
+        , acceptedCards: ['mastercard', 'visa']
+        , account: {
+            firstName: ''
+            , lastName: ''
+            , email: ''
+        }
+        , signature: '{{ signature }}'
+        , beforeInject: function(form){
+            $(form).prepend('<h2 class="introduction">Almost there! Just enter your payment details.</h2>');
+            $('.footer', $(form)).prepend('<a href="/pricing/" class="back">&larr; Go back to pricing plans</a>');
+            $('.country select', $(form)).val('US').trigger('change');
+        }
+    });
+</script>
+<div id="recurly-subscribe">
+    <p class="loading">Loading&hellip;</p>
+</div>

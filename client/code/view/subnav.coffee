@@ -384,12 +384,19 @@ class Cu.View.DocsNav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
-    if @options.section == 'corporate'
-      url = '/docs/corporate/'
-      name = 'Corporate'
-    else
-      url = '/docs/developer/'
-      name = 'Developer'
+    switch @options.section
+      when 'corporate'
+        url = '/docs/corporate/'
+        name = 'Corporate'
+      when 'developer'
+        url = '/docs/developer/'
+        name = 'Developer'
+      when 'zig'
+        url = '/docs/zig/'
+        name = 'ZIG'
+      else
+        url = '/docs/else/'
+        name = 'WRONG'
 
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
@@ -406,6 +413,7 @@ class Cu.View.DocsNav extends Backbone.View
       <ul class="nav-pills" id="subnav-options">
         <li#{if name == 'Developer' then ' class="active"' else ''}><a href="/docs/developer/">Developer Docs</a></li>
         <li#{if name == 'Corporate' then ' class="active"' else ''}><a href="/docs/corporate/">Corporate FAQs</a></li>
+        <li#{if name == 'ZIG' then ' class="active"' else ''}><a href="/docs/zig/">ZIG</a></li>
       </ul>
       <hr>""")
     @

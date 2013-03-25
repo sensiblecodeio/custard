@@ -27,6 +27,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('docs/?'), 'developerDocs'
     @route RegExp('docs/corporate/?'), 'corporateDocs'
     @route RegExp('docs/developer/?'), 'developerDocs'
+    @route RegExp('docs/zig/?'), 'zigDocs'
     @route RegExp('pricing/?'), 'pricing'
     @route RegExp('tools/?'), 'toolShop'
     @route RegExp('tools/people-pack/?'), 'peoplePack'
@@ -158,3 +159,10 @@ class Cu.Router.Main extends Backbone.Router
     contentView = new Cu.View.CorporateDocs()
     @appView.showView contentView
     @subnavView.showView subnavView
+
+  zigDocs: ->
+    subnavView = new Cu.View.DocsNav {section: 'zig'}
+    contentView = new Cu.View.ZIGDocs()
+    @appView.showView contentView
+    @subnavView.showView subnavView
+    

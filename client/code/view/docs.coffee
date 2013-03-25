@@ -29,3 +29,6 @@ class Cu.View.DeveloperDocs extends Cu.View.Docs
 
 class Cu.View.CorporateDocs extends Cu.View.Docs
   template: 'docs-corporate'
+
+class Cu.View.ZIGDocs extends Cu.View.Docs
+  template: 'docs-zig'

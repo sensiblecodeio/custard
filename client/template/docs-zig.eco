@@ -1,0 +1,117 @@
+<nav class="well">
+  <ul class="nav nav-list">
+    <li><a data-nonpushstate href="#zig-intro">Introduction</a></li>
+    <li class="nav-header">User Interface</li>
+    <li><a data-nonpushstate href="#ui-naming">Naming your tool</a></li>
+    <li class="nav-header">Technical Standards</li>
+    <li><a data-nonpushstate href="#ts-html">HTML</a></li>
+    <li><a data-nonpushstate href="#ts-css">CSS</a></li>
+  </ul>
+</nav>
+
+<div class="wrapper">
+
+<h2 id="zig-intro">Zarino Interface Guidelines</h2>
+
+<p>You&rsquo;re making a tool, that&rsquo;s brilliant! Our UX guru, Zarino, has worked out some of the hard details so you don&rsquo;t have to.
+</p>
+
+<hr />
+
+<h2 id="ui-naming">Naming your tool</h2>
+
+<h3>Tool names should start with a verb</h3>
+
+<p>
+Examples of good tool names include:
+</p>
+
+<ul>
+<li>Upload a spreadsheet</li>
+<li>Code in your browser</li>
+<li>Search for Tweets</li>
+<li>Import LinkedIn connections</li>
+</ul>
+
+<p>
+Try to keep the name short (3-4 words max). You can always expand more in the
+description (10 words max).
+</p>
+
+<p>
+Try not to use the verb "scrape". "Import", "search" and even plain old "get" are far
+clearer.
+</p>
+
+<h3>
+Tool descriptions have no full stop
+</h3>
+
+<p>
+For example put "Sort, search and page through your data" not "Sort, search and page through your data."
+</p>
+
+<p>
+When writing descriptions, think about what the user will want to know first about the tool.
+If you find you have lots of sentences, your description is too long.
+</p>
+
+<hr />
+
+
+
+<h2 id="ts-html">HTML</h2>
+
+<p>HTML5 is great.</p>
+
+<hr />
+
+<h2 id="ts-css">CSS</h2>
+
+<h3>
+When in doubt, use <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>
+</h3>
+
+<p>
+Bootstrap is a CSS and Javascript framework that makes it easy to build good-looking
+interfaces using a handful of tags and classes. All of the Bootstrap <a
+href="http://twitter.github.com/bootstrap/base-css.html">CSS Classes</a> and
+more <a href="http://twitter.github.com/bootstrap/components.html">Advanced Components</a> are supported in ScraperWiki.
+</p>
+
+<p>
+Remember to include Bootstrap and the ScraperWiki stylesheet in your HTML <code>&lt;head></code>, as
+described in <a href="/docs#views-basics">the Documentation</a>.
+</p>
+
+<pre class="prettyprint">
+&lt;link rel="stylesheet" href="//x.scraperwiki.com/vendor/style/bootstrap.min.css">
+&lt;link rel="stylesheet" href="//x.scraperwiki.com/style/scraperwiki.css">
+&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js">&lt;/script>
+&lt;script src="//x.scraperwiki.com/vendor/js/bootstrap.min.js">&lt;/script>
+</pre>
+
+<h3>Button loading state</h3>
+
+<p>
+Where a user clicks a button in your tool, and their information is sent to the server
+for processing, you should add a loading class to the button, so the user
+knows what&rsquo;s happening.
+You may also want to disable the button so further clicks are ignored. For example:
+</p>
+
+<pre class="prettyprint">
+$('#mybutton').on('click', function(){
+  $(this).attr('disabled', true)  // Disable further clicks.
+  $(this).addClass('loading').html('Loading&amp;hellip;')  // Spinny loader.
+})
+</pre>
+
+<p>
+Here&rsquo;s what it might look like:
+<a class="btn loading">Loading&hellip;</a>
+</p>
+
+
+
+</div>

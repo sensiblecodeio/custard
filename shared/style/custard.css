@@ -311,7 +311,7 @@ a.tile h3 {
 
 a.view.tile h3 {
   margin: 0;
-  padding: 10px;
+  padding: 10px 55px 10px 10px; /* extra padding-right for the "settings" cog button */
 }
 
 a.tile .hide {
@@ -382,6 +382,8 @@ a.tile .hide:hover {
 
 .tile.view .actions {
   line-height: 41px;
+  top: 0; /* full-height button, for tiles with very long (multi-line) titles */
+  bottom: 0;
 }
 
 .tile li.actions > a {

@@ -33,4 +33,5 @@ describe 'Plan (Server)', ->
         form:
           path: 'fskjh33i'
           size: 8
+      correctArgs.should.be.true
 

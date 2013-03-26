@@ -268,12 +268,13 @@ app.post '/api/tools/?', (req, resp) ->
   Tool.findOneByName body.name, (err, tool) ->
     isNew = not tool?
     if tool is null
+      publicBool = (body.public is "true")
       tool = new Tool
         name: body.name
         user: req.user.effective.shortName
         type: body.type
         gitUrl: body.gitUrl
-        public: body.public
+        public: publicBool
     # :todo: Should edit the fields of tool, using the key/value
     # pairs in req.body (_.update tool, body). So that for
     # example the gitUrl can be changed and we git clone from the

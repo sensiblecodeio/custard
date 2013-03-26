@@ -35,3 +35,8 @@ describe 'Pricing', ->
       wd40.trueURL (err, url) ->
         url.should.include '/signup/explorer'
         done()
+
+  after (done) ->
+    browser.quit ->
+      done()
+

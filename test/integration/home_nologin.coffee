@@ -25,3 +25,8 @@ describe 'Home page (not logged in)', ->
 
   it 'tells me about ScraperWiki Data Services', =>
     @bodyText.toLowerCase().should.include 'data services'
+
+  after (done) ->
+    browser.quit ->
+      done()
+

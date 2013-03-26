@@ -18,3 +18,8 @@ describe 'Sign up', ->
 
     it 'says thanks', (done) ->
       browser.waitForVisibleByCss '#thanks', 4000, done
+
+  after (done) ->
+    browser.quit ->
+      done()
+

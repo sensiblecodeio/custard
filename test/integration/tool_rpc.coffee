@@ -108,3 +108,7 @@ describe 'Tool RPC', ->
           should.exist obj?.table?.SurLeTable
           should.exist obj?.table?.VoirLeLapin
           done()
+
+  after (done) ->
+    browser.quit ->
+      done()

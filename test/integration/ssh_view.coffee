@@ -76,6 +76,9 @@ describe 'View SSH Details', ->
           it 'the modal window tells me how to SSH in', =>
             @modalTextContent.should.include 'ssh 4008115731@box.scraperwiki.com'
           
+  after (done) ->
+    browser.quit ->
+      done()
 
 
 

@@ -232,3 +232,8 @@ describe 'Whitelabel', ->
       browser.source (err, source) ->
         source.should.include """src="#{corpProfile.logoUrl}"""
         done()
+
+  after (done) ->
+    browser.quit ->
+      done()
+

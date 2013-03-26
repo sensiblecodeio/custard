@@ -139,3 +139,7 @@ describe 'View', ->
               wd40.getText 'body', (err, text) ->
                 text.should.not.include randomname
                 done()
+
+  after (done) ->
+    browser.quit ->
+      done()

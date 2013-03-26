@@ -156,4 +156,7 @@ MII...0tXU=
       it 'the modal window tells me how to SSH in', =>
         @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
 
+  after (done) ->
+    browser.quit ->
+      done()
 

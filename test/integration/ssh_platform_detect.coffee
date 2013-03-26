@@ -70,3 +70,9 @@ describe 'Platform-specific SSH instructions', ->
 
     it 'the modal window shows me the Mac commands I should run', =>
       @modalTextContent.should.include 'xclip -sel clip < ~/.ssh/id_rsa.pub'
+
+  after (done) ->
+    browser.quit ->
+      done()
+
+

@@ -62,6 +62,11 @@ class Cu.View.DataHubNav extends Backbone.View
           <input type="text" class="input-medium search-query">
         </div>
       </div>""")
+
+    if $('#chooser').length
+      $('#chooser').fadeOut 200, ->
+          $(this).remove()
+      $(window).off('keyup')
     @
 
   liClick: (e) ->
@@ -75,11 +80,13 @@ class Cu.View.DataHubNav extends Backbone.View
       window.tools.fetch
         success: ->
           t = new Cu.View.ToolList {collection: window.tools, type: 'importers'}
+          app.navigate "#{window.location.pathname}#chooser"
           $('body').append t.render().el
         error: (x,y,z) ->
           console.warn 'ERRROR', x, y, z
     else
       t = new Cu.View.ToolList {collection: window.tools, type: 'importers'}
+      app.navigate "#{window.location.pathname}#chooser"
       $('body').append t.render().el
 
   focusContextSearch: ->

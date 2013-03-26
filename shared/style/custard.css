@@ -1010,6 +1010,7 @@ div.docs h3 {
 
   div.docs .wrapper {
     padding-left: 280px;
+    padding-bottom: 40px;
   }
 
   div.docs nav.well {

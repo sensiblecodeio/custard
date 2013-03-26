@@ -7,6 +7,7 @@ request = require 'request'
 
 User = require('model/user').dbInject()
 Box = require('model/box')()
+plan = require 'model/plan'
 
 describe 'User (client)', ->
   helper = require '../helper'
@@ -134,7 +135,7 @@ describe 'User (server)', ->
         correctArgs = @request.calledWith
           uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
           form:
-            keys: '["a","b","c","d","e","f"]'
+            keys: '["d","e","f","a","b","c"]'
         correctArgs.should.be.true
 
   describe 'Validation', ->
@@ -195,4 +196,25 @@ describe 'User (server)', ->
       # TODO: stub nodemailer
       xit 'emails the user', ->
         @emailStub.calledOnce.should.be.true
+
+  describe 'setting disk quota', ->
+
+    context 'when updating the quotas for a user', ->
+      before (done) ->
+        @stub = sinon.stub plan, 'setDiskQuota', (dataset, plan, cb) ->
+          cb null, true
+
+        User.findByShortName 'ehg', (err, user) =>
+          @user = user
+          user.setDiskQuotasForPlan done
+
+      it "should update the disk quota for each dataset", ->
+        correctArgs = @stub.calledWith '3006375731', 'grandfather'
+        correctArgs.should.be.true
+        correctArgs = @stub.calledWith '3006375815', 'grandfather'
+        correctArgs.should.be.true
+ 
+
+
+
 

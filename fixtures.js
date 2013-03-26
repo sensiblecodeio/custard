@@ -9,7 +9,8 @@ exports.users = [
   password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
   apikey: process.env.COTEST_USER_API_KEY,
   isStaff: false,
-  sshKeys: []
+  sshKeys: [],
+  accountLevel: "free"
 },
 {
   shortName: 'teststaff',
@@ -18,7 +19,8 @@ exports.users = [
   password: '$2a$10$CFjsDLWeS1x5BiX0mLulnOH97vop1KwUmzPnx5NvmZ1oda.LZNXNm',
   apikey: process.env.COTEST_STAFF_API_KEY,
   isStaff: true,
-  sshKeys: []
+  sshKeys: [],
+  accountLevel: "free"
 },
 {
   shortName: 'ehg',
@@ -27,7 +29,8 @@ exports.users = [
   password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
   apikey: process.env.COTEST_USER_API_KEY,
   isStaff: true,
-  sshKeys: ['d', 'e', 'f']
+  sshKeys: ['d', 'e', 'f'],
+  accountLevel: "grandfather"
 },
 {
   shortName: 'ickletest',
@@ -36,7 +39,8 @@ exports.users = [
   password: '$2a$10$zGJXsNwhOBvze9GDm.jeEuLBX.TciRIKxNXfslxe5TZ.9/fDgpeDu',
   apikey: process.env.COTEST_STAFF_API_KEY,
   isStaff: true,
-  sshKeys: ['a', 'b', 'c']
+  sshKeys: ['a', 'b', 'c'],
+  accountLevel: "free"
 },
 {
   shortName: 'zarino',
@@ -44,7 +48,8 @@ exports.users = [
   displayName: 'Zarino Testington',
   password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
   apikey: process.env.COTEST_USER_API_KEY,
-  sshKeys: []
+  sshKeys: [],
+  accountLevel: "grandfather"
 }
 ];
 

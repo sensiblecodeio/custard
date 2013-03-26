@@ -130,12 +130,17 @@ describe 'User (server)', ->
         correctArgs.should.be.true
 
       it "posts to luxurypigbox with ehg's and ickletest's ssh keys", ->
-        # :TODO: this test is sensitive to the order the keys arrive in
-        # (whether a/b/c first or d/e/f first), it shouldn't be
+        # Note: the "keys" argument in the form is sensitive to some
+        # essentially random dictionary iteration order. We naughtily test
+        # both plausible orders.
         correctArgs = @request.calledWith
           uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
           form:
             keys: '["d","e","f","a","b","c"]'
+        correctArgs ||= @request.calledWith
+          uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
+          form:
+            keys: '["a","b","c","d","e","f"]'
         correctArgs.should.be.true
 
   describe 'Validation', ->

@@ -51,16 +51,16 @@ class User extends ModelBase
       @password = hash
       @save callback
 
-  setDiskQuotasForPlan: (callback) ->
-    # Find all their boxes
-    # set quota on each box
-    Box.findAllByUser @shortName, (err, boxes) =>
-      if err
-        return callback err, null
-      async.forEach boxes, (box, next) =>
-        plan.setDiskQuota, box.name, @accountLevel, next
-      , ->
-        callback null, true
+#  setDiskQuotasForPlan: (callback) ->
+#    # Find all their boxes
+#    # set quota on each box
+#    Box.findAllByUser @shortName, (err, boxes) =>
+#      if err
+#        return callback err, null
+#      async.forEach boxes, (box, next) =>
+#        plan.setDiskQuota, box.name, @accountLevel, next
+#      , ->
+#        callback null, true
 
   # Sends a list of box sshkeys to cobalt for each box a user
   # can access, so cobalt can overwite the authorized_keys for a box

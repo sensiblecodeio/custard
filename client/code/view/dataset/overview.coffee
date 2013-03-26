@@ -27,6 +27,13 @@ class Cu.View.DatasetOverview extends Backbone.View
     $actionDiv.append """<span class="btn btn-large new-view"><img src="/image/chooser-icon-24px.png" width="24" height="24">#{buttonText}</span>"""
 
     @$el.append $aboutDiv, $actionDiv
+
+    # close the tool chooser if it's open
+    # (ie: if we've just used the back button to close it)
+    if $('#chooser').length
+      $('#chooser').fadeOut 200, ->
+          $(this).remove()
+      $(window).off('keyup')
     @
 
   showChooser: ->
@@ -36,9 +43,11 @@ class Cu.View.DatasetOverview extends Backbone.View
       window.tools.fetch
         success: ->
           t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters', dataset: @model}
+          app.navigate "#{window.location.pathname}#chooser"
           $('body').append t.render().el
         error: (x,y,z) ->
           console.warn 'ERRROR', x, y, z
     else
       t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters', dataset: @model}
+      app.navigate "#{window.location.pathname}#chooser"
       $('body').append t.render().el

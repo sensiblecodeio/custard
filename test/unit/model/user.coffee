@@ -206,7 +206,7 @@ describe 'User (server)', ->
 
     context 'when updating the quotas for a user', ->
       before (done) ->
-        @stub = sinon.stub plan, 'setDiskQuota', (dataset, plan, cb) ->
+        @stub = sinon.stub plan, 'setDiskQuota', (box, plan, cb) ->
           cb null, true
 
         User.findByShortName 'ehg', (err, user) =>

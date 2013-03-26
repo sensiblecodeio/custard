@@ -83,6 +83,8 @@ exports.datasets = [
 { "box" : "3006375821", "tool": "test-app", "displayName" : "Chicks", "user" : "zarino", "views" : [] },
 { "box" : "3006375823", "tool": "test-app", "displayName" : "Bobcats", "user" : "zarino", "views" : [] }
 ]
-//
-//exports.boxes = [
-//]
+
+exports.boxes = [
+  { "users" : ['ehg'], "name": "3006375731" },
+  { "users" : ['ehg'], "name": "3006375815" }
+]

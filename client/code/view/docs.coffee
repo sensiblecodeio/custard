@@ -20,9 +20,10 @@ class Cu.View.Docs extends Backbone.View
       , 250
 
   makePrettyLike: ->
-    prettyPrint()
-    $('nav.well').affix({offset: 110})
-    $('body').scrollspy()
+    prettyPrint() # syntax-highlight code blocks
+    $('nav.well').affix({offset: 110}) # fixed position for table of contents
+    $('body').scrollspy('refresh') # highlight links in table of contents on scroll
+    $(window).trigger('scroll') # fake a scroll event to highlight the current link
 
 class Cu.View.DeveloperDocs extends Cu.View.Docs
   template: 'docs-developer'

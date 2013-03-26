@@ -1,5 +1,4 @@
 should = require 'should'
-
 {wd40, browser} = require('../wd40')
 
 url = 'http://localhost:3001'

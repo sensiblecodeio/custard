@@ -206,7 +206,6 @@ describe 'Switch', ->
 
 describe 'Whitelabel', ->
 
-  browser = null
   corpProfile =
     shortName: 'evilcorp'
     displayName: 'Evil Corp'

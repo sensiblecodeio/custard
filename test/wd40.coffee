@@ -44,8 +44,8 @@ class wd40
       browser.window handle, cb
 
   @switchToBottomFrame: (cb) ->
-    Wd40.switchToFrame 'iframe', ->
-      Wd40.switchToFrame 'iframe', cb
+    @switchToFrame 'iframe', =>
+      @switchToFrame 'iframe', cb
 
   @waitForText: (text, cb) ->
     endTime = Date.now() + 4000

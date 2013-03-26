@@ -108,10 +108,8 @@ $('#mybutton').on('click', function(){
 </pre>
 
 <p>
-Here&rsquo;s what it might look like:
+<span style="vertical-align: -1px; margin-right: 10px;">Here&rsquo;s what it might look like:</span>
 <a class="btn loading">Loading&hellip;</a>
 </p>
-
-
 
 </div>

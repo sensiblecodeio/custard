@@ -52,7 +52,7 @@ describe 'User (client)', ->
       @user.set @attrs, validate: true
       @eventSpy.calledOnce.should.be.true
 
-describe 'User (Server)', ->
+describe 'User (server)', ->
   before ->
     mongoose.connect process.env.CU_DB
 
@@ -194,3 +194,4 @@ describe 'User (Server)', ->
       # TODO: stub nodemailer
       xit 'emails the user', ->
         @emailStub.calledOnce.should.be.true
+

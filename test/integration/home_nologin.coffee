@@ -1,8 +1,5 @@
-wd = require 'wd'
 should = require 'should'
-
-browser = wd.remote()
-wd40 = require('../wd40')(browser)
+{wd40, browser} = require('../wd40')
 
 url = 'http://localhost:3001'
 
@@ -28,3 +25,8 @@ describe 'Home page (not logged in)', ->
 
   it 'tells me about ScraperWiki Data Services', =>
     @bodyText.toLowerCase().should.include 'data services'
+
+  after (done) ->
+    browser.quit ->
+      done()
+

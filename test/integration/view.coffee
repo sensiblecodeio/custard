@@ -1,7 +1,5 @@
-wd = require 'wd'
-browser = wd.remote()
-wd40 = require('../wd40')(browser)
 should = require 'should'
+{wd40, browser} = require('../wd40')
 
 url = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{url}/login"
@@ -141,3 +139,7 @@ describe 'View', ->
               wd40.getText 'body', (err, text) ->
                 text.should.not.include randomname
                 done()
+
+  after (done) ->
+    browser.quit ->
+      done()

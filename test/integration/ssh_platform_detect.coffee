@@ -1,7 +1,5 @@
-wd = require 'wd'
-browser = wd.remote()
-wd40 = require('../wd40')(browser)
 should = require 'should'
+{wd40, browser} = require('../wd40')
 
 url = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{url}/login"
@@ -72,3 +70,9 @@ describe 'Platform-specific SSH instructions', ->
 
     it 'the modal window shows me the Mac commands I should run', =>
       @modalTextContent.should.include 'xclip -sel clip < ~/.ssh/id_rsa.pub'
+
+  after (done) ->
+    browser.quit ->
+      done()
+
+

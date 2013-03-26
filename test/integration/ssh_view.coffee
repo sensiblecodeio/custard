@@ -1,7 +1,5 @@
-wd = require 'wd'
-browser = wd.remote()
-wd40 = require('../wd40')(browser)
 should = require 'should'
+{wd40, browser} = require('../wd40')
 
 url = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{url}/login"
@@ -78,6 +76,9 @@ describe 'View SSH Details', ->
           it 'the modal window tells me how to SSH in', =>
             @modalTextContent.should.include 'ssh 4008115731@box.scraperwiki.com'
           
+  after (done) ->
+    browser.quit ->
+      done()
 
 
 

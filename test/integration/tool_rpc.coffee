@@ -1,13 +1,10 @@
 # See custard/README.md for Selenium setup instructions
 
-wd = require 'wd'
 should = require 'should'
-
+{wd40, browser} = require('../wd40')
 
 BASE_URL = 'http://localhost:3001' # DRY DRY DRY
 login_url = "#{BASE_URL}/login"
-browser = wd.remote()
-wd40 = require('../wd40')(browser)
 
 
 describe 'Tool RPC', ->
@@ -111,3 +108,7 @@ describe 'Tool RPC', ->
           should.exist obj?.table?.SurLeTable
           should.exist obj?.table?.VoirLeLapin
           done()
+
+  after (done) ->
+    browser.quit ->
+      done()

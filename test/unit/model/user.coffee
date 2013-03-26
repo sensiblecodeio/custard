@@ -57,7 +57,7 @@ describe 'User (server)', ->
   before ->
     mongoose.connect process.env.CU_DB
 
-  describe 'password', ->
+  describe 'Password', ->
     before ->
       @user = new User {shortName: 'ickletest'}
       @password = 'toottoot'
@@ -88,7 +88,7 @@ describe 'User (server)', ->
             correct.should.be.true
             done()
 
-  context 'when trying to find a user', ->
+  describe 'Finding', ->
     it 'can find one by its shortname', (done) ->
       # TODO: Stub actual DB calls?
       User.findByShortName 'ickletest', (err, user) ->
@@ -202,7 +202,7 @@ describe 'User (server)', ->
       xit 'emails the user', ->
         @emailStub.calledOnce.should.be.true
 
-  describe 'setting disk quota', ->
+  describe 'Disk quota', ->
 
     context 'when updating the quotas for a user', ->
       before (done) ->

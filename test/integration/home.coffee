@@ -1,8 +1,6 @@
-wd = require 'wd'
 should = require 'should'
 
-browser = wd.remote()
-wd40 = require('../wd40')(browser)
+{wd40, browser} = require('../wd40')
 
 url = 'http://localhost:3001'
 login_url = "#{url}/login"

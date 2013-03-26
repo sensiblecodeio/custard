@@ -1,6 +1,6 @@
-browser = null
+wd = require 'wd'
 
-class Wd40
+class wd40
   @init: (cb) ->
     browser.init
       browserName: process.env.BROWSER ? 'chrome'
@@ -62,6 +62,5 @@ class Wd40
             setTimeout poll, 200
     poll()
 
-module.exports = (b) ->
-  browser = b
-  Wd40
+exports.browser = browser = wd.remote()
+exports.wd40 = wd40

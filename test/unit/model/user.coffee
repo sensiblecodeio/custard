@@ -108,7 +108,7 @@ describe 'User (server)', ->
         users: ['ickletest']
         name: 'pigbox'
       @luxuryPigBox = new Box
-        users: ['ehg', 'ickletest']
+        users: ['zarino', 'ickletest']
         name: 'luxurypigbox'
       @request = sinon.stub request, 'post', (opt, cb) ->
         cb null, null, null
@@ -129,7 +129,7 @@ describe 'User (server)', ->
             keys: '["a","b","c"]'
         correctArgs.should.be.true
 
-      it "posts to luxurypigbox with ehg's and ickletest's ssh keys", ->
+      it "posts to luxurypigbox with zarino's and ickletest's ssh keys", ->
         # Note: the "keys" argument in the form is sensitive to some
         # essentially random dictionary iteration order. We naughtily test
         # both plausible orders.

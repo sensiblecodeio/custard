@@ -26,12 +26,13 @@ login  = (username, password, callback) ->
 createProfile = (options, done) ->
   login 'teststaff', process.env.CU_TEST_STAFF_PASSWORD, (err, res, body) ->
     form =
+      shortName: options.shortName
       displayName: options.displayName
       email: options.email
     form.logoUrl = options.logoUrl if options.logoUrl?
 
     request.post
-      uri: "#{BASE_URL}/api/#{options.shortName}"
+      uri: "#{BASE_URL}/api/user"
       form: form
     , (err, resp, body) ->
       obj = JSON.parse body
@@ -44,7 +45,6 @@ createProfile = (options, done) ->
 describe 'Login', ->
   before (done) ->
     wd40.init ->
-      console.log browser
       browser.get LOGIN_URL, done
 
   before (done) ->
@@ -64,20 +64,23 @@ describe 'Login', ->
         wd40.fill '#username', 'ickletest', ->
           wd40.fill '#password', 'toottoot', ->
             wd40.click '#login', ->
-              browser.wait done
+              setTimeout ->
+                done()
+              , 500
 
       it 'shows my name', (done) ->
-        wd40.text '#subnav-path', (err, text) ->
-          text.should.include 'Mr Ickle Test'
+        # change "does not show my name" below as well if you change this
+        wd40.getText '#subnav-path .btn', (err, text) ->
+          text.should.include 'Ickle Test'
           done()
 
       context 'when I logout', ->
         before (done) ->
           wd40.click '#header .logout a', done
 
-        it 'redirects me to the login page', (done) ->
+        it 'redirects me to the home page', (done) ->
           wd40.trueURL (err, url) ->
-            url.should.equal LOGIN_URL
+            url.should.equal BASE_URL + "/"
             done()
 
      xcontext 'when I try to login with my email address as my username', ->
@@ -89,10 +92,11 @@ describe 'Password', ->
     before (done) ->
       login 'teststaff', process.env.CU_TEST_STAFF_PASSWORD, (err, res, body) =>
         form =
+          shortName: newUser
           displayName: newUser
           email: "pass@example.com"
         request.post
-          uri: "#{BASE_URL}/api/#{newUser}"
+          uri: "#{BASE_URL}/api/user"
           form: form
         , (err, resp, body) =>
           obj = JSON.parse body
@@ -158,12 +162,12 @@ describe 'Switch', ->
         done()
 
     it 'shows me datasets of the profile into which I have switched', (done) ->
-      wd40.text '.dataset-list', (err, text) ->
+      wd40.getText '.dataset-list', (err, text) ->
         text.should.include dataset_name
         done()
 
     it "has the switched to profile's name", (done) ->
-      wd40.text 'h1', (err, text) ->
+      wd40.getText 'h1', (err, text) ->
         text.should.include 'Mr Ickle Test'
         done()
 
@@ -188,14 +192,14 @@ describe 'Switch', ->
                 wd40.get BASE_URL, done
 
     it "hasn't changed who I am", (done) ->
-      wd40.text 'h1', (err, text) ->
+      wd40.getText 'h1', (err, text) ->
         text.should.include 'Mr Ickle Test'
-        wd40.text 'h1', (err, text) ->
+        wd40.getText 'h1', (err, text) ->
           text.should.not.include 'Staff Test'
           done()
 
     it 'still shows me my datasets', (done) ->
-      wd40.text '.dataset-list', (err, text) ->
+      wd40.getText '.dataset-list', (err, text) ->
         text.should.include dataset_name
         done()
 

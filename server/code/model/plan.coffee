@@ -1,6 +1,6 @@
 request = require 'request'
 
-datasetMaxSize = (name) ->
+boxMaxSize = (name) ->
   if name == "grandfather"
     return 8000 # 8GB
   else if name == "free"
@@ -9,18 +9,18 @@ datasetMaxSize = (name) ->
     console.warn "planSize: unknown plan", name
     return 8
 
-setDiskQuota = (dataset, accountLevel, cb) ->
-  maxSize = datasetMaxSize accountLevel
+setDiskQuota = (box, accountLevel, cb) ->
+  maxSize = boxMaxSize accountLevel
   request.post
     uri: "#{process.env.CU_QUOTA_SERVER}/quota"
     form:
-      path: dataset.box
+      path: box.name
       size: maxSize
   , (err, res, body) ->
     if err
-      console.log("failed to setDiskQuota for", dataset.box)
+      console.log("failed to setDiskQuota for", box.name)
       cb err
     cb null, true
 
-exports.datasetMaxSize = datasetMaxSize
+exports.boxMaxSize = boxMaxSize
 exports.setDiskQuota = setDiskQuota

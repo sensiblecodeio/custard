@@ -7,6 +7,7 @@ request = require 'request'
 
 User = require('model/user').dbInject()
 Box = require('model/box')()
+plan = require 'model/plan'
 
 describe 'User (client)', ->
   helper = require '../helper'
@@ -56,7 +57,7 @@ describe 'User (server)', ->
   before ->
     mongoose.connect process.env.CU_DB
 
-  describe 'password', ->
+  describe 'Password', ->
     before ->
       @user = new User {shortName: 'ickletest'}
       @password = 'toottoot'
@@ -87,7 +88,7 @@ describe 'User (server)', ->
             correct.should.be.true
             done()
 
-  context 'when trying to find a user', ->
+  describe 'Finding', ->
     it 'can find one by its shortname', (done) ->
       # TODO: Stub actual DB calls?
       User.findByShortName 'ickletest', (err, user) ->
@@ -129,9 +130,14 @@ describe 'User (server)', ->
         correctArgs.should.be.true
 
       it "posts to luxurypigbox with ehg's and ickletest's ssh keys", ->
-        # :TODO: this test is sensitive to the order the keys arrive in
-        # (whether a/b/c first or d/e/f first), it shouldn't be
+        # Note: the "keys" argument in the form is sensitive to some
+        # essentially random dictionary iteration order. We naughtily test
+        # both plausible orders.
         correctArgs = @request.calledWith
+          uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
+          form:
+            keys: '["d","e","f","a","b","c"]'
+        correctArgs ||= @request.calledWith
           uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
           form:
             keys: '["a","b","c","d","e","f"]'
@@ -195,4 +201,25 @@ describe 'User (server)', ->
       # TODO: stub nodemailer
       xit 'emails the user', ->
         @emailStub.calledOnce.should.be.true
+
+  describe 'Disk quota', ->
+
+    context 'when updating the quotas for a user', ->
+      before (done) ->
+        @stub = sinon.stub plan, 'setDiskQuota', (box, plan, cb) ->
+          cb null, true
+
+        User.findByShortName 'ehg', (err, user) =>
+          @user = user
+          user.setDiskQuotasForPlan done
+
+      it "should update the disk quota for each dataset", ->
+        correctArgs = @stub.calledWith '3006375731', 'grandfather'
+        correctArgs.should.be.true
+        correctArgs = @stub.calledWith '3006375815', 'grandfather'
+        correctArgs.should.be.true
+ 
+
+
+
 

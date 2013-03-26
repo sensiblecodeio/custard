@@ -29,8 +29,8 @@ describe 'Plan (Server)', ->
     
     it 'made the right HTTP request to change glusterfs quota', ->
       correctArgs = @request.calledWith
-      uri: "#{process.env.CU_QUOTA_SERVER}/quota"
-      form:
-        path: 'fskjh33i'
-        size: 8
+        uri: "#{process.env.CU_QUOTA_SERVER}/quota"
+        form:
+          path: 'fskjh33i'
+          size: 8
 

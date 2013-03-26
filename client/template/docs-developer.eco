@@ -15,6 +15,7 @@
     <li><a data-nonpushstate href="#tools-structure">Structure of a tool</a></li>
     <li><a data-nonpushstate href="#tools-process">Development process</a></li>
     <li><a data-nonpushstate href="#tools-submitting">Submitting your tool</a></li>
+    <li><a data-nonpushstate href="#tools-updating">Updating your tool</a></li>
   </ul>
 </nav>
 
@@ -715,6 +716,27 @@ $.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", ty
 
 <p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="text-error">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
 
-<p>ScraperWiki always pulls the latest code from the specified <code>gitUrl</code> when users use your tool. Datasets or views they have already created will also be automatically updated.</p>
+<h2 id="tools-updating">Updating your tool</h2>
+
+<p>To update a tool, call the same API endpoint as for submitting a new tool. 
+Specify the <code>name</code>, spelt the same as when you submitted the tool.
+Other parameters are ignored.</p>
+
+<pre class="prettyprint">
+$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download"}}).complete(function(r){ console.log(r.responseText) })
+</pre>
+
+<p>ScraperWiki will get the latest display name and description from <code>scraperwiki.json</code>. 
+It will also update the code of any datasets or views that were made using the tool by 
+running <code>git pull</code> in their <code>tool</code> directory.
+</p>
+
+<p class="well well-small"><span class="label label-warning">Warning!</span> 
+If you update the git repository of a tool without calling
+<code>/api/tools</code>, then new datasets/views will get the latest code and
+old ones will keep their old code.
+</p>
 
 </div>
+
+

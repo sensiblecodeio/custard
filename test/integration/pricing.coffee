@@ -14,7 +14,7 @@ describe 'Pricing', ->
   before (done) =>
     wd40.getText 'body', (err, text) =>
       @bodyText = text
-      console.log text
+      # console.log text
       done()
 
   xit 'shows me a free "community" plan', =>

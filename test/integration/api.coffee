@@ -274,7 +274,7 @@ describe 'API', ->
             uri: "#{serverURL}/api/#{@user}/sshkeys"
           , (err, res) ->
             keys = JSON.parse res.body
-            keys.should.eql ['ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local']
+            keys.should.include 'ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local'
             done err
 
   describe 'Logging in as a different user', ->

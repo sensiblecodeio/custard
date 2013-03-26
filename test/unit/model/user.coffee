@@ -102,39 +102,40 @@ describe 'User (server)', ->
         done()
 
   describe 'SSH keys', ->
-    context 'POST /api/<user>/sshkeys', ->
-      before ->
-        @pigBox = new Box
-          users: ['ickletest']
-          name: 'pigbox'
-        @luxuryPigBox = new Box
-          users: ['ehg', 'ickletest']
-          name: 'luxurypigbox'
-        @request = sinon.stub request, 'post', (opt, cb) ->
-          cb null, null, null
+    before ->
+      @pigBox = new Box
+        users: ['ickletest']
+        name: 'pigbox'
+      @luxuryPigBox = new Box
+        users: ['ehg', 'ickletest']
+        name: 'luxurypigbox'
+      @request = sinon.stub request, 'post', (opt, cb) ->
+        cb null, null, null
 
+    before (done) ->
+      @pigBox.save (err) =>
+        @luxuryPigBox.save (err) ->
+          done null
+
+    context 'when distributing the keys of ickletest', ->
       before (done) ->
-        @pigBox.save (err) =>
-          @luxuryPigBox.save (err) ->
-            done null
+        User.distributeUserKeys 'ickletest', done
 
-      context 'when distributing the keys of ickletest', ->
-        before (done) ->
-          User.distributeUserKeys 'ickletest', done
+      it "posts to pigbox with ickletest's ssh keys", ->
+        correctArgs = @request.calledWith
+          uri: "#{process.env.CU_BOX_SERVER}/pigbox/sshkeys"
+          form:
+            keys: '["a","b","c"]'
+        correctArgs.should.be.true
 
-        it "posts to pigbox with ickletest's ssh keys", ->
-          correctArgs = @request.calledWith
-            uri: "#{process.env.CU_BOX_SERVER}/pigbox/sshkeys"
-            form:
-              keys: ['a', 'b', 'c']
-          correctArgs.should.be.true
-
-        it "posts to luxurypigbox with ehg's and ickletest's ssh keys", ->
-          correctArgs = @request.calledWith
-            uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
-            form:
-              keys: ['d', 'e', 'f', 'a', 'b', 'c']
-          correctArgs.should.be.true
+      it "posts to luxurypigbox with ehg's and ickletest's ssh keys", ->
+        # :TODO: this test is sensitive to the order the keys arrive in
+        # (whether a/b/c first or d/e/f first), it shouldn't be
+        correctArgs = @request.calledWith
+          uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
+          form:
+            keys: '["a","b","c","d","e","f"]'
+        correctArgs.should.be.true
 
   describe 'Validation', ->
     beforeEach ->

@@ -63,6 +63,8 @@ class Cu.View.DataHubNav extends Backbone.View
         </div>
       </div>""")
 
+    # close the tool chooser if it's open
+    # (ie: if we've just used the back button to close it)
     if $('#chooser').length
       $('#chooser').fadeOut 200, ->
           $(this).remove()

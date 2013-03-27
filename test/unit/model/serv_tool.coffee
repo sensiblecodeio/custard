@@ -44,11 +44,14 @@ class UserDb extends MockDb
       apikey: process.env.COTEST_USER_API_KEY
       displayName: 'Lord Test Testington'
 
-Tool = require('model/tool')(TestDb)
-Dataset = require('model/dataset').dbInject DatasetDb
-User = require('model/user').dbInject UserDb
-
 describe 'Server model: Tool', ->
+
+  Tool = Dataset = User = null
+
+  before ->
+    Tool = require('model/tool')(TestDb)
+    Dataset = require('model/dataset').dbInject DatasetDb
+    User = require('model/user').dbInject UserDb
 
   before ->
     @saveSpy = sinon.spy MockDb.prototype, 'save'

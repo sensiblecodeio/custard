@@ -27,7 +27,7 @@ describe 'Tool RPC', ->
 
     before (done) ->
       wd40.click '.test-app.tool', =>
-        browser.waitForElementByCss 'iframe', 4000, =>
+        browser.waitForElementByCss 'iframe', 7000, =>
           wd40.trueURL (err, url) =>
             @toolURL = url
             done()

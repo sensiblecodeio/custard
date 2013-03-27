@@ -113,6 +113,11 @@ MII...0tXU=
 
           context 'when I click the "Add another SSH key" button', ->
             before (done) ->
+              # Mysteriously, the click handler (below) doesn't
+              # seems to fire reliably, unless we wait a bit.
+              setTimeout done, 500
+
+            before (done) ->
               wd40.click '#add-another-ssh-key', done
 
             before (done) =>

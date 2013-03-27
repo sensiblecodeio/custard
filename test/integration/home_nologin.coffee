@@ -1,9 +1,9 @@
 should = require 'should'
-{wd40, browser, login_url, url} = require './helper'
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'Home page (not logged in)', ->
   before (done) ->
-    browser.get url, done
+    browser.get home_url, done
 
   before (done) =>
     wd40.getText 'body', (err, text) =>

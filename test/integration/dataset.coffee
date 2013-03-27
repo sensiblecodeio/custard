@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, url} = require './helper'
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'Dataset', ->
   randomname = "New favourite number is #{Math.random()}"
@@ -77,7 +77,7 @@ describe 'Dataset', ->
 
       context 'when I go back home', ->
         before (done) ->
-          browser.get "#{url}/", done
+          browser.get "#{home_url}/", done
 
         # wait for animation :(
         before (done) ->

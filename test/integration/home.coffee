@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, url} = require './helper'
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'Home page (logged in)', ->
   before (done) ->

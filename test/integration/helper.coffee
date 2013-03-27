@@ -2,8 +2,8 @@
 
 {wd40, browser} = require('../wd40')
 
-url = 'http://localhost:3001'
-login_url = "#{url}/login"
+home_url = 'http://localhost:3001'
+login_url = "#{home_url}/login"
 
 before (done) ->
   wd40.init ->
@@ -16,4 +16,4 @@ after (done) ->
 exports.wd40 = wd40
 exports.browser = browser
 exports.login_url = login_url
-exports.url = url
+exports.home_url = home_url

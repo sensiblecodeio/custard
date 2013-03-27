@@ -29,7 +29,7 @@ deactivate () {
 
 mocha () {
     # Clean DB out and load fixtures
-    coffee cleaner.coffee
+    coffee test/cleaner.coffee
 
     # Consider pushing to external program.
     eval last=\${$#}

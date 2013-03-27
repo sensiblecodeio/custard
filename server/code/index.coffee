@@ -210,6 +210,7 @@ app.post '/api/user/?', (req, resp) ->
       shortName: req.body.shortName
       displayName: req.body.displayName
       email: [req.body.email]
+      logoUrl: req.body.logoUrl
     requestingUser: req.user?.real
   , (err, user) ->
     if err?

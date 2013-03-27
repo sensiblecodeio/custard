@@ -1,18 +1,11 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-url = 'http://localhost:3001' # DRY DRY DRY
-login_url = "#{url}/login"
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'Platform-specific SSH instructions', ->
   before (done) ->
-    wd40.init ->
-      browser.get login_url, done
-
-  before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', -> wd40.click '#login', ->
-        browser.get "#{url}/dataset/3006375731", done
+        browser.get "#{home_url}/dataset/3006375731", done
       
   context 'when I use a Windows PC to view SSH instructions', ->
     before (done) ->
@@ -70,9 +63,4 @@ describe 'Platform-specific SSH instructions', ->
 
     it 'the modal window shows me the Mac commands I should run', =>
       @modalTextContent.should.include 'xclip -sel clip < ~/.ssh/id_rsa.pub'
-
-  after (done) ->
-    browser.quit ->
-      done()
-
 

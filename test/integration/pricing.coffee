@@ -1,12 +1,9 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-url = 'http://localhost:3001'
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'Pricing', ->
   before (done) ->
-    wd40.init ->
-      browser.get url + '/pricing', done
+    browser.get home_url + '/pricing', done
 
   before (done) =>
     wd40.getText 'body', (err, text) =>
@@ -35,8 +32,3 @@ describe 'Pricing', ->
       wd40.trueURL (err, url) ->
         url.should.include '/signup/explorer'
         done()
-
-  after (done) ->
-    browser.quit ->
-      done()
-

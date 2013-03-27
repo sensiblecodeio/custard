@@ -1,15 +1,8 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-url = 'http://localhost:3001' # DRY DRY DRY
-login_url = "#{url}/login"
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'View', ->
   randomname = "Prune graph number #{Math.random()}"
-
-  before (done) ->
-    wd40.init ->
-      browser.get login_url, done
 
   before (done) ->
     wd40.fill '#username', 'ehg', ->
@@ -103,7 +96,7 @@ describe 'View', ->
 
           it "goes to the view page", (done) ->
             browser.url (err, currentUrl) =>
-              currentUrl.should.match new RegExp("#{url}/dataset/[^/]+/view/[^/]+")
+              currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/view/[^/]+")
               done()
 
           it "has shown the rename input box", (done) ->
@@ -139,7 +132,3 @@ describe 'View', ->
               wd40.getText 'body', (err, text) ->
                 text.should.not.include randomname
                 done()
-
-  after (done) ->
-    browser.quit ->
-      done()

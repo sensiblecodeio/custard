@@ -1,15 +1,8 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-url = 'http://localhost:3001' # DRY DRY DRY
-login_url = "#{url}/login"
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'Dataset', ->
   randomname = "New favourite number is #{Math.random()}"
-
-  before (done) ->
-    wd40.init ->
-      browser.get login_url, done
 
   before (done) ->
     wd40.fill '#username', 'ehg', ->
@@ -84,7 +77,7 @@ describe 'Dataset', ->
 
       context 'when I go back home', ->
         before (done) ->
-          browser.get "#{url}/", done
+          browser.get "#{home_url}/", done
 
         # wait for animation :(
         before (done) ->
@@ -124,8 +117,3 @@ describe 'Dataset', ->
               wd40.getText 'body', (err, text) ->
                 text.should.not.include randomname
                 done()
-
-  after (done) ->
-    browser.quit ->
-      done()
-

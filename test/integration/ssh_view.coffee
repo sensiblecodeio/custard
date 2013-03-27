@@ -1,15 +1,7 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-url = 'http://localhost:3001' # DRY DRY DRY
-login_url = "#{url}/login"
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'View SSH Details', ->
-
-  before (done) ->
-    wd40.init ->
-      browser.get login_url, done
-
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', -> wd40.click '#login', done
@@ -75,13 +67,3 @@ describe 'View SSH Details', ->
 
           it 'the modal window tells me how to SSH in', =>
             @modalTextContent.should.include 'ssh 4008115731@box.scraperwiki.com'
-          
-  after (done) ->
-    browser.quit ->
-      done()
-
-
-
-
-
-

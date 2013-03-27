@@ -17,7 +17,7 @@ describe 'Tool RPC', ->
         wd40.fill '#password', 'testing', ->
           wd40.click '#login', done
 
-  context "when create a dataset with the test app", ->
+  context "with a freshly created test app dataset", ->
     before (done) ->
       browser.waitForElementByCss '.dataset-list', 4000, done
 

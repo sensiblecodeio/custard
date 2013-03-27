@@ -205,10 +205,6 @@ describe 'Switch', ->
 
 
 describe 'Whitelabel', ->
-  before (done) ->
-    wd40.init ->
-      browser.get LOGIN_URL, done
-
   corpProfile =
     shortName: 'evilcorp'
     displayName: 'Evil Corp'

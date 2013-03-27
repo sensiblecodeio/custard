@@ -29,7 +29,7 @@ exports.users = [
   password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
   apikey: process.env.COTEST_USER_API_KEY,
   isStaff: true,
-  sshKeys: ['d', 'e', 'f'],
+  sshKeys: [],
   accountLevel: "grandfather"
 },
 {
@@ -48,8 +48,8 @@ exports.users = [
   displayName: 'Zarino Testington',
   password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
   apikey: process.env.COTEST_USER_API_KEY,
+  sshKeys: ['d', 'e', 'f'],
   isStaff: false,
-  sshKeys: [],
   accountLevel: "grandfather"
 }
 ];

@@ -1,14 +1,7 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-url = 'http://localhost:3001'
-login_url = "#{url}/login"
+{wd40, browser, login_url, url} = require './helper'
 
 describe 'Home page (logged in)', ->
-  before (done) ->
-    wd40.init ->
-      browser.get login_url, done
-
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', ->
@@ -45,6 +38,3 @@ describe 'Home page (logged in)', ->
           tools.length.should.be.above 0
           done()
 
-  after (done) ->
-    browser.quit ->
-      done()

@@ -116,12 +116,15 @@ describe 'Password', ->
 
     context 'when I fill in my new password', ->
       before (done) ->
-        browser.fill '#password', newPass ->
-          browser.click '#content .btn-primary', (err, btn) ->
-            btn.click done
+        wd40.fill '#password', newPass, ->
+          wd40.click '#content .btn-primary', done
 
-      it 'sets my password', (done) ->
-        browser.waitForVisibleByCss '.alert-success', 4000, done
+      it 'redirected to home page', (done) ->
+        wd40.waitForText "data hub", ->
+          wd40.trueURL (err, url) ->
+            url.should.equal "#{BASE_URL}/"
+            done()
+
 
 describe 'Switch', ->
 
@@ -129,28 +132,17 @@ describe 'Switch', ->
   nonstaff_pass = 'toottoot'
   staff_user = 'teststaff'
   staff_pass = process.env.CU_TEST_STAFF_PASSWORD
-  dataset_name = "dataset-#{String(Math.random()*Math.pow(2,32))[0..4]}"
-
-  before (done) ->
-    # log in as A
-    login nonstaff_user, nonstaff_pass, (err, resp, body) ->
-      request.post
-        uri: "#{BASE_URL}/api/#{nonstaff_user}/datasets/"
-        form:
-          name: dataset_name
-          displayName: dataset_name
-          box: 'dummybox'
-      , done
+  dataset_name = "Cheese" # in the fixture
 
   before (done) ->
     browser.deleteAllCookies done
 
   before (done) ->
-    # Log in as B via zombie
+    # Log in as B via selenium
     browser.get LOGIN_URL, ->
       wd40.fill '#username', staff_user, ->
         wd40.fill '#password', staff_pass, ->
-          wd40.pressButton '#login', done
+          wd40.click '#login', done
 
   context 'when a staff member switches context', ->
     before (done) ->
@@ -168,13 +160,16 @@ describe 'Switch', ->
 
     it "has the switched to profile's name", (done) ->
       wd40.getText 'h1', (err, text) ->
-        text.should.include 'Mr Ickle Test'
+        text.should.include 'Ickle Test'
         done()
 
     it 'shows a gravatar', (done) ->
-      browser.elementByCssIfExists 'h1 img', (err, img) ->
-        img.src.should.include 'gravatar'
-        done()
+      browser.waitForVisibleByCss 'h1 img', 4000, ->
+        browser.elementByCssIfExists 'h1 img', (err, img) ->
+          console.log(img)
+          console.log(img.src)
+          img.src.should.include 'gravatar'
+          done()
 
     it 'shows the context search box', (done) ->
       browser.waitForVisibleByCss '.context-switch', 4000, done
@@ -188,14 +183,14 @@ describe 'Switch', ->
         wd40.fill '#username', nonstaff_user, ->
           wd40.fill '#password', nonstaff_pass, ->
             wd40.click '#login', ->
-              wd40.get "#{BASE_URL}/switch/#{staff_user}", ->
-                wd40.get BASE_URL, done
+              browser.get "#{BASE_URL}/switch/#{staff_user}", ->
+                browser.get BASE_URL, done
 
     it "hasn't changed who I am", (done) ->
       wd40.getText 'h1', (err, text) ->
-        text.should.include 'Mr Ickle Test'
+        text.should.include 'Ickle Test'
         wd40.getText 'h1', (err, text) ->
-          text.should.not.include 'Staff Test'
+          text.should.not.include 'Testington'
           done()
 
     it 'still shows me my datasets', (done) ->

@@ -1,12 +1,9 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-url = 'http://localhost:3001'
+{wd40, browser, login_url, url} = require './helper'
 
 describe 'Home page (not logged in)', ->
   before (done) ->
-    wd40.init ->
-      browser.get url, done
+    browser.get url, done
 
   before (done) =>
     wd40.getText 'body', (err, text) =>
@@ -25,8 +22,4 @@ describe 'Home page (not logged in)', ->
 
   it 'tells me about ScraperWiki Data Services', =>
     @bodyText.toLowerCase().should.include 'services'
-
-  after (done) ->
-    browser.quit ->
-      done()
 

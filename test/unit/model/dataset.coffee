@@ -1,3 +1,4 @@
+mongoose = require 'mongoose'
 _ = require 'underscore'
 util = require 'util'
 sinon = require 'sinon'
@@ -35,14 +36,17 @@ describe 'Client model: Dataset', ->
       tool.get('displayName').should.equal 'Test App'
 
 describe 'Server model: Dataset', ->
-  class TestDb
-    save: (callback) ->
-      callback null
 
-  Dataset = require('model/dataset').dbInject TestDb
+  Dataset = null
 
   before ->
-    @dataset = new Dataset
+    mongoose.connect process.env.CU_DB unless mongoose.connection.db
+
+  before ->
+    {Dataset} = require('model/dataset')
+
+  before ->
+    @vDataset = new Dataset
       name: 'test'
       box: 'box'
       tool: 'tool'
@@ -50,15 +54,14 @@ describe 'Server model: Dataset', ->
 
   context 'when dataset.save is called', ->
     beforeEach ->
-      @vDataset = _.clone @dataset
-      @saveSpy = sinon.spy TestDb.prototype, 'save'
+      @saveSpy = sinon.spy Dataset.dbClass.prototype, 'save'
 
     afterEach ->
-      TestDb.prototype.save.restore()
+      Dataset.dbClass.prototype.save.restore()
       @saveSpy = null
 
     it 'calls mongoose save method if all fields are valid', (done) ->
-      @vDataset.save =>
+      @vDataset.save (err) =>
         @saveSpy.calledOnce.should.be.true
         done()
 
@@ -92,12 +95,17 @@ describe 'Server model: Dataset', ->
   context 'when dataset.updateStatus is called', ->
     context 'with an error', ->
       before ->
-        @saveSpy = sinon.spy TestDb.prototype, 'save'
+        @saveSpy = sinon.spy Dataset.dbClass.prototype, 'save'
 
       after ->
-        TestDb.prototype.save.restore()
+        Dataset.dbClass.prototype.save.restore()
 
       before (done) ->
+        @dataset = new Dataset
+          name: 'test'
+          box: 'box'
+          tool: 'tool'
+          displayName: 'Test'
         @dataset.updateStatus
           type: 'error'
           message: 'Scraper exception!!'
@@ -116,18 +124,23 @@ describe 'Server model: Dataset', ->
 
     context 'with an ok', ->
       before ->
-        @saveSpy = sinon.spy TestDb.prototype, 'save'
+        @saveSpy = sinon.spy Dataset.dbClass.prototype, 'save'
 
       after ->
-        TestDb.prototype.save.restore()
+        Dataset.dbClass.prototype.save.restore()
 
       before (done) ->
+        @dataset = new Dataset
+          name: 'test'
+          box: 'box'
+          tool: 'tool'
+          displayName: 'Test'
         @dataset.updateStatus
           type: 'ok'
           message: 'I scrapped some page :D'
         , done
 
-      it 'stores the status as an error', ->
+      it 'stores the status as ok', ->
         @dataset.status.type.should.equal 'ok'
         @dataset.status.message.should.eql 'I scrapped some page :D'
 
@@ -140,18 +153,23 @@ describe 'Server model: Dataset', ->
 
     context 'with an unknown type', ->
       before ->
-        @saveSpy = sinon.spy TestDb.prototype, 'save'
+        @saveSpy = sinon.spy Dataset.dbClass.prototype, 'save'
 
       after ->
-        TestDb.prototype.save.restore()
+        Dataset.dbClass.prototype.save.restore()
 
       before (done) ->
+        @dataset = new Dataset
+          name: 'test'
+          box: 'box'
+          tool: 'tool'
+          displayName: 'Test'
         @dataset.updateStatus
           type: 'unknown'
           message: 'what'
         , done
 
-      it 'stores the status as an error', ->
+      it 'stores the status as ok', ->
         @dataset.status.type.should.equal 'ok'
         @dataset.status.message.should.eql 'what'
 

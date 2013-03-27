@@ -81,7 +81,8 @@ exports.datasets = [
 { "box" : "3006375818", "tool": "test-app", "displayName" : "Puppies", "user" : "zarino", "views" : [], "status": { "updated": "2013-03-12T07:20:00.000Z", "message": "Fully up to date", "type": "ok" } },
 { "box" : "3006375819", "tool": "test-app", "displayName" : "Piglets", "user" : "zarino", "views" : [], "status": { "updated": "2013-01-10T10:23:00.000Z", "message": "No piglets detected", "type": "error" } },
 { "box" : "3006375821", "tool": "test-app", "displayName" : "Chicks", "user" : "zarino", "views" : [] },
-{ "box" : "3006375823", "tool": "test-app", "displayName" : "Bobcats", "user" : "zarino", "views" : [] }
+{ "box" : "3006375823", "tool": "test-app", "displayName" : "Bobcats", "user" : "zarino", "views" : [] },
+{ "box" : "2416349265", "tool": "spreadsheet-upload", "displayName" : "My Spreadsheet", "user" : "zarino", "views" : [] }
 ]
 
 exports.boxes = [

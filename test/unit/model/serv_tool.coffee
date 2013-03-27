@@ -1,3 +1,4 @@
+mongoose = require 'mongoose'
 child_process = require 'child_process'
 fs = require 'fs'
 
@@ -7,64 +8,21 @@ sinon = require 'sinon'
 should = require 'should'
 _ = require 'underscore'
 
-class Model
-  constructor: (obj) ->
-    for k of obj
-      @[k] = obj[k]
-  toObject: -> @
-
-class MockDb
-  save: (callback) ->
-    callback null
-
-class TestDb extends MockDb
-  @find: (_args, callback) ->
-    callback null, [ new Model(name: 'dataset-tool', type: 'importer'),
-      new Model(name: 'view-tool', type: 'view')
-    ]
-  # Only works when searching for name properties.
-  @findOne: (args, callback) ->
-    @find {}, (err, all) ->
-      callback null, _.findWhere all, name: args.name
-
-class DatasetDb extends MockDb
-  @find: (args, callback) ->
-    callback null, [
-      new Model
-        name: 'dataset1'
-        tool: 'dataset-tool'
-        box: 'ds-box'
-        views: [ new Model(name: 'view1', tool: 'view-tool', box: 'view-box') ]
-      ]
-
-class UserDb extends MockDb
-  @findOne: (args, callback) ->
-    callback null, new Model
-      name: 'testington'
-      apikey: process.env.COTEST_USER_API_KEY
-      displayName: 'Lord Test Testington'
+Tool = require('model/tool')()
 
 describe 'Server model: Tool', ->
 
-  Tool = Dataset = User = null
+  before ->
+    mongoose.connect process.env.CU_DB unless mongoose.connection.db
 
   before ->
-    Tool = require('model/tool')(TestDb)
-    Dataset = require('model/dataset').dbInject DatasetDb
-    User = require('model/user').dbInject UserDb
-
-  before ->
-    @saveSpy = sinon.spy MockDb.prototype, 'save'
-    @findSpy = sinon.spy TestDb, 'find'
-    @tool = new Tool name: 'dataset-tool'
+    @tool = new Tool
+      name: 'dataset-tool'
+      type: 'importer'
     mkdirp.sync 'test/tmp/repos'
 
-  context 'when tool.save is called', ->
-    before (done) ->
-      @tool.save done
-
-    it 'calls mongoose save method', ->
-      @saveSpy.calledOnce.should.be.true
+  before (done) ->
+    @tool.save done
 
   context 'when tool.findAll is called', ->
     before (done) ->
@@ -72,14 +30,19 @@ describe 'Server model: Tool', ->
         @results = res
         done()
 
-    it 'should return Tool results', ->
-      @results[0].should.be.an.instanceOf Tool
-      @results[0].name.should.equal 'dataset-tool'
-      @results.length.should.equal 2
+    it 'should return at least one tool', ->
+      our_tool = _.find @results, (result) ->
+        result.name is 'dataset-tool'
+      should.exist our_tool
+      our_tool.should.be.an.instanceOf Tool
+      our_tool.name.should.equal 'dataset-tool'
 
   context 'when loading from git', ->
     before ->
       @exec = sinon.stub child_process, 'exec', (child, cb) -> cb()
+
+    after ->
+      child_process.exec.restore()
 
     context 'if tool is new', ->
       before (done) ->
@@ -160,25 +123,32 @@ describe 'Server model: Tool', ->
       it 'should have a gitUrl', ->
         should.exist @tool.manifest.gitUrl
 
-  context 'when tool.updateInstances is called', ->
+  context 'An "importer" tool: when tool.updateInstances is called', ->
     before (done) ->
       @requestStub = sinon.stub(request, 'post').callsArg(1)
-      Tool.findOneByName 'dataset-tool', (err, tool) =>
-        tool.updateInstances ->
-          Tool.findOneByName 'view-tool', (err, tool) =>
-            tool.updateInstances done
+      Tool.findOneByName 'spreadsheet-upload', (err, tool) =>
+        tool.updateInstances done
 
     it 'has updated the dataset boxes', ->
       pulledInDSBox = @requestStub.calledWithMatch
-        uri: sinon.match /ds-box/
+        uri: sinon.match /2416349265/
         form:
           apikey: sinon.match new RegExp(process.env.COTEST_USER_API_KEY)
           cmd: sinon.match /git pull/
       pulledInDSBox.should.be.true
 
+    after ->
+      request.post.restore()
+
+  xcontext 'A "view" tool: when tool.updateInstances is called', ->
+    before (done) ->
+      @requestStub = sinon.stub(request, 'post').callsArg(1)
+      Tool.findOneByName 'test-plugin', (err, tool) =>
+        tool.updateInstances done
+
     it 'has updated the view boxes', ->
       pulledInViewBox = @requestStub.calledWithMatch
-        uri: sinon.match /view-box/
+        uri: sinon.match /4008115731/
         form:
           apikey: sinon.match new RegExp(process.env.COTEST_USER_API_KEY)
           cmd: sinon.match /git pull/

@@ -55,7 +55,7 @@ describe 'User (client)', ->
 
 describe 'User (server)', ->
   before ->
-    mongoose.connect process.env.CU_DB
+    mongoose.connect process.env.CU_DB unless mongoose.connection.db
 
   describe 'Password', ->
     before ->
@@ -117,6 +117,9 @@ describe 'User (server)', ->
       @pigBox.save (err) =>
         @luxuryPigBox.save (err) ->
           done null
+
+    after ->
+      request.post.restore()
 
     context 'when distributing the keys of ickletest', ->
       before (done) ->

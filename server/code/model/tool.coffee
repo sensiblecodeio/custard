@@ -51,9 +51,9 @@ class Tool extends ModelBase
     else
       console.warn "unexpected tool type"
       done "tooltypewrong"
-    M.findAllByTool @name, (err, datasets) ->
-      async.forEach datasets, (item, cb) ->
-        User.findByShortName item.user, (err, user) ->
+    M.findAllByTool @name, (err, datasets) =>
+      async.forEach datasets, (item, cb) =>
+        User.findByShortName item.user, (err, user) =>
           if err? or not user?
             cb err or "no user"
           else

@@ -1,16 +1,9 @@
 # See custard/README.md for Selenium setup instructions
 
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-BASE_URL = 'http://localhost:3001' # DRY DRY DRY
-login_url = "#{BASE_URL}/login"
-
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'Tool RPC', ->
-  before (done) ->
-    wd40.init done
-
   before (done) ->
     browser.get login_url, ->
       wd40.fill '#username', 'ehg', ->
@@ -40,7 +33,7 @@ describe 'Tool RPC', ->
 
       it 'redirects the host to the specified URL', (done) ->
         wd40.trueURL (err, url) ->
-          url.should.equal "#{BASE_URL}/"
+          url.should.equal "#{home_url}/"
           done()
 
     context 'when the redirect external button is pressed', ->
@@ -109,6 +102,3 @@ describe 'Tool RPC', ->
           should.exist obj?.table?.VoirLeLapin
           done()
 
-  after (done) ->
-    browser.quit ->
-      done()

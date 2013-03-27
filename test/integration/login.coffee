@@ -1,10 +1,7 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
+{wd40, browser, login_url, home_url} = require './helper'
 
 request = require 'request'
-
-BASE_URL = 'http://localhost:3001'
-LOGIN_URL = "#{BASE_URL}/login"
 
 # Overview
 # Login as teststaff, create a profile called ickletest, attempt to login.
@@ -15,9 +12,9 @@ LOGIN_URL = "#{BASE_URL}/login"
 # TODO: move Switching out into its own test file
 
 login  = (username, password, callback) ->
-  request.get LOGIN_URL, ->
+  request.get login_url, ->
     request.post
-      uri: LOGIN_URL
+      uri: login_url
       form:
         username: username
         password: password
@@ -32,21 +29,17 @@ createProfile = (options, done) ->
     form.logoUrl = options.logoUrl if options.logoUrl?
 
     request.post
-      uri: "#{BASE_URL}/api/user"
+      uri: "#{home_url}/api/user"
       form: form
     , (err, resp, body) ->
       obj = JSON.parse body
       request.post
-        uri: "#{BASE_URL}/api/token/#{obj.token}"
+        uri: "#{home_url}/api/token/#{obj.token}"
         form:
           password: options.password
       , done
 
 describe 'Login', ->
-  before (done) ->
-    wd40.init ->
-      browser.get LOGIN_URL, done
-
   before (done) ->
     createProfile
       shortName: 'ickletest'
@@ -57,7 +50,7 @@ describe 'Login', ->
 
   context 'when I visit the homepage', ->
     before (done) ->
-      browser.get LOGIN_URL, done
+      browser.get login_url, done
 
     context 'when I try to login with valid details', ->
       before (done) ->
@@ -80,7 +73,7 @@ describe 'Login', ->
 
         it 'redirects me to the home page', (done) ->
           wd40.trueURL (err, url) ->
-            url.should.equal BASE_URL + "/"
+            url.should.equal home_url + "/"
             done()
 
      xcontext 'when I try to login with my email address as my username', ->
@@ -96,7 +89,7 @@ describe 'Password', ->
           displayName: newUser
           email: "pass@example.com"
         request.post
-          uri: "#{BASE_URL}/api/user"
+          uri: "#{home_url}/api/user"
           form: form
         , (err, resp, body) =>
           obj = JSON.parse body
@@ -107,7 +100,7 @@ describe 'Password', ->
       browser.deleteAllCookies done
 
     before (done) ->
-      browser.get "#{BASE_URL}/set-password/#{@token}", done
+      browser.get "#{home_url}/set-password/#{@token}", done
 
     it 'shows a page with a password field', (done) ->
       browser.elementByCssIfExists '#password', (err, element) ->
@@ -122,7 +115,7 @@ describe 'Password', ->
       it 'redirected to home page', (done) ->
         wd40.waitForText "data hub", ->
           wd40.trueURL (err, url) ->
-            url.should.equal "#{BASE_URL}/"
+            url.should.equal "#{home_url}/"
             done()
 
 
@@ -139,18 +132,18 @@ describe 'Switch', ->
 
   before (done) ->
     # Log in as B via selenium
-    browser.get LOGIN_URL, ->
+    browser.get login_url, ->
       wd40.fill '#username', staff_user, ->
         wd40.fill '#password', staff_pass, ->
           wd40.click '#login', done
 
   context 'when a staff member switches context', ->
     before (done) ->
-      browser.get "#{BASE_URL}/switch/#{nonstaff_user}", done
+      browser.get "#{home_url}/switch/#{nonstaff_user}", done
 
     it 'redirected to home page', (done) ->
       wd40.trueURL (err, url) ->
-        url.should.equal "#{BASE_URL}/"
+        url.should.equal "#{home_url}/"
         done()
 
     it 'shows me datasets of the profile into which I have switched', (done) ->
@@ -177,13 +170,13 @@ describe 'Switch', ->
       browser.deleteAllCookies done
 
     before (done) ->
-      browser.get LOGIN_URL, ->
+      browser.get login_url, ->
         wd40.fill '#username', nonstaff_user, ->
           wd40.fill '#password', nonstaff_pass, ->
             wd40.click '#login', ->
-              browser.get "#{BASE_URL}/switch/#{staff_user}", ->
+              browser.get "#{home_url}/switch/#{staff_user}", ->
                 # XXX could check that switch returns a 403 and message "Unstafforised"
-                browser.get BASE_URL, done
+                browser.get home_url, done
 
     it "hasn't changed who I am", (done) ->
       wd40.getText 'h1', (err, text) ->
@@ -221,7 +214,7 @@ describe 'Whitelabel', ->
       browser.deleteAllCookies done
 
     before (done) ->
-      browser.get LOGIN_URL, ->
+      browser.get login_url, ->
         wd40.fill '#username', 'evilcorp', ->
           wd40.fill '#password', 'evilevil', ->
             wd40.click '#login', done
@@ -232,8 +225,4 @@ describe 'Whitelabel', ->
           element.getAttribute "src", (err, value) ->
             value.should.include corpProfile.logoUrl
             done()
-
-  after (done) ->
-    browser.quit ->
-      done()
 

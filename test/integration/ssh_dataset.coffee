@@ -1,14 +1,7 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-url = 'http://localhost:3001' # DRY DRY DRY
-login_url = "#{url}/login"
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'Dataset SSH Details', ->
-  before (done) ->
-    wd40.init ->
-      browser.get login_url, done
-
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', -> wd40.click '#login', done
@@ -136,7 +129,7 @@ MII...0tXU=
 
   context 'when I click on the list of datasets', ->
     before (done) ->
-      browser.get "#{url}/", ->
+      browser.get "#{home_url}/", ->
         setTimeout done, 500
     
     context 'when I click the "SSH in" menu link', ->
@@ -155,8 +148,4 @@ MII...0tXU=
 
       it 'the modal window tells me how to SSH in', =>
         @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
-
-  after (done) ->
-    browser.quit ->
-      done()
 

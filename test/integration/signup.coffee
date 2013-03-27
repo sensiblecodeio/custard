@@ -1,12 +1,9 @@
 should = require 'should'
-{wd40, browser} = require('../wd40')
-
-url = 'http://localhost:3001'
+{wd40, browser, login_url, home_url} = require './helper'
 
 describe 'Sign up', ->
   before (done) ->
-    wd40.init ->
-      browser.get "#{url}/signup/hacker", done
+    browser.get "#{home_url}/signup/hacker", done
 
   context 'when I enter my details and click go', ->
     before (done) ->
@@ -21,8 +18,4 @@ describe 'Sign up', ->
 
     it 'says thanks', (done) ->
       browser.waitForVisibleByCss '#thanks', 4000, done
-
-  after (done) ->
-    browser.quit ->
-      done()
 

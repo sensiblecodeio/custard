@@ -164,11 +164,9 @@ describe 'Switch', ->
         done()
 
     it 'shows a gravatar', (done) ->
-      browser.waitForVisibleByCss 'h1 img', 4000, ->
-        browser.elementByCssIfExists 'h1 img', (err, img) ->
-          console.log(img)
-          console.log(img.src)
-          img.src.should.include 'gravatar'
+      browser.elementByCss "h1 img", (err, element) ->
+        element.getAttribute "src", (err, value) ->
+          value.should.include 'gravatar'
           done()
 
     it 'shows the context search box', (done) ->
@@ -184,6 +182,7 @@ describe 'Switch', ->
           wd40.fill '#password', nonstaff_pass, ->
             wd40.click '#login', ->
               browser.get "#{BASE_URL}/switch/#{staff_user}", ->
+                # XXX could check that switch returns a 403 and message "Unstafforised"
                 browser.get BASE_URL, done
 
     it "hasn't changed who I am", (done) ->
@@ -199,39 +198,40 @@ describe 'Switch', ->
         done()
 
     it "doesn't show the context switching popup", (done) ->
-      browser.isVisible '.context-switch', (err, visible) ->
-        visible.should.be.true
-        done()
+      browser.elementByCss '.context-switch', (err, element) ->
+        browser.isVisible element, (err, visible) ->
+          visible.should.be.true
+          done()
 
-describe 'Whitelabel', ->
-
-  corpProfile =
-    shortName: 'evilcorp'
-    displayName: 'Evil Corp'
-    password: 'evilevil'
-    email: 'mail@evil.com'
-    logoUrl: "https://example.com/evil.png"
-
-  before (done) ->
-    createProfile corpProfile, done
-
-  context 'when I log in to a corporate account', ->
-    before (done) ->
-      browser.deleteAllCookies done
-
-    before (done) ->
-      browser.get BASE_URL, ->
-        wd40.fill '#username', corpProfile.shortName, ->
-          wd40.fill '#password', corpProfile.password, ->
-            wd40.click '#login', ->
-              browser.get BASE_URL, done
-
-    it 'shows my corporate logo somewhere', (done) ->
-      browser.source (err, source) ->
-        source.should.include """src="#{corpProfile.logoUrl}"""
-        done()
-
-  after (done) ->
-    browser.quit ->
-      done()
+#describe 'Whitelabel', ->
+#
+#  corpProfile =
+#    shortName: 'evilcorp'
+#    displayName: 'Evil Corp'
+#    password: 'evilevil'
+#    email: 'mail@evil.com'
+#    logoUrl: "https://example.com/evil.png"
+#
+#  before (done) ->
+#    createProfile corpProfile, done
+#
+#  context 'when I log in to a corporate account', ->
+#    before (done) ->
+#      browser.deleteAllCookies done
+#
+#    before (done) ->
+#      browser.get BASE_URL, ->
+#        wd40.fill '#username', corpProfile.shortName, ->
+#          wd40.fill '#password', corpProfile.password, ->
+#            wd40.click '#login', ->
+#              browser.get BASE_URL, done
+#
+#    it 'shows my corporate logo somewhere', (done) ->
+#      browser.source (err, source) ->
+#        source.should.include """src="#{corpProfile.logoUrl}"""
+#        done()
+#
+#  after (done) ->
+#    browser.quit ->
+#      done()
 

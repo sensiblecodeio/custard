@@ -109,8 +109,8 @@ class User extends ModelBase
       apikey: uuid.v4()
       accountLevel: 'free'
 
-    if opts.logoUrl?
-      newUser.logoUrl = opts.logoUrl
+    if opts.newUser.logoUrl?
+      newUser.logoUrl = opts.newUser.logoUrl
 
     new User(newUser).save (err) ->
       if err?

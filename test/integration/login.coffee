@@ -203,35 +203,41 @@ describe 'Switch', ->
           visible.should.be.true
           done()
 
-#describe 'Whitelabel', ->
-#
-#  corpProfile =
-#    shortName: 'evilcorp'
-#    displayName: 'Evil Corp'
-#    password: 'evilevil'
-#    email: 'mail@evil.com'
-#    logoUrl: "https://example.com/evil.png"
-#
-#  before (done) ->
-#    createProfile corpProfile, done
-#
-#  context 'when I log in to a corporate account', ->
-#    before (done) ->
-#      browser.deleteAllCookies done
-#
-#    before (done) ->
-#      browser.get BASE_URL, ->
-#        wd40.fill '#username', corpProfile.shortName, ->
-#          wd40.fill '#password', corpProfile.password, ->
-#            wd40.click '#login', ->
-#              browser.get BASE_URL, done
-#
-#    it 'shows my corporate logo somewhere', (done) ->
-#      browser.source (err, source) ->
-#        source.should.include """src="#{corpProfile.logoUrl}"""
-#        done()
-#
-#  after (done) ->
-#    browser.quit ->
-#      done()
+
+describe 'Whitelabel', ->
+  before (done) ->
+    wd40.init ->
+      browser.get LOGIN_URL, done
+
+  corpProfile =
+    shortName: 'evilcorp'
+    displayName: 'Evil Corp'
+    password: 'evilevil'
+    email: 'mail@evil.com'
+    logoUrl: "https://example.com/evil.png"
+    isStaff: false
+
+  before (done) ->
+    createProfile corpProfile, done
+
+  context 'when I log in to a corporate account', ->
+    before (done) ->
+      browser.deleteAllCookies done
+
+    before (done) ->
+      browser.get LOGIN_URL, ->
+        wd40.fill '#username', 'evilcorp', ->
+          wd40.fill '#password', 'evilevil', ->
+            wd40.click '#login', done
+
+    it 'shows my corporate logo', (done) ->
+      browser.waitForElementByCss "#subnav-path", 4000, ->
+        browser.elementByCss "#subnav-path img", (err, element) ->
+          element.getAttribute "src", (err, value) ->
+            value.should.include corpProfile.logoUrl
+            done()
+
+  after (done) ->
+    browser.quit ->
+      done()
 

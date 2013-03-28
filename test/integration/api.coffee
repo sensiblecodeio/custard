@@ -177,9 +177,6 @@ describe 'API', ->
 
     describe 'Datasets', ->
       context 'when I create a dataset', ->
-        response = null
-        dataset = null
-
         before (done) ->
           request.post
             uri: "#{serverURL}/api/#{@user}/datasets"
@@ -187,25 +184,24 @@ describe 'API', ->
               name: 'baconface'
               displayName: 'Biscuit'
               tool: 'test-app'
-              box: String(Math.random() * Math.pow(2, 32))
-          , (err, res, body) ->
-            response = res
-            dataset = JSON.parse res.body
+          , (err, res, body) =>
+            @response = res
+            @dataset = JSON.parse res.body
             done()
 
         context 'POST /api/:user/datasets', ->
           it 'creates a new dataset', ->
-            response.should.have.status 200
+            @response.should.have.status 200
 
           it 'returns the newly created dataset', ->
-            should.exist dataset.box
-            dataset.displayName.should.equal 'Biscuit'
+            should.exist @dataset.box
+            @dataset.displayName.should.equal 'Biscuit'
 
         context 'GET /api/:user/datasets/:id', ->
           it 'returns a single dataset', (done)  ->
-            request.get "#{serverURL}/api/#{@user}/datasets/#{dataset.box}", (err, res) ->
-              dataset = JSON.parse res.body
-              should.exist dataset.box
+            request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
+              @dataset = JSON.parse res.body
+              should.exist @dataset.box
               done()
 
           it "404 errors if the dataset doesn't exist", (done) ->
@@ -214,27 +210,27 @@ describe 'API', ->
               done()
 
           it "403 errors if the user doesn't exist", (done) ->
-            request.get "#{serverURL}/api/MRINVISIBLE/datasets/#{dataset.box}", (err, res) ->
+            request.get "#{serverURL}/api/MRINVISIBLE/datasets/#{@dataset.box}", (err, res) ->
               res.should.have.status 403
               done()
 
         context 'PUT /api/:user/datasets/:id', ->
           it 'changes the display name of a single dataset', (done) ->
             request.put
-              uri: "#{serverURL}/api/#{@user}/datasets/#{dataset.box}"
+              uri: "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}"
               form:
                 displayName: 'Cheese'
             , (err, res) =>
               res.should.have.status 200
-              request.get "#{serverURL}/api/#{@user}/datasets/#{dataset.box}", (err, res) ->
-                dataset = JSON.parse res.body
-                dataset.displayName.should.equal 'Cheese'
+              request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) =>
+                @dataset = JSON.parse res.body
+                @dataset.displayName.should.equal 'Cheese'
                 done(err)
 
           it 'changes the owner of a single dataset', (done) ->
             @newowner = 'ehg'
             request.put
-              uri: "#{serverURL}/api/#{@user}/datasets/#{dataset.box}"
+              uri: "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}"
               form:
                 user: @newowner
             , (err, res) =>
@@ -242,8 +238,8 @@ describe 'API', ->
               done(err)
 
           it "that dataset doesn't appear in my list of datasets any more", (done) ->
-            request.get "#{serverURL}/api/#{@user}/datasets", (err, res) ->
-              res.body.should.not.include "#{dataset.box}"
+            request.get "#{serverURL}/api/#{@user}/datasets", (err, res) =>
+              res.body.should.not.include "#{@dataset.box}"
               done()
 
           it "404 errors if the dataset doesn't exist", (done) ->

@@ -16,6 +16,7 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
+nibbler = require 'nibbler'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
@@ -357,22 +358,67 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
       dataset.save()
       return resp.send 200, dataset
 
-app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
-  data = req.body
-  dataset = new Dataset
-    box: data.box
-    user: req.user.effective.shortName
-    tool: req.body.tool
-    name: data.name
-    displayName: data.displayName
+_generateBoxName = ->
+  r = Math.random() * Math.pow(10,9)
+  return nibbler.b32encode(String.fromCharCode(r>>24,(r>>16)&0xff,(r>>8)&0xff,r&0xff)).replace(/[=]/g,'').toLowerCase()
 
-  dataset.save (err) ->
+_exec = (arg, callback) ->
+  request.post
+    uri: "#{process.env.CU_BOX_SERVER}/#{arg.boxName}/exec"
+    form:
+      apikey: arg.user.apiKey
+      cmd: arg.cmd
+  , callback
+
+app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
+  boxName = _generateBoxName()
+  user = req.user.effective
+  console.log "POST dataset boxName=#{boxName}"
+  console.log "POST dataset user", user
+  request.post
+    uri: "#{process.env.CU_BOX_SERVER}/box/#{boxName}"
+    form:
+      apikey: user.apiKey
+  , (err, res, body) ->
     if err?
-      console.warn err
-      return resp.send 400, error: "Error saving dataset: #{err}"
-    Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
-      console.warn err if err?
-      resp.send 200, dataset
+      return resp.send 500, "#{err}"
+    if res.statusCode isnt 200
+      return resp.send res.statusCode, body
+
+    body = req.body
+    dataset = new Dataset
+      box: boxName
+      user: user.shortName
+      tool: body.tool
+      name: body.name
+      displayName: body.displayName
+
+    dataset.save (err) ->
+      if err?
+        console.warn err
+        return resp.send 400, error: "Error saving dataset: #{err}"
+      # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
+      User.distributeUserKeys user.shortName, (err) ->
+        if err?
+          return resp.send 400, "SSH key distribution error"
+        console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
+        Tool.findOneByName dataset.tool, (err, tool) ->
+          if err?
+            console.log "Mysterious tool error", err
+            return resp.send 500, "Mysterious tool error"
+          _exec
+            user: user
+            boxName: boxName
+            cmd: "rm -r http && git clone #{tool.gitUrl} tool --depth 1 && ln -s tool/http http"
+          , (err, res) ->
+            if err?
+              return resp.send 500, "Shuigurhthfw;nasvrnrgajk"
+            if res.statusCode isnt 200
+              return resp.send res.statusCode, res.body
+
+            Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
+              console.warn err if err?
+              resp.send 200, dataset
 
 # user api is staff-only for now (probably forever)
 app.get '/api/user/?', checkStaff, (req, resp) ->

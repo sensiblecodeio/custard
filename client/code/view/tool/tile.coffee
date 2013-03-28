@@ -74,27 +74,25 @@ class Cu.View.AppTile extends Cu.View.ToolTile
     @active = true
     @showLoading()
 
-    @model.install (jqXHR, text) =>
-      user = window.user.effective
-      dataset = Cu.Model.Dataset.findOrCreate
-        user: user.shortName
-        name: @model.get 'name'
-        displayName: @model.get('manifest').displayName
-        box: @model.get 'box'
-        tool: @model
+    dataset = Cu.Model.Dataset.findOrCreate
+      user: user.shortName
+      name: @model.get 'name'
+      displayName: @model.get('manifest').displayName
+      box: @model.get 'box'
+      tool: @model
 
-      dataset.new = true
+    dataset.new = true
 
-      dataset.save {},
-        wait: true
-        success: ->
-          delete dataset.new
-          window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
-          $('#chooser').fadeOut 200, ->
-            $(this).remove()
-        error: (model, xhr, options) ->
-          @active = false
-          console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
+    dataset.save {},
+      wait: true
+      success: ->
+        delete dataset.new
+        window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
+        $('#chooser').fadeOut 200, ->
+          $(this).remove()
+      error: (model, xhr, options) ->
+        @active = false
+        console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
 
 class Cu.View.PluginTile extends Cu.View.ToolTile
   events:

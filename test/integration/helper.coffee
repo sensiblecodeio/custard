@@ -6,20 +6,17 @@ cleaner = require('../cleaner')
 home_url = 'http://localhost:3001'
 login_url = "#{home_url}/login"
 
-before (done) ->
-  console.log "helper before"
-  cleaner.clear_and_set_fixtures ->
-    wd40.init ->
-      browser.get login_url, done
+prepIntegration = ->
+  before (done) ->
+    cleaner.clear_and_set_fixtures ->
+      wd40.init ->
+        browser.get login_url, done
 
-after (done) ->
-  console.log "helper after"
-  browser.quit ->
-    done()
+  after (done) ->
+    browser.quit done
 
 exports.wd40 = wd40
 exports.browser = browser
 exports.login_url = login_url
 exports.home_url = home_url
-
-
+exports.prepIntegration = prepIntegration

@@ -25,7 +25,7 @@ class wd40
         browser.clear element, cb
 
   @click: (selector, cb) ->
-    browser.waitForElementByCss selector, 4000, ->
+    browser.waitForVisibleByCss selector, 4000, ->
       browser.elementByCss selector, (err, element) ->
         element.click cb
 
@@ -57,7 +57,7 @@ class wd40
           cb null
         else
           if Date.now() > endTime
-            cb new Error("Element didn't appear")
+            cb new Error("Text didn't appear")
           else
             setTimeout poll, 200
     poll()

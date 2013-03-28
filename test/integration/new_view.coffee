@@ -1,7 +1,9 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'New view tool', ->
+  prepIntegration()
+
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', ->

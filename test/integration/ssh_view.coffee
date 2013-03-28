@@ -1,7 +1,9 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'View SSH Details', ->
+  prepIntegration()
+
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', -> wd40.click '#login', done
@@ -24,10 +26,10 @@ describe 'View SSH Details', ->
         wd40.getText '.modal', (err, text) =>
           @modalTextContent = text.toLowerCase()
           done()
-        
+
       it 'the modal window asks for my SSH key', =>
         @modalTextContent.should.include 'add your ssh key:'
-        
+
       it 'the modal tells me the command I should run', =>
         @modalTextContent.should.include 'ssh-keygen'
 
@@ -35,7 +37,7 @@ describe 'View SSH Details', ->
         before (done) ->
           wd40.fill '#ssh-key', 'ssh-rsa AAAAB3Nza...ezneI9HWBOzHnh foo@bar.local', ->
             wd40.click '#add-ssh-key', done
-        
+
         before (done) =>
           wd40.getText '.modal', (err, text) =>
             @modalTextContent = text.toLowerCase()
@@ -49,7 +51,7 @@ describe 'View SSH Details', ->
 
         it 'the modal window tells me how to SSH in', =>
           @modalTextContent.should.include 'ssh 4008115731@box.scraperwiki.com'
-        
+
         context 'when I close the modal, and reopen it', ->
           before (done) =>
             wd40.click '#done', =>

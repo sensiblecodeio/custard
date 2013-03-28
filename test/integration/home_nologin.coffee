@@ -1,7 +1,12 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Home page (not logged in)', ->
+  prepIntegration()
+
+  before (done) ->
+    browser.deleteAllCookies done
+
   before (done) ->
     browser.get home_url, done
 
@@ -22,4 +27,3 @@ describe 'Home page (not logged in)', ->
 
   it 'tells me about ScraperWiki Data Services', =>
     @bodyText.toLowerCase().should.include 'services'
-

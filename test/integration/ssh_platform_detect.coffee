@@ -1,19 +1,21 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Platform-specific SSH instructions', ->
+  prepIntegration()
+
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', -> wd40.click '#login', ->
         browser.get "#{home_url}/dataset/3006375731", done
-      
+
   context 'when I use a Windows PC to view SSH instructions', ->
     before (done) ->
       browser.refresh ->
         browser.eval "window.navigator = {platform: 'Win32'}", ->
           wd40.click '.dataset-actions .git-ssh', ->
             browser.waitForVisibleByCss '.modal', 4000, done
-    
+
     before (done) =>
         wd40.getText '.modal', (err, text) =>
           @modalTextContent = text.toLowerCase()
@@ -63,4 +65,3 @@ describe 'Platform-specific SSH instructions', ->
 
     it 'the modal window shows me the Mac commands I should run', =>
       @modalTextContent.should.include 'xclip -sel clip < ~/.ssh/id_rsa.pub'
-

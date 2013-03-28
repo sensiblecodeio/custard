@@ -1,7 +1,9 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Dataset', ->
+  prepIntegration()
+
   randomname = "New favourite number is #{Math.random()}"
 
   before (done) ->

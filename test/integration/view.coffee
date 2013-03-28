@@ -1,7 +1,9 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'View', ->
+  prepIntegration()
+
   randomname = "Prune graph number #{Math.random()}"
 
   before (done) ->

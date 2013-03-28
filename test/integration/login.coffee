@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 request = require 'request'
 
@@ -40,6 +40,8 @@ createProfile = (options, done) ->
       , done
 
 describe 'Login', ->
+  prepIntegration()
+
   before (done) ->
     createProfile
       shortName: 'ickletest'
@@ -79,6 +81,8 @@ describe 'Login', ->
      xcontext 'when I try to login with my email address as my username', ->
 
 describe 'Password', ->
+  prepIntegration()
+
   context 'when I use the password reset link', ->
     newUser = String(Math.random()).replace('0.', 'pass-')
     newPass = newUser
@@ -120,6 +124,8 @@ describe 'Password', ->
 
 
 describe 'Switch', ->
+  prepIntegration()
+
 
   nonstaff_user = 'ickletest'
   nonstaff_pass = 'toottoot'
@@ -198,6 +204,8 @@ describe 'Switch', ->
 
 
 describe 'Whitelabel', ->
+  prepIntegration()
+
   corpProfile =
     shortName: 'evilcorp'
     displayName: 'Evil Corp'
@@ -225,4 +233,3 @@ describe 'Whitelabel', ->
           element.getAttribute "src", (err, value) ->
             value.should.include corpProfile.logoUrl
             done()
-

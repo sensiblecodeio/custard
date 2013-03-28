@@ -1,7 +1,9 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Dataset SSH Details', ->
+  prepIntegration()
+
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', -> wd40.click '#login', done
@@ -36,16 +38,11 @@ describe 'Dataset SSH Details', ->
         before (done) ->
           wd40.click '#add-ssh-key', done
 
-        before (done) =>
-          wd40.getText '.modal', (err, text) =>
-            @modalTextContent = text.toLowerCase()
-            done()
+        it 'the modal window asks for my SSH key', (done) ->
+          wd40.waitForText 'Add your SSH key:', done
 
-        it 'the modal window asks for my SSH key', =>
-          @modalTextContent.should.include 'add your ssh key:'
-
-        it 'the modal window gives an error', =>
-          @modalTextContent.should.include 'please supply an ssh key'
+        it 'the modal window gives an error', (done) ->
+          wd40.waitForText  'Please supply an SSH key', done
 
       context 'when I paste my private ssh key into the box and press submit', ->
         before (done) ->
@@ -65,10 +62,10 @@ MII...0tXU=
 
         it 'the modal window gives an error', =>
           @modalTextContent.should.include 'private key'
-          
+
         after (done) =>
           wd40.clear '#ssh-key', done
-        
+
 
       context 'when I paste my ssh key into the box and press submit', ->
         before (done) ->
@@ -136,7 +133,7 @@ MII...0tXU=
     before (done) ->
       browser.get "#{home_url}/", ->
         setTimeout done, 500
-    
+
     context 'when I click the "SSH in" menu link', ->
       before (done) ->
         browser.elementByCss '.dataset.tile .dropdown-toggle', (err, settingsLink) =>
@@ -153,4 +150,3 @@ MII...0tXU=
 
       it 'the modal window tells me how to SSH in', =>
         @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
-

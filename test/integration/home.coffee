@@ -1,7 +1,9 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Home page (logged in)', ->
+  prepIntegration()
+
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', ->
@@ -37,4 +39,3 @@ describe 'Home page (logged in)', ->
         browser.elementsByCss '#chooser .tool', (err, tools) ->
           tools.length.should.be.above 0
           done()
-

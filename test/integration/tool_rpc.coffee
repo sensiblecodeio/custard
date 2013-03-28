@@ -1,9 +1,11 @@
 # See custard/README.md for Selenium setup instructions
 
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Tool RPC', ->
+  prepIntegration()
+
   before (done) ->
     browser.get login_url, ->
       wd40.fill '#username', 'ehg', ->
@@ -101,4 +103,3 @@ describe 'Tool RPC', ->
           should.exist obj?.table?.SurLeTable
           should.exist obj?.table?.VoirLeLapin
           done()
-

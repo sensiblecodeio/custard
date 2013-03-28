@@ -1,7 +1,9 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'New dataset tool', ->
+  prepIntegration()
+
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', ->
@@ -25,4 +27,3 @@ describe 'New dataset tool', ->
 
       it 'takes me to the dataset settings page', ->
         @currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/settings")
-

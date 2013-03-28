@@ -1,7 +1,9 @@
 should = require 'should'
-{wd40, browser, login_url, home_url} = require './helper'
+{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Sign up', ->
+  prepIntegration()
+
   before (done) ->
     browser.get "#{home_url}/signup/hacker", done
 
@@ -18,4 +20,3 @@ describe 'Sign up', ->
 
     it 'says thanks', (done) ->
       browser.waitForVisibleByCss '#thanks', 4000, done
-

@@ -14,19 +14,6 @@ class Cu.Model.Tool extends Backbone.RelationalModel
         @_update_sshkeys()
         @exec("cd; rm -r http && git clone #{@get 'gitUrl'} tool --depth 1 && ln -s tool/http http").complete callback
 
-  _create_box: ->
-    @_generateBoxName()
-    $.ajax
-      type: 'POST'
-      url: "#{window.boxServer}/box/#{@get 'box'}"
-      data:
-        apikey: window.user.effective.apiKey
-
-  _generateBoxName: ->
-    r = Math.random() * Math.pow(10,9)
-    n = Nibbler.b32encode(String.fromCharCode(r>>24,(r>>16)&0xff,(r>>8)&0xff,r&0xff)).replace(/[=]/g,'').toLowerCase()
-    @set 'box', n, silent: true
-
   _update_sshkeys: ->
     $.ajax
       type: 'POST'

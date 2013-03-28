@@ -27,7 +27,7 @@ exports.users = [
   email: ['chris@scraperwiki.com'],
   displayName: 'Chris Blower',
   password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
-  apikey: process.env.COTEST_USER_API_KEY,
+  apikey: process.env.COTEST_STAFF_API_KEY,
   isStaff: true,
   sshKeys: [],
   accountLevel: "grandfather"
@@ -37,7 +37,7 @@ exports.users = [
   email: ['ickletest@example.org'],
   displayName: 'Ickle Test',
   password: '$2a$10$zGJXsNwhOBvze9GDm.jeEuLBX.TciRIKxNXfslxe5TZ.9/fDgpeDu',
-  apikey: process.env.COTEST_STAFF_API_KEY,
+  apikey: process.env.COTEST_USER_API_KEY,
   isStaff: false,
   sshKeys: ['a', 'b', 'c'],
   accountLevel: "free"

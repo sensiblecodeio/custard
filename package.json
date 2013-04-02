@@ -20,6 +20,8 @@
     "ident-express": "*",
     "uuid": "~1.4.0",
     "request": "~2.12",
+    "which": "*",
+    "async": "~0.1.22",
     "nodemailer": "~0.3.43"
   },
   "scripts": {
@@ -28,9 +30,8 @@
     "test": "mocha --require should --compilers coffee:coffee-script --colors"
   },
   "devDependencies": {
-    "which": "*",
-    "async": "~0.1.22",
     "mocha": "~1.6.0",
+    "mkdirp": "~0.3.4",
     "should": "*",
     "supervisor": "*",
     "sinon": "~1.5.0",
@@ -39,7 +40,6 @@
     "jquery": "~1.7.3",
     "pow-mongodb-fixtures": "*",
     "zombie": "2.0.0-alpha9",
-    "mkdirp": "~0.3.4",
     "backbone-relational": "~0.7.0",
     "jsdom": "~0.3.4",
     "wd": "0.0.30",

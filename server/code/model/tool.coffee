@@ -109,6 +109,8 @@ class Tool extends ModelBase
         result = (@makeModelFromMongo(doc) for doc in docs)
         cb null, result
 
-module.exports = (dbObj) ->
-  Tool.dbClass = zDbTool = dbObj if dbObj?
+exports.Tool = Tool
+
+exports.dbInject = (dbObj) ->
+  Tool.dbClass = zDbBox = dbObj
   Tool

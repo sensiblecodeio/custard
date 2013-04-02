@@ -8,7 +8,7 @@ sinon = require 'sinon'
 should = require 'should'
 _ = require 'underscore'
 
-Tool = require('model/tool')()
+{Tool} = require 'model/tool'
 
 describe 'Server model: Tool', ->
 
@@ -119,7 +119,7 @@ describe 'Server model: Tool', ->
 
       it 'should have a description', ->
         should.exist @tool.manifest.description
-        
+
       it 'should have a gitUrl', ->
         should.exist @tool.manifest.gitUrl
 

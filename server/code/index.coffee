@@ -5,6 +5,7 @@ existsSync = fs.existsSync || path.existsSync
 crypto = require 'crypto'
 child_process = require 'child_process'
 
+_ = require 'underscore'
 express = require 'express'
 assets = require 'connect-assets'
 ejs = require 'ejs'
@@ -394,6 +395,39 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
             console.warn err if err?
             # TODO: set quota
             resp.send 200, dataset
+
+app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
+  user = req.user.effective
+  Dataset.findOneById req.params.dataset, (err, dataset) ->
+    Box.create user, (err, box) ->
+      if err?
+        console.warn err
+        return resp.send err.statusCode, error: "Error creating box: #{err.body}"
+      # Add view to dataset and save
+      body = req.body
+      view = 
+        box: box.name
+        tool: body.tool
+        displayName: body.displayName
+      dataset.views.push view
+      dataset.save (err) ->
+        if err?
+          console.warn err
+          return resp.send 400, error: "Error saving view: #{err}"
+        # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
+        User.distributeUserKeys user.shortName, (err) ->
+          if err?
+            console.warn "SSH key distribution error"
+            err = null
+          box.installTool {user: user, toolName: body.tool}, (err) ->
+            if err?
+              console.warn err
+              return resp.send 500, error: "Error installing tool: #{err}"
+            Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
+              console.warn err if err?
+              view = _.findWhere dataset.views, box: box.name
+              # TODO: set quota
+              resp.send 200, view
 
 # user api is staff-only for now (probably forever)
 app.get '/api/user/?', checkStaff, (req, resp) ->

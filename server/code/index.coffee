@@ -368,7 +368,6 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
       return resp.send err.statusCode, error: "Error creating box: #{err.body}"
     console.log "POST dataset boxName=#{box.name}"
     # Save dataset
-    # TODO: save box
     body = req.body
     dataset = new Dataset
       box: box.name

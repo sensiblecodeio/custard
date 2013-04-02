@@ -5,7 +5,7 @@ request = require 'request'
 uuid = require 'uuid'
 
 ModelBase = require 'model/base'
-Box = require('model/box')()
+{Box} = require 'model/box'
 Token = require('model/token')()
 plan = require('model/plan')
 

@@ -6,7 +6,7 @@ _ = require 'underscore'
 request = require 'request'
 
 User = require('model/user').dbInject()
-Box = require('model/box')()
+{Box} = require 'model/box'
 plan = require 'model/plan'
 
 describe 'User (client)', ->
@@ -221,8 +221,3 @@ describe 'User (server)', ->
         correctArgs.should.be.true
         correctArgs = @stub.calledWith '3006375815', 'grandfather'
         correctArgs.should.be.true
- 
-
-
-
-

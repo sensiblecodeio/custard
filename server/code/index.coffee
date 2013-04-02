@@ -69,6 +69,7 @@ getSessionUser = (user) ->
     apiKey: user.apikey
     isStaff: user.isStaff
     avatarUrl: "/image/avatar.png"
+    accountLevel: user.accountLevel
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")
@@ -393,7 +394,6 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
             return resp.send 500, error: "Error installing tool: #{err}"
           Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
             console.warn err if err?
-            # TODO: set quota
             resp.send 200, dataset
 
 app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
@@ -405,7 +405,7 @@ app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
         return resp.send err.statusCode, error: "Error creating box: #{err.body}"
       # Add view to dataset and save
       body = req.body
-      view = 
+      view =
         box: box.name
         tool: body.tool
         displayName: body.displayName

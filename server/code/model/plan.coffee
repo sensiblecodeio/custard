@@ -1,15 +1,16 @@
 request = require 'request'
 
 boxMaxSize = (name) ->
-  if name == "grandfather"
+  if name == 'grandfather'
     return 8000 # 8GB
-  else if name == "free"
+  else if name == 'free'
     return 8 # 8MB
   else
-    console.warn "planSize: unknown plan", name
+    console.warn 'planSize: unknown plan', name
     return 8
 
 setDiskQuota = (box, accountLevel, cb) ->
+  return cb(null, true) unless process.env.CU_QUOTA_SERVER?
   maxSize = boxMaxSize accountLevel
   request.post
     uri: "#{process.env.CU_QUOTA_SERVER}/quota"
@@ -17,8 +18,8 @@ setDiskQuota = (box, accountLevel, cb) ->
       path: box.name
       size: maxSize
   , (err, res, body) ->
-    if err
-      console.log("failed to setDiskQuota for", box.name)
+    if err?
+      console.warn 'failed to setDiskQuota for', box.name
       cb err
     cb null, true
 

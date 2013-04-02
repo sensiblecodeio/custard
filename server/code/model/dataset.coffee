@@ -27,7 +27,6 @@ class Dataset extends ModelBase
   @dbClass: zDbDataset
 
   validate: ->
-    return 'no name' unless @name? and @name.length > 0
     return 'no tool' unless @tool? and @tool.length > 0
     return 'no display name' unless @displayName? and @displayName.length > 0
 

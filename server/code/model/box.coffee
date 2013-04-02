@@ -7,6 +7,7 @@ Schema = mongoose.Schema
 
 ModelBase = require 'model/base'
 {Tool} = require 'model/tool'
+plan = require 'model/plan'
 
 boxSchema = new Schema
   users: [String]
@@ -70,7 +71,8 @@ class Box extends ModelBase
         else if res.statusCode isnt 200
           callback {statusCode: res.statusCode, body: body}, null
         else
-          callback null, box
+          plan.setDiskQuota box, user.accountLevel, (err) ->
+            callback null, box
 
   @_generateBoxName: ->
     r = Math.random() * Math.pow(10,9)

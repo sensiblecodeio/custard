@@ -12,10 +12,11 @@ class Cu.Model.View extends Backbone.RelationalModel
   ]
 
   url: ->
+    datasetId = @get('plugsInTo').get('box')
     if @isNew()
-      "/api/#{window.user.effective.shortName}/views"
+      "/api/#{window.user.effective.shortName}/datasets/#{datasetId}/views"
     else
-      "/api/#{window.user.effective.shortName}/views/#{@get 'box'}"
+      "/api/#{window.user.effective.shortName}/datasets/#{datasetId}/views/#{@get 'box'}"
 
 Cu.Model.View.setup()
 

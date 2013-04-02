@@ -231,8 +231,8 @@ has no order, the keys in these objects are in the same order as the columns in 
 <p>Here&rsquo;s some example code in Python, calling the endpoint.</p>
 
 <pre class="prettyprint">
-requests.post("https://x.scraperwiki.com/api/status", data={'type':'ok'})
-requests.post("https://x.scraperwiki.com/api/status", data={'type':'error', 'message':'Source website broken'})
+scraperwiki.status('ok')
+scraperwiki.status('error', 'Source website broken')
 </pre>
 
 <hr />

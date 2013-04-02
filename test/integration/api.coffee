@@ -273,6 +273,28 @@ describe 'API', ->
             keys.should.include 'ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local'
             done err
 
+      describe 'Views', ->
+        context 'when I create a view on a dataset', ->
+          before (done) ->
+            request.post
+              uri: "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}/views"
+              form:
+                name: 'carrottop'
+                displayName: 'Carrot Top'
+                tool: 'test-plugin'
+            , (err, res, body) =>
+              @response = res
+              @view = JSON.parse res.body
+              done()
+
+          context 'POST /api/:user/datasets/<dataset>/views', ->
+            it 'creates a new dataset', ->
+              @response.should.have.status 200
+
+            it 'returns the newly created dataset', ->
+              should.exist @view.box
+              @view.displayName.should.equal 'Carrot Top'
+
   describe 'Logging in as a different user', ->
     context "When I'm a staff member", ->
       before (done) ->

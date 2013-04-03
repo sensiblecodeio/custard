@@ -21,7 +21,7 @@
     "uuid": "~1.4.0",
     "request": "~2.12",
     "which": "*",
-    "async": "~0.1.22",
+    "async": "~0.2.6",
     "nodemailer": "~0.3.43"
   },
   "scripts": {

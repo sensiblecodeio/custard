@@ -217,7 +217,7 @@ describe 'User (server)', ->
           user.setDiskQuotasForPlan done
 
       it "should update the disk quota for each dataset", ->
-        correctArgs = @stub.calledWith '3006375731', 'grandfather'
+        correctArgs = @stub.calledWithMatch {name: '3006375731'}, 'grandfather'
         correctArgs.should.be.true
-        correctArgs = @stub.calledWith '3006375815', 'grandfather'
+        correctArgs = @stub.calledWithMatch {name: '3006375815'}, 'grandfather'
         correctArgs.should.be.true

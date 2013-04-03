@@ -57,9 +57,9 @@ class User extends ModelBase
     Box.findAllByUser @shortName, (err, boxes) =>
       if err
         return callback err, null
-      # set quota on each box
-      async.forEach boxes, (box, next) =>
-        plan.setDiskQuota box.name, @accountLevel, next
+      # set quota on each box. Parallel overwhelms gand.
+      async.eachSeries boxes, (box, next) =>
+        plan.setDiskQuota box, @accountLevel, next
       , ->
         callback null, true
 

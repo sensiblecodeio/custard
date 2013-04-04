@@ -109,6 +109,9 @@ class User extends ModelBase
       apikey: uuid.v4()
       accountLevel: 'free'
 
+    if opts.requestingUser.isStaff
+      newUser.accountLevel = opts.newUser.accountLevel or 'free'
+
     if opts.newUser.logoUrl?
       newUser.logoUrl = opts.newUser.logoUrl
 

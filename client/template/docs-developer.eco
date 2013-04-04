@@ -59,6 +59,16 @@ This will show you how to SSH in.</p>
 
 <p>Your box&rsquo;s <code>publish_token</code> is used to secure its public-facing, read-only endpoints (<code>/http</code> and <code>/sqlite</code>). It should be alphanumeric and 10-30 characters long. Or, if you&rsquo;d prefer to make your box&rsquo;s contents public, you can set it to an empty string or remove its entry entirely from <code>~/box.json</code>.</p>
 
+<p>
+At any one time your box is allocated to one particular server, but that
+server might change from time to time.
+Occasionally we may need to migrate your box to a new server (when ScraperWiki has to create or
+destroy servers).
+In that case we may kill running process on your box. Any new processes
+that your box creates (via the exec endpoint or cron) will run on the new server,
+so <code>ps</code> will still list all the processes.
+</p>
+
 <hr />
 
 <h2 id="datasets-endpoints">Box API endpoints</h2>
@@ -266,9 +276,15 @@ example, to get a Python package, do this:
 The <code>MAILTO</code> variable works as normal, and is a good way to get
 cron output via email.</p>
 
-<p>Unlike other facilities, this runs separately on each physical server in
-ScraperWiki&rsquo;s cluster. Currently you only have access to one server &ndash; this will
-change as we add more.</p>
+<p>Cron jobs run on the same server as the rest of your box; as noted above the particular server may
+change from time to time but at any moment all of your box's processes will be running on the same
+server.</p>
+
+<p>For technical reasons we encourage you not to schedule your cron jobs for specific times (such as
+10 minutes past the hour).
+Use <code>@daily</code> and <code>@hourly</code> instead. We may not honour crontabs that run jobs at
+specific times.
+</p>
 
 <h3>SMTP</h3>
 

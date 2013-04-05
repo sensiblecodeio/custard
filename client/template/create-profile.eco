@@ -1,6 +1,10 @@
 <form>
     <fieldset>
         <p>
+            <label for="accountlevel">Account level (free/medium/large):</label>
+            <input type="text" name="accountlevel" id="accountlevel" value="free">
+        </p>
+        <p>
             <label for="displayname">New profile name:</label>
             <input type="text" name="displayname" id="displayname" placeholder="Acme Inc.">
         </p>

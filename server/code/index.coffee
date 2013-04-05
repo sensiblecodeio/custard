@@ -217,6 +217,7 @@ app.post '/api/user/?', (req, resp) ->
       displayName: req.body.displayName
       email: [req.body.email]
       logoUrl: req.body.logoUrl
+      accountLevel: req.body.accountLevel
     requestingUser: req.user?.real
   , (err, user) ->
     if err?

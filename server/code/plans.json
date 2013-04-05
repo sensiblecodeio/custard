@@ -1,0 +1,22 @@
+{
+    "free": {
+        "maxDiskSpaceMB": 8,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 3
+    },
+    "grandfather": {
+        "maxDiskSpaceMB": 8000,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 100
+    },
+    "large": {
+        "maxDiskSpaceMB": 256,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 81
+    },
+    "medium": {
+        "maxDiskSpaceMB": 64,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 9
+    }
+}

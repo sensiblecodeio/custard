@@ -17,12 +17,15 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
+xml2js = require 'xml2js'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
 Token = require('model/token')()
 {Tool} = require 'model/tool'
 {Box} = require 'model/box'
+
+recurlySign = require 'lib/sign'
 
 # Set up database connection
 mongoose.connect process.env.CU_DB
@@ -248,10 +251,41 @@ app.post '/api/status/?', checkIdent, (req, resp) ->
           return resp.send 500, error: 'Error trying to update status'
         return resp.send 200, status: 'ok'
 
-app.post '/recurly/?', (req, resp) ->
-  token = req.body.params.recurly_token
-  request.get "https://api.recurly.com/v2/recurly_js/result/#{token}", (err, resp, body) ->
-    console.log err, body
+
+app.get '/api/:user/subscription/:plan/sign/?', (req, resp) ->
+  signedSubscription = recurlySign.sign
+    subscription:
+      plan_code: req.params.plan
+  resp.send 200, signedSubscription
+
+app.post '/api/:user/subscription/verify/?', (req, resp) ->
+  token = req.body.recurly_token
+  request.get
+    uri: "https://#{process.env.RECURLY_API_KEY}:@api.recurly.com/v2/recurly_js/result/#{token}"
+    strictSSL: true
+    headers:
+      'Accept': 'application/xml'
+      'Content-Type': 'application/xml; charset=utf-8'
+  , (err, recurlyResp, body) ->
+    if err?
+      resp.send 500, error: err
+    else if recurlyResp.statusCode isnt 200
+      resp.send recurlyResp.statusCode, error: recurlyResp.body
+    else
+      parser = new xml2js.Parser
+        ignoreAttrs: true
+        explicitArray: false
+      parser.parseString recurlyResp.body, (err, obj) ->
+        #TODO: check for valid plan code
+        User.findByShortName req.user.effective.shortName, (err, user) ->
+          console.log 'Subscribed to', obj.subscription.plan.plan_code
+          user.setAccountLevel obj.subscription.plan.plan_code, (err) ->
+            #TODO: DRY
+            req.user.effective = getSessionUser user
+            req.session.save()
+            resp.writeHead 302,
+              location: "/"   # How to give full URL here?
+            resp.end()
 
 
 ############ AUTHENTICATED ############

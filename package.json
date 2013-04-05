@@ -22,7 +22,9 @@
     "request": "~2.12",
     "which": "*",
     "async": "~0.2.6",
-    "nodemailer": "~0.3.43"
+    "nodemailer": "~0.3.43",
+    "qs": "~0.5.5",
+    "xml2js": "~0.2.6"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

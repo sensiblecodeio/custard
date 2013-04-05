@@ -74,10 +74,17 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.showView subnavView
 
   subscribe: (plan) ->
-    contentView = new Cu.View.Subscribe {plan: plan}
-    subnavView = new Cu.View.SignUpNav {plan: plan}
-    @appView.showView contentView
-    @subnavView.showView subnavView
+    # TODO: make this a backbone model
+    # TODO: handle unknown plan in sign api?
+    shortName = window.user.effective.shortName
+    $.ajax
+      type: 'GET'
+      url: "/api/#{shortName}/subscription/#{plan}/sign"
+      success: (signature) =>
+        contentView = new Cu.View.Subscribe {plan: plan, signature: signature}
+        subnavView = new Cu.View.SignUpNav {plan: plan}
+        @appView.showView contentView
+        @subnavView.showView subnavView
 
   dataset: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
@@ -172,4 +179,3 @@ class Cu.Router.Main extends Backbone.Router
     contentView = new Cu.View.ZIGDocs()
     @appView.showView contentView
     @subnavView.showView subnavView
-    

@@ -295,6 +295,34 @@ describe 'API', ->
             keys.should.include 'ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local'
             done err
 
+    describe 'Billing', ->
+      context 'GET /api/:user/subscription/medium/sign', ->
+        before (done) ->
+          request.get
+            uri: "#{serverURL}/api/#{@user}/subscription/medium/sign"
+          , (err, res, body) =>
+            @body = body
+            done err
+
+        it 'returns a signature', ->
+          @body.should.match /\w+|.+/g
+
+        it 'returns the unsigned contents', ->
+          @body.should.include 'subscription[plan_code]=medium'
+
+      context 'POST /api/:user/subscription/verify', ->
+        before (done) ->
+          request.post
+            uri: "#{serverURL}/api/#{@user}/subscription/verify"
+            form:
+              recurly_token: '34324sdfsdf'
+          , (err, res, body) =>
+            @res = res
+            done err
+
+        it 'returns a 404 (the token is unknown)', ->
+          @res.should.have.status 404
+
   describe 'Logging in as a different user', ->
     context "When I'm a staff member", ->
       before (done) ->

@@ -63,6 +63,10 @@ class User extends ModelBase
       , ->
         callback null, true
 
+  setAccountLevel: (plan, callback) ->
+    @accountLevel = plan
+    @save callback
+
   # Sends a list of box sshkeys to cobalt for each box a user
   # can access, so cobalt can overwite the authorized_keys for a box
   @distributeUserKeys: (shortName, callback) ->

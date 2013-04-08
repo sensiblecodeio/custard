@@ -68,7 +68,7 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.showView subnavView
 
   signUp: (plan) ->
-    contentView = new Cu.View.SignUp
+    contentView = new Cu.View.SignUp {plan: plan}
     subnavView = new Cu.View.SignUpNav {plan: plan}
     @appView.showView contentView
     @subnavView.showView subnavView

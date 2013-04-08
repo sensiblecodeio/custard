@@ -30,7 +30,8 @@ exports.users = [
   apikey: process.env.COTEST_STAFF_API_KEY,
   isStaff: true,
   sshKeys: [],
-  accountLevel: "grandfather"
+  accountLevel: "grandfather",
+  recurlyAccount: "ehg-2423432"
 },
 {
   shortName: 'ickletest',
@@ -40,7 +41,8 @@ exports.users = [
   apikey: process.env.COTEST_USER_API_KEY,
   isStaff: false,
   sshKeys: ['a', 'b', 'c'],
-  accountLevel: "free"
+  accountLevel: "free",
+  recurlyAccount: "ickletest-242363"
 },
 {
   shortName: 'zarino',
@@ -50,7 +52,8 @@ exports.users = [
   apikey: process.env.COTEST_USER_API_KEY,
   sshKeys: ['d', 'e', 'f'],
   isStaff: false,
-  accountLevel: "grandfather"
+  accountLevel: "grandfather",
+  recurlyAccount: "zarino-2423348"
 }
 ];
 

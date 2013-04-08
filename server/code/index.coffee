@@ -151,6 +151,7 @@ renderClientApp = (req, resp) ->
     templates: js 'template/index'
     user: JSON.stringify( req.user or {} )
     boxServer: process.env.CU_BOX_SERVER
+    flash: req.flash()
 
 # Render login page
 app.get '/login/?', (req, resp) ->
@@ -278,17 +279,16 @@ app.post '/api/:user/subscription/verify/?', (req, resp) ->
         ignoreAttrs: true
         explicitArray: false
       parser.parseString recurlyResp.body, (err, obj) ->
-        #TODO: check for valid plan code
+        #TODO: check for valid plan code & recurlyAccount
         User.findByShortName req.user.effective.shortName, (err, user) ->
           console.log 'Subscribed to', obj.subscription.plan.plan_code
           user.setAccountLevel obj.subscription.plan.plan_code, (err) ->
             #TODO: DRY
             req.user.effective = getSessionUser user
+            planName = obj.subscription.plan.name
+            req.flash 'info', "You've been subscribed to the #{planName} plan!"
             req.session.save()
-            resp.writeHead 302,
-              location: "/"   # How to give full URL here?
-            resp.end()
-
+            resp.send 201, success: "Verified and upgraded"
 
 ############ AUTHENTICATED ############
 app.all '*', ensureAuthenticated

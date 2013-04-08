@@ -41,7 +41,11 @@ describe 'Subscriptions', ->
       before (done) ->
         setTimeout done, 5000
 
-      it 'subscribes me to the plan'
+      it 'subscribes me to the plan', (done) ->
+        wd40.getText '#info', (err, text) ->
+          text.should.include "You've been subscribed to the Explorer plan!"
+          done()
+
       it 'redirects me to the homepage?', (done) ->
         wd40.trueURL (err, url) ->
           url.should.equal "#{home_url}/"

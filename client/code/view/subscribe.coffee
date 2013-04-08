@@ -11,7 +11,7 @@ class Cu.View.Subscribe extends Backbone.View
         VATPercent: '20'
       Recurly.buildSubscriptionForm
         target: '#recurly-subscribe'
-        accountCode: Math.round(Math.random()*10000)
+        accountCode: window.user.effective.recurlyAccount
         planCode: @options.plan
         distinguishContactFromBillingInfo: true
         collectCompany: true

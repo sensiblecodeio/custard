@@ -73,6 +73,7 @@ getSessionUser = (user) ->
     isStaff: user.isStaff
     avatarUrl: "/image/avatar.png"
     accountLevel: user.accountLevel
+    recurlyAccount: user.recurlyAccount
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")

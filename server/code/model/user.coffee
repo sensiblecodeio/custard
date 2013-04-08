@@ -19,6 +19,7 @@ userSchema = new mongoose.Schema
   apikey: {type: String, unique: true}
   isStaff: Boolean
   accountLevel: String
+  recurlyAccount: {type: String, unique: true}
   trialStarted: {type: Date, default: Date.now}
   created: {type: Date, default: Date.now}
   logoUrl: String
@@ -106,12 +107,14 @@ class User extends ModelBase
 
   # Add and email the user
   @add: (opts, callback) ->
+    recurlyRand = String(Math.random()).replace('0.', '')
     newUser =
       shortName: opts.newUser.shortName
       displayName: opts.newUser.displayName
       email: [opts.newUser.email]
       apikey: uuid.v4()
       accountLevel: 'free'
+      recurlyAccount: "#{opts.newUser.shortName}.#{recurlyRand}"
 
     if opts.requestingUser?.isStaff
       newUser.accountLevel = opts.newUser.accountLevel or 'free'

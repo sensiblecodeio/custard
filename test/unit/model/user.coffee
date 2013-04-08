@@ -196,7 +196,12 @@ describe 'User (server)', ->
             shortName: 'testerson'
             displayName: 'Test Testerson Esq.'
             email: ['test@example.org']
-        , done
+        , (err, user) =>
+          @user = user
+          done err
+
+      it 'has a recurlyAccount', ->
+        should.exist @user.recurlyAccount
 
       # TODO: stub database
       xit 'saves the user to the database'

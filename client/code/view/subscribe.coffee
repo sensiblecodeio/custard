@@ -4,6 +4,7 @@ class Cu.View.Subscribe extends Backbone.View
   render: ->
     @el.innerHTML = JST['subscribe'] @options
     $.getScript "/vendor/js/recurly.js", =>
+      splitDisplayName = window.user.effective.displayName.split ' '
       Recurly.config
         subdomain: 'scraperwiki-test'
         currency: 'USD'
@@ -19,15 +20,17 @@ class Cu.View.Subscribe extends Backbone.View
         enableAddOns: false
         acceptedCards: ['mastercard', 'visa']
         account:
-          firstName: ''
-          lastName: ''
-          email: ''
+          firstName: splitDisplayName[0]
+          lastName: splitDisplayName[splitDisplayName.length - 1]
+          email: window.user.effective.email[0]
+        billingInfo:
+          firstName: splitDisplayName[0]
+          lastName: splitDisplayName[splitDisplayName.length - 1]
         signature: @options.signature
         beforeInject: @beforeInject
         successHandler: @onSuccessfulTransaction
 
   onSuccessfulTransaction: (token) ->
-    console.log 'TOKEN', token
     shortName = window.user.effective.shortName
     $.ajax
       type: 'POST'
@@ -35,7 +38,6 @@ class Cu.View.Subscribe extends Backbone.View
       data:
         recurly_token: token
       success: (result) =>
-        console.log 'RESULT', result
         window.location = '/'
       error: (err) =>
         alert err

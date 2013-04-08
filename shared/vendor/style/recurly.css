@@ -1,3 +1,15 @@
+#recurly-subscribe,
+#recurly-update-billing-info,
+#recurly-transaction {
+  width: 500px;
+  margin: 0 auto;
+  padding: 0px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.25);
+}
+
 .recurly {
   display: block;
   position: relative;
@@ -578,19 +590,26 @@
 .recurly select > option {
   color: inherit;
 }
+
 .recurly .due_now {
-  background: url("images/due_now.png") no-repeat top left;
   clear: both;
   color: #2a3a3c;
   height: 70px;
   line-height: 67px;
   vertical-align: middle;
-  padding: 0 25px;
-  width: 460px;
-  position: relative;
-  left: -5px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.50);
+  padding: 0 20px;
+  text-shadow: 0px 1px 3px rgba(0,0,0,0.6);
+  color: #fff;
+  background: #e8b62a;
+  border-bottom: 1px solid #a4801b;
+  border-top: 1px solid #a4801b;
+  -webkit-box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.7);
+  -moz-box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.7);
+  font-weight: bold;
+  font-size: 33px;
 }
+
 .recurly .due_now .title {
   float: left;
   font-size: 29px;

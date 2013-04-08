@@ -36,11 +36,9 @@ class Cu.View.Subscribe extends Backbone.View
         recurly_token: token
       success: (result) =>
         console.log 'RESULT', result
-        window.app.navigate '/', trigger: true
+        window.location = '/'
       error: (err) =>
         alert err
-
-
 
    beforeInject: ->
      # TODO: move to eco

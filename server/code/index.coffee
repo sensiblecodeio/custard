@@ -24,6 +24,7 @@ xml2js = require 'xml2js'
 Token = require('model/token')()
 {Tool} = require 'model/tool'
 {Box} = require 'model/box'
+plans = require 'plans'
 
 recurlySign = require 'lib/sign'
 
@@ -160,6 +161,7 @@ app.get '/login/?', (req, resp) ->
 
 # Allow set-password, signup, docs, etc, to be visited by anons
 app.get '/set-password/:token/?', renderClientApp
+app.get '/subscribe/?*', renderClientApp
 app.get '/pricing/?*', renderClientApp
 app.get '/signup/?*', renderClientApp
 app.get '/docs/?*', renderClientApp
@@ -210,7 +212,12 @@ app.post '/api/token/:token/?', (req, resp) ->
 
 # Add a user
 app.post '/api/user/?', (req, resp) ->
-  if not req.user?.real?.isStaff
+  subscribingTo = req.body.subscribingTo
+  subscribingTo = plans[subscribingTo]
+  # Is money required?
+  if not subscribingTo?.$
+    subscribingTo = null
+  if not req.user?.real?.isStaff and not req.body.subscribingTo?
     if req.body.inviteCode isnt process.env.CU_INVITE_CODE
       return resp.send 403, error: 'Invalid invite code'
   User.add
@@ -280,13 +287,17 @@ app.post '/api/:user/subscription/verify/?', (req, resp) ->
         explicitArray: false
       parser.parseString recurlyResp.body, (err, obj) ->
         #TODO: check for valid plan code & recurlyAccount
-        User.findByShortName req.user.effective.shortName, (err, user) ->
+        User.findByShortName req.params.user, (err, user) ->
           console.log 'Subscribed to', obj.subscription.plan.plan_code
           user.setAccountLevel obj.subscription.plan.plan_code, (err) ->
             #TODO: DRY
-            req.user.effective = getSessionUser user
             planName = obj.subscription.plan.name
-            req.flash 'info', "You've been subscribed to the #{planName} plan!"
+            msg = "You've been subscribed to the #{planName} plan!"
+            if req.user?.effective
+              req.user.effective = getSessionUser user
+            else
+              msg = "#{msg} Please check your email for an activation link."
+            req.flash 'info', msg
             req.session.save()
             resp.send 201, success: "Verified and upgraded"
 

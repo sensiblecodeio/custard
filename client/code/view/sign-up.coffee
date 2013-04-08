@@ -25,8 +25,18 @@ class Cu.View.SignUp extends Backbone.View
     ,
       success: (model, response, options) ->
         console.log model, response, options
-        $('form').hide()
-        $('#thanks').show()
+        plan = location.pathname.split('/')[2]
+        planConvert =
+          explorer: 'medium'
+          datascientist: 'large'
+        plan = planConvert[plan]
+        if plan?
+          # Note: not logged in, but going to use in the /subscribe page
+          window.user = effective: model.toJSON()
+          app.navigate "/subscribe/#{plan}", trigger: true
+        else
+          $('form').hide()
+          $('#thanks').show()
       error: (model, response, options) =>
         $('#go', @$el).removeClass('loading').html('Go!')
 

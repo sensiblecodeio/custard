@@ -74,11 +74,9 @@ class Cu.View.AppTile extends Cu.View.ToolTile
     @active = true
     @showLoading()
 
+    # TODO: DRY with RPC call
     dataset = Cu.Model.Dataset.findOrCreate
-      user: user.shortName
-      name: @model.get 'name'
       displayName: @model.get('manifest').displayName
-      box: @model.get 'box'
       tool: @model
 
     dataset.new = true

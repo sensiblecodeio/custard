@@ -22,7 +22,7 @@ scraperwiki.tool.getURL = (cb) ->
 scraperwiki.tool.rename = (name) ->
   parent.scraperwiki.xdm.rename(scraperwiki.box, name)
 
-scraperwiki.tool.sqlPush = (query, toolName) ->
+scraperwiki.tool.pushSql = (query, toolName) ->
   parent.scraperwiki.xdm.sqlPush(query, toolName)
 
 scraperwiki.exec = (cmd, success, error) ->

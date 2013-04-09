@@ -152,6 +152,7 @@ renderClientApp = (req, resp) ->
     templates: js 'template/index'
     user: JSON.stringify( req.user or {} )
     boxServer: process.env.CU_BOX_SERVER
+    recurlyDomain: process.env.RECURLY_DOMAIN
     flash: req.flash()
 
 # Render login page

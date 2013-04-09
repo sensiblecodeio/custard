@@ -6,7 +6,7 @@ class Cu.View.Subscribe extends Backbone.View
     $.getScript "/vendor/js/recurly.js", =>
       splitDisplayName = window.user.effective.displayName.split ' '
       Recurly.config
-        subdomain: 'scraperwiki-test'
+        subdomain: window.recurlyDomain
         currency: 'USD'
         country: 'GB'
         VATPercent: '20'

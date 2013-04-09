@@ -5,7 +5,7 @@ _ = require 'underscore'
 
 request = require 'request'
 
-User = require('model/user').dbInject()
+{User} = require 'model/user'
 {Box} = require 'model/box'
 plan = require 'model/plan'
 
@@ -75,6 +75,17 @@ describe 'User (server)', ->
         @user.checkPassword @password, (correct) ->
           correct.should.be.false
           done()
+
+    context "when the password doesn't exist", ->
+      before (done) ->
+        User.findByShortName 'nopassword', (err, user) =>
+          delete user.password
+          user.checkPassword 'nonono', (correct) =>
+            @correct = correct
+            done()
+
+      it 'returns false', ->
+        @correct.should.be.false
 
     context "when trying to set a password", ->
       before (done) ->

@@ -45,6 +45,16 @@ exports.users = [
   recurlyAccount: "ickletest-242363"
 },
 {
+  shortName: 'nopassword',
+  email: ['ickletest@example.org'],
+  displayName: 'Ickle Test',
+  apikey: process.env.COTEST_USER_API_KEY,
+  isStaff: false,
+  sshKeys: ['a', 'b', 'c'],
+  accountLevel: "free",
+  recurlyAccount: "nopassword-242325"
+},
+{
   shortName: 'zarino',
   email: ['zarino@scraperwiki.com'],
   displayName: 'Zarino Testington',

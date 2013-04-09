@@ -39,7 +39,7 @@ class User extends ModelBase
   checkPassword: (password, callback) ->
     User.findByShortName @shortName, (err, user) ->
       console.warn err if err?
-      if not user? then return callback false
+      if not user?.password then return callback false
 
       bcrypt.compare password, user.password, (err, correct) ->
         if correct

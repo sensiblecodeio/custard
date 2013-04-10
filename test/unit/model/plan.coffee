@@ -14,6 +14,7 @@ describe 'Plan (Server)', ->
 
   describe 'Can set quota of a box', ->
     before (done) ->
+      process.env.CU_QUOTA_SERVER = 'testy'
       @request = sinon.stub request, 'post', (opt, cb) ->
         cb null, null, null
 

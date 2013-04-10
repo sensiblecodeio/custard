@@ -17,13 +17,13 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
-xml2js = require 'xml2js'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
 Token = require('model/token')()
 {Tool} = require 'model/tool'
 {Box} = require 'model/box'
+{Subscription} = require 'model/subscription'
 plans = require 'plans'
 
 recurlySign = require 'lib/sign'
@@ -270,37 +270,26 @@ app.get '/api/:user/subscription/:plan/sign/?', (req, resp) ->
   resp.send 200, signedSubscription
 
 app.post '/api/:user/subscription/verify/?', (req, resp) ->
-  token = req.body.recurly_token
-  request.get
-    uri: "https://#{process.env.RECURLY_API_KEY}:@api.recurly.com/v2/recurly_js/result/#{token}"
-    strictSSL: true
-    headers:
-      'Accept': 'application/xml'
-      'Content-Type': 'application/xml; charset=utf-8'
-  , (err, recurlyResp, body) ->
+  Subscription.getRecurlyResult req.body.recurly_token, (err, result) ->
     if err?
-      resp.send 500, error: err
-    else if recurlyResp.statusCode isnt 200
-      resp.send recurlyResp.statusCode, error: recurlyResp.body
-    else
-      parser = new xml2js.Parser
-        ignoreAttrs: true
-        explicitArray: false
-      parser.parseString recurlyResp.body, (err, obj) ->
-        #TODO: check for valid plan code & recurlyAccount
-        User.findByShortName req.params.user, (err, user) ->
-          console.log 'Subscribed to', obj.subscription.plan.plan_code
-          user.setAccountLevel obj.subscription.plan.plan_code, (err) ->
-            #TODO: DRY
-            planName = obj.subscription.plan.name
-            msg = "You've been subscribed to the #{planName} plan!"
-            if req.user?.effective
-              req.user.effective = getSessionUser user
-            else
-              msg = "#{msg} Please check your email for an activation link."
-            req.flash 'info', msg
-            req.session.save()
-            resp.send 201, success: "Verified and upgraded"
+      statusCode = err.statusCode or 500
+    return resp.send statusCode, err.error
+    User.findByShortName req.params.user, (err, user) ->
+      if err?
+        statusCode = err.statusCode or 500
+      return resp.send statusCode, err.error
+
+      plan = result.subscription.plan
+      console.log 'Subscribed to', plan.plan_code
+      user.setAccountLevel plan.name, (err) ->
+        msg = "You've been subscribed to the #{plan.name} plan!"
+        if req.user?.effective
+          req.user.effective = getSessionUser user
+        else
+          msg = "#{msg} Please check your email for an activation link."
+        req.flash 'info', msg
+        req.session.save()
+        resp.send 201, success: "Verified and upgraded"
 
 ############ AUTHENTICATED ############
 app.all '*', ensureAuthenticated

@@ -49,7 +49,8 @@ Then on all platforms:
     # You'll also need swops-secret and you'll need to git pull it
     # every now and then.
 
-    # Some of the tests may need to start a selenium server.
+    # Some of the tests may need to start a selenium server
+    (```cake se```).
 
 # Tests
 
@@ -62,7 +63,9 @@ We love them. First download Selenium:
 
 Then start a Selenium server:
 
-    java -jar selenium-server-standalone-2.29.0.jar -Dwebdriver.chrome.driver=chromedriver
+    . activate && cake se
+
+(this is a shortcut for running ```java -jar selenium-server-standalone-2.29.0.jar -Dwebdriver.chrome.driver=chromedriver```)
 
 To run the tests:
 

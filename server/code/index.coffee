@@ -273,11 +273,13 @@ app.post '/api/:user/subscription/verify/?', (req, resp) ->
   Subscription.getRecurlyResult req.body.recurly_token, (err, result) ->
     if err?
       statusCode = err.statusCode or 500
-    return resp.send statusCode, err.error
+      error = err.error or err
+      return resp.send statusCode, error
     User.findByShortName req.params.user, (err, user) ->
       if err?
         statusCode = err.statusCode or 500
-      return resp.send statusCode, err.error
+        error = err.error or err
+        return resp.send statusCode, error
 
       plan = result.subscription.plan
       console.log 'Subscribed to', plan.plan_code

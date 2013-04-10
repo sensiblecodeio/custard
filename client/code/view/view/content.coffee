@@ -28,7 +28,7 @@ class Cu.View.ViewContent extends Backbone.View
             success: (model, resp, options) ->
               model.set 'displayName', name
               model.save()
-        pushSql: (query, toolName) =>
+        pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly
           window.app.pushSqlQuery = query
           window.tools.fetch

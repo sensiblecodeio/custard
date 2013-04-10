@@ -758,8 +758,7 @@ SQLite-specific <code>sqlite_master</code>.
 
 <h3>Tool to tool communication</h3>
 
-<p><code>scraperwiki.tool.pushSQL()</code> takes two arguments, a query and a tool name. When called, the specified tool is installed and passed the specified SQL query.
-
+<p><code>scraperwiki.tool.pushSQL()</code> takes two arguments, a query and a tool name. When called, the specified tool is installed and passed the specified SQL query. The specified tool will be able to access the query by <code>scraperwiki.readSettings().sqlQuery</code>
 <table class="table table-bordered">
   <thead>
     <tr>

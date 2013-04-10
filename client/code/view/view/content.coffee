@@ -72,6 +72,8 @@ class Cu.View.AppContent extends Cu.View.ViewContent
 class Cu.View.PluginContent extends Cu.View.ViewContent
   settings: (callback) ->
     @model.publishToken (viewToken) =>
+      query = window.app.pushSqlQuery
+      window.app.pushSqlQuery = null
       dataset = @model.get 'plugsInTo'
       dataset.publishToken (datasetToken) =>
         callback
@@ -80,6 +82,7 @@ class Cu.View.PluginContent extends Cu.View.ViewContent
             url: "#{@boxUrl}/#{@model.get 'box'}/#{viewToken}"
             publishToken: viewToken
             box: @model.get 'box'
+            sqlQuery: query
           target:
             url: "#{@boxUrl}/#{dataset.get 'box'}/#{datasetToken}"
             publishToken: datasetToken

@@ -5,6 +5,12 @@ Backbone.View::close = ->
   @remove()
 
 class Cu.Router.Main extends Backbone.Router
+  tools: ->
+    Cu.CollectionManager.get Cu.Collection.Tools
+
+  datasets: ->
+    Cu.CollectionManager.get Cu.Collection.Datasets
+
   initialize: ->
     @appView = new Cu.AppView '#content'
     @subnavView = new Cu.AppView '#subnav'

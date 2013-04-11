@@ -35,9 +35,9 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
 
   installPlugin: (name, callback) ->
     # get tool, install tool
-    tools.fetch
+    app.tools().fetch
       success: =>
-        tool = window.tools.get name
+        tool = app.tools().get name
         console.log 'tool name', tool.name
         view = new Cu.Model.View
           user: user.shortName
@@ -66,13 +66,13 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
 
 Cu.Model.Dataset.setup()
 
-class Cu.Collection.DatasetList extends Backbone.Collection
+class Cu.Collection.Datasets extends Backbone.Collection
   model: Cu.Model.Dataset
   url: -> "/api/#{window.user.effective.shortName}/datasets"
 
   visible: ->
     visibles = @filter (t) -> t.get('state') isnt 'deleted'
-    new Cu.Collection.DatasetList visibles
+    new Cu.Collection.Datasets visibles
 
   comparator: (model) ->
     model.get 'displayName'

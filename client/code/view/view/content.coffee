@@ -33,11 +33,12 @@ class Cu.View.ViewContent extends Backbone.View
         pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly
           window.app.pushSqlQuery = query
-          window.tools.fetch
+
+          app.tools().fetch
             error: (a, b, c) ->
               console.warn model, xhr, options
             success: (tools, resp, options) ->
-              tool = window.tools.findByName toolName
+              tool = app.tools().findByName toolName
               # TODO: DRY with tool tile install
               dataset = Cu.Model.Dataset.findOrCreate
                 displayName: tool.get('manifest').displayName

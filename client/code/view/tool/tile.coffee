@@ -79,6 +79,8 @@ class Cu.View.AppTile extends Cu.View.ToolTile
       displayName: @model.get('manifest').displayName
       tool: @model
 
+    app.datasets().add dataset
+
     dataset.new = true
 
     dataset.save {},

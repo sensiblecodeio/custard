@@ -76,20 +76,9 @@ class Cu.View.DataHubNav extends Backbone.View
     e.stopPropagation()
 
   showChooser: ->
-    # :TODO: We shouldn't be fetching tools in here.
-    # :TODO: This is duplicated in view/dataset/overview.coffee (for creating Views)
-    if window.tools.length == 0
-      window.tools.fetch
-        success: ->
-          t = new Cu.View.ToolList {collection: window.tools, type: 'importers'}
-          app.navigate "#{window.location.pathname}#chooser"
-          $('body').append t.render().el
-        error: (x,y,z) ->
-          console.warn 'ERRROR', x, y, z
-    else
-      t = new Cu.View.ToolList {collection: window.tools, type: 'importers'}
-      app.navigate "#{window.location.pathname}#chooser"
-      $('body').append t.render().el
+    t = new Cu.View.ToolList {type: 'importers'}
+    app.navigate "#{window.location.pathname}#chooser"
+    $('body').append t.render().el
 
   focusContextSearch: ->
     $.ajax
@@ -327,7 +316,7 @@ class Cu.View.DatasetSettingsNav extends Backbone.View
 class Cu.View.ViewNav extends Cu.View.EditableSubnav
   initialize: ->
     super()
-    # override @modelToSave for Cu.View.EditableSubnav, 
+    # override @modelToSave for Cu.View.EditableSubnav,
     # as the view is saved by saving its dataset
     @modelToSave = @model.get 'plugsInTo'
 

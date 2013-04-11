@@ -3,10 +3,12 @@ class Cu.View.DatasetTile extends Backbone.View
   tagName: 'a'
   attributes: ->
     if @options.details?
-      href: "/dataset/#{@model.attributes.box}/settings"
+      href: "/dataset/#{@model.get 'box'}/settings"
+      'data-box': @model.get 'box'
     else
-      href: "/dataset/#{@model.attributes.box}"
-  
+      href: "/dataset/#{@model.get 'box'}"
+      'data-box': @model.get 'box'
+
   events:
     'click .hide': 'hideDataset'
     'click .dropdown-menu a': 'dropdownMenuItemClick'
@@ -27,10 +29,7 @@ class Cu.View.DatasetTile extends Backbone.View
     e.preventDefault()
     e.stopPropagation()
     @$el.fadeOut()
-    @model.save {state: 'deleted'},
-      error: (e) =>
-        @$el.show()
-        console.warn 'Dataset could not be deleted!'
+    @model.save {state: 'deleted'}
 
   dropdownMenuItemClick: (e) ->
     e.preventDefault()
@@ -43,4 +42,3 @@ class Cu.View.DatasetTile extends Backbone.View
     setTimeout ->
       $('#subnav-path .editable').trigger('click')
     , 300
-

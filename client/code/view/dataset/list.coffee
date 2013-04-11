@@ -2,7 +2,8 @@ class Cu.View.DatasetList extends Backbone.View
   className: 'dataset-list row'
 
   initialize: ->
-    app.datasets().on 'sync', @addDatasets, @
+    app.datasets().on 'add', @addDataset, @
+    app.datasets().on 'change:state', @addDatasets, @
 
   events:
     'click .new-dataset-tile': ->
@@ -10,12 +11,17 @@ class Cu.View.DatasetList extends Backbone.View
 
   render: ->
     @$el.append $('<a class="new-dataset-tile swcol" title="Add a new dataset">Create a<br/>new dataset</a>').hide().fadeIn(150)
+    @$el.remove('.dataset')
     @addDatasets() if app.datasets().length
     @
 
   addDatasets: ->
-    app.datasets().visible().each @addDataset
+    @$el.remove('.dataset')
+    app.datasets().each @addDataset
 
   addDataset: (dataset, i) =>
-    view = new Cu.View.DatasetTile model: dataset
-    @$el.append $(view.render().el).hide().delay(i*75 + 100).fadeIn(150)
+    alreadyThere = @$el.find("[data-box=#{dataset.get 'box'}]").length
+
+    if not alreadyThere and dataset.get('state') isnt 'deleted'
+      view = new Cu.View.DatasetTile model: dataset
+      @$el.append $(view.render().el).hide().delay(i*75 + 100).fadeIn(150)

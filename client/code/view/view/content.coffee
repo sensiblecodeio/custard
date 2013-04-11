@@ -23,11 +23,13 @@ class Cu.View.ViewContent extends Backbone.View
         getURL: (cb) ->
           cb window.location.href
         rename: (box, name) ->
-          mod = Cu.Model.Dataset.findOrCreate box: box
-          mod.fetch
-            success: (model, resp, options) ->
-              model.set 'displayName', name
-              model.save()
+          window.tools.fetch
+            success: ->
+              mod = Cu.Model.Dataset.findOrCreate box: box
+              mod.fetch
+                success: (model, resp, options) ->
+                  model.set 'displayName', name
+                  model.save()
         pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly
           window.app.pushSqlQuery = query
@@ -36,7 +38,6 @@ class Cu.View.ViewContent extends Backbone.View
               console.warn model, xhr, options
             success: (tools, resp, options) ->
               tool = window.tools.findByName toolName
-              console.log tool
               # TODO: DRY with tool tile install
               dataset = Cu.Model.Dataset.findOrCreate
                 displayName: tool.get('manifest').displayName

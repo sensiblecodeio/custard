@@ -34,9 +34,9 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
 
   installPlugin: (name, callback) ->
     # get tool, install tool
-    tools.fetch
+    app.tools().fetch
       success: =>
-        tool = window.tools.get name
+        tool = app.tools().get name
         console.log 'tool name', tool.name
         view = new Cu.Model.View
           user: user.shortName

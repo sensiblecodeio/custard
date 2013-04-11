@@ -36,7 +36,7 @@ class Cu.View.ViewContent extends Backbone.View
             error: (a, b, c) ->
               console.warn model, xhr, options
             success: (tools, resp, options) ->
-              tool = window.tools.findByName toolName
+              tool = app.tools().findByName toolName
               console.log tool
               # TODO: DRY with tool tile install
               dataset = Cu.Model.Dataset.findOrCreate

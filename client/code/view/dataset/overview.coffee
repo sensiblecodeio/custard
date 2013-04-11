@@ -37,6 +37,6 @@ class Cu.View.DatasetOverview extends Backbone.View
     @
 
   showChooser: ->
-     t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters', dataset: @model}
+     t = new Cu.View.ToolList {type: 'nonimporters', dataset: @model}
      app.navigate "#{window.location.pathname}#chooser"
      $('body').append t.render().el

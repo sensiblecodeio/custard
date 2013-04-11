@@ -5,7 +5,16 @@ class Cu.View.ToolList extends Backbone.View
     'click .close': 'closeChooser'
     'click': 'closeChooser'
 
+  initialize: ->
+    @collection = Cu.CollectionManager.get Cu.Collection.Tools
+    @collection.on 'sync', @addTools, @
+
+    $(window).on 'keyup', (e) =>
+      if e.which == 27
+        @closeChooser()
+
   render: ->
+    console.log 'RENDER'
     @$el.hide().append('<span class="close">&times;</span>')
 
     headerView = new Cu.View.ToolListHeader {type: @options.type}
@@ -14,14 +23,10 @@ class Cu.View.ToolList extends Backbone.View
     # :TODO: Euch, DOM generation in jQuery. Unclean.
     @container = $('<div class="container">')
     @row = $('<div class="row">').appendTo(@container)
-    @addTools()
+    @addTools() if @collection.length
     @$el.append(@container).fadeIn(100)
 
-    # :TODO: this is probably the wrong place to be binding an event
-    $(window).on 'keyup', (e) =>
-      if e.which == 27
-        @closeChooser()
-    @
+    return this
 
   addTools: ->
     if @options.type == 'importers'

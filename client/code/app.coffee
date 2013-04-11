@@ -36,3 +36,18 @@ class Cu.AppView
   hideView: (view) ->
     @currentView?.close()
     $(@selector).hide().empty()
+
+class Cu.CollectionManager
+  @collections: {}
+
+  @get: (klass) ->
+    name = klass.name
+    if not @collections[name]
+      collection = new klass()
+      if collection.fetchRelated?
+        collection.fetchRelated()
+      else
+        collection.fetch()
+
+      @.collections[name] = collection
+    return @.collections[name]

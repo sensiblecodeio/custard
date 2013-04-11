@@ -1,15 +1,10 @@
 num = String(Math.random()).replace '.',''
 
-
-window.datasets = new Cu.Collection.DatasetList()
-window.tools = new Cu.Collection.Tools()
-
 Backbone.View::close = ->
   @off()
   @remove()
 
 class Cu.Router.Main extends Backbone.Router
-
   initialize: ->
     @appView = new Cu.AppView '#content'
     @subnavView = new Cu.AppView '#subnav'
@@ -51,15 +46,10 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.hideView()
 
   homeLoggedIn: ->
-    window.datasets.fetch
-      success: =>
-        contentView = new Cu.View.DatasetList {collection: window.datasets}
-        subnavView = new Cu.View.DataHubNav
-        @appView.showView contentView
-        @subnavView.showView subnavView
-        window.tools.fetch()
-      error: (x,y,z) ->
-        console.warn 'ERRROR', x, y, z
+    contentView = new Cu.View.DatasetList
+    subnavView = new Cu.View.DataHubNav
+    @appView.showView contentView
+    @subnavView.showView subnavView
 
   pricing: ->
     subnavView = new Cu.View.Subnav {text: 'Pricing'}
@@ -90,11 +80,11 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model, resp, options) =>
+        console.log 'MODEL', model.attributes
         contentView = new Cu.View.DatasetOverview {model: model}
         subnavView = new Cu.View.DatasetNav {model: model}
         @appView.showView contentView
         @subnavView.showView subnavView
-        window.tools.fetch()
       error: (model, xhr, options) =>
         # TODO: factor into function
         contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"
@@ -124,14 +114,11 @@ class Cu.Router.Main extends Backbone.Router
 
     dataset.fetch
       success: (dataset, resp, options) =>
-        # :TODO: Why do we fetch tools here?? ~Z
-        window.tools.fetch
-          success: =>
-            v = dataset.get('views').findById(viewID)
-            contentView = new Cu.View.PluginContent {model: v}
-            subnavView = new Cu.View.ViewNav {model: v}
-            @appView.showView contentView
-            @subnavView.showView subnavView
+        v = dataset.get('views').findById(viewID)
+        contentView = new Cu.View.PluginContent {model: v}
+        subnavView = new Cu.View.ViewNav {model: v}
+        @appView.showView contentView
+        @subnavView.showView subnavView
       error: (model, xhr, options) ->
         console.warn xhr
 

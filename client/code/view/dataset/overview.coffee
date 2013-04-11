@@ -37,17 +37,6 @@ class Cu.View.DatasetOverview extends Backbone.View
     @
 
   showChooser: ->
-    # :TODO: We shouldn't be fetching tools in here.
-    # :TODO: This is duplicated in view/subnav.coffee (for creating Datasets)
-    if window.tools.length == 0
-      window.tools.fetch
-        success: ->
-          t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters', dataset: @model}
-          app.navigate "#{window.location.pathname}#chooser"
-          $('body').append t.render().el
-        error: (x,y,z) ->
-          console.warn 'ERRROR', x, y, z
-    else
-      t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters', dataset: @model}
-      app.navigate "#{window.location.pathname}#chooser"
-      $('body').append t.render().el
+     t = new Cu.View.ToolList {collection: window.tools, type: 'nonimporters', dataset: @model}
+     app.navigate "#{window.location.pathname}#chooser"
+     $('body').append t.render().el

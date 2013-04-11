@@ -90,6 +90,7 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model, resp, options) =>
+        model.fetchRelated()
         contentView = new Cu.View.DatasetOverview {model: model}
         subnavView = new Cu.View.DatasetNav {model: model}
         @appView.showView contentView

@@ -23,7 +23,7 @@ class Cu.View.ViewContent extends Backbone.View
         getURL: (cb) ->
           cb window.location.href
         rename: (box, name) ->
-          window.tools.fetch
+          app.tools().fetch
             success: ->
               mod = Cu.Model.Dataset.findOrCreate box: box
               mod.fetch

@@ -27,7 +27,7 @@ userSchema = new mongoose.Schema
 
 zDbUser = mongoose.model 'User', userSchema
 
-class User extends ModelBase
+class exports.User extends ModelBase
   @dbClass: zDbUser
 
   validate: ->
@@ -151,8 +151,6 @@ class User extends ModelBase
                   callback null, userobj
         else
           callback "Can't find user", null
-
-exports.User = User
 
 exports.dbInject = (dbObj) ->
   User.dbClass = zDbUser = dbObj if dbObj?

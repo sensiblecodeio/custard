@@ -44,10 +44,7 @@ class Cu.CollectionManager
     name = klass.name
     if not @collections[name]
       collection = new klass()
-      if collection.fetchRelated?
-        collection.fetchRelated()
-      else
-        collection.fetch()
-
+      collection.fetch
+        success: -> collection.trigger 'fetched'
       @.collections[name] = collection
     return @.collections[name]

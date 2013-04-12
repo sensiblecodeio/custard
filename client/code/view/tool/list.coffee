@@ -6,15 +6,13 @@ class Cu.View.ToolList extends Backbone.View
     'click': 'closeChooser'
 
   initialize: ->
-    @collection = Cu.CollectionManager.get Cu.Collection.Tools
-    @collection.on 'sync', @addTools, @
+    app.tools().on 'fetched', @addTools, @
 
     $(window).on 'keyup', (e) =>
       if e.which == 27
         @closeChooser()
 
   render: ->
-    console.log 'RENDER'
     @$el.hide().append('<span class="close">&times;</span>')
 
     headerView = new Cu.View.ToolListHeader {type: @options.type}
@@ -23,23 +21,22 @@ class Cu.View.ToolList extends Backbone.View
     # :TODO: Euch, DOM generation in jQuery. Unclean.
     @container = $('<div class="container">')
     @row = $('<div class="row">').appendTo(@container)
-    @addTools() if @collection.length
+    @addTools() if app.tools().length
     @$el.append(@container).fadeIn(100)
 
     return this
 
   addTools: ->
-    if @options.type == 'importers'
-      @collection.importers().each @addTool
-    else
-      @collection.nonimporters().each @addTool
+    @$el.remove('.tool')
+    app.tools().each @addTool
 
   addTool: (tool) =>
-    if @options.type == 'importers'
+    if @options.type is 'importers' and tool.get('type') is 'importer'
       view = new Cu.View.AppTile model: tool
-    else
+      @row.append view.render().el
+    else if @options.type isnt 'importers' and tool.get('type') isnt 'importer'
       view = new Cu.View.PluginTile { model: tool, dataset: @options.dataset }
-    @row.append view.render().el
+      @row.append view.render().el
 
   closeChooser: ->
     @$el.fadeOut 200, ->

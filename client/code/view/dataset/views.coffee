@@ -3,10 +3,9 @@ class Cu.View.DatasetViews extends Backbone.View
 
   initialize: ->
     @views = @model.get('views').visible()
-    app.tools().on 'sync', @addTools, @
+    app.tools().on 'fetched', @addTools, @
 
   render: ->
-    console.log @views
     if @views.length > 0
       @views.each @addView
     else
@@ -14,7 +13,6 @@ class Cu.View.DatasetViews extends Backbone.View
     return this
 
   addTools: ->
-    console.log 'add tools'
     if @views.length <= 0
       app.tools().basics().each @addTool
 

@@ -5,9 +5,6 @@ class Cu.View.ToolTile extends Backbone.View
   attributes: ->
     'data-nonpushstate': ''
 
-  initialize: ->
-    @model.on 'change', @render, this
-
   render: ->
     @monkeypatchIconManifest @model
     @$el.html JST['tool-tile'] @model.toJSON()

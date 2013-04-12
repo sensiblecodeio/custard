@@ -195,7 +195,7 @@ has no order, the keys in these objects are in the same order as the columns in 
 
 <pre class="prettyprint linenums">&lt;!-- in /http/index.html --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="https://x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
+&lt;script src="https://beta.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
 &lt;form id="up" action="../../file/" method="POST" enctype="multipart/form-data"&gt;
   &lt;input type="file" name="file" size="80" id="file"&gt;
   &lt;input type="hidden" name="apikey" id="apikey"&gt;
@@ -212,7 +212,7 @@ has no order, the keys in these objects are in the same order as the columns in 
 
 <h3 id="datasets-endpoints-status">Dataset status API</h3>
 
-<p>The ScraperWiki website can display the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://x.scraperwiki.com/api/status</code>.</p>
+<p>The ScraperWiki website can display the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://beta.scraperwiki.com/api/status</code>.</p>
 
 <table class="table table-bordered">
   <thead>
@@ -401,10 +401,10 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
 You&rsquo;ll want to include Bootstrap and our custom style sheet.
 </p>
 
-<pre class="prettyprint">&lt;link rel="stylesheet" href="//x.scraperwiki.com/vendor/style/bootstrap.min.css"&gt;
-&lt;link rel="stylesheet" href="//x.scraperwiki.com/style/scraperwiki.css"&gt;
+<pre class="prettyprint">&lt;link rel="stylesheet" href="//beta.scraperwiki.com/vendor/style/bootstrap.min.css"&gt;
+&lt;link rel="stylesheet" href="//beta.scraperwiki.com/style/scraperwiki.css"&gt;
 &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="//x.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;</pre>
+&lt;script src="//beta.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;</pre>
 
 <p>Write your HTML in a way that <a href="http://twitter.github.com/bootstrap/base-css.html">works
 well with Boostrap</a>.
@@ -469,7 +469,7 @@ scraperwiki.json</pre>
 
 <pre>swot sync</pre>
 
-<p>Your changes will now be visible through the normal ScraperWiki interface, at <code>https://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>https://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
+<p>Your changes will now be visible through the normal ScraperWiki interface, at <code>https://beta.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>https://beta.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
 
 <h3>Remote development</h3>
 
@@ -545,7 +545,7 @@ old ones will keep their old code.
 endpoints and functions needed by views. It requires jQuery. You&rsquo;ll want to include it in
 your view&rsquo;s HTML <code>&lt;head&gt;</code>, after you load jQuery.</p>
 
-<pre class="prettyprint">&lt;script src="//x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
+<pre class="prettyprint">&lt;script src="//beta.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
 
 <h3>Read settings</h3>
 

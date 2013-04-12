@@ -29,14 +29,14 @@ plans = require 'plans'
 recurlySign = require 'lib/sign'
 
 # Set up database connection
-mongoose.connect process.env.CU_DB
+mongoose.connect process.env.CU_DB,
+  server:
+    auto_reconnect: true
+    socketOptions:
+      keepAlive: 1
 # Doesn't seem to do much.
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
-# More cargo cult from https://github.com/LearnBoost/mongoose/issues/306
-# (doesn't work)
-# mongoose.connection.db.serverConfig.connection.autoReconnect = true
-
 
 assets.jsCompilers.eco =
   match: /\.eco$/

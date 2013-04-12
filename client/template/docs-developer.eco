@@ -469,7 +469,7 @@ scraperwiki.json</pre>
 
 <pre>swot sync</pre>
 
-<p>Your changes will now be visible through the normal ScraperWiki interface, at <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
+<p>Your changes will now be visible through the normal ScraperWiki interface, at <code>https://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>https://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
 
 <h3>Remote development</h3>
 

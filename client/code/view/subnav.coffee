@@ -261,6 +261,7 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
     'keyup #editable-input input': 'keypressOnEditableName'
 
   render: ->
+    toolsView = new Cu.View.DatasetTools model: @model
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
         <div class="btn-group">
@@ -281,15 +282,12 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
       </div>
       <div class="btn-toolbar" id="subnav-options">
         <div class="btn-group">
-          <a class="btn dropdown-toggle" data-toggle="dropdown">Tools
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu pull-right" id="dataset-tools">
-            <li><a>First tool</a></li>
-            <li><a>Second tool</a></li>
-          </ul>
+          <a class="btn dropdown-toggle" data-toggle="dropdown">
+            Tools <span class="caret"></span>
+          </a>
         </div>
       </div>
-      <hr>""")
+      <hr>""").find('.dropdown-toggle').after(toolsView.render().el)
     @
 
 class Cu.View.SignUpNav extends Backbone.View

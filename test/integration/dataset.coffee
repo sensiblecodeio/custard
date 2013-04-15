@@ -28,11 +28,6 @@ describe 'Dataset', ->
         should.exist link
         done()
 
-    it 'shows two tools I can use on this dataset', (done) ->
-      browser.elementsByCss '.dataset-views .tool', (err, tools) ->
-        tools.length.should.equal 2
-        done()
-
     it 'has not shown the input box', (done) ->
       browser.elementByCss '#editable-input', (err, input) ->
         browser.isVisible input, (err, visible) ->
@@ -41,14 +36,27 @@ describe 'Dataset', ->
 
     context 'when I click on the Tools button', (done) ->
       before (done) ->
-        @tools.click done
-
-      it 'shows some tools I can use on this dataset', (done) ->
-        browser.elementsByCss '#dataset-tools li', (err, tools) ->
-          browser.isVisible tools[0], (err, visible) ->
-            visible.should.be.true
-            tools.length.should.equal 2
+        @tools.click =>
+          wd40.getText '#dataset-tools', (err, text) =>
+            @dropdownText = text
             done()
+
+      it 'shows a dropdown menu, containing...', (done) ->
+        browser.isVisible 'css selector', '#dataset-tools', (err, visible) ->
+          visible.should.be.true
+          done()
+
+      it '...the tool that made this dataset', ->
+        @dropdownText.should.include 'Test app'
+
+      it '...the view in a table tool', ->
+        @dropdownText.should.include 'View in a table'
+
+      it '...the spreadsheet download tool', ->
+        @dropdownText.should.include 'Download as spreadsheet'
+
+      it '...the a button to pick more tools', ->
+        @dropdownText.toLowerCase().should.include 'more tools'
 
     context 'when I click the title', ->
       before (done) ->

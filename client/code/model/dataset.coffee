@@ -38,7 +38,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     app.tools().fetch
       success: =>
         tool = app.tools().get name
-        console.log 'tool name', tool.name
+        console.warn "tool #{name} not found" unless tool?
         view = new Cu.Model.View
           user: user.shortName
           name: tool.get 'name'

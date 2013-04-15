@@ -72,23 +72,6 @@ class Cu.View.AppTile extends Cu.View.ToolTile
     @showLoading()
     @createDataset()
 
-  createDataset: ->
-    dataset = Cu.Model.Dataset.findOrCreate
-      displayName: @model.get('manifest').displayName
-      tool: @model
-    app.datasets().add dataset
-    dataset.new = true
-    dataset.save {},
-      wait: true
-      success: ->
-        delete dataset.new
-        window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
-        $('#chooser').fadeOut 200, ->
-          $(this).remove()
-      error: (model, xhr, options) ->
-        @active = false
-        console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
-
   # TODO: DRY with RPC call
   createDataset: ->
     dataset = Cu.Model.Dataset.findOrCreate

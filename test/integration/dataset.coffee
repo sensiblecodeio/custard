@@ -22,6 +22,12 @@ describe 'Dataset', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
+    it 'shows a button that shows all the tools', (done) ->
+      browser.elementByPartialLinkText 'Tools', (err, link) =>
+        @tools = link
+        should.exist link
+        done()
+
     it 'shows two tools I can use on this dataset', (done) ->
       browser.elementsByCss '.dataset-views .tool', (err, tools) ->
         tools.length.should.equal 2
@@ -32,6 +38,17 @@ describe 'Dataset', ->
         browser.isVisible input, (err, visible) ->
           visible.should.be.false
           done()
+
+    context 'when I click on the Tools button', (done) ->
+      before (done) ->
+        @tools.click done
+
+      it 'shows some tools I can use on this dataset', (done) ->
+        browser.elementsByCss '#dataset-tools li', (err, tools) ->
+          browser.isVisible tools[0], (err, visible) ->
+            visible.should.be.true
+            tools.length.should.equal 2
+            done()
 
     context 'when I click the title', ->
       before (done) ->

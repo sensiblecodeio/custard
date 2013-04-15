@@ -279,6 +279,16 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
           </span>
         </div>
       </div>
+      <div class="btn-toolbar" id="subnav-options">
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown">Tools
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu pull-right" id="dataset-tools">
+            <li><a>First tool</a></li>
+            <li><a>Second tool</a></li>
+          </ul>
+        </div>
+      </div>
       <hr>""")
     @
 

@@ -23,16 +23,20 @@ request = require 'request'
 Token = require('model/token')()
 {Tool} = require 'model/tool'
 {Box} = require 'model/box'
+{Subscription} = require 'model/subscription'
+plans = require 'plans'
+
+recurlySign = require 'lib/sign'
 
 # Set up database connection
-mongoose.connect process.env.CU_DB
+mongoose.connect process.env.CU_DB,
+  server:
+    auto_reconnect: true
+    socketOptions:
+      keepAlive: 1
 # Doesn't seem to do much.
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
-# More cargo cult from https://github.com/LearnBoost/mongoose/issues/306
-# (doesn't work)
-# mongoose.connection.db.serverConfig.connection.autoReconnect = true
-
 
 assets.jsCompilers.eco =
   match: /\.eco$/
@@ -70,6 +74,7 @@ getSessionUser = (user) ->
     isStaff: user.isStaff
     avatarUrl: "/image/avatar.png"
     accountLevel: user.accountLevel
+    recurlyAccount: user.recurlyAccount
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")
@@ -147,6 +152,8 @@ renderClientApp = (req, resp) ->
     templates: js 'template/index'
     user: JSON.stringify( req.user or {} )
     boxServer: process.env.CU_BOX_SERVER
+    recurlyDomain: process.env.RECURLY_DOMAIN
+    flash: req.flash()
 
 # Render login page
 app.get '/login/?', (req, resp) ->
@@ -155,6 +162,7 @@ app.get '/login/?', (req, resp) ->
 
 # Allow set-password, signup, docs, etc, to be visited by anons
 app.get '/set-password/:token/?', renderClientApp
+app.get '/subscribe/?*', renderClientApp
 app.get '/pricing/?*', renderClientApp
 app.get '/signup/?*', renderClientApp
 app.get '/docs/?*', renderClientApp
@@ -205,7 +213,12 @@ app.post '/api/token/:token/?', (req, resp) ->
 
 # Add a user
 app.post '/api/user/?', (req, resp) ->
-  if not req.user?.real?.isStaff
+  subscribingTo = req.body.subscribingTo
+  subscribingTo = plans[subscribingTo]
+  # Is money required?
+  if not subscribingTo?.$
+    subscribingTo = null
+  if not req.user?.real?.isStaff and not req.body.subscribingTo?
     if req.body.inviteCode isnt process.env.CU_INVITE_CODE
       return resp.send 403, error: 'Invalid invite code'
   User.add
@@ -214,6 +227,7 @@ app.post '/api/user/?', (req, resp) ->
       displayName: req.body.displayName
       email: [req.body.email]
       logoUrl: req.body.logoUrl
+      accountLevel: req.body.accountLevel
     requestingUser: req.user?.real
   , (err, user) ->
     if err?
@@ -248,11 +262,36 @@ app.post '/api/status/?', checkIdent, (req, resp) ->
           return resp.send 500, error: 'Error trying to update status'
         return resp.send 200, status: 'ok'
 
-app.post '/recurly/?', (req, resp) ->
-  token = req.body.params.recurly_token
-  request.get "https://api.recurly.com/v2/recurly_js/result/#{token}", (err, resp, body) ->
-    console.log err, body
 
+app.get '/api/:user/subscription/:plan/sign/?', (req, resp) ->
+  signedSubscription = recurlySign.sign
+    subscription:
+      plan_code: req.params.plan
+  resp.send 200, signedSubscription
+
+app.post '/api/:user/subscription/verify/?', (req, resp) ->
+  Subscription.getRecurlyResult req.body.recurly_token, (err, result) ->
+    if err?
+      statusCode = err.statusCode or 500
+      error = err.error or err
+      return resp.send statusCode, error
+    User.findByShortName req.params.user, (err, user) ->
+      if err?
+        statusCode = err.statusCode or 500
+        error = err.error or err
+        return resp.send statusCode, error
+
+      plan = result.subscription.plan
+      console.log 'Subscribed to', plan.plan_code
+      user.setAccountLevel plan.name, (err) ->
+        msg = "You've been subscribed to the #{plan.name} plan!"
+        if req.user?.effective
+          req.user.effective = getSessionUser user
+        else
+          msg = "#{msg} Please check your email for an activation link."
+        req.flash 'info', msg
+        req.session.save()
+        resp.send 201, success: "Verified and upgraded"
 
 ############ AUTHENTICATED ############
 app.all '*', ensureAuthenticated

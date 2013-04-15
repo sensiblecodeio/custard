@@ -2,7 +2,7 @@
 scraperwiki.js
 Copyright (c) 2013 ScraperWiki Limited
 ScraperWiki tool client library. See
-http://x.scraperwiki.com/docs
+https://beta.scraperwiki.com/docs
 
 jQuery is required.
 ###
@@ -21,6 +21,9 @@ scraperwiki.tool.getURL = (cb) ->
 
 scraperwiki.tool.rename = (name) ->
   parent.scraperwiki.xdm.rename(scraperwiki.box, name)
+
+scraperwiki.tool.pushSQL = (query, toolName) ->
+  parent.scraperwiki.xdm.pushSQL(query, toolName)
 
 scraperwiki.exec = (cmd, success, error) ->
   settings = scraperwiki.readSettings()

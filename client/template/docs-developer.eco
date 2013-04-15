@@ -10,12 +10,13 @@
     <li class="nav-header">Views</li>
     <li><a data-nonpushstate href="#views-basics">View basics</a></li>
     <li><a data-nonpushstate href="#views-styling">Styling your view</a></li>
-    <li><a data-nonpushstate href="#views-helper">Helper library</a></li>
     <li class="nav-header">Tools</li>
     <li><a data-nonpushstate href="#tools-structure">Structure of a tool</a></li>
     <li><a data-nonpushstate href="#tools-process">Development process</a></li>
     <li><a data-nonpushstate href="#tools-submitting">Submitting your tool</a></li>
     <li><a data-nonpushstate href="#tools-updating">Updating your tool</a></li>
+    <li class="nav-header">Helper library</li>
+    <li><a data-nonpushstate href="#views-helper">Helper library</a></li>
   </ul>
 </nav>
 
@@ -58,6 +59,16 @@ This will show you how to SSH in.</p>
 }</pre>
 
 <p>Your box&rsquo;s <code>publish_token</code> is used to secure its public-facing, read-only endpoints (<code>/http</code> and <code>/sqlite</code>). It should be alphanumeric and 10-30 characters long. Or, if you&rsquo;d prefer to make your box&rsquo;s contents public, you can set it to an empty string or remove its entry entirely from <code>~/box.json</code>.</p>
+
+<p>
+At any one time your box is allocated to one particular server, but that
+server might change from time to time.
+Occasionally we may need to migrate your box to a new server (when ScraperWiki has to create or
+destroy servers).
+In that case we may kill running process on your box. Any new processes
+that your box creates (via the exec endpoint or cron) will run on the new server,
+so <code>ps</code> will still list all the processes.
+</p>
 
 <hr />
 
@@ -184,7 +195,7 @@ has no order, the keys in these objects are in the same order as the columns in 
 
 <pre class="prettyprint linenums">&lt;!-- in /http/index.html --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="https://x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
+&lt;script src="https://beta.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
 &lt;form id="up" action="../../file/" method="POST" enctype="multipart/form-data"&gt;
   &lt;input type="file" name="file" size="80" id="file"&gt;
   &lt;input type="hidden" name="apikey" id="apikey"&gt;
@@ -201,7 +212,7 @@ has no order, the keys in these objects are in the same order as the columns in 
 
 <h3 id="datasets-endpoints-status">Dataset status API</h3>
 
-<p>The ScraperWiki website can display the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://x.scraperwiki.com/api/status</code>.</p>
+<p>The ScraperWiki website can display the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://beta.scraperwiki.com/api/status</code>.</p>
 
 <table class="table table-bordered">
   <thead>
@@ -266,9 +277,15 @@ example, to get a Python package, do this:
 The <code>MAILTO</code> variable works as normal, and is a good way to get
 cron output via email.</p>
 
-<p>Unlike other facilities, this runs separately on each physical server in
-ScraperWiki&rsquo;s cluster. Currently you only have access to one server &ndash; this will
-change as we add more.</p>
+<p>Cron jobs run on the same server as the rest of your box; as noted above the particular server may
+change from time to time but at any moment all of your box's processes will be running on the same
+server.</p>
+
+<p>For technical reasons we encourage you not to schedule your cron jobs for specific times (such as
+10 minutes past the hour).
+Use <code>@daily</code> and <code>@hourly</code> instead. We may not honour crontabs that run jobs at
+specific times.
+</p>
 
 <h3>SMTP</h3>
 
@@ -384,10 +401,10 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
 You&rsquo;ll want to include Bootstrap and our custom style sheet.
 </p>
 
-<pre class="prettyprint">&lt;link rel="stylesheet" href="//x.scraperwiki.com/vendor/style/bootstrap.min.css"&gt;
-&lt;link rel="stylesheet" href="//x.scraperwiki.com/style/scraperwiki.css"&gt;
+<pre class="prettyprint">&lt;link rel="stylesheet" href="//beta.scraperwiki.com/vendor/style/bootstrap.min.css"&gt;
+&lt;link rel="stylesheet" href="//beta.scraperwiki.com/style/scraperwiki.css"&gt;
 &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="//x.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;</pre>
+&lt;script src="//beta.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;</pre>
 
 <p>Write your HTML in a way that <a href="http://twitter.github.com/bootstrap/base-css.html">works
 well with Boostrap</a>.
@@ -397,13 +414,138 @@ well with Boostrap</a>.
 
 <hr />
 
+<h2 id="tools-structure">Structure of a tool</h2>
+
+<p>Tools are packaged datasets or views &ndash; files in a git repository which are built to run automatically when installed into a new box. By way of example, here are the contents of the <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">Spreadsheet upload tool</a>:</p>
+
+<pre class="prettyprint">code/
+ └ extract.py
+http/
+ ├ done.html
+ ├ index.html
+ └ style.css
+test/
+ ├ simple.py
+ └ tricky.py
+README.md
+scraperwiki.json</pre>
+
+<p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe. This <code>index.html</code> contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It works just like the <a href="views-basics">views</a> described above, and uses the <a href="#datasets-endpoints">box API endpoints</a> to select data and run server-side code.</p>
+
+<p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
+
+<pre class="prettyprint linenums">{
+  "displayName": "Upload a Spreadsheet",
+  "description": "Upload an Excel file or CSV"
+}</pre>
+
+<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
+
+<p>The <code>test/</code> directory contains Python unit tests used during development. We suggest you write tests for your tools, expecially when listing them publically in the ScraperWiki Data Store.</p>
+
+<hr />
+
+<h2 id="tools-process">Development process</h2>
+
+<p>When you&rsquo;re writing a new tool on your local machine, you&rsquo;ll probably want to preview your changes without officially committing them to the git repo. Since tools rely so heavily on the ScraperWiki platform, previewing locally isn&rsquo;t an option. But neither is comitting every change you make and initiating the tool again and again via the ScraperWiki web interface.</p>
+
+<h3>Local development</h3>
+
+<p>It&rsquo;s for this reason that we&rsquo;ve built <a href="https://github.com/scraperwiki/swot">swot</a>: a tool for developing tools! Install it from our git repo:</p>
+
+<pre>git clone git://github.com/scraperwiki/swot.git</pre>
+
+<p>You will need a box to test your dataset or view in. Create one on ScraperWiki by using the "Code your own dataset!" or "Code your own view!" tool. You will be shown SSH instructions for the resulting box &ndash; make a note of the 7-character <code>box_name</code> and your <code>apikey</code>, and enter them into <code>swot</code> from within your local tool directory:</p>
+
+<pre>swot setup <em class="muted">&lt;box_name&gt;</em> <em class="muted">&lt;apikey&gt;</em></pre>
+
+<p>This automatically adds your SSH keys to the box, and saves some settings into <code>.swotconfig</code></p>
+
+<p>To get <code>swot</code> to watch your local directory for changes and automatically sync them up to the box on ScraperWiki, run:</p>
+
+<pre>swot watch</pre>
+
+<p>Note: a bug in node.js means this doesn&rsquo;t work on a Mac. Try manually synchronizing instead:</p>
+
+<pre>swot sync</pre>
+
+<p>Your changes will now be visible through the normal ScraperWiki interface, at <code>https://beta.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>https://beta.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
+
+<h3>Remote development</h3>
+
+<p>If you&rsquo;d prefer to edit the live code directly in a box, you can SSH in, and use <code>vim</code> or <code>emacs</code>. You&rsquo;ll need to configure your environment there, separately for each tool you&rsquo;re making.</p>
+
+<hr />
+
+<h2 id="tools-submitting">Submitting your tool</h2>
+
+<p>To sumbit a completed tool (or work in progress!) to ScraperWiki, make a <code>HTTP POST</code> request to <code>/api/tools</code>, with the following body parameters:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>POST&nbsp;parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>name</code></td>
+    <td>A unique name for your tool. Should contain only alphanumeric characters and hyphens. This internal to ScraperWiki and will not be seen by end-users.</td>
+  </tr>
+  <tr>
+    <td><code>type</code></td>
+    <td>Either <code>importer</code> if your tool creates new datasets, or <code>view</code> if it visualises/exports existing datasets.</td>
+  </tr>
+  <tr>
+    <td><code>public</code></td>
+    <td>Whether your tool is public or not (a private tool will only be visible to you). Can be <code>true</code> or <code>false</code>. It defaults to <code>false</code>.</td>
+  </tr>
+  <tr>
+    <td><code>gitUrl</code></td>
+    <td>URL of your tool&rsquo;s Git repo, eg: <code>git://github.com/scraperwiki/spreadsheet-download-tool.git</code></td>
+  </tr>
+</table>
+
+<p>This API endpoint currently requires an active ScraperWiki login session. It is therefore easiest to call the API from the Javascript console in your web browser, while you are logged into ScraperWiki. eg:</p>
+
+<pre class="prettyprint">
+$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", public: true, gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
+</pre>
+
+<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#tools-structure">the structure outlined above</a>.</p>
+
+<p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="text-error">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
+
+<h2 id="tools-updating">Updating your tool</h2>
+
+<p>To update a tool, call the same API endpoint as for submitting a new tool.
+Specify the <code>name</code>, spelt the same as when you submitted the tool.
+Other parameters are ignored.</p>
+
+<pre class="prettyprint">
+$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download"}}).complete(function(r){ console.log(r.responseText) })
+</pre>
+
+<p>ScraperWiki will get the latest display name and description from <code>scraperwiki.json</code>.
+It will also update the code of any datasets or views that were made using the tool by
+running <code>git pull</code> in their <code>tool</code> directory.
+</p>
+
+<p class="well well-small"><span class="label label-warning">Warning!</span>
+If you update the git repository of a tool without calling
+<code>/api/tools</code>, then new datasets/views will get the latest code and
+old ones will keep their old code.
+</p>
+
+<hr />
+
 <h2 id="views-helper">Helper library</h2>
 
 <p>There&rsquo;s a client side Javascript library, which wraps a lot of the API
 endpoints and functions needed by views. It requires jQuery. You&rsquo;ll want to include it in
 your view&rsquo;s HTML <code>&lt;head&gt;</code>, after you load jQuery.</p>
 
-<pre class="prettyprint">&lt;script src="//x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
+<pre class="prettyprint">&lt;script src="//beta.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
 
 <h3>Read settings</h3>
 
@@ -614,131 +756,23 @@ SQLite-specific <code>sqlite_master</code>.
 
 <pre class="prettyprint">scraperwiki.alert("Could not authenticate with Twitter", "Please check your username and password", 1)</pre>
 
-<hr />
+<h3>Tool to tool communication</h3>
 
-<h2 id="tools-structure">Structure of a tool</h2>
-
-<p>Tools are packaged datasets or views &ndash; files in a git repository which are built to run automatically when installed into a new box. By way of example, here are the contents of the <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">Spreadsheet upload tool</a>:</p>
-
-<pre class="prettyprint">code/
- └ extract.py
-http/
- ├ done.html
- ├ index.html
- └ style.css
-test/
- ├ simple.py
- └ tricky.py
-README.md
-scraperwiki.json</pre>
-
-<p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe. This <code>index.html</code> contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It works just like the <a href="views-basics">views</a> described above, and uses the <a href="#datasets-endpoints">box API endpoints</a> to select data and run server-side code.</p>
-
-<p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
-
-<pre class="prettyprint linenums">{
-  "displayName": "Upload a Spreadsheet",
-  "description": "Upload an Excel file or CSV"
-}</pre>
-
-<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
-
-<p>The <code>test/</code> directory contains Python unit tests used during development. We suggest you write tests for your tools, expecially when listing them publically in the ScraperWiki Data Store.</p>
-
-<hr />
-
-<h2 id="tools-process">Development process</h2>
-
-<p>When you&rsquo;re writing a new tool on your local machine, you&rsquo;ll probably want to preview your changes without officially committing them to the git repo. Since tools rely so heavily on the ScraperWiki platform, previewing locally isn&rsquo;t an option. But neither is comitting every change you make and initiating the tool again and again via the ScraperWiki web interface.</p>
-
-<h3>Local development</h3>
-
-<p>It&rsquo;s for this reason that we&rsquo;ve built <a href="https://github.com/scraperwiki/swot">swot</a>: a tool for developing tools! Install it from our git repo:</p>
-
-<pre>git clone git://github.com/scraperwiki/swot.git</pre>
-
-<p>You will need a box to test your dataset or view in. Create one on ScraperWiki by using the "Code your own dataset!" or "Code your own view!" tool. You will be shown SSH instructions for the resulting box &ndash; make a note of the 7-character <code>box_name</code> and your <code>apikey</code>, and enter them into <code>swot</code> from within your local tool directory:</p>
-
-<pre>swot setup <em class="muted">&lt;box_name&gt;</em> <em class="muted">&lt;apikey&gt;</em></pre>
-
-<p>This automatically adds your SSH keys to the box, and saves some settings into <code>.swotconfig</code></p>
-
-<p>To get <code>swot</code> to watch your local directory for changes and automatically sync them up to the box on ScraperWiki, run:</p>
-
-<pre>swot watch</pre>
-
-<p>Note: a bug in node.js means this doesn&rsquo;t work on a Mac. Try manually synchronizing instead:</p>
-
-<pre>swot sync</pre>
-
-<p>Your changes will now be visible through the normal ScraperWiki interface, at <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>http://x.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
-
-<h3>Remote development</h3>
-
-<p>If you&rsquo;d prefer to edit the live code directly in a box, you can SSH in, and use <code>vim</code> or <code>emacs</code>. You&rsquo;ll need to configure your environment there, separately for each tool you&rsquo;re making.</p>
-
-<hr />
-
-<h2 id="tools-submitting">Submitting your tool</h2>
-
-<p>To sumbit a completed tool (or work in progress!) to ScraperWiki, make a <code>HTTP POST</code> request to <code>/api/tools</code>, with the following body parameters:</p>
-
+<p><code>scraperwiki.tool.pushSQL()</code> takes two arguments, a query and a tool name. When called, the specified tool is installed and passed the specified SQL query. The specified tool will be able to access the query by <code>scraperwiki.readSettings().sqlQuery</code>
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>POST&nbsp;parameter</th>
+      <th>Argument</th>
       <th>Description</th>
     </tr>
   </thead>
   <tr>
-    <td><code>name</code></td>
-    <td>A unique name for your tool. Should contain only alphanumeric characters and hyphens. This internal to ScraperWiki and will not be seen by end-users.</td>
+    <td><code>query</code></td>
+    <td>An SQL query to pass to the tool.</td>
   </tr>
   <tr>
-    <td><code>type</code></td>
-    <td>Either <code>importer</code> if your tool creates new datasets, or <code>view</code> if it visualises/exports existing datasets.</td>
-  </tr>
-  <tr>
-    <td><code>public</code></td>
-    <td>Whether your tool is public or not (a private tool will only be visible to you). Can be <code>true</code> or <code>false</code>. It defaults to <code>false</code>.</td>
-  </tr>
-  <tr>
-    <td><code>gitUrl</code></td>
-    <td>URL of your tool&rsquo;s Git repo, eg: <code>git://github.com/scraperwiki/spreadsheet-download-tool.git</code></td>
+    <td><code>toolName</code></td>
+    <td>The name of the tool to be installed.</td>
   </tr>
 </table>
-
-<p>This API endpoint currently requires an active ScraperWiki login session. It is therefore easiest to call the API from the Javascript console in your web browser, while you are logged into ScraperWiki. eg:</p>
-
-<pre class="prettyprint">
-$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", public: true, gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
-</pre>
-
-<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#tools-structure">the structure outlined above</a>.</p>
-
-<p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="text-error">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
-
-<h2 id="tools-updating">Updating your tool</h2>
-
-<p>To update a tool, call the same API endpoint as for submitting a new tool. 
-Specify the <code>name</code>, spelt the same as when you submitted the tool.
-Other parameters are ignored.</p>
-
-<pre class="prettyprint">
-$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download"}}).complete(function(r){ console.log(r.responseText) })
-</pre>
-
-<p>ScraperWiki will get the latest display name and description from <code>scraperwiki.json</code>. 
-It will also update the code of any datasets or views that were made using the tool by 
-running <code>git pull</code> in their <code>tool</code> directory.
-</p>
-
-<p class="well well-small"><span class="label label-warning">Warning!</span> 
-If you update the git repository of a tool without calling
-<code>/api/tools</code>, then new datasets/views will get the latest code and
-old ones will keep their old code.
-</p>
-
 </div>
-
-

@@ -5,9 +5,6 @@ class Cu.View.ToolTile extends Backbone.View
   attributes: ->
     'data-nonpushstate': ''
 
-  initialize: ->
-    @model.on 'change', @render, this
-
   render: ->
     @monkeypatchIconManifest @model
     @$el.html JST['tool-tile'] @model.toJSON()
@@ -74,12 +71,12 @@ class Cu.View.AppTile extends Cu.View.ToolTile
     @active = true
     @showLoading()
 
+    # TODO: DRY with RPC call
     dataset = Cu.Model.Dataset.findOrCreate
-      user: user.shortName
-      name: @model.get 'name'
       displayName: @model.get('manifest').displayName
-      box: @model.get 'box'
       tool: @model
+
+    app.datasets().add dataset
 
     dataset.new = true
 

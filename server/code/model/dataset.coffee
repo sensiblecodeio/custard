@@ -66,7 +66,11 @@ Dataset.View =
     , (err, docs) ->
       # convert from dataset to its views...
       listoflists = _.map docs, (item) ->
-        item.views
+        newViews = []
+        for view in item.views
+          newView = user: item.user
+          newViews.push _.extend newView, view.toObject()
+        newViews
       # concatenate into one giant list...
       onelist = _.reduce listoflists, ((a, b) -> a.concat(b)), []
       # then filter.

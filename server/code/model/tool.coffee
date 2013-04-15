@@ -9,7 +9,6 @@ rimraf = require 'rimraf'
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
-{User} = require 'model/user'
 {Dataset} = require 'model/dataset'
 
 ModelBase = require 'model/base'
@@ -30,7 +29,7 @@ toolSchema = new Schema
 
 zDbTool = mongoose.model 'Tool', toolSchema
 
-class Tool extends ModelBase
+class exports.Tool extends ModelBase
   @dbClass: zDbTool
 
   gitCloneOrPull: (options, callback) ->
@@ -43,6 +42,7 @@ class Tool extends ModelBase
       child_process.exec cmd, callback
 
   updateInstances: (done) ->
+    {User} = require 'model/user' # Avoids circular dependency
     # updates all of the boxes on cobalt that use this tool.
     if @type == 'importer'
       M = Dataset
@@ -50,7 +50,7 @@ class Tool extends ModelBase
       M = Dataset.View
     else
       console.warn "unexpected tool type"
-      done "tooltypewrong"
+      return done "tooltypewrong"
     M.findAllByTool @name, (err, datasets) =>
       async.forEach datasets, (item, cb) =>
         User.findByShortName item.user, (err, user) =>
@@ -108,8 +108,6 @@ class Tool extends ModelBase
       else
         result = (@makeModelFromMongo(doc) for doc in docs)
         cb null, result
-
-exports.Tool = Tool
 
 exports.dbInject = (dbObj) ->
   Tool.dbClass = zDbBox = dbObj

@@ -13,7 +13,10 @@ prepIntegration = ->
         browser.get login_url, done
 
   after (done) ->
-    browser.quit done
+    unless process.env.BROWSER_KEEP?
+      browser.quit done
+    else
+      done()
 
 exports.wd40 = wd40
 exports.browser = browser

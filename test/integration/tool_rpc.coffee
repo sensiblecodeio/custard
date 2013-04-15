@@ -103,3 +103,22 @@ describe 'Tool RPC', ->
           should.exist obj?.table?.SurLeTable
           should.exist obj?.table?.VoirLeLapin
           done()
+
+    context 'when the tool sql push button is pressed', ->
+      before (done) ->
+        wd40.switchToBottomFrame ->
+          wd40.click '#sqlpush', ->
+            wd40.switchToTopFrame done
+
+      # Wait for tool to be installed
+      before (done) ->
+        setTimeout done, 5000
+
+      before (done) ->
+        wd40.switchToBottomFrame done
+
+      it 'should take me to the test push tool', (done) ->
+        wd40.waitForText "Test push tool", done
+
+      it 'should display the correct sql query', (done) ->
+        wd40.waitForText "SELECT 1", done

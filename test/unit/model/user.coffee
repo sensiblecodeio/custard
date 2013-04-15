@@ -5,7 +5,7 @@ _ = require 'underscore'
 
 request = require 'request'
 
-User = require('model/user').dbInject()
+{User} = require 'model/user'
 {Box} = require 'model/box'
 plan = require 'model/plan'
 
@@ -75,6 +75,17 @@ describe 'User (server)', ->
         @user.checkPassword @password, (correct) ->
           correct.should.be.false
           done()
+
+    context "when the password doesn't exist", ->
+      before (done) ->
+        User.findByShortName 'nopassword', (err, user) =>
+          delete user.password
+          user.checkPassword 'nonono', (correct) =>
+            @correct = correct
+            done()
+
+      it 'returns false', ->
+        @correct.should.be.false
 
     context "when trying to set a password", ->
       before (done) ->
@@ -196,7 +207,12 @@ describe 'User (server)', ->
             shortName: 'testerson'
             displayName: 'Test Testerson Esq.'
             email: ['test@example.org']
-        , done
+        , (err, user) =>
+          @user = user
+          done err
+
+      it 'has a recurlyAccount', ->
+        should.exist @user.recurlyAccount
 
       # TODO: stub database
       xit 'saves the user to the database'

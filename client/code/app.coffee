@@ -11,6 +11,10 @@ $ ->
   window.app = new Cu.Router.Main()
   Backbone.history.start {pushState: on}
 
+  window.app.on 'route', ->
+    $('#info').remove()
+    $('#error').remove()
+
   if Backbone.history and Backbone.history._hasPushState
     $(document).delegate "a[href]:not([href^=http])", "click", (evt) ->
       unless $(@).is '[data-nonpushstate]'
@@ -32,4 +36,15 @@ class Cu.AppView
   hideView: (view) ->
     @currentView?.close()
     $(@selector).hide().empty()
-    
+
+class Cu.CollectionManager
+  @collections: {}
+
+  @get: (klass) ->
+    name = klass.name
+    if not @collections[name]
+      collection = new klass()
+      collection.fetch
+        success: -> collection.trigger 'fetched'
+      @.collections[name] = collection
+    return @.collections[name]

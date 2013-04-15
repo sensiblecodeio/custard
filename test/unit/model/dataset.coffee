@@ -21,7 +21,7 @@ describe 'Client model: Dataset', ->
       @dataset = Cu.Model.Dataset.findOrCreate
         user: 'test'
         box: @box
-        tool: 'test-app'
+        tool: @tool
 
     it 'has an URL of /api/test/datasets/{id} if the dataset is new', ->
       @dataset.new = true
@@ -31,8 +31,11 @@ describe 'Client model: Dataset', ->
       @dataset.new = false # We shouldn't have to set this...
       @dataset.url().should.include @box
 
-    it 'has a related tool', ->
+    xit 'has a related tool', ->
       tool = @dataset.get('tool')
+      console.log tool
+      console.log tool.get('displayName')
+      console.log tool.attributes.displayName
       tool.get('displayName').should.equal 'Test App'
 
 describe 'Server model: Dataset', ->

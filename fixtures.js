@@ -30,7 +30,8 @@ exports.users = [
   apikey: process.env.COTEST_STAFF_API_KEY,
   isStaff: true,
   sshKeys: [],
-  accountLevel: "grandfather"
+  accountLevel: "grandfather",
+  recurlyAccount: "ehg-2423432"
 },
 {
   shortName: 'ickletest',
@@ -40,7 +41,18 @@ exports.users = [
   apikey: process.env.COTEST_USER_API_KEY,
   isStaff: false,
   sshKeys: ['a', 'b', 'c'],
-  accountLevel: "free"
+  accountLevel: "free",
+  recurlyAccount: "ickletest-242363"
+},
+{
+  shortName: 'nopassword',
+  email: ['ickletest@example.org'],
+  displayName: 'Ickle Test',
+  apikey: process.env.COTEST_USER_API_KEY,
+  isStaff: false,
+  sshKeys: ['a', 'b', 'c'],
+  accountLevel: "free",
+  recurlyAccount: "nopassword-242325"
 },
 {
   shortName: 'zarino',
@@ -50,7 +62,8 @@ exports.users = [
   apikey: process.env.COTEST_USER_API_KEY,
   sshKeys: ['d', 'e', 'f'],
   isStaff: false,
-  accountLevel: "grandfather"
+  accountLevel: "grandfather",
+  recurlyAccount: "zarino-2423348"
 }
 ];
 
@@ -65,6 +78,7 @@ exports.tools = [
 { name: "newdataset", public: true, type: "importer", gitUrl: "https://github.com/scraperwiki/newdataset-tool.git", manifest: { description: "Create a new, empty dataset", gitUrl: "https://github.com/scraperwiki/newdataset-tool.git", displayName: "Code a dataset!" } },
 { name: "test-app", public: true, type: "importer", gitUrl: "https://github.com/scraperwiki/test-app-tool.git", manifest: { description: "Test app", gitUrl: "https://github.com/scraperwiki/test-app-tool.git", displayName: "Test app" } },
 { name: "test-plugin", public: true, type: "view", gitUrl: "https://github.com/scraperwiki/test-plugin-tool.git", manifest: { description: "Test plugin", gitUrl: "https://github.com/scraperwiki/test-plugin-tool.git", displayName: "Test plugin" } },
+{ name: "test-push", public: true, type: "importer", gitUrl: "https://github.com/scraperwiki/test-push-tool.git", manifest: { description: "Test push", gitUrl: "https://github.com/scraperwiki/test-push-tool.git", displayName: "Test push" } },
 { name: "spreadsheet-download", public: true, type: "view", gitUrl: "https://github.com/scraperwiki/spreadsheet-download-tool", manifest: { description: "Download your dataset as an Excel file", gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git", displayName: "Download as spreadsheet" } },
 { name: "newview", public: true, type: "view", gitUrl: "git://github.com/scraperwiki/newview-tool.git", manifest: { description: "Visualise or export your dataset however you'd like. A blank slate. Get creative!", gitUrl: "git://github.com/scraperwiki/newview-tool.git", displayName: "Code your own view!" } },
 { name: "view-source", public: true, type: "view", gitUrl: "git://github.com/scraperwiki/view-source-tool.git", manifest: { description: "Find out how to see the code that powers your dataset", gitUrl: "https://github.com/scraperwiki/view-source-tool.git", displayName: "View source" } },

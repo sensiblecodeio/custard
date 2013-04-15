@@ -10,6 +10,7 @@ class Cu.View.CreateProfile extends Backbone.View
 
   createProfile: (e) ->
     e.preventDefault()
+    accountLevel = $('#accountlevel').val()
     displayName = $('#displayname').val()
     shortName = $('#shortname').val()
     email = $('#email').val()
@@ -19,6 +20,7 @@ class Cu.View.CreateProfile extends Backbone.View
       $.ajax
         url: "#{location.protocol}//#{location.host}/api/user/"
         data:
+          accountLevel: accountLevel
           shortName: shortName
           displayName: displayName
           email: email

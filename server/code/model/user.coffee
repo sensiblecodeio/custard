@@ -19,6 +19,7 @@ userSchema = new mongoose.Schema
   apikey: {type: String, unique: true}
   isStaff: Boolean
   accountLevel: String
+  recurlyAccount: {type: String, unique: true}
   trialStarted: {type: Date, default: Date.now}
   created: {type: Date, default: Date.now}
   logoUrl: String
@@ -26,7 +27,7 @@ userSchema = new mongoose.Schema
 
 zDbUser = mongoose.model 'User', userSchema
 
-class User extends ModelBase
+class exports.User extends ModelBase
   @dbClass: zDbUser
 
   validate: ->
@@ -38,7 +39,7 @@ class User extends ModelBase
   checkPassword: (password, callback) ->
     User.findByShortName @shortName, (err, user) ->
       console.warn err if err?
-      if not user? then return callback false
+      if not user?.password then return callback false
 
       bcrypt.compare password, user.password, (err, correct) ->
         if correct
@@ -62,6 +63,10 @@ class User extends ModelBase
         plan.setDiskQuota box, @accountLevel, next
       , ->
         callback null, true
+
+  setAccountLevel: (plan, callback) ->
+    @accountLevel = plan
+    @save callback
 
   # Sends a list of box sshkeys to cobalt for each box a user
   # can access, so cobalt can overwite the authorized_keys for a box
@@ -102,12 +107,17 @@ class User extends ModelBase
 
   # Add and email the user
   @add: (opts, callback) ->
+    recurlyRand = String(Math.random()).replace('0.', '')
     newUser =
       shortName: opts.newUser.shortName
       displayName: opts.newUser.displayName
       email: [opts.newUser.email]
       apikey: uuid.v4()
       accountLevel: 'free'
+      recurlyAccount: "#{opts.newUser.shortName}.#{recurlyRand}"
+
+    if opts.requestingUser?.isStaff
+      newUser.accountLevel = opts.newUser.accountLevel or 'free'
 
     if opts.newUser.logoUrl?
       newUser.logoUrl = opts.newUser.logoUrl
@@ -141,8 +151,6 @@ class User extends ModelBase
                   callback null, userobj
         else
           callback "Can't find user", null
-
-exports.User = User
 
 exports.dbInject = (dbObj) ->
   User.dbClass = zDbUser = dbObj if dbObj?

@@ -36,10 +36,10 @@
   <script>
     window.user = <%- user %>
     window.boxServer = "<%- boxServer %>"
+    window.recurlyDomain = "<%- recurlyDomain %>"
   </script>
   <%- templates %>
   <%- scripts %>
-  <script src="/vendor/js/nibbler.js"></script>
 </head>
 <body>
   <header id="header">
@@ -49,6 +49,16 @@
       <nav></nav>
     </div>
   </header>
+  <% if (flash.error && flash.error.length > 0) { %>
+  <div id="error" class="alert alert-error alert-block">
+    <h4><%=flash.error[0] %></h4>
+  </div>
+  <% } %>
+  <% if (flash.info && flash.info.length > 0) { %>
+  <div id="info" class="alert alert-info alert-block">
+    <h4><%=flash.info[0] %></h4>
+  </div>
+  <% } %>
   <div id="subnav" class="container"></div>
   <div id="content" class="container"></div>
 </body>

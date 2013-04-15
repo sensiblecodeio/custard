@@ -101,8 +101,8 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
-        subnavView = new Cu.View.DatasetSettingsNav {model: model}
-        contentView = new Cu.View.AppContent {model: model}
+        subnavView = new Cu.View.DatasetNav model: model
+        contentView = new Cu.View.AppContent model: model
         @appView.showView contentView
         @subnavView.showView subnavView
       error: (x,y,z) ->
@@ -120,8 +120,8 @@ class Cu.Router.Main extends Backbone.Router
     dataset.fetch
       success: (dataset, resp, options) =>
         v = dataset.get('views').findById(viewID)
-        contentView = new Cu.View.PluginContent {model: v}
-        subnavView = new Cu.View.ViewNav {model: v}
+        contentView = new Cu.View.PluginContent model: v
+        subnavView = new Cu.View.DatasetNav model: dataset
         @appView.showView contentView
         @subnavView.showView subnavView
       error: (model, xhr, options) ->

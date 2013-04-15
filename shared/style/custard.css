@@ -62,6 +62,19 @@ body.fullscreen .container {
   margin-left: 20px;
 }
 
+#header #beta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: block;
+  height: 50px;
+  width: 50px;
+  background: transparent url(../image/beta.png) 0 0 no-repeat;
+  text-indent: -9000px;
+  outline: none;
+}
+
 #header nav {
   display: none; /* :TODO: work out how to display nav for small devices */
 }

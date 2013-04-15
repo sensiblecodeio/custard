@@ -27,6 +27,11 @@ class Cu.Collection.ViewList extends Backbone.Collection
   findById: (id) ->
     views = @find (t) -> t.id is id
 
+  # returns first match
+  findByToolName: (name) ->
+    tool = app.tools().findByName 'name'
+    @find (view) -> view.tool is tool
+
   visible: ->
     visibles = @filter (t) -> t.get('state') isnt 'deleted'
     new Cu.Collection.ViewList visibles

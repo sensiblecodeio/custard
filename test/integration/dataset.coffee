@@ -22,7 +22,8 @@ describe 'Dataset', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    it 'shows two tools I can use on this dataset', (done) ->
+    # Waiting for subnav change
+    xit 'shows two tools I can use on this dataset', (done) ->
       browser.elementsByCss '.dataset-views .tool', (err, tools) ->
         tools.length.should.equal 2
         done()

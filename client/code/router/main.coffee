@@ -84,12 +84,20 @@ class Cu.Router.Main extends Backbone.Router
 
   dataset: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
+    # TODO: sucky code
     mod.fetch
       success: (model, resp, options) =>
-        contentView = new Cu.View.DatasetOverview {model: model}
         subnavView = new Cu.View.DatasetNav {model: model}
-        @appView.showView contentView
         @subnavView.showView subnavView
+        dataTablesView = model.get('views').findByToolName 'datatables-view-tool'
+        if dataTablesView
+          contentView = new Cu.View.PluginContent {model: dataTablesView}
+          @appView.showView contentView
+        else
+          # Install datatables tool
+          $('#content').text "Oh dear, there's no data tables tool installed"
+
+
       error: (model, xhr, options) =>
         # TODO: factor into function
         contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"

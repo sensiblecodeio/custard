@@ -1,9 +1,6 @@
 class Cu.View.DatasetOverview extends Backbone.View
   className: 'dataset-overview row'
 
-  events:
-    'click .new-view': 'showChooser'
-
   render: ->
     $aboutDiv = $('<div class="about swcol">')
 
@@ -25,8 +22,3 @@ class Cu.View.DatasetOverview extends Backbone.View
           $(this).remove()
       $(window).off('keyup')
     @
-
-  showChooser: ->
-     t = new Cu.View.ToolList {type: 'nonimporters', dataset: @model}
-     app.navigate "#{window.location.pathname}#chooser"
-     $('body').append t.render().el

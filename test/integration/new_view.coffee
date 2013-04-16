@@ -22,10 +22,11 @@ describe 'New view tool', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    context 'when I click the "new view" button', ->
+    context 'when I click on "More tools" in the "Tools" dropdown', ->
       before (done) ->
-        wd40.click '.new-view', ->
-          browser.waitForElementByCss '#chooser .tool', 4000, done
+        wd40.click 'a#dataset-tools-toggle', ->
+          wd40.click '.new-view', ->
+            browser.waitForElementByCss '#chooser .tool', 4000, done
 
       context 'when I click on the newview tool', ->
         before (done) ->

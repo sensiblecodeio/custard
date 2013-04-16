@@ -257,8 +257,14 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
 
   events:
     'click .editable': 'nameClicked'
+    'click .new-view': 'showChooser'
     'blur #editable-input input': 'editableNameBlurred'
     'keyup #editable-input input': 'keypressOnEditableName'
+
+  showChooser: ->
+    t = new Cu.View.ToolList {type: 'nonimporters', dataset: @model}
+    app.navigate "#{window.location.pathname}#chooser"
+    $('body').append t.render().el
 
   render: ->
     toolsView = new Cu.View.DatasetTools model: @model
@@ -282,7 +288,7 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
       </div>
       <div class="btn-toolbar" id="subnav-options">
         <div class="btn-group">
-          <a class="btn dropdown-toggle" data-toggle="dropdown">
+          <a class="btn dropdown-toggle" id="dataset-tools-toggle" data-toggle="dropdown">
             Tools <span class="caret"></span>
           </a>
         </div>

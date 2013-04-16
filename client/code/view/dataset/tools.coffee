@@ -1,6 +1,6 @@
 class Cu.View.DatasetTools extends Backbone.View
   className: 'dropdown-menu pull-right'
-  tagName: 'ul'
+  tagName: 'div'
   id: 'dataset-tools'
 
   initialize: ->
@@ -9,7 +9,11 @@ class Cu.View.DatasetTools extends Backbone.View
 
   render: ->
     @addToolInstance @model
-    @$el.append('<li><a class="new-view">More tools&hellip;</a></li>')
+    @$el.html """<ul class="tools"></ul>
+      <ul class="archetypes"></ul>
+      <ul class="more">
+        <li><a class="new-view">More tools&hellip;</a></li>
+      </ul>"""
     @
 
   addMenuItem: (toolModel) =>
@@ -34,9 +38,13 @@ class Cu.View.DatasetTools extends Backbone.View
           addedAnItem = true
       if not addedAnItem and toolModel.isBasic()
         v = new Cu.View.PluginTile { model: toolModel, dataset: @model }
-        @$el.append v.render().el
+        $('.archetypes', @$el).append v.render().el
     , 0
 
   addToolInstance: (instance) =>
     v = new Cu.View.ToolMenuItem model: instance
-    @$el.append v.render().el
+    if instance instanceof Cu.Model.Dataset
+      # So that the tool that imported is at the top.
+      $('.tools', @$el).prepend v.render().el
+    else
+      $('.tools', @$el).append v.render().el

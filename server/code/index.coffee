@@ -108,7 +108,7 @@ app.configure ->
   app.use passport.initialize()
   app.use passport.session()
 
-  app.use express.logger()
+  app.use express.logger() if /staging|production/.test process.env.NODE_ENV
 
   app.use flash()
   app.use express.favicon(__dirname + '/../../shared/image/favicon.ico', { maxAge: 2592000000 })

@@ -46,9 +46,6 @@ class Cu.CollectionManager
       collection = new klass()
       collection.fetch
         success: ->
-          # :TODO: THIS IS HORRIBLE. WHY DO WE NEED TIMEOUT??
-          setTimeout ->
-            collection.trigger 'fetched'
-          , 500
+          collection.trigger 'fetched'
       @.collections[name] = collection
     return @.collections[name]

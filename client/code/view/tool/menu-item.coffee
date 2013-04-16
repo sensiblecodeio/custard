@@ -14,9 +14,8 @@ class Cu.View.ToolMenuItem extends Backbone.View
 
   initialize: ->
     @model.on 'change', @render, this
-    app.tools().on 'fetched', @render, this
 
-  render: =>
+  render: ->
     if app.tools().length
       @a = $('<a>').appendTo @$el
       @a.html @model.get('tool').get('manifest').displayName

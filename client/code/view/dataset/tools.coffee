@@ -37,7 +37,7 @@ class Cu.View.DatasetTools extends Backbone.View
           @addToolInstance instance
           addedAnItem = true
       if not addedAnItem and toolModel.isBasic()
-        v = new Cu.View.PluginTile { model: toolModel, dataset: @model }
+        v = new Cu.View.ArchetypeMenuItem { archetype: toolModel, dataset: @model }
         $('.archetypes', @$el).append v.render().el
     , 0
 

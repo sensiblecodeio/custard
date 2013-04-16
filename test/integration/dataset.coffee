@@ -55,6 +55,9 @@ describe 'Dataset', ->
       it '...the spreadsheet download tool', ->
         @dropdownText.should.include 'Download as spreadsheet'
 
+      it '...the said spreadsheet download tool, only once', ->
+        @dropdownText.match(/Download as spreadsheet/).length.should.equal 1
+
       it '...the a button to pick more tools', ->
         @dropdownText.toLowerCase().should.include 'more tools'
 

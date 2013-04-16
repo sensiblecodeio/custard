@@ -7,6 +7,9 @@ class Cu.Model.Tool extends Backbone.RelationalModel
   isBasic: ->
     return @get('name') in ['spreadsheet-download', 'datatables-view-tool']
 
+  isImporter: ->
+    return @get('type') is 'importer'
+
 Cu.Model.Tool.setup()
 
 class Cu.Collection.Tools extends Backbone.Collection
@@ -14,11 +17,11 @@ class Cu.Collection.Tools extends Backbone.Collection
   url: "/api/tools/"
 
   importers: ->
-    importers = @filter (t) -> t.get('type') is 'importer'
+    importers = @filter (t) -> t.isImporter()
     new Cu.Collection.Tools importers
 
   nonimporters: ->
-    nonimporters = @filter (t) -> t.get('type') isnt 'importer'
+    nonimporters = @filter (t) -> not t.isImporter()
     new Cu.Collection.Tools nonimporters
 
   basics: ->

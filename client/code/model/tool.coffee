@@ -4,6 +4,9 @@ class Cu.Model.Tool extends Backbone.RelationalModel
 
   idAttribute: 'name'
 
+  isBasic: ->
+    return @get('name') in ['spreadsheet-download', 'datatables-view-tool']
+
 Cu.Model.Tool.setup()
 
 class Cu.Collection.Tools extends Backbone.Collection
@@ -20,7 +23,7 @@ class Cu.Collection.Tools extends Backbone.Collection
 
   basics: ->
     basics = @filter (t) ->
-      t.get('name') in ['spreadsheet-download', 'datatables-view-tool']
+      t.isBasic()
     new Cu.Collection.Tools basics
 
   comparator: (model) ->

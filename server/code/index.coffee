@@ -157,32 +157,33 @@ renderClientApp = (req, resp) ->
 
 # Add a view to a dataset
 addView = (user, dataset, attributes, callback) ->
-  Box.create user, (err, box) ->
+  Dataset.findOneById dataset.box, user.shortName, (err, dataset) ->
     if err?
       console.warn err
-      return resp.send err.statusCode, error: "Error creating box: #{err.body}"
-    view =
-      box: box.name
-      tool: attributes.tool
-      displayName: attributes.displayName
-    dataset.views.push view
-    dataset.save (err) ->
+      return resp.send err.statusCode, error: "Error finding dataset: #{err.body}"
+    Box.create user, (err, box) ->
       if err?
         console.warn err
-        return callback {statusCode: 400, error: "Error saving view: #{err}"}, null
-      # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
-      User.distributeUserKeys user.shortName, (err) ->
+        return resp.send err.statusCode, error: "Error creating box: #{err.body}"
+      view =
+        box: box.name
+        tool: attributes.tool
+        displayName: attributes.displayName
+      dataset.views.push view
+      dataset.save (err) ->
         if err?
-          console.warn "SSH key distribution error"
-          err = null
-        box.installTool {user: user, toolName: attributes.tool}, (err) ->
+          console.warn err
+          return callback {statusCode: 400, error: "Error saving view: #{err}"}, null
+        # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
+        User.distributeUserKeys user.shortName, (err) ->
           if err?
-            console.warn err
-            return callback {500, error: "Error installing tool: #{err}"}
-          Dataset.findOneById dataset.box, user.shortName, (err, dataset) ->
-            console.warn err if err?
+            console.warn "SSH key distribution error"
+            err = null
+          box.installTool {user: user, toolName: attributes.tool}, (err) ->
+            if err?
+              console.warn err
+              return callback {500, error: "Error installing tool: #{err}"}
             view = _.findWhere dataset.views, box: box.name
-            # TODO: set quota
             callback null, view
 
 # Render login page

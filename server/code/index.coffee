@@ -155,6 +155,33 @@ renderClientApp = (req, resp) ->
     recurlyDomain: process.env.RECURLY_DOMAIN
     flash: req.flash()
 
+# Add a view to a dataset
+addView = (user, dataset, attributes, callback) ->
+  box = attributes.box
+  view =
+    box: box.name
+    tool: attributes.tool
+    displayName: attributes.displayName
+  dataset.views.push view
+  dataset.save (err) ->
+    if err?
+      console.warn err
+      return callback {statusCode: 400, error: "Error saving view: #{err}"}, null
+    # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
+    User.distributeUserKeys user.shortName, (err) ->
+      if err?
+        console.warn "SSH key distribution error"
+        err = null
+      box.installTool {user: user, toolName: attributes.tool}, (err) ->
+        if err?
+          console.warn err
+          return callback {500, error: "Error installing tool: #{err}"}
+        Dataset.findOneById dataset.box, user.shortName, (err, dataset) ->
+          console.warn err if err?
+          view = _.findWhere dataset.views, box: box.name
+          # TODO: set quota
+          callback null, view
+
 # Render login page
 app.get '/login/?', (req, resp) ->
   resp.render 'login',
@@ -434,6 +461,13 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
           Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
             console.warn err if err?
             resp.send 200, dataset
+            addView user, dataset,
+              box: box
+              tool: 'datatables-view-tool'
+              displayName: 'View in a table' # TODO: use tool object
+            , (err, view) ->
+              if err?
+                console.warn "Error creating DT view: #{err}"
 
 app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
   user = req.user.effective
@@ -442,31 +476,19 @@ app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
       if err?
         console.warn err
         return resp.send err.statusCode, error: "Error creating box: #{err.body}"
+
       # Add view to dataset and save
       body = req.body
-      view =
-        box: box.name
+      addView user, dataset,
+        box: box
         tool: body.tool
         displayName: body.displayName
-      dataset.views.push view
-      dataset.save (err) ->
+      , (err, view) ->
         if err?
-          console.warn err
-          return resp.send 400, error: "Error saving view: #{err}"
-        # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
-        User.distributeUserKeys user.shortName, (err) ->
-          if err?
-            console.warn "SSH key distribution error"
-            err = null
-          box.installTool {user: user, toolName: body.tool}, (err) ->
-            if err?
-              console.warn err
-              return resp.send 500, error: "Error installing tool: #{err}"
-            Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
-              console.warn err if err?
-              view = _.findWhere dataset.views, box: box.name
-              # TODO: set quota
-              resp.send 200, view
+          resp.send err.error, error: "Error creating view: #{err}"
+        else
+          resp.send 200, view
+
 
 # user api is staff-only for now (probably forever)
 app.get '/api/user/?', checkStaff, (req, resp) ->

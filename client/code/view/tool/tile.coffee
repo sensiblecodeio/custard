@@ -83,10 +83,6 @@ class Cu.View.AppTile extends Cu.View.ToolTile
       wait: true
       success: ->
         delete dataset.new
-        # TODO: this should be removed when we sort out the tool/view/dataset refactor
-        # Install the datatables view tool here
-        dataset.installPlugin 'datatables-view-tool', (err, view) ->
-          console.warn 'Error', err if err?
         window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
         $('#chooser').fadeOut 200, ->
           $(this).remove()

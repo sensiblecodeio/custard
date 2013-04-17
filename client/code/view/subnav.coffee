@@ -262,6 +262,7 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
     'keyup #editable-input input': 'keypressOnEditableName'
 
   initialize: ->
+    super()
     @toolsView = new Cu.View.DatasetTools model: @model
 
   showChooser: ->

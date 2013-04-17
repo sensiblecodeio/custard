@@ -30,13 +30,11 @@ describe 'New dataset tool', ->
 
     context 'when I go back to the dataset page', ->
       before (done) ->
-        wd40.waitForText "Untitled dataset", (err) ->
-          browser.get @currentUrl.replace(/\/settings$/, ''), done
+        setTimeout done, 5000
 
       before (done) ->
-        wd40.waitForText "Untitled dataset", (err) ->
-          browser.elementByLinkText "Untitled dataset", (err, link) ->
-            link.click done
+        wd40.waitForText "Untitled dataset", (err) =>
+          browser.get @currentUrl.replace(/\/settings$/, ''), done
 
       it 'has the datatables view installed', (done) ->
         wd40.switchToBottomFrame ->

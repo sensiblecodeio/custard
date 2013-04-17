@@ -25,7 +25,7 @@ class Cu.View.ToolMenuItem extends Backbone.View
       href: href
       id: "instance-#{@model.get 'box'}"
       toolName: @model.get('tool').get('name')
-    $(html).appendTo @$el
+    @$el.html html
     @
 
 # This should be passed a tool archetype model, not a dataset/view model
@@ -40,7 +40,9 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
 
   render: ->
     if app.tools().length
-      @a = $( JST['tool-menu-item'] manifest: @options.archetype.get('manifest') ).appendTo @$el
+      html = JST['tool-menu-item']
+        manifest: @options.archetype.get 'manifest'
+      @$el.html html
     @
 
   clicked: (e) ->

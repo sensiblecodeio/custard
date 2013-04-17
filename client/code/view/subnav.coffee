@@ -261,13 +261,19 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
     'blur #editable-input input': 'editableNameBlurred'
     'keyup #editable-input input': 'keypressOnEditableName'
 
+  initialize: ->
+    @toolsView = new Cu.View.DatasetTools model: @model
+
   showChooser: ->
     t = new Cu.View.ToolList {type: 'nonimporters', dataset: @model}
     app.navigate "#{window.location.pathname}#chooser"
     $('body').append t.render().el
 
+  close: ->
+    @toolsView?.close()
+    super()
+
   render: ->
-    toolsView = new Cu.View.DatasetTools model: @model
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
         <div class="btn-group">
@@ -293,7 +299,7 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
           </a>
         </div>
       </div>
-      <hr>""").find('.dropdown-toggle').after(toolsView.render().el)
+      <hr>""").find('.dropdown-toggle').after(@toolsView.render().el)
     @
 
 class Cu.View.SignUpNav extends Backbone.View

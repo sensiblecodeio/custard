@@ -1,6 +1,13 @@
 should = require 'should'
 {wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
+clickSSHButton = (done) ->
+  browser.elementByPartialLinkText 'Tools', (err, link) =>
+    link.click ->
+      browser.elementByPartialLinkText 'Test app', (err, link) ->
+        link.elementByCss '.ssh-in', (err, sshLink) ->
+          sshLink.click done
+
 describe 'Platform-specific SSH instructions', ->
   prepIntegration()
 
@@ -12,14 +19,17 @@ describe 'Platform-specific SSH instructions', ->
   context 'when I use a Windows PC to view SSH instructions', ->
     before (done) ->
       browser.refresh ->
-        browser.eval "window.navigator = {platform: 'Win32'}", ->
-          wd40.click '.dataset-actions .git-ssh', ->
-            browser.waitForVisibleByCss '.modal', 4000, done
+        browser.eval "window.navigator = {platform: 'Win32'}", done
+
+    before clickSSHButton
+
+    before (done) ->
+      browser.waitForVisibleByCss '.modal', 4000, done
 
     before (done) =>
-        wd40.getText '.modal', (err, text) =>
-          @modalTextContent = text.toLowerCase()
-          done()
+      wd40.getText '.modal', (err, text) =>
+        @modalTextContent = text.toLowerCase()
+        done()
 
     it 'the modal window tells me to use Git Bash', =>
       @modalTextContent.should.include 'git bash'
@@ -30,14 +40,17 @@ describe 'Platform-specific SSH instructions', ->
   context 'when I use a Mac to view SSH instructions', ->
     before (done) ->
       browser.refresh ->
-        browser.eval "window.navigator = {platform: 'MacIntel'}", ->
-          wd40.click '.dataset-actions .git-ssh', ->
-            browser.waitForVisibleByCss '.modal', 4000, done
+        browser.eval "window.navigator = {platform: 'MacIntel'}", done
+
+    before clickSSHButton
+
+    before (done) ->
+      browser.waitForVisibleByCss '.modal', 4000, done
 
     before (done) =>
-        wd40.getText '.modal', (err, text) =>
-          @modalTextContent = text.toLowerCase()
-          done()
+      wd40.getText '.modal', (err, text) =>
+        @modalTextContent = text.toLowerCase()
+        done()
 
     it 'the modal window tells me to use the Terminal', =>
       @modalTextContent.should.include 'terminal'
@@ -48,14 +61,17 @@ describe 'Platform-specific SSH instructions', ->
   context 'when I use a Linux computer to view SSH instructions', ->
     before (done) ->
       browser.refresh ->
-        browser.eval "window.navigator = {platform: 'Linux i686'}", ->
-          wd40.click '.dataset-actions .git-ssh', ->
-            browser.waitForVisibleByCss '.modal', 4000, done
+        browser.eval "window.navigator = {platform: 'Linux i686'}", done
+
+    before clickSSHButton
+
+    before (done) ->
+      browser.waitForVisibleByCss '.modal', 4000, done
 
     before (done) =>
-        wd40.getText '.modal', (err, text) =>
-          @modalTextContent = text.toLowerCase()
-          done()
+      wd40.getText '.modal', (err, text) =>
+        @modalTextContent = text.toLowerCase()
+        done()
 
     it 'the modal window tells me to use the Terminal', =>
       @modalTextContent.should.include 'terminal'

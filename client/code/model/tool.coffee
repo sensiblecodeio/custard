@@ -12,7 +12,7 @@ class Cu.Model.Tool extends Backbone.RelationalModel
 
   # :TODO: Horrible kludge to avoid tool manifest changes right now
   initialize: ->
-    @on 'add', =>
+    @on 'add change', =>
       manifest = @get('manifest')
       n = manifest.displayName.toLowerCase()
       if n.indexOf('in your browser') > -1

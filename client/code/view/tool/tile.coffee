@@ -6,7 +6,6 @@ class Cu.View.ToolTile extends Backbone.View
     'data-nonpushstate': ''
 
   render: ->
-    @monkeypatchIconManifest @model
     @$el.html JST['tool-tile'] @model.toJSON()
     @$el.addClass @model.get('name')
     @
@@ -17,36 +16,6 @@ class Cu.View.ToolTile extends Backbone.View
   clicked: (e) ->
     e.stopPropagation()
     @checkInstall e
-
-  # :TODO: Horrible kludge to avoid tool manifest changes right now (we've done worse)
-  monkeypatchIconManifest: (model) ->
-    manifest = model.get 'manifest'
-    n = manifest.displayName.toLowerCase()
-    if n.indexOf('in your browser') > -1
-      manifest.icon = '/image/tool-icon-classic.png'
-      manifest.color = '#6AAFD1'
-    else if n.indexOf('code') == 0
-      manifest.icon = '/image/tool-icon-code.png'
-      manifest.color = '#555'
-    else if n.indexOf('twitter') > -1 or n.indexOf('tweet') > -1
-      manifest.icon = '/image/tool-icon-twitter.png'
-      manifest.color = '#3cf'
-    else if n.indexOf('upload') == 0
-      manifest.icon = '/image/tool-icon-spreadsheet-upload.png'
-      manifest.color = '#029745'
-    else if n.indexOf('download') == 0
-      manifest.icon = '/image/tool-icon-spreadsheet-upload.png'
-      manifest.color = '#029745'
-    else if n.indexOf('test') == 0
-      manifest.icon = '/image/tool-icon-test.png'
-      manifest.color = '#b0df18'
-    else if n.indexOf('table') > -1
-      manifest.icon = '/image/tool-icon-data-table.png'
-      manifest.color = '#f6b730'
-    else if n.indexOf('query with sql') == 0
-      manifest.icon = '/image/tool-icon-sql.png'
-      manifest.color = '#17959d'
-    model.set 'manifest', manifest
 
   showLoading: ->
     $inner = @$el.find('.tool-icon-inner')

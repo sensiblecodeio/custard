@@ -39,7 +39,9 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
 
   render: ->
     if app.tools().length
-      @a = $( JST['tool-menu-item'] manifest: @options.archetype.get('manifest') ).appendTo @$el
+      html = JST['tool-menu-item']
+        manifest: @options.archetype.get('manifest')
+      $(html).appendTo @$el
     @
 
   clicked: (e) ->

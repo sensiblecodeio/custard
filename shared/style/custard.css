@@ -460,6 +460,39 @@ div.dataset-overview .about .tile li.status {
   padding-right: 10px; /* down from 55px, because there's no actions menu to avoid */
 }
 
+/* Dropdown menu containing tools on dataset page */
+#dataset-tools {}
+
+#dataset-tools ul {
+  list-style: none;
+  margin: 0;
+}
+
+#dataset-tools ul a {
+  display: block;
+  padding: 3px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#dataset-tools ul a:hover,
+#dataset-tools ul a:focus {
+  color: #fff;
+  text-decoration: none;
+  background-color: #0081c2;
+  background-image: -moz-linear-gradient(top,#08c,#0077b3);
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#08c),to(#0077b3));
+  background-image: -webkit-linear-gradient(top,#08c,#0077b3);
+  background-image: -o-linear-gradient(top,#08c,#0077b3);
+  background-image: linear-gradient(to bottom,#08c,#0077b3);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',endColorstr='#ff0077b3',GradientType=0);
+}
+
+#dataset-tools ul a.active {
+  background-color: #eee;
+}
+
 #chooser {
   position: fixed;
   top: 0;

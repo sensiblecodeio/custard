@@ -19,6 +19,8 @@ class Cu.View.DatasetTools extends Backbone.View
     views = @model.get('views').visible()
     views.each (view) =>
       @addToolInstance view
+    app.tools().each (archetype) =>
+      @addToolArchetype archetype
     @
 
   addToolArchetype: (toolModel) =>

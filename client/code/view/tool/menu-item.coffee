@@ -16,13 +16,13 @@ class Cu.View.ToolMenuItem extends Backbone.View
     @model.on 'change', @render, this
 
   render: ->
-    if app.tools().length
-      @a = $('<a>').appendTo @$el
-      @a.html @model.get('tool').get('manifest').displayName
-      if @model instanceof Cu.Model.Dataset
-        @a.attr 'href', "/dataset/#{@model.get 'box'}/settings"
-      else
-        @a.attr 'href', "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get 'box'}"
+    @a = $('<a>').appendTo @$el
+    @a.html @model.get('tool').get('manifest').displayName
+    if @model instanceof Cu.Model.Dataset
+      @a.attr 'href', "/dataset/#{@model.get 'box'}/settings"
+    else
+      @a.attr 'href', "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get 'box'}"
+    @a.attr 'id', "instance-#{@model.get 'box'}"
     @
 
 # This should be passed a tool archetype model, not a dataset/view model

@@ -107,7 +107,8 @@ describe 'Dataset', ->
 
       context 'when I go back home', ->
         before (done) ->
-          browser.get "#{home_url}/", done
+          browser.elementByPartialLinkText 'data hub', (err, link) ->
+            link.click done
 
         # wait for animation :(
         before (done) ->
@@ -147,3 +148,61 @@ describe 'Dataset', ->
               wd40.getText 'body', (err, text) ->
                 text.should.not.include randomname
                 done()
+
+  context 'when I click on a Prune dataset', ->
+    before (done) ->
+      # wait for tiles to fade in
+      setTimeout ->
+        browser.elementByPartialLinkText 'Prune', (err, link) ->
+          link.click done
+      , 500
+
+    context 'when I click on the Tools button (again)', (done) ->
+      before (done) ->
+        browser.elementByPartialLinkText 'Tools', (err, link) =>
+          @tools = link
+          @tools.click =>
+            wd40.getText '#dataset-tools', (err, text) =>
+              @dropdownText = text
+              done()
+
+      it 'shows a dropdown menu, containing...', (done) ->
+        browser.isVisible 'css selector', '#dataset-tools', (err, visible) ->
+          visible.should.be.true
+          done()
+
+      it '...the tool that made this dataset', ->
+        @dropdownText.should.include 'Test app'
+
+      context 'when I go back home, and click on Prune again', ->
+        before (done) ->
+          browser.elementByPartialLinkText 'data hub', (err, link) ->
+            link.click done
+
+        before (done) ->
+          # wait for tiles to fade in
+          setTimeout ->
+            browser.elementByPartialLinkText 'Prune', (err, link) ->
+              link.click done
+          , 500
+
+        context 'when I click on the Tools button (again)', (done) ->
+          before (done) ->
+            browser.elementByPartialLinkText 'Tools', (err, link) =>
+              @tools = link
+              @tools.click =>
+                wd40.getText '#dataset-tools', (err, text) =>
+                  @dropdownText = text
+                  done()
+
+          it 'shows a dropdown menu, containing...', (done) ->
+            browser.isVisible 'css selector', '#dataset-tools', (err, visible) ->
+              visible.should.be.true
+              done()
+
+          it '...the tool that made this dataset', ->
+            @dropdownText.should.include 'Test app'
+
+          it '...the spreadsheet download tool', ->
+            @dropdownText.should.include 'Download as spreadsheet'
+

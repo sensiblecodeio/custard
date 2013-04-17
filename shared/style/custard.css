@@ -460,23 +460,51 @@ div.dataset-overview .about .tile li.status {
   padding-right: 10px; /* down from 55px, because there's no actions menu to avoid */
 }
 
+
+
 /* Dropdown menu containing tools on dataset page */
-#dataset-tools {}
+
+#dataset-tools:before {
+  position: absolute;
+  top: -7px;
+  right: 9px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0,0,0,0.2);
+  content: '';
+}
+
+#dataset-tools:after {
+  position: absolute;
+  top: -6px;
+  right: 10px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #fff;
+  border-left: 6px solid transparent;
+  content: '';
+}
 
 #dataset-tools ul {
   list-style: none;
   margin: 0;
 }
 
-#dataset-tools ul a {
-  display: block;
-  padding: 3px 20px;
+#dataset-tools a.tool {
   cursor: pointer;
-  white-space: nowrap;
+  white-space: normal; /* override .btn-group default of no-wrap */
+  width: 320px;
+  text-shadow: none;
+  color: #333;
+  margin-bottom: 0; /* override a.tool:last-child margin */
 }
 
-#dataset-tools ul a:hover,
-#dataset-tools ul a:focus {
+#dataset-tools a.tool:hover,
+#dataset-tools a.tool:focus,
+#dataset-tools a.new-view:hover,
+#dataset-tools a.new-view:focus {
   color: #fff;
   text-decoration: none;
   background-color: #0081c2;
@@ -489,9 +517,43 @@ div.dataset-overview .about .tile li.status {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',endColorstr='#ff0077b3',GradientType=0);
 }
 
-#dataset-tools ul a.active {
+#dataset-tools a.tool.active {
   background-color: #eee;
 }
+
+#dataset-tools a.tool:active {
+  position: static;
+}
+
+#dataset-tools a.tool .tool-icon {
+  padding-left: 20px; /* add padding between the icon and the left edge of the dropdown menu */
+}
+
+#dataset-tools a.tool .tool-info {
+  padding-right: 20px; /* override 30px padding required between #chooser columns */
+}
+
+#dataset-tools a.tool .tool-icon-outer {
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  border-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+#dataset-tools a.new-view {
+  display: block;
+  padding: 10px 20px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#dataset-tools ul.more {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 5px;
+  margin-top: 5px;
+}
+
+
 
 #chooser {
   position: fixed;
@@ -634,20 +696,6 @@ a.tool canvas {
   vertical-align: -6px; /* assumes an ajax loading spinner 38px high */
 }
 
-div.dataset-views a.tool {
-  margin: 15px 0;
-  text-shadow: none;
-  color: #333;
-  height: auto;
-  float: none;
-}
-
-div.dataset-views a.tool .tool-icon-outer {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  border-box-shadow: none;
-}
-
 div.dataset-overview h4 {
   margin: 0 0 15px 0;
   font-weight: normal;
@@ -659,20 +707,6 @@ div.dataset-overview h4 {
 div.dataset-overview a.tile {
   margin: 0;
   float: none;
-}
-
-div.dataset-overview .actions .btn-large {
-  padding-top: 7px; /* compensate for really big <img> in button */
-  padding-bottom: 7px;
-  width: 240px; /* make it more substantial */
-  margin-top: 20px;
-}
-
-div.dataset-overview .actions .btn-large img {
-  vertical-align: -6px;
-  margin-right: 10px;
-  height: 24px;
-  width: 24px;
 }
 
 div.dataset-overview ul.dataset-actions {

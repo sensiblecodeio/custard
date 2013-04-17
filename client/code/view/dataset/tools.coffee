@@ -5,18 +5,25 @@ class Cu.View.DatasetTools extends Backbone.View
 
   initialize: ->
     @toolInstances = @model.get('views').visible()
-    app.tools().on 'add', @addMenuItem, @
+    app.tools().on 'add', @addToolArchetype, @
+    @model.on 'update:tool', @addToolInstance, @
+    @model.get('views').on 'update:tool', @addToolInstance, @
 
   render: ->
-    @addToolInstance @model
     @$el.html """<ul class="tools"></ul>
       <ul class="archetypes"></ul>
       <ul class="more">
         <li><a class="new-view">More tools&hellip;</a></li>
       </ul>"""
+    @addToolInstance @model
+    views = @model.get('views').visible()
+    views.each (view) =>
+      @addToolInstance view
+    app.tools().each (archetype) =>
+      @addToolArchetype archetype
     @
 
-  addMenuItem: (toolModel) =>
+  addToolArchetype: (toolModel) =>
     # This is called once per tool archetype. Each time
     # it adds either 0 or 1 menu items. The added item is either a tool instance
     # (if there is an instance of the archetype toolModel) or the tool
@@ -28,20 +35,20 @@ class Cu.View.DatasetTools extends Backbone.View
     # The setTimeout thing is because we can't work out Backbone (Relational) model loading:
     # without the setTimeout, instance.get('tool') is undefined.
     setTimeout =>
-      addedAnItem = false
-      l = [@model]
-      _.each @model.get('views').visible().models, (view) ->
-        l.push view
-      for instance in l
-        if instance.get('tool')?.id is toolModel.id
-          @addToolInstance instance
-          addedAnItem = true
-      if not addedAnItem and toolModel.isBasic()
+      if toolModel.isBasic()
         v = new Cu.View.ArchetypeMenuItem { archetype: toolModel, dataset: @model }
         $('.archetypes', @$el).append v.render().el
     , 0
 
   addToolInstance: (instance) =>
+    id = "instance-#{instance.get 'box'}"
+    l = $("##{id}", @$el)
+    if l.length > 0
+      # Already added as a menu item; don't add again.
+      return
+    if not instance.get 'tool'
+      # Tool relation not loaded yet, so we don't know what to display.
+      return
     v = new Cu.View.ToolMenuItem model: instance
     if instance instanceof Cu.Model.Dataset
       # So that the tool that imported is at the top.

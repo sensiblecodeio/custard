@@ -23,24 +23,19 @@ class Cu.View.DatasetTools extends Backbone.View
       @addToolArchetype archetype
     @
 
-  addToolArchetype: (toolModel) =>
-    # This is called once per tool archetype. Each time
-    # it adds either 0 or 1 menu items. The added item is either a tool instance
-    # (if there is an instance of the archetype toolModel) or the tool
-    # archetype (if there are no instances of the archetype and the archetype
-    # is one of the basic archetypes).
-    # Secret Fun Fact: If you end up in the situation where you have more than
-    # one instance of a particular archetype, then you'll get more than one menu
-    # item; in violation of what I just said. That's okay, because that can't happen.
+  addToolArchetype: (toolModel) ->
     # The setTimeout thing is because we can't work out Backbone (Relational) model loading:
     # without the setTimeout, instance.get('tool') is undefined.
     setTimeout =>
       if toolModel.isBasic()
+        item = $("[data-toolname=#{toolModel.get 'name'}]", @$el)
+        if item.length > 0
+          return
         v = new Cu.View.ArchetypeMenuItem { archetype: toolModel, dataset: @model }
         $('.archetypes', @$el).append v.render().el
     , 0
 
-  addToolInstance: (instance) =>
+  addToolInstance: (instance) ->
     id = "instance-#{instance.get 'box'}"
     l = $("##{id}", @$el)
     if l.length > 0

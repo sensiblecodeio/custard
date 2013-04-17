@@ -23,6 +23,7 @@ class Cu.View.ToolMenuItem extends Backbone.View
     else
       @a.attr 'href', "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get 'box'}"
     @a.attr 'id', "instance-#{@model.get 'box'}"
+    @a.attr 'data-toolname', @model.get('tool').get('name')
     @
 
 # This should be passed a tool archetype model, not a dataset/view model

@@ -553,6 +553,23 @@ div.dataset-overview .about .tile li.status {
   margin-top: 5px;
 }
 
+#dataset-tools a.tool p span {
+  color: #999;
+}
+
+#dataset-tools a.tool:hover p span {
+  color: #C3DDEB;
+}
+
+#dataset-tools a.tool p span:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+#dataset-tools a.tool p span + span {
+  margin-left: 10px;
+}
+
 
 
 #chooser {

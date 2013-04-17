@@ -16,14 +16,16 @@ class Cu.View.ToolMenuItem extends Backbone.View
     @model.on 'change', @render, this
 
   render: ->
-    @a = $('<a>').appendTo @$el
-    @a.html @model.get('tool').get('manifest').displayName
     if @model instanceof Cu.Model.Dataset
-      @a.attr 'href', "/dataset/#{@model.get 'box'}/settings"
+      href = "/dataset/#{@model.get 'box'}/settings"
     else
-      @a.attr 'href', "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get 'box'}"
-    @a.attr 'id', "instance-#{@model.get 'box'}"
-    @a.attr 'data-toolname', @model.get('tool').get('name')
+      href = "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get 'box'}"
+    html = JST['tool-menu-item']
+      manifest: @model.get('tool').get('manifest')
+      href: href
+      id: "instance-#{@model.get 'box'}"
+      toolName: @model.get('tool').get('name')
+    $(html).appendTo @$el
     @
 
 # This should be passed a tool archetype model, not a dataset/view model
@@ -38,8 +40,7 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
 
   render: ->
     if app.tools().length
-      @a = $('<a>').appendTo @$el
-      @a.html @options.archetype.get('manifest').displayName
+      @a = $( JST['tool-menu-item'] manifest: @options.archetype.get('manifest') ).appendTo @$el
     @
 
   clicked: (e) ->

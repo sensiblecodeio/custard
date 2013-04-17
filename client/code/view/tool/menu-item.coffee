@@ -3,8 +3,13 @@ class Cu.View.ToolMenuItem extends Backbone.View
   tagName: 'li'
   events:
     'click .hide': 'hideTool'
-    'click .git-ssh': ->
-      Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'dataset'
+    'click .ssh-in': (event) ->
+      event.preventDefault()
+      event.stopPropagation()
+      if @model instanceof Cu.Model.Dataset
+        Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'dataset'
+      else if @model instanceof Cu.Model.View
+        Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'view'
 
   hideDataset: (e) ->
     e.preventDefault()

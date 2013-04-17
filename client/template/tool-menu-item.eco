@@ -9,7 +9,7 @@
   <div class="tool-info">
     <h3><%= @manifest.displayName %></h3>
     <% if @href: %>
-      <p><span>SSH IN</span></p>
+      <p><span class="ssh-in">SSH IN</span></p>
     <% else: %>
       <p><%= @manifest.description %></p>
     <% end %>

@@ -3,7 +3,6 @@ class Cu.View.ViewContent extends Backbone.View
   boxUrl: window.boxServer
 
   initialize: ->
-    $('body').addClass('fullscreen')
     @settings (settings) =>
       frag = encodeURIComponent JSON.stringify(settings)
       @setupEasyXdm "#{@boxUrl}/#{@model.get 'box'}/#{settings.source.publishToken}/container.html##{frag}"
@@ -53,10 +52,6 @@ class Cu.View.ViewContent extends Backbone.View
                   window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
                 error: (model, xhr, options) ->
                   console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
-
-  close: ->
-    $('body').removeClass('fullscreen')
-    super()
 
 class Cu.View.AppContent extends Cu.View.ViewContent
   settings: (callback) ->

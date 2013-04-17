@@ -44,9 +44,12 @@ task 'dev', 'start dev env', ->
   build true, ->
     # watch_js
 
-task 'se', 'start selenium', ->
+Selenium = ->
   se = spawn 'java', ['-jar', 'selenium-server-standalone-2.29.0.jar',
     '-Dwebdriver.chrome.driver=chromedriver']
   se.stdout.pipe process.stdout
   se.stderr.pipe process.stderr
   log 'Selenium started'
+
+task 'se', 'start selenium', Selenium
+task 'Se', 'start Selenium', Selenium

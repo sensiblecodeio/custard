@@ -10,10 +10,12 @@ boxMaxSize = (name) ->
     return 8
 
 setDiskQuota = (box, accountLevel, cb) ->
-  return cb(null, true) unless process.env.CU_QUOTA_SERVER?
+  quotaServer = process.env.CU_QUOTA_SERVER
+  unless quotaServer? and quotaServer.length > 0
+    return cb(null, true)
   maxSize = boxMaxSize accountLevel
   request.post
-    uri: "#{process.env.CU_QUOTA_SERVER}/quota"
+    uri: "#{quotaServer}/quota"
     form:
       path: box.name
       size: maxSize

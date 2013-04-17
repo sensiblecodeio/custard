@@ -257,89 +257,30 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
 
   events:
     'click .editable': 'nameClicked'
+    'click .new-view': 'showChooser'
     'blur #editable-input input': 'editableNameBlurred'
     'keyup #editable-input input': 'keypressOnEditableName'
 
-  render: ->
-    @$el.html("""
-      <div class="btn-toolbar" id="subnav-path">
-        <div class="btn-group">
-          <a class="btn btn-link" href="/">
-            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
-          </a>
-        </div>
-        <div class="btn-group">
-          <span class="slash">/</span>
-        </div>
-        <div class="btn-group">
-          <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
-          <span class="input-append" id="editable-input">
-            <input type="text">
-            <button class="btn">Save</button>
-          </span>
-        </div>
-      </div>
-      <hr>""")
-    @
-
-class Cu.View.DatasetSettingsNav extends Backbone.View
-  # This view should be passed a dataset model!
-  className: 'subnav-wrapper'
-
-  initialize: ->
-    @model.on 'change', @render, this
-
-  render: ->
-    @$el.html("""
-      <div class="btn-toolbar" id="subnav-path">
-        <h1 class="btn-group">
-          <a class="btn btn-link" href="/">
-            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
-          </a>
-        </h1>
-        <div class="btn-group">
-          <span class="slash">/</span>
-        </div>
-        <div class="btn-group">
-          <a class="btn btn-link" href="/dataset/#{@model.get 'box'}">#{@model.get 'displayName'}</a>
-        </div>
-        <div class="btn-group">
-          <span class="slash">/</span>
-        </div>
-        <div class="btn-group">
-          <span class="btn btn-link">Settings</span>
-        </div>
-      </div>
-      <hr>""")
-    @
-
-class Cu.View.ViewNav extends Cu.View.EditableSubnav
   initialize: ->
     super()
-    # override @modelToSave for Cu.View.EditableSubnav,
-    # as the view is saved by saving its dataset
-    @modelToSave = @model.get 'plugsInTo'
+    @toolsView = new Cu.View.DatasetTools model: @model
 
-  className: 'subnav-wrapper'
+  showChooser: ->
+    t = new Cu.View.ToolList {type: 'nonimporters', dataset: @model}
+    app.navigate "#{window.location.pathname}#chooser"
+    $('body').append t.render().el
 
-  events:
-    'click .editable': 'nameClicked'
-    'blur #editable-input input': 'editableNameBlurred'
-    'keyup #editable-input input': 'keypressOnEditableName'
+  close: ->
+    @toolsView?.close()
+    super()
 
   render: ->
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
-        <h1 class="btn-group">
+        <div class="btn-group">
           <a class="btn btn-link" href="/">
             <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
           </a>
-        </h1>
-        <div class="btn-group">
-          <span class="slash">/</span>
-        </div>
-        <div class="btn-group">
-          <a class="btn btn-link" href="/dataset/#{@model.get('plugsInTo').get 'box'}">#{@model.get('plugsInTo').get 'displayName'}</a>
         </div>
         <div class="btn-group">
           <span class="slash">/</span>
@@ -352,7 +293,14 @@ class Cu.View.ViewNav extends Cu.View.EditableSubnav
           </span>
         </div>
       </div>
-      <hr>""")
+      <div class="btn-toolbar" id="subnav-options">
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" id="dataset-tools-toggle" data-toggle="dropdown">
+            Tools <span class="caret"></span>
+          </a>
+        </div>
+      </div>
+      <hr>""").find('.dropdown-toggle').after(@toolsView.render().el)
     @
 
 class Cu.View.SignUpNav extends Backbone.View

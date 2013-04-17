@@ -45,6 +45,7 @@ class Cu.CollectionManager
     if not @collections[name]
       collection = new klass()
       collection.fetch
-        success: -> collection.trigger 'fetched'
+        success: ->
+          collection.trigger 'fetched'
       @.collections[name] = collection
     return @.collections[name]

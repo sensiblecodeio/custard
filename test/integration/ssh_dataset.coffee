@@ -1,6 +1,13 @@
 should = require 'should'
 {wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
+clickSSHButton = (done) ->
+  browser.elementByPartialLinkText 'Tools', (err, link) =>
+    link.click ->
+      browser.elementByPartialLinkText 'Test app', (err, link) ->
+        link.elementByCss '.ssh-in', (err, sshLink) ->
+          sshLink.click done
+
 describe 'Dataset SSH Details', ->
   prepIntegration()
 
@@ -16,9 +23,8 @@ describe 'Dataset SSH Details', ->
           link.click done
       , 500
 
-    context 'when I click the "SSH in" menu link', ->
-      before (done) ->
-        wd40.click '.dataset-actions .git-ssh', done
+    context 'when I click on the Tools button', (done) ->
+      before clickSSHButton
 
       it 'a modal window appears', (done) =>
         wd40.getText '.modal', (err, text) =>
@@ -92,12 +98,14 @@ MII...0tXU=
         context 'when I close the modal, and reopen it', ->
           before (done) =>
             wd40.click '#done', =>
-              setTimeout =>
-                wd40.click '.dataset-actions .git-ssh', =>
-                  wd40.getText '.modal', (err, text) =>
-                    @modalTextContent = text.toLowerCase()
-                    done()
-              , 400
+              setTimeout done, 400
+
+          before clickSSHButton
+
+          before (done) ->
+            wd40.getText '.modal', (err, text) =>
+              @modalTextContent = text.toLowerCase()
+              done()
 
           it 'the modal window does not ask for my SSH key', =>
             @modalTextContent.should.not.include 'add your ssh key:'

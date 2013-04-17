@@ -29,10 +29,9 @@ describe 'New dataset tool', ->
         @currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/settings")
 
     context 'when I go back to the dataset page', ->
-      # TODO: we shouldn't need to wait
-      # wait a while for the data tables view to be created(!)
       before (done) ->
-        setTimeout done, 4000
+        wd40.waitForText "Untitled dataset", (err) ->
+          browser.get @currentUrl.replace(/\/settings$/, ''), done
 
       before (done) ->
         wd40.waitForText "Untitled dataset", (err) ->

@@ -90,7 +90,7 @@ exports.tools = [
 
 exports.datasets = [
 { "box" : "3006375730", "tool": "test-app", "displayName" : "Cheese", "user" : "ickletest", "views" : [] },
-{ "box" : "3006375731", "tool": "test-app", "displayName" : "Apricot", "user" : "ehg", "views" : [ {"displayName": "View in a table", "box": "notexist", "tool": "datatables-view-tool"}] },
+{ "box" : "3006375731", "tool": "test-app", "displayName" : "Apricot", "user" : "ehg", "views" : [ { "name": "downloader", "displayName": "Download a Spreadsheet", "box": "4001815731", "state": "state", "tool": "spreadsheet-download" }] },
 { "box" : "3006375815", "tool": "test-app", "displayName" : "Prune", "user" : "ehg", "views" : [  { "name": "viwewe", "displayName": "Graph of Prunes", "box": "4008115731", "state": "state", "tool": "test-plugin" } ] },
 { "box" : "3006375816", "tool": "test-app", "displayName" : "Kittens", "user" : "zarino", "views" : [  { "name": "table1", "displayName": "View in a Table", "box": "400857239", "state": "state", "tool": "test-plugin" } ], "status": { "updated": "2013-03-12T08:23:00.000Z", "message": "Fully up to date", "type": "ok" } },
 { "box" : "3006375818", "tool": "test-app", "displayName" : "Puppies", "user" : "zarino", "views" : [], "status": { "updated": "2013-03-12T07:20:00.000Z", "message": "Fully up to date", "type": "ok" } },

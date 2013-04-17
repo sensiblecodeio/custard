@@ -1,4 +1,4 @@
-<a class="tool"<% if @id: %> id="<%= @id %>"<% end %><% if @href: %> href="<%= @href %>"<% end %>>
+<a class="tool"<% if @id: %> id="<%= @id %>"<% end %><% if @href: %> href="<%= @href %>"<% end %> data-toolname="<%= @toolName %>">
   <div class="tool-icon">
     <span class="tool-icon-outer" style="<% if @manifest?.color: %>background-color: <%= chroma.interpolate(@manifest.color, "#000", .3, 'hsl') %><% end %>">
       <span class="tool-icon-inner" style="<% if @manifest?.color: %>background-color: <%= @manifest.color %>;<% end %><% if @manifest?.icon: %> background-image: url(<%= @manifest.icon %>)<% end %>">

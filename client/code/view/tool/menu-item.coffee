@@ -24,6 +24,7 @@ class Cu.View.ToolMenuItem extends Backbone.View
       manifest: @model.get('tool').get('manifest')
       href: href
       id: "instance-#{@model.get 'box'}"
+      toolName: @model.get('tool').get('name')
     $(html).appendTo @$el
     @
 

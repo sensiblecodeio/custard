@@ -10,16 +10,20 @@ describe 'View', ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', -> wd40.click '#login', done
 
-  context 'when I click on an Prune dataset', ->
+  context 'when I click on an Prune dataset then the graph of prunes view', ->
     before (done) ->
       # wait for tiles to fade in
       setTimeout ->
         browser.elementByPartialLinkText 'Prune', (err, link) ->
           link.click done
-      , 500
+      , 1000
 
     before (done) ->
-      browser.elementByPartialLinkText 'Graph of Prunes', (err, link) ->
+      browser.elementByPartialLinkText 'Tools', (err, link) =>
+        link.click done
+
+    before (done) ->
+      browser.elementByPartialLinkText 'Code a prune!', (err, link) ->
         link.click done
 
     it 'takes me to the Graph of Prunes page', (done) ->
@@ -31,7 +35,7 @@ describe 'View', ->
       before (done) ->
         browser.back done
 
-      context 'when I click the "hide" link on the view', ->
+      xcontext 'when I click the "hide" link on the view', ->
         before (done) ->
           browser.elementByPartialLinkText "Graph of Prunes", (err, view) =>
             @view = view

@@ -2,9 +2,9 @@ should = require 'should'
 {wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 clickSSHButton = (done) ->
-  browser.elementByPartialLinkText 'Tools', (err, link) =>
+  wd40.elementByPartialLinkText 'Tools', (err, link) =>
     link.click ->
-      browser.elementByPartialLinkText 'Test app', (err, link) ->
+      wd40.elementByPartialLinkText 'Test app', (err, link) ->
         link.elementByCss '.ssh-in', (err, sshLink) ->
           sshLink.click done
 

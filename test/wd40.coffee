@@ -63,5 +63,11 @@ class wd40
             setTimeout poll, 200
     poll()
 
+  @elementByPartialLinkText: (text, callback) ->
+    browser.waitForElementByPartialLinkText text, 4000, (err) ->
+      callback(err) if err?
+      browser.elementByPartialLinkText text, callback
+
+
 exports.browser = browser = wd.remote()
 exports.wd40 = wd40

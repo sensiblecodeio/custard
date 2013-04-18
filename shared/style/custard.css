@@ -23,6 +23,10 @@ body.fullscreen .container {
   width: 100%;
 }
 
+.container {
+  margin-top: 20px;
+}
+
 #fullscreen iframe {
   width: 100%;
   height: 100%;

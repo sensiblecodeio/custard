@@ -155,11 +155,14 @@ describe 'Dataset', ->
       setTimeout ->
         browser.elementByPartialLinkText 'Prune', (err, link) ->
           link.click done
-      , 500
+      , 1000
 
     context 'when I click on the Tools button (again)', (done) ->
+      # Inexplicably we need this as well as the wait in wd40.element...
       before (done) ->
-        browser.elementByPartialLinkText 'Tools', (err, link) =>
+        browser.waitForElementByPartialLinkText 'Tools', 4000, done
+      before (done) ->
+        wd40.elementByPartialLinkText 'Tools', (err, link) =>
           @tools = link
           @tools.click =>
             wd40.getText '#dataset-tools', (err, text) =>
@@ -205,4 +208,3 @@ describe 'Dataset', ->
 
           it '...the spreadsheet download tool', ->
             @dropdownText.should.include 'Download as spreadsheet'
-

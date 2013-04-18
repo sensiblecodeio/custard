@@ -83,8 +83,8 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
 
   dataset: (box) ->
-    mod = Cu.Model.Dataset.findOrCreate box: box, merge: true
-    # TODO: sucky code
+    mod = Cu.Model.Dataset.findOrCreate box: box
+    # TODO: REALLY sucky code
     mod.fetch
       success: (model, resp, options) =>
         views = model.get('views')
@@ -92,19 +92,18 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
         dataTablesView = views.findByToolName 'datatables-view-tool'
 
-        if dataTablesView?
-          contentView = new Cu.View.PluginContent {model: dataTablesView}
-          @appView.showView contentView
-
-        views.once 'update:tool', =>
+        views.once 'update:tool forceUpdate:tool', =>
           dataTablesView = views.findByToolName 'datatables-view-tool'
           if dataTablesView?
+            subnavView = new Cu.View.DatasetNav {model: model, view: dataTablesView}
+            @subnavView.showView subnavView
             contentView = new Cu.View.PluginContent {model: dataTablesView}
             @appView.showView contentView
           else
-            # Install datatables tool
-            $('#content').text "Oh dear, there's no data tables tool installed"
+            @datasetSettings model.get 'box'
 
+        if dataTablesView?
+          views.trigger('forceUpdate:tool')
 
       error: (model, xhr, options) =>
         # TODO: factor into function
@@ -137,7 +136,7 @@ class Cu.Router.Main extends Backbone.Router
       success: (dataset, resp, options) =>
         v = dataset.get('views').findById(viewID)
         contentView = new Cu.View.PluginContent model: v
-        subnavView = new Cu.View.DatasetNav model: dataset
+        subnavView = new Cu.View.DatasetNav model: dataset, view: v
         @appView.showView contentView
         @subnavView.showView subnavView
       error: (model, xhr, options) ->

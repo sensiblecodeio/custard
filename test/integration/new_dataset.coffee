@@ -33,8 +33,23 @@ describe 'New dataset tool', ->
         setTimeout done, 5000
 
       before (done) ->
-        wd40.waitForText "Untitled dataset", (err) =>
-          browser.get @currentUrl.replace(/\/settings$/, ''), done
+        browser.get @currentUrl.replace(/\/settings$/, ''), done
+
+      before (done) ->
+        browser.waitForElementByPartialLinkText 'Tools', 4000, done
+
+      before (done) ->
+        browser.elementByPartialLinkText 'Tools', (err, link) ->
+          link.click done
+
+      before (done) ->
+        browser.waitForElementByCss '.active', 4000, done
+
+      it 'has the datatables view selected', (done) ->
+        browser.elementByCss '.active', (err, link) ->
+          link.text (err, text) ->
+            text.should.include 'View in a table'
+            done()
 
       it 'has the datatables view installed', (done) ->
         wd40.switchToBottomFrame ->

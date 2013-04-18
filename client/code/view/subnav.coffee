@@ -263,10 +263,14 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
 
   initialize: ->
     super()
-    @toolsView = new Cu.View.DatasetTools model: @model
+    @toolsView = new Cu.View.DatasetTools
+      model: @model
+      view: @options.view
 
   showChooser: ->
-    t = new Cu.View.ToolList {type: 'nonimporters', dataset: @model}
+    t = new Cu.View.ToolList
+      type: 'nonimporters'
+      dataset: @model
     app.navigate "#{window.location.pathname}#chooser"
     $('body').append t.render().el
 

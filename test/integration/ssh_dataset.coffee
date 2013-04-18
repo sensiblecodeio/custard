@@ -42,6 +42,8 @@ describe 'Dataset SSH Details', ->
 
       context 'when I press submit with no SSH key', ->
         before (done) ->
+          setTimeout done, 100
+        before (done) ->
           wd40.click '#add-ssh-key', done
 
         it 'the modal window asks for my SSH key', (done) ->

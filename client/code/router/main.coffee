@@ -83,19 +83,27 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
 
   dataset: (box) ->
-    mod = Cu.Model.Dataset.findOrCreate box: box
+    mod = Cu.Model.Dataset.findOrCreate box: box, merge: true
     # TODO: sucky code
     mod.fetch
       success: (model, resp, options) =>
+        views = model.get('views')
         subnavView = new Cu.View.DatasetNav {model: model}
         @subnavView.showView subnavView
-        dataTablesView = model.get('views').findByToolName 'datatables-view-tool'
-        if dataTablesView
+        dataTablesView = views.findByToolName 'datatables-view-tool'
+
+        if dataTablesView?
           contentView = new Cu.View.PluginContent {model: dataTablesView}
           @appView.showView contentView
-        else
-          # Install datatables tool
-          $('#content').text "Oh dear, there's no data tables tool installed"
+
+        views.once 'update:tool', =>
+          dataTablesView = views.findByToolName 'datatables-view-tool'
+          if dataTablesView?
+            contentView = new Cu.View.PluginContent {model: dataTablesView}
+            @appView.showView contentView
+          else
+            # Install datatables tool
+            $('#content').text "Oh dear, there's no data tables tool installed"
 
 
       error: (model, xhr, options) =>

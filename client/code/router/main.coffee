@@ -83,34 +83,24 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
 
   dataset: (box) ->
-    mod = Cu.Model.Dataset.findOrCreate box: box
-    # TODO: REALLY sucky code
-    mod.fetch
-      success: (model, resp, options) =>
-        views = model.get('views')
-        subnavView = new Cu.View.DatasetNav {model: model}
-        @subnavView.showView subnavView
-        dataTablesView = views.findByToolName 'datatables-view-tool'
-
-        views.once 'update:tool forceUpdate:tool', =>
-          dataTablesView = views.findByToolName 'datatables-view-tool'
-          if dataTablesView?
-            subnavView = new Cu.View.DatasetNav {model: model, view: dataTablesView}
-            @subnavView.showView subnavView
-            contentView = new Cu.View.PluginContent {model: dataTablesView}
-            @appView.showView contentView
-          else
-            @datasetSettings model.get 'box'
-
+    model = Cu.Model.Dataset.findOrCreate box: box, merge: true
+    toolsDone = app.tools().fetch()
+    modelDone = model.fetch()
+    viewsDone = model.fetchRelated 'views'
+    $.when.apply( null, _.union(viewsDone, modelDone, toolsDone) ).done =>
+      views = model.get 'views'
+      subnavView = new Cu.View.DatasetNav {model: model}
+      @subnavView.showView subnavView
+      views.findByToolName 'datatables-view-tool', (dataTablesView) =>
         if dataTablesView?
-          views.trigger('forceUpdate:tool')
+          subnavView = new Cu.View.DatasetNav {model: model, view: dataTablesView}
+          @subnavView.showView subnavView
+          contentView = new Cu.View.PluginContent {model: dataTablesView}
+          @appView.showView contentView
+        else
+          app.navigate "/dataset/#{model.id}/settings", trigger: true
 
-      error: (model, xhr, options) =>
-        # TODO: factor into function
-        contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"
-        subnavView = new Cu.View.Subnav text: "Dataset not found"
-        @appView.showView contentView
-        @subnavView.showView subnavView
+
 
   datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box

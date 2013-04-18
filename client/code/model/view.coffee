@@ -31,9 +31,9 @@ class Cu.Collection.ViewList extends Backbone.Collection
     views = @find (t) -> t.id is id
 
   # returns first match
-  findByToolName: (name) ->
+  findByToolName: (name, callback) ->
     tool = app.tools().findByName name
-    @findWhere tool: tool
+    callback @findWhere tool: tool
 
   visible: ->
     visibles = @filter (t) -> t.isVisible()

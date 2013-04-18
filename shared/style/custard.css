@@ -132,7 +132,7 @@ body.fullscreen .container {
   padding: 6px 10px; /* rather than default 4px 12px, to line up with taller input */
 }
 
-#subnav-path .editable:hover:after,
+#subnav-path .editable:after,
 #subnav-path .editable.saved:after,
 #subnav-path .editable.error:after {
     content: "";

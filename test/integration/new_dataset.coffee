@@ -39,7 +39,7 @@ describe 'New dataset tool', ->
         browser.waitForElementByPartialLinkText 'Tools', 4000, done
 
       before (done) ->
-        browser.elementByPartialLinkText 'Tools', (err, link) ->
+        wd40.elementByPartialLinkText 'Tools', (err, link) ->
           link.click done
 
       before (done) ->

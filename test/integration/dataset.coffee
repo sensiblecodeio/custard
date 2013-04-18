@@ -191,7 +191,7 @@ describe 'Dataset', ->
 
         context 'when I click on the Tools button (again)', (done) ->
           before (done) ->
-            browser.elementByPartialLinkText 'Tools', (err, link) =>
+            wd40.elementByPartialLinkText 'Tools', (err, link) =>
               @tools = link
               @tools.click =>
                 wd40.getText '#dataset-tools', (err, text) =>

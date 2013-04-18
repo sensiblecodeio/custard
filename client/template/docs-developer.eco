@@ -187,7 +187,7 @@ has no order, the keys in these objects are in the same order as the columns in 
   </tr>
   <tr>
     <td><code>next</code></td>
-    <td>The URL to which users will be redirected once the files have been uploaded</td>
+    <td>The URL to which users will be redirected once the files have been uploaded. A <code>filePath</code> value containing the upload file&rsquo;s name is added to the settings hash, accessible via <a data-nonpushstate href="#views-helper">scraperwiki.readSettings()</a>.</td>
   </tr>
 </table>
 

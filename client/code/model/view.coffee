@@ -18,6 +18,9 @@ class Cu.Model.View extends Backbone.RelationalModel
     else
       "/api/#{window.user.effective.shortName}/datasets/#{datasetId}/views/#{@get 'box'}"
 
+  isVisible: ->
+    @get('state') isnt 'deleted'
+
 Cu.Model.View.setup()
 
 class Cu.Collection.ViewList extends Backbone.Collection
@@ -33,7 +36,7 @@ class Cu.Collection.ViewList extends Backbone.Collection
     @find (view) -> view.tool is tool
 
   visible: ->
-    visibles = @filter (t) -> t.get('state') isnt 'deleted'
+    visibles = @filter (t) -> t.isVisible()
     new Cu.Collection.ViewList visibles
 
   comparator: (model) ->

@@ -63,6 +63,9 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     else
       'Never'
 
+  isVisible: ->
+    @get('state') isnt 'deleted'
+
 Cu.Model.Dataset.setup()
 
 class Cu.Collection.Datasets extends Backbone.Collection
@@ -70,7 +73,7 @@ class Cu.Collection.Datasets extends Backbone.Collection
   url: -> "/api/#{window.user.effective.shortName}/datasets"
 
   visible: ->
-    visibles = @filter (t) -> t.get('state') isnt 'deleted'
+    visibles = @filter (t) -> t.isVisible()
     new Cu.Collection.Datasets visibles
 
   comparator: (model) ->

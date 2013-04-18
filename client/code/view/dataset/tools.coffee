@@ -4,6 +4,11 @@ class Cu.View.DatasetTools extends Backbone.View
   id: 'dataset-tools'
 
   initialize: ->
+    if @options.view?
+      @selectedTool = @options.view
+    else
+      @selectedTool = @model
+
     @toolInstances = @model.get('views').visible()
     app.tools().on 'add', @addToolArchetype, @
     @model.on 'update:tool', @addToolInstance, @
@@ -48,8 +53,11 @@ class Cu.View.DatasetTools extends Backbone.View
       # Tool relation not loaded yet, so we don't know what to display.
       return
     v = new Cu.View.ToolMenuItem model: instance
+    el = v.render().el
+    $('a', el).addClass('active') if instance is @selectedTool
+
     if instance instanceof Cu.Model.Dataset
       # So that the tool that imported is at the top.
-      $('.tools', @$el).prepend v.render().el
+      $('.tools', @$el).prepend el
     else
-      $('.tools', @$el).append v.render().el
+      $('.tools', @$el).append el

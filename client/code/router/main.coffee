@@ -137,7 +137,7 @@ class Cu.Router.Main extends Backbone.Router
       success: (dataset, resp, options) =>
         v = dataset.get('views').findById(viewID)
         contentView = new Cu.View.PluginContent model: v
-        subnavView = new Cu.View.DatasetNav model: dataset
+        subnavView = new Cu.View.DatasetNav model: dataset, view: v
         @appView.showView contentView
         @subnavView.showView subnavView
       error: (model, xhr, options) ->

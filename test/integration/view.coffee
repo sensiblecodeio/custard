@@ -31,32 +31,35 @@ describe 'View', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    context 'when I go back', (done) ->
+    context 'when I open the Tools menu', ->
       before (done) ->
-        browser.back done
+        browser.elementByPartialLinkText 'Tools', (err, link) ->
+          link.click done
 
-      xcontext 'when I click the "hide" link on the view', ->
+      context 'when I click the "hide" link on the "Code a prune" tool', ->
         before (done) ->
-          browser.elementByPartialLinkText "Graph of Prunes", (err, view) =>
-            @view = view
-            @view.elementByCss '.dropdown-toggle', (err, settingsLink) =>
-              settingsLink.click =>
-                @view.elementByCss '.hide-view', (err, hideLink) ->
-                  hideLink.click done
+          browser.elementByPartialLinkText "Code a prune", (err, view) =>
+            @link = view
+            browser.moveTo @link, =>
+              @link.elementByCss '.hide', (err, hideLink) ->
+                hideLink.click done
 
-        it 'the view disappears from the dataset page immediately', (done) ->
+        it 'the tool disappears from the tool menu immediately', (done) ->
           # TODO: write a waitForInvisible function
-          setTimeout =>
-            @view.isVisible (err, visible) ->
-              visible.should.be.false
+          setTimeout ->
+            browser.elementByPartialLinkTextIfExists "Code a prune", (err, view) ->
+              should.not.exist view
               done()
           , 400
 
-        context 'when I revisit the dataset page', ->
+        context 'when I reload the page', ->
           before (done) ->
             browser.refresh done
 
-          it 'the view stays hidden', (done) ->
-            wd40.getText 'body', (err, text) ->
-              text.should.not.include randomname
-              done()
+          it 'the "Code a prune" tool stays hidden', (done) ->
+            browser.elementByPartialLinkText 'Tools', (err, link) =>
+              browser.moveTo link, ->
+                link.click ->
+                  browser.elementByPartialLinkTextIfExists "Code a prune", (err, view) ->
+                    should.not.exist view
+                    done()

@@ -11,25 +11,40 @@ class Cu.View.ToolMenuItem extends Backbone.View
       else if @model instanceof Cu.Model.View
         Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'view'
 
-  hideDataset: (e) ->
+  hideTool: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @$el.slideUp()
-    @model.save {state: 'deleted'}
+    if @model instanceof Cu.Model.View
+      $('.hide', @$el).hide 0, =>
+        @$el.slideUp =>
+          @model.set 'state', 'deleted'
+          @model.get('plugsInTo').save {},
+            error: (e) =>
+              @$el.slideDown()
+              console.warn 'View could not be deleted!'
 
   initialize: ->
     @model.on 'change', @render, this
 
   render: ->
+    hideable = true
+    toolName = @model.get('tool').get('name')
+
     if @model instanceof Cu.Model.Dataset
       href = "/dataset/#{@model.get 'box'}/settings"
+      hideable = false
     else
       href = "/dataset/#{@model.get('plugsInTo').get('box')}/view/#{@model.get 'box'}"
+
+    if toolName is "datatables-view-tool"
+      hideable = false
+
     html = JST['tool-menu-item']
       manifest: @model.get('tool').get('manifest')
       href: href
       id: "instance-#{@model.get 'box'}"
-      toolName: @model.get('tool').get('name')
+      hideable: hideable
+      toolName: toolName
     @$el.html html
     @
 

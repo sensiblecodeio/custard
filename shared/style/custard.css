@@ -330,7 +330,8 @@ a.view.tile h3 {
   padding: 10px 55px 10px 10px; /* extra padding-right for the "settings" cog button */
 }
 
-a.tile .hide {
+a.tile .hide,
+#dataset-tools a.tool .hide {
   position: absolute;
   top: -7px;
   right: -7px;
@@ -346,11 +347,13 @@ a.tile .hide {
   border: 2px solid #fff;
 }
 
-a.tile:hover .hide {
+a.tile:hover .hide,
+#dataset-tools a.tool:hover .hide {
   display: block;
 }
 
-a.tile .hide:hover {
+a.tile .hide:hover,
+#dataset-tools a.tool .hide:hover {
   background-color: #e11b2c;
 }
 
@@ -493,6 +496,7 @@ div.dataset-overview .about .tile li.status {
 }
 
 #dataset-tools a.tool {
+  position: relative;
   cursor: pointer;
   white-space: normal; /* override .btn-group default of no-wrap */
   width: 320px;
@@ -522,7 +526,13 @@ div.dataset-overview .about .tile li.status {
 }
 
 #dataset-tools a.tool:active {
-  position: static;
+  position: relative;
+  top: 0;
+}
+
+#dataset-tools a.tool .hide {
+  background-color: #0081c2;
+  z-index: 100;
 }
 
 #dataset-tools a.tool .tool-icon {

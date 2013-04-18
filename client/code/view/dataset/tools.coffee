@@ -38,6 +38,9 @@ class Cu.View.DatasetTools extends Backbone.View
   addToolInstance: (instance) ->
     id = "instance-#{instance.get 'box'}"
     l = $("##{id}", @$el)
+    if not instance.isVisible()
+      # Don't show "hidden" tool instances
+      return
     if l.length > 0
       # Already added as a menu item; don't add again.
       return

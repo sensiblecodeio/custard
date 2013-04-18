@@ -65,17 +65,18 @@ body.fullscreen .container {
 #header #beta {
   position: absolute;
   top: 0;
-  left: -55px;
+  right: 100%;
   z-index: 100;
   display: block;
   height: 50px;
-  width: 55px;
-  text-align: center;
+  padding: 0 10px;
+  text-align: right;
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 200;
   color: #999;
   text-shadow: 0 1px 0 #fff;
+  white-space: nowrap;
 }
 
 #header nav {

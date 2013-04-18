@@ -228,7 +228,6 @@ class Cu.View.EditableSubnav extends Backbone.View
       $wrapper.hide()
       $label.text(@newName).show()
       @model.set 'displayName', @newName
-      console.log 'modelToSave', @modelToSave
       @modelToSave.save {},
         success: =>
           $label.addClass 'saved'

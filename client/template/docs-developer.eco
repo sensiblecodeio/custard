@@ -589,7 +589,7 @@ scraperwiki.readSettings().target.url + "/sqlite"
 
 <p>Since you&rsquo;re in a secure iframe, you need to call a special function to
 redirect the browser to another location. For example, this redirects to
-the dataset overview page:
+a dataset&rsquo;s default page:
 </p>
 
 <pre class="prettyprint linenums">var datasetUrl = "/dataset/" + scraperwiki.box

@@ -88,7 +88,7 @@ body.fullscreen .container {
   text-align: center; /* We'll override this for large-screened devices later */
 }
 
-.subnav-wrapper > hr { /* used on dataset overview pages etc to visually separate header from content */
+.subnav-wrapper > hr { /* used on dataset pages etc to visually separate header from content */
   float: left;
   clear: both;
   width: 100%;
@@ -454,15 +454,6 @@ a.tile .hide:hover,
   margin-right: 3px;
 }
 
-div.dataset-overview .about .tile .hide,
-div.dataset-overview .about .tile .actions {
-  display: none; /* don't want to see the hide button or actions menu on dataset overview page */
-}
-
-div.dataset-overview .about .tile li.status {
-  padding-right: 10px; /* down from 55px, because there's no actions menu to avoid */
-}
-
 
 
 /* Dropdown menu containing tools on dataset page */
@@ -721,72 +712,6 @@ a.tool p {
 
 a.tool canvas {
   vertical-align: -6px; /* assumes an ajax loading spinner 38px high */
-}
-
-div.dataset-overview h4 {
-  margin: 0 0 15px 0;
-  font-weight: normal;
-  color: #999;
-  font-size: 16px;
-  text-transform: uppercase;
-}
-
-div.dataset-overview a.tile {
-  margin: 0;
-  float: none;
-}
-
-div.dataset-overview ul.dataset-actions {
-  position: relative;
-  border-top: 1px solid #ddd;
-  margin: 15px 0;
-  list-style: none;
-}
-
-div.dataset-overview ul.dataset-actions:before {
-  position: absolute;
-  top: -7px;
-  left: 7px;
-  display: inline-block;
-  border-right: 7px solid transparent;
-  border-bottom: 7px solid #ccc;
-  border-left: 7px solid transparent;
-  border-bottom-color: rgba(0, 0, 0, 0.2);
-  content: '';
-}
-
-div.dataset-overview ul.dataset-actions:after {
-  position: absolute;
-  top: -6px;
-  left: 8px;
-  display: inline-block;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid #fff;
-  border-left: 6px solid transparent;
-  content: '';
-}
-
-div.dataset-overview ul.dataset-actions a {
-  cursor: pointer;
-  color: #666;
-  text-decoration: none;
-  font-size: 15px;
-  line-height: 32px;
-  display: block;
-  border-bottom: 1px solid #eee;
-}
-
-div.dataset-overview ul.dataset-actions a:hover {
-  color: #333;
-}
-
-div.dataset-overview ul.dataset-actions a.hide-dataset:hover {
-  color: #e11b2c;
-}
-
-div.dataset-overview ul.dataset-actions img {
-  vertical-align: -3px;
-  margin: 0 3px 0 6px;
 }
 
 #content p.loading {
@@ -1108,12 +1033,6 @@ div.docs h3 {
     width: auto;
     text-overflow: none;
     overflow: visible;
-  }
-
-  /* This is a bit of a hack to make the dataset overview page easier to parse */
-  /* It breaks the 20+280+20+280… grid system, but it looks better */
-  div.dataset-overview div.actions {
-    margin-left: 40px; /* vs the default 20px */
   }
 
   div.docs {

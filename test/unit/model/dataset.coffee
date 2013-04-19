@@ -16,10 +16,12 @@ describe 'Client model: Dataset', ->
       @box = 'blah'
       @tool = Cu.Model.Tool.findOrCreate
         name: 'test-app'
-        displayName: 'Test App'
+        manifest:
+          displayName: 'Grr'
 
       @dataset = Cu.Model.Dataset.findOrCreate
         user: 'test'
+        displayName: 'Dataset'
         box: @box
         tool: @tool
 

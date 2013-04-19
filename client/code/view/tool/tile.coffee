@@ -20,7 +20,7 @@ class Cu.View.ToolTile extends Backbone.View
   showLoading: ->
     $inner = @$el.find('.tool-icon-inner')
     $inner.empty().css('background-image', 'none')
-    Spinners.create($inner, {
+    @spinner = Spinners.create($inner, {
       radius: 7,
       height: 8,
       width: 2.5,
@@ -55,9 +55,14 @@ class Cu.View.AppTile extends Cu.View.ToolTile
         window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
         $('#chooser').fadeOut 200, ->
           $(this).remove()
-      error: (model, xhr, options) ->
+      error: (model, xhr, options) =>
         @active = false
-        console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
+        dataset.destroy()
+        if xhr.status is 402
+          @trigger 'install:failed'
+          app.navigate '/pricing/upgrade', trigger: true
+        else
+          console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
 
 class Cu.View.PluginTile extends Cu.View.ToolTile
   events:

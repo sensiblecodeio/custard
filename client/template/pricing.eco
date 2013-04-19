@@ -1,3 +1,6 @@
+<% if @upgrade is 'upgrade': %>
+<h1>YOU MUST PAY - CHOOSE PLAN!!</h1>
+<% end %>
 <a class="plan datascientist swcol" href="/signup/datascientist">
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>

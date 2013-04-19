@@ -33,6 +33,7 @@ class Cu.View.ToolList extends Backbone.View
   addTool: (tool) =>
     if @options.type is 'importers' and tool.get('type') is 'importer'
       view = new Cu.View.AppTile model: tool
+      view.on 'install:failed', @closeChooser, @
       @row.append view.render().el
     else if @options.type isnt 'importers' and tool.get('type') isnt 'importer'
       view = new Cu.View.PluginTile { model: tool, dataset: @options.dataset }
@@ -40,5 +41,5 @@ class Cu.View.ToolList extends Backbone.View
 
   closeChooser: ->
     @$el.fadeOut 200, ->
-        $(this).remove()
+      $(this).remove()
     $(window).off('keyup')

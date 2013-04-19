@@ -30,6 +30,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('docs/developer/?'), 'developerDocs'
     @route RegExp('docs/zig/?'), 'zigDocs'
     @route RegExp('pricing/?'), 'pricing'
+    @route RegExp('pricing/([^/]+)/?'), 'pricing'
     @route RegExp('tools/?'), 'toolShop'
     @route RegExp('tools/people-pack/?'), 'peoplePack'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
@@ -57,9 +58,9 @@ class Cu.Router.Main extends Backbone.Router
     @appView.showView contentView
     @subnavView.showView subnavView
 
-  pricing: ->
+  pricing: (upgrade) ->
     subnavView = new Cu.View.Subnav {text: 'Pricing'}
-    contentView = new Cu.View.Pricing()
+    contentView = new Cu.View.Pricing upgrade: upgrade
     @appView.showView contentView
     @subnavView.showView subnavView
 

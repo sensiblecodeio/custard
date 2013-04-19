@@ -18,12 +18,16 @@ class Cu.View.DatasetTile extends Backbone.View
 
   initialize: ->
     @model.on 'change', @render, this
+    @model.on 'destroy', @destroy, this
 
   render: ->
     @$el.html JST['dataset-tile']
       dataset: @model.toJSON()
       statusUpdatedHuman: @model.statusUpdatedHuman()
     @
+
+  destroy: ->
+    @remove()
 
   hideDataset: (e) ->
     e.preventDefault()

@@ -233,12 +233,12 @@ describe 'API', ->
               res.should.have.status 403
               done()
 
-          context 'I create 6 more', ->
+          context 'I create some more', ->
             before (done) ->
-              createDatasets 6, ->
+              createDatasets 2, ->
                 done()
 
-            it "doesn't let me create the 8th one", (done) ->
+            it "doesn't let me create the 4th one", (done) ->
               createDatasets 1, (err, res, body) ->
                 res.should.have.status 402
                 done()

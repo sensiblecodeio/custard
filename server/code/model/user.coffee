@@ -8,6 +8,7 @@ ModelBase = require 'model/base'
 {Box} = require 'model/box'
 Token = require('model/token')()
 plan = require('model/plan')
+plans = require 'plans.json'
 
 {signUpEmail} = require 'lib/email'
 
@@ -67,6 +68,23 @@ class exports.User extends ModelBase
   setAccountLevel: (plan, callback) ->
     @accountLevel = plan
     @save callback
+
+  @canCreateDataset: (user, callback) ->
+    {Dataset} = require 'model/dataset'
+    plan = plans[user.accountLevel]
+    if not plan?
+      return callback
+        statusCode: 404
+        error: "Plan not found"
+
+    console.log user
+    Dataset.countVisibleDatasets user.shortName, (err, count) ->
+      if count >= plan.maxNumDatasets
+        callback
+          statusCode: 402
+          error: "You must upgrade your plan to create another dataset"
+      else
+        callback null, true
 
   # Sends a list of box sshkeys to cobalt for each box a user
   # can access, so cobalt can overwite the authorized_keys for a box

@@ -38,6 +38,9 @@ class Dataset extends ModelBase
     @status.type = 'ok' unless status.type in ['ok', 'error']
     @save callback
 
+  @countVisibleDatasets: (user, callback) ->
+    @dbClass.find({user: user, state: {$ne: 'deleted'}}).count callback
+
   @findAllByUserShortName: (name, callback) ->
     @dbClass.find {user: name}, callback
 

@@ -434,44 +434,47 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
 app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   user = req.user.effective
   console.log "POST dataset user", user
-  Box.create user, (err, box) ->
+  User.canCreateDataset user, (err, can) ->
     if err?
-      console.warn err
-      return resp.send err.statusCode, error: "Error creating box: #{err.body}"
-    console.log "POST dataset boxName=#{box.name}"
-    # Save dataset
-    body = req.body
-    dataset = new Dataset
-      box: box.name
-      user: user.shortName
-      tool: body.tool
-      name: body.name
-      displayName: body.displayName
-
-    dataset.save (err) ->
+      return resp.send err.statusCode, err.error
+    Box.create user, (err, box) ->
       if err?
         console.warn err
-        return resp.send 400, error: "Error saving dataset: #{err}"
-      # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
-      User.distributeUserKeys user.shortName, (err) ->
+        return resp.send err.statusCode, error: "Error creating box: #{err.body}"
+      console.log "POST dataset boxName=#{box.name}"
+      # Save dataset
+      body = req.body
+      dataset = new Dataset
+        box: box.name
+        user: user.shortName
+        tool: body.tool
+        name: body.name
+        displayName: body.displayName
+
+      dataset.save (err) ->
         if err?
-          console.warn "SSH key distribution error"
-          err = null
-        console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
-        box.installTool {user: user, toolName: body.tool}, (err) ->
+          console.warn err
+          return resp.send 400, error: "Error saving dataset: #{err}"
+        # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
+        User.distributeUserKeys user.shortName, (err) ->
           if err?
-            console.warn err
-            return resp.send 500, error: "Error installing tool: #{err}"
-          Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
-            console.warn err if err?
-            resp.send 200, dataset
-            addView user, dataset,
-              box: box
-              tool: 'datatables-view-tool'
-              displayName: 'View in a table' # TODO: use tool object
-            , (err, view) ->
-              if err?
-                console.warn "Error creating DT view: #{err}"
+            console.warn "SSH key distribution error"
+            err = null
+          console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
+          box.installTool {user: user, toolName: body.tool}, (err) ->
+            if err?
+              console.warn err
+              return resp.send 500, error: "Error installing tool: #{err}"
+            Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
+              console.warn err if err?
+              resp.send 200, dataset
+              addView user, dataset,
+                box: box
+                tool: 'datatables-view-tool'
+                displayName: 'View in a table' # TODO: use tool object
+              , (err, view) ->
+                if err?
+                  console.warn "Error creating DT view: #{err}"
 
 app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
   user = req.user.effective

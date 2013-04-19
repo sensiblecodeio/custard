@@ -13,7 +13,7 @@ describe 'Dataset', ->
     before (done) ->
       # wait for tiles to fade in
       setTimeout ->
-        browser.elementByPartialLinkText 'Apricot', (err, link) ->
+        wd40.elementByPartialLinkText 'Apricot', (err, link) ->
           link.click done
       , 500
 
@@ -23,23 +23,23 @@ describe 'Dataset', ->
         done()
 
     it 'shows a button that shows all the tools', (done) ->
-      browser.elementByPartialLinkText 'Tools', (err, link) =>
-        @tools = link
+      wd40.elementByPartialLinkText 'Tools', (err, link) =>
         should.exist link
         done()
 
     it 'has not shown the input box', (done) ->
-      browser.elementByCss '#editable-input', (err, input) ->
+      wd40.elementByCss '#editable-input', (err, input) ->
         browser.isVisible input, (err, visible) ->
           visible.should.be.false
           done()
 
     context 'when I click on the Tools button', (done) ->
       before (done) ->
-        @tools.click =>
-          wd40.getText '#dataset-tools', (err, text) =>
-            @dropdownText = text
-            done()
+        wd40.elementByPartialLinkText 'Tools', (err, link) =>
+          link.click (err) =>
+            wd40.getText '#dataset-tools', (err, text) =>
+              @dropdownText = text
+              done()
 
       it 'shows a dropdown menu, containing...', (done) ->
         browser.isVisible 'css selector', '#dataset-tools', (err, visible) ->
@@ -158,6 +158,8 @@ describe 'Dataset', ->
       , 1000
 
     context 'when I click on the Tools button (again)', (done) ->
+      before (done) ->
+        setTimeout done, 500
       # Inexplicably we need this as well as the wait in wd40.element...
       before (done) ->
         browser.waitForElementByPartialLinkText 'Tools', 4000, done
@@ -187,9 +189,11 @@ describe 'Dataset', ->
           setTimeout ->
             browser.elementByPartialLinkText 'Prune', (err, link) ->
               link.click done
-          , 500
+          , 600
 
         context 'when I click on the Tools button (again)', (done) ->
+          before (done) ->
+            setTimeout done, 500
           before (done) ->
             wd40.elementByPartialLinkText 'Tools', (err, link) =>
               @tools = link

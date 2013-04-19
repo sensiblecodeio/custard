@@ -68,6 +68,11 @@ class wd40
       callback(err) if err?
       browser.elementByPartialLinkText text, callback
 
+  @elementByCss: (selector, callback) ->
+    browser.waitForElementByCss selector, 4000, (err) ->
+      callback(err) if err?
+      browser.elementByCss selector, callback
+
 
 exports.browser = browser = wd.remote()
 exports.wd40 = wd40

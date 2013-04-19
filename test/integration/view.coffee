@@ -33,12 +33,12 @@ describe 'View', ->
 
     context 'when I open the Tools menu', ->
       before (done) ->
-        browser.elementByPartialLinkText 'Tools', (err, link) ->
+        wd40.elementByPartialLinkText 'Tools', (err, link) ->
           link.click done
 
       context 'when I click the "hide" link on the "Code a prune" tool', ->
         before (done) ->
-          browser.elementByPartialLinkText "Code a prune", (err, view) =>
+          wd40.elementByPartialLinkText "Code a prune", (err, view) =>
             @link = view
             browser.moveTo @link, =>
               @link.elementByCss '.hide', (err, hideLink) ->

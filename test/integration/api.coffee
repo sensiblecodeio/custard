@@ -1,8 +1,9 @@
 _ = require 'underscore'
 request = require 'request'
 should = require 'should'
-settings = require '../settings.json'
+async = require 'async'
 
+settings = require '../settings.json'
 serverURL = process.env.CU_TEST_SERVER or settings.serverURL
 
 describe 'API', ->
@@ -177,13 +178,31 @@ describe 'API', ->
 
     describe 'Datasets', ->
       context 'when I create a dataset', ->
+
+        createDatasets = (number, opts, callback) ->
+          functionArr = []
+          callback = opts unless arguments[2]?
+          for i in [1..number]
+            functionArr.push (cb) =>
+              random = String(Math.random()*Math.pow(2,32))[0..4]
+              request.post
+                uri: "#{serverURL}/api/#{opts.user or 'ickletest'}/datasets"
+                form:
+                  displayName: opts.displayName or "Dataset #{random}"
+                  tool: opts.tool or 'test-app'
+              , cb
+
+          async.series functionArr, (err, res) ->
+            if res.length is 1
+              callback err, res[0][0], res[0][1]
+            else
+              callback res
+
         before (done) ->
-          request.post
-            uri: "#{serverURL}/api/#{@user}/datasets"
-            form:
-              name: 'baconface'
-              displayName: 'Biscuit'
-              tool: 'test-app'
+          createDatasets 1,
+            displayName: 'Biscuit'
+            tool: 'test-app'
+            user: @user
           , (err, res, body) =>
             @response = res
             @dataset = JSON.parse res.body
@@ -213,6 +232,16 @@ describe 'API', ->
             request.get "#{serverURL}/api/MRINVISIBLE/datasets/#{@dataset.box}", (err, res) ->
               res.should.have.status 403
               done()
+
+          context 'I create 6 more', ->
+            before (done) ->
+              createDatasets 6, ->
+                done()
+
+            it "doesn't let me create the 8th one", (done) ->
+              createDatasets 1, (err, res, body) ->
+                res.should.have.status 402
+                done()
 
         describe 'Views', ->
           context 'when I create a view on a dataset', ->

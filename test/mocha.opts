@@ -2,5 +2,5 @@
 --ui bdd
 --compilers coffee:coffee-script
 --reporter spec
---timeout 20000
+--timeout 40000
 --ignore-leaks

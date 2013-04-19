@@ -73,7 +73,7 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
   install: (e) ->
     e.preventDefault()
     @active = true
-    console.log "loading..."
+    $('#content').html """<p class="loading">Installing tool&hellip;</p>"""
 
     dataset = Cu.Model.Dataset.findOrCreate
       user: window.user.effective.shortName

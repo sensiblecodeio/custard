@@ -7,6 +7,14 @@ class Cu.View.ViewContent extends Backbone.View
       frag = encodeURIComponent JSON.stringify(settings)
       @setupEasyXdm "#{@boxUrl}/#{@model.get 'box'}/#{settings.source.publishToken}/container.html##{frag}"
 
+  render: ->
+    $('body').addClass('fullscreen')
+    super()
+
+  close: ->
+    $('body').removeClass('fullscreen')
+    super()
+
   setupEasyXdm: (url) ->
     transport = new easyXDM.Rpc
       remote: url

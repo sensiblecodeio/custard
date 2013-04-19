@@ -83,6 +83,7 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
 
   dataset: (box) ->
+    doNotNavigate = false
     model = Cu.Model.Dataset.findOrCreate box: box, merge: true
     toolsDone = app.tools().fetch()
     modelDone = model.fetch()
@@ -98,9 +99,18 @@ class Cu.Router.Main extends Backbone.Router
           contentView = new Cu.View.PluginContent {model: dataTablesView}
           @appView.showView contentView
         else
-          app.navigate "/dataset/#{model.id}/settings", trigger: true
+          views.once 'update:tool', =>
+            doNotNavigate = true
+            views.findByToolName 'datatables-view-tool', (dataTablesView) =>
+              subnavView = new Cu.View.DatasetNav {model: model, view: dataTablesView}
+              @subnavView.showView subnavView
+              contentView = new Cu.View.PluginContent {model: dataTablesView}
+              @appView.showView contentView
 
-
+          setTimeout ->
+            unless doNotNavigate
+              app.navigate "/dataset/#{model.id}/settings", trigger: true
+          , 200
 
   datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box

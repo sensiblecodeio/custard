@@ -1,5 +1,7 @@
 <% if @upgrade is 'upgrade': %>
-<h1>YOU MUST PAY - CHOOSE PLAN!!</h1>
+<div class="alert alert-info" style="margin-left: 20px;">
+  <strong>Please upgrade your account</strong> to create more datasets.
+</div>
 <% end %>
 <a class="plan datascientist swcol" href="/signup/datascientist">
   <h2>Data Scientist</h2>

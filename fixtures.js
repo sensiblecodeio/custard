@@ -64,6 +64,17 @@ exports.users = [
   isStaff: false,
   accountLevel: "grandfather",
   recurlyAccount: "zarino-2423348"
+},
+{
+  shortName: 'mrgreedy',
+  email: ['omnomnom@example.com'],
+  displayName: 'Mr F Greedy',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: process.env.COTEST_USER_API_KEY,
+  sshKeys: [],
+  isStaff: false,
+  accountLevel: "free",
+  recurlyAccount: "mrgreedy-1045756"
 }
 ];
 
@@ -98,7 +109,10 @@ exports.datasets = [
 { "box" : "3006375819", "tool": "test-app", "displayName" : "Piglets", "user" : "zarino", "views" : [], "status": { "updated": "2013-01-10T10:23:00.000Z", "message": "No piglets detected", "type": "error" } },
 { "box" : "3006375821", "tool": "test-app", "displayName" : "Chicks", "user" : "zarino", "views" : [] },
 { "box" : "3006375823", "tool": "test-app", "displayName" : "Bobcats", "user" : "zarino", "views" : [] },
-{ "box" : "2416349265", "tool": "spreadsheet-upload", "displayName" : "My Spreadsheet", "user" : "zarino", "views" : [] }
+{ "box" : "2416349265", "tool": "spreadsheet-upload", "displayName" : "My Spreadsheet", "user" : "zarino", "views" : [] },
+{ "box" : "1057304856", "tool": "test-app", "displayName" : "Hamburger", "user" : "mrgreedy", "views" : [] },
+{ "box" : "3046586739", "tool": "test-app", "displayName" : "Fries", "user" : "mrgreedy", "views" : [] },
+{ "box" : "4057690375", "tool": "test-app", "displayName" : "Cola", "user" : "mrgreedy", "views" : [] }
 ]
 
 exports.boxes = [

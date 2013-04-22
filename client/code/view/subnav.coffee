@@ -76,9 +76,7 @@ class Cu.View.DataHubNav extends Backbone.View
     e.stopPropagation()
 
   showChooser: ->
-    t = new Cu.View.ToolList {type: 'importers'}
-    app.navigate "#{window.location.pathname}#chooser"
-    $('body').append t.render().el
+    app.navigate "/chooser", trigger: true
 
   focusContextSearch: ->
     $.ajax
@@ -267,11 +265,7 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
       view: @options.view
 
   showChooser: ->
-    t = new Cu.View.ToolList
-      type: 'nonimporters'
-      dataset: @model
-    app.navigate "#{window.location.pathname}#chooser"
-    $('body').append t.render().el
+    app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true
 
   close: ->
     @toolsView?.close()

@@ -1,9 +1,3 @@
-num = String(Math.random()).replace '.',''
-
-Backbone.View::close = ->
-  @off()
-  @remove()
-
 class Cu.Router.Main extends Backbone.Router
   tools: ->
     Cu.CollectionManager.get Cu.Collection.Tools
@@ -14,6 +8,7 @@ class Cu.Router.Main extends Backbone.Router
   initialize: ->
     @appView = new Cu.AppView '#content'
     @subnavView = new Cu.AppView '#subnav'
+    @overlayView = new Cu.AppView '#overlay'
     @navView ?= new Cu.View.Nav()
 
     # Move somewhere better
@@ -32,9 +27,11 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('pricing/?'), 'pricing'
     @route RegExp('pricing/([^/]+)/?'), 'pricing'
     @route RegExp('tools/?'), 'toolShop'
+    @route RegExp('chooser/?'), 'toolChooser'
     @route RegExp('tools/people-pack/?'), 'peoplePack'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
     @route RegExp('dataset/([^/]+)/settings/?'), 'datasetSettings'
+    @route RegExp('dataset/([^/]+)/chooser/?'), 'datasetToolChooser'
     @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
     @route RegExp('create-profile/?'), 'createProfile'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
@@ -69,6 +66,19 @@ class Cu.Router.Main extends Backbone.Router
     subnavView = new Cu.View.SignUpNav {plan: plan}
     @appView.showView contentView
     @subnavView.showView subnavView
+
+  toolChooser: ->
+    chooserView = new Cu.View.ToolList {type: 'importers'}
+    @overlayView.showView chooserView
+
+  datasetToolChooser: (box) ->
+    model = Cu.Model.Dataset.findOrCreate box: box
+    model.fetch
+      success: =>
+        chooserView = new Cu.View.ToolList
+          type: 'nonimporters'
+          dataset: model
+        @overlayView.showView chooserView
 
   subscribe: (plan) ->
     # TODO: make this a backbone model

@@ -7,6 +7,15 @@
 #= require_tree router
 #= require_tree view
 
+Backbone.View::close = ->
+  @off()
+  @remove()
+
+Backbone.history.routeCount = 0
+Backbone.history.on 'route', ->
+  Backbone.history.routeCount += 1
+  Backbone.history.firstLoad = false
+
 $ ->
   window.app = new Cu.Router.Main()
   Backbone.history.start {pushState: on}

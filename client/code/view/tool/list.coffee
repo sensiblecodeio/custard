@@ -7,23 +7,17 @@ class Cu.View.ToolList extends Backbone.View
 
   initialize: ->
     app.tools().on 'fetched', @addTools, @
-
     $(window).on 'keyup', (e) =>
       if e.which == 27
         @closeChooser()
 
   render: ->
     @$el.hide().append('<span class="close">&times;</span>')
-
     headerView = new Cu.View.ToolListHeader {type: @options.type}
     @$el.append headerView.render().el
-
-    # :TODO: Euch, DOM generation in jQuery. Unclean.
-    @container = $('<div class="container">')
-    @row = $('<div class="row">').appendTo(@container)
+    @row = $('<div class="row container">').appendTo @$el
     @addTools() if app.tools().length
-    @$el.append(@container).fadeIn(100)
-
+    @$el.fadeIn 200
     return this
 
   addTools: ->
@@ -40,6 +34,11 @@ class Cu.View.ToolList extends Backbone.View
       @row.append view.render().el
 
   closeChooser: ->
-    @$el.fadeOut 200, ->
-      $(this).remove()
+    @$el.fadeOut 200, =>
+      # TODO: we want to go back to the last page, but
+      # on our site only window.history.back() will screw up stuff
+      if @options.type is 'importers'
+        app.navigate '/', trigger: Backbone.history.routeCount < 2
+      else
+        app.navigate "/dataset/#{@options.dataset.get 'box'}", trigger: Backbone.history.routeCount < 2
     $(window).off('keyup')

@@ -22,6 +22,11 @@ describe '3 dataset limit for free users', ->
         wd40.click '.newdataset.tool', ->
           browser.waitForElementByCss '.pricing', 4000, done
 
+      it 'is on the pricing page', (done) ->
+        browser.url (err, url) ->
+          url.should.include '/pricing'
+          done()
+
       it 'shows me an upgrade message', (done) ->
         wd40.getText 'body', (err, text) ->
           text.toLowerCase().should.include 'please upgrade'

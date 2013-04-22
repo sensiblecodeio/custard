@@ -95,26 +95,18 @@ class Cu.Router.Main extends Backbone.Router
     model = Cu.Model.Dataset.findOrCreate box: box, merge: true
     toolsDone = app.tools().fetch()
     modelDone = model.fetch()
-    viewsDone = model.fetchRelated 'views'
-    $.when.apply( null, _.union(viewsDone, modelDone, toolsDone) ).done =>
-      console.log 'all done'
+    $.when.apply( null, [modelDone, toolsDone] ).done =>
       views = model.get 'views'
       subnavView = new Cu.View.DatasetNav {model: model}
       @subnavView.showView subnavView
 
-      views.findByToolName 'datatables-view-tool', (dataTablesView) =>
-        if dataTablesView?
-          render dataTablesView
-        else
-          views.once 'update:tool', =>
-            console.log 'UPDATE TOOL'
-            doNotNavigate = true
+      setTimeout =>
+        views.findByToolName 'datatables-view-tool', (dataTablesView) =>
+          if dataTablesView?
             render dataTablesView
-          setTimeout ->
-            console.log "navigating"
-            unless doNotNavigate
-              app.navigate "/dataset/#{model.id}/settings", trigger: true
-          , 1000
+          else
+            app.navigate "/dataset/#{model.id}/settings", trigger: true
+      , 0
 
   datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box

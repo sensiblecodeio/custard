@@ -85,33 +85,34 @@ class Cu.Router.Main extends Backbone.Router
 
   dataset: (box) ->
     doNotNavigate = false
+    render = =>
+      views.findByToolName 'datatables-view-tool', (dataTablesView) =>
+        alert 'NULL DT' unless dataTablesView
+        subnavView = new Cu.View.DatasetNav {model: model, view: dataTablesView}
+        @subnavView.showView subnavView
+        contentView = new Cu.View.PluginContent {model: dataTablesView}
+        @appView.showView contentView
+        doNotNavigate = false
+
     model = Cu.Model.Dataset.findOrCreate box: box, merge: true
     toolsDone = app.tools().fetch()
     modelDone = model.fetch()
     viewsDone = model.fetchRelated 'views'
     $.when.apply( null, _.union(viewsDone, modelDone, toolsDone) ).done =>
+      console.log 'all done'
       views = model.get 'views'
       subnavView = new Cu.View.DatasetNav {model: model}
       @subnavView.showView subnavView
-      views.findByToolName 'datatables-view-tool', (dataTablesView) =>
-        if dataTablesView?
-          subnavView = new Cu.View.DatasetNav {model: model, view: dataTablesView}
-          @subnavView.showView subnavView
-          contentView = new Cu.View.PluginContent {model: dataTablesView}
-          @appView.showView contentView
-        else
-          views.once 'update:tool', =>
-            doNotNavigate = true
-            views.findByToolName 'datatables-view-tool', (dataTablesView) =>
-              subnavView = new Cu.View.DatasetNav {model: model, view: dataTablesView}
-              @subnavView.showView subnavView
-              contentView = new Cu.View.PluginContent {model: dataTablesView}
-              @appView.showView contentView
-
-          setTimeout ->
-            unless doNotNavigate
-              app.navigate "/dataset/#{model.id}/settings", trigger: true
-          , 200
+      if dataTablesView?
+        render()
+      else
+        views.once 'update:tool', =>
+          doNotNavigate = true
+          render()
+        setTimeout ->
+          unless doNotNavigate
+            app.navigate "/dataset/#{model.id}/settings", trigger: true
+        , 200
 
   datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box

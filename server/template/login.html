@@ -29,6 +29,8 @@
             <button type="submit" id="login" class="btn btn-primary">
               <i class="icon-ok space"></i> Log In
             </button>
+            <!-- preload the spinner icon by hiding it off screen -->
+            <img src="/image/loader-btn-primary.png" width="16" height="16" style="position: absolute; left: -4000px;">
           </p>
         </form>
       </div>
@@ -36,7 +38,7 @@
     <script>
       $('#username').focus()
       $('#content form').on('submit', function(){
-          $('#login').attr('disabled', true).addClass('loading').html('Logging In&hellip;')
+          $('#login').addClass('loading').html('Logging In&hellip;')
       })
     </script>
 

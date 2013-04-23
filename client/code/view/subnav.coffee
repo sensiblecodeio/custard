@@ -276,7 +276,8 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
       <div class="btn-toolbar" id="subnav-path">
         <div class="btn-group">
           <a class="btn btn-link" href="/">
-            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
+            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />
+            <span class="datahub-name">#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
           </a>
         </div>
         <div class="btn-group">

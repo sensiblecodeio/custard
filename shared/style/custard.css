@@ -88,17 +88,9 @@ body.fullscreen .container {
 }
 
 #subnav {
-  margin-bottom: 0;
-  margin-top: 20px;
+  margin-top: 0;
+  padding-top: 20px;
   text-align: center; /* We'll override this for large-screened devices later */
-}
-
-.subnav-wrapper > hr { /* used on dataset pages etc to visually separate header from content */
-  float: left;
-  clear: both;
-  width: 100%;
-  margin: 10px 0 0 0;
-  border-top-color: #eee; /* slightly lighter than normal bootstrap hr's */
 }
 
 #subnav-path {
@@ -1008,10 +1000,11 @@ div.docs h3 {
 
   #fullscreen {
     position: fixed;
-    top: 120px;
+    top: 125px;
     left: 0;
     right: 0;
     bottom: 0;
+    border-top: 1px solid #eee;
   }
 
   div.docs nav.well {

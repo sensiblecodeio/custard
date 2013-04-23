@@ -297,8 +297,7 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
             Tools <span class="caret"></span>
           </a>
         </div>
-      </div>
-      <hr>""").find('.dropdown-toggle').after(@toolsView.render().el)
+      </div>""").find('.dropdown-toggle').after(@toolsView.render().el)
     @
 
 class Cu.View.SignUpNav extends Backbone.View

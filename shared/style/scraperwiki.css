@@ -525,6 +525,10 @@ input[type="color"],
   color: #333;
   background: #E6E6E6 url(../image/loader-btn-default.gif) 8px 6px no-repeat;
   padding-left: 30px;
+  -webkit-transition: none;
+     -moz-transition: none;
+       -o-transition: none;
+          transition: none;
 }
 
 .btn-primary.loading {

@@ -621,6 +621,11 @@ a.tile .hide:hover,
   overflow: auto;
 }
 
+/* chooser should always be centred, even on body.fullscreen pages */
+#chooser .container {
+  width: 280px;
+}
+
 #chooser .header {
   margin-top: 67px;
   position: relative;
@@ -1071,6 +1076,11 @@ div.docs h3 {
     margin-left: 20px;
   }
 
+  /* chooser should always be centred, even on body.fullscreen pages */
+  #chooser .container {
+    width: 580px;
+  }
+
 }
 
 @media only screen and (min-width: 920px) {
@@ -1109,6 +1119,18 @@ div.docs h3 {
     padding: 0 150px;
   }
 
+  /* chooser should always be centred, even on body.fullscreen pages */
+  #chooser .container {
+    width: 880px;
+  }
+
 }
 
-@media only screen and (min-width: 1220px) { }
+@media only screen and (min-width: 1220px) {
+
+  /* chooser should always be centred, even on body.fullscreen pages */
+  #chooser .container {
+    width: 1180px;
+  }
+
+}

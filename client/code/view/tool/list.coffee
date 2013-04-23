@@ -15,7 +15,8 @@ class Cu.View.ToolList extends Backbone.View
     @$el.hide().append('<span class="close">&times;</span>')
     headerView = new Cu.View.ToolListHeader {type: @options.type}
     @$el.append headerView.render().el
-    @row = $('<div class="row container">').appendTo @$el
+    @row = $('<div class="row">').appendTo @$el
+    @row.wrap('<div class="container">')
     @addTools() if app.tools().length
     @$el.fadeIn 200
     return this

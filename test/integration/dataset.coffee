@@ -107,7 +107,7 @@ describe 'Dataset', ->
 
       context 'when I go back home', ->
         before (done) ->
-          browser.elementByPartialLinkText 'data hub', (err, link) ->
+          browser.elementByCss '#subnav-path a[href="/"]', (err, link) ->
             link.click done
 
         # wait for animation :(
@@ -181,7 +181,7 @@ describe 'Dataset', ->
 
       context 'when I go back home, and click on Prune again', ->
         before (done) ->
-          browser.elementByPartialLinkText 'data hub', (err, link) ->
+          browser.elementByCss '#subnav-path a[href="/"]', (err, link) ->
             link.click done
 
         before (done) ->

@@ -293,11 +293,19 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
       </div>
       <div class="btn-toolbar" id="subnav-options">
         <div class="btn-group">
-          <a class="btn dropdown-toggle" id="dataset-tools-toggle" data-toggle="dropdown">
-            Tools <span class="caret"></span>
-          </a>
+          <a class="btn btn-link" id="dataset-tools-toggle"></a>
         </div>
-      </div>""").find('.dropdown-toggle').after(@toolsView.render().el)
+      </div>""")
+    @$el.find('#dataset-tools-toggle').after(@toolsView.render().el)
+    setTimeout =>
+      if @options?.view
+        currentToolManifest = @options.view.get('tool').get 'manifest'
+      else
+        currentToolManifest = @model.get('tool').get 'manifest'
+      toggleHtml = JST['tool-menu-toggle']
+        manifest: currentToolManifest
+      @$el.find('#dataset-tools-toggle').html toggleHtml
+    , 200
     @
 
 class Cu.View.SignUpNav extends Backbone.View

@@ -22,8 +22,8 @@ describe 'Dataset', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    it 'shows a button that shows all the tools', (done) ->
-      wd40.elementByPartialLinkText 'Tools', (err, link) =>
+    it 'shows this dataset was made by the Test App tool', (done) ->
+      wd40.elementByPartialLinkText 'Test app', (err, link) ->
         should.exist link
         done()
 
@@ -33,20 +33,23 @@ describe 'Dataset', ->
           visible.should.be.false
           done()
 
-    context 'when I click on the Tools button', (done) ->
+    context 'when I hover over the Test App tool name', (done) ->
       before (done) ->
-        wd40.elementByPartialLinkText 'Tools', (err, link) =>
-          link.click (err) =>
-            wd40.getText '#dataset-tools', (err, text) =>
-              @dropdownText = text
-              done()
+        setTimeout done, 500
 
-      it 'shows a dropdown menu, containing...', (done) ->
-        browser.isVisible 'css selector', '#dataset-tools', (err, visible) ->
+      before (done) ->
+        wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
+          browser.moveTo link, (err) ->
+            done()
+
+      it 'more tools appear in a pop-up menu', (done) ->
+        browser.isVisible 'css selector', '#dataset-tools', (err, visible) =>
           visible.should.be.true
-          done()
+          wd40.getText '#dataset-tools', (err, text) =>
+            @dropdownText = text
+            done()
 
-      it '...the tool that made this dataset', ->
+      it '...including the tool that made this dataset', ->
         @dropdownText.should.include 'Test app'
 
       it '...the view in a table tool', ->
@@ -55,10 +58,10 @@ describe 'Dataset', ->
       it '...the spreadsheet download tool', ->
         @dropdownText.should.include 'Download as spreadsheet'
 
-      it '...the said spreadsheet download tool, only once', ->
+      it '...(only once)', ->
         @dropdownText.match(/Download as spreadsheet/g).length.should.equal 1
 
-      it '...the a button to pick more tools', ->
+      it '...and a button to pick more tools', ->
         @dropdownText.toLowerCase().should.include 'more tools'
 
     context 'when I click the title', ->

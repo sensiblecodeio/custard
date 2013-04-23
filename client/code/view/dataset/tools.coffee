@@ -1,6 +1,4 @@
 class Cu.View.DatasetTools extends Backbone.View
-  className: 'dropdown-menu pull-right'
-  tagName: 'div'
   id: 'dataset-tools'
 
   initialize: ->

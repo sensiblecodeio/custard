@@ -93,6 +93,15 @@ body.fullscreen .container {
   text-align: center; /* We'll override this for large-screened devices later */
 }
 
+.subnav-wrapper > hr { /* used on docs pages etc to visually separate header from content */
+  float: left;
+  clear: both;
+  width: 100%;
+  margin: 10px 0 0 0;
+  border-top-color: #eee; /* slightly lighter than normal bootstrap hr's */
+}
+
+
 #subnav-path {
   line-height: 32px;
   text-rendering: optimizelegibility;

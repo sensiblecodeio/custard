@@ -407,7 +407,7 @@ You&rsquo;ll want to include Bootstrap and our custom style sheet.
 &lt;script src="//beta.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;</pre>
 
 <p>Write your HTML in a way that <a href="http://twitter.github.com/bootstrap/base-css.html">works
-well with Boostrap</a>.
+well with Bootstrap</a>.
 </p>
 
 <p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap are rendered on ScraperWiki.</p>

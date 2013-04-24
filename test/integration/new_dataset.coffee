@@ -13,6 +13,7 @@ describe 'New dataset tool', ->
     browser.waitForElementByCss '.dataset-list', 4000, done
 
   context 'when I click the "new dataset" button', ->
+    iframeUrl = null
     before (done) ->
       wd40.click '.new-dataset', ->
         browser.waitForElementByCss '#chooser .tool', 4000, done
@@ -25,32 +26,45 @@ describe 'New dataset tool', ->
               @currentUrl = url
               done err
 
+      before (done) ->
+        # wait for the tool menu toggle to load
+        setTimeout done, 1000
+
       it 'takes me to the dataset settings page', ->
         @currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/settings")
 
+      it 'and shows that the "Code a dataset" tool is active', (done) ->
+        wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
+          link.text (err, text) ->
+            text.toLowerCase().should.include 'code a dataset'
+            done()
+
+      it 'and shows me the "Code in a dataset" tool contents', (done) ->
+        wd40.switchToBottomFrame ->
+          wd40.trueURL (err, url) ->
+            iframeUrl = url
+            done()
+
     context 'when I go back to the dataset page', ->
       before (done) ->
+        # wait for the data tables tool to be installed in the background
         setTimeout done, 5000
 
       before (done) ->
         browser.get @currentUrl.replace(/\/settings$/, ''), done
 
       before (done) ->
-        browser.waitForElementByPartialLinkText 'Tools', 4000, done
+        # wait for the tool menu toggle to load (just in case)
+        setTimeout done, 1000
 
-      before (done) ->
-        wd40.elementByPartialLinkText 'Tools', (err, link) ->
-          link.click done
-
-      before (done) ->
-        browser.waitForElementByCss '.active', 4000, done
-
-      it 'has the datatables view selected', (done) ->
-        browser.elementByCss '.active', (err, link) ->
+      it 'shows that the "View in a table" tool is active', (done) ->
+        wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
           link.text (err, text) ->
-            text.should.include 'View in a table'
+            text.toLowerCase().should.include 'view in a table'
             done()
 
-      it 'has the datatables view installed', (done) ->
+      it 'and shows me the "View in a table" tool contents', (done) ->
         wd40.switchToBottomFrame ->
-          wd40.waitForText 'database file does not exist', done
+          wd40.trueURL (err, url) ->
+            url.should.not.equal iframeUrl
+            done()

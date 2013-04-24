@@ -19,22 +19,20 @@ describe 'View', ->
       , 1000
 
     before (done) ->
-      browser.elementByPartialLinkText 'Tools', (err, link) =>
-        link.click done
-
-    before (done) ->
-      browser.elementByPartialLinkText 'Code a prune!', (err, link) ->
-        link.click done
+      wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
+        browser.moveTo link, (err) ->
+          wd40.elementByPartialLinkText 'Code a prune!', (err, toolLink) ->
+            toolLink.click done
 
     it 'takes me to the Graph of Prunes page', (done) ->
       wd40.trueURL (err, result) ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    context 'when I open the Tools menu', ->
+    xcontext 'when I open the Tools menu', ->
       before (done) ->
-        wd40.elementByPartialLinkText 'Tools', (err, link) ->
-          link.click done
+        wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
+          browser.moveTo link, done
 
       context 'when I click the "hide" link on the "Code a prune" tool', ->
         before (done) ->
@@ -42,6 +40,7 @@ describe 'View', ->
             @link = view
             browser.moveTo @link, =>
               @link.elementByCss '.hide', (err, hideLink) ->
+                # for some reason we need a timeout for the CSS :hover to take effect
                 hideLink.click done
 
         it 'the tool disappears from the tool menu immediately', (done) ->
@@ -57,7 +56,7 @@ describe 'View', ->
             browser.refresh done
 
           it 'the "Code a prune" tool stays hidden', (done) ->
-            browser.elementByPartialLinkText 'Tools', (err, link) =>
+            wd40.elementByCss '#dataset-tools-toggle', (err, link) =>
               browser.moveTo link, ->
                 link.click ->
                   browser.elementByPartialLinkTextIfExists "Code a prune", (err, view) ->

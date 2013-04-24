@@ -63,6 +63,21 @@ class wd40
             setTimeout poll, 200
     poll()
 
+  @waitForMatchingURL: (regExp, cb) ->
+    endTime = Date.now() + 4000
+    poll = =>
+      @trueURL (err, url) ->
+        if err
+          return cb err
+        if regExp.test url
+          cb null, url
+        else
+          if Date.now() > endTime
+            cb new Error("No matching URL found")
+          else
+            setTimeout poll, 200
+    poll()
+
   @elementByPartialLinkText: (text, callback) ->
     browser.waitForElementByPartialLinkText text, 4000, (err) ->
       callback(err) if err?

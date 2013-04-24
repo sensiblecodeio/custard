@@ -17,11 +17,10 @@ class Cu.View.ToolMenuItem extends Backbone.View
     if @model instanceof Cu.Model.View
       $('.hide', @$el).hide 0, =>
         @$el.slideUp =>
+          dataset = @model.get('plugsInTo')
           @model.set 'state', 'deleted'
-          @model.get('plugsInTo').save {},
-            error: (e) =>
-              @$el.slideDown()
-              console.warn 'View could not be deleted!'
+          dataset.save()
+          app.navigate "/dataset/#{dataset.get 'box'}/", trigger: true
 
   initialize: ->
     @model.on 'change', @render, this

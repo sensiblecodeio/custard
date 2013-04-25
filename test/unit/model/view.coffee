@@ -10,7 +10,8 @@ describe 'Client model: View', ->
     beforeEach ->
       @tool = Cu.Model.Tool.findOrCreate
         name: 'test-plugin'
-        displayName: 'Test Plugin'
+        manifest:
+          displayName: 'Test Plugin'
 
       @view = Cu.Model.View.findOrCreate
         user: 'test'
@@ -19,7 +20,7 @@ describe 'Client model: View', ->
 
     it 'has a related tool', ->
       tool = @view.get('tool')
-      tool.get('displayName').should.equal 'Test Plugin'
+      tool.get('manifest').displayName.should.equal 'Test Plugin'
 
 class TestDb
   class Model

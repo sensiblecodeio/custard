@@ -1,0 +1,30 @@
+#!/usr/bin/env coffee
+mongoose = require 'mongoose'
+async = require 'async'
+
+{User} = require 'model/user'
+{Dataset} = require 'model/dataset'
+plans = require 'plans.json'
+
+mongoose.connect process.env.CU_DB
+
+addBoxServer = (dataset, callback) ->
+  console.log dataset
+  User.findByShortName dataset.user, (err, user) ->
+    if err?
+      console.log err
+      return callback err
+    else
+      server = plans[user.accountLevel]?.boxServer
+      if server?
+        dataset.boxServer = server
+        for view in dataset.views
+          view.boxServer = server
+        dataset.save callback
+      else
+        console.log "NO SERVER for #{user.shortName}"
+        return callback 'NO SERVER'
+
+Dataset.dbClass.find {state: { $ne: 'deleted' } }, (err, dataseten) ->
+  async.eachSeries dataseten, addBoxServer, (err) ->
+    console.log err if err?

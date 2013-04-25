@@ -8,10 +8,6 @@ plan = require('model/plan')
 
 describe 'Plan (Server)', ->
 
-  describe 'Can get maximum box size', ->
-    it 'gets 8Mb for the free plan', ->
-      plan.boxMaxSize("free").should.equal 8
-
   describe 'Can set quota of a box', ->
     before (done) ->
       process.env.CU_QUOTA_SERVER = 'testy'

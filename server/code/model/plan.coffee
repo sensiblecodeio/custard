@@ -1,19 +1,11 @@
 request = require 'request'
-
-boxMaxSize = (name) ->
-  if name == 'grandfather'
-    return 8000 # 8GB
-  else if name == 'free'
-    return 8 # 8MB
-  else
-    console.warn 'planSize: unknown plan', name
-    return 8
+plans = require 'plans.json'
 
 setDiskQuota = (box, accountLevel, cb) ->
   quotaServer = process.env.CU_QUOTA_SERVER
   unless quotaServer? and quotaServer.length > 0
     return cb(null, true)
-  maxSize = boxMaxSize accountLevel
+  maxSize = plans[accountLevel]?.maxDiskSpaceMB or 8
   request.post
     uri: "#{quotaServer}/quota"
     form:
@@ -25,5 +17,4 @@ setDiskQuota = (box, accountLevel, cb) ->
       cb err
     cb null, true
 
-exports.boxMaxSize = boxMaxSize
 exports.setDiskQuota = setDiskQuota

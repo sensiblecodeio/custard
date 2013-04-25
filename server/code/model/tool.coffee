@@ -58,7 +58,7 @@ class exports.Tool extends ModelBase
             cb err or "no user"
           else
             request.post
-              uri: "#{process.env.CU_BOX_SERVER}/#{item.box}/exec"
+              uri: "#{Box.endpoint item.boxServer, item.box}/exec"
               form:
                 apikey: user.apikey
                 cmd: "cd ~/tool && git pull >> tool-update.log 2>&1"

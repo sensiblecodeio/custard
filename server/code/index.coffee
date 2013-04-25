@@ -24,7 +24,7 @@ Token = require('model/token')()
 {Tool} = require 'model/tool'
 {Box} = require 'model/box'
 {Subscription} = require 'model/subscription'
-plans = require 'plans'
+{Plan} = require 'model/plan'
 
 recurlySign = require 'lib/sign'
 
@@ -151,7 +151,6 @@ renderClientApp = (req, resp) ->
     scripts: js 'app'
     templates: js 'template/index'
     user: JSON.stringify( req.user or {} )
-    boxServer: process.env.CU_BOX_SERVER
     recurlyDomain: process.env.RECURLY_DOMAIN
     flash: req.flash()
 
@@ -246,7 +245,7 @@ app.post '/api/token/:token/?', (req, resp) ->
 # Add a user
 app.post '/api/user/?', (req, resp) ->
   subscribingTo = req.body.subscribingTo
-  subscribingTo = plans[subscribingTo]
+  [err_,subscribingTo] = Plan.getPlan subscribingTo
   # Is money required?
   if not subscribingTo?.$
     subscribingTo = null

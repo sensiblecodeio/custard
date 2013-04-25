@@ -5,7 +5,7 @@ window.Cu =
   Router: {}
   Helpers:
     # :TODO: this should be in its own file
-    showOrAddSSH: (box, displayName, type) =>
+    showOrAddSSH: (option) =>
 
       initZeroClipboard = ->
         clip = new ZeroClipboard $('.zeroclipboard')[0], { moviePath: "/vendor/js/ZeroClipboard.swf" }
@@ -36,13 +36,13 @@ window.Cu =
             url: "/api/#{window.user.effective.shortName}/sshkeys",
             type: "POST",
             data: {key: key}
-          makeModal JST['modal-ssh'] {box: box, displayName: displayName, type: type}
+          makeModal JST['modal-ssh'] opt
 
       $.ajax
         url: "/api/#{window.user.effective.shortName}/sshkeys"
         success: (sshKeys) ->
           if sshKeys.length
-            makeModal JST['modal-ssh'] {box: box, displayName: displayName, type: type}
+            makeModal JST['modal-ssh'] opt
           else
             makeModal JST['modal-add-ssh']()
 

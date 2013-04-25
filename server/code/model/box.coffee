@@ -7,8 +7,7 @@ Schema = mongoose.Schema
 
 ModelBase = require 'model/base'
 {Tool} = require 'model/tool'
-plan = require 'model/plan'
-plans = require 'plans.json'
+{Plan} = require 'model/plan'
 
 boxSchema = new Schema
   users: [String]
@@ -21,7 +20,7 @@ zDbBox = mongoose.model 'Box', boxSchema
 
 _exec = (arg, callback) ->
   request.post
-    uri: "#{process.env.CU_BOX_SERVER}/#{arg.boxName}/exec"
+    uri: "#{Box.endpoint arg.boxServer, arg.boxName}/exec"
     form:
       apikey: arg.user.apiKey
       cmd: arg.cmd
@@ -38,6 +37,7 @@ class Box extends ModelBase
         _exec
           user: arg.user
           boxName: @name
+          boxServer: @boxServer
           cmd: "rm -r http && git clone #{tool.gitUrl} tool --depth 1 && ln -s tool/http http"
         , (err, res, body) ->
           if err?
@@ -46,6 +46,15 @@ class Box extends ModelBase
             callback {statusCode: res.statusCode, body: body}
           else
             callback null
+
+  @endpoint: (server, name) ->
+    proto_server = "https://#{server}"
+    if process.env.CU_BOX_SERVER?
+      proto_server = "http://#{process.env.CU_BOX_SERVER}"
+    return "#{proto_server}/#{name}"
+
+  endpoint: () ->
+    Box.endpoint @server, @name
 
   @findAllByUser: (shortName, callback) ->
     @dbClass.find users: shortName, callback
@@ -59,20 +68,30 @@ class Box extends ModelBase
 
   @create: (user, callback) ->
     boxName = @_generateBoxName()
+    [err_, plan] = Plan.getPlan user.accountLevel
+    server = plan?.boxServer
+    if not server
+      return callback
+        statusCode: 500
+        body: JSON.stringify(error: "Plan/Server not present")
+      , null
+    # The URI we need should have "box" between the server name and the
+    # box name. Bit tricky to do. :todo: make better (by fixing cobalt?).
+    uri = "#{Box.endpoint server, boxName}"
+    uri = uri.split '/'
+    # Insert 'box' just after 3rd element.
+    uri.splice 3, 0, 'box'
+    uri = uri.join '/'
+    console.log "BOX CREATE posting to #{uri}"
     request.post
-      uri: "#{process.env.CU_BOX_SERVER}/box/#{boxName}"
+      uri: uri
       form:
         apikey: user.apiKey
     , (err, res, body) ->
+      console.log "server #{server} boxName #{boxName}"
+      if err?
+        return callback err, null
       # TODO: we don't need multiple users
-      server = plans[user.accountLevel]?.boxServer
-      console.log "boxCreate server", server
-      if not server
-        return callback
-          statusCode: 500
-          body: JSON.stringify(error: "Plan/Server not present")
-        , null
-      console.log "boxCreate server", server
       box = new Box({users: [user.shortName], name: boxName, server: server})
       box.save (err) ->
         if err?
@@ -80,8 +99,7 @@ class Box extends ModelBase
         else if res.statusCode isnt 200
           callback {statusCode: res.statusCode, body: body}, null
         else
-          console.log "boxCreate box.server", box.server
-          plan.setDiskQuota box, user.accountLevel, (err) ->
+          Plan.setDiskQuota box, user.accountLevel, (err) ->
             callback null, box
 
   @_generateBoxName: ->

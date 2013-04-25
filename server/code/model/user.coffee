@@ -7,8 +7,7 @@ uuid = require 'uuid'
 ModelBase = require 'model/base'
 {Box} = require 'model/box'
 Token = require('model/token')()
-plan = require('model/plan')
-plans = require 'plans.json'
+{Plan} = require 'model/plan'
 
 {signUpEmail} = require 'lib/email'
 
@@ -61,7 +60,7 @@ class exports.User extends ModelBase
         return callback err, null
       # set quota on each box. Parallel overwhelms gand.
       async.eachSeries boxes, (box, next) =>
-        plan.setDiskQuota box, @accountLevel, next
+        Plan.setDiskQuota box, @accountLevel, next
       , ->
         callback null, true
 
@@ -71,7 +70,7 @@ class exports.User extends ModelBase
 
   @canCreateDataset: (user, callback) ->
     {Dataset} = require 'model/dataset'
-    plan = plans[user.accountLevel]
+    [err_,plan] = Plan.getPlan user.accountLevel
     if not plan?
       return callback
         statusCode: 404
@@ -101,7 +100,7 @@ class exports.User extends ModelBase
               userCb()
           , ->
             request.post
-              uri: "#{process.env.CU_BOX_SERVER}/#{box.name}/sshkeys"
+              uri: "#{Box.endpoint box.server, box.name}/sshkeys"
               form:
                 keys: JSON.stringify boxKeys
             , (err, res, body) ->

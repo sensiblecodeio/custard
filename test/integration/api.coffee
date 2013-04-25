@@ -216,6 +216,12 @@ describe 'API', ->
             should.exist @dataset.box
             @dataset.displayName.should.equal 'Biscuit'
 
+          it 'has an associated boxServer...', ->
+            should.exist @dataset.boxServer
+
+          it '... which is the free boxServer', ->
+            @dataset.boxServer.should.include "free"
+
         context 'GET /api/:user/datasets/:id', ->
           it 'returns a single dataset', (done)  ->
             request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->

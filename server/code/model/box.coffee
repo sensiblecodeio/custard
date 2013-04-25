@@ -8,13 +8,14 @@ Schema = mongoose.Schema
 ModelBase = require 'model/base'
 {Tool} = require 'model/tool'
 plan = require 'model/plan'
+plans = require 'plans.json'
 
 boxSchema = new Schema
   users: [String]
   name:
     type: String
     index: unique: true
-  # maybe host here?
+  server: String
 
 zDbBox = mongoose.model 'Box', boxSchema
 
@@ -64,13 +65,22 @@ class Box extends ModelBase
         apikey: user.apiKey
     , (err, res, body) ->
       # TODO: we don't need multiple users
-      box = new Box({users: [user.shortName], name: boxName})
+      server = plans[user.accountLevel]?.boxServer
+      console.log "boxCreate server", server
+      if not server
+        return callback
+          statusCode: 500
+          body: JSON.stringify(error: "Plan/Server not present")
+        , null
+      console.log "boxCreate server", server
+      box = new Box({users: [user.shortName], name: boxName, server: server})
       box.save (err) ->
         if err?
           callback err, null
         else if res.statusCode isnt 200
           callback {statusCode: res.statusCode, body: body}, null
         else
+          console.log "boxCreate box.server", box.server
           plan.setDiskQuota box, user.accountLevel, (err) ->
             callback null, box
 

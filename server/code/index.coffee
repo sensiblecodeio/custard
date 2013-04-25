@@ -433,19 +433,22 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
 
 app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   user = req.user.effective
-  console.log "POST dataset user", user
+  console.log "AFDASDASD POST dataset user", user
   User.canCreateDataset user, (err, can) ->
     if err?
+      console.log "USER #{user} CANNOT CREATE DATASET"
       return resp.send err.statusCode, err.error
     Box.create user, (err, box) ->
       if err?
         console.warn err
         return resp.send err.statusCode, error: "Error creating box: #{err.body}"
       console.log "POST dataset boxName=#{box.name}"
+      console.log "POST dataset boxServer = #{box.server}"
       # Save dataset
       body = req.body
       dataset = new Dataset
         box: box.name
+        boxServer: box.server
         user: user.shortName
         tool: body.tool
         name: body.name

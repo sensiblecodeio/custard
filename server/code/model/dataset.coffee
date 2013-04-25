@@ -6,6 +6,7 @@ ModelBase = require 'model/base'
 
 viewSchema = new Schema
   box: String
+  boxServer: String
   tool: String
   name: String
   displayName: String
@@ -13,6 +14,7 @@ viewSchema = new Schema
 
 datasetSchema = new Schema
   box: String
+  boxServer: String
   user: String  # Actually, the owner
   tool: String
   name: String

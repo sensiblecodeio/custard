@@ -271,6 +271,13 @@ describe 'API', ->
                 should.exist @view.box
                 @view.displayName.should.equal 'Carrot Top'
 
+              it 'has an associated boxServer...', ->
+                should.exist @view.boxServer
+
+              it '... which is the free boxServer', ->
+                @view.boxServer.should.include "free"
+
+
         context 'PUT /api/:user/datasets/:id', ->
           it 'changes the display name of a single dataset', (done) ->
             request.put

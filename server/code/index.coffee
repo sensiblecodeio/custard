@@ -167,6 +167,7 @@ addView = (user, dataset, attributes, callback) ->
         return resp.send err.statusCode, error: "Error creating box: #{err.body}"
       view =
         box: box.name
+        boxServer: box.server
         tool: attributes.tool
         displayName: attributes.displayName
       dataset.views.push view
@@ -472,7 +473,6 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
               console.warn err if err?
               resp.send 200, dataset
               addView user, dataset,
-                box: box
                 tool: 'datatables-view-tool'
                 displayName: 'View in a table' # TODO: use tool object
               , (err, view) ->
@@ -482,22 +482,16 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
 app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
   user = req.user.effective
   Dataset.findOneById req.params.dataset, (err, dataset) ->
-    Box.create user, (err, box) ->
+    # Add view to dataset and save
+    body = req.body
+    addView user, dataset,
+      tool: body.tool
+      displayName: body.displayName
+    , (err, view) ->
       if err?
-        console.warn err
-        return resp.send err.statusCode, error: "Error creating box: #{err.body}"
-
-      # Add view to dataset and save
-      body = req.body
-      addView user, dataset,
-        box: box
-        tool: body.tool
-        displayName: body.displayName
-      , (err, view) ->
-        if err?
-          resp.send err.error, error: "Error creating view: #{err}"
-        else
-          resp.send 200, view
+        resp.send err.error, error: "Error creating view: #{err}"
+      else
+        resp.send 200, view
 
 
 # user api is staff-only for now (probably forever)

@@ -66,6 +66,7 @@ passport.deserializeUser (obj, done) ->
 
 # Convert user into session appropriate user
 getSessionUser = (user) ->
+  [err_, plan] = Plan.getPlan user.accountLevel
   session =
     shortName: user.shortName
     displayName: user.displayName
@@ -75,6 +76,8 @@ getSessionUser = (user) ->
     avatarUrl: "/image/avatar.png"
     accountLevel: user.accountLevel
     recurlyAccount: user.recurlyAccount
+    boxEndpoint: Box.endpoint plan.boxServer, ''
+    boxServer: plan.boxServer
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")

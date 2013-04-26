@@ -2,9 +2,10 @@ class Cu.View.ViewContent extends Backbone.View
   id: 'fullscreen'
 
   initialize: ->
+    @boxUrl = @model.endpoint()
     @settings (settings) =>
       frag = encodeURIComponent JSON.stringify(settings)
-      @setupEasyXdm "#{@model.endpoint()}/#{@model.get 'box'}/#{settings.source.publishToken}/container.html##{frag}"
+      @setupEasyXdm "#{@boxUrl}/#{@model.get 'box'}/#{settings.source.publishToken}/container.html##{frag}"
 
   render: ->
     $('body').addClass('fullscreen')

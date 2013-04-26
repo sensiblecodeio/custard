@@ -3,4 +3,3 @@
 --compilers coffee:coffee-script
 --reporter spec
 --timeout 40000
---ignore-leaks

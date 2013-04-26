@@ -3,9 +3,11 @@ should = require 'should'
 
 clickSSHButton = (done) ->
   wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
-    browser.moveTo link, (err) ->
-      wd40.elementByCss '#dataset-tools a[href$="/settings"] .ssh-in', (err, sshLink) ->
-        sshLink.click done
+    setTimeout ->
+      browser.moveTo link, (err) ->
+        wd40.elementByCss '#dataset-tools a[href$="/settings"] .ssh-in', (err, sshLink) ->
+          sshLink.click done
+    , 1000
 
 describe 'Platform-specific SSH instructions', ->
   prepIntegration()

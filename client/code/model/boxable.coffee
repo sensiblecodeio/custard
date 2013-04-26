@@ -1,17 +1,4 @@
 class Cu.Boxable
-  publishToken: (callback) ->
-    if @_publishToken?
-      callback @_publishToken
-    else
-      @exec "cat ~/box.json",
-        dataType: 'json'
-        success: (settings) ->
-          @_publishToken = settings.publish_token
-          callback @_publishToken
-        error: (jqXhr, textStatus, errorThrown) ->
-          console.warn "Couldn't parse box.json!", errorThrown
-
-
   exec: (cmd, args) ->
     # Returns an ajax object, onto which you can
     # chain .success and .error callbacks

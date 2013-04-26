@@ -100,6 +100,7 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
         contentView = new Cu.View.PluginContent {model: dataTablesView}
         @appView.showView contentView
+        contentView.showContent()
         doNotNavigate = false
 
     model = Cu.Model.Dataset.findOrCreate box: box, merge: true
@@ -126,6 +127,7 @@ class Cu.Router.Main extends Backbone.Router
         contentView = new Cu.View.AppContent model: model
         @appView.showView contentView
         @subnavView.showView subnavView
+        contentView.showContent()
       error: (x,y,z) ->
         # TODO: factor into function
         contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"
@@ -145,6 +147,7 @@ class Cu.Router.Main extends Backbone.Router
         subnavView = new Cu.View.DatasetNav model: dataset, view: v
         @appView.showView contentView
         @subnavView.showView subnavView
+        contentView.showContent()
       error: (model, xhr, options) ->
         console.warn xhr
 

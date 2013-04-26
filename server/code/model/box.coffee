@@ -15,6 +15,7 @@ boxSchema = new Schema
     type: String
     index: unique: true
   server: String
+  boxJSON: Schema.Types.Mixed
 
 zDbBox = mongoose.model 'Box', boxSchema
 
@@ -89,16 +90,19 @@ class Box extends ModelBase
         apikey: user.apiKey
     , (err, res, body) ->
       console.log "server #{server} boxName #{boxName}"
+
       if err?
         return callback err, null
       # TODO: we don't need multiple users
-      box = new Box({users: [user.shortName], name: boxName, server: server})
+      boxJSON = JSON.parse body
+      box = new Box({users: [user.shortName], name: boxName, server: server, boxJSON: boxJSON})
       box.save (err) ->
         if err?
           callback err, null
         else if res.statusCode isnt 200
           callback {statusCode: res.statusCode, body: body}, null
         else
+          #TODO: background this
           Plan.setDiskQuota box, user.accountLevel, (err) ->
             callback null, box
 

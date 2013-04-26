@@ -173,6 +173,7 @@ addView = (user, dataset, attributes, callback) ->
         boxServer: box.server
         tool: attributes.tool
         displayName: attributes.displayName
+        boxJSON: box.boxJSON
       dataset.views.push view
       dataset.save (err) ->
         if err?
@@ -457,6 +458,7 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
         tool: body.tool
         name: body.name
         displayName: body.displayName
+        boxJSON: box.boxJSON
 
       dataset.save (err) ->
         if err?

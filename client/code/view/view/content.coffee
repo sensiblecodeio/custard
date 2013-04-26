@@ -1,7 +1,7 @@
 class Cu.View.ViewContent extends Backbone.View
   id: 'fullscreen'
 
-  initialize: ->
+  showContent: ->
     @boxUrl = @model.endpoint()
     @settings (settings) =>
       frag = encodeURIComponent JSON.stringify(settings)
@@ -9,7 +9,6 @@ class Cu.View.ViewContent extends Backbone.View
 
   render: ->
     $('body').addClass('fullscreen')
-    super()
 
   close: ->
     $('body').removeClass('fullscreen')
@@ -18,7 +17,7 @@ class Cu.View.ViewContent extends Backbone.View
   setupEasyXdm: (url) ->
     transport = new easyXDM.Rpc
       remote: url
-      container: 'fullscreen'
+      container: document.getElementById('fullscreen')
     ,
       local:
         redirect: (url) ->
@@ -63,32 +62,32 @@ class Cu.View.ViewContent extends Backbone.View
 
 class Cu.View.AppContent extends Cu.View.ViewContent
   settings: (callback) ->
-    @model.publishToken (publishToken) =>
-      query = window.app.pushSqlQuery
-      window.app.pushSqlQuery = null
-      callback
-        source:
-          apikey: window.user.effective.apiKey
-          url: "#{@boxUrl}/#{@model.get 'box'}/#{publishToken}"
-          publishToken: publishToken
-          box: @model.get 'box'
-          sqlQuery: query
+    query = window.app.pushSqlQuery
+    window.app.pushSqlQuery = null
+    publishToken = @model.get('boxJSON').publish_token
+    callback
+      source:
+        apikey: window.user.effective.apiKey
+        url: "#{@boxUrl}/#{@model.get 'box'}/#{publishToken}"
+        publishToken: publishToken
+        box: @model.get 'box'
+        sqlQuery: query
 
 class Cu.View.PluginContent extends Cu.View.ViewContent
   settings: (callback) ->
-    @model.publishToken (viewToken) =>
-      query = window.app.pushSqlQuery
-      window.app.pushSqlQuery = null
-      dataset = @model.get 'plugsInTo'
-      dataset.publishToken (datasetToken) =>
-        callback
-          source:
-            apikey: window.user.effective.apiKey
-            url: "#{@boxUrl}/#{@model.get 'box'}/#{viewToken}"
-            publishToken: viewToken
-            box: @model.get 'box'
-            sqlQuery: query
-          target:
-            url: "#{@boxUrl}/#{dataset.get 'box'}/#{datasetToken}"
-            publishToken: datasetToken
-            box: dataset.get 'box'
+    query = window.app.pushSqlQuery
+    window.app.pushSqlQuery = null
+    dataset = @model.get 'plugsInTo'
+    viewToken = @model.get('boxJSON').publish_token
+    datasetToken = dataset.get('boxJSON').publish_token
+    callback
+      source:
+        apikey: window.user.effective.apiKey
+        url: "#{@boxUrl}/#{@model.get 'box'}/#{viewToken}"
+        publishToken: viewToken
+        box: @model.get 'box'
+        sqlQuery: query
+      target:
+        url: "#{@boxUrl}/#{dataset.get 'box'}/#{datasetToken}"
+        publishToken: datasetToken
+        box: dataset.get 'box'

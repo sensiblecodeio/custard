@@ -101,18 +101,18 @@ exports.tools = [
 ]
 
 exports.datasets = [
-{ "box" : "3006375730", "tool": "test-app", "displayName" : "Cheese", "user" : "ickletest", "views" : [] },
-{ "box" : "3006375731", "tool": "test-app", "displayName" : "Apricot", "user" : "ehg", "views" : [ { "name": "downloader", "displayName": "Download a Spreadsheet", "box": "4001815731", "state": "state", "tool": "spreadsheet-download" }] },
-{ "box" : "3006375815", "tool": "test-app", "displayName" : "Prune", "user" : "ehg", "views" : [  { "name": "prune-graph", "displayName": "Graph of Prunes", "box": "4008115731", "state": "state", "tool": "prune-graph" } ] },
-{ "box" : "3006375816", "tool": "test-app", "displayName" : "Kittens", "user" : "zarino", "views" : [  { "name": "table1", "displayName": "View in a Table", "box": "400857239", "state": "state", "tool": "test-plugin" } ], "status": { "updated": "2013-03-12T08:23:00.000Z", "message": "Fully up to date", "type": "ok" } },
-{ "box" : "3006375818", "tool": "test-app", "displayName" : "Puppies", "user" : "zarino", "views" : [], "status": { "updated": "2013-03-12T07:20:00.000Z", "message": "Fully up to date", "type": "ok" } },
-{ "box" : "3006375819", "tool": "test-app", "displayName" : "Piglets", "user" : "zarino", "views" : [], "status": { "updated": "2013-01-10T10:23:00.000Z", "message": "No piglets detected", "type": "error" } },
-{ "box" : "3006375821", "tool": "test-app", "displayName" : "Chicks", "user" : "zarino", "views" : [] },
-{ "box" : "3006375823", "tool": "test-app", "displayName" : "Bobcats", "user" : "zarino", "views" : [] },
-{ "box" : "2416349265", "tool": "spreadsheet-upload", "displayName" : "My Spreadsheet", "user" : "zarino", "views" : [] },
-{ "box" : "1057304856", "tool": "test-app", "displayName" : "Hamburger", "user" : "mrgreedy", "views" : [] },
-{ "box" : "3046586739", "tool": "test-app", "displayName" : "Fries", "user" : "mrgreedy", "views" : [] },
-{ "box" : "4057690375", "tool": "test-app", "displayName" : "Cola", "user" : "mrgreedy", "views" : [] }
+{ "box" : "3006375730", "tool": "test-app", "displayName" : "Cheese", "user" : "ickletest", "boxServer": "localhost", "views" : [] },
+{ "box" : "3006375731", "tool": "test-app", "displayName" : "Apricot", "user" : "ehg", "boxServer": "localhost", "views" : [ { "name": "downloader", "displayName": "Download a Spreadsheet", "box": "4001815731", "state": "state", "boxServer": "localhost", "tool": "spreadsheet-download" }] },
+{ "box" : "3006375815", "tool": "test-app", "displayName" : "Prune", "user" : "ehg","boxServer": "localhost",  "views" : [  { "name": "prune-graph", "displayName": "Graph of Prunes", "box": "4008115731", "boxServer": "localhost", "state": "state", "tool": "prune-graph" } ] },
+{ "box" : "3006375816", "boxServer": "localhost", "tool": "test-app", "displayName" : "Kittens", "user" : "zarino", "views" : [  { "name": "table1", "displayName": "View in a Table", "boxServer": "localhost", "box": "400857239", "state": "state", "tool": "test-plugin" } ], "status": { "updated": "2013-03-12T08:23:00.000Z", "message": "Fully up to date", "type": "ok" } },
+{ "box" : "3006375818", "tool": "test-app", "displayName" : "Puppies", "user" : "zarino", "boxServer": "localhost", "views" : [], "status": { "updated": "2013-03-12T07:20:00.000Z", "message": "Fully up to date", "type": "ok" } },
+{ "box" : "3006375819", "tool": "test-app", "displayName" : "Piglets", "user" : "zarino", "boxServer": "localhost", "views" : [], "status": { "updated": "2013-01-10T10:23:00.000Z", "message": "No piglets detected", "type": "error" } },
+{ "box" : "3006375821", "tool": "test-app", "boxServer": "localhost", "displayName" : "Chicks", "user" : "zarino", "views" : [] },
+{ "box" : "3006375823", "tool": "test-app", "boxServer": "localhost", "displayName" : "Bobcats", "user" : "zarino", "views" : [] },
+{ "box" : "2416349265", "boxServer": "localhost", "tool": "spreadsheet-upload", "displayName" : "My Spreadsheet", "user" : "zarino", "views" : [] },
+{ "box" : "1057304856", "boxServer": "localhost", "tool": "test-app", "displayName" : "Hamburger", "user" : "mrgreedy", "views" : [] },
+{ "box" : "3046586739", "tool": "test-app", "boxServer": "localhost", "displayName" : "Fries", "user" : "mrgreedy", "views" : [] },
+{ "box" : "4057690375", "tool": "test-app", "boxServer": "localhost", "displayName" : "Cola", "user" : "mrgreedy", "views" : [] }
 ]
 
 exports.boxes = [

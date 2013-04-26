@@ -9,7 +9,7 @@ class Cu.View.ViewTile extends Backbone.View
     'click .dropdown-menu a': 'dropdownMenuItemClick'
     'click .rename-view': 'renameViewClick'
     'click .git-ssh': ->
-      Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'view'
+      Cu.Helpers.showOrAddSSH @model, 'view'
 
   initialize: ->
     @model.on 'change', @render, this
@@ -45,5 +45,3 @@ class Cu.View.ViewTile extends Backbone.View
     setTimeout ->
       $('#subnav-path .editable').trigger('click')
     , 1200
-
-

@@ -112,7 +112,7 @@ MII...0tXU=
             @modalTextContent.should.not.include 'add your ssh key:'
 
           it 'the modal window tells me how to SSH in', =>
-            @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
+            @modalTextContent.should.include 'ssh 3006375731@localhost'
 
           it 'the modal window lets me add another SSH key', =>
             @modalTextContent.should.include 'add another ssh key'
@@ -158,4 +158,4 @@ MII...0tXU=
         @modalTextContent.should.not.include 'add your ssh key:'
 
       it 'the modal window tells me how to SSH in', =>
-        @modalTextContent.should.include 'ssh 3006375731@box.scraperwiki.com'
+        @modalTextContent.should.include 'ssh 3006375731@localhost'

@@ -14,7 +14,7 @@ class Cu.View.DatasetTile extends Backbone.View
     'click .dropdown-menu a': 'dropdownMenuItemClick'
     'click .rename-dataset': 'renameDatasetClick'
     'click .git-ssh': ->
-      Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'dataset'
+      Cu.Helpers.showOrAddSSH  @model, 'dataset'
 
   initialize: ->
     @model.on 'change', @render, this

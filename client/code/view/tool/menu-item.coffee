@@ -7,9 +7,9 @@ class Cu.View.ToolMenuItem extends Backbone.View
       event.preventDefault()
       event.stopPropagation()
       if @model instanceof Cu.Model.Dataset
-        Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'dataset'
+        Cu.Helpers.showOrAddSSH @model, 'dataset'
       else if @model instanceof Cu.Model.View
-        Cu.Helpers.showOrAddSSH @model.get('box'), @model.get('displayName'), 'view'
+        Cu.Helpers.showOrAddSSH @model, 'view'
 
   hideTool: (e) ->
     e.preventDefault()

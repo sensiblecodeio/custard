@@ -49,7 +49,7 @@ describe 'View', ->
             browser.elementByPartialLinkTextIfExists "Code a prune", (err, view) ->
               should.not.exist view
               done()
-          , 400
+          , 1000
 
         it "and I'm redirected to the dataset's default tool", (done) ->
           wd40.waitForMatchingURL /dataset[/]\w+([/]settings)?[/]?$/, done

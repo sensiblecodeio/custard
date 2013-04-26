@@ -156,6 +156,7 @@ renderClientApp = (req, resp) ->
     user: JSON.stringify( req.user or {} )
     recurlyDomain: process.env.RECURLY_DOMAIN
     flash: req.flash()
+    environment: process.env.NODE_ENV
 
 # Add a view to a dataset
 addView = (user, dataset, attributes, callback) ->

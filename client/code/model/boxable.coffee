@@ -29,7 +29,11 @@ class Cu.Boxable
 
   endpoint: ->
     server = @get('boxServer') or @get('server')
-    "https://#{server}"
+    #TODO: stop poluting the global namespace
+    if window.custardEnvironment is 'production'
+      "https://#{server}"
+    else
+      "http://#{server}"
 
 
   @mixin: (klass) ->

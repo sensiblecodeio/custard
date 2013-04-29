@@ -337,14 +337,17 @@ class Cu.View.HelpNav extends Backbone.View
   render: ->
     switch @options.section
       when 'corporate'
-        url = '/help/corporate/'
         name = 'Corporate FAQs'
       when 'developer'
-        url = '/help/developer/'
         name = 'Developer Docs'
       when 'zig'
-        url = '/help/zig/'
         name = 'ZIG'
+      when 'twitter-search'
+        name = 'Scrape Tweets and download as a spreadsheet'
+      when 'upload-and-summarise'
+        name = 'Upload and summarise a spreadsheet of data'
+      when 'copy-from-classic'
+        name = 'Copy a scraper from ScraperWiki Classic'
 
     html = """
       <div class="btn-toolbar" id="subnav-path">
@@ -352,12 +355,12 @@ class Cu.View.HelpNav extends Backbone.View
           <a class="btn btn-link" href="/help">Help</a>
         </h1>"""
 
-    if name and url
+    if name
       html += """<div class="btn-group">
           <span class="slash">/</span>
         </div>
         <h1 class="btn-group" style="margin-left: 7px">
-          <a class="btn btn-link" href="#{url}">#{name}</a>
+          <a class="btn btn-link">#{name}</a>
         </h1>"""
 
     html += "</div><hr>"

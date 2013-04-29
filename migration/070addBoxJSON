@@ -1,0 +1,43 @@
+#!/usr/bin/env coffee
+mongoose = require 'mongoose'
+async = require 'async'
+request = require 'request'
+
+{User} = require 'model/user'
+{Box} = require 'model/box'
+
+mongoose.connect process.env.CU_DB
+
+_exec = (arg, callback) ->
+  request.post
+    uri: "#{Box.endpoint arg.boxServer, arg.boxName}/exec"
+    form:
+      apikey: arg.user.apikey
+      cmd: arg.cmd
+  , callback
+
+addBoxJSON = (box, callback) ->
+  console.log "#{box.server}/#{box.name}"
+  User.findByShortName box.users[0], (err, user) ->
+    console.log "#{box.server}/#{box.name} user #{user.shortName} #{user.apikey}"
+    _exec
+      cmd: "cat box.json 2>/dev/null || cat scraperwiki.json 2>/dev/null"
+      user: user
+      boxName: box.name
+      boxServer: box.server
+    , (err, res, stdout) ->
+      console.log "EXEC err", err, "stdout", stdout
+      try
+        obj = JSON.parse stdout
+      catch error
+        obj = null
+      if obj?.error
+        console.log obj.error
+        return callback null, null
+      else
+        box.boxJSON = obj
+        box.save callback
+
+Box.dbClass.find {boxJSON: null}, (err, boxen) ->
+  async.eachLimit boxen, 5, addBoxJSON, (err) ->
+    console.log err if err?

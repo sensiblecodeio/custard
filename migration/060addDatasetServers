@@ -25,6 +25,7 @@ addBoxServer = (dataset, callback) ->
         console.log "NO SERVER for #{user.shortName}"
         return callback 'NO SERVER'
 
-Dataset.dbClass.find {state: { $ne: 'deleted' } }, (err, dataseten) ->
-  async.eachSeries dataseten, addBoxServer, (err) ->
+Dataset.dbClass.find {state: { $ne: 'deleted' }, boxServer: null }, (err, dataseten) ->
+  async.eachLimit dataseten, 1, addBoxServer, (err) ->
     console.log err if err?
+    process.exit()

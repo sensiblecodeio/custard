@@ -34,6 +34,11 @@ describe 'View', ->
         wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
           browser.moveTo link, done
 
+      it 'there is a custom-named "Data Scientist\'s Report" tool', (done) ->
+        wd40.getText '#dataset-tools', (err, text) ->
+          text.toLowerCase().should.include "data scientist's report"
+          done()
+
       context 'when I click the "hide" link on the "Code a prune" tool', ->
         before (done) ->
           wd40.elementByCss '#dataset-tools', (err, menu) ->

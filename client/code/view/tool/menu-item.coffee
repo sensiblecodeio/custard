@@ -28,6 +28,10 @@ class Cu.View.ToolMenuItem extends Backbone.View
   render: ->
     hideable = true
     toolName = @model.get('tool').get('name')
+    manifest = @model.get('tool').get('manifest')
+    
+    if toolName is 'newview'
+      manifest.displayName = @model.get('displayName')
 
     if @model instanceof Cu.Model.Dataset
       href = "/dataset/#{@model.get 'box'}/settings"
@@ -39,7 +43,7 @@ class Cu.View.ToolMenuItem extends Backbone.View
       hideable = false
 
     html = JST['tool-menu-item']
-      manifest: @model.get('tool').get('manifest')
+      manifest: manifest
       href: href
       id: "instance-#{@model.get 'box'}"
       hideable: hideable

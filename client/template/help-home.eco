@@ -1,0 +1,35 @@
+<h2>Quick start guides</h2>
+
+<div class="row">
+
+  <a class="swcol docs-tile" href="/help/twitter-search/">
+    <h3>Scrape Tweets and download as a spreadsheet</h3>
+  </a>
+
+  <a class="swcol docs-tile" href="/help/upload-and-summarise/">
+    <h3>Upload and summarise a spreadsheet of data</h3>
+  </a>
+
+  <a class="swcol docs-tile" href="/help/copy-from-classic/">
+    <h3>Copy a scraper from ScraperWiki Classic</h3>
+  </a>
+
+</div>
+
+<h2>Reference documentation</h2>
+
+<div class="row">
+
+  <a class="swcol docs-tile developer" href="/help/developer/">
+    <h3>Developer docs</h3>
+  </a>
+
+  <a class="swcol docs-tile corporate" href="/help/corporate/">
+    <h3>Corporate FAQs</h3>
+  </a>
+
+  <a class="swcol docs-tile zig" href="/help/zig/">
+    <h3>Zarino Interface Guidelines</h3>
+  </a>
+
+</div>

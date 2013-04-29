@@ -25,6 +25,9 @@ class Cu.View.Help extends Backbone.View
     $('body').scrollspy('refresh') # highlight links in table of contents on scroll
     $(window).trigger('scroll') # fake a scroll event to highlight the current link
 
+class Cu.View.HelpHome extends Cu.View.Help
+  template: 'help-home'
+
 class Cu.View.HelpDeveloper extends Cu.View.Help
   template: 'help-developer'
 

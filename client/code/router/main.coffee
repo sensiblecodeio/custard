@@ -20,7 +20,7 @@ class Cu.Router.Main extends Backbone.Router
     # TODO: revert to standard routes?
     @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'main'
-    @route RegExp('(docs|help)/?'), 'helpDeveloper'
+    @route RegExp('(docs|help)/?'), 'helpHome'
     @route RegExp('(docs|help)/corporate/?'), 'helpCorporate'
     @route RegExp('(docs|help)/developer/?'), 'helpDeveloper'
     @route RegExp('(docs|help)/zig/?'), 'helpZig'
@@ -178,8 +178,8 @@ class Cu.Router.Main extends Backbone.Router
     @appView.showView contentView
     @subnavView.showView subnavView
 
-  help: ->
-    subnavView = new Cu.View.HelpNav {section: 'developer'}
+  helpHome: ->
+    subnavView = new Cu.View.HelpNav {section: 'home'}
     contentView = new Cu.View.HelpHome()
     @appView.showView contentView
     @subnavView.showView subnavView

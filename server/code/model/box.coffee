@@ -38,7 +38,7 @@ class Box extends ModelBase
         _exec
           user: arg.user
           boxName: @name
-          boxServer: @boxServer
+          boxServer: @server
           cmd: "rm -r http && git clone #{tool.gitUrl} tool --depth 1 && ln -s tool/http http"
         , (err, res, body) ->
           if err?

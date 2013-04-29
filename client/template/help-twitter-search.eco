@@ -1,1 +1,42 @@
-<p>use the twitter search tool</p>
+<h2>1. Create a new dataset</h2>
+
+<p>After registering and logging in, click the <strong>&ldquo;Create a new dataset&rdquo;</strong> button on your homepage.</p>
+
+<p><img src="/image/screenshots/create-new-dataset.png" width="292" height="153" alt="Create New Dataset" /></p>
+
+<p>You&rsquo;ll be shown all the tools you can use to populate your new dataset.</p>
+
+<p><img src="/image/screenshots/importer-chooser.png" width="615" height="194" alt="Importer Chooser"></p>
+
+<p>We&rsquo;re going to use the <strong>&ldquo;Search for Tweets&rdquo;</strong> tool. Click it.</p>
+
+<h2>2. Enter search term</h2>
+
+<p>Type in whatever you want to search for.</p>
+
+<p><img src="/image/screenshots/twitter-search-term.png" width="308" height="84" alt="Twitter Search Term"></p>
+
+<p>The Twitter tool will guide you through the process of authorising with your Twitter account.
+</p>
+
+<h2>3. View your data</h2>
+
+<p>You can see the first few Tweets have already appeared.</p>
+
+<p><img src="/image/screenshots/table-of-tweets.png" width="664" height="320" alt="Table of Tweets"></p>
+
+<p>Above the table, in the top right, you&rsquo;ll notice you&rsquo;re looking at the data with the 
+  <strong>&ldquo;View in a Table&rdquo;</strong> tool.
+</p>
+
+<p><img src="/image/screenshots/view-in-table-icon.png" width="208" height="53" alt="View in a Table tool"></p>
+  
+<h2>4. Download a spreadsheet</h2>
+
+<p>ScraperWiki has lots of tools you can use on any dataset. Hover over the <strong>&ldquo;View in a Table&rdquo;</strong> tool to see more tools you can use.</p>
+
+<img src="/image/screenshots/dataset-tools-menu.png" width="367" height="417" alt="Dataset tools menu">
+
+<p>Click on the <strong>&ldquo;Download as spreadsheet&rdquo;</strong> tool.</p>
+
+<p>Once they're generated, you can download your data as CSV or Excel files.</p>

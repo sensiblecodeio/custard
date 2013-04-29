@@ -977,6 +977,23 @@ div.help h3 {
   margin-top: 20px;
 }
 
+a.help-tile {
+  background-color: #eee;
+  height: 140px;
+}
+
+a.help-tile:hover {
+  background-color: #e3e3e3;
+  text-decoration: none;
+}
+
+a.help-tile h3 {
+  font-weight: normal;
+  margin: 15px;
+  line-height: 28px;
+  font-size: 21px;
+}
+
 .modal .text-error {
   font-size: 14px;
 }

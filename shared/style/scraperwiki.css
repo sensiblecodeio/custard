@@ -47,10 +47,20 @@ blockquote p + p {
 
 h1 {
   font-weight: 200;
+  margin: 20px 0;
 }
 
 h2 {
   font-weight: normal;
+  margin: 20px 0;
+}
+
+h1:first-child, h2:first-child {
+  margin-top: 0;
+}
+
+.page-header h1, .page-header h2, .page-header h3, .page-header h4 {
+  margin-bottom: 10px;
 }
 
 /* Less subtle horizontal rules; use .muted to revert back to default */

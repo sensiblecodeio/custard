@@ -31,10 +31,12 @@ describe 'New view tool', ->
       context 'when I click on the newview tool', ->
         before (done) ->
           wd40.click '.newview.tool', =>
-            browser.waitForElementByTagName 'iframe', 10000, =>
+            # XXX but of a rubbish long wait - what CSS element could we wait for instead?
+            setTimeout =>
               browser.url (err, url) =>
                 @currentUrl = url
                 done()
+            , 2000
 
         it 'takes me to the view page', ->
           @currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/view/[^/]+")

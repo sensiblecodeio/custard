@@ -97,8 +97,8 @@ MII...0tXU=
           @modalTextContent.should.include 'copy to clipboard'
 
         context 'when I close the modal, and reopen it', ->
-          before (done) =>
-            wd40.click '#done', =>
+          before (done) ->
+            wd40.click '#done', ->
               setTimeout done, 400
 
           before clickSSHButton
@@ -108,13 +108,13 @@ MII...0tXU=
               @modalTextContent = text.toLowerCase()
               done()
 
-          it 'the modal window does not ask for my SSH key', =>
+          it 'the modal window does not ask for my SSH key', ->
             @modalTextContent.should.not.include 'add your ssh key:'
 
-          it 'the modal window tells me how to SSH in', =>
+          it 'the modal window tells me how to SSH in', ->
             @modalTextContent.should.include 'ssh 3006375731@localhost'
 
-          it 'the modal window lets me add another SSH key', =>
+          it 'the modal window lets me add another SSH key', ->
             @modalTextContent.should.include 'add another ssh key'
 
           context 'when I click the "Add another SSH key" button', ->

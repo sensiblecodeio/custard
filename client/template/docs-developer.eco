@@ -388,7 +388,7 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
 <p>A view is just HTML, starting at the file <code>http/index.html</code>. Visualisations are a combination of HTML, Javascript, and calls to run arbitary commands inside the box if you need them. The view loads inside an <code>iframe</code>.
 </p>
 
-<p>If you&rsquo;re writing a user interface, make sure to check out the <a href="/docs/zig/" data-nonpushstate>Zarino Interface Guidelines (ZIG)</a> for tips and code samples that&rsquo;ll make your interface easier to use.</p>
+<p>If you&rsquo;re writing a user interface, make sure to check out the <a href="/help/zig/" data-nonpushstate>Zarino Interface Guidelines (ZIG)</a> for tips and code samples that&rsquo;ll make your interface easier to use.</p>
 
 <hr />
 

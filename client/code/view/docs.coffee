@@ -1,5 +1,5 @@
-class Cu.View.Docs extends Backbone.View
-  className: "docs"
+class Cu.View.Help extends Backbone.View
+  className: "help"
 
   events:
     'click nav a': 'navClick'
@@ -25,11 +25,11 @@ class Cu.View.Docs extends Backbone.View
     $('body').scrollspy('refresh') # highlight links in table of contents on scroll
     $(window).trigger('scroll') # fake a scroll event to highlight the current link
 
-class Cu.View.DeveloperDocs extends Cu.View.Docs
-  template: 'docs-developer'
+class Cu.View.HelpDeveloper extends Cu.View.Help
+  template: 'help-developer'
 
-class Cu.View.CorporateDocs extends Cu.View.Docs
-  template: 'docs-corporate'
+class Cu.View.HelpCorporate extends Cu.View.Help
+  template: 'help-corporate'
 
-class Cu.View.ZIGDocs extends Cu.View.Docs
-  template: 'docs-zig'
+class Cu.View.HelpZIG extends Cu.View.Help
+  template: 'help-zig'

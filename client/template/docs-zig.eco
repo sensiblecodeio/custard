@@ -81,7 +81,7 @@ more <a href="http://twitter.github.com/bootstrap/components.html">Advanced Comp
 
 <p>
 Remember to include Bootstrap and the ScraperWiki stylesheet in your HTML <code>&lt;head></code>, as
-described in <a href="/docs#views-basics">the Documentation</a>.
+described in <a href="/help#views-basics">the Documentation</a>.
 </p>
 
 <pre class="prettyprint">

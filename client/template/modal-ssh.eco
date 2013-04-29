@@ -6,7 +6,7 @@
   <a class="btn btn-small zeroclipboard pull-right" style="margin-top: 5px;" data-clipboard-target="ssh-commands">Copy to clipboard</a>
   <h4>Run this in your terminal:</h4>
   <pre class="prettyprint" id="ssh-commands">ssh <%= @box %>@<%= @boxServer %></pre>
-  <p><span class="label label-info">Top tip!</span> Read <a href="/docs/developer/" target="_blank" data-nonpushstate>our developer documentation</a> for more information about SSHing into your <%= @type %>s.</p>
+  <p><span class="label label-info">Top tip!</span> Read <a href="/help/developer/" target="_blank" data-nonpushstate>our developer documentation</a> for more information about SSHing into your <%= @type %>s.</p>
 </div>
 <div class="modal-footer">
   <a class="btn pull-left" id="add-another-ssh-key">Add another SSH key</a>

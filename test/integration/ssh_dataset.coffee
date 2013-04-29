@@ -103,7 +103,7 @@ MII...0tXU=
 
           before clickSSHButton
 
-          before (done) =>
+          before (done) ->
             wd40.getText '.modal', (err, text) =>
               @modalTextContent = text.toLowerCase()
               done()

@@ -608,7 +608,9 @@ so you need to pass in a callback function.
 
 <h3>Rename a dataset / view</h3>
 
-<p>By default, datasets or views created by a tool adopt the name of the tool itself. You can change the name using the <code>scraperwiki.tool.rename()</code> function. It takes one argument: a string to which the dataset or view should be renamed. For example:</p>
+<p>By default, datasets or views created by a tool adopt the name of the tool itself. 
+  You can change the name of datasets, or of views made using the "Code a view" tool,
+  by calling <code>scraperwiki.tool.rename()</code>. It takes one argument: a string to which the dataset or view should be renamed. For example:</p>
 
 <pre class="prettyprint linenums">var username = "@scraperwiki"
 scraperwiki.tool.rename(username + "'s twitter followers")</pre>

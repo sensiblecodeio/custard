@@ -6,7 +6,7 @@ class Cu.View.Help extends Backbone.View
     'click a[href^="#"]': 'navClick'
 
   render: ->
-    @el.innerHTML = JST[@template]
+    @el.innerHTML = JST[@options.template]
       user: window.user.effective
     setTimeout @makePrettyLike, 100
     @
@@ -24,15 +24,3 @@ class Cu.View.Help extends Backbone.View
     $('nav.well').affix({offset: 110}) # fixed position for table of contents
     $('body').scrollspy('refresh') # highlight links in table of contents on scroll
     $(window).trigger('scroll') # fake a scroll event to highlight the current link
-
-class Cu.View.HelpHome extends Cu.View.Help
-  template: 'help-home'
-
-class Cu.View.HelpDeveloper extends Cu.View.Help
-  template: 'help-developer'
-
-class Cu.View.HelpCorporate extends Cu.View.Help
-  template: 'help-corporate'
-
-class Cu.View.HelpZIG extends Cu.View.Help
-  template: 'help-zig'

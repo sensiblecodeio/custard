@@ -36,7 +36,7 @@
 
 <h2 id="datasets-basics">Dataset basics</h2>
 
-<p>To create a new, blank dataset, click the <b>Create a new dataset</b> link on the homepage, and then select either the <b>&ldquo;Code a dataset&rdquo;</b> tool (which will let you write code via SSH), or the <b>&ldquo;Code a dataset&rdquo;</b> tool (which will give you an in-browser editor, like ScraperWiki Classic).</p>
+<p>To create a new, blank dataset, click the <b>Create a new dataset</b> link on the homepage, and then select either the <b>&ldquo;Code a dataset&rdquo;</b> tool (which will let you write code via SSH), or the <b>&ldquo;Code in your browser&rdquo;</b> tool (which will give you an in-browser editor, like ScraperWiki Classic).</p>
 
 <p>You can SSH into any existing dataset by clicking it on the homepage, then using the <b>&ldquo;SSH IN&rdquo;</b> links in the <b>&ldquo;Tools&rdquo;</b> menu.</p>
 

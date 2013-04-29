@@ -64,7 +64,7 @@ class Cu.View.AppContent extends Cu.View.ViewContent
   settings: (callback) ->
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null
-    publishToken = @model.get('boxJSON').publish_token
+    publishToken = @model.get('boxJSON')?.publish_token
     callback
       source:
         apikey: window.user.effective.apiKey
@@ -78,8 +78,8 @@ class Cu.View.PluginContent extends Cu.View.ViewContent
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null
     dataset = @model.get 'plugsInTo'
-    viewToken = @model.get('boxJSON').publish_token
-    datasetToken = dataset.get('boxJSON').publish_token
+    viewToken = @model.get('boxJSON')?.publish_token
+    datasetToken = dataset.get('boxJSON')?.publish_token
     callback
       source:
         apikey: window.user.effective.apiKey

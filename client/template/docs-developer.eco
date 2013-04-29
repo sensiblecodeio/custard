@@ -48,7 +48,7 @@
 
 <p>A box is a Unix user account on ScraperWiki&rsquo;s server cluster. The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy. Your home directory is always <code>/home/</code>. </p>
 
-<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), limited to 500 MB storage across all the boxes you own. </p>
+<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), with a storage limit according to your <a href="/pricing/" data-nonpushstate>payment plan</a>.</p>
 
 <p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/box.json</code>. Eg:</p>
 
@@ -407,7 +407,7 @@ You&rsquo;ll want to include Bootstrap and our custom style sheet.
 well with Bootstrap</a>.
 </p>
 
-<p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap are rendered on ScraperWiki.</p>
+<p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap styles are rendered on ScraperWiki.</p>
 
 <hr />
 

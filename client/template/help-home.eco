@@ -2,15 +2,15 @@
 
 <div class="row">
 
-  <a class="swcol help-tile" href="/help/twitter-search/">
+  <a class="swcol help-tile" href="/help/twitter-search/" style="background: #3498db">
     <h3>Scrape Tweets and download as a spreadsheet</h3>
   </a>
 
-  <a class="swcol help-tile" href="/help/upload-and-summarise/">
+  <a class="swcol help-tile" href="/help/upload-and-summarise/" style="background: #27ae60">
     <h3>Upload and summarise a spreadsheet of data</h3>
   </a>
 
-  <a class="swcol help-tile" href="/help/copy-from-classic/">
+  <a class="swcol help-tile" href="/help/copy-from-classic/" style="background: #f39c12">
     <h3>Copy a scraper from ScraperWiki Classic</h3>
   </a>
 
@@ -20,11 +20,11 @@
 
 <div class="row">
 
-  <a class="swcol help-tile developer" href="/help/developer/">
+  <a class="swcol help-tile developer" href="/help/developer/" style="background: #9b59b6">
     <h3>Developer docs</h3>
   </a>
 
-  <a class="swcol help-tile corporate" href="/help/corporate/">
+  <a class="swcol help-tile corporate" href="/help/corporate/" style="background: #e74c3c">
     <h3>Corporate FAQs</h3>
   </a>
 

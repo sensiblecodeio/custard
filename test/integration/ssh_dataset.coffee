@@ -91,7 +91,7 @@ MII...0tXU=
           @modalTextContent.should.not.include 'add your ssh key:'
 
         it 'the modal window tells me how to SSH in', =>
-          @modalTextContent.should.include 'ssh 3006375731@boxecutor-dev'
+          @modalTextContent.should.include 'ssh 3006375731@localhost'
 
         it 'the modal includes a "copy to clipboard" button', =>
           @modalTextContent.should.include 'copy to clipboard'

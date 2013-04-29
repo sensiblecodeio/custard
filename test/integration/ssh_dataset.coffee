@@ -22,7 +22,7 @@ describe 'Dataset SSH Details', ->
           link.click done
       , 500
 
-    context 'when I click on the Tools button', (done) ->
+    context 'when I click on the importer tool\'s SSH in button', (done) ->
       before clickSSHButton
 
       it 'a modal window appears', (done) =>
@@ -103,7 +103,7 @@ MII...0tXU=
 
           before clickSSHButton
 
-          before (done) ->
+          before (done) =>
             wd40.getText '.modal', (err, text) =>
               @modalTextContent = text.toLowerCase()
               done()

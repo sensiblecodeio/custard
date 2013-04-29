@@ -36,7 +36,7 @@
 
 <h2 id="datasets-basics">Dataset basics</h2>
 
-<p>To create a new, blank dataset, click the <b>Create a new dataset</b> link on the homepage, and then select either the <b>&ldquo;Code a dataset&rdquo;</b> tool (which will let you write code via SSH), or the <b>&ldquo;Code a dataset&rdquo;</b> tool (which will give you an in-browser editor, like ScraperWiki Classic).</p>
+<p>To create a new, blank dataset, click the <b>Create a new dataset</b> link on the homepage, and then select either the <b>&ldquo;Code a dataset&rdquo;</b> tool (which will let you write code via SSH), or the <b>&ldquo;Code in your browser&rdquo;</b> tool (which will give you an in-browser editor, like ScraperWiki Classic).</p>
 
 <p>You can SSH into any existing dataset by clicking it on the homepage, then using the <b>&ldquo;SSH IN&rdquo;</b> links in the <b>&ldquo;Tools&rdquo;</b> menu.</p>
 
@@ -48,7 +48,7 @@
 
 <p>A box is a Unix user account on ScraperWiki&rsquo;s server cluster. The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy. Your home directory is always <code>/home/</code>. </p>
 
-<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), limited to 500 MB storage across all the boxes you own. </p>
+<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), with a storage limit according to your <a href="/pricing/" data-nonpushstate>payment plan</a>.</p>
 
 <p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/box.json</code>. Eg:</p>
 
@@ -388,7 +388,7 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
 <p>A view is just HTML, starting at the file <code>http/index.html</code>. Visualisations are a combination of HTML, Javascript, and calls to run arbitary commands inside the box if you need them. The view loads inside an <code>iframe</code>.
 </p>
 
-<p>If you&rsquo;re writing a user interface, make sure to check out the <a href="/docs/zig/" data-nonpushstate>Zarino Interface Guidelines (ZIG)</a> for tips and code samples that&rsquo;ll make your interface easier to use.</p>
+<p>If you&rsquo;re writing a user interface, make sure to check out the <a href="/help/zig/" data-nonpushstate>Zarino Interface Guidelines (ZIG)</a> for tips and code samples that&rsquo;ll make your interface easier to use.</p>
 
 <hr />
 
@@ -407,7 +407,7 @@ You&rsquo;ll want to include Bootstrap and our custom style sheet.
 well with Bootstrap</a>.
 </p>
 
-<p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap are rendered on ScraperWiki.</p>
+<p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap styles are rendered on ScraperWiki.</p>
 
 <hr />
 

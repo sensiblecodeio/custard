@@ -20,10 +20,8 @@ class Cu.Router.Main extends Backbone.Router
     # TODO: revert to standard routes?
     @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'main'
-    @route RegExp('docs/?'), 'developerDocs'
-    @route RegExp('docs/corporate/?'), 'corporateDocs'
-    @route RegExp('docs/developer/?'), 'developerDocs'
-    @route RegExp('docs/zig/?'), 'zigDocs'
+    @route RegExp('(?:docs|help)/?'), 'help'
+    @route RegExp('(?:docs|help)/([^/]+)/?'), 'help'
     @route RegExp('pricing/?'), 'pricing'
     @route RegExp('pricing/([^/]+)/?'), 'pricing'
     @route RegExp('tools/?'), 'toolShop'
@@ -178,20 +176,9 @@ class Cu.Router.Main extends Backbone.Router
     @appView.showView contentView
     @subnavView.showView subnavView
 
-  developerDocs: ->
-    subnavView = new Cu.View.DocsNav {section: 'developer'}
-    contentView = new Cu.View.DeveloperDocs()
-    @appView.showView contentView
-    @subnavView.showView subnavView
-
-  corporateDocs: ->
-    subnavView = new Cu.View.DocsNav {section: 'corporate'}
-    contentView = new Cu.View.CorporateDocs()
-    @appView.showView contentView
-    @subnavView.showView subnavView
-
-  zigDocs: ->
-    subnavView = new Cu.View.DocsNav {section: 'zig'}
-    contentView = new Cu.View.ZIGDocs()
+  help: (section) ->
+    section ?= 'home'
+    subnavView = new Cu.View.HelpNav {section: section}
+    contentView = new Cu.View.Help {template: "help-#{section}"}
     @appView.showView contentView
     @subnavView.showView subnavView

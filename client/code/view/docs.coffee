@@ -1,12 +1,12 @@
-class Cu.View.Docs extends Backbone.View
-  className: "docs"
+class Cu.View.Help extends Backbone.View
+  className: "help"
 
   events:
     'click nav a': 'navClick'
     'click a[href^="#"]': 'navClick'
 
   render: ->
-    @el.innerHTML = JST[@template]
+    @el.innerHTML = JST[@options.template]
       user: window.user.effective
     setTimeout @makePrettyLike, 100
     @
@@ -24,12 +24,3 @@ class Cu.View.Docs extends Backbone.View
     $('nav.well').affix({offset: 110}) # fixed position for table of contents
     $('body').scrollspy('refresh') # highlight links in table of contents on scroll
     $(window).trigger('scroll') # fake a scroll event to highlight the current link
-
-class Cu.View.DeveloperDocs extends Cu.View.Docs
-  template: 'docs-developer'
-
-class Cu.View.CorporateDocs extends Cu.View.Docs
-  template: 'docs-corporate'
-
-class Cu.View.ZIGDocs extends Cu.View.Docs
-  template: 'docs-zig'

@@ -2,7 +2,7 @@
 scraperwiki.js
 Copyright (c) 2013 ScraperWiki Limited
 ScraperWiki tool client library. See
-https://beta.scraperwiki.com/docs
+https://beta.scraperwiki.com/help
 
 jQuery is required.
 ###

@@ -331,42 +331,38 @@ class Cu.View.SignUpNav extends Backbone.View
       <hr>""")
     @
 
-class Cu.View.DocsNav extends Backbone.View
+class Cu.View.HelpNav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
     switch @options.section
       when 'corporate'
-        url = '/docs/corporate/'
-        name = 'Corporate'
+        url = '/help/corporate/'
+        name = 'Corporate FAQs'
       when 'developer'
-        url = '/docs/developer/'
-        name = 'Developer'
+        url = '/help/developer/'
+        name = 'Developer Docs'
       when 'zig'
-        url = '/docs/zig/'
+        url = '/help/zig/'
         name = 'ZIG'
-      else
-        url = '/docs/else/'
-        name = 'WRONG'
 
-    @$el.html("""
+    html = """
       <div class="btn-toolbar" id="subnav-path">
         <h1 class="btn-group">
-          <a class="btn btn-link" href="/docs">Documentation</a>
-        </h1>
-        <div class="btn-group">
+          <a class="btn btn-link" href="/help">Help</a>
+        </h1>"""
+
+    if name and url
+      html += """<div class="btn-group">
           <span class="slash">/</span>
         </div>
         <h1 class="btn-group" style="margin-left: 7px">
           <a class="btn btn-link" href="#{url}">#{name}</a>
-        </h1>
-      </div>
-      <ul class="nav-pills" id="subnav-options">
-        <li#{if name == 'Developer' then ' class="active"' else ''}><a href="/docs/developer/">Developer Docs</a></li>
-        <li#{if name == 'Corporate' then ' class="active"' else ''}><a href="/docs/corporate/">Corporate FAQs</a></li>
-        <li#{if name == 'ZIG' then ' class="active"' else ''}><a href="/docs/zig/">ZIG</a></li>
-      </ul>
-      <hr>""")
+        </h1>"""
+
+    html += "</div><hr>"
+
+    @$el.html html
     @
 
 class Cu.View.ToolShopNav extends Backbone.View

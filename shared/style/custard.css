@@ -93,7 +93,7 @@ body.fullscreen .container {
   text-align: center; /* We'll override this for large-screened devices later */
 }
 
-.subnav-wrapper > hr { /* used on docs pages etc to visually separate header from content */
+.subnav-wrapper > hr { /* used on help pages etc to visually separate header from content */
   float: left;
   clear: both;
   width: 100%;
@@ -246,10 +246,6 @@ body.fullscreen .container {
   text-align: center;
   padding-bottom: 5px;
   color: #999;
-}
-
-#subnav-options {
-  list-style: none; /* for when #subnav-options is a list element, eg: docs pages */
 }
 
 #subnav-options .btn-group + .btn-group {
@@ -588,6 +584,7 @@ a.tile .hide:hover,
   padding-left: 0; /* so image doesn't show through when element is empty */
   background: transparent url(../image/dataset-tools-toggle.png) right center no-repeat;
   height: 42px;
+  text-decoration: none;
 }
 
 #dataset-tools-toggle .tool-icon-outer,
@@ -882,6 +879,21 @@ div.pricing .plan.explorer {
   background-color: #FDECA8;
 }
 
+div.pricing .plan.community {
+  background-color: #FFFAE7;
+  border: 2px dashed rgb(255, 223, 94);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  width: 276px;
+}
+
+div.pricing .plan.corporate {
+  background-color: #eee;
+}
+
 div.pricing .plan h2 {
   margin: 15px 10px 5px 10px;
 }
@@ -924,34 +936,44 @@ div.pricing .cta:hover {
   text-shadow: 0 1px 0 rgba(0,0,0,0.7);
 }
 
-div.pricing .corporate {
-  margin-left: 20px;
-  clear: both;
+div.pricing .plan.corporate h2 {
+  margin-top: 0;
 }
 
-div.docs {
+div.pricing .plan.corporate small {
+  display: block;
+  margin-top: 15px;
+  color: #999;
+}
+
+div.pricing .plan.corporate p {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+div.help {
   line-height: 24px; /* the default 21px is a bit tight for so much text */
 }
 
-div.docs nav.well {
+div.help nav.well {
   padding: 8px 0;
   margin-bottom: 0;
 }
 
-div.docs nav.well a {
+div.help nav.well a {
   font-size: 14px;
 }
 
-div.docs .well {
+div.help .well {
   margin-bottom: 15px;
 }
 
-div.docs .well .label {
+div.help .well .label {
   vertical-align: 2px;
   margin: 0 5px 0 2px;
 }
 
-div.docs h3 {
+div.help h3 {
   margin-top: 20px;
 }
 
@@ -1061,7 +1083,7 @@ div.docs h3 {
     border-top: 1px solid #eee;
   }
 
-  div.docs nav.well {
+  div.help nav.well {
     position: static;
     float: left;
     margin: 0 20px 20px 0;
@@ -1100,16 +1122,16 @@ div.docs h3 {
     overflow: visible;
   }
 
-  div.docs {
+  div.help {
     position: relative;
   }
 
-  div.docs .wrapper {
+  div.help .wrapper {
     padding-left: 280px;
     padding-bottom: 40px;
   }
 
-  div.docs nav.well {
+  div.help nav.well {
     float: none;
     margin: 0;
     position: absolute;
@@ -1118,7 +1140,7 @@ div.docs h3 {
     width: 240px;
   }
 
-  div.docs nav.well.affix {
+  div.help nav.well.affix {
     position: fixed;
     top: 30px;
     left: auto;

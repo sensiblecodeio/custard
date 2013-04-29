@@ -1,0 +1,27 @@
+#!/usr/bin/env coffee
+mongoose = require 'mongoose'
+async = require 'async'
+
+{Box} = require 'model/box'
+{Dataset} = require 'model/dataset'
+
+mongoose.connect process.env.CU_DB
+
+addBoxJSON = (dataset, callback) ->
+  console.log dataset
+  Box.findOneByName dataset.box, (err, box) ->
+    if not box?
+      console.log "BOX NOT EXIST #{dataset.box}"
+      return callback()
+    else
+      console.log "BOX err: #{err} box: #{box}"
+      dataset.boxJSON = box.boxJSON
+      async.each dataset.views, (view, cb) ->
+        Box.findOneByName view.box, (err, bx) ->
+          if bx then view.boxJSON = bx.boxJSON
+          cb()
+      , -> dataset.save callback
+
+Dataset.dbClass.find {state: { $ne: 'deleted' } }, (err, dataseten) ->
+  async.eachLimit dataseten, 3, addBoxJSON, (err) ->
+    console.log err if err?

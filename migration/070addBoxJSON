@@ -19,14 +19,14 @@ _exec = (arg, callback) ->
 addBoxJSON = (box, callback) ->
   console.log "#{box.server}/#{box.name}"
   User.findByShortName box.users[0], (err, user) ->
-    console.log "user #{user.shortName} #{user.apikey}"
+    console.log "#{box.server}/#{box.name} user #{user.shortName} #{user.apikey}"
     _exec
       cmd: "cat box.json 2>/dev/null || cat scraperwiki.json 2>/dev/null"
       user: user
       boxName: box.name
       boxServer: box.server
     , (err, res, stdout) ->
-      console.log "EXEC err", err
+      console.log "EXEC err", err, "stdout", stdout
       try
         obj = JSON.parse stdout
       catch error
@@ -38,6 +38,6 @@ addBoxJSON = (box, callback) ->
         box.boxJSON = obj
         box.save callback
 
-Box.dbClass.find {}, (err, boxen) ->
-  async.eachSeries boxen, addBoxJSON, (err) ->
+Box.dbClass.find {boxJSON: null}, (err, boxen) ->
+  async.eachLimit boxen, 1, addBoxJSON, (err) ->
     console.log err if err?

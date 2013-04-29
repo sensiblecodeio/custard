@@ -588,6 +588,7 @@ a.tile .hide:hover,
   padding-left: 0; /* so image doesn't show through when element is empty */
   background: transparent url(../image/dataset-tools-toggle.png) right center no-repeat;
   height: 42px;
+  text-decoration: none;
 }
 
 #dataset-tools-toggle .tool-icon-outer,
@@ -882,6 +883,21 @@ div.pricing .plan.explorer {
   background-color: #FDECA8;
 }
 
+div.pricing .plan.community {
+  background-color: #FFFAE7;
+  border: 2px dashed rgb(255, 223, 94);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  width: 276px;
+}
+
+div.pricing .plan.corporate {
+  background-color: #eee;
+}
+
 div.pricing .plan h2 {
   margin: 15px 10px 5px 10px;
 }
@@ -924,9 +940,19 @@ div.pricing .cta:hover {
   text-shadow: 0 1px 0 rgba(0,0,0,0.7);
 }
 
-div.pricing .corporate {
-  margin-left: 20px;
-  clear: both;
+div.pricing .plan.corporate h2 {
+  margin-top: 0;
+}
+
+div.pricing .plan.corporate small {
+  display: block;
+  margin-top: 15px;
+  color: #999;
+}
+
+div.pricing .plan.corporate p {
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 div.docs {

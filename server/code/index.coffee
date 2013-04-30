@@ -17,7 +17,6 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
-connectDomain = require 'connect-domain'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
@@ -125,10 +124,6 @@ app.configure ->
   app.use assets({src: 'client'})
   # Set the public folder as static assets
   app.use express.static(process.cwd() + '/shared')
-
-  app.use connectDomain()
-  app.use (err, req, res, next) ->
-    res.end err.message
 
 passport.use 'local', new LocalStrategy(verify)
 

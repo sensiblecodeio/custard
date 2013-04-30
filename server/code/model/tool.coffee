@@ -42,6 +42,7 @@ class exports.Tool extends ModelBase
       child_process.exec cmd, callback
 
   updateInstances: (done) ->
+    {Box} = require 'model/box'
     {User} = require 'model/user' # Avoids circular dependency
     # updates all of the boxes on cobalt that use this tool.
     if @type == 'importer'

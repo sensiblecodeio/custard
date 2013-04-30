@@ -34,11 +34,13 @@ class exports.Tool extends ModelBase
 
   gitCloneOrPull: (options, callback) ->
     @directory = "#{options.dir}/#{@name}"
+    # :todo: whitelist @directory
     fs.exists @directory, (exists) =>
       if not exists
-        cmd = "git clone #{@gitUrl} #{@directory}"
+        cmd = "git clone #{@gitUrl} #{@directory}; cd #{@directory}"
       else
         cmd = "cd #{@directory}; git pull"
+      cmd += "; chown -R root:www-data .; git update-server-info"
       child_process.exec cmd, callback
 
   updateInstances: (done) ->

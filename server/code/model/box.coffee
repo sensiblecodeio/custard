@@ -28,8 +28,9 @@ _exec = (arg, callback) ->
   , callback
 
 getGitURL = (tool, server) ->
+  # :todo: Maybe use a different server for dev.scraperwiki.com
   if /dev/.test server
-    origin = "https://git-dev.scraperwiki.com"
+    origin = "https://git.scraperwiki.com"
   else
     origin = "https://git.scraperwiki.com"
 
@@ -55,7 +56,7 @@ class Box extends ModelBase
           user: arg.user
           boxName: @name
           boxServer: @server
-          cmd: "rm -r http && git clone #{gitURL} tool && ln -s tool/http http"
+          cmd: "rm -fr http && git clone #{gitURL} tool && ln -s tool/http http"
         , (err, res, body) ->
           if err?
             callback err

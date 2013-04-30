@@ -10,8 +10,8 @@
     <h3>Upload and summarise a spreadsheet of data</h3>
   </a>
 
-  <a class="swcol help-tile" href="/help/copy-from-classic/" style="background: #f39c12">
-    <h3>Copy a scraper from ScraperWiki Classic</h3>
+  <a class="swcol help-tile" href="/help/code-in-your-browser/" style="background: #f39c12">
+    <h3>Code a scraper in your browser</h3>
   </a>
 
 </div>

@@ -1,0 +1,98 @@
+<h2>1. Select the &ldquo;Code in your browser&rdquo; tool</h2>
+
+<p>After registering and logging in, click the <strong>&ldquo;Create a new dataset&rdquo;</strong> button on your homepage.</p>
+
+<p><img class="thumbnail" src="/image/screenshots/create-new-dataset.png" width="292" height="153" alt="Create New Dataset" /></p>
+
+<p>You&rsquo;ll be shown all the tools you can use to populate your new dataset.</p>
+
+<p><img class="thumbnail" src="/image/screenshots/importer-chooser.png" width="615" height="194" alt="Importer Chooser"></p>
+
+<p>We&rsquo;re going to use the <strong>&ldquo;Code in your browser&rdquo;</strong> tool. Click it.</p>
+
+<hr>
+
+<h2>2. Pick a language</h2>
+
+<p>ScraperWiki supports dozens of languages. But for this tutorial, we&rsquo;re going to use Python.</p>
+
+<img src="/image/screenshots/code-in-browser-language.png" width="381" height="524" alt="Pick a language">
+
+<hr>
+
+<h2>3. Name your dataset</h2>
+
+<p>We&rsquo;re going to scrape the <a href="http://blog.ups.com/" target="_blank">UPS corporate blog</a>. Although with small changes this should work for any WordPress blog.</p>
+
+<img src="/image/screenshots/untitled-dataset.png" width="283" height="52" alt="Untitled Dataset">
+
+<p>Click the pencil next to <strong>&ldquo;Untitled dataset&rdquo;</strong> to rename your dataset to something like &ldquo;UPS blog posts&rdquo;.</p>
+
+<img src="/image/screenshots/ups-blog-posts.png" width="367" height="56" alt="Ups Blog Posts">
+
+<hr>
+
+<h2>4. Scrape the data</h2>
+
+<p>Copy and paste this code into the code editor. It downloads the
+  front page of the blog, and extracts information about each article.
+</p>
+
+<pre class="prettyprint">#!/usr/bin/env python
+
+import scraperwiki
+import requests
+import lxml.html
+
+html = requests.get("http://blog.ups.com").content
+dom = lxml.html.fromstring(html)
+
+for entry in dom.cssselect('.theentry'):
+    post = {
+        'title': entry.cssselect('.entry-title')[0].text_content(),
+        'author': entry.cssselect('.the-meta a')[0].text_content(),
+        'url': entry.cssselect('a')[0].get('href'),
+        'comments': int( entry.cssselect('.comment-number')[0].text_content() ),
+        'category': entry.cssselect('table a')[0].text_content()
+    }
+    print post
+</pre>
+
+<p>Press the <span class="btn btn-primary btn-small">Run</span> button.
+  You'll see information about each post printed in the console
+  window.</p>
+
+<hr>
+
+<h2>5. Save to the datastore</h2>
+
+<p>To save to the datastore, put this in your code. It should go just
+  after the <code>print post</code>. Make sure it
+  is indented.</p>
+
+<pre class="prettyprint">  scraperwiki.sql.save(['url'], post)  
+</pre>
+  
+<p>You don't <em>have</em> to use this special function. Any library, in any language, which makes a 
+  SQLite database file called <code>scraperwiki.sqlite</code> will do. 
+</p>
+
+
+<hr>
+
+<h2>6. Use your data</h2>
+
+<p>You can now see your data using the <strong>&ldquo;View in a table&rdquo;</strong> tool in the top right corner.
+</p>
+
+<p><img src="/image/screenshots/dataset-tools-menu-2.png" width="361" height="400" alt="Dataset tools menu">
+<p>
+
+<p>There are more tools you can use on your data. Choose <strong>More tools...</strong> and then 
+  select one.</p>
+
+<p><img src="/image/screenshots/tool-chooser.png" width="835" height="186" alt="Tool chooser"></p>
+
+
+
+

@@ -346,8 +346,8 @@ class Cu.View.HelpNav extends Backbone.View
         name = 'Scrape Tweets and download as a spreadsheet'
       when 'upload-and-summarise'
         name = 'Upload and summarise a spreadsheet of data'
-      when 'copy-from-classic'
-        name = 'Copy a scraper from ScraperWiki Classic'
+      when 'code-in-your-browser'
+        name = 'Code a scraper in your browser'
 
     html = """
       <div class="btn-toolbar" id="subnav-path">

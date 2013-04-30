@@ -27,6 +27,17 @@ _exec = (arg, callback) ->
       cmd: arg.cmd
   , callback
 
+getGitURL = (tool, server) ->
+  # :todo: Maybe use a different server for dev.scraperwiki.com
+  if /dev/.test server
+    origin = "https://git.scraperwiki.com"
+  else
+    origin = "https://git.scraperwiki.com"
+
+  url = "#{origin}/#{tool.name}/.git"
+  return url
+
+
 class Box extends ModelBase
   @dbClass: zDbBox
 
@@ -35,11 +46,17 @@ class Box extends ModelBase
       if err?
         callback "Can't find tool"
       else
+        # EG: https://git.scraperwiki.com/tool-name
+        # :todo: When we have paid-for tools (private), then
+        # the https server will need to authenticate each box
+        # to check it has access to the git repo. It can do this
+        # (in principle) using ident-express.
+        gitURL = getGitURL(tool, @server)
         _exec
           user: arg.user
           boxName: @name
           boxServer: @server
-          cmd: "rm -r http && git clone #{tool.gitUrl} tool --depth 1 && ln -s tool/http http"
+          cmd: "rm -fr http && git clone #{gitURL} tool && ln -s tool/http http"
         , (err, res, body) ->
           if err?
             callback err

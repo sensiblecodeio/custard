@@ -201,7 +201,7 @@ app.get '/set-password/:token/?', renderClientApp
 app.get '/subscribe/?*', renderClientApp
 app.get '/pricing/?*', renderClientApp
 app.get '/signup/?*', renderClientApp
-app.get '/(docs|help)/?*', renderClientApp
+app.get '/help/?*', renderClientApp
 app.get '/', renderClientApp
 
 # Switch is protected by a specific function.

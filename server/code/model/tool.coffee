@@ -10,6 +10,7 @@ mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
 {Dataset} = require 'model/dataset'
+{Box} = require 'model/box'
 
 ModelBase = require 'model/base'
 

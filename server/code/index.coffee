@@ -197,6 +197,7 @@ app.get '/login/?', (req, resp) ->
     errors: req.flash('error')
 
 # Allow set-password, signup, docs, etc, to be visited by anons
+# Note: these are NOT regular expressions!!
 app.get '/set-password/:token/?', renderClientApp
 app.get '/subscribe/?*', renderClientApp
 app.get '/pricing/?*', renderClientApp

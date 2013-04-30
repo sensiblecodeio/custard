@@ -260,6 +260,7 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
 
   initialize: ->
     super()
+    @model.on 'update:tool', @render, @
     @toolsView = new Cu.View.DatasetTools
       model: @model
       view: @options.view
@@ -296,16 +297,20 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
           <a class="btn btn-link" id="dataset-tools-toggle"></a>
         </div>
       </div>""")
-    @$el.find('#dataset-tools-toggle').after(@toolsView.render().el)
     setTimeout =>
+      if tool is null
+        return @
+      @$el.find('#dataset-tools-toggle').after(@toolsView.render().el)
       if @options?.view
-        currentToolManifest = @options.view.get('tool').get 'manifest'
+        tool = @options.view.get 'tool'
       else
-        currentToolManifest = @model.get('tool').get 'manifest'
+        tool = @model.get 'tool'
+
+      currentToolManifest = tool.get 'manifest'
       toggleHtml = JST['tool-menu-toggle']
         manifest: currentToolManifest
       @$el.find('#dataset-tools-toggle').html toggleHtml
-    , 200
+    , 0
     @
 
 class Cu.View.SignUpNav extends Backbone.View

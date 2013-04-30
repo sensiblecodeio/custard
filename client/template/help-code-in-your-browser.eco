@@ -16,7 +16,7 @@
 
 <p>ScraperWiki supports dozens of languages. But for this tutorial, we&rsquo;re going to use Python.</p>
 
-<img src="/image/screenshots/code-in-browser-language.png" width="381" height="524" alt="Pick a language">
+<img class="thumbnail" src="/image/screenshots/code-in-browser-language.png" width="381" height="524" alt="Pick a language">
 
 <hr>
 
@@ -85,13 +85,13 @@ for entry in dom.cssselect('.theentry'):
 <p>You can now see your data using the <strong>&ldquo;View in a table&rdquo;</strong> tool in the top right corner.
 </p>
 
-<p><img src="/image/screenshots/dataset-tools-menu-2.png" width="361" height="400" alt="Dataset tools menu">
+<p><img class="thumbnail" src="/image/screenshots/dataset-tools-menu-2.png" width="361" height="400" alt="Dataset tools menu">
 <p>
 
 <p>There are more tools you can use on your data. Choose <strong>More tools...</strong> and then 
   select one.</p>
 
-<p><img src="/image/screenshots/tool-chooser.png" width="835" height="186" alt="Tool chooser"></p>
+<p><img class="thumbnail" src="/image/screenshots/tool-chooser.png" width="835" height="186" alt="Tool chooser"></p>
 
 
 

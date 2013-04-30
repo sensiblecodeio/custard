@@ -10,7 +10,6 @@ mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
 {Dataset} = require 'model/dataset'
-{Box} = require 'model/box'
 
 ModelBase = require 'model/base'
 
@@ -43,6 +42,7 @@ class exports.Tool extends ModelBase
       child_process.exec cmd, callback
 
   updateInstances: (done) ->
+    {Box} = require 'model/box'
     {User} = require 'model/user' # Avoids circular dependency
     # updates all of the boxes on cobalt that use this tool.
     if @type == 'importer'

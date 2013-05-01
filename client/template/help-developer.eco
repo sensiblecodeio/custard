@@ -2,6 +2,7 @@
   <ul class="nav nav-list">
     <li class="nav-header">Core concepts</li>
     <li><a data-nonpushstate href="#concepts">Datasets, Tools &amp; Boxes</a></li>
+    <li><a data-nonpushstate href="#concepts-tools">Structure of a tool</a></li>
     <li class="nav-header">Scraperwiki.js library</li>
     <li><a data-nonpushstate href="#js-introduction">How to use scraperwiki.js</a></li>
     <li><a data-nonpushstate href="#js-reference">Function reference</a>
@@ -19,7 +20,6 @@
       </ul>
     </li>
     <li class="nav-header">Making a tool</li>
-    <li><a data-nonpushstate href="#tools-introduction">Typical structure</a></li>
     <li><a data-nonpushstate href="#tools-styling">Styling</a></li>
     <li><a data-nonpushstate href="#tools-develop">Developing your tools</a>
       <ul class="nav nav-list">
@@ -55,6 +55,39 @@
 <p>Any tools &lsquo;installed&rsquo; into a dataset have access to the shared SQLite database. They can also save functional data into their own private databases, or their local filesystem.</p>
 
 <p><strong>Tools live in boxes</strong> &ndash; essentially Unix shell accounts on the web. Tools are installed into boxes, and run independently inside those boxes, talking to each other via the <a data-nonpushstate href="#js-introduction">scraperwiki.js library</a> or the underlying <a data-nonpushstate href="#boxes-settings">box API endpoints</a>.</p>
+
+<hr>
+
+<h2 id="concepts-tools">Structure of a tool</h2>
+
+<p>Tools are, essentially, files in a git repository which are built to run automatically when installed into a new box. By way of example, here are the contents of the <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">Spreadsheet upload tool</a>:</p>
+
+<pre class="prettyprint">code/
+ └ extract.py
+http/
+ ├ done.html
+ ├ index.html
+ └ style.css
+test/
+ ├ simple.py
+ └ tricky.py
+README.md
+scraperwiki.json</pre>
+
+<p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe.</p>
+
+<p>This <code>index.html</code> file contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It uses the <a href="#js-introduction">scraperwiki.js library</a> to select data and run the server-side <code>extract.py</code> script.</p>
+
+<p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
+
+<pre class="prettyprint linenums">{
+  "displayName": "Upload a Spreadsheet",
+  "description": "Upload an Excel file or CSV"
+}</pre>
+
+<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
+
+<p>The <code>test/</code> directory contains Python unit tests used during development. We suggest you write tests for your tools, expecially when listing them publically in the ScraperWiki Tool Shop.</p>
 
 <hr>
 
@@ -283,39 +316,6 @@ href="http://www.sqlite.org/lang_keywords.html">(more info)</a>.</td>
 
 <hr>
 
-<h2 id="tools-introduction">Typical structure</h2>
-
-<p>Tools are, essentially, files in a git repository which are built to run automatically when installed into a new box. By way of example, here are the contents of the <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">Spreadsheet upload tool</a>:</p>
-
-<pre class="prettyprint">code/
- └ extract.py
-http/
- ├ done.html
- ├ index.html
- └ style.css
-test/
- ├ simple.py
- └ tricky.py
-README.md
-scraperwiki.json</pre>
-
-<p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe.</p>
-
-<p>This <code>index.html</code> file contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It uses the <a href="#js-introduction">scraperwiki.js library</a> to select data and run the server-side <code>extract.py</code> script.</p>
-
-<p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
-
-<pre class="prettyprint linenums">{
-  "displayName": "Upload a Spreadsheet",
-  "description": "Upload an Excel file or CSV"
-}</pre>
-
-<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
-
-<p>The <code>test/</code> directory contains Python unit tests used during development. We suggest you write tests for your tools, expecially when listing them publically in the ScraperWiki Tool Shop.</p>
-
-<hr>
-
 <h2 id="tools-styling">Styling</h2>
 
 <p>It&rsquo;s important that tools share the same styling and fit in with the rest of ScraperWiki.
@@ -332,6 +332,8 @@ well with Bootstrap</a>.
 </p>
 
 <p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap styles are rendered on ScraperWiki.</p>
+
+<p>You might also want to read the <a href="/help/zig">Zarino Interface Guidelines (ZIG)</a>, which lay down a few conventions that ScraperWiki tools should follow.</p>
 
 <hr>
 
@@ -471,7 +473,7 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
 $.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", public: true, gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
 </pre>
 
-<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#tools-structure">the structure outlined above</a>.</p>
+<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#concepts-tools">the structure outlined above</a>. It must, for example, include a <strong>scraperwiki.json</strong> file that describes the tool.</p>
 
 <p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="text-error">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
 

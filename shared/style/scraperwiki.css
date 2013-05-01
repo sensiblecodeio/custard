@@ -189,6 +189,16 @@ input[type="search"].loading,
     margin-right: 0.2em;
 }
 
+/* A new .highlight class to make strings more prominent */
+
+.highlight {
+  font-style: inherit;
+  font-weight: inherit;
+  background-color: #FF9;
+  background-color: rgba(255, 255, 0, 0.3);
+  padding: 0.1em 0.2em;
+}
+
 /* Improve close button spacing on alerts */
 
 .alert .close {

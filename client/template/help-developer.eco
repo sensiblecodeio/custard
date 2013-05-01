@@ -1,334 +1,389 @@
 <nav class="well">
   <ul class="nav nav-list">
-    <li><a data-nonpushstate href="#scraperwiki-intro">Introduction</a></li>
-    <li class="nav-header">Datasets</li>
-    <li><a data-nonpushstate href="#datasets-basics">Dataset basics</a></li>
-    <li><a data-nonpushstate href="#datasets-anatomy">Anatomy of a box</a></li>
-    <li><a data-nonpushstate href="#datasets-endpoints">Box API endpoints</a></li>
-    <li><a data-nonpushstate href="#datasets-services">Unix services</a></li>
-    <li><a data-nonpushstate href="#datasets-git">Developing with Git and SSH</a></li>
-    <li class="nav-header">Views</li>
-    <li><a data-nonpushstate href="#views-basics">View basics</a></li>
-    <li><a data-nonpushstate href="#views-styling">Styling your view</a></li>
-    <li class="nav-header">Tools</li>
-    <li><a data-nonpushstate href="#tools-structure">Structure of a tool</a></li>
-    <li><a data-nonpushstate href="#tools-process">Development process</a></li>
-    <li><a data-nonpushstate href="#tools-submitting">Submitting your tool</a></li>
-    <li><a data-nonpushstate href="#tools-updating">Updating your tool</a></li>
-    <li class="nav-header">Helper library</li>
-    <li><a data-nonpushstate href="#views-helper">Helper library</a></li>
+    <li class="nav-header">Core concepts</li>
+    <li><a data-nonpushstate href="#concepts">Datasets, Tools &amp; Boxes</a></li>
+    <li class="nav-header">Scraperwiki.js library</li>
+    <li><a data-nonpushstate href="#js-introduction">How to use scraperwiki.js</a></li>
+    <li><a data-nonpushstate href="#js-reference">Function reference</a>
+      <ul class="nav nav-list">
+        <li><a data-nonpushstate href="#js-readsettings">Read settings</a></li>
+        <li><a data-nonpushstate href="#js-boxname">Read box name</a></li>
+        <li><a data-nonpushstate href="#js-geturl">Read browser URL</a></li>
+        <li><a data-nonpushstate href="#js-redirect">Redirect browser</a></li>
+        <li><a data-nonpushstate href="#js-rename">Rename a dataset</a></li>
+        <li><a data-nonpushstate href="#js-alert">Display alerts</a></li>
+        <li><a data-nonpushstate href="#js-sql">SQL API</a></li>
+        <li><a data-nonpushstate href="#js-sqlmeta">SQL Metadata API</a></li>
+        <li><a data-nonpushstate href="#js-exec">Exec API</a></li>
+        <li><a data-nonpushstate href="#js-push">Push SQL to other tools</a></li>
+      </ul>
+    </li>
+    <li class="nav-header">Making a tool</li>
+    <li><a data-nonpushstate href="#tools-introduction">Typical structure</a></li>
+    <li><a data-nonpushstate href="#tools-styling">Styling</a></li>
+    <li><a data-nonpushstate href="#tools-develop">Developing your tools</a>
+      <ul class="nav nav-list">
+        <li><a data-nonpushstate href="#tools-develop-locally">Develop locally</a></li>
+        <li><a data-nonpushstate href="#tools-develop-remotely">Develop on the box</a></li>
+      </ul>
+    </li>
+    <li><a data-nonpushstate href="#tools-submit">Submit to the Tool Shop</a></li>
+    <li class="nav-header">More about boxes</li>
+    <li><a data-nonpushstate href="#boxes-settings">Internal box settings</a></li>
+    <li><a data-nonpushstate href="#boxes-unix">Unix services</a></li>
+    <li><a data-nonpushstate href="#boxes-reference">Box API reference</a>
+      <ul class="nav nav-list">
+        <li><a data-nonpushstate href="#boxes-http">HTTP fileserver</a></li>
+        <li><a data-nonpushstate href="#boxes-sql">SQL API</a></li>
+        <li><a data-nonpushstate href="#boxes-sqlmeta">SQL Metadata API</a></li>
+        <li><a data-nonpushstate href="#boxes-exec">Exec API</a></li>
+        <li><a data-nonpushstate href="#boxes-upload">File upload API</a></li>
+        <li><a data-nonpushstate href="#boxes-status">Dataset status API</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
 <div class="wrapper">
 
-<h2 id="scraperwiki-intro">ScraperWiki is about datasets</h2>
+<h2 id="concepts">Core Concepts: Datasets, Tools &amp; Boxes</h2>
 
-<p>The simplest dataset is just an SQLite database, with a bit of code to create it and possibly update it. </p>
+<p><strong>ScraperWiki is about datasets.</strong> The simplest dataset is just an SQLite database, shared with a bunch of tools.</p>
 
-<p>On ScraperWiki, these files live inside what we call a <b>box</b> &ndash; essentially a Unix shell account on the web. Boxes are sandboxed from each other, and provided with a set of API endpoints for communicating with the outside world.</p>
+<p><strong>Tools act on datasets.</strong> Tools are things that populate, update, visualise or export a dataset. They are sold in the Tool Shop, or provided for free with the platform.</p>
 
-<p>Datasets can be analysed, visualised and exported using <b>views</b>. Each view is a separate box, and communicates with the dataset by making SQL queries and accessing files in the dataset over HTTP.</p>
+<p>Any tools &lsquo;installed&rsquo; into a dataset have access to the shared SQLite database. They can also save functional data into their own private databases, or their local filesystem.</p>
 
-<p>Datasets and views can be packaged up for you or other people to reuse and customise as <b>tools</b>. Tools are just git repositories, which are automatically checked out into a blank box when they are used to make a dataset or a view.</p>
+<p><strong>Tools live in boxes</strong> &ndash; essentially Unix shell accounts on the web. Tools are installed into boxes, and run independently inside those boxes, talking to each other via the <a data-nonpushstate href="#js-introduction">scraperwiki.js library</a> or the underlying <a data-nonpushstate href="#boxes-settings">box API endpoints</a>.</p>
 
-<hr />
+<hr>
 
-<h2 id="datasets-basics">Dataset basics</h2>
+<h2 id="js-introduction">How to use scraperwiki.js</h2>
 
-<p>To create a new, blank dataset, click the <b>Create a new dataset</b> link on the homepage, and then select either the <b>&ldquo;Code a dataset&rdquo;</b> tool (which will let you write code via SSH), or the <b>&ldquo;Code in your browser&rdquo;</b> tool (which will give you an in-browser editor, like ScraperWiki Classic).</p>
+<p>When you&rsquo;re writing your own tools, you&rsquo;ll want to use the <strong>scraperwiki.js</strong> library to interact with your tool&rsquo;s underlying box and the main dataset itself.</p>
 
-<p>You can SSH into any existing dataset by clicking it on the homepage, then using the <b>&ldquo;SSH IN&rdquo;</b> links in the <b>&ldquo;Tools&rdquo;</b> menu.</p>
+<p>Scraperwiki.js requires jQuery. You&rsquo;ll want to include it in
+your view&rsquo;s HTML <code>&lt;head&gt;</code>, after you load jQuery.</p>
 
-<p class="well well-small"><span class="label label-info">Top tip!</span> You can find out how to SSH into any dataset or tool by looking for its seven character identifier in the URL, and using it as the user name in your SSH command.</p>
+<pre class="prettyprint">&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="//beta.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
 
-<hr />
+<hr>
 
-<h2 id="datasets-anatomy">Anatomy of a box</h2>
+<h2 id="js-reference">Scraperwiki.js function reference</h2>
 
-<p>A box is a Unix user account on ScraperWiki&rsquo;s server cluster. The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy. Your home directory is always <code>/home/</code>. </p>
+<h3 id="js-readsettings">Read settings</h3>
 
-<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), with a storage limit according to your <a href="/pricing/" data-nonpushstate>payment plan</a>.</p>
+<p>When somebody loads your view, ScraperWiki passes it a number of settings. The settings are in a URL encoded JSON object after the # in the URL. You can use this helper function to access them easier:</p>
 
-<p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/box.json</code>. Eg:</p>
-
-<pre class="prettyprint linenums">{
-  "database": "database.sqlite",
-  "publish_token": "t5odv7of5l"
-}</pre>
-
-<p>Your box&rsquo;s <code>publish_token</code> is used to secure its public-facing, read-only endpoints (<code>/http</code> and <code>/sqlite</code>). It should be alphanumeric and 10-30 characters long. Or, if you&rsquo;d prefer to make your box&rsquo;s contents public, you can set it to an empty string or remove its entry entirely from <code>~/box.json</code>.</p>
-
-<p>
-At any one time your box is allocated to one particular server, but that
-server might change from time to time.
-Occasionally we may need to migrate your box to a new server (when ScraperWiki has to create or
-destroy servers).
-In that case we may kill running process on your box. Any new processes
-that your box creates (via the exec endpoint or cron) will run on the new server,
-so <code>ps</code> will still list all the processes.
-</p>
-
-<hr />
-
-<h2 id="datasets-endpoints">Box API endpoints</h2>
-
-<p class="well well-small"><span class="label label-important"> Watch out for 403s!</span>We currently only supply <code>Access-Control-Allow-Origin</code> in our API responses, no other CORS headers. Don&rsquo;t preflight your AJAX requests.</p>
-
-<h3 id="datasets-endpoints-http">HTTP file endpoint</h3>
-
-<p>Files placed in the <code>~/http/</code> directory of your box will be served statically via the box&rsquo;s HTTP endpoint. So, a file at <code>~/http/index.html</code> will be accessible at <code><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%><em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/http/index.html</code></p>
-
-<p>The HTTP file endpoint is a great way to serve static web pages, client-side javascript apps, and downloadable files &ndash; especially when you&rsquo;re writing views, or setup screens for more complex datasets.</p>
-
-<p>The file&rsquo;s MIME type is worked out from its extension, using <a
-href="https://github.com/git-mirror/nginx/blob/master/conf/mime.types">a standard set of rules</a>
-supplied with nginx.</p>
-
-<h3 id="datasets-endpoints-sql">SQL data endpoint</h3>
-
-<p>If an SQLite file is named in the <code>database</code> key of <code>~/box.json</code>, you can query it using the read-only SQL endpoint like so: <code><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%><em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql?q=select+*+from+sqlite_master</code>.</p>
-
-<p>The SQL endpoint accepts only <code>HTTP GET</code> requests with the following parameters:</p>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>GET&nbsp;parameter</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>q</code></td>
-    <td>The SQL query to execute. Multiple queries separated by a <code>;</code> are not allowed.</td>
-  </tr>
-  <tr>
-    <td><code>callback</code></td>
-    <td><span class="muted">[optional]</span> A callback function with which to wrap the JSON response, for JSONP output.</td>
-  </tr>
-</table>
-
-<p>The SQL endpoint returns a JSON list of objects; one object for each row in the result set. Although JSON officially
-has no order, the keys in these objects are in the same order as the columns in the SQL database.
-</p>
-
-<p>You can also see metadata about your database by making a <code>HTTP GET</code> request to <code><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%><em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql/meta</code>. The meta endpoint returns a JSON object like this:</p>
-
-<pre class="prettyprint">{
-  "databaseType": "sqlite3",
-  "table": {
-    "deals": {
-      "columnNames": [ "deal_id", "ref_no", "deal_name", "status", "created", "updated", "price" ],
-      "type": "table"
-    }
-  }
-}
+<pre class="prettyprint">
+scraperwiki.readSettings()
 </pre>
 
-<h3 id="datasets-endpoints-exec">Exec endpoint</h3>
+<p>This will return a JSON object where <code>source</code> contains information about your tool&rsquo;s box, and <code>target</code> contains information about the parent dataset&rsquo;s box.</p>
 
-<p>You can execute commands remotely, without SSHing in, by using your box&rsquo;s <code>/exec</code> endpoint. The Exec endpoint accepts <code>HTTP POST</code> requests with two required body parameters:</p>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>POST&nbsp;parameter</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>cmd</code></td>
-    <td>The Unix command to execute inside the box. Multiple commands separated by a <code>;</code> <em>are</em> allowed. Commands are run from <code>/</code>.</td>
-  </tr>
-  <tr>
-    <td><code>apikey</code></td>
-    <td>The API Key of the box owner.
-      <% if @user?.apiKey: %>(Hint: yours is <code><%= @user.apiKey %></code>)<% end %></td>
-  </tr>
-</table>
-
-<p class="well well-small"><span class="label label-important">Watch out!</span> The Exec endpoint allows potentially destructive access to your box. Never share your API Key with anyone.</p>
-
-<p>Because the Exec endpoint is secured using your <code>apikey</code>, there is no need to provide a <code>publish_token</code> in the URL. Eg:</p>
-
-<pre class="prettyprint linenums">$.ajax({
-  url: '<%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%>example/exec', // note: no publish_token
-  type: 'POST',
-  data: {
-    'cmd': 'echo "hello world" > hello.txt; ls -hitlar',
-    'apikey': '<%= @user?.apiKey or '<span class="muted">&lt;your-apikey&gt;</span>' %>'
+<pre class="prettyprint linenums">{
+  "source": {
+    "apikey": "<%= @user?.apiKey or '<span class="muted">&lt;your-apikey&gt;</span>' %>"
+    "publishToken": "t5odv7of5l",
+    "box": "fdtlza1",
+    "url": "<%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%>fdtlza1/t5odv7of5l"
+  },
+  "target": {
+    "publishToken": "a1pax8jk32",
+    "box": "de3jikz",
+    "url": "<%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%>de3jikz/a1pax8jk32"
   }
-}).done(function(text){
-  console.log(text)
+}</pre>
+
+<p>For example, this gets the target dataset&rsquo;s <a data-nonpushstate href="#datasets-endpoints-sql">SQL data endpoint</a>.</p>
+
+<pre class="prettyprint">
+scraperwiki.readSettings().target.url + "/sqlite"
+</pre>
+
+<h3 id="js-boxname">Read your tool&rsquo;s box name</h3>
+
+<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.box</code>.</p>
+
+<h3 id="js-geturl">Read the browser&rsquo;s URL</h3>
+
+<p>Sometimes you will need the URL of the outer page, for example to read query parameters or to get a URL for OAuth to redirect back to. Getting the URL happens asynchronusly using <a href="http://easyxdm.net/wp/">XDM</a>, so you need to pass in a callback function.</p>
+
+<pre class="prettyprint linenums">scraperwiki.tool.getURL(function(url) {
+  console.log(url)
 })</pre>
 
-<p>Unlike the other box endpoints, the Exec endpoint returns plain text, rather than JSON.</p>
+<h3 id="js-redirect">Redirect the browser</h3>
 
-<h3 id="datasets-endpoint-file">File upload endpoint</h3>
+<p>Since you&rsquo;re in a secure iframe, you need to call a special function to redirect the browser to another location. For example, this redirects to a dataset&rsquo;s default page:
+</p>
 
-<p>Boxes come with a file upload endpoint, allowing you to write datasets or views that accept a user&rsquo;s files as input. The file upload endpoint accepts <code>HTTP POST</code> requests, and like the Exec endpoint, requires your <code>apikey</code> as a body parameter:</p>
+<pre class="prettyprint linenums">var datasetUrl = "/dataset/" + scraperwiki.box
+scraperwiki.tool.redirect(datasetUrl)</pre>
 
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>POST&nbsp;parameter</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>file</code></td>
-    <td>The file you wish to upload.</td>
-  </tr>
-  <tr>
-    <td><code>apikey</code></td>
-    <td>The API Key of the box owner.
-      <% if @user?.apiKey: %>(Hint: yours is <code><%= @user.apiKey %></code>)<% end %></td>
-  </tr>
-  <tr>
-    <td><code>next</code></td>
-    <td>The URL to which users will be redirected once the files have been uploaded. A <code>filePath</code> value containing the upload file&rsquo;s name is added to the settings hash, accessible via <a data-nonpushstate href="#views-helper">scraperwiki.readSettings()</a>.</td>
-  </tr>
-</table>
+<p>It&rsquo;s also useful for redirecting to OAuth endpoints.</p>
 
-<p>You will often use the file upload endpoint as the <code>action</code> attribute of a web form, like so:</p>
+<h3 id="js-rename">Rename your tool or its parent dataset</h3>
 
-<pre class="prettyprint linenums">&lt;!-- in /http/index.html --&gt;
-&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="https://beta.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
-&lt;form id="up" action="../../file/" method="POST" enctype="multipart/form-data"&gt;
-  &lt;input type="file" name="file" size="80" id="file"&gt;
-  &lt;input type="hidden" name="apikey" id="apikey"&gt;
-  &lt;input type="hidden" name="next" id="next"&gt;
-  &lt;input type="submit" value="Upload now!"&gt;
-&lt;/form&gt;
-&lt;script&gt;
-  settings = scraperwiki.readSettings()
-  $('#next').val(window.location.pathname + 'done.html' + window.location.hash)
-  $('#apikey').val(settings.source.apikey)
-&lt;/script&gt;</pre>
+<p>By default, datasets or views created by a tool adopt the name of the tool itself. You can change the name of datasets, or of views made using the "Code a view" tool, by calling <code>scraperwiki.tool.rename()</code>. It takes one argument: a string to which the dataset or view should be renamed. For example:</p>
 
-<p>The uploaded file will be put in the <code>/home/incoming/</code> directory.</p>
+<pre class="prettyprint linenums">var username = "@scraperwiki"
+scraperwiki.tool.rename(username + "'s twitter followers")</pre>
 
-<h3 id="datasets-endpoints-status">Dataset status API</h3>
+<h3 id="js-alert">Display alerts</h3>
 
-<p>The ScraperWiki website can display the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://beta.scraperwiki.com/api/status</code>.</p>
+<p><code>scraperwiki.alert()</code> takes three arguments and displays an alert bar at the top of your dataset / view:</p>
 
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>POST&nbsp;parameter</th>
+      <th>Argument</th>
       <th>Description</th>
     </tr>
   </thead>
   <tr>
-    <td><code>type</code></td>
-    <td>Your dataset&rsquo;s status. Should either be <code>ok</code> or <code>error</code>.</td>
+    <td><code>title</code></td>
+    <td>A string to be shown in bold at the start of the alert. eg: "Could not authenticate with Twitter"</td>
   </tr>
   <tr>
     <td><code>message</code></td>
-    <td><span class="muted">[optional]</span>
-    An optional description, such as <code>Scraped 24 new tweets</code> or <code>Invalid password</code>.
-    If not specified, the ScraperWiki website instead shows "Refreshed" or "Error" followed by how long ago
-    the status was updated.
-    </td>
+    <td>A string to be shown after the title, usually to explain the alert or give the user some help. eg: "Please double-check your username and password"</td>
+  </tr>
+  <tr>
+    <td><code>level</code></td>
+    <td><span class="muted">[optional]</span> An optional boolean to control the appearance of the alert. True values will cause the alert to be shown in red (<code>.alert-error</code>); false values will cause it to be shown in the default yellow.</td>
   </tr>
 </table>
 
-<p>This API requires no <code>publish_token</code> or <code>apikey</code> because it automatically detects the credentials of the box from which it&rsquo;s called. Magic!</p>
+<p>Example usage:</p>
 
-<p>The endpoint returns a JSON object with a single <code>success</code> key on success, or an <code>error</code> key on errors.</p>
+<pre class="prettyprint">scraperwiki.alert("Could not authenticate with Twitter", "Please check your username and password", 1)</pre>
 
-<p>Here&rsquo;s some example code in Python, calling the endpoint.</p>
+<h3 id="js-sql">SQL API</h3>
 
-<pre class="prettyprint">
-scraperwiki.status('ok')
-scraperwiki.status('error', 'Source website broken')
-</pre>
+<p>Use <code>scraperwiki.sql()</code> to read data from the main dataset your tool is attached to.</p>
 
-<hr />
+<p>The <code>scraperwiki.sql()</code> function takes three arguments:</p>
 
-<h2 id="datasets-services">Unix services</h2>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>command</code></td>
+    <td>The SQL query to execute in the target box.</td>
+  </tr>
+  <tr>
+    <td><code>success(data, textStatus, jqXHR)</code></td>
+    <td>A callback to run on success. This is a standard <a href="http://api.jquery.com/jQuery.ajax/">jQuery $.ajax()</a> success callback.</td>
+  </tr>
+  <tr>
+    <td><code>error(jqXHR, textStatus, errorThrown)</code></td>
+    <td>A callback to run on error. This is a standard <a href="http://api.jquery.com/jQuery.ajax/">jQuery $.ajax()</a> error callback.</td>
+  </tr>
+</table>
 
-<h3>Third party libraries</h3>
+<p>Example usage:</p>
 
-<p>We&rsquo;ve installed many standard Unix tools.
+<pre class="prettyprint linenums">scraperwiki.sql("select * from tweets", function(data, textStatus, jqXHR) {
+    console.log('Great! Here are your tweets:', data)
+}, function(jqXHR, textStatus, errorThrown){
+    console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
+})</pre>
+
+<p><strong>Make sure to use ANSI standard SQL.</strong> Although all ScraperWiki datasets are currently based on SQLite, it&rsquo;s likely, at some point, we&rsquo;ll allow PostgreSQL databases as well. You should avoid database-specific SQL. For example:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Try to&hellip;</th>
+      <th>Good</th>
+      <th>Bad</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>Use <code>"</code> to escape column and table names <a
+href="http://www.sqlite.org/lang_keywords.html">(more info)</a>.</td>
+    <td class="good-code">SELECT id, "first name" FROM "table name"</td>
+    <td class="bad-code">SELECT id, `first name` FROM `table name`</td>
+  </tr>
+  <tr>
+    <td>Drop tables rather than deleting the SQLite file.</td>
+    <td class="good-code">DROP TABLE "dirty_table"</td>
+    <td class="bad-code">rm -f scraperwiki.sqlite</td>
+  </tr>
+  <tr>
+    <td>Use the Metadata API to discover table and column names.</td>
+    <td class="good-code">scraperwiki.sql.meta()</td>
+    <td class="bad-code">SELECT * FROM sqlite_master</td>
+  </tr>
+</table>
+
+<h3 id="js-exec">Exec API</h3>
+
+<p>Use <code>scraperwiki.exec()</code> to execute arbitrary Unix commands inside your tool&rsquo;s box.</p>
+
+<p>The <code>scraperwiki.exec()</code> function takes three arguments:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>command</code></td>
+    <td>The shell command to execute in the <em>source</em> box.</td>
+  </tr>
+  <tr>
+    <td><code>success(data, textStatus, jqXHR)</code></td>
+    <td>A callback to run on success. This is a standard <a href="http://api.jquery.com/jQuery.ajax/">jQuery $.ajax()</a> error callback.</td>
+  </tr>
+  <tr>
+    <td><code>error(jqXHR, textStatus, errorThrown)</code></td>
+    <td>A callback to run on error. This is a standard <a href="http://api.jquery.com/jQuery.ajax/">jQuery $.ajax()</a> error callback.</td>
+  </tr>
+</table>
+
+<p>Example usage:</p>
+
+<pre class="prettyprint linenums">scraperwiki.exec("cd; ./code.py", function(data, textStatus, jqXHR) {
+    console.log('Code.py exited successfully:', data)
+}, function(jqXHR, textStatus, errorThrown){
+    console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
+})</pre>
+
+<p>You&rsquo;ll often want to escape quotes and special characters before sending them to the Exec endpoint. For this reason, <code>scraperwiki.shellEscape()</code> returns a string with single-quotes escaped (more for convenience than security).</p>
+
+<h3 id="js-push">Push SQL to other tools</h3>
+
+<p><code>scraperwiki.tool.pushSQL()</code> takes two arguments, a query and a tool name. When called, the specified tool is installed and passed the specified SQL query. The specified tool will be able to access the query by reading <code>scraperwiki.readSettings().sqlQuery</code></p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>query</code></td>
+    <td>An SQL query to pass to the tool.</td>
+  </tr>
+  <tr>
+    <td><code>toolName</code></td>
+    <td>The name of the tool to be installed.</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2 id="tools-introduction">Typical structure</h2>
+
+<p>Tools are, essentially, files in a git repository which are built to run automatically when installed into a new box. By way of example, here are the contents of the <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">Spreadsheet upload tool</a>:</p>
+
+<pre class="prettyprint">code/
+ └ extract.py
+http/
+ ├ done.html
+ ├ index.html
+ └ style.css
+test/
+ ├ simple.py
+ └ tricky.py
+README.md
+scraperwiki.json</pre>
+
+<p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe.</p>
+
+<p>This <code>index.html</code> file contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It uses the <a href="#js-introduction">scraperwiki.js library</a> to select data and run the server-side <code>extract.py</code> script.</p>
+
+<p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
+
+<pre class="prettyprint linenums">{
+  "displayName": "Upload a Spreadsheet",
+  "description": "Upload an Excel file or CSV"
+}</pre>
+
+<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
+
+<p>The <code>test/</code> directory contains Python unit tests used during development. We suggest you write tests for your tools, expecially when listing them publically in the ScraperWiki Tool Shop.</p>
+
+<hr>
+
+<h2 id="tools-styling">Styling</h2>
+
+<p>It&rsquo;s important that tools share the same styling and fit in with the rest of ScraperWiki.
+If you&rsquo;re writing your own tool, you&rsquo;ll want to include Bootstrap and our custom style sheet:
 </p>
 
-<ul>
-    <li>Languages such as Python, R, Ruby, PHP, Node, Java and Clojure.</li>
-    <li>Scraping libraries such as Mechanize, Hpricot, Highrise, Zombie.</li>
-    <li>Data using libraries such as Zombie, NLTK, iCalendar.</li>
-    <li>Version control software such as git, Subversion and Mercurial.</li>
-    <li>Useful tools like GNU Screen, strace and curl.</li>
-    <li>Editors like vim and Emacs.</li>
-</ul>
+<pre class="prettyprint">&lt;link rel="stylesheet" href="//beta.scraperwiki.com/vendor/style/bootstrap.min.css"&gt;
+&lt;link rel="stylesheet" href="//beta.scraperwiki.com/style/scraperwiki.css"&gt;
+&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="//beta.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;</pre>
 
-<p>You can install anything else you need in the box. Use a language-specific
-package manager (e.g. pip, gem) or download the source and compile it. For
-example, to get a Python package, do this:
-
-<pre class="prettyprint">pip install --user &lt;packagename&gt;
-</pre>
-
-<h3>Cron</h3>
-
-<p>You can create a standard cron job using the <code>crontab</code> command.
-The <code>MAILTO</code> variable works as normal, and is a good way to get
-cron output via email.</p>
-
-<p>Cron jobs run on the same server as the rest of your box; as noted above the particular server may
-change from time to time but at any moment all of your box's processes will be running on the same
-server.</p>
-
-<p>For technical reasons we encourage you not to schedule your cron jobs for specific times (such as
-10 minutes past the hour).
-Use <code>@daily</code> and <code>@hourly</code> instead. We may not honour crontabs that run jobs at
-specific times.
+<p>Write your HTML in a way that <a href="http://twitter.github.com/bootstrap/base-css.html">works
+well with Bootstrap</a>.
 </p>
 
-<h3>SMTP</h3>
+<p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap styles are rendered on ScraperWiki.</p>
 
-<p>You can send email using SMTP via port 25 on <code>localhost</code>. This is intended
-for logging and alerting. Spam is against our Terms &amp; Conditions, and will not work.</p>
+<hr>
 
-<h3>SSH</h3>
+<h2 id="tools-develop">Developing your tools</h2>
 
-<p>This is an ordinary SSH server, you can use <code>scp</code>,
-<code>sftp</code>, <code>git</code> over SSH and so on. Your keys are stored
-separately for each box in <code>/home/.ssh/</code>, so you can add and
-remove people.</p>
+<p>You can see and edit the code of <strong>any tool</strong> you&rsquo;ve installed on ScraperWiki &ndash; whether you originally wrote it or not!</p>
 
-<hr />
+<p>Because tools are simply git repositories in a box, and boxes are just shell accounts, there are a number of ways you can develop your tools. <strong>They are built to fit around your usual development process.</strong></p>
 
-<h2 id="datasets-git">Developing with Git and SSH</h2>
+<h3 id="tools-develop-locally">Develop locally</h3>
 
-<p>Every box contains a Git repo in the <code>~/tool/</code> directory.
-You can either work on it on your laptop (locally) or in the box (remotely).</p>
+<p>The simplest way to develop locally is to use a tool called <a href="https://github.com/zarino/swbox">swbox</a>. It&rsquo;s essentially a wrapper around rsync that makes it easy to create a local copy of a tool, and then push local changes back up to the box on demand. Like so:</p>
 
-<h3>Local development</h3>
-
-<p>To develop code locally and push it to your box using Git, you need this
-configuration setting inside the box.</p>
-
-<pre class="prettyprint">git config --global receive.denyCurrentBranch "ignore"
+<pre class="prettyprint">swbox clone c7bc6s5
+cd c7bc6s5
+vim tool/http/index.html # make some changes to a file
+swbox push
 </pre>
 
-<p>You can then clone to your local machine using:</p>
+<p>If you want to use version control, you can then <code>git commit</code> and <code>git push</code> inside your local copy as you would normally. <a href="https://github.com/zarino/swbox">Click here to download swbox</a> and read the documentation.</p>
 
-<pre class="prettyprint">git clone a1b2c3d@<%= @user?.boxServer or 'free.scraperwiki.com'%>:tool ./tool</pre>
+<p>If swbox is too complicated, you can always just use rsync (or scp):</p>
 
-<p>Where <code>a1b2c3d</code> is the name of your box, and <code>./local-directory-name</code> is the directory in which you&rsquo;d like the local repo created.</p>
+<pre class="prettyprint"># turn ~/local-directory/ into a copy of the box /home/ directory
+rsync -avx --itemize-changes c7bc6s5@box.scraperwiki.com:. ~/local-directory/
+# push changes back up from ~/local-directory to the box
+rsync -avx --itemize-changes ~/local-directory/ #{boxName}@box.scraperwiki.com:.</pre>
 
-<p>The box will not automatically update when you push your changes to it. You
-can either SSH in and run <code>git reset --hard</code> manually, or set an
-automatic post hook inside the box:</p>
+<p>If you prefer a point-and-click solution, try accessing your box using SFTP and an FTP client like <a href="https://filezilla-project.org/" target="_blank">Filezilla</a>, <a href="http://cyberduck.ch/" target="_blank">Cyberduck</a> or <a href="http://winscp.net/" target="_blank">WinSCP</a>:</p>
 
-<pre class="prettyprint">echo "cd ..; env -i git reset --hard" > ~/tool/.git/hooks/post-receive
-chmod +x ~/tool/.git/hooks/post-receive</pre>
+<table class="table table-bordered">
+  <tr>
+    <td style="font-weight: bold">Protocol:</td>
+    <td>SFTP (not FTP)</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold">Server:</td>
+    <td><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%></td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold">Username:</td>
+    <td>Your box_name (eg: c7bc6s5)</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold">Port:</td>
+    <td>22</td>
+  </tr>
+</table>
 
-<h3>Remote development</h3>
+<h3 id="tools-develop-remotely">Develop on the box</h3>
 
-<p>You can SSH into the box, edit the code there, and commit it.
+<p>Alternatively, you can SSH into the box, edit the code there, and commit it.
 Git needs to know who you are. To automatically tell it for every box, add this
 to your local <code>~/.ssh/config</code>.
 </p>
@@ -379,102 +434,9 @@ ForwardAgent yes</pre>
 As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to connect to any box.
 </p>
 
-<hr />
+<hr>
 
-<h2 id="views-basics">View basics</h2>
-
-<p>You can <b>create a new view</b> clicking the <b>&ldquo;Tools&rdquo;</b> menu on any dataset&rsquo;s page, selecting <b>&ldquo;More Tools&hellip;&rdquo;</b> and picking the <b>&ldquo;Code a new view&rdquo;</b> tool. This will show you how to SSH in.</p>
-
-<p>A view is just HTML, starting at the file <code>http/index.html</code>. Visualisations are a combination of HTML, Javascript, and calls to run arbitary commands inside the box if you need them. The view loads inside an <code>iframe</code>.
-</p>
-
-<p>If you&rsquo;re writing a user interface, make sure to check out the <a href="/help/zig/" data-nonpushstate>Zarino Interface Guidelines (ZIG)</a> for tips and code samples that&rsquo;ll make your interface easier to use.</p>
-
-<hr />
-
-<h2 id="views-styling">Styling your view</h2>
-
-<p>It&rsquo;s important that views share the same styling and fit in with the rest of ScraperWiki.
-You&rsquo;ll want to include Bootstrap and our custom style sheet.
-</p>
-
-<pre class="prettyprint">&lt;link rel="stylesheet" href="//beta.scraperwiki.com/vendor/style/bootstrap.min.css"&gt;
-&lt;link rel="stylesheet" href="//beta.scraperwiki.com/style/scraperwiki.css"&gt;
-&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="//beta.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;</pre>
-
-<p>Write your HTML in a way that <a href="http://twitter.github.com/bootstrap/base-css.html">works
-well with Bootstrap</a>.
-</p>
-
-<p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap styles are rendered on ScraperWiki.</p>
-
-<hr />
-
-<h2 id="tools-structure">Structure of a tool</h2>
-
-<p>Tools are packaged datasets or views &ndash; files in a git repository which are built to run automatically when installed into a new box. By way of example, here are the contents of the <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">Spreadsheet upload tool</a>:</p>
-
-<pre class="prettyprint">code/
- └ extract.py
-http/
- ├ done.html
- ├ index.html
- └ style.css
-test/
- ├ simple.py
- └ tricky.py
-README.md
-scraperwiki.json</pre>
-
-<p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe. This <code>index.html</code> contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It works just like the <a href="views-basics">views</a> described above, and uses the <a href="#datasets-endpoints">box API endpoints</a> to select data and run server-side code.</p>
-
-<p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
-
-<pre class="prettyprint linenums">{
-  "displayName": "Upload a Spreadsheet",
-  "description": "Upload an Excel file or CSV"
-}</pre>
-
-<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
-
-<p>The <code>test/</code> directory contains Python unit tests used during development. We suggest you write tests for your tools, expecially when listing them publically in the ScraperWiki Data Store.</p>
-
-<hr />
-
-<h2 id="tools-process">Development process</h2>
-
-<p>When you&rsquo;re writing a new tool on your local machine, you&rsquo;ll probably want to preview your changes without officially committing them to the git repo. Since tools rely so heavily on the ScraperWiki platform, previewing locally isn&rsquo;t an option. But neither is comitting every change you make and initiating the tool again and again via the ScraperWiki web interface.</p>
-
-<h3>Local development</h3>
-
-<p>It&rsquo;s for this reason that we&rsquo;ve built <a href="https://github.com/scraperwiki/swot">swot</a>: a tool for developing tools! Install it from our git repo:</p>
-
-<pre>git clone git://github.com/scraperwiki/swot.git</pre>
-
-<p>You will need a box to test your dataset or view in. Create one on ScraperWiki by using the "Code your own dataset!" or "Code your own view!" tool. You will be shown SSH instructions for the resulting box &ndash; make a note of the 7-character <code>box_name</code> and your <code>apikey</code>, and enter them into <code>swot</code> from within your local tool directory:</p>
-
-<pre>swot setup <em class="muted">&lt;box_name&gt;</em> <em class="muted">&lt;apikey&gt;</em></pre>
-
-<p>This automatically adds your SSH keys to the box, and saves some settings into <code>.swotconfig</code></p>
-
-<p>To get <code>swot</code> to watch your local directory for changes and automatically sync them up to the box on ScraperWiki, run:</p>
-
-<pre>swot watch</pre>
-
-<p>Note: a bug in node.js means this doesn&rsquo;t work on a Mac. Try manually synchronizing instead:</p>
-
-<pre>swot sync</pre>
-
-<p>Your changes will now be visible through the normal ScraperWiki interface, at <code>https://beta.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/settings</code> if you are working on a dataset, or <code>https://beta.scraperwiki.com/dataset/<em class="muted">&lt;dataset_box&gt;</em>/view/<em class="muted">&lt;view_box&gt;</em></code> if you are working on a view.</p>
-
-<h3>Remote development</h3>
-
-<p>If you&rsquo;d prefer to edit the live code directly in a box, you can SSH in, and use <code>vim</code> or <code>emacs</code>. You&rsquo;ll need to configure your environment there, separately for each tool you&rsquo;re making.</p>
-
-<hr />
-
-<h2 id="tools-submitting">Submitting your tool</h2>
+<h2 id="tools-submit">Submit to the Tool Shop</h2>
 
 <p>To sumbit a completed tool (or work in progress!) to ScraperWiki, make a <code>HTTP POST</code> request to <code>/api/tools</code>, with the following body parameters:</p>
 
@@ -513,7 +475,7 @@ $.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", ty
 
 <p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="text-error">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
 
-<h2 id="tools-updating">Updating your tool</h2>
+<h3>Update your tool shop listing</h3>
 
 <p>To update a tool, call the same API endpoint as for submitting a new tool.
 Specify the <code>name</code>, spelt the same as when you submitted the tool.
@@ -534,244 +496,258 @@ If you update the git repository of a tool without calling
 old ones will keep their old code.
 </p>
 
-<hr />
+<hr>
 
-<h2 id="views-helper">Helper library</h2>
+<h2 id="boxes-settings">Internal box settings</h2>
 
-<p>There&rsquo;s a client side Javascript library, which wraps a lot of the API
-endpoints and functions needed by views. It requires jQuery. You&rsquo;ll want to include it in
-your view&rsquo;s HTML <code>&lt;head&gt;</code>, after you load jQuery.</p>
+<p>A box is a Unix user account on ScraperWiki&rsquo;s server cluster. The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy. Your home directory is always <code>/home/</code>. </p>
 
-<pre class="prettyprint">&lt;script src="//beta.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;</pre>
+<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), with a storage limit according to your <a href="/pricing/" data-nonpushstate>payment plan</a>.</p>
 
-<h3>Read settings</h3>
-
-<p>When somebody loads your view, ScraperWiki passes it a number of settings. The settings are
-in a URL encoded JSON object after the # in the URL. You can use this helper function
-to access them easier:
-
-<pre class="prettyprint">
-scraperwiki.readSettings()
-</pre>
-
-<p>This will return a JSON object where <code>target</code> contains information about the box of the dataset being visualised
-and <code>source</code> contains information about the view&rsquo;s box.
-</p>
+<p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/box.json</code>. Eg:</p>
 
 <pre class="prettyprint linenums">{
-  "source": {
-    "apikey": "<%= @user?.apiKey or '<span class="muted">&lt;your-apikey&gt;</span>' %>"
-    "publishToken": "t5odv7of5l",
-    "box": "fdtlza1",
-    "url": "<%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%>fdtlza1/t5odv7of5l"
-  },
-  "target": {
-    "publishToken": "a1pax8jk32",
-    "box": "de3jikz",
-    "url": "<%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%>de3jikz/a1pax8jk32"
-  }
+  "database": "database.sqlite",
+  "publish_token": "t5odv7of5l"
 }</pre>
 
-<p>For example, this gets the target dataset&rsquo;s <a data-nonpushstate href="#datasets-endpoints-sql">SQL data endpoint</a>.</p>
-
-<pre class="prettyprint">
-scraperwiki.readSettings().target.url + "/sqlite"
-</pre>
-
-<h3>Read box name</h3>
-
-<p>The name (random letters and numbers) of the current box is in <code>scraperwiki.box</code>.</p>
-
-<h3>Redirecting</h3>
-
-<p>Since you&rsquo;re in a secure iframe, you need to call a special function to
-redirect the browser to another location. For example, this redirects to
-a dataset&rsquo;s default page:
-</p>
-
-<pre class="prettyprint linenums">var datasetUrl = "/dataset/" + scraperwiki.box
-scraperwiki.tool.redirect(datasetUrl)</pre>
-
-<p>It&rsquo;s also useful for redirecting to OAuth endpoints.</p>
-
-<h3>Read the URL</h3>
-
-<p>Sometimes you will need the URL of the outer page, for example to
-read query parameters or to get a URL for OAuth to redirect back to.
-Getting the URL happens asynchronusly using <a href="http://easyxdm.net/wp/">XDM</a>,
-so you need to pass in a callback function.
-</p>
-
-<pre class="prettyprint linenums">scraperwiki.tool.getURL(function(url) {
-  console.log(url)
-})</pre>
-
-<h3>Rename a dataset / view</h3>
-
-<p>By default, datasets or views created by a tool adopt the name of the tool itself. 
-  You can change the name of datasets, or of views made using the "Code a view" tool,
-  by calling <code>scraperwiki.tool.rename()</code>. It takes one argument: a string to which the dataset or view should be renamed. For example:</p>
-
-<pre class="prettyprint linenums">var username = "@scraperwiki"
-scraperwiki.tool.rename(username + "'s twitter followers")</pre>
-
-<h3>SQL API wrapper</h3>
-
-<p>The ScraperWiki helper library includes a convenient wrapper around the target box&rsquo;s SQL API: <code>scraperwiki.sql()</code>. The function takes three arguments:</p>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Argument</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>command</code></td>
-    <td>The SQL query to execute in the target box.</td>
-  </tr>
-  <tr>
-    <td><code>success(data, textStatus, jqXHR)</code></td>
-    <td>A callback to run on success.</td>
-  </tr>
-  <tr>
-    <td><code>error(jqXHR, textStatus, errorThrown)</code></td>
-    <td>A callback to run on error.</td>
-  </tr>
-</table>
-
-<p>Example usage:</p>
-
-<pre class="prettyprint linenums">scraperwiki.sql("select * from tweets", function(data, textStatus, jqXHR) {
-    console.log('Great! Here are your tweets:', data)
-}, function(jqXHR, textStatus, errorThrown){
-    console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
-})</pre>
+<p>Your box&rsquo;s <code>publish_token</code> is used to secure its public-facing, read-only endpoints (<code>/http</code> and <code>/sqlite</code>). It should be alphanumeric and 10-30 characters long. Or, if you&rsquo;d prefer to make your box&rsquo;s contents public, you can set it to an empty string or remove its entry entirely from <code>~/box.json</code>.</p>
 
 <p>
-The SQL API is intended to accept a common subset of ANSI SQL. Keep queries as
-simple as possible; avoid database specific SQL. If in doubt, make sure you&rsquo;re
-compatible with at least SQLite (the current database) and PostgreSQL (the most likely future alternative).
+At any one time your box is allocated to one particular server, but that
+server might change from time to time.
+Occasionally we may need to migrate your box to a new server (when ScraperWiki has to create or
+destroy servers).
+In that case we may kill running process on your box. Any new processes
+that your box creates (via the exec endpoint or cron) will run on the new server,
+so <code>ps</code> will still list all the processes.
 </p>
 
-<p>
-We&rsquo;ve spotted the following:
-</p>
+<hr>
+
+<h2 id="boxes-unix">Unix services</h2>
+
+<h3>Standard Unix tools included in every box:</h3>
 
 <ul>
-<li>
-use <code>"</code> to escape column names, rather than <code>`</code> or <code>[</code> (see <a
-href="http://www.sqlite.org/lang_keywords.html">SQLite Keywords</a>).
-</li>
-
-<li>
-DROP tables rather than deleting the SQLite file
-</li>
-
-<li>
-Use the metadata API (below) to discover table and column names, rather than the
-SQLite-specific <code>sqlite_master</code>.
-</li>
+    <li>Languages such as Python, R, Ruby, PHP, Node, Java and Clojure.</li>
+    <li>Scraping libraries such as Mechanize, Hpricot, Highrise, Zombie.</li>
+    <li>Data using libraries such as Zombie, NLTK, iCalendar.</li>
+    <li>Version control software such as git, Subversion and Mercurial.</li>
+    <li>Useful tools like GNU Screen, strace and curl.</li>
+    <li>Editors like vim and Emacs.</li>
 </ul>
 
-<h3>SQL metadata API wrapper</h3>
+<p>You can install anything else you need in the box. Use a language-specific
+package manager (e.g. pip, gem) or download the source and compile it. For
+example, to get a Python package, do this:
 
-<p>This API should be used to discover table and column names rather than the SQLite-specific <code>sqlite_master</code>.</p>
+<pre class="prettyprint">pip install --user &lt;packagename&gt;</pre>
 
-<p>It takes <code>success</code> and <code>error</code> callbacks, like the main SQL function above. Example usage:</p>
+<h3>Schedule your code to run using Cron:</h3>
 
-<pre class="prettyprint linenums">scraperwiki.sql.meta(function(metadata, textStatus, jqXHR) {
-  for(tableName in metadata.table){
-    console.log('table:', tableName, 'columns:', metadata.table[tableName].columnNames)
-  }
-}, function(jqXHR, textStatus, errorThrown){
-  console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
-})
-</pre>
+<p>You can create a standard cron job using the <code>crontab</code> command.
+The <code>MAILTO</code> variable works as normal, and is a good way to get
+cron output via email.</p>
 
-<h3>Exec API wrapper</h3>
+<p>Cron jobs run on the same server as the rest of your box; as noted above the particular server may
+change from time to time but at any moment all of your box's processes will be running on the same
+server.</p>
 
-<p>The ScraperWiki helper library also includes a convenient wrapper around the <em>source</em> box&rsquo;s Exec API: <code>scraperwiki.exec()</code>. The function takes three arguments:</p>
+<p>For technical reasons we encourage you not to schedule your cron jobs for specific times (such as
+10 minutes past the hour).
+Use <code>@daily</code> and <code>@hourly</code> instead. We may not honour crontabs that run jobs at
+specific times of day.
+</p>
+
+<h3>Send email (not spam!) using SMTP:</h3>
+
+<p>You can send email using SMTP via port 25 on <code>localhost</code>. This is intended
+for logging and alerting. Spam is against our Terms &amp; Conditions, and will not work.</p>
+
+<h3>Access your code using SSH, SCP, SFTP, rsync and Git:</h3>
+
+<p>Your box is an ordinary SSH server, meaning you can use <code>scp</code>,
+<code>sftp</code>, <code>git</code> over SSH and so on. Your keys are stored
+separately for each box in <code>/home/.ssh/</code>, so you can add and
+remove people.</p>
+
+<hr>
+
+<h2 id="boxes-reference">Box API reference</h2>
+
+<p class="well well-small"><span class="label label-important"> Watch out for 403s!</span>We currently only supply <code>Access-Control-Allow-Origin</code> in our API responses, no other CORS headers. Don&rsquo;t preflight your AJAX requests.</p>
+
+<h3 id="boxes-http">HTTP fileserver</h3>
+
+<p>Files placed in the <code>~/http/</code> directory of your box will be served statically via the box&rsquo;s HTTP endpoint. So, a file at <code>~/http/index.html</code> will be accessible at <code><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%><em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/http/index.html</code></p>
+
+<p>The HTTP file endpoint is a great way to serve static web pages, client-side javascript apps, and downloadable files &ndash; especially when you&rsquo;re writing views, or setup screens for more complex datasets.</p>
+
+<p>The file&rsquo;s MIME type is worked out from its extension, using <a
+href="https://github.com/git-mirror/nginx/blob/master/conf/mime.types">a standard set of rules</a>
+supplied with nginx.</p>
+
+<h3 id="boxes-sql">SQL API</h3>
+
+<p>If an SQLite file is named in the <code>database</code> key of <code>~/box.json</code>, you can query it using the read-only SQL endpoint like so: <code><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%><em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql?q=select+*+from+sqlite_master</code>.</p>
+
+<p>The SQL endpoint accepts only <code>HTTP GET</code> requests with the following parameters:</p>
 
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>Argument</th>
+      <th>GET&nbsp;parameter</th>
       <th>Description</th>
     </tr>
   </thead>
   <tr>
-    <td><code>command</code></td>
-    <td>The shell command to execute in the <em>source</em> box.</td>
+    <td><code>q</code></td>
+    <td>The SQL query to execute. Multiple queries separated by a <code>;</code> are not allowed.</td>
   </tr>
   <tr>
-    <td><code>success(data, textStatus, jqXHR)</code></td>
-    <td>A callback to run on success.</td>
-  </tr>
-  <tr>
-    <td><code>error(jqXHR, textStatus, errorThrown)</code></td>
-    <td>A callback to run on error.</td>
+    <td><code>callback</code></td>
+    <td><span class="muted">[optional]</span> A callback function with which to wrap the JSON response, for JSONP output.</td>
   </tr>
 </table>
 
-<p>Example usage:</p>
+<p>The SQL endpoint returns a JSON list of objects; one object for each row in the result set. Although JSON officially
+has no order, the keys in these objects are in the same order as the columns in the SQL database.
+</p>
 
-<pre class="prettyprint linenums">scraperwiki.exec("cd; ./code.py", function(data, textStatus, jqXHR) {
-    console.log('Code.py exited successfully:', data)
-}, function(jqXHR, textStatus, errorThrown){
-    console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
-})</pre>
+<h3 id="boxes-sqlmeta">SQL Metadata API</h3>
 
-<h3>Escaping strings for shell commands</h3>
+<p>You can see metadata about your database by making a <code>HTTP GET</code> request to <code><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%><em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql/meta</code>. The meta endpoint returns a JSON object like this:</p>
 
-<p><code>scraperwiki.shellEscape()</code> returns a string with single-quotes escaped (more for convenience than security). This will come in useful when you&rsquo;re executing commands via the <code>scraperwiki.exec()</code> method.</p>
+<pre class="prettyprint">{
+  "databaseType": "sqlite3",
+  "table": {
+    "deals": {
+      "columnNames": [ "deal_id", "ref_no", "deal_name", "status", "created", "updated", "price" ],
+      "type": "table"
+    }
+  }
+}
+</pre>
 
-<h3>Show alerts</h3>
+<h3 id="boxes-exec">Exec API</h3>
 
-<p><code>scraperwiki.alert()</code> takes three arguments and displays an alert bar at the top of your dataset / view:</p>
+<p>You can execute commands remotely, without SSHing in, by using your box&rsquo;s <code>/exec</code> endpoint. The Exec endpoint accepts <code>HTTP POST</code> requests with two required body parameters:</p>
 
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>Argument</th>
+      <th>POST&nbsp;parameter</th>
       <th>Description</th>
     </tr>
   </thead>
   <tr>
-    <td><code>title</code></td>
-    <td>A string to be shown in bold at the start of the alert. eg: "Could not authenticate with Twitter"</td>
+    <td><code>cmd</code></td>
+    <td>The Unix command to execute inside the box. Multiple commands separated by a <code>;</code> <em>are</em> allowed. Commands are run from <code>/</code>.</td>
+  </tr>
+  <tr>
+    <td><code>apikey</code></td>
+    <td>The API Key of the box owner.
+      <% if @user?.apiKey: %>(Hint: yours is <code><%= @user.apiKey %></code>)<% end %></td>
+  </tr>
+</table>
+
+<p class="well well-small"><span class="label label-important">Watch out!</span> The Exec endpoint allows potentially destructive access to your box. Never share your API Key with anyone.</p>
+
+<p>Because the Exec endpoint is secured using your <code>apikey</code>, there is no need to provide a <code>publish_token</code> in the URL. Eg:</p>
+
+<pre class="prettyprint linenums">$.ajax({
+  url: '<%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%>example/exec', // note: no publish_token
+  type: 'POST',
+  data: {
+    'cmd': 'echo "hello world" > hello.txt; ls -hitlar',
+    'apikey': '<%= @user?.apiKey or '<span class="muted">&lt;your-apikey&gt;</span>' %>'
+  }
+}).done(function(text){
+  console.log(text)
+})</pre>
+
+<p>Unlike the other box endpoints, the Exec endpoint returns plain text, rather than JSON.</p>
+
+<h3 id="boxes-upload">File upload API</h3>
+
+<p>Boxes come with a file upload endpoint, allowing you to write datasets or views that accept a user&rsquo;s files as input. The file upload endpoint accepts <code>HTTP POST</code> requests, and like the Exec endpoint, requires your <code>apikey</code> as a body parameter:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>POST&nbsp;parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>file</code></td>
+    <td>The file you wish to upload.</td>
+  </tr>
+  <tr>
+    <td><code>apikey</code></td>
+    <td>The API Key of the box owner.
+      <% if @user?.apiKey: %>(Hint: yours is <code><%= @user.apiKey %></code>)<% end %></td>
+  </tr>
+  <tr>
+    <td><code>next</code></td>
+    <td>The URL to which users will be redirected once the files have been uploaded. A <code>filePath</code> value containing the upload file&rsquo;s name is added to the settings hash, accessible via <a data-nonpushstate href="#views-helper">scraperwiki.readSettings()</a>.</td>
+  </tr>
+</table>
+
+<p>You will often use the file upload endpoint as the <code>action</code> attribute of a web form, like so:</p>
+
+<pre class="prettyprint linenums">&lt;!-- in /http/index.html --&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://beta.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
+&lt;form id="up" action="../../file/" method="POST" enctype="multipart/form-data"&gt;
+  &lt;input type="file" name="file" size="80" id="file"&gt;
+  &lt;input type="hidden" name="apikey" id="apikey"&gt;
+  &lt;input type="hidden" name="next" id="next"&gt;
+  &lt;input type="submit" value="Upload now!"&gt;
+&lt;/form&gt;
+&lt;script&gt;
+  settings = scraperwiki.readSettings()
+  $('#next').val(window.location.pathname + 'done.html' + window.location.hash)
+  $('#apikey').val(settings.source.apikey)
+&lt;/script&gt;</pre>
+
+<p>The uploaded file will be put in the <code>/home/incoming/</code> directory.</p>
+
+<h3 id="boxes-status">Dataset status API</h3>
+
+<p>The ScraperWiki website can display the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://beta.scraperwiki.com/api/status</code>.</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>POST&nbsp;parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>type</code></td>
+    <td>Your dataset&rsquo;s status. Should either be <code>ok</code> or <code>error</code>.</td>
   </tr>
   <tr>
     <td><code>message</code></td>
-    <td>A string to be shown after the title, usually to explain the alert or give the user some help. eg: "Please double-check your username and password"</td>
-  </tr>
-  <tr>
-    <td><code>level</code></td>
-    <td><span class="muted">[optional]</span> An optional boolean to control the appearance of the alert. True values will cause the alert to be shown in red (<code>.alert-error</code>); false values will cause it to be shown in the default yellow.</td>
-  </tr>
-</table>
-
-<p>Example usage:</p>
-
-<pre class="prettyprint">scraperwiki.alert("Could not authenticate with Twitter", "Please check your username and password", 1)</pre>
-
-<h3>Tool to tool communication</h3>
-
-<p><code>scraperwiki.tool.pushSQL()</code> takes two arguments, a query and a tool name. When called, the specified tool is installed and passed the specified SQL query. The specified tool will be able to access the query by <code>scraperwiki.readSettings().sqlQuery</code>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Argument</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>query</code></td>
-    <td>An SQL query to pass to the tool.</td>
-  </tr>
-  <tr>
-    <td><code>toolName</code></td>
-    <td>The name of the tool to be installed.</td>
+    <td><span class="muted">[optional]</span>
+    An optional description, such as <code>Scraped 24 new tweets</code> or <code>Invalid password</code>.
+    If not specified, the ScraperWiki website instead shows "Refreshed" or "Error" followed by how long ago
+    the status was updated.
+    </td>
   </tr>
 </table>
+
+<p>This API requires no <code>publish_token</code> or <code>apikey</code> because it automatically detects the credentials of the box from which it&rsquo;s called. Magic!</p>
+
+<p>The endpoint returns a JSON object with a single <code>success</code> key on success, or an <code>error</code> key on errors.</p>
+
+<p>Here&rsquo;s some example code in Python, calling the endpoint.</p>
+
+<pre class="prettyprint">
+scraperwiki.status('ok')
+scraperwiki.status('error', 'Source website broken')
+</pre>
+
 </div>

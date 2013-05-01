@@ -28,15 +28,7 @@ _exec = (arg, callback) ->
   , callback
 
 getGitURL = (tool, server) ->
-  # :todo: Maybe use a different server for dev.scraperwiki.com
-  if /dev/.test server
-    origin = "https://git.scraperwiki.com"
-  else
-    origin = "https://git.scraperwiki.com"
-
-  url = "#{origin}/#{tool.name}/.git"
-  return url
-
+  return tool.gitURL
 
 class Box extends ModelBase
   @dbClass: zDbBox

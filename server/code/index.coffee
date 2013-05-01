@@ -184,12 +184,12 @@ addView = (user, dataset, attributes, callback) ->
           if err?
             console.warn "SSH key distribution error"
             err = null
-          box.installTool {user: user, toolName: attributes.tool}, (err) ->
-            if err?
-              console.warn err
-              return callback {500, error: "Error installing tool: #{err}"}
-            view = _.findWhere dataset.views, box: box.name
-            callback null, view
+        box.installTool {user: user, toolName: attributes.tool}, (err) ->
+          if err?
+            console.warn err
+            return callback {500, error: "Error installing tool: #{err}"}
+          view = _.findWhere dataset.views, box: box.name
+          callback null, view
 
 # Render login page
 app.get '/login/?', (req, resp) ->
@@ -439,7 +439,7 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
 
 app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
   user = req.user.effective
-  console.log "AFDASDASD POST dataset user", user
+  console.log "POST dataset user", user
   User.canCreateDataset user, (err, can) ->
     if err?
       console.log "USER #{user} CANNOT CREATE DATASET"
@@ -470,20 +470,20 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
           if err?
             console.warn "SSH key distribution error"
             err = null
-          console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
-          box.installTool {user: user, toolName: body.tool}, (err) ->
-            if err?
-              console.warn err
-              return resp.send 500, error: "Error installing tool: #{err}"
-            Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
-              console.warn err if err?
-              resp.send 200, dataset
-              addView user, dataset,
-                tool: 'datatables-view-tool'
-                displayName: 'View in a table' # TODO: use tool object
-              , (err, view) ->
-                if err?
-                  console.warn "Error creating DT view: #{err}"
+        console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
+        box.installTool {user: user, toolName: body.tool}, (err) ->
+          if err?
+            console.warn err
+            return resp.send 500, error: "Error installing tool: #{err}"
+          Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
+            console.warn err if err?
+            resp.send 200, dataset
+            addView user, dataset,
+              tool: 'datatables-view-tool'
+              displayName: 'View in a table' # TODO: use tool object
+            , (err, view) ->
+              if err?
+                console.warn "Error creating DT view: #{err}"
 
 app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
   user = req.user.effective

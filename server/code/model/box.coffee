@@ -119,9 +119,9 @@ class Box extends ModelBase
         else if res.statusCode isnt 200
           callback {statusCode: res.statusCode, body: body}, null
         else
-          #TODO: background this
           Plan.setDiskQuota box, user.accountLevel, (err) ->
-            callback null, box
+            console.warn "setDiskQuota on #{box.name} error: #{err}"
+          callback null, box
 
   @_generateBoxName: ->
     r = Math.random() * Math.pow(10,9)

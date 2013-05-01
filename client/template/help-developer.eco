@@ -369,7 +369,7 @@ rsync -avx --itemize-changes ~/local-directory/ #{boxName}@box.scraperwiki.com:.
   </tr>
   <tr>
     <td style="font-weight: bold">Server:</td>
-    <td><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%></td>
+    <td><%= @user?.boxServer or 'free.scraperwiki.com'%></td>
   </tr>
   <tr>
     <td style="font-weight: bold">Username:</td>

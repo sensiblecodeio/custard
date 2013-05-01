@@ -28,15 +28,7 @@ _exec = (arg, callback) ->
   , callback
 
 getGitURL = (tool, server) ->
-  # :todo: Maybe use a different server for dev.scraperwiki.com
-  if /dev/.test server
-    origin = "https://git.scraperwiki.com"
-  else
-    origin = "https://git.scraperwiki.com"
-
-  url = "#{origin}/#{tool.name}/.git"
-  return url
-
+  return tool.gitUrl
 
 class Box extends ModelBase
   @dbClass: zDbBox
@@ -56,7 +48,7 @@ class Box extends ModelBase
           user: arg.user
           boxName: @name
           boxServer: @server
-          cmd: "rm -fr http && git clone #{gitURL} tool && ln -s tool/http http"
+          cmd: "rm -fr http && git clone #{gitURL} --depth 1 tool && ln -s tool/http http"
         , (err, res, body) ->
           if err?
             callback err
@@ -119,9 +111,9 @@ class Box extends ModelBase
         else if res.statusCode isnt 200
           callback {statusCode: res.statusCode, body: body}, null
         else
-          #TODO: background this
           Plan.setDiskQuota box, user.accountLevel, (err) ->
-            callback null, box
+            console.warn "setDiskQuota on #{box.name} error: #{err}"
+          callback null, box
 
   @_generateBoxName: ->
     r = Math.random() * Math.pow(10,9)

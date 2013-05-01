@@ -28,7 +28,7 @@ _exec = (arg, callback) ->
   , callback
 
 getGitURL = (tool, server) ->
-  return tool.gitURL
+  return tool.gitUrl
 
 class Box extends ModelBase
   @dbClass: zDbBox
@@ -48,7 +48,7 @@ class Box extends ModelBase
           user: arg.user
           boxName: @name
           boxServer: @server
-          cmd: "rm -fr http && git clone #{gitURL} tool && ln -s tool/http http"
+          cmd: "rm -fr http && git clone #{gitURL} --depth 1 tool && ln -s tool/http http"
         , (err, res, body) ->
           if err?
             callback err

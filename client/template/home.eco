@@ -1,19 +1,112 @@
-<a href="/pricing" class="banner signup">
-  <h1>Liberate Your Data!</h1>
-  <ul class="features">
-    <li>Scrape web pages and APIs</li>
-    <li>Import Excel files, PDFs and more</li>
-    <li>Central ScraperWiki data hub</li>
-    <li>Sort, filter and visualise</li>
-    <li>Export and download for analysis</li>
-  </ul>
-  <h2>All the tools&nbsp;and&nbsp;services you&nbsp;need to do data&nbsp;science&nbsp;on&nbsp;the&nbsp;web. <em>Sign up <i class="icon-arrow-right"></i></em></h2>
-</a>
-<!--
-<a href="https://scraperwiki.com/dataservices/" class="banner dataservices">
-  <h2>Call in the professionals</h2>
-  <h3>ScraperWiki Data Services</h3>
-  <p>Our data scientists help B2B Media customers extract value from internal and external data.</p>
-  <p><em>Find out more &gt;</em></p>
-</a>
--->
+<style>
+
+.case-study {
+  margin: 20px 0;
+}
+
+.hero-unit {
+  padding: 30px;
+  margin-bottom: 0;
+}
+
+.case-study h3 {
+  line-height: 30px;
+}
+
+.hero-unit h2 {
+  margin-top: 0;
+}
+
+@media only screen and (min-width: 620px) { }
+
+@media only screen and (min-width: 920px) {
+
+  .hero-unit {
+    padding: 50px;
+  }
+
+  .case-study {
+    float: left;
+    width: 30%;
+    margin-right: 5%;
+    margin-bottom: 30px;
+  }
+  
+  .case-study.last {
+    margin-right: 0;
+  }
+
+  .case-study p {
+    font-size: 18px;
+  }
+
+}
+
+@media only screen and (min-width: 1220px) {
+
+  .hero-unit {
+    padding: 60px;
+  }
+  
+  .case-study {
+    margin-bottom: 40px;
+  }
+
+}
+
+
+</style>
+
+<div class="hero-unit" style="background-color: #DDE6FD">
+  <img class="pull-right" src="/image/tractor-500x320.png" width="220" height="141" alt="The ScraperWiki digger" style="margin: 0 0 10px 10px">
+  <h2>Welcome to the ScraperWiki beta!</h2>
+  <p class="lead">The new ScraperWiki is quite different to ScraperWiki&nbsp;Classic.<br>Here&rsquo;s a sixty-second rundown of what&rsquo;s changed and&nbsp;why.</p>
+  <p style="margin-bottom: 0">
+    <a class="btn btn-large" data-nonpushstate href="/help/" style="margin-right: 20px;">Read the docs</a>
+    <a class="btn btn-primary btn-large" data-nonpushstate href="/pricing">Sign up <i class="icon-chevron-right"></i></a>
+  </p>
+</div>
+
+<div class="case-study first">
+  <h3>New ScraperWiki is&nbsp;about datasets&nbsp;and&nbsp;tools.</h3>
+  <p>Datasets are created, updated, visualised and exported using <strong>tools</strong>.</p>
+  <p>You can write your own tools, or install and hack on existing ones.</p>
+  <p>Right now, all tools are free. But soon we&rsquo;ll be selling all sorts of awesome tools in the Tool Shop.</p>
+  <a class="btn btn-primary" href="/">Create a new dataset <i class="icon-chevron-right"></i></a>
+</div>
+
+<div class="case-study">
+  <h3>You can still code in your&nbsp;browser.</h3>
+  <p>Click <strong>Create a new dataset</strong>, then pick the <strong>Code in your browser</strong> tool. It&rsquo;s just like ScraperWiki Classic, and all your existing code will work in it.</p>
+  <p>You can also <strong>SSH into</strong> any tool to see and edit all of its code. Or you can rsync, SFTP or Git push your local code up, like Heroku.</p>
+  <a class="btn btn-primary" data-nonpushstate href="/docs/developer/#concepts-tools">Read more about boxes <i class="icon-chevron-right"></i></a>
+</div>
+
+<div class="case-study last">
+  <h3>ScraperWiki&rsquo;s secret sauce: Using tools for instant&nbsp;wins.</h3>
+  <p>ScraperWiki itself is a simple platform. All&nbsp;of the magic is performed by&nbsp;<strong>tools</strong>.</p>
+  <p>Tools are focussed, single-purpose programs for doing something with a dataset. They let <strong>domain experts</strong> do exactly what they need to do, without touching a line of code.</p>
+  <a class="btn btn-primary" data-nonpushstate href="/docs/">Try the quickstart guides <i class="icon-chevron-right"></i></a>
+</div>
+
+<span class="clearfix"></span>
+
+<hr>
+
+<div class="row-fluid" style="margin-bottom: 80px;">
+  <div class="span4">
+    <h2 style="margin-top: -4px;">Why the change?</h2>
+  </div>
+  <div class="span8">
+    <p class="lead">New ScraperWiki is <span class="highlight">more powerful for end-users</span> and <span class="highlight">more flexible for coders.</span></p>
+    <p>New ScraperWiki is built for two markets: Domain experts who use want to use point-and-click tools, and coders or data scientists who want to work more flexibly with data.</p>
+    <p>The domain experts shouldn&rsquo;t have to learn to code, just to explore their data. Likewise, the coders shouldn&rsquo;t be limited by a platform built for hobbyists.</p>
+    <p>ScraperWiki Classic tried to shoot down the middle &ndash; and while some people loved it, we knew we could do so much better, by addressing the two markets individually.</p>
+    <p>And, the best bit is, by bringing these two markets together, the coders get the advantage of simple tools to automate the boring bits, and non-coders get to look under the hood and learn from (and maybe even improve) the tools they use every day.</p>
+    <p>We want to empower people everywhere to get, clean and analyse the data that&rsquo;s important to them. In a way that makes sense to them.</p>
+    <p>That&rsquo;s why we&rsquo;ve changed.</p>
+    <p><a class="btn btn-primary" href="http://blog.scraperwiki.com/2012/12/31/a-small-matter-of-programming/">Read more on our blog <i class="icon-chevron-right"></i></a></p>
+  </div>
+</div>
+
+

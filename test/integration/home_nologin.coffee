@@ -15,8 +15,11 @@ describe 'Home page (not logged in)', ->
       @bodyText = text
       done()
 
-  it 'tells me about the platform for data science', =>
-    @bodyText.toLowerCase().should.include 'data science'
+  it 'tells me about the platform', =>
+    @bodyText.toLowerCase().should.include 'platform'
+
+  it 'tells me about code in your browser tool', =>
+    @bodyText.toLowerCase().should.include 'code in your browser'
 
   it 'gives me a link to sign up for an account', (done) ->
     browser.elementByPartialLinkText 'Sign up', (err, link) ->
@@ -24,6 +27,3 @@ describe 'Home page (not logged in)', ->
       link.getAttribute 'href', (err, href) ->
         href.should.include '/pricing'
         done()
-
-  it 'tells me about ScraperWiki Data Services', =>
-    @bodyText.toLowerCase().should.include 'services'

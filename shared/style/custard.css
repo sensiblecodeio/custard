@@ -973,12 +973,35 @@ div.help .well .label {
   margin: 0 5px 0 2px;
 }
 
+div.help .nav-list .nav-list {
+  display: none; /* this gets overwritten by javascript in client/view/docs.coffee */
+  margin: 0 -15px; /* make list stretch full width of nav parent */
+}
+
+div.help .nav-list .nav-list a {
+  padding-left: 30px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
 div.help h3 {
   margin-top: 20px;
 }
 
 div.help hr {
   margin: 40px 0;
+}
+
+td.good-code, td.bad-code {
+  font-family: Consolas, Menlo, "DejaVu Sans Mono", Courier, "Courier New", monospace;
+  font-size: 0.9em;
+  color: #468847;
+  background-color: #F7FDF2;
+}
+
+td.bad-code {
+  color: #B94A48;
+  background-color: #FDF2F2;
 }
 
 a.help-tile {

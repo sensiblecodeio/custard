@@ -48,7 +48,9 @@ class Box extends ModelBase
           user: arg.user
           boxName: @name
           boxServer: @server
-          cmd: "rm -fr http && git clone #{gitURL} --depth 1 tool && ln -s tool/http http"
+          # :todo: we don't really need to remove the http directory any more,
+          # because cobalt no longer furnishes it.
+          cmd: "rm -fr http ; mkdir incoming ; git clone #{gitURL} --depth 1 tool ; ln -s tool/http http"
         , (err, res, body) ->
           if err?
             callback err
@@ -59,7 +61,7 @@ class Box extends ModelBase
 
   @endpoint: (server, name) ->
     proto_server = "https://#{server}"
-    if process.env.CU_BOX_SERVER?
+    if process.env.CU_BOX_SERVER
       proto_server = "http://#{process.env.CU_BOX_SERVER}"
     return "#{proto_server}/#{name}"
 

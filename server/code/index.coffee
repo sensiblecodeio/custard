@@ -320,7 +320,7 @@ app.post '/api/:user/subscription/verify/?', (req, resp) ->
 
       plan = result.subscription.plan
       console.log 'Subscribed to', plan.plan_code
-      user.setAccountLevel plan.name, (err) ->
+      user.setAccountLevel plan.plan_code, (err) ->
         msg = "You've been subscribed to the #{plan.name} plan!"
         if req.user?.effective
           req.user.effective = getSessionUser user

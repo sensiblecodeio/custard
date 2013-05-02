@@ -46,7 +46,7 @@ class Dataset extends ModelBase
     @dbClass.find({user: user, state: {$ne: 'deleted'}}).count callback
 
   @findAllByUserShortName: (name, callback) ->
-    @dbClass.find {user: name}, callback
+    @dbClass.find {user: name, state: {$ne: 'deleted'}}, callback
 
   @findOneByName: (shortName, dsName, callback) ->
     @dbClass.findOne {user: shortName, name: dsName}, callback

@@ -79,14 +79,14 @@
   <h3>You can still code in your&nbsp;browser.</h3>
   <p>Click <strong>Create a new dataset</strong>, then pick the <strong>Code in your browser</strong> tool. It&rsquo;s just like ScraperWiki Classic, and all your existing code will work in it.</p>
   <p>You can also <strong>SSH into</strong> any tool to see and edit all of its code. Or you can rsync, SFTP or Git push your local code up, like Heroku.</p>
-  <a class="btn btn-primary" data-nonpushstate href="/docs/developer/#concepts-tools">Read more about boxes <i class="icon-chevron-right"></i></a>
+  <a class="btn btn-primary" data-nonpushstate href="/help/developer/#concepts-tools">Read more about boxes <i class="icon-chevron-right"></i></a>
 </div>
 
 <div class="case-study last">
   <h3>ScraperWiki&rsquo;s secret sauce: Using tools for instant&nbsp;wins.</h3>
   <p>ScraperWiki itself is a simple platform. All&nbsp;of the magic is performed by&nbsp;<strong>tools</strong>.</p>
   <p>Tools are focussed, single-purpose programs for doing something with a dataset. They let <strong>domain experts</strong> do exactly what they need to do, without touching a line of code.</p>
-  <a class="btn btn-primary" data-nonpushstate href="/docs/">Try the quickstart guides <i class="icon-chevron-right"></i></a>
+  <a class="btn btn-primary" data-nonpushstate href="/help/">Try the quickstart guides <i class="icon-chevron-right"></i></a>
 </div>
 
 <span class="clearfix"></span>

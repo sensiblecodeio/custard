@@ -72,7 +72,11 @@
   <p>Datasets are created, updated, visualised and exported using <strong>tools</strong>.</p>
   <p>You can write your own tools, or install and hack on existing ones.</p>
   <p>Right now, all tools are free. But soon we&rsquo;ll be selling all sorts of awesome tools in the Tool Shop.</p>
-  <a class="btn btn-primary" href="/">Create a new dataset <i class="icon-chevron-right"></i></a>
+<% if window?.user?.effective: %>
+  <a class="btn btn-primary" href="/chooser">Create a new dataset <i class="icon-chevron-right"></i></a>
+<% else: %>
+  <a class="btn btn-primary" data-nonpushstate href="/login">Create a new dataset <i class="icon-chevron-right"></i></a>
+<% end %>
 </div>
 
 <div class="case-study">

@@ -506,14 +506,7 @@ old ones will keep their old code.
 
 <p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), with a storage limit according to your <a href="/pricing/" data-nonpushstate>payment plan</a>.</p>
 
-<p>Box settings, such as the <code>publish_token</code> and default database location, are stored in a JSON file at <code>~/box.json</code>. Eg:</p>
-
-<pre class="prettyprint linenums">{
-  "database": "database.sqlite",
-  "publish_token": "t5odv7of5l"
-}</pre>
-
-<p>Your box&rsquo;s <code>publish_token</code> is used to secure its public-facing, read-only endpoints (<code>/http</code> and <code>/sqlite</code>). It should be alphanumeric and 10-30 characters long. Or, if you&rsquo;d prefer to make your box&rsquo;s contents public, you can set it to an empty string or remove its entry entirely from <code>~/box.json</code>.</p>
+<p>A handful of internal box settings are stored in a JSON file at <code>~/box.json</code>. This is deprecated and will probably disappear soon. Just move along :-)</p>
 
 <p>
 At any one time your box is allocated to one particular server, but that

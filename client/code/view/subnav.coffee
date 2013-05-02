@@ -353,6 +353,8 @@ class Cu.View.HelpNav extends Backbone.View
         name = 'Upload and summarise a spreadsheet of data'
       when 'code-in-your-browser'
         name = 'Code a scraper in your browser'
+      when 'whats-new'
+        name = 'What’s new?'
 
     html = """
       <div class="btn-toolbar" id="subnav-path">

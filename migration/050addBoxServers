@@ -23,6 +23,6 @@ addBoxServer = (box, callback) ->
         console.log "NO SERVER for #{user.shortName}"
         return callback 'NO SERVER'
 
-Box.dbClass.find {}, (err, boxen) ->
+Box.dbClass.find {server: null}, (err, boxen) ->
   async.eachSeries boxen, addBoxServer, (err) ->
     console.log err if err?

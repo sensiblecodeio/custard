@@ -41,7 +41,7 @@ addBoxJSON = (box, callback) ->
         box.boxJSON = obj
         box.save callback
 
-Box.dbClass.find {boxJSON: null}, (err, boxen) ->
+Box.dbClass.find {"boxJSON.status": {$ne: null}}, (err, boxen) ->
   async.eachLimit boxen, 5, addBoxJSON, (err) ->
     console.log err if err?
     process.exit()

@@ -87,6 +87,18 @@ body.fullscreen .container {
   display: none; /* :TODO: work out how to display nav for small devices */
 }
 
+#header + .alert {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  padding: 10px 0;
+}
+
+#header + .alert .container {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 #footer {
   padding: 15px 0;
   background-color: #fcfcfc;

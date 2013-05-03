@@ -31,12 +31,14 @@ $ ->
           href = $(@).attr "href"
           evt.preventDefault()
           window.app.navigate href, trigger: true
+          window.scrollTo 0,0
 
 class Cu.AppView
   constructor: (@selector) ->
 
   showView: (view) ->
     @currentView?.close()
+    window.scrollTo 0,0
     @currentView = view
     @currentView.render()
 

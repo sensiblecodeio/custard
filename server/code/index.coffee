@@ -78,6 +78,7 @@ getSessionUser = (user) ->
     recurlyAccount: user.recurlyAccount
     boxEndpoint: Box.endpoint plan.boxServer, ''
     boxServer: plan.boxServer
+    acceptedTerms: user.acceptedTerms
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")
@@ -150,6 +151,9 @@ checkSwitchUserRights = checkStaff
 
 # Render the main client side app
 renderClientApp = (req, resp) ->
+  if req.user
+    if isNaN(req.user.real.acceptedTerms) or req.user.real.acceptedTerms < 1 # :TODO: this number "1" should not be hard-coded.
+      req.flash 'notice', 'acceptTerms'
   resp.render 'index',
     scripts: js 'app'
     templates: js 'template/index'

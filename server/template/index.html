@@ -59,6 +59,11 @@
     <p class="container"><%=flash.info[0] %></p>
   </div>
   <% } %>
+  <% if (flash.notice && flash.notice.length > 0 && flash.notice[0] == 'acceptTerms') { %>
+  <div class="alert alert-warning permanent">
+    <p class="container"><strong>Our Terms &amp; Conditions have changed.</strong> <a href="/terms/">Read them here</a> then accept the changes. <a id="acceptTerms" class="btn btn-warning btn-small pull-right"><i class="icon-ok icon-white space"></i> I accept</a></p>
+  </div>
+  <% } %>
   <div id="overlay"></div>
   <div id="subnav" class="container"></div>
   <div id="content" class="container"></div>

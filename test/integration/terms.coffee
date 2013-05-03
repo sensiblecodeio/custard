@@ -24,7 +24,7 @@ describe 'Login after introduction of Terms & Conditions', ->
 
     context 'when I click the "I accept" button', ->
       before (done) ->
-        wd40.click '#acceptedTerms', ->
+        wd40.click '#acceptTerms', ->
           setTimeout done, 1000
 
       it 'the message goes away', (done) ->

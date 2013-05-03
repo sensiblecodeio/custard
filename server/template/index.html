@@ -62,6 +62,13 @@
   <% if (flash.notice && flash.notice.length > 0 && flash.notice[0] == 'acceptTerms') { %>
   <div class="alert alert-warning permanent">
     <p class="container"><strong>Our Terms &amp; Conditions have changed.</strong> <a href="/terms/">Read them here</a> then accept the changes. <a id="acceptTerms" class="btn btn-warning btn-small pull-right"><i class="icon-ok icon-white space"></i> I accept</a></p>
+    <script> // :TODO: It feels very very wrong putting this in here.
+    $('#acceptTerms').on('click', function(){
+      $(this).parents('.alert').slideUp(250, function(){
+        $(this).remove()
+      })
+    })
+    </script>
   </div>
   <% } %>
   <div id="overlay"></div>

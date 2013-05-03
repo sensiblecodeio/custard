@@ -34,7 +34,7 @@ describe 'Login after introduction of Terms & Conditions', ->
 
       context 'and when I revist the homepage', ->
         before (done) ->
-          browser.get login_url, done
+          browser.get home_url, done
 
         it 'the message is not show again', (done) ->
           wd40.getText 'body', (err, text) ->

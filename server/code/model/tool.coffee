@@ -40,8 +40,20 @@ class exports.Tool extends ModelBase
         cmd = "git clone #{@gitUrl} #{@directory}; cd #{@directory}"
       else
         cmd = "cd #{@directory}; git pull"
-      cmd += "; chown -R root:www-data .; git update-server-info"
+      cmd += "; chown -R www-data:www-data ."
       child_process.exec cmd, callback
+
+  # TODO: DRY
+  gitCloneIfNotExists: (options, callback) ->
+    @directory = "#{options.dir}/#{@name}"
+    # :todo: whitelist @directory
+    fs.exists @directory, (exists) =>
+      if not exists
+        cmd = "git clone #{@gitUrl} #{@directory}; cd #{@directory}"
+        cmd += "; chown -R www-data:www-data ."
+        child_process.exec cmd, callback
+      else
+        callback null, null
 
   updateInstances: (done) ->
     {Box} = require 'model/box'

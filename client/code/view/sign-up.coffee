@@ -42,7 +42,7 @@ class Cu.View.SignUp extends Backbone.View
       displayName: $('#displayName').val()
       inviteCode: $('#inviteCode').val()
       subscribingTo: subscribingTo
-      acceptedTerms: if $('#acceptedTerms').is(':checked') then 1 else 0
+      acceptedTerms: if $('#acceptedTerms').is(':checked') then 1 else 0 # :TODO: this "1" should not be hard-coded.
     ,
       success: (model, response, options) =>
         console.log model, response, options

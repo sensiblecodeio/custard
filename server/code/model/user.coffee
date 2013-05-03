@@ -21,7 +21,7 @@ userSchema = new mongoose.Schema
   accountLevel: String
   recurlyAccount: {type: String, unique: true}
   trialStarted: {type: Date, default: Date.now}
-  acceptedTerms: Number
+  acceptedTerms: Number # a value of 0 or null means you need to accept terms on next login
   created: {type: Date, default: Date.now}
   logoUrl: String
   sshKeys: [String]
@@ -138,6 +138,7 @@ class exports.User extends ModelBase
 
     if opts.requestingUser?.isStaff
       newUser.accountLevel = opts.newUser.accountLevel or 'free'
+      newUser.acceptedTerms = 0
 
     if opts.newUser.logoUrl?
       newUser.logoUrl = opts.newUser.logoUrl

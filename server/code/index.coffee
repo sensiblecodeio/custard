@@ -266,6 +266,7 @@ app.post '/api/user/?', (req, resp) ->
       email: [req.body.email]
       logoUrl: req.body.logoUrl
       accountLevel: req.body.accountLevel
+      acceptedTerms: req.body.acceptedTerms
     requestingUser: req.user?.real
   , (err, user) ->
     if err?

@@ -20,6 +20,7 @@ describe 'API', ->
               displayName: 'Tabatha Testerson'
               email: 'tabby@example.org'
               inviteCode: process.env.CU_INVITE_CODE
+              acceptedTerms: 1
           , (err, res, body) =>
             @body = body
             done()

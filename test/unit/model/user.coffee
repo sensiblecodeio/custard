@@ -7,7 +7,7 @@ request = require 'request'
 
 {User} = require 'model/user'
 {Box} = require 'model/box'
-plan = require 'model/plan'
+{Plan} = require 'model/plan'
 
 describe 'User (client)', ->
   helper = require '../helper'
@@ -20,6 +20,7 @@ describe 'User (client)', ->
         displayName: 'Tabby Testerson'
         shortName: 'tabbytest'
         email: 'tabby@example.org'
+        acceptedTerms: 1
 
       @eventSpy = sinon.spy()
       @user.on 'invalid', @eventSpy
@@ -50,6 +51,16 @@ describe 'User (client)', ->
 
     it 'errors when email is not valid', ->
       @attrs.email = 'tabby@example.org@DROP TABLES;'
+      @user.set @attrs, validate: true
+      @eventSpy.calledOnce.should.be.true
+
+    it 'errors when acceptedTerms is not valid', ->
+      @attrs.acceptedTerms = 'this is not a number'
+      @user.set @attrs, validate: true
+      @eventSpy.calledOnce.should.be.true
+
+    it 'errors when acceptedTerms is not supplied', ->
+      delete @attrs.acceptedTerms
       @user.set @attrs, validate: true
       @eventSpy.calledOnce.should.be.true
 
@@ -163,6 +174,7 @@ describe 'User (server)', ->
         shortName: 'testoo'
         displayName: 'Test Testerson'
         email: ['test@example.org']
+        acceptedTerms: 1
 
     it 'should save if all fields are valid', (done) ->
       @user.save (err) ->
@@ -199,6 +211,18 @@ describe 'User (server)', ->
         should.exist err
         done()
 
+    it 'should not save if the accepted terms are invalid', (done) ->
+      @user.acceptedTerms = 'this is not a number'
+      @user.save (err) ->
+        should.exist err
+        done()
+
+    it 'should not save if the terms have not been accepted', (done) ->
+      delete @user.acceptedTerms
+      @user.save (err) ->
+        should.exist err
+        done()
+
   describe 'Adding a user', ->
     context 'when add is called', ->
       before (done) ->
@@ -207,12 +231,17 @@ describe 'User (server)', ->
             shortName: 'testerson'
             displayName: 'Test Testerson Esq.'
             email: ['test@example.org']
+            acceptedTerms: 1
         , (err, user) =>
           @user = user
           done err
 
       it 'has a recurlyAccount', ->
         should.exist @user.recurlyAccount
+
+      it 'has agreed to a version of the terms and conditions', ->
+        should.exist @user.acceptedTerms
+        @user.acceptedTerms.should.be.above 0
 
       # TODO: stub database
       xit 'saves the user to the database'
@@ -225,7 +254,7 @@ describe 'User (server)', ->
 
     context 'when updating the quotas for a user', ->
       before (done) ->
-        @stub = sinon.stub plan, 'setDiskQuota', (box, plan, cb) ->
+        @stub = sinon.stub Plan, 'setDiskQuota', (box, plan, cb) ->
           cb null, true
 
         User.findByShortName 'ehg', (err, user) =>

@@ -13,6 +13,8 @@ class Cu.Model.User extends Backbone.Model
       errors.shortName = "This can only contain a minimum of 3, and a maximum of 24 letters, numbers, dots and dashes"
     if not @validEmail attrs
       errors.email = "This is not a valid email address"
+    if not @hasAcceptedTerms attrs
+      errors.acceptedTerms = "Please accept the terms and conditions"
     if _.size errors
       return errors
 
@@ -33,3 +35,9 @@ class Cu.Model.User extends Backbone.Model
       return true
     else
       return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+$/gi.test attrs.email
+
+  hasAcceptedTerms: (attrs) ->
+    if not 'acceptedTerms' of attrs
+      return true
+    else
+      return not isNaN attrs.acceptedTerms

@@ -40,7 +40,7 @@ class exports.Tool extends ModelBase
         cmd = "git clone #{@gitUrl} #{@directory}; cd #{@directory}"
       else
         cmd = "cd #{@directory}; git pull"
-      cmd += "; chown -R www-data:www-data ."
+      cmd += "; chown -R www-data:www-data ." if process.env.NODE_ENV?
       child_process.exec cmd, callback
 
   # TODO: DRY

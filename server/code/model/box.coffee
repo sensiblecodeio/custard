@@ -28,7 +28,10 @@ _exec = (arg, callback) ->
   , callback
 
 getGitURL = (tool, server) ->
-  return tool.gitUrl
+  if process.env.NODE_ENV is 'production'
+    return "https://git.scraperwiki.com/#{tool.name}"
+  else
+    return tool.gitUrl
 
 class Box extends ModelBase
   @dbClass: zDbBox
@@ -44,20 +47,23 @@ class Box extends ModelBase
         # to check it has access to the git repo. It can do this
         # (in principle) using ident-express.
         gitURL = getGitURL(tool, @server)
-        _exec
-          user: arg.user
-          boxName: @name
-          boxServer: @server
-          # :todo: we don't really need to remove the http directory any more,
-          # because cobalt no longer furnishes it.
-          cmd: "rm -fr http ; mkdir incoming ; git clone #{gitURL} --depth 1 tool ; ln -s tool/http http"
-        , (err, res, body) ->
-          if err?
-            callback err
-          else if res.statusCode isnt 200
-            callback {statusCode: res.statusCode, body: body}
-          else
-            callback null
+        toolsDir = process.env.CU_TOOLS_DIR
+        # Clone from gitURL if it doesn't exist in the tool cache
+        tool.gitCloneIfNotExists dir: toolsDir, (err) =>
+          _exec
+            user: arg.user
+            boxName: @name
+            boxServer: @server
+            # :todo: we don't really need to remove the http directory any more,
+            # because cobalt no longer furnishes it.
+            cmd: "rm -fr http ; mkdir incoming ; git clone #{gitURL} --depth 1 tool ; ln -s tool/http http"
+          , (err, res, body) ->
+            if err?
+              callback err
+            else if res.statusCode isnt 200
+              callback {statusCode: res.statusCode, body: body}
+            else
+              callback null
 
   @endpoint: (server, name) ->
     proto_server = "https://#{server}"

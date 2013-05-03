@@ -30,7 +30,8 @@ describe 'Subscription Workflow', ->
         wd40.clear '#shortName', ->
           wd40.fill '#shortName', 'tabbytest', ->
             wd40.fill '#email', 'tabby@example.org', ->
-              wd40.click '#go', done
+              wd40.click '#acceptedTerms', ->
+                wd40.click '#go', done
 
     before (done) ->
       wd40.waitForText 'Order Total', done

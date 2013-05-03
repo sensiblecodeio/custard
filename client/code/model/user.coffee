@@ -40,4 +40,6 @@ class Cu.Model.User extends Backbone.Model
     if not 'acceptedTerms' of attrs
       return true
     else
-      return not isNaN attrs.acceptedTerms
+      console.log 'attrs.acceptedTerms ', attrs.acceptedTerms
+      console.log '0+attrs.acceptedTerms > 0 =', 0+attrs.acceptedTerms > 0
+      return 0+attrs.acceptedTerms > 0

@@ -106,7 +106,7 @@ app.configure ->
     cookie:
       maxAge: 60000 * 60 * 24 * 365
     secret: process.env.CU_SESSION_SECRET
-    store: new mongoStore(url: process.env.CU_DB)
+    store: new mongoStore({url: process.env.CU_DB, auto_reconnect: true})
 
   app.use passport.initialize()
   app.use passport.session()

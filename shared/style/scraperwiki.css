@@ -622,6 +622,18 @@ input[type="color"],
   user-select: none;
 }
 
+/* Make form .help-inline same size as labels */
+
+.help-inline {
+  font-size: 14px;
+  line-height: 20px;
+  padding-left: 10px;
+}
+
+.checkbox + .help-inline {
+  padding-left: 0;
+}
+
 /* Make modals and popovers look cleaner */
 
 .modal, .popover {

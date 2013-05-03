@@ -82,6 +82,18 @@ exports.users = [
   accountLevel: "free",
   recurlyAccount: "mrgreedy-1045756",
   acceptedTerms: 1
+},
+{
+  shortName: 'mrlazy',
+  email: ['infrequent@example.com'],
+  displayName: 'Longtime NoSee',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: process.env.COTEST_USER_API_KEY,
+  sshKeys: [],
+  isStaff: false,
+  accountLevel: "free",
+  recurlyAccount: "mrlazy-2319852",
+  acceptedTerms: 0
 }
 ];
 

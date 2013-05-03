@@ -35,6 +35,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
     @route RegExp('signup/([^/]+)/?'), 'signUp'
     @route RegExp('subscribe/([^/]+)/?'), 'subscribe'
+    @route RegExp('terms/?'), 'terms'
 
   main: ->
     if window.user.effective?
@@ -180,5 +181,11 @@ class Cu.Router.Main extends Backbone.Router
     section ?= 'home'
     subnavView = new Cu.View.HelpNav {section: section}
     contentView = new Cu.View.Help {template: "help-#{section}"}
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  terms: ->
+    subnavView = new Cu.View.Subnav {text: 'Terms & Conditions'}
+    contentView = new Cu.View.Terms()
     @appView.showView contentView
     @subnavView.showView subnavView

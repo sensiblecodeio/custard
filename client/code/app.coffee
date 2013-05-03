@@ -43,6 +43,10 @@ class Cu.AppView
     @currentView.render()
 
     $(@selector).show().html @currentView.el
+    if $(document).height() <= $(window).height()
+      $('#footer').addClass('stuck-to-bottom')
+    else
+      $('#footer').removeClass('stuck-to-bottom')
 
   hideView: (view) ->
     @currentView?.close()

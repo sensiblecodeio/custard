@@ -87,6 +87,33 @@ body.fullscreen .container {
   display: none; /* :TODO: work out how to display nav for small devices */
 }
 
+#footer {
+  padding: 15px 0;
+  background-color: #fcfcfc;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+}
+
+#footer.stuck-to-bottom { /* class added by jQuery on very short pages */
+  position: absolute;     /* sticks footer to bottom of browser window */
+  bottom: 0;              /* (since body is relative with 100% height) */
+  right: 0;
+  left: 0;
+}
+
+#footer ul.inline {
+  margin: 0 auto; /* override default margin-left: 0 on .inline elements */
+}
+
+#footer a {
+  color: #bbb;
+  padding: 10px;
+}
+
+#footer a:hover {
+  color: #999;
+}
+
 #subnav {
   margin-top: 0;
   padding-top: 20px;
@@ -1058,6 +1085,8 @@ a.help-tile h3 {
     right: 0;
     bottom: 0;
     border-top: 1px solid #eee;
+    z-index: 1;
+    background-color: #fff;
   }
 
   div.help nav.well {

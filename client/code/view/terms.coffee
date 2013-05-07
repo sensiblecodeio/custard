@@ -21,6 +21,7 @@ class Cu.View.TermsAlert extends Backbone.View
     user.save 'acceptedTerms', window.latestTerms,
       type: 'put' # force backbone to issue a PUT, even though it thinks this is a new model
       success: (model, response, options) =>
+        window.user.real.acceptedTerms = window.latestTerms
         @$el.slideUp 250, =>
           @$el.remove()
       error: (model, xhr, options) =>

@@ -92,8 +92,7 @@ exports.users = [
   sshKeys: [],
   isStaff: false,
   accountLevel: "free",
-  recurlyAccount: "mrlazy-2319852",
-  acceptedTerms: 0
+  recurlyAccount: "mrlazy-2319852"
 }
 ];
 

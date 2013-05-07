@@ -53,7 +53,7 @@
 
 </style>
 
-<div class="hero-unit" style="background-color: #DDE6FD">
+<div class="hero-unit" style="background-color: #DAF0FF">
   <img class="pull-right" src="/image/tractor-500x320.png" width="220" height="141" alt="The ScraperWiki digger" style="margin: 0 0 10px 10px">
   <h2>Welcome to the ScraperWiki beta!</h2>
   <p class="lead">The new ScraperWiki is quite different to ScraperWiki&nbsp;Classic.<br>Here&rsquo;s a sixty-second rundown of what&rsquo;s changed and&nbsp;why.</p>

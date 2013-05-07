@@ -10,7 +10,8 @@ exports.users = [
   apikey: process.env.COTEST_USER_API_KEY,
   isStaff: false,
   sshKeys: [],
-  accountLevel: "free"
+  accountLevel: "free",
+  acceptedTerms: 1
 },
 {
   shortName: 'teststaff',
@@ -20,7 +21,8 @@ exports.users = [
   apikey: process.env.COTEST_STAFF_API_KEY,
   isStaff: true,
   sshKeys: [],
-  accountLevel: "free"
+  accountLevel: "free",
+  acceptedTerms: 1
 },
 {
   shortName: 'ehg',
@@ -31,7 +33,8 @@ exports.users = [
   isStaff: true,
   sshKeys: [],
   accountLevel: "grandfather",
-  recurlyAccount: "ehg-2423432"
+  recurlyAccount: "ehg-2423432",
+  acceptedTerms: 1
 },
 {
   shortName: 'ickletest',
@@ -42,7 +45,8 @@ exports.users = [
   isStaff: false,
   sshKeys: ['a', 'b', 'c'],
   accountLevel: "free",
-  recurlyAccount: "ickletest-242363"
+  recurlyAccount: "ickletest-242363",
+  acceptedTerms: 1
 },
 {
   shortName: 'nopassword',
@@ -52,7 +56,8 @@ exports.users = [
   isStaff: false,
   sshKeys: ['a', 'b', 'c'],
   accountLevel: "free",
-  recurlyAccount: "nopassword-242325"
+  recurlyAccount: "nopassword-242325",
+  acceptedTerms: 1
 },
 {
   shortName: 'zarino',
@@ -63,7 +68,8 @@ exports.users = [
   sshKeys: ['d', 'e', 'f'],
   isStaff: false,
   accountLevel: "grandfather",
-  recurlyAccount: "zarino-2423348"
+  recurlyAccount: "zarino-2423348",
+  acceptedTerms: 1
 },
 {
   shortName: 'mrgreedy',
@@ -74,7 +80,19 @@ exports.users = [
   sshKeys: [],
   isStaff: false,
   accountLevel: "free",
-  recurlyAccount: "mrgreedy-1045756"
+  recurlyAccount: "mrgreedy-1045756",
+  acceptedTerms: 1
+},
+{
+  shortName: 'mrlazy',
+  email: ['infrequent@example.com'],
+  displayName: 'Longtime NoSee',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: process.env.COTEST_USER_API_KEY,
+  sshKeys: [],
+  isStaff: false,
+  accountLevel: "free",
+  recurlyAccount: "mrlazy-2319852"
 }
 ];
 

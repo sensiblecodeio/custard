@@ -611,6 +611,13 @@ input[type="color"],
   background-position: 8px 2px\9; /* override for IE6-8 which don't support background-size */
 }
 
+/* Better icon positioning for small buttons */
+
+.btn-small [class^="icon-"], .btn-small [class*=" icon-"],
+.btn-mini [class^="icon-"], .btn-mini [class*=" icon-"] {
+  vertical-align: -2px;
+}
+
 /* Disable text selection for buttons */
 
 .btn {
@@ -620,6 +627,18 @@ input[type="color"],
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+/* Make form .help-inline same size as labels */
+
+.help-inline {
+  font-size: 14px;
+  line-height: 20px;
+  padding-left: 10px;
+}
+
+.checkbox + .help-inline {
+  padding-left: 0;
 }
 
 /* Make modals and popovers look cleaner */

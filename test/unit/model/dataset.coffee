@@ -35,9 +35,6 @@ describe 'Client model: Dataset', ->
 
     xit 'has a related tool', ->
       tool = @dataset.get('tool')
-      console.log tool
-      console.log tool.get('displayName')
-      console.log tool.attributes.displayName
       tool.get('displayName').should.equal 'Test App'
 
 describe 'Server model: Dataset', ->

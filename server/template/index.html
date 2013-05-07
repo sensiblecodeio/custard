@@ -50,13 +50,13 @@
     </div>
   </header>
   <% if (flash.error && flash.error.length > 0) { %>
-  <div id="error" class="alert alert-error alert-block">
-    <h4><%=flash.error[0] %></h4>
+  <div class="alert alert-error">
+    <p class="container"><%=flash.error[0] %></p>
   </div>
   <% } %>
   <% if (flash.info && flash.info.length > 0) { %>
-  <div id="info" class="alert alert-info alert-block">
-    <h4><%=flash.info[0] %></h4>
+  <div class="alert alert-info">
+    <p class="container"><%=flash.info[0] %></p>
   </div>
   <% } %>
   <div id="overlay"></div>

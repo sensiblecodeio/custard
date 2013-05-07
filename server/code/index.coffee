@@ -83,6 +83,7 @@ getSessionUser = (user) ->
     recurlyAccount: user.recurlyAccount
     boxEndpoint: Box.endpoint plan.boxServer, ''
     boxServer: plan.boxServer
+    acceptedTerms: user.acceptedTerms
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")
@@ -90,6 +91,21 @@ getSessionUser = (user) ->
   if user.logoUrl?
     session.logoUrl = user.logoUrl
   session
+
+# TODO: there should be a better way of doing this
+# Get a real + effective user objects from the database,
+# return them in a single object, to be injected into index.html
+getSessionUsersFromDB = (reqUser, cb) ->
+  if not reqUser
+    cb {}
+  else
+    User.findByShortName reqUser.effective.shortName, (err, effectiveUser) ->
+      if err then console.warn err
+      User.findByShortName reqUser.real.shortName, (err, realUser) ->
+        if err then console.warn err
+        cb
+          real: getSessionUser realUser
+          effective: getSessionUser effectiveUser
 
 # Verify callback for LocalStrategy
 verify = (username, password, done) ->
@@ -140,8 +156,8 @@ app.set 'view engine', 'html'
 js.root = 'code'
 
 # Middleware (for checking users)
-checkUserRights = (req, resp, next) ->
-  console.log 'CheckUserRights', req.method, req.url, req.user.effective.shortName, req.params.user
+checkThisIsMyDataHub = (req, resp, next) ->
+  console.log 'checkThisIsMyDataHub', req.method, req.url, req.user.effective.shortName, req.params.user
   return next() if req.user.effective.shortName == req.params.user
   return resp.send 403, error: "Unauthorised"
 
@@ -155,13 +171,14 @@ checkSwitchUserRights = checkStaff
 
 # Render the main client side app
 renderClientApp = (req, resp) ->
-  resp.render 'index',
-    scripts: js 'app'
-    templates: js 'template/index'
-    user: JSON.stringify( req.user or {} )
-    recurlyDomain: process.env.RECURLY_DOMAIN
-    flash: req.flash()
-    environment: process.env.NODE_ENV
+  getSessionUsersFromDB req.user, (usersObj) ->
+    resp.render 'index',
+      scripts: js 'app'
+      templates: js 'template/index'
+      user: JSON.stringify usersObj
+      recurlyDomain: process.env.RECURLY_DOMAIN
+      flash: req.flash()
+      environment: process.env.NODE_ENV
 
 # Add a view to a dataset
 addView = (user, dataset, attributes, callback) ->
@@ -271,6 +288,7 @@ app.post '/api/user/?', (req, resp) ->
       email: [req.body.email]
       logoUrl: req.body.logoUrl
       accountLevel: req.body.accountLevel
+      acceptedTerms: req.body.acceptedTerms
     requestingUser: req.user?.real
   , (err, user) ->
     if err?
@@ -391,7 +409,20 @@ app.post '/api/tools/?', (req, resp) ->
                 code = if isNew then 201 else 200
                 return resp.send code, tool
 
-app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
+app.put '/api/user/?', (req, resp) ->
+  User.findByShortName req.user.real.shortName, (err, user) ->
+    console.log "body is", req.body
+    if 'acceptedTerms' of req.body
+      user.acceptedTerms = req.body.acceptedTerms
+      user.save (err) ->
+        if err?
+          resp.send 500, error: err
+        else
+          resp.send 200, success: 'ok'
+    else
+      resp.send 403, error: "This endpoint only sets acceptedTerms; other attributes are ignored"
+
+app.get '/api/:user/datasets/?', checkThisIsMyDataHub, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
     if err?
       console.warn err
@@ -400,7 +431,7 @@ app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
       return resp.send 200, datasets
 
 # :todo: should :user be part of the dataset URL?
-app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
+app.get '/api/:user/datasets/:id/?', checkThisIsMyDataHub, (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -412,7 +443,7 @@ app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
     else
       return resp.send 200, dataset
 
-app.get '/api/:user/datasets/:id/views?', checkUserRights, (req, resp) ->
+app.get '/api/:user/datasets/:id/views?', checkThisIsMyDataHub, (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}/views"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -426,7 +457,7 @@ app.get '/api/:user/datasets/:id/views?', checkUserRights, (req, resp) ->
         console.warn "Error fetching views #{err}" if err?
         return resp.send 200, views
 
-app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
+app.put '/api/:user/datasets/:id/?', checkThisIsMyDataHub, (req, resp) ->
   console.log "PUT /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -443,7 +474,7 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
       return resp.send 200, dataset
 
 
-app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
+app.post '/api/:user/datasets/?', checkThisIsMyDataHub, (req, resp) ->
   user = req.user.effective
   console.log "POST dataset user", user
   User.canCreateDataset user, (err, can) ->
@@ -491,7 +522,7 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
               if err?
                 console.warn "Error creating DT view: #{err}"
 
-app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
+app.post '/api/:user/datasets/:dataset/views/?', checkThisIsMyDataHub, (req, resp) ->
   user = req.user.effective
   Dataset.findOneById req.params.dataset, (err, dataset) ->
     # Add view to dataset and save
@@ -506,7 +537,7 @@ app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
         resp.send 200, view
 
 
-# user api is staff-only for now (probably forever)
+# search for user api is staff-only for now (probably forever)
 app.get '/api/user/?', checkStaff, (req, resp) ->
   User.findAll (err, users) ->
     if err?

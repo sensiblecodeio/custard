@@ -21,7 +21,7 @@ class Cu.View.SignUp extends Backbone.View
     'keyup #displayName': 'keyupDisplayName'
     'keyup #shortName': 'keyupShortName'
     'blur #shortName': 'keyupDisplayName'
-  
+
   render: ->
     @el.innerHTML = JST['sign-up']
       plan: cashPlan @options.plan
@@ -33,6 +33,7 @@ class Cu.View.SignUp extends Backbone.View
     @cleanUpForm()
 
     model = new Cu.Model.User
+    model.on 'invalid', @displayErrors, @
 
     subscribingTo = cashPlan @options.plan
     model.save
@@ -41,6 +42,7 @@ class Cu.View.SignUp extends Backbone.View
       displayName: $('#displayName').val()
       inviteCode: $('#inviteCode').val()
       subscribingTo: subscribingTo
+      acceptedTerms: if $('#acceptedTerms').is(':checked') then 1 else 0 # :TODO: this "1" should not be hard-coded.
     ,
       success: (model, response, options) =>
         console.log model, response, options
@@ -69,11 +71,11 @@ class Cu.View.SignUp extends Backbone.View
           else
             # Don't really know what the error is, so say something technical and geeky.
             $div.append("""<code>#{JSON.stringify jsonResponse}</code>""")
-        else
-          # probably a thing returned by the model validate method.
-          $('#go', @$el).removeClass('loading').html('<i class="icon-ok space"></i> Create Account')
-          for key of response
-            $("##{key}").after("""<span class="help-inline">#{response[key]}</span>""").parents('.control-group').addClass('error')
+
+  displayErrors: (model_, errors) ->
+    $('#go', @$el).removeClass('loading').html('<i class="icon-ok space"></i> Create Account')
+    for key of errors
+      $("##{key}").parents('.controls').append("""<span class="help-inline">#{errors[key]}</span>""").parents('.control-group').addClass('error')
 
   cleanUpForm: ->
     $('.control-group.error', @$el).removeClass('error').find('.help-inline').remove()

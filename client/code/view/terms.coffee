@@ -17,8 +17,11 @@ class Cu.View.TermsAlert extends Backbone.View
     @
 
   acceptTerms: ->
-    Cu.Model.User.acceptTerms()
-    @$el.slideUp 250, ->
-      @$el.remove()
-
-
+    user = new Cu.Model.User window.user.real
+    user.save 'acceptedTerms', window.latestTerms,
+      type: 'put' # force backbone to issue a PUT, even though it thinks this is a new model
+      success: (model, response, options) =>
+        @$el.slideUp 250, =>
+          @$el.remove()
+      error: (model, xhr, options) =>
+        console.log 'error saving user model!', JSON.parse(xhr.responseText)

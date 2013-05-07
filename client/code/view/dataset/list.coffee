@@ -19,9 +19,9 @@ class Cu.View.DatasetList extends Backbone.View
     @$el.remove('.dataset')
     app.datasets().each @addDataset
 
-  addDataset: (dataset, i) =>
+  addDataset: (dataset) =>
     alreadyThere = @$el.find("[data-box=#{dataset.get 'box'}]").length
 
     if not alreadyThere and dataset.get('state') isnt 'deleted'
       view = new Cu.View.DatasetTile model: dataset
-      @$el.append $(view.render().el).hide().delay(i*75 + 100).fadeIn(150)
+      @$el.append view.render().el

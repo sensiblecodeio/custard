@@ -23,6 +23,6 @@ class exports.Plan
     if not plan?
       return ["Plan #{planName} not found", null]
     else
-      if process.env.CU_BOX_SERVER?
+      if process.env.CU_BOX_SERVER
         plan.boxServer = process.env.CU_BOX_SERVER
       return [null, plan]

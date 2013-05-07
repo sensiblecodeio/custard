@@ -4,6 +4,7 @@ should = require 'should'
 _ = require 'underscore'
 
 request = require 'request'
+mailchimp = require 'mailchimp'
 
 {User} = require 'model/user'
 {Box} = require 'model/box'
@@ -243,12 +244,31 @@ describe 'User (server)', ->
         should.exist @user.acceptedTerms
         @user.acceptedTerms.should.be.above 0
 
+      xit 'has not contacted the MailChimp API', ->
+        true.should.be.false
+
       # TODO: stub database
       xit 'saves the user to the database'
 
       # TODO: stub nodemailer
       xit 'emails the user', ->
         @emailStub.calledOnce.should.be.true
+
+    context 'when add is called (with newsletter opt-in)', ->
+      before (done) ->
+        User.add
+          newUser:
+            shortName: 'testerson-loves-email'
+            displayName: 'Test Testerson Loves Email'
+            email: ['emailme@example.org']
+            acceptedTerms: 1
+        , (err, user) =>
+          @user = user
+          done err
+
+      xit 'has added them to our MailChimp list', ->
+        false.should.be.true
+
 
   describe 'Disk quota', ->
 

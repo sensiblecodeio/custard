@@ -391,7 +391,7 @@ app.post '/api/tools/?', (req, resp) ->
 app.put '/api/user/?', (req, resp) ->
   User.findByShortName req.user.real.shortName, (err, user) ->
     console.log "body is", req.body
-    if _.isEqual _.keys(req.body), [ 'acceptedTerms' ]
+    if 'acceptedTerms' of req.body
       user.acceptedTerms = req.body.acceptedTerms
       user.save (err) ->
         if err?
@@ -399,10 +399,7 @@ app.put '/api/user/?', (req, resp) ->
         else
           resp.send 200, success: 'ok'
     else
-      resp.send 403, error: "can only set acceptedTerms"
-
-#    if not req.body.key?
-#      return resp.send 400, error: 'Specify key'
+      resp.send 403, error: "This endpoint only sets acceptedTerms; other attributes are ignored"
 
 app.get '/api/:user/datasets/?', checkThisIsMyDataHub, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->

@@ -17,6 +17,8 @@ class Cu.View.TermsAlert extends Backbone.View
     @
 
   acceptTerms: ->
+    Cu.Model.User.acceptTerms()
     @$el.slideUp 250, ->
       @$el.remove()
+
 

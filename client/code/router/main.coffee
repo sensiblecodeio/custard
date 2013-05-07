@@ -16,11 +16,13 @@ class Cu.Router.Main extends Backbone.Router
       event.preventDefault()
       window.app.navigate "/", {trigger: true}
 
+    # TODO: this isn't a great place for this constant
+    window.latestTerms = 1
+    
     if window.user?.real
-      if isNaN(window.user.real.acceptedTerms) or window.user.real.acceptedTerms < 1 # :TODO: this number "1" should not be hard-coded.
+      if isNaN(window.user.real.acceptedTerms) or window.user.real.acceptedTerms < window.latestTerms
         @termsAlertView = new Cu.View.TermsAlert
         $("#header").after @termsAlertView.render().el
-
 
     # Backbone seems to reverse route order
     # TODO: revert to standard routes?

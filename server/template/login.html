@@ -12,8 +12,8 @@
     <div id="content" class="container">
       <div class="login-page">
         <% if (errors.length > 0) { %>
-        <div id="error" class="alert alert-error alert-block">
-          <h4><%=errors %></h4>
+        <div id="error" class="alert alert-error">
+          <strong><%=errors %></strong>
         </div>
         <% } %>
         <form action="/login" method="post">

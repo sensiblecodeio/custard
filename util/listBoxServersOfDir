@@ -1,0 +1,20 @@
+#!/usr/bin/env coffee
+fs = require 'fs'
+
+mongoose = require 'mongoose'
+async = require 'async'
+
+{Box} = require 'model/box'
+
+mongoose.connect process.env.CU_DB
+
+listBoxServer = (file, cb) ->
+  Box.dbClass.findOne {name: file}, (err, box) ->
+    if box?
+      console.log "#{box.name} #{box.server}"
+    return cb null, null
+
+files = fs.readdirSync process.argv[2]
+
+async.each files, listBoxServer, ->
+  process.exit 0

@@ -99,6 +99,11 @@ body.fullscreen .container {
   margin-bottom: 0;
 }
 
+.fullscreen #header + .alert .container {
+  width: auto;
+  padding: 0 20px;
+}
+
 .alert #acceptTerms {
   font-weight: bold;
 }

@@ -332,6 +332,29 @@ describe 'API', ->
             keys.should.include 'ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local'
             done err
 
+      context 'PUT: /api/user', ->
+        it 'lets me accept the terms and conditions', (done) ->
+          request.put
+            uri: "#{serverURL}/api/user"
+            form:
+              acceptedTerms: 7
+          , (err, res) =>
+            res.should.have.status 200
+            res.body.should.include 'ok'
+            done err
+
+        it 'does not let me change my user name', (done) ->
+          request.put
+            uri: "#{serverURL}/api/user"
+            form:
+              shortName: "zebadee"
+          , (err, res) =>
+            res.should.not.have.status 200
+            res.body.should.not.include 'ok'
+            res.should.have.status 403
+            res.body.should.include 'error'
+            done err
+
     describe 'Billing', ->
       context 'GET /api/:user/subscription/medium/sign', ->
         before (done) ->

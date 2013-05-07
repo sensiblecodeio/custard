@@ -136,8 +136,8 @@ app.set 'view engine', 'html'
 js.root = 'code'
 
 # Middleware (for checking users)
-checkUserRights = (req, resp, next) ->
-  console.log 'CheckUserRights', req.method, req.url, req.user.effective.shortName, req.params.user
+checkThisIsMyDataHub = (req, resp, next) ->
+  console.log 'checkThisIsMyDataHub', req.method, req.url, req.user.effective.shortName, req.params.user
   return next() if req.user.effective.shortName == req.params.user
   return resp.send 403, error: "Unauthorised"
 
@@ -388,7 +388,7 @@ app.post '/api/tools/?', (req, resp) ->
                 code = if isNew then 201 else 200
                 return resp.send code, tool
 
-app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
+app.get '/api/:user/datasets/?', checkThisIsMyDataHub, (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
     if err?
       console.warn err
@@ -397,7 +397,7 @@ app.get '/api/:user/datasets/?', checkUserRights, (req, resp) ->
       return resp.send 200, datasets
 
 # :todo: should :user be part of the dataset URL?
-app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
+app.get '/api/:user/datasets/:id/?', checkThisIsMyDataHub, (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -409,7 +409,7 @@ app.get '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
     else
       return resp.send 200, dataset
 
-app.get '/api/:user/datasets/:id/views?', checkUserRights, (req, resp) ->
+app.get '/api/:user/datasets/:id/views?', checkThisIsMyDataHub, (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}/views"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -423,7 +423,7 @@ app.get '/api/:user/datasets/:id/views?', checkUserRights, (req, resp) ->
         console.warn "Error fetching views #{err}" if err?
         return resp.send 200, views
 
-app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
+app.put '/api/:user/datasets/:id/?', checkThisIsMyDataHub, (req, resp) ->
   console.log "PUT /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -440,7 +440,7 @@ app.put '/api/:user/datasets/:id/?', checkUserRights, (req, resp) ->
       return resp.send 200, dataset
 
 
-app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
+app.post '/api/:user/datasets/?', checkThisIsMyDataHub, (req, resp) ->
   user = req.user.effective
   console.log "POST dataset user", user
   User.canCreateDataset user, (err, can) ->
@@ -488,7 +488,7 @@ app.post '/api/:user/datasets/?', checkUserRights, (req, resp) ->
               if err?
                 console.warn "Error creating DT view: #{err}"
 
-app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
+app.post '/api/:user/datasets/:dataset/views/?', checkThisIsMyDataHub, (req, resp) ->
   user = req.user.effective
   Dataset.findOneById req.params.dataset, (err, dataset) ->
     # Add view to dataset and save
@@ -503,7 +503,7 @@ app.post '/api/:user/datasets/:dataset/views/?', checkUserRights, (req, resp) ->
         resp.send 200, view
 
 
-# user api is staff-only for now (probably forever)
+# search for user api is staff-only for now (probably forever)
 app.get '/api/user/?', checkStaff, (req, resp) ->
   User.findAll (err, users) ->
     if err?

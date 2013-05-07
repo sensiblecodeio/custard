@@ -11,20 +11,14 @@
     <label for="email" class="control-label">Email:</label>
     <div class="controls"><input type="text" id="email" /></div>
   </div>
-  <% if not @plan: %>
-    <div class="control-group">
-      <label for="inviteCode" class="control-label">Invite code:</label>
-      <div class="controls"><input type="text" id="inviteCode" /></div>
+  <div class="control-group">
+    <div class="controls">
+      <label class="checkbox" for="acceptedTerms">
+        <input type="checkbox" id="acceptedTerms" />
+        I accept your <a href="/terms/" data-nonpushstate target="_blank">Terms &amp; Conditions</a>
+      </label>
     </div>
-  <% end %>
-    <div class="control-group">
-      <div class="controls">
-        <label class="checkbox" for="acceptedTerms">
-          <input type="checkbox" id="acceptedTerms" />
-          I accept your <a href="/terms/" data-nonpushstate target="_blank">Terms &amp; Conditions</a>
-        </label>
-      </div>
-    </div>
+  </div>
   <div class="control-group">
     <div class="controls"><button class="btn btn-primary" type="submit" id="go"><i class="icon-ok space"></i> Create Account</button></div>
   </div>

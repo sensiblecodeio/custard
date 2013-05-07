@@ -23,8 +23,7 @@ class Cu.View.SignUp extends Backbone.View
     'blur #shortName': 'keyupDisplayName'
 
   render: ->
-    @el.innerHTML = JST['sign-up']
-      plan: cashPlan @options.plan
+    @el.innerHTML = JST['sign-up']()
 
   go: (e) ->
     e.preventDefault()
@@ -40,9 +39,8 @@ class Cu.View.SignUp extends Backbone.View
       shortName: $('#shortName').val()
       email: $('#email').val()
       displayName: $('#displayName').val()
-      inviteCode: $('#inviteCode').val()
       subscribingTo: subscribingTo
-      acceptedTerms: if $('#acceptedTerms').is(':checked') then 1 else 0 # :TODO: this "1" should not be hard-coded.
+      acceptedTerms: if $('#acceptedTerms').is(':checked') then window.latestTerms else 0
     ,
       success: (model, response, options) =>
         console.log model, response, options

@@ -278,9 +278,6 @@ app.post '/api/user/?', (req, resp) ->
   # Is money required?
   if not subscribingTo?.$
     subscribingTo = null
-  if not req.user?.real?.isStaff and not req.body.subscribingTo?
-    if req.body.inviteCode isnt process.env.CU_INVITE_CODE
-      return resp.send 403, error: 'Invalid invite code'
   User.add
     newUser:
       shortName: req.body.shortName

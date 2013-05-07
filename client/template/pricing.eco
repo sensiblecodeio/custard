@@ -7,7 +7,7 @@
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
   <p>Unlimited datasets</p>
-  <p class="muted">maximum 256MB storage &amp;<br/>&frac12;hr CPU/day per dataset</p>
+  <p class="muted">Each dataset can store 256MB data<br/>and use 30 CPU minutes per day</p>
   <span class="cta">Sign Up</span>
 </a>
 
@@ -15,17 +15,17 @@
   <h2>Explorer</h2>
   <p class="cost">$9<small>/mth</small></p>
   <p>10 datasets</p>
-  <p class="muted">maximum 64MB storage &amp;<br/>&frac12;hr CPU/day per dataset</p>
+  <p class="muted">Each dataset can store 64MB data<br/>and use 30 CPU minutes per day</p>
   <span class="cta">Sign Up</span>
 </a>
 
-<!--<a class="plan community swcol" href="/signup/community">
+<a class="plan community swcol" href="/signup/community">
   <h2>Community</h2>
   <p class="cost">Free</p>
   <p>3 datasets</p>
-  <p class="muted">maximum of 8MB storage &amp;<br/>&frac12;hr CPU/day</p>
+  <p class="muted">Each dataset can store 8MB data<br/>and use 30 CPU minutes per day</p>
   <span class="cta">Sign Up</span>
-</a>-->
+</a>
 
 <a class="plan corporate swcol" href="https://scraperwiki.com/dataservices">
   <small>We also have</small>

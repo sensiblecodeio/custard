@@ -151,9 +151,6 @@ checkSwitchUserRights = checkStaff
 
 # Render the main client side app
 renderClientApp = (req, resp) ->
-  if req.user
-    if isNaN(req.user.real.acceptedTerms) or req.user.real.acceptedTerms < 1 # :TODO: this number "1" should not be hard-coded.
-      req.flash 'notice', 'acceptTerms'
   resp.render 'index',
     scripts: js 'app'
     templates: js 'template/index'

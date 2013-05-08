@@ -28,7 +28,7 @@ Token = require('model/token')()
 
 recurlySign = require 'lib/sign'
 
-if process.env.NODETIME_KEY?
+if process.env.NODETIME_KEY
   require('nodetime').profile
     accountKey: process.env.NODETIME_KEY
     appName: process.env.CU_NODETIME_APP
@@ -143,8 +143,9 @@ app.configure ->
 
   # Add Connect Assets
   app.use assets({src: 'client'})
-  # Set the public folder as static assets
-  app.use express.static(process.cwd() + '/shared')
+  if not process.env.NODE_ENV
+    # Set the public folder as static assets
+    app.use express.static(process.cwd() + '/shared')
 
 passport.use 'local', new LocalStrategy(verify)
 

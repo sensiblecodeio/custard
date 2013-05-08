@@ -11,6 +11,14 @@
     <label for="email" class="control-label">Email:</label>
     <div class="controls"><input type="text" id="email" /></div>
   </div>
+  <div class="control-group" style="margin-bottom: 5px;">
+    <div class="controls">
+      <label class="checkbox" for="emailMarketing">
+        <input type="checkbox" id="emailMarketing" />
+        I&rsquo;d like to subscribe to your email newsletter
+      </label>
+    </div>
+  </div>
   <div class="control-group">
     <div class="controls">
       <label class="checkbox" for="acceptedTerms">

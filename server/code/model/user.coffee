@@ -4,6 +4,8 @@ async = require 'async'
 request = require 'request'
 uuid = require 'uuid'
 
+mailchimp = require('mailchimp')
+
 ModelBase = require 'model/base'
 {Box} = require 'model/box'
 Token = require('model/token')()
@@ -143,6 +145,32 @@ class exports.User extends ModelBase
     if opts.newUser.logoUrl?
       newUser.logoUrl = opts.newUser.logoUrl
 
+    if opts.newUser.emailMarketing?
+      try
+        api = new mailchimp.MailChimpAPI process.env.CU_MAILCHIMP_API_KEY, 
+          version: '1.3'
+          secure: false
+      catch err
+        console.warn 'Error connecting to MailChimp API', err.message
+
+      # http://apidocs.mailchimp.com/api/1.3/listsubscribe.func.php
+      api.listSubscribe
+        id: process.env.CU_MAILCHIMP_LIST_ID
+        double_optin: false
+        update_existing: true
+        email_address: newUser.email[0]
+        merge_vars:
+          FNAME: newUser.displayName.split(' ')[0]
+          LNAME: newUser.displayName.split(' ').pop()
+          UNAME: newUser.shortName
+      , (err, data) ->
+        if err
+          console.warn "Error adding user to MailChimp newsletter list", newUser, err
+        else if data
+          console.log 'User added to MailChimp newsletter list'
+        else
+          console.log 'MailChimpAPI.listSubscribe() returned false while adding user, but there was no error (!?)', newUser
+
     new User(newUser).save (err) ->
       if err?
         err.action = 'save'
@@ -172,6 +200,7 @@ class exports.User extends ModelBase
                   callback null, userobj
         else
           callback "Can't find user", null
+
 
 exports.dbInject = (dbObj) ->
   User.dbClass = zDbUser = dbObj if dbObj?

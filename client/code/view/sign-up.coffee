@@ -41,6 +41,7 @@ class Cu.View.SignUp extends Backbone.View
       displayName: $('#displayName').val()
       subscribingTo: subscribingTo
       acceptedTerms: if $('#acceptedTerms').is(':checked') then window.latestTerms else 0
+      emailMarketing: $('#emailMarketing').is(':checked')
     ,
       success: (model, response, options) =>
         console.log model, response, options

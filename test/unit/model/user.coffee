@@ -227,15 +227,21 @@ describe 'User (server)', ->
   describe 'Adding a user', ->
     context 'when add is called', ->
       before (done) ->
+        @apiStub = listSubscribe: sinon.stub()
+        @mailChimpStub = sinon.stub mailchimp, 'MailChimpAPI', =>
+          return @apiStub
         User.add
           newUser:
             shortName: 'testerson'
             displayName: 'Test Testerson Esq.'
-            email: ['test@example.org']
+            email: 'test@example.org'
             acceptedTerms: 1
         , (err, user) =>
           @user = user
           done err
+
+      after ->
+        mailchimp.MailChimpAPI.restore()
 
       it 'has a recurlyAccount', ->
         should.exist @user.recurlyAccount
@@ -244,8 +250,8 @@ describe 'User (server)', ->
         should.exist @user.acceptedTerms
         @user.acceptedTerms.should.be.above 0
 
-      xit 'has not contacted the MailChimp API', ->
-        true.should.be.false
+      it 'has not contacted the MailChimp API', ->
+        @apiStub.listSubscribe.calledOnce.should.be.false
 
       # TODO: stub database
       xit 'saves the user to the database'
@@ -256,18 +262,26 @@ describe 'User (server)', ->
 
     context 'when add is called (with newsletter opt-in)', ->
       before (done) ->
+        @apiStub = listSubscribe: sinon.stub()
+        @mailChimpStub = sinon.stub mailchimp, 'MailChimpAPI', =>
+          return @apiStub
         User.add
           newUser:
             shortName: 'testerson-loves-email'
             displayName: 'Test Testerson Loves Email'
-            email: ['emailme@example.org']
+            email: 'emailme@example.org'
             acceptedTerms: 1
+            emailMarketing: true
         , (err, user) =>
           @user = user
           done err
 
-      xit 'has added them to our MailChimp list', ->
-        false.should.be.true
+      after ->
+        mailchimp.MailChimpAPI.restore()
+
+      it 'has added them to our MailChimp list', ->
+        @apiStub.listSubscribe.calledOnce.should.be.true
+        @apiStub.listSubscribe.calledWithMatch({ email_address: 'emailme@example.org' }).should.be.true
 
 
   describe 'Disk quota', ->

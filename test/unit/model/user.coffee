@@ -20,7 +20,7 @@ describe 'User (client)', ->
       @attrs =
         displayName: 'Tabby Testerson'
         shortName: 'tabbytest'
-        email: 'tabby@example.org'
+        email: ['tabby@example.org']
         acceptedTerms: 1
 
       @eventSpy = sinon.spy()
@@ -234,7 +234,7 @@ describe 'User (server)', ->
           newUser:
             shortName: 'testerson'
             displayName: 'Test Testerson Esq.'
-            email: 'test@example.org'
+            email: ['test@example.org']
             acceptedTerms: 1
         , (err, user) =>
           @user = user
@@ -269,7 +269,7 @@ describe 'User (server)', ->
           newUser:
             shortName: 'testerson-loves-email'
             displayName: 'Test Testerson Loves Email'
-            email: 'emailme@example.org'
+            email: ['emailme@example.org']
             acceptedTerms: 1
             emailMarketing: true
         , (err, user) =>

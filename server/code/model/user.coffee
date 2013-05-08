@@ -132,7 +132,7 @@ class exports.User extends ModelBase
     newUser =
       shortName: opts.newUser.shortName
       displayName: opts.newUser.displayName
-      email: [opts.newUser.email]
+      email: opts.newUser.email
       apikey: uuid.v4()
       accountLevel: 'free'
       recurlyAccount: "#{opts.newUser.shortName}.#{recurlyRand}"
@@ -147,7 +147,7 @@ class exports.User extends ModelBase
 
     if opts.newUser.emailMarketing?
       try
-        api = new mailchimp.MailChimpAPI process.env.CU_MAILCHIMP_API_KEY, 
+        api = new mailchimp.MailChimpAPI process.env.CU_MAILCHIMP_API_KEY,
           version: '1.3'
           secure: false
       catch err

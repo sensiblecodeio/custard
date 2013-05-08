@@ -8,7 +8,11 @@
   <p class="cost">$29<small>/mth</small></p>
   <p>Unlimited datasets</p>
   <p class="muted">Each dataset can store 256MB data<br/>and use 30 CPU minutes per day</p>
+  <% if window.user.effective?.accountLevel == 'large': %>
+  <span class="currentPlan"><i class="icon-ok space"></i> Current Plan</span>
+  <% else: %>
   <span class="cta">Sign Up</span>
+  <% end %>
 </a>
 
 <a class="plan explorer swcol" href="/signup/explorer">
@@ -16,7 +20,12 @@
   <p class="cost">$9<small>/mth</small></p>
   <p>10 datasets</p>
   <p class="muted">Each dataset can store 64MB data<br/>and use 30 CPU minutes per day</p>
+  <% if window.user.effective?.accountLevel == 'medium': %>
+  <span class="currentPlan"><i class="icon-ok space"></i> Current Plan</span>
+  <% else: %>
   <span class="cta">Sign Up</span>
+  <% end %>
+  
 </a>
 
 <a class="plan community swcol" href="/signup/community">
@@ -24,7 +33,12 @@
   <p class="cost">Free</p>
   <p>3 datasets</p>
   <p class="muted">Each dataset can store 8MB data<br/>and use 30 CPU minutes per day</p>
+  <% if window.user.effective?.accountLevel == 'free': %>
+  <span class="currentPlan"><i class="icon-ok space"></i> Current Plan</span>
+  <% else: %>
   <span class="cta">Sign Up</span>
+  <% end %>
+  
 </a>
 
 <a class="plan corporate swcol" href="https://scraperwiki.com/dataservices">

@@ -143,8 +143,9 @@ app.configure ->
 
   # Add Connect Assets
   app.use assets({src: 'client'})
-  # Set the public folder as static assets
-  app.use express.static(process.cwd() + '/shared')
+  if not process.env.NODE_ENV
+    # Set the public folder as static assets
+    app.use express.static(process.cwd() + '/shared')
 
 passport.use 'local', new LocalStrategy(verify)
 

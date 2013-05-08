@@ -66,7 +66,7 @@ class Cu.View.SignUp extends Backbone.View
           @$el.prepend $div
           if jsonResponse.code == 'username-duplicate'
             # :todo: Add password reset link.
-            $div.append(""" Is that you? If we had a password reset link, we'd give it to you now.""")
+            $div.append(""" Is that you? We have emailed you a password reset link.""")
           else
             # Don't really know what the error is, so say something technical and geeky.
             $div.append("""<code>#{JSON.stringify jsonResponse}</code>""")

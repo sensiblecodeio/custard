@@ -145,9 +145,11 @@ MII...0tXU=
 
     context 'when I click the "SSH in" menu link', ->
       before (done) ->
-        browser.elementByCss '.dataset.tile .dropdown-toggle', (err, settingsLink) =>
-          settingsLink.click =>
-            wd40.click '.dataset.tile .git-ssh', done
+        wd40.elementByPartialLinkText 'Apricot', (err, tile) ->
+          tile.elementByCss '.dropdown-toggle', (err, settingsLink) ->
+            settingsLink.click ->
+              tile.elementByCss '.git-ssh', (err, link) ->
+                link.click done
 
       it 'a modal window appears', (done) =>
         wd40.getText '.modal', (err, text) =>

@@ -87,24 +87,10 @@ describe 'Dataset', ->
             browser.type @input, randomname + '\n', ->
               done()
 
-        before (done) ->
-          browser.elementByCssIfExists '#editable-input', (err, wrapper) =>
-            @wrapper = wrapper
-            browser.elementByCssIfExists '#editable-input input', (err, input) =>
-              @input = input
-              browser.elementByCssIfExists '#subnav-path .editable', (err, a) =>
-                @a = a
-                done()
-
-        before (done) ->
-          # short pause while jQuery hides stuff and Selenium finishes typing
-          setTimeout done, 750
-
-        it 'hides the input box and shows the title', (done) ->
-          browser.isVisible @wrapper, (err, inputVisible) =>
-            inputVisible.should.be.false
-            browser.isVisible @a, (err, aVisible) =>
-              aVisible.should.be.true
+        it 'hides the input box and shows the new title', (done) =>
+          browser.waitForVisibleByCss '#subnav-path .editable', 4000, (err) =>
+            browser.isVisible 'css selector', '#editable-input', (err, inputVisible) ->
+              inputVisible.should.be.false
               done()
 
         it 'has updated the title', (done) ->

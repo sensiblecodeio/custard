@@ -96,6 +96,10 @@ describe 'Dataset', ->
                 @a = a
                 done()
 
+        before (done) ->
+          # short pause while jQuery hides stuff and Selenium finishes typing
+          setTimeout done, 750
+
         it 'hides the input box and shows the title', (done) ->
           browser.isVisible @wrapper, (err, inputVisible) =>
             inputVisible.should.be.false

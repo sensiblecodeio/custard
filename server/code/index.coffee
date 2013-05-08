@@ -28,7 +28,7 @@ Token = require('model/token')()
 
 recurlySign = require 'lib/sign'
 
-if process.env.NODETIME_KEY?
+if process.env.NODETIME_KEY
   require('nodetime').profile
     accountKey: process.env.NODETIME_KEY
     appName: process.env.CU_NODETIME_APP

@@ -575,8 +575,20 @@ if existsSync(port)
   fs.unlinkSync port
 
 # Start Server
-app.listen port, ->
+server = app.listen port, ->
   if existsSync(port)
     fs.chmodSync port, 0o600
     child_process.exec "chown www-data #{port}"
   console.log "Listening on #{port}\nPress CTRL-C to stop server."
+
+# Wait for all connections to finish before quitting
+process.on 'SIGTERM', ->
+  console.log "Gracefully stopping..."
+  server.close ->
+    console.log "All connections finished, exiting"
+    process.exit()
+
+  setTimeout ->
+    console.error "Could not close connections in time, forcefully shutting down"
+    process.exit 1
+  , 30*1000

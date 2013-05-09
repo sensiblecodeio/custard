@@ -22,7 +22,7 @@ class Cu.Model.User extends Backbone.Model
     if not 'displayName' of attrs
       return true
     else
-      return /^[a-zA-Z0-9-. ]+$/g.test attrs.displayName
+      return /^[^<>;\b]+$/g.test attrs.displayName
 
   validShortName: (attrs) ->
     if not 'shortName' of attrs

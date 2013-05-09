@@ -173,7 +173,7 @@ describe 'User (server)', ->
     beforeEach ->
       @user = new User
         shortName: 'testoo'
-        displayName: 'Test Testerson'
+        displayName: 'Tést Testersön'
         email: ['test@example.org']
         acceptedTerms: 1
 

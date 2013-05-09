@@ -113,7 +113,7 @@ your view&rsquo;s HTML <code>&lt;head&gt;</code>, after you load jQuery.</p>
 scraperwiki.readSettings()
 </pre>
 
-<p>This will return a JSON object where <code>source</code> contains information about your tool&rsquo;s box, and <code>target</code> contains information about the parent dataset&rsquo;s box.</p>
+<p>This will return an object where <code>source</code> contains information about your tool&rsquo;s box, and <code>target</code> contains information about the parent dataset&rsquo;s box.</p>
 
 <pre class="prettyprint linenums">{
   "source": {

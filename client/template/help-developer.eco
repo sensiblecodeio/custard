@@ -612,7 +612,7 @@ has no order, the keys in these objects are in the same order as the columns in 
 
 <h3 id="boxes-sqlmeta">SQL Metadata API</h3>
 
-<p>You can see metadata about your database by making a <code>HTTP GET</code> request to <code><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%><em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql/meta</code>. The meta endpoint returns a JSON object like this:</p>
+<p>You can see metadata about your database by making a <code>HTTP GET</code> request to <code><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%><em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/sql/meta</code>. The meta endpoint returns an object like this:</p>
 
 <pre class="prettyprint">{
   "databaseType": "sqlite3",
@@ -736,7 +736,7 @@ has no order, the keys in these objects are in the same order as the columns in 
 
 <p>This API requires no <code>publish_token</code> or <code>apikey</code> because it automatically detects the credentials of the box from which it&rsquo;s called. Magic!</p>
 
-<p>The endpoint returns a JSON object with a single <code>success</code> key on success, or an <code>error</code> key on errors.</p>
+<p>The endpoint returns an object with a single <code>success</code> key on success, or an <code>error</code> key on errors.</p>
 
 <p>Here&rsquo;s some example code in Python, calling the endpoint.</p>
 

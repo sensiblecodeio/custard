@@ -117,7 +117,7 @@ scraperwiki.readSettings()
 
 <pre class="prettyprint linenums">{
   "source": {
-    "apikey": "<%= @user?.apiKey or '<span class="muted">&lt;your-apikey&gt;</span>' %>"
+    "apikey": "<%= @user?.apiKey or '<your-apikey>' %>"
     "publishToken": "t5odv7of5l",
     "box": "fdtlza1",
     "url": "<%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%>fdtlza1/t5odv7of5l"
@@ -394,8 +394,8 @@ to your local <code>~/.ssh/config</code>.
 
 <p>And add this to your local <code>~/.bashrc</code> or equivalent.
 
-<pre class="prettyprint">export GIT_AUTHOR_EMAIL=<%= if @user?.email then @user.email[0] else '<span class="muted">example@example.org</span>'%>
-export GIT_AUTHOR_NAME='<%= @user?.displayName or '<span class="muted">A. N. Example</span>' %>'
+<pre class="prettyprint">export GIT_AUTHOR_EMAIL=<%= if @user?.email then @user.email[0] else 'example@example.org'%>
+export GIT_AUTHOR_NAME='<%= @user?.displayName or 'A. N. Example' %>'
 export GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL
 export GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME
 </pre>
@@ -656,7 +656,7 @@ has no order, the keys in these objects are in the same order as the columns in 
   type: 'POST',
   data: {
     'cmd': 'echo "hello world" > hello.txt; ls -hitlar',
-    'apikey': '<%= @user?.apiKey or '<span class="muted">&lt;your-apikey&gt;</span>' %>'
+    'apikey': '<%= @user?.apiKey or '<your-apikey>' %>'
   }
 }).done(function(text){
   console.log(text)

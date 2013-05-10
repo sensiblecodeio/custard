@@ -39,6 +39,9 @@ class Cu.Model.Tool extends Backbone.RelationalModel
       else if n.indexOf('query with sql') == 0
         manifest.icon = '/image/tool-icon-sql.png'
         manifest.color = '#17959d'
+      else if n.indexOf('summarise') == 0
+        manifest.icon = '/image/tool-icon-summarise.png'
+        manifest.color = '#27affd'
       @set 'manifest', manifest
 
 Cu.Model.Tool.setup()

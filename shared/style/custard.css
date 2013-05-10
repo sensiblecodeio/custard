@@ -927,7 +927,11 @@ div.help {
 
 div.help nav.well {
   padding: 8px 0;
-  margin-bottom: 0;
+  margin-bottom: 20px;
+}
+
+div.help nav.well.affix {
+  position: static; /* this is overridden on larger screens */
 }
 
 div.help nav.well a {

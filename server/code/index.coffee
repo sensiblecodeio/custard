@@ -5,6 +5,7 @@ existsSync = fs.existsSync || path.existsSync
 crypto = require 'crypto'
 child_process = require 'child_process'
 util = require 'util'
+require('http').globalAgent.maxSockets = 4096
 
 _ = require 'underscore'
 express = require 'express'

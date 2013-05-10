@@ -48,8 +48,12 @@ if process.env.NODETIME_KEY
 # TODO: move into npm module
 nodetimeLog = (req, res, next) ->
   matched = _.find app.routes[req.method.toLowerCase()], (route) ->
-    route.regexp.test req.url
-  if matched.path isnt '*'
+    if route.regexp.test req.url
+      if route.path is '*'
+        return false
+      else
+        return true
+  if matched?
     res.nodetimePromise = nodetime.time 'Custard request ', matched.path, req.url
     oldSend = res.send
     res.send = (args... ) ->

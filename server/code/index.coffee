@@ -52,7 +52,7 @@ nodetimeLog = (req, res, next) ->
       if route.path isnt '*'
         return true
   if matched?
-    name = "#{req.method} #{req.path}"
+    name = "#{req.method} #{matched.path}"
     res.nodetimePromise = nodetime.time 'Custard request ', name, req.url
     oldSend = res.send
     res.send = (args... ) ->

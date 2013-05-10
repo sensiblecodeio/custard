@@ -4,6 +4,7 @@ path = require 'path'
 existsSync = fs.existsSync || path.existsSync
 crypto = require 'crypto'
 child_process = require 'child_process'
+util = require 'util'
 
 _ = require 'underscore'
 express = require 'express'
@@ -17,6 +18,7 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
+nodetime = require 'nodetime'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
@@ -37,6 +39,23 @@ mongoose.connect process.env.CU_DB,
 # Doesn't seem to do much.
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
+
+if process.env.NODETIME_KEY
+  nodetime.profile
+    accountKey: process.env.NODETIME_KEY
+    appName: process.env.CU_NODETIME_APP
+
+# TODO: move into npm module
+nodetimeLog = (req, res, next) ->
+  matched = _.find app.routes[req.method.toLowerCase()], (route) ->
+    route.regexp.test req.url
+  if matched.path isnt '*'
+    res.nodetimePromise = nodetime.time 'Custard request ', matched.path, req.url
+    oldSend = res.send
+    res.send = (args... ) ->
+      res.nodetimePromise.end()
+      oldSend.apply res, args
+  return next()
 
 assets.jsCompilers.eco =
   match: /\.eco$/
@@ -141,6 +160,8 @@ app.configure ->
   if not process.env.NODE_ENV
     # Set the public folder as static assets
     app.use express.static(process.cwd() + '/shared')
+  if process.env.NODETIME_KEY
+    app.use nodetimeLog
 
 passport.use 'local', new LocalStrategy(verify)
 
@@ -587,8 +608,3 @@ process.on 'SIGTERM', ->
     console.error "Could not close connections in time, forcefully shutting down"
     process.exit 1
   , 30*1000
-
-if process.env.NODETIME_KEY
-  require('nodetime').profile
-    accountKey: process.env.NODETIME_KEY
-    appName: process.env.CU_NODETIME_APP

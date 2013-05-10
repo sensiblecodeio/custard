@@ -49,12 +49,11 @@ if process.env.NODETIME_KEY
 nodetimeLog = (req, res, next) ->
   matched = _.find app.routes[req.method.toLowerCase()], (route) ->
     if route.regexp.test req.url
-      if route.path is '*'
-        return false
-      else
+      if route.path isnt '*'
         return true
   if matched?
-    res.nodetimePromise = nodetime.time 'Custard request ', matched.path, req.url
+    name = "#{req.method} #{req.path}"
+    res.nodetimePromise = nodetime.time 'Custard request ', name, req.url
     oldSend = res.send
     res.send = (args... ) ->
       res.nodetimePromise.end()

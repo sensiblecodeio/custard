@@ -1,3 +1,10 @@
+nodetime = require 'nodetime'
+
+if process.env.NODETIME_KEY
+  nodetime.profile
+    accountKey: process.env.NODETIME_KEY
+    appName: process.env.CU_NODETIME_APP
+
 net = require 'net'
 fs = require 'fs'
 path = require 'path'
@@ -19,7 +26,6 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
-nodetime = require 'nodetime'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
@@ -40,11 +46,6 @@ mongoose.connect process.env.CU_DB,
 # Doesn't seem to do much.
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
-
-if process.env.NODETIME_KEY
-  nodetime.profile
-    accountKey: process.env.NODETIME_KEY
-    appName: process.env.CU_NODETIME_APP
 
 # TODO: move into npm module
 nodetimeLog = (req, res, next) ->

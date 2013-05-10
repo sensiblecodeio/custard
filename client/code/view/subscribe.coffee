@@ -2,6 +2,7 @@ class Cu.View.Subscribe extends Backbone.View
   className: 'subscribe'
 
   render: ->
+    $('#footer').remove()
     @el.innerHTML = JST['subscribe'] @options
     $.getScript "/vendor/js/recurly.js", =>
       splitDisplayName = window.user.effective.displayName.split ' '

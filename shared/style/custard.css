@@ -934,6 +934,10 @@ div.help nav.well.affix {
   position: static; /* this is overridden on larger screens */
 }
 
+div.help nav.well.optional {
+  display: none; /* this is overridden on larger screens */
+}
+
 div.help nav.well a {
   font-size: 14px;
 }
@@ -964,6 +968,33 @@ div.help h3 {
 
 div.help hr {
   margin: 40px 0;
+}
+
+div.help .step {
+  overflow: auto;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+div.help .step + h2 {
+  margin-top: 40px;
+}
+
+div.help .step img {
+  float: right;
+  max-width: 44%;
+}
+
+div.help .step p {
+  float: left;
+  max-width: 49%;
+}
+
+div.help .step.full-width p,
+div.help .step.full-width img {
+  float: none;
+  max-width: none;
 }
 
 td.good-code, td.bad-code {
@@ -1175,6 +1206,10 @@ a.help-tile h3 {
     position: fixed;
     top: 30px;
     left: auto;
+  }
+
+  div.help nav.well.optional {
+    display: block; /* this is overridden on larger screens */
   }
 
   div.home .signup h2 {

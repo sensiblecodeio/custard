@@ -8,10 +8,7 @@
     on narrow screens. The responsive .container class will make sure they stay
     centred on the user's screen. */
 
-html, body {
-  position: relative;
-  width: 100%;
-  height: 100%;
+body {
   padding: 0;
 }
 

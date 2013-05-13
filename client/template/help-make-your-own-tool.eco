@@ -1,0 +1,62 @@
+<nav class="well optional">
+  <ul class="nav nav-list">
+    <li class="nav-header">This quick start guide:</li>
+    <li><a data-nonpushstate href="#step1">1. Create a new blank tool</a></li>
+    <li><a data-nonpushstate href="#step2">2. SSH into the box</a></li>
+    <li><a data-nonpushstate href="#step3">3. Write your server-side code</a></li>
+    <li><a data-nonpushstate href="#step4">4. Make a user interface</a></li>
+    <li><a data-nonpushstate href="#step5">5. Test it out</a></li>
+    <li><a data-nonpushstate href="#step6">6. Use other tools on your data</a></li>
+    <li class="nav-header">Related guides:</li>
+    <li><a href="/help/code-in-your-browser">Code a scraper in your browser</a></li>
+    <li><a href="/help/developer">Full developer docs</a></li>
+  </ul>
+</nav>
+
+<div class="wrapper">
+
+  <h2 id="step1">1. Create a new blank tool</h2>
+
+  <div class="step">
+    <img class="thumbnail" src="/image/screenshots/create-new-dataset.png" width="292" height="153" alt="Create New Dataset" />
+    <p>In this guide, we&rsquo;re going to make a tool that populates a dataset of lost kittens. It&rsquo;ll <p>
+    <p>After registering and logging in, click the <strong>&ldquo;Create a new dataset&rdquo;</strong> button on your homepage.</p>
+  </div>
+
+  <div class="step">
+    <img class="thumbnail" src="/image/screenshots/importer-chooser.png" width="615" height="194" alt="Importer Chooser">
+    <p>You&rsquo;ll be shown all the tools you can use to populate your new dataset.</p>
+    <p>We&rsquo;re going to <strong>&ldquo;Code a Dataset&rdquo;</strong> from scratch. Click it.</p>
+  </div>
+
+  <h2 id="step2">2. SSH into the box</h2>
+
+  <div class="step">
+    
+  </div>
+
+  <h2 id="step3">3. Write your server-side code</h2>
+
+  <div class="step">
+    
+  </div>
+
+  <h2 id="step4">4. Make a user interface</h2>
+
+  <div class="step">
+    
+  </div>
+
+  <h2 id="step5">5. Test it out</h2>
+
+  <div class="step">
+    
+  </div>
+
+  <h2 id="step6">6. Use other tools on your data</h2>
+
+  <div class="step">
+    
+  </div>
+
+</div>

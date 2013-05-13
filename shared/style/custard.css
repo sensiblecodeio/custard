@@ -110,25 +110,26 @@ body.fullscreen .container {
 
 #footer {
   padding: 15px 0;
-  background-color: #fcfcfc;
-  border-top: 1px solid #eee;
   font-size: 14px;
 }
 
-#footer.stuck-to-bottom { /* class added by jQuery on very short pages */
-  position: absolute;     /* sticks footer to bottom of browser window */
-  bottom: 0;              /* (since body is relative with 100% height) */
-  right: 0;
-  left: 0;
+#footer > ul {
+  margin: 0 auto; /* override default margin-left: 0 on .inline elements */
+  border-top: 1px solid #f3f3f3;
+  padding-top: 10px;
 }
 
-#footer ul.inline {
-  margin: 0 auto; /* override default margin-left: 0 on .inline elements */
+#footer li {
+  padding: 0; /* override default 5px padding on .inline li elements */
+}
+
+#footer li + li {
+  margin-left: 20px;
 }
 
 #footer a {
   color: #bbb;
-  padding: 10px;
+  padding: 5px 0;
 }
 
 #footer a:hover {
@@ -301,6 +302,10 @@ body.fullscreen .container {
 
 #subnav-options .search-query {
   width: 100px;
+}
+
+.dataset-list {
+  margin-bottom: 40px;
 }
 
 a.tile {

@@ -1,8 +1,13 @@
 <form>
     <fieldset>
         <p>
-            <label for="accountlevel">Account level (free/medium/large/dataservices):</label>
-            <input type="text" name="accountlevel" id="accountlevel" value="dataservices">
+            <label for="accountlevel">Account level:</label>
+            <select name="accountlevel" id="accountlevel">
+              <option value="dataservices" selected>Data Services Customer</option>
+              <option value="large">Large ($29)</option>
+              <option value="medium">Medium ($9)</option>
+              <option value="free">Community (Free)</option>
+            </select>
         </p>
         <p>
             <label for="displayname">New profile name:</label>

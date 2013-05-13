@@ -2,7 +2,7 @@
     <fieldset>
         <p>
             <label for="accountlevel">Account level (free/medium/large/dataservices):</label>
-            <input type="text" name="accountlevel" id="accountlevel" value="free">
+            <input type="text" name="accountlevel" id="accountlevel" value="dataservices">
         </p>
         <p>
             <label for="displayname">New profile name:</label>

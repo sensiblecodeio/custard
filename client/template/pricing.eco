@@ -3,7 +3,7 @@
   <strong>Please upgrade your account</strong> to create more datasets.
 </div>
 <% end %>
-<a class="plan datascientist swcol" href="/signup/datascientist">
+<a class="plan datascientist account-large swcol" href="/signup/datascientist">
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
   <p>Unlimited datasets</p>
@@ -15,7 +15,7 @@
   <% end %>
 </a>
 
-<a class="plan explorer swcol" href="/signup/explorer">
+<a class="plan explorer account-medium swcol" href="/signup/explorer">
   <h2>Explorer</h2>
   <p class="cost">$9<small>/mth</small></p>
   <p>10 datasets</p>
@@ -28,7 +28,7 @@
   
 </a>
 
-<a class="plan community swcol" href="/signup/community">
+<a class="plan community account-free swcol" href="/signup/community">
   <h2>Community</h2>
   <p class="cost">Free</p>
   <p>3 datasets</p>

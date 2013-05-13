@@ -3,10 +3,27 @@ class Cu.View.CreateProfile extends Backbone.View
 
   events:
     'click .btn-primary': 'createProfile'
+    'keyup #displayname': 'keyupDisplayName'
+    'keyup #shortname': 'keyupShortName'
+    'blur #shortname': 'keyupDisplayName'
 
   render: ->
     @el.innerHTML = JST['create-profile']()
     @
+
+  keyupShortName: (e) ->
+    if $(e.target).val() == ''
+      $(e.target).removeClass('edited')
+    else
+      $(e.target).addClass('edited')
+
+  keyupDisplayName: ->
+    # "is" is a reserved word in coffeescript, so we use
+    # long form method notation for the .is() jQuery function!!
+    if not $('#shortname')['is']('.edited')
+      username = $('#displayname').val()
+      username = username.toLowerCase().replace(/[^a-zA-Z0-9-.]/g, '')
+      $('#shortname').val(username)
 
   createProfile: (e) ->
     e.preventDefault()

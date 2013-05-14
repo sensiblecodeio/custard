@@ -30,7 +30,7 @@
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",
-    "start": "node server.js",
+    "start": ". ./activate && cake dev",
     "test": "mocha --require should --compilers coffee:coffee-script --colors"
   },
   "devDependencies": {

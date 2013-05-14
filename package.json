@@ -4,6 +4,10 @@
   "private": true,
   "bugs": "https://github.com/scraperwiki/custard/issues",
   "license" : "GNU Affero General Public License",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scraperwiki/custard.git"
+  },
   "dependencies": {
     "express": "3.x",
     "coffee-script": "~1.4",

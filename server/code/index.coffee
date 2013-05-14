@@ -202,8 +202,8 @@ renderClientApp = (req, resp) ->
       flash: req.flash()
       environment: process.env.NODE_ENV
 
-# Add a view to a dataset
-addView = (user, dataset, attributes, callback) ->
+# (internal) Add a view to a dataset
+_addView = (user, dataset, attributes, callback) ->
   Dataset.findOneById dataset.box, user.shortName, (err, dataset) ->
     if err?
       console.warn err
@@ -235,23 +235,7 @@ addView = (user, dataset, attributes, callback) ->
           view = _.findWhere dataset.views, box: box.name
           callback null, view
 
-# Render login page
-app.get '/login/?', (req, resp) ->
-  resp.render 'login',
-    errors: req.flash('error')
-
-# Allow set-password, signup, docs, etc, to be visited by anons
-# Note: these are NOT regular expressions!!
-app.get '/set-password/:token/?', renderClientApp
-app.get '/subscribe/?*', renderClientApp
-app.get '/pricing/?*', renderClientApp
-app.get '/signup/?*', renderClientApp
-app.get '/help/?*', renderClientApp
-app.get '/terms/?*', renderClientApp
-app.get '/', renderClientApp
-
-# Switch is protected by a specific function.
-app.get '/switch/:username/?', checkSwitchUserRights, (req, resp) ->
+switchUser = (req, resp) ->
   shortName = req.params.username
   console.log "SWITCH #{req.user.effective.shortName} -> #{shortName}"
   User.findByShortName shortName, (err, user) ->
@@ -264,16 +248,14 @@ app.get '/switch/:username/?', checkSwitchUserRights, (req, resp) ->
         location: "/"   # How to give full URL here?
       resp.end()
 
-app.post "/login", (req, resp) ->
+login = (req, resp) ->
   passport.authenticate("local",
     successRedirect: "/"
     failureRedirect: "/login"
     failureFlash: true
   )(req,resp)
 
-# Set a password using a token.
-# TODO: :token should be in POST body
-app.post '/api/token/:token/?', (req, resp) ->
+setPassword = (req, resp) ->
   Token.find req.params.token, (err, token) ->
     if token?.shortName and req.body.password?
       # TODO: token expiration
@@ -293,8 +275,7 @@ app.post '/api/token/:token/?', (req, resp) ->
     else
       return resp.send 404, error: 'No token/password specified'
 
-# Add a user
-app.post '/api/user/?', (req, resp) ->
+addUser = (req, resp) ->
   subscribingTo = req.body.subscribingTo
   [err_,subscribingTo] = Plan.getPlan subscribingTo
   # Is money required?
@@ -323,7 +304,7 @@ app.post '/api/user/?', (req, resp) ->
     else
       return resp.json 201, user
 
-app.post '/api/status/?', checkIdent, (req, resp) ->
+postStatus = (req, resp) ->
   console.log "POST /api/status/ from ident #{req.ident}"
   Dataset.findOneById req.ident, (err, dataset) ->
     if err?
@@ -343,14 +324,20 @@ app.post '/api/status/?', checkIdent, (req, resp) ->
           return resp.send 500, error: 'Error trying to update status'
         return resp.send 200, status: 'ok'
 
+# Render login page
+app.get '/login/?', (req, resp) ->
+  resp.render 'login',
+    errors: req.flash('error')
 
-app.get '/api/:user/subscription/:plan/sign/?', (req, resp) ->
+# For Recurly.
+signPlan = (req, resp) ->
   signedSubscription = recurlySign.sign
     subscription:
       plan_code: req.params.plan
   resp.send 200, signedSubscription
 
-app.post '/api/:user/subscription/verify/?', (req, resp) ->
+# Also for Recurly.
+verifyRecurly = (req, resp) ->
   Subscription.getRecurlyResult req.body.recurly_token, (err, result) ->
     if err?
       statusCode = err.statusCode or 500
@@ -361,7 +348,6 @@ app.post '/api/:user/subscription/verify/?', (req, resp) ->
         statusCode = err.statusCode or 500
         error = err.error or err
         return resp.send statusCode, error
-
       plan = result.subscription.plan
       console.log 'Subscribed to', plan.plan_code
       user.setAccountLevel plan.plan_code, (err) ->
@@ -374,20 +360,46 @@ app.post '/api/:user/subscription/verify/?', (req, resp) ->
         req.session.save()
         resp.send 201, success: "Verified and upgraded"
 
-############ AUTHENTICATED ############
-app.all '*', ensureAuthenticated
+# Allow set-password, signup, docs, etc, to be visited by anons
+# Note: these are NOT regular expressions!!
+app.get '/set-password/:token/?', renderClientApp
+app.get '/subscribe/?*', renderClientApp
+app.get '/pricing/?*', renderClientApp
+app.get '/signup/?*', renderClientApp
+app.get '/help/?*', renderClientApp
+app.get '/terms/?*', renderClientApp
+app.get '/', renderClientApp
 
-app.get '/logout', (req, resp) ->
+# Switch is protected by a specific function.
+app.get '/switch/:username/?', checkSwitchUserRights, switchUser
+
+app.post "/login", login
+
+# Set a password using a token.
+# TODO: :token should be in POST body
+app.post '/api/token/:token/?', setPassword
+
+app.post '/api/user/?', addUser
+
+# :todo: Add IP address check (at the moment, anyone running an identd
+# can post to anyone's status).
+app.post '/api/status/?', checkIdent, postStatus
+
+app.get '/api/:user/subscription/:plan/sign/?', signPlan
+app.post '/api/:user/subscription/verify/?', verifyRecurly
+
+############ AUTHENTICATED ############
+
+logout = (req, resp) ->
   req.logout()
   resp.redirect '/'
 
-# API!
-app.get '/api/tools/?', (req, resp) ->
+listTools = (req, resp) ->
   Tool.findForUser req.user.effective.shortName, (err, tools) ->
     console.log "API about to return"
     resp.send 200, tools
 
-app.post '/api/tools/?', (req, resp) ->
+postTool = (req, resp) ->
   body = req.body
   Tool.findOneByName body.name, (err, tool) ->
     isNew = not tool?
@@ -429,7 +441,7 @@ app.post '/api/tools/?', (req, resp) ->
                 code = if isNew then 201 else 200
                 return resp.send code, tool
 
-app.put '/api/user/?', (req, resp) ->
+updateUser = (req, resp) ->
   User.findByShortName req.user.real.shortName, (err, user) ->
     console.log "body is", req.body
     if 'acceptedTerms' of req.body
@@ -442,7 +454,7 @@ app.put '/api/user/?', (req, resp) ->
     else
       resp.send 403, error: "This endpoint only sets acceptedTerms; other attributes are ignored"
 
-app.get '/api/:user/datasets/?', checkThisIsMyDataHub, (req, resp) ->
+listDatasets = (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
     if err?
       console.warn err
@@ -450,8 +462,7 @@ app.get '/api/:user/datasets/?', checkThisIsMyDataHub, (req, resp) ->
     else
       return resp.send 200, datasets
 
-# :todo: should :user be part of the dataset URL?
-app.get '/api/:user/datasets/:id/?', checkThisIsMyDataHub, (req, resp) ->
+getDataset = (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -463,7 +474,7 @@ app.get '/api/:user/datasets/:id/?', checkThisIsMyDataHub, (req, resp) ->
     else
       return resp.send 200, dataset
 
-app.get '/api/:user/datasets/:id/views?', checkThisIsMyDataHub, (req, resp) ->
+listViews = (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}/views"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -477,7 +488,7 @@ app.get '/api/:user/datasets/:id/views?', checkThisIsMyDataHub, (req, resp) ->
         console.warn "Error fetching views #{err}" if err?
         return resp.send 200, views
 
-app.put '/api/:user/datasets/:id/?', checkThisIsMyDataHub, (req, resp) ->
+updateDataset = (req, resp) ->
   console.log "PUT /api/#{req.params.user}/datasets/#{req.params.id}"
   Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
@@ -493,8 +504,7 @@ app.put '/api/:user/datasets/:id/?', checkThisIsMyDataHub, (req, resp) ->
       dataset.save()
       return resp.send 200, dataset
 
-
-app.post '/api/:user/datasets/?', checkThisIsMyDataHub, (req, resp) ->
+addDataset = (req, resp) ->
   user = req.user.effective
   console.log "POST dataset user", user
   User.canCreateDataset user, (err, can) ->
@@ -535,19 +545,19 @@ app.post '/api/:user/datasets/?', checkThisIsMyDataHub, (req, resp) ->
           Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
             console.warn err if err?
             resp.send 200, dataset
-            addView user, dataset,
+            _addView user, dataset,
               tool: 'datatables-view-tool'
               displayName: 'View in a table' # TODO: use tool object
             , (err, view) ->
               if err?
                 console.warn "Error creating DT view: #{err}"
 
-app.post '/api/:user/datasets/:dataset/views/?', checkThisIsMyDataHub, (req, resp) ->
+# Add view to dataset and save
+addView = (req, resp) ->
   user = req.user.effective
   Dataset.findOneById req.params.dataset, (err, dataset) ->
-    # Add view to dataset and save
     body = req.body
-    addView user, dataset,
+    _addView user, dataset,
       tool: body.tool
       displayName: body.displayName
     , (err, view) ->
@@ -556,9 +566,7 @@ app.post '/api/:user/datasets/:dataset/views/?', checkThisIsMyDataHub, (req, res
       else
         resp.send 200, view
 
-
-# search for user api is staff-only for now (probably forever)
-app.get '/api/user/?', checkStaff, (req, resp) ->
+listUsers = (req, resp) ->
   User.findAll (err, users) ->
     if err?
       console.log err
@@ -568,7 +576,7 @@ app.get '/api/user/?', checkStaff, (req, resp) ->
         getSessionUser u
       return resp.send 200, result
 
-app.post '/api/:user/sshkeys/?', (req, resp) ->
+addSSHKey = (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->
     if not req.body.key?
       return resp.send 400, error: 'Specify key'
@@ -582,14 +590,37 @@ app.post '/api/:user/sshkeys/?', (req, resp) ->
         else
           resp.send 200, success: 'ok'
 
-app.get '/api/:user/sshkeys/?', (req, resp) ->
+listSSHKeys = (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->
     resp.send 200, user.sshKeys
+
+app.all '*', ensureAuthenticated
+
+app.get '/logout', logout
+
+# API!
+app.get '/api/tools/?', listTools
+app.post '/api/tools/?', postTool
+
+app.put '/api/user/?', updateUser
+
+app.get '/api/:user/datasets/?', checkThisIsMyDataHub, listDatasets
+# :todo: should :user be part of the dataset URL?
+app.get '/api/:user/datasets/:id/?', checkThisIsMyDataHub, getDataset
+app.get '/api/:user/datasets/:id/views/?', checkThisIsMyDataHub, listViews
+app.put '/api/:user/datasets/:id/?', checkThisIsMyDataHub, updateDataset
+app.post '/api/:user/datasets/?', checkThisIsMyDataHub, addDataset
+app.post '/api/:user/datasets/:dataset/views/?', checkThisIsMyDataHub, addView
+
+# Search for user api is staff-only for now.
+app.get '/api/user/?', checkStaff, listUsers
+
+app.post '/api/:user/sshkeys/?', addSSHKey
+app.get '/api/:user/sshkeys/?', listSSHKeys
 
 # Catch all other routes, send to client app
 app.get '*', renderClientApp
 
-# Define Port
 port = process.env.CU_PORT or 3001
 
 if existsSync(port)

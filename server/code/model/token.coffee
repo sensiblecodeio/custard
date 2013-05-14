@@ -10,7 +10,7 @@ tokenSchema = new mongoose.Schema
 
 zDbToken = mongoose.model 'Token', tokenSchema
 
-class Token extends ModelBase
+class exports.Token extends ModelBase
   @dbClass: zDbToken
 
   @find: (token, callback) ->
@@ -24,6 +24,3 @@ class Token extends ModelBase
         _.extend newToken, token.toObject()
         callback null, newToken
 
-module.exports = (dbObj) ->
-  zDbToken = dbObj if dbObj?
-  Token

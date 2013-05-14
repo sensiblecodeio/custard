@@ -29,7 +29,7 @@ request = require 'request'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
-Token = require('model/token')()
+{Token} = require 'model/token'
 {Tool} = require 'model/tool'
 {Box} = require 'model/box'
 {Subscription} = require 'model/subscription'

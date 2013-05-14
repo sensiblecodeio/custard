@@ -8,7 +8,7 @@ mailchimp = require('mailchimp')
 
 ModelBase = require 'model/base'
 {Box} = require 'model/box'
-Token = require('model/token')()
+{Token} = require 'model/token'
 {Plan} = require 'model/plan'
 
 {signUpEmail} = require 'lib/email'

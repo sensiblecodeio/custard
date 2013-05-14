@@ -2,6 +2,12 @@
   "name": "custard",
   "version": "0.1.0",
   "private": true,
+  "bugs": "https://github.com/scraperwiki/custard/issues",
+  "license" : "GNU Affero General Public License",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scraperwiki/custard.git"
+  },
   "dependencies": {
     "express": "3.x",
     "coffee-script": "~1.4",
@@ -30,7 +36,7 @@
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",
-    "start": "node server.js",
+    "start": ". ./activate && cake dev",
     "test": "mocha --require should --compilers coffee:coffee-script --colors"
   },
   "devDependencies": {

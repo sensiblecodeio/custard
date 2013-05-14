@@ -2,6 +2,7 @@
   "name": "custard",
   "version": "0.1.0",
   "private": true,
+  "bugs": "https://github.com/scraperwiki/custard/issues",
   "dependencies": {
     "express": "3.x",
     "coffee-script": "~1.4",

@@ -27,6 +27,8 @@ userSchema = new mongoose.Schema
   created: {type: Date, default: Date.now}
   logoUrl: String
   sshKeys: [String]
+  # List of users that can switch into this profile.
+  canBeReally: [String]
 
 zDbUser = mongoose.model 'User', userSchema
 

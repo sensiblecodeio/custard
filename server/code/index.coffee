@@ -192,7 +192,22 @@ checkStaff = (req, resp, next) ->
   return resp.send 403, error: "Unstafforised"
 
 # :todo: more flexible implementation that checks group membership and stuff
-checkSwitchUserRights = checkStaff
+checkSwitchUserRights = (req, res, next) ->
+  # Staff can (still) switch into any profile.
+  if req.user.real.isStaff
+    return next()
+
+  # Otherwise check the canBeReally field of the target user.
+  switchingTo = req.params.username
+  console.log "SWITCH #{req.user.effective.shortName} -> #{switchingTo}"
+  User.findByShortName switchingTo, (err, user) ->
+    if err? or not user?
+      return resp.send 500, err
+    if user.canBeReally and req.user.real.shortName in user.canBeReally
+      req.switchingTo = user
+      return next()
+    return resp.send 403, { error:
+      "#{req.user.real.shortName} cannot switch to #{switchingTo}"}
 
 # Render the main client side app
 renderClientApp = (req, resp) ->
@@ -240,16 +255,12 @@ _addView = (user, dataset, attributes, callback) ->
 
 switchUser = (req, resp) ->
   shortName = req.params.username
-  console.log "SWITCH #{req.user.effective.shortName} -> #{shortName}"
-  User.findByShortName shortName, (err, user) ->
-    if err? or not user?
-      resp.send 500, err
-    else
-      req.user.effective = getSessionUser user
-      req.session.save()
-      resp.writeHead 302,
-        location: "/"   # How to give full URL here?
-      resp.end()
+  switchingTo = req.switchingTo # set by checkSwitchUserRights
+  req.user.effective = getSessionUser switchingTo
+  req.session.save()
+  resp.writeHead 302,
+    location: "/"   # How to give full URL here?
+  resp.end()
 
 login = (req, resp) ->
   passport.authenticate("local",

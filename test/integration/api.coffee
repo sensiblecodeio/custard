@@ -393,6 +393,33 @@ describe 'API', ->
         it 'returns a 404 (the token is unknown)', ->
           @res.should.have.status 404
 
+  describe 'Logging in as user test', ->
+    context "When ickletest has approved", ->
+      before (done) ->
+        # logout
+        request.get "#{serverURL}/logout", done
+      before (done) ->
+        @loginURL = "#{serverURL}/login"
+        @user = "test"
+        @password = process.env.CU_TEST_PASSWORD
+        request.get @loginURL, =>
+          request.post
+            uri: @loginURL
+            form:
+              username: @user
+              password: "testing"
+          , (err, res) =>
+            @loginResponse = res
+            done(err)
+
+      it "can switch into ickletest's profile", (done) ->
+        request.get
+          uri: "#{serverURL}/switch/ickletest"
+          followRedirect: false
+        , (err, res) ->
+          res.should.have.status 302
+          done()
+
   describe 'Logging in as a different user', ->
     context "When I'm a staff member", ->
       before (done) ->

@@ -27,6 +27,8 @@ userSchema = new mongoose.Schema
   created: {type: Date, default: Date.now}
   logoUrl: String
   sshKeys: [String]
+  # List of users that can switch into this profile.
+  canBeReally: [String]
 
 zDbUser = mongoose.model 'User', userSchema
 
@@ -201,6 +203,8 @@ class exports.User extends ModelBase
         else
           callback "Can't find user", null
 
+  @findCanBeReally: (shortName, callback) ->
+    @find canBeReally: shortName, callback
 
 exports.dbInject = (dbObj) ->
   User.dbClass = zDbUser = dbObj if dbObj?

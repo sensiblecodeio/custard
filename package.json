@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "bugs": "https://github.com/scraperwiki/custard/issues",
-  "license" : "GNU Affero General Public License",
+  "license": "GNU Affero General Public License",
   "repository": {
     "type": "git",
     "url": "https://github.com/scraperwiki/custard.git"
@@ -32,7 +32,8 @@
     "qs": "~0.5.5",
     "xml2js": "~0.2.6",
     "nodetime": "~0.8.12",
-    "mailchimp": "~0.9.5"
+    "mailchimp": "~0.9.5",
+    "exceptional-node": "~0.1.1"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

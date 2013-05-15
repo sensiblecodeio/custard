@@ -355,6 +355,16 @@ describe 'API', ->
             res.body.should.include 'error'
             done err
 
+        it 'does let me change my canBeReally field', (done) ->
+          request.put
+            uri: "#{serverURL}/api/user"
+            form:
+              canBeReally: ["test", "teststaff"]
+            , (err, res) ->
+              res.should.have.status 200
+              res.body.should.include 'ok'
+              done err
+
     describe 'Billing', ->
       context 'GET /api/:user/subscription/medium/sign', ->
         before (done) ->
@@ -382,6 +392,44 @@ describe 'API', ->
 
         it 'returns a 404 (the token is unknown)', ->
           @res.should.have.status 404
+
+  describe 'Switching', ->
+    context 'POST /switch/ickletest', ->
+      context "When ickletest has approved", ->
+        before (done) ->
+          # logout
+          request.get "#{serverURL}/logout", done
+        before (done) ->
+          @loginURL = "#{serverURL}/login"
+          @user = "test"
+          @password = process.env.CU_TEST_PASSWORD
+          request.get @loginURL, =>
+            request.post
+              uri: @loginURL
+              form:
+                username: @user
+                password: "testing"
+            , (err, res) =>
+              @loginResponse = res
+              done(err)
+
+        it "can switch into ickletest's profile", (done) ->
+          request.get
+            uri: "#{serverURL}/switch/ickletest"
+            followRedirect: false
+          , (err, res) ->
+            res.should.have.status 302
+            done()
+
+    context 'GET /api/user', ->
+      before (done) ->
+        request.get "#{serverURL}/api/user", (err, res, body) =>
+          @body = body
+          done()
+
+      it 'gets ickletest and ehg as users test can switch into', ->
+        @body.should.include 'ehg'
+        @body.should.include 'ickletest'
 
   describe 'Logging in as a different user', ->
     context "When I'm a staff member", ->

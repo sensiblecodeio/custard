@@ -27,6 +27,7 @@ class Cu.View.DataHubNav extends Backbone.View
   className: 'subnav-wrapper'
 
   events:
+    'click .context-switch': 'displayContexts'
     'click .context-switch li': 'liClick'
     'click .new-dataset': 'showChooser'
     'focus .context-switch input': 'focusContextSearch'
@@ -35,22 +36,13 @@ class Cu.View.DataHubNav extends Backbone.View
     'keyup #subnav-options .search-query': 'keyupPageSearch'
 
   render: ->
-    if window.user.real.isStaff?
-      h1 = """<h1 class="btn-group context-switch">
-          <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="search"><input type="search" placeholder="Switch profile&hellip;"></li>
-            <!--<li><a href="#">Another action</a></li>-->
-          </ul>
-        </h1>"""
-    else
-      h1 = """<h1 class="btn-group">
-          <a class="btn btn-link">
-            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub
-          </a>
-        </h1>"""
+    h1 = """<h1 class="btn-group context-switch">
+        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+          <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub<span class="caret"></span>
+        </a>
+        <ul id="user-contexts" class="dropdown-menu">
+        </ul>
+      </h1>"""
 
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">#{h1}</div>
@@ -67,9 +59,29 @@ class Cu.View.DataHubNav extends Backbone.View
     # (ie: if we've just used the back button to close it)
     if $('#chooser').length
       $('#chooser').fadeOut 200, ->
-          $(this).remove()
+        $(this).remove()
       $(window).off('keyup')
     @
+
+  displayContexts: ->
+    $userContexts = $('#user-contexts').empty()
+    return if $userContexts.is(':visible')
+
+    users = Cu.CollectionManager.get Cu.Collection.User
+    users.fetch
+      success: =>
+        # TODO: we probably don't want to show the current context
+        @appendContextUser new Cu.Model.User(window.user.real)
+        users.each @appendContextUser
+
+  appendContextUser: (user) ->
+    $userContexts = $('#user-contexts')
+    $userContexts.append """<li class="context-search-result">
+      <a href="/switch/#{user.get 'shortName'}/" data-nonpushstate>
+        <img src="#{user.get('logoUrl') or user.get('avatarUrl') or '/image/avatar.png'}" alt="#{user.get 'shortName'}" />
+        #{user.get 'displayName' or user.get 'shortName'}
+      </a>
+    </li>"""
 
   liClick: (e) ->
     # stops the dropdown menu disappearing when you click inside it
@@ -78,6 +90,7 @@ class Cu.View.DataHubNav extends Backbone.View
   showChooser: ->
     app.navigate "/chooser", trigger: true
 
+  # TODO: should use user collection
   focusContextSearch: ->
     $.ajax
       url: '/api/user/'

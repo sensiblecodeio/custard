@@ -11,7 +11,7 @@ exports.users = [
   isStaff: false,
   sshKeys: [],
   accountLevel: "free",
-  acceptedTerms: 1
+  acceptedTerms: 1,
 },
 {
   shortName: 'teststaff',
@@ -34,7 +34,8 @@ exports.users = [
   sshKeys: [],
   accountLevel: "grandfather",
   recurlyAccount: "ehg-2423432",
-  acceptedTerms: 1
+  acceptedTerms: 1,
+  canBeReally: ['test']
 },
 {
   shortName: 'ickletest',
@@ -46,7 +47,8 @@ exports.users = [
   sshKeys: ['a', 'b', 'c'],
   accountLevel: "free",
   recurlyAccount: "ickletest-242363",
-  acceptedTerms: 1
+  acceptedTerms: 1,
+  canBeReally: ['test', 'ehg']
 },
 {
   shortName: 'nopassword',

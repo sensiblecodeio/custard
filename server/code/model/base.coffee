@@ -35,10 +35,13 @@ class ModelBase
     @dbInstance.save callback
 
   @findAll: (callback) ->
-    @dbClass.find {}, (err, docs) =>
+    @find {}, callback
+
+  @find: (options, callback) ->
+    @dbClass.find options, (err, docs) =>
       if err?
         console.warn err
-        callback err, null
+        return callback err, null
       if docs?
         result = for d in docs
           @makeModelFromMongo d

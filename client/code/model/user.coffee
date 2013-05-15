@@ -41,3 +41,6 @@ class Cu.Model.User extends Backbone.Model
       return true
     else
       return 0+attrs.acceptedTerms > 0
+
+class Cu.Collection.User extends Backbone.Collection
+  url: '/api/user'

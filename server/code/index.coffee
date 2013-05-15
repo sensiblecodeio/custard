@@ -26,6 +26,7 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
+{Exceptional} = require 'exceptional-node'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
@@ -46,6 +47,8 @@ mongoose.connect process.env.CU_DB,
 # Doesn't seem to do much.
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
+
+Exceptional.API_KEY = process.env.EXCEPTIONAL_KEY
 
 # TODO: move into npm module
 nodetimeLog = (req, res, next) ->
@@ -189,7 +192,20 @@ checkStaff = (req, resp, next) ->
   return resp.send 403, error: "Unstafforised"
 
 # :todo: more flexible implementation that checks group membership and stuff
-checkSwitchUserRights = checkStaff
+checkSwitchUserRights = (req, res, next) ->
+  switchingTo = req.params.username
+  console.log "SWITCH #{req.user.effective.shortName} -> #{switchingTo}"
+  User.findByShortName switchingTo, (err, user) ->
+    if err? or not user?
+      return resp.send 500, err
+    # Staff can (still) switch into any profile.
+    # Otherwise check the canBeReally field of the target user.
+    if req.user.real.isStaff or
+     (user.canBeReally and req.user.real.shortName in user.canBeReally)
+      req.switchingTo = user
+      return next()
+    return res.send 403, { error:
+      "#{req.user.real.shortName} cannot switch to #{switchingTo}"}
 
 # Render the main client side app
 renderClientApp = (req, resp) ->
@@ -237,16 +253,12 @@ _addView = (user, dataset, attributes, callback) ->
 
 switchUser = (req, resp) ->
   shortName = req.params.username
-  console.log "SWITCH #{req.user.effective.shortName} -> #{shortName}"
-  User.findByShortName shortName, (err, user) ->
-    if err? or not user?
-      resp.send 500, err
-    else
-      req.user.effective = getSessionUser user
-      req.session.save()
-      resp.writeHead 302,
-        location: "/"   # How to give full URL here?
-      resp.end()
+  switchingTo = req.switchingTo # set by checkSwitchUserRights
+  req.user.effective = getSessionUser switchingTo
+  req.session.save()
+  resp.writeHead 302,
+    location: "/"   # How to give full URL here?
+  resp.end()
 
 login = (req, resp) ->
   passport.authenticate("local",
@@ -443,16 +455,18 @@ postTool = (req, resp) ->
 
 updateUser = (req, resp) ->
   User.findByShortName req.user.real.shortName, (err, user) ->
-    console.log "body is", req.body
-    if 'acceptedTerms' of req.body
-      user.acceptedTerms = req.body.acceptedTerms
-      user.save (err) ->
-        if err?
-          resp.send 500, error: err
-        else
-          resp.send 200, success: 'ok'
-    else
-      resp.send 403, error: "This endpoint only sets acceptedTerms; other attributes are ignored"
+    console.log "updateUser body is", req.body
+    # The attributes that we can set via this API.
+    canSet = ['acceptedTerms', 'canBeReally']
+    _.extend user, _.pick req.body, canSet
+    otherAttrs = _.omit req.body, canSet
+    if not _.isEmpty otherAttrs
+      return resp.send 403, error: "This endpoint only sets #{canSet}; other attributes are ignored"
+    user.save (err) ->
+      if err?
+        resp.send 500, error: err
+      else
+        resp.send 200, success: 'ok'
 
 listDatasets = (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
@@ -567,7 +581,7 @@ addView = (req, resp) ->
         resp.send 200, view
 
 listUsers = (req, resp) ->
-  User.findAll (err, users) ->
+  User.findCanBeReally req.user.real.shortName, (err, users) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find users'
@@ -612,8 +626,7 @@ app.put '/api/:user/datasets/:id/?', checkThisIsMyDataHub, updateDataset
 app.post '/api/:user/datasets/?', checkThisIsMyDataHub, addDataset
 app.post '/api/:user/datasets/:dataset/views/?', checkThisIsMyDataHub, addView
 
-# Search for user api is staff-only for now.
-app.get '/api/user/?', checkStaff, listUsers
+app.get '/api/user/?', listUsers
 
 app.post '/api/:user/sshkeys/?', addSSHKey
 app.get '/api/:user/sshkeys/?', listSSHKeys
@@ -644,3 +657,11 @@ process.on 'SIGTERM', ->
     console.error "Could not close connections in time, forcefully shutting down"
     process.exit 1
   , 30*1000
+
+if /staging|production/.test process.env.NODE_ENV
+  process.on 'uncaughtException', (err) ->
+    console.warn err
+    Exceptional.handle err
+    setTimeout ->
+      process.kill process.pid, 'SIGTERM'
+    , 500

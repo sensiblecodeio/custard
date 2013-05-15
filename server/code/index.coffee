@@ -193,20 +193,18 @@ checkStaff = (req, resp, next) ->
 
 # :todo: more flexible implementation that checks group membership and stuff
 checkSwitchUserRights = (req, res, next) ->
-  # Staff can (still) switch into any profile.
-  if req.user.real.isStaff
-    return next()
-
-  # Otherwise check the canBeReally field of the target user.
   switchingTo = req.params.username
   console.log "SWITCH #{req.user.effective.shortName} -> #{switchingTo}"
   User.findByShortName switchingTo, (err, user) ->
     if err? or not user?
       return resp.send 500, err
-    if user.canBeReally and req.user.real.shortName in user.canBeReally
+    # Staff can (still) switch into any profile.
+    # Otherwise check the canBeReally field of the target user.
+    if req.user.real.isStaff or
+     (user.canBeReally and req.user.real.shortName in user.canBeReally)
       req.switchingTo = user
       return next()
-    return resp.send 403, { error:
+    return res.send 403, { error:
       "#{req.user.real.shortName} cannot switch to #{switchingTo}"}
 
 # Render the main client side app

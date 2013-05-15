@@ -3,8 +3,8 @@
     <li class="nav-header">This quick start guide:</li>
     <li><a data-nonpushstate href="#step1">1. Create a new blank tool</a></li>
     <li><a data-nonpushstate href="#step2">2. SSH into the box</a></li>
-    <li><a data-nonpushstate href="#step3">3. Write your server-side code</a></li>
-    <li><a data-nonpushstate href="#step4">4. Make a user interface</a></li>
+    <li><a data-nonpushstate href="#step3">3. Make a user interface</a></li>
+    <li><a data-nonpushstate href="#step4">4. Write your server-side code</a></li>
     <li><a data-nonpushstate href="#step5">5. Test it out</a></li>
     <li><a data-nonpushstate href="#step6">6. Use other tools on your data</a></li>
     <li class="nav-header">Related guides:</li>
@@ -35,13 +35,13 @@
     
   </div>
 
-  <h2 id="step3">3. Write your server-side code</h2>
+  <h2 id="step3">3. Make a user interface</h2>
 
   <div class="step">
     
   </div>
 
-  <h2 id="step4">4. Make a user interface</h2>
+  <h2 id="step4">4. Write your server-side code</h2>
 
   <div class="step">
     

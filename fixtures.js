@@ -48,7 +48,7 @@ exports.users = [
   accountLevel: "free",
   recurlyAccount: "ickletest-242363",
   acceptedTerms: 1,
-  canBeReally: ['test']
+  canBeReally: ['test', 'ehg']
 },
 {
   shortName: 'nopassword',

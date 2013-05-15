@@ -581,7 +581,7 @@ addView = (req, resp) ->
         resp.send 200, view
 
 listUsers = (req, resp) ->
-  User.findAll (err, users) ->
+  User.findCanBeReally req.user.real.shortName, (err, users) ->
     if err?
       console.log err
       return resp.send 500, error: 'Error trying to find users'
@@ -626,8 +626,7 @@ app.put '/api/:user/datasets/:id/?', checkThisIsMyDataHub, updateDataset
 app.post '/api/:user/datasets/?', checkThisIsMyDataHub, addDataset
 app.post '/api/:user/datasets/:dataset/views/?', checkThisIsMyDataHub, addView
 
-# Search for user api is staff-only for now.
-app.get '/api/user/?', checkStaff, listUsers
+app.get '/api/user/?', listUsers
 
 app.post '/api/:user/sshkeys/?', addSSHKey
 app.get '/api/:user/sshkeys/?', listSSHKeys

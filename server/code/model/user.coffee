@@ -203,6 +203,8 @@ class exports.User extends ModelBase
         else
           callback "Can't find user", null
 
+  @findCanBeReally: (shortName, callback) ->
+    @find canBeReally: shortName, callback
 
 exports.dbInject = (dbObj) ->
   User.dbClass = zDbUser = dbObj if dbObj?

@@ -42,7 +42,7 @@ class Cu.Model.Tool extends Backbone.RelationalModel
       else if n.indexOf('summarise') == 0
         manifest.icon = '/image/tool-icon-summarise.png'
         manifest.color = '#27affd'
-      else if n.indexOf('lastfm') > -1
+      else if n.indexOf('last.fm') > -1
         manifest.icon = '/image/tool-icon-lastfm.png'
         manifest.color = '#D51007'
       @set 'manifest', manifest

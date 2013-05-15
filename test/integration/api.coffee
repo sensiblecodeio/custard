@@ -355,6 +355,16 @@ describe 'API', ->
             res.body.should.include 'error'
             done err
 
+        it 'does let me change my canBeReally field', (done) ->
+          request.put
+            uri: "#{serverURL}/api/user"
+            form:
+              canBeReally: ["test", "teststaff"]
+            , (err, res) ->
+              res.should.have.status 200
+              res.body.should.include 'ok'
+              done err
+
     describe 'Billing', ->
       context 'GET /api/:user/subscription/medium/sign', ->
         before (done) ->

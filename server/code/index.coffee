@@ -446,16 +446,18 @@ postTool = (req, resp) ->
 
 updateUser = (req, resp) ->
   User.findByShortName req.user.real.shortName, (err, user) ->
-    console.log "body is", req.body
-    if 'acceptedTerms' of req.body
-      user.acceptedTerms = req.body.acceptedTerms
-      user.save (err) ->
-        if err?
-          resp.send 500, error: err
-        else
-          resp.send 200, success: 'ok'
-    else
-      resp.send 403, error: "This endpoint only sets acceptedTerms; other attributes are ignored"
+    console.log "updateUser body is", req.body
+    # The attributes that we can set via this API.
+    canSet = ['acceptedTerms', 'canBeReally']
+    _.extend user, _.pick req.body, canSet
+    otherAttrs = _.omit req.body, canSet
+    if not _.isEmpty otherAttrs
+      return resp.send 403, error: "This endpoint only sets #{canSet}; other attributes are ignored"
+    user.save (err) ->
+      if err?
+        resp.send 500, error: err
+      else
+        resp.send 200, success: 'ok'
 
 listDatasets = (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->

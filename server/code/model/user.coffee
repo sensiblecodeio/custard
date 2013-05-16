@@ -29,6 +29,7 @@ userSchema = new mongoose.Schema
   sshKeys: [String]
   # List of users that can switch into this profile.
   canBeReally: [String]
+  defaultContext: String
 
 zDbUser = mongoose.model 'User', userSchema
 

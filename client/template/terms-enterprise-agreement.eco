@@ -1,0 +1,87 @@
+<style>
+
+#content p, #content li, #content h3 {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 14px;
+}
+
+#content ul {
+  list-style: none;
+  margin-left: 40px;
+}
+
+#content .section-number, #content .party-number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #999;
+}
+
+.fill-in {
+  display: inline-block;
+  width: 4em;
+}
+.fill-in-wide {
+  display: inline-block;
+  width: 8em;
+}
+
+
+</style>
+
+
+</style>
+
+<h2>General</h2>
+<p>This agreement dated [<span class="fill-in">20</span>] is made by and between:
+</p>
+
+<p><span class="party-number">(1)</span> ScraperWiki Ltd, a company limited by shares, incorporated in England and Wales under company registration number 06979284 whose registered office is at James House, Stonecross Business Park, Yew Tree Way, Warrington, Cheshire, WA3 3JD (“the supplier”); and
+</p>
+
+<p><span class="party-number">(2)</span> [<span class="fill-in-wide"></span>], a company limited by shares, incorporated in England and
+Wales under company registration number [<span class="fill-in-wide"></span>] whose registered office is at [<span class="fill-in-wide"></span>]
+(“the customer”).
+</p>
+
+<h2>Agreement</h2>
+
+<p>The parties agree as follows:</p>
+
+<h3><span class="section-number">1</span> Definitions</h3>
+
+<p><span class="section-number">1.1</span> In this agreement the following definitions apply:
+<ul>
+  <li>“<em>the agreement</em>” means this agreement and any schedules and exhibits attached to it.</li>
+  <li>“<em>business hours</em>” means between 9am and 5pm on any day upon which banks are generally open for business in the City of London. </li>
+  <li>“<em>the initial period</em>” means one year from the date of commencement.</li>
+  <li>“<em>notice of increase</em>” means a notice given by the supplier under clause <a href="#">3.5</a>.</li>
+  <li>“<em>the service charge</em>” means the sum payable monthly for the supply of the service in accordance with Annex A.1.</li>
+  <li>“<em>the parties</em>” means the supplier and the customer.</li>
+  <li>“<em>the renewal date</em>” means the date upon which this agreement would (unless terminated) be renewed in accordance with clause <a href="#">2.2</a>. </li>
+  <li>“<em>the service</em>” means the service described in Annex A.2.</li>
+</ul>
+<p><span class="section-number">1.2</span> Where a defined term is used it will be written in italic for clarity.</p>
+<p><span class="section-number">1.3</span> The terms “<em>writing</em>”, “<em>written</em>” etc include any document in electronically readable form, and in particular, electronic mail, but do not include ephemeral systems of communication such as social media platforms or text messaging.</p>
+<p><span class="section-number">1.4</span> Any notice or communication specified under this agreement shall be in writing by one of the methods specified in this clause, and shall be deemed to have been duly given</p>
+<ul>
+  <li><span class="section-number">1.4.1</span> If sent by courier, post with record of receipt, or other means of recorded delivery to the receiving party’s registered offices then, if received during <em>business hours</em>, at the time when receipt is correctly recorded as received at those offices;</li>
+  <li><span class="section-number">1.4.2</span> If sent by ordinary post to the receiving party’s registered offices, three days after the date upon which the communication was posted.  It shall be sufficient to prove that this communication was properly addressed, stamped and put in the post in order to prove such service;</li>
+  <li><span class="section-number">1.4.3</span> If sent by email to an address supplied by any party as an acceptable means of communication between the parties, then, if received during <em>business hours</em>, when it is received in the email inbox of the recipient.</li>
+</ul>
+<p><span class="section-number">1.5</span> If notice under clause <a href="#">1.4</a> is received outside of <em>business hours</em> then it shall be deemed to have been have been duly given one hour after the start of business hours next following the event which would otherwise have constituted successful notice.</p>
+
+<h3><span class="section-number">2</span> Starting and renewal</h3>
+
+<p><span class="section-number">2.1</span> <em>The agreement</em> shall commence on the date set out at the head of this <em>agreement</em>.
+</p>
+<p><span class="section-number">2.2</span> Unless terminated in accordance with the provisions of clauses <a href="#">3.8</a> or <a href="#">9</a> below, the agreement will remain in force for the <em>initial period</em> and will be renewed automatically on a yearly rolling basis on the anniversary of its commencement.
+</p>
+<p><span class="section-number">2.3</span> Either party may terminate <em>the agreement</em> by serving written notice of termination not less than three months before the <em>renewal date</em>.  If such notice is given, <em>the agreement</em> will not be renewed at the <em>renewal date</em>.
+</p>
+
+
+
+
+<br><br><br>

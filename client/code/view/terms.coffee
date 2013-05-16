@@ -5,6 +5,13 @@ class Cu.View.Terms extends Backbone.View
     @el.innerHTML = JST['terms']()
     @
 
+class Cu.View.TermsEnterpriseAgreement extends Backbone.View
+  className: "terms"
+
+  render: ->
+    @el.innerHTML = JST['terms-enterprise-agreement']()
+    @
+
 class Cu.View.TermsAlert extends Backbone.View
   className: "alert alert-warning permanent"
 

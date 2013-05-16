@@ -44,6 +44,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('signup/([^/]+)/?'), 'signUp'
     @route RegExp('subscribe/([^/]+)/?'), 'subscribe'
     @route RegExp('terms/?'), 'terms'
+    @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
 
   main: ->
     if window.user.effective?
@@ -197,3 +198,11 @@ class Cu.Router.Main extends Backbone.Router
     contentView = new Cu.View.Terms()
     @appView.showView contentView
     @subnavView.showView subnavView
+
+  termsEnterpriseAgreement: ->
+    subnavView = new Cu.View.Subnav {text: 'Enterprise Agreement'}
+    contentView = new Cu.View.TermsEnterpriseAgreement()
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+

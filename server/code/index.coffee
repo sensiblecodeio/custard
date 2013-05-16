@@ -129,18 +129,32 @@ getSessionUsersFromDB = (reqUser, cb) ->
           real: getSessionUser realUser
           effective: getSessionUser effectiveUser
 
+getEffectiveUser = (user, callback) ->
+  User.findCanBeReally user.shortName, (err, canBeReally) ->
+    console.log 'sdfsdfsdfsdf wuewtsed'
+    if canBeReally.length == 0
+      console.log 'LUL THERE IS NO CANBEREALLY'
+      return callback(getSessionUser user)
+    else
+      console.log 'pluck off', _.pluck(canBeReally, 'shortName')
+      if user.defaultContext in _.pluck(canBeReally, 'shortName')
+        effectiveUser = _.findWhere canBeReally, shortName: user.defaultContext
+      else
+        effectiveUser = canBeReally[0]
+      return callback effectiveUser
+
 # Verify callback for LocalStrategy
 verify = (username, password, done) ->
   user = new User {shortName: username}
   user.checkPassword password, (correct, user) ->
     if correct
-      sessionUser =
-        real: getSessionUser user
-        effective: getSessionUser user
-      return done null, sessionUser
+      getEffectiveUser user, (effectiveUser) ->
+        sessionUser =
+          real: getSessionUser user
+          effective: getSessionUser effectiveUser
+        return done null, sessionUser
     else
       done null, false, message: 'Incorrect username or password'
-
 
 app.configure ->
   app.use express.bodyParser()

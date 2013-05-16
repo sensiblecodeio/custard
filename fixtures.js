@@ -35,7 +35,7 @@ exports.users = [
   accountLevel: "grandfather",
   recurlyAccount: "ehg-2423432",
   acceptedTerms: 1,
-  canBeReally: ['test']
+  canBeReally: ['ehg', 'test']
 },
 {
   shortName: 'ickletest',
@@ -48,7 +48,7 @@ exports.users = [
   accountLevel: "free",
   recurlyAccount: "ickletest-242363",
   acceptedTerms: 1,
-  canBeReally: ['test', 'ehg']
+  canBeReally: ['ickletest', 'test', 'ehg']
 },
 {
   shortName: 'nopassword',
@@ -83,6 +83,7 @@ exports.users = [
   isStaff: false,
   accountLevel: "free",
   recurlyAccount: "mrgreedy-1045756",
+  defaultContext: "testersonltd",
   acceptedTerms: 1
 },
 {
@@ -95,6 +96,18 @@ exports.users = [
   isStaff: false,
   accountLevel: "free",
   recurlyAccount: "mrlazy-2319852"
+},
+{
+  shortName: 'testersonltd',
+  email: ['testersonltd@example.com'],
+  displayName: 'Testerson & Sons Ltd',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: process.env.COTEST_USER_API_KEY,
+  sshKeys: [],
+  isStaff: false,
+  accountLevel: "large",
+  canBeReally: 'mrgreedy',
+  recurlyAccount: "testersonltd-2319852"
 }
 ];
 

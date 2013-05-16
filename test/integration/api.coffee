@@ -431,6 +431,43 @@ describe 'API', ->
         @body.should.include 'ehg'
         @body.should.include 'ickletest'
 
+  login = (done) ->
+    @loginURL = "#{serverURL}/login"
+    request.get "#{serverURL}/logout", =>
+      request.get @loginURL, =>
+        request.post
+          uri: @loginURL
+          form:
+            username: @user
+            password: @password
+        , (err, res) =>
+          @loginResponse = res
+          done(err)
+
+  describe 'Forced context switch on login', ->
+    context "When we login as mrgreedy", ->
+      before (done) ->
+        @user = "mrgreedy"
+        @password = "testing"
+        login.call @, done
+
+      it 'forces me into the testersonltd context', (done) ->
+        request.get "#{serverURL}/api/testersonltd/datasets", (err, res) ->
+          res.should.have.status 200
+          done err
+
+    context "When we login as ehg", ->
+      before (done) ->
+        @user = "ehg"
+        @password = "testing"
+        login.call @, done
+
+      it "doesn't force me into a different context", (done) ->
+        request.get "#{serverURL}/api/ehg/datasets", (err, res) ->
+          res.should.have.status 200
+          done err
+
+
   describe 'Logging in as a different user', ->
     context "When I'm a staff member", ->
       before (done) ->

@@ -54,7 +54,7 @@ Signature section
 </style>
 
 <h2>General</h2>
-<p class="main">This agreement dated [<span class="fill-in">20</span>] is made by and between:
+<p class="main">This agreement (version 1.1.0 of the ScraperWiki Enterprise Agreement) dated [<span class="fill-in">20</span>] is made by and between:
 </p>
 
 <p><span class="party-number">(1)</span> ScraperWiki Ltd, a company limited by shares, incorporated in England and Wales under company registration number 06979284 whose registered office is at James House, Stonecross Business Park, Yew Tree Way, Warrington, Cheshire, WA3 3JD (“the supplier”); and
@@ -117,7 +117,7 @@ Wales under company registration number [<span class="fill-in-wide"></span>] who
 <p><span class="section-number">4.1</span> <em>The supplier</em> shall provide <em>the service</em> to <em>the customer</em></span>.</p>
 <p><span class="section-number">4.2</span> <em>The supplier</em> shall ensure that <em>the service</em> shall be made available not less than 99.5% of the time</span>.  </p>
 <p><span class="section-number">4.3</span> The percentage availability of <em>the service</em> shall be calculated on a monthly basis as follows:</p>
-<blockquote>100 * Complete minutes of time for which the service is unavailable / Total number of minutes in a month</blockquote>
+<blockquote>100 &times; Complete minutes of time for which the service is unavailable / Total number of minutes in a month</blockquote>
 <p><span class="section-number">4.4</span> Any time for which any of the following events occur shall not be included in the total time for which <em>the service</em> is unavailable.</p>
 <ul>
 <li><span class="section-number">4.4.1</span> Unavailability due to the fault of <em>the customer</em>;</li>
@@ -126,7 +126,7 @@ Wales under company registration number [<span class="fill-in-wide"></span>] who
 <li><span class="section-number">4.4.4</span> Unavailability due to any of the circumstances listed in Annex A3 (disaster recovery) except for any time which falls outside of the deadline for recovery given in that annex. The period of time after which that deadline for recovery expires shall not begin until <em>the supplier</em> becomes aware of the failure.</li>
 </ul>
 <p><span class="section-number">4.5</span> In the event that the availability of <em>the service</em> falls below 99.5% in any month, the client shall be entitled to a refund of the money paid in respect of that month’s service according to the following formula:</p>
-<blockquote>Monthly payment * (99.5 – percentage availability of service) / 50</blockquote>
+<blockquote>Monthly payment &times; (99.5 – percentage availability of service) / 50</blockquote>
 
 <p>Subject to the limitation that the maximum refund available shall be the entire monthly payment in any one month.</p>
 <p>Refunds will be issued in the form of credit against future payment instalments, or, should no further sums be payable by <em>the customer</em> to <em>the supplier</em> under the terms of this agreement, as a payment within 30 days of the end of the month in which <em>the service</em> fails to meet the guaranteed availability level.</p>
@@ -201,14 +201,14 @@ Wales under company registration number [<span class="fill-in-wide"></span>] who
 <h3><span class="section-number">10</span> Limitation of liability</h3>
 <p><span class="section-number">10.1</span> Subject to the remainder of this clause and to the extent allowed by law,neither party will be liable for: </p>
 <ul>
-<span class="section-number">10.1.1</span> any indirect or consequential loss; or
-<span class="section-number">10.1.2</span> any economic loss, such as loss of profits;
-caused to the other party even if any excluded loss was caused by the offending party’s negligence.
+<li><span class="section-number">10.1.1</span> any indirect or consequential loss; or</li>
+<li><span class="section-number">10.1.2</span> any economic loss, such as loss of profits;
+caused to the other party even if any excluded loss was caused by the offending party’s negligence.</li>
 </ul>
 <p><span class="section-number">10.2</span> Nothing in this clause excludes or limits liability for:</p>
 <ul>
-<span class="section-number">10.2.1</span> the negligent causation of personal injury or death.
-<span class="section-number">10.2.2</span> fraud.
+<li><span class="section-number">10.2.1</span> the negligent causation of personal injury or death.</li>
+<li><span class="section-number">10.2.2</span> fraud.</li>
 </ul>
 <p><span class="section-number">10.3</span> In any event, the liability of <em>the supplier</em> under this agreement shall be limited to the total sum payable by <em>the customer</em> during the contractual period in which the liability arose.</p>
 

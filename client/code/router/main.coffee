@@ -200,7 +200,7 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.showView subnavView
 
   termsEnterpriseAgreement: ->
-    subnavView = new Cu.View.Subnav {text: 'Enterprise Agreement'}
+    subnavView = new Cu.View.Subnav {text: 'ScraperWiki Enterprise Agreement'}
     contentView = new Cu.View.TermsEnterpriseAgreement()
     @appView.showView contentView
     @subnavView.showView subnavView

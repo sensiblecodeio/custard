@@ -1,8 +1,28 @@
+<!--
+TODO:
+
+Add anchors to clause and annexe references
+Signature section
+
+-->
+
 <style>
 
 #content p, #content li, #content h3 {
   position: relative;
   padding-left: 40px;
+  margin-bottom: 14px;
+}
+
+#content p.main {
+  position: relative;
+  padding-left: 0px;
+  margin-bottom: 14px;
+}
+
+#content blockquote {
+  position: relative;
+  margin-left: 40px;
   margin-bottom: 14px;
 }
 
@@ -34,7 +54,7 @@
 </style>
 
 <h2>General</h2>
-<p>This agreement dated [<span class="fill-in">20</span>] is made by and between:
+<p class="main">This agreement dated [<span class="fill-in">20</span>] is made by and between:
 </p>
 
 <p><span class="party-number">(1)</span> ScraperWiki Ltd, a company limited by shares, incorporated in England and Wales under company registration number 06979284 whose registered office is at James House, Stonecross Business Park, Yew Tree Way, Warrington, Cheshire, WA3 3JD (“the supplier”); and
@@ -47,7 +67,7 @@ Wales under company registration number [<span class="fill-in-wide"></span>] who
 
 <h2>Agreement</h2>
 
-<p>The parties agree as follows:</p>
+<p class="main">The parties agree as follows:</p>
 
 <h3><span class="section-number">1</span> Definitions</h3>
 
@@ -56,10 +76,10 @@ Wales under company registration number [<span class="fill-in-wide"></span>] who
   <li>“<em>the agreement</em>” means this agreement and any schedules and exhibits attached to it.</li>
   <li>“<em>business hours</em>” means between 9am and 5pm on any day upon which banks are generally open for business in the City of London. </li>
   <li>“<em>the initial period</em>” means one year from the date of commencement.</li>
-  <li>“<em>notice of increase</em>” means a notice given by the supplier under clause <a href="#">3.5</a>.</li>
+  <li>“<em>notice of increase</em>” means a notice given by the supplier under clause 3.5.</li>
   <li>“<em>the service charge</em>” means the sum payable monthly for the supply of the service in accordance with Annex A.1.</li>
   <li>“<em>the parties</em>” means the supplier and the customer.</li>
-  <li>“<em>the renewal date</em>” means the date upon which this agreement would (unless terminated) be renewed in accordance with clause <a href="#">2.2</a>. </li>
+  <li>“<em>the renewal date</em>” means the date upon which this agreement would (unless terminated) be renewed in accordance with clause 2.2. </li>
   <li>“<em>the service</em>” means the service described in Annex A.2.</li>
 </ul>
 <p><span class="section-number">1.2</span> Where a defined term is used it will be written in italic for clarity.</p>
@@ -70,18 +90,144 @@ Wales under company registration number [<span class="fill-in-wide"></span>] who
   <li><span class="section-number">1.4.2</span> If sent by ordinary post to the receiving party’s registered offices, three days after the date upon which the communication was posted.  It shall be sufficient to prove that this communication was properly addressed, stamped and put in the post in order to prove such service;</li>
   <li><span class="section-number">1.4.3</span> If sent by email to an address supplied by any party as an acceptable means of communication between the parties, then, if received during <em>business hours</em>, when it is received in the email inbox of the recipient.</li>
 </ul>
-<p><span class="section-number">1.5</span> If notice under clause <a href="#">1.4</a> is received outside of <em>business hours</em> then it shall be deemed to have been have been duly given one hour after the start of business hours next following the event which would otherwise have constituted successful notice.</p>
+<p><span class="section-number">1.5</span> If notice under clause 1.4 is received outside of <em>business hours</em> then it shall be deemed to have been have been duly given one hour after the start of business hours next following the event which would otherwise have constituted successful notice.</p>
 
 <h3><span class="section-number">2</span> Starting and renewal</h3>
 
 <p><span class="section-number">2.1</span> <em>The agreement</em> shall commence on the date set out at the head of this <em>agreement</em>.
 </p>
-<p><span class="section-number">2.2</span> Unless terminated in accordance with the provisions of clauses <a href="#">3.8</a> or <a href="#">9</a> below, the agreement will remain in force for the <em>initial period</em> and will be renewed automatically on a yearly rolling basis on the anniversary of its commencement.
+<p><span class="section-number">2.2</span> Unless terminated in accordance with the provisions of clauses 3.8 or 9 below, the agreement will remain in force for the <em>initial period</em> and will be renewed automatically on a yearly rolling basis on the anniversary of its commencement.
 </p>
 <p><span class="section-number">2.3</span> Either party may terminate <em>the agreement</em> by serving written notice of termination not less than three months before the <em>renewal date</em>.  If such notice is given, <em>the agreement</em> will not be renewed at the <em>renewal date</em>.
 </p>
 
+<h3><span class="section-number">3</span> Payment</h3>
+<p><span class="section-number">3.1</span> <em>The customer</em> will pay the service charge to <em>the supplier</em> in accordance with the terms specified in Annex A1 of this agreement.</p>
+<p><span class="section-number">3.2</span> All payments will be made in pounds sterling.</p>
+<p><span class="section-number">3.3</span> All sums payable under this agreement are exclusive of VAT or any similar tax as appropriate which shall, where applicable, be paid in addition at the rate in force at the due time for payment subject to the recipient providing a tax invoice complying with any formalities required in a VAT invoice or invoice for any similar tax as appropriate.</p>
+<p><span class="section-number">3.4</span> <em>The customer</em> will pay all sums owing to <em>the supplier</em> in full, and shall not be entitled to assert any set off or counterclaim against <em>the supplier</em> in order to withhold payment.</p>
+<p><span class="section-number">3.5</span> <em>The supplier</em> may vary the <em>service charge</em> by giving three months’ notice in writing. Any change in service charge under this provision shall take effect from the first payment due after the notice period, except that:</p>
+<ul>
+<li><span class="section-number">3.5.1</span> No increase in <em>service charge</em> may occur before the end of the <em>initial period</em>.</li>
+<li><span class="section-number">3.5.2</span> If <em>the supplier</em> has given <em>the customer</em> <em>a notice of increase</em>, <em>the customer</em> may terminate the agreement by giving notice in writing within on month of the service of the notice.  In which case, <em>this agreement</em> shall then terminate on the day before the new <em>service charge</em> would otherwise be due to come into effect and <em>the customer</em> shall be liable only for any payments due under <em>this agreement</em> before termination.</li>
+</ul>
 
 
+<h3><span class="section-number">4</span> Obligations of the supplier</h3>
+<p><span class="section-number">4.1</span> <em>The supplier</em> shall provide <em>the service</em> to <em>the customer</em></span>.</p>
+<p><span class="section-number">4.2</span> <em>The supplier</em> shall ensure that <em>the service</em> shall be made available not less than 99.5% of the time</span>.  </p>
+<p><span class="section-number">4.3</span> The percentage availability of <em>the service</em> shall be calculated on a monthly basis as follows:</p>
+<blockquote>100 * Complete minutes of time for which the service is unavailable / Total number of minutes in a month</blockquote>
+<p><span class="section-number">4.4</span> Any time for which any of the following events occur shall not be included in the total time for which <em>the service</em> is unavailable.</p>
+<ul>
+<li><span class="section-number">4.4.1</span> Unavailability due to the fault of <em>the customer</em>;</li>
+<li><span class="section-number">4.4.2</span> Unavailability due to circumstances entirely beyond the control of <em>the supplier</em> including but not limited to disruption in internet connectivity between <em>the supplier</em>, <em>the customer</em> and/or any other relevant third party;</li>
+<li><span class="section-number">4.4.3</span> Unavailability due to scheduled maintenance by <em>the supplier</em> lasting not longer than 3 hours notified to <em>the customer</em> at least 2 working days in advance of the start of that maintenance; or</li>
+<li><span class="section-number">4.4.4</span> Unavailability due to any of the circumstances listed in Annex A3 (disaster recovery) except for any time which falls outside of the deadline for recovery given in that annex. The period of time after which that deadline for recovery expires shall not begin until <em>the supplier</em> becomes aware of the failure.</li>
+</ul>
+<p><span class="section-number">4.5</span> In the event that the availability of <em>the service</em> falls below 99.5% in any month, the client shall be entitled to a refund of the money paid in respect of that month’s service according to the following formula:</p>
+<blockquote>Monthly payment * (99.5 – percentage availability of service) / 50</blockquote>
+
+<p>Subject to the limitation that the maximum refund available shall be the entire monthly payment in any one month.</p>
+<p>Refunds will be issued in the form of credit against future payment instalments, or, should no further sums be payable by <em>the customer</em> to <em>the supplier</em> under the terms of this agreement, as a payment within 30 days of the end of the month in which <em>the service</em> fails to meet the guaranteed availability level.</p>
+<p><span class="section-number">4.6</span> <em>The supplier</em> shall use all reasonable endeavours to receive, assess and respond to reports of faults with <em>the service</em> reported by <em>the customer</em>, and to do so in compliance with the timetable detailed in Annex A4.  The timetable for response begins from the time when <em>the supplier</em> has completed recording and assessment of the issue.</p>
+<p><span class="section-number">4.7</span> While <em>the supplier</em> has no control over the data which <em>the client</em> is processing, and cannot therefore guarantee a particular level of accuracy, they shall use reasonable care and skill to ensure that all data produced by tools provided by them accurately reflect the content of the original data which those tools were designed to process, and to address any defects in those tools in accordance with clause 4.6 subject to the constraints of the service agreement in Annex A. </p>
+
+<h3><span class="section-number">5</span> Obligations of the customer</h3>
+<p><span class="section-number">5.1</span> <em>The customer</em> shall take all reasonable steps to ensure that it is not possible for anyone other than <em>the customer</em>, their employees or agents to gain access to the service including but not limited to keeping any credentials used to access the system such as passwords secure.</p>
+<p><span class="section-number">5.2</span> <em>The customer</em> will not use <em>the service</em> for any illegal purpose.</p>
+<p><span class="section-number">5.3</span> <em>The customer</em> will not use <em>the service</em> to annoy, harass or cause a nuisance to others.</p>
+<p><span class="section-number">5.4</span> <em>The customer</em> will respect <em>the supplier</em>’s intellectual property rights and the intellectual property rights of others in their use of <em>the service</em>, and comply with the license requirements of any material which they are provided with access to under <em>this agreement</em>, so far as those requirements are legally enforceable.</p>
+<p><span class="section-number">5.5</span> <em>The customer</em> will not attempt to breach the security of <em>the service</em>, or attempt to use <em>the service</em> to breach the security of any other party.</p>
+<p><span class="section-number">5.6</span> <em>The customer</em> will report to <em>the supplier</em> privately in writing any occurrence, including accidental occurrences, which leads to <em>the customer</em> gaining unauthorised access to any part of <em>the service</em> as soon as is practical after <em>the customer</em> becomes aware that this has happened.  In these circumstances <em>the customer</em> will not use <em>the service</em> to interact with any material which they are not authorised to access.</p>
+<p><span class="section-number">5.7</span> <em>The customer</em> will not allow <em>the service</em> to be used to</p>
+<ul>
+<li><span class="section-number">5.7.1</span> defame any person;</li>
+<li><span class="section-number">5.7.2</span> infringe upon the intellectual property rights of others; or</li>
+<li><span class="section-number">5.7.3</span> do any unlawful or criminal act</li>
+</ul>
+<p><span class="section-number">5.8</span> <em>The customer</em> will indemnify and keep indemnified <em>the supplier</em> to the maximum extent permissible by law in respect of any proceedings, costs, liabilities, injury, loss or damage which may arise as a result of <em>the customer</em>’s use of <em>the service</em>.</p>
+
+<h3><span class="section-number">6</span> Intellectual Property</h3>
+<p><span class="section-number">6.1</span> <em>The customer</em> grants <em>the supplier</em> a perpetual, irrevocable, non-exclusive, worldwide licence, with a right to sub-license, to do anything which would otherwise infringe any of <em>the customer</em>’s intellectual property rights subsisting in anything transferred (even temporarily) by <em>the customer</em> to any of <em>the supplier</em>’s computer systems, provided that such use is for one of the following purposes:</p>
+<ul>
+<li><span class="section-number">6.1.1</span> administering the service, including the taking of back-up copies</li>
+<li><span class="section-number">6.1.2</span> making that intellectual property available as part of the normal operation of the service</li>
+<li><span class="section-number">6.1.3</span> to enable <em>the supplier</em> to identify and notify <em>the customer</em> of potential uses (both commercial and non-commercial) for that intellectual property.</li>
+</ul>
+
+<h3><span class="section-number">7</span> Confidentiality</h3>
+<p><span class="section-number">7.1</span> Under this heading “confidential information” means any information disclosed by one of <em>the parties</em> to the other, which:</p>
+<ul>
+<li><span class="section-number">7.1.1</span> is marked or otherwise identified as being confidential; or</li>
+<li><span class="section-number">7.1.2</span> ought reasonably to have been understood as being confidential in particular because of the circumstances of its disclosure and the nature of the information disclosed.</li>
+</ul>
+<p><span class="section-number">7.2</span> <em>The parties</em> agree to keep in confidence all confidential information. The parties will take all reasonable steps to ensure that:</p>
+<ul>
+<li><span class="section-number">7.2.1</span> all confidential information is used only for the proper performance of this agreement;</li>
+<li><span class="section-number">7.2.2</span> confidential information is only disclosed to another person where it is reasonable to do so in the circumstances;</li>
+<li><span class="section-number">7.2.3</span> where confidential information is disclosed to another person, that person is bound, whether by written agreement, or their professional rules, or otherwise, by an obligation of confidentiality at least as stringent as that imposed by this agreement on <em>the parties</em>.</li>
+</ul>
+<p><span class="section-number">7.3</span> A party is not bound by any obligation of confidentiality concerning information to the extent that it:</p>
+<ul>
+<li><span class="section-number">7.3.1</span> was already known to <em>the party</em> before <em>the parties</em> began to negotiate this agreement; or</li>
+<li><span class="section-number">7.3.2</span> has become public knowledge, except where that was caused by a breach of this agreement;</li>
+<li><span class="section-number">7.3.3</span> was received from another person who was not bound to keep it confidential; or</li>
+<li><span class="section-number">7.3.4</span> the order of a court, or a rule of law, requires its disclosure.</li>
+</ul>
+
+<h3><span class="section-number">8</span> Suspension</h3>
+<p><span class="section-number">8.1</span> In the event that <em>the customer</em> fails to pay any sums due under <em>this agreement</em>, <em>the supplier</em> may immediately suspend <em>the customer</em>’s access to <em>the service</em> until such time as payment has been received in full and processed by <em>the supplier</em>.  </p>
+<p><span class="section-number">8.2</span> <em>The supplier</em> may suspend the customer’s access to the service if <em>the supplier</em> reasonably believes that:</p>
+<ul>
+  <li><span class="section-number">8.2.1</span> that the customer is in breach of <em>this agreement</em>; or</li>
+  <li><span class="section-number">8.2.2</span> it is necessary in all the circumstances to do so.</li>
+</ul>
+<p><span class="section-number">8.3</span> If <em>the customer</em>’s access to the service is suspended because of <em>the customer</em>’s fault (whether that fault would be a breach of <em>this agreement</em> or otherwise), then they remain liable for any sums due under the agreement, unless such liability would be unreasonable in all the circumstances.  </p>
+
+<h3><span class="section-number">9</span> Termination</h3>
+<p><span class="section-number">9.1</span> In the event that either of <em>the parties</em> fail to perform any of their obligations under this agreement, and <em>that party</em> fails to remedy their breach within 30 days of receiving written notice from the other <em>party</em>, then the other <em>party</em> may serve written notice on <em>the party</em> in default terminating this agreement with immediate effect.  </p>
+<p><span class="section-number">9.2</span> In the event that <em>the supplier</em> terminates the agreement under clause 9.1, then the full amount payable in the whole period of <em>this agreement</em> that would otherwise have remained shall immediately become due.</p>
+<p><span class="section-number">9.3</span> Upon termination of <em>this agreement</em> for whatever reason, <em>the supplier</em>, unless prevented from doing so by law, shall ensure that <em>the customer</em> will be able to retrieve all of their data within 30 days of termination.  <em>The supplier</em> shall not be obliged to retain the customer’s data for more than 30 days following termination.</p>
+<p><span class="section-number">9.4</span> The following clauses of this agreement shall survive termination, regardless of the reason that termination occurs:</p>
+<ul>
+<li><span class="section-number">9.4.1</span> Clause 5.8 (indemnity)</li>
+<li><span class="section-number">9.4.2</span> Clause 6 (intellectual property)</li>
+<li><span class="section-number">9.4.3</span> Clause 7 (confidentiality)</li>
+<li><span class="section-number">9.4.4</span> Clause 9.3 (customer’s right of access to their data following terminations)</li>
+<li><span class="section-number">9.4.5</span> Clause 10 (limitation of liability)</li>
+</ul>
+
+<h3><span class="section-number">10</span> Limitation of liability</h3>
+<p><span class="section-number">10.1</span> Subject to the remainder of this clause and to the extent allowed by law,neither party will be liable for: </p>
+<ul>
+<span class="section-number">10.1.1</span> any indirect or consequential loss; or
+<span class="section-number">10.1.2</span> any economic loss, such as loss of profits;
+caused to the other party even if any excluded loss was caused by the offending party’s negligence.
+</ul>
+<p><span class="section-number">10.2</span> Nothing in this clause excludes or limits liability for:</p>
+<ul>
+<span class="section-number">10.2.1</span> the negligent causation of personal injury or death.
+<span class="section-number">10.2.2</span> fraud.
+</ul>
+<p><span class="section-number">10.3</span> In any event, the liability of <em>the supplier</em> under this agreement shall be limited to the total sum payable by <em>the customer</em> during the contractual period in which the liability arose.</p>
+
+<h3><span class="section-number">11</span> Choice of law and jurisdiction</h3>
+<p><span class="section-number">11.1</span> This agreement is subject to the law of England and Wales.</p>
+<p><span class="section-number">11.2</span> The parties submit to the exclusive jurisdiction of the courts of England and Wales for the resolution of any matter arising out of this agreement.</p>
+
+<h3><span class="section-number">12</span> Events beyond the parties’ control</h3>
+<p><span class="section-number">12.1</span> Neither <em>party</em> shall be responsible for any failure or delay in performing their obligations under this agreement that is caused by circumstances beyond their reasonable control.</p>
+<p><span class="section-number">12.2</span> If, for reasons beyond the reasonable control of either party, the performance of this agreement becomes impossible for a period of more than 3 months, either party may terminate this agreement by giving notice to the other.  </p>
+
+<h3><span class="section-number">13</span> Miscellaneous</h3>
+<p><span class="section-number">13.1</span> No term of this agreement is intended to be enforceable by anyone other than one of the <em>parties</em>. In consequence, the Contract (Rights of Third Parties) Act 1999 shall not apply.</p>
+<p><span class="section-number">13.2</span> This agreement may not be amended except by a further agreement in writing between the parties.  </p>
+<p><span class="section-number">13.3</span> If a court, or other competent authority, finds that any term of this agreement is illegal or otherwise unenforceable, that term is to be treated as if it had been severed from this agreement. Its severance will be treated (as far as possible) as having no effect on the remainder of this agreement.</p>
+<p><span class="section-number">13.4</span> The parties are not in, and do not intend to form a, partnership. Nothing in this agreement should be construed to the contrary.</p>
+
+<h2>Signatures</h2>
+
+<p class="main">The parties agree to the terms of this agreement through their authorized signatories.</p>
 
 <br><br><br>

@@ -11,6 +11,7 @@ exports.users = [
   isStaff: false,
   sshKeys: [],
   accountLevel: "free",
+  canBeReally: ['test'],
   acceptedTerms: 1,
 },
 {
@@ -22,6 +23,7 @@ exports.users = [
   isStaff: true,
   sshKeys: [],
   accountLevel: "free",
+  canBeReally: ['teststaff'],
   acceptedTerms: 1
 },
 {
@@ -83,7 +85,6 @@ exports.users = [
   isStaff: false,
   accountLevel: "free",
   recurlyAccount: "mrgreedy-1045756",
-  defaultContext: "testersonltd",
   acceptedTerms: 1
 },
 {
@@ -106,9 +107,22 @@ exports.users = [
   sshKeys: [],
   isStaff: false,
   accountLevel: "large",
-  canBeReally: 'mrgreedy',
+  canBeReally: 'tinat',
   recurlyAccount: "testersonltd-2319852"
-}
+},
+{
+  shortName: 'tinat',
+  email: ['tina@example.com'],
+  displayName: 'Tina Testerson NVQ',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: process.env.COTEST_USER_API_KEY,
+  sshKeys: [],
+  isStaff: false,
+  accountLevel: "free",
+  recurlyAccount: "tinat-1045756",
+  defaultContext: "testersonltd",
+  acceptedTerms: 1
+},
 ];
 
 exports.tokens = [

@@ -338,21 +338,20 @@ describe 'API', ->
             uri: "#{serverURL}/api/user"
             form:
               acceptedTerms: 7
-          , (err, res) =>
+          , (err, res, body) =>
             res.should.have.status 200
-            res.body.should.include 'ok'
+            obj = JSON.parse body
+            obj.acceptedTerms.should.equal 7
             done err
 
         it 'does not let me change my user name', (done) ->
           request.put
             uri: "#{serverURL}/api/user"
             form:
-              shortName: "zebadee"
+              shortName: 'zebadee'
           , (err, res) =>
-            res.should.not.have.status 200
-            res.body.should.not.include 'ok'
-            res.should.have.status 403
-            res.body.should.include 'error'
+            obj = JSON.parse res.body
+            obj.shortName.should.not.equal 'zebadee'
             done err
 
         it 'does let me change my canBeReally field', (done) ->
@@ -362,7 +361,8 @@ describe 'API', ->
               canBeReally: ["test", "teststaff"]
             , (err, res) ->
               res.should.have.status 200
-              res.body.should.include 'ok'
+              obj = JSON.parse res.body
+              obj.canBeReally.should.eql ['test', 'teststaff']
               done err
 
     describe 'Billing', ->

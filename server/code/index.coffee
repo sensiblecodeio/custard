@@ -459,14 +459,11 @@ updateUser = (req, resp) ->
     # The attributes that we can set via this API.
     canSet = ['acceptedTerms', 'canBeReally']
     _.extend user, _.pick req.body, canSet
-    otherAttrs = _.omit req.body, canSet
-    if not _.isEmpty otherAttrs
-      return resp.send 403, error: "This endpoint only sets #{canSet}; other attributes are ignored"
-    user.save (err) ->
+    user.save (err, newUser) ->
       if err?
         resp.send 500, error: err
       else
-        resp.send 200, success: 'ok'
+        resp.send 200, newUser
 
 listDatasets = (req, resp) ->
   Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->

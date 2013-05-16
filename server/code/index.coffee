@@ -131,12 +131,9 @@ getSessionUsersFromDB = (reqUser, cb) ->
 
 getEffectiveUser = (user, callback) ->
   User.findCanBeReally user.shortName, (err, canBeReally) ->
-    console.log 'sdfsdfsdfsdf wuewtsed'
     if canBeReally.length == 0
-      console.log 'LUL THERE IS NO CANBEREALLY'
       return callback(getSessionUser user)
     else
-      console.log 'pluck off', _.pluck(canBeReally, 'shortName')
       if user.defaultContext in _.pluck(canBeReally, 'shortName')
         effectiveUser = _.findWhere canBeReally, shortName: user.defaultContext
       else

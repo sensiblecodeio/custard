@@ -71,7 +71,6 @@ class Cu.View.DataHubNav extends Backbone.View
     users.fetch
       success: =>
         # TODO: we probably don't want to show the current context
-        @appendContextUser new Cu.Model.User(window.user.real)
         users.each @appendContextUser
 
   appendContextUser: (user) ->

@@ -1,0 +1,22 @@
+#!/usr/bin/env coffee
+mongoose = require 'mongoose'
+async = require 'async'
+
+{User} = require 'model/user'
+
+mongoose.connect process.env.CU_DB
+
+reallyMe = (shortName, cb) ->
+  User.findByShortName shortName, (err, user) ->
+    console.log "user", shortName
+    if user.canBeReally is null
+      user.canBeReally = [shortName]
+    else
+      user.canBeReally.push shortName
+    user.acceptedTerms = 1
+    user.save (err, user) ->
+      console.log "user #{shortName} err #{err}"
+      cb()
+
+console.log process.argv[2..]
+async.eachLimit process.argv[2..], 1, reallyMe, -> process.exit()

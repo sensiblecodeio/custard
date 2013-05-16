@@ -445,9 +445,9 @@ describe 'API', ->
           done(err)
 
   describe 'Forced context switch on login', ->
-    context "When we login as mrgreedy", ->
+    context "When we login as tinat", ->
       before (done) ->
-        @user = "mrgreedy"
+        @user = "tinat"
         @password = "testing"
         login.call @, done
 

@@ -209,6 +209,7 @@ body.fullscreen .container {
 #subnav-path > .context-switch > a {
   position: relative;
   margin-left: -4px;
+  text-decoration: none;
   /* We'll override these next settings for large-screened devices later */
   width: 260px;
   text-overflow: ellipsis;
@@ -220,14 +221,13 @@ body.fullscreen .container {
   padding-right: 20px;
 }
 
-#subnav-path > .context-switch > a:hover,
-#subnav-path > .context-switch.open > a {
+#subnav-path > .context-switch > a.dropdown-toggle:hover,
+#subnav-path > .context-switch.open > a.dropdown-toggle {
   border-color: #ccc;
   padding-top: 4px;
   padding-bottom: 4px;
   margin-top: -4px;
   margin-bottom: -4px;
-  text-decoration: none;
 }
 
 #subnav-path > .context-switch > a .caret {

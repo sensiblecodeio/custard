@@ -27,7 +27,6 @@ class Cu.View.DataHubNav extends Backbone.View
   className: 'subnav-wrapper'
 
   events:
-    'click .context-switch': 'displayContexts'
     'click .context-switch li': 'liClick'
     'click .new-dataset': 'showChooser'
     'focus .context-switch input': 'focusContextSearch'
@@ -55,6 +54,8 @@ class Cu.View.DataHubNav extends Backbone.View
         </div>
       </div>""")
 
+    @displayContexts()
+
     # close the tool chooser if it's open
     # (ie: if we've just used the back button to close it)
     if $('#chooser').length
@@ -70,7 +71,11 @@ class Cu.View.DataHubNav extends Backbone.View
     users = Cu.CollectionManager.get Cu.Collection.User
     users.fetch
       success: =>
-        # TODO: we probably don't want to show the current context
+        if users.length <= 1
+          $('.context-switch > a').attr('data-toggle', null)
+           .removeClass('dropdown-toggle', null)
+           .css('cursor', 'default')
+           .children('span').remove()
         users.each @appendContextUser
 
   appendContextUser: (user) ->

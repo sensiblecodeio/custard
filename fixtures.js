@@ -107,7 +107,7 @@ exports.users = [
   sshKeys: [],
   isStaff: false,
   accountLevel: "large",
-  canBeReally: 'tinat',
+  canBeReally: ['tinat'],
   recurlyAccount: "testersonltd-2319852"
 },
 {

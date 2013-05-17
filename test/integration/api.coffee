@@ -6,6 +6,22 @@ async = require 'async'
 settings = require '../settings.json'
 serverURL = process.env.CU_TEST_SERVER or settings.serverURL
 
+login = (done) ->
+  @loginURL = "#{serverURL}/login"
+  request.get
+    uri: "#{serverURL}/logout"
+    followRedirect: false
+  , (err) =>
+    request.get @loginURL, =>
+      request.post
+        uri: @loginURL
+        form:
+          username: @user
+          password: @password
+      , (err, res) =>
+        @loginResponse = res
+        done(err)
+
 describe 'API', ->
   before ->
     @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
@@ -431,18 +447,6 @@ describe 'API', ->
         @body.should.include 'ehg'
         @body.should.include 'ickletest'
 
-  login = (done) ->
-    @loginURL = "#{serverURL}/login"
-    request.get "#{serverURL}/logout", =>
-      request.get @loginURL, =>
-        request.post
-          uri: @loginURL
-          form:
-            username: @user
-            password: @password
-        , (err, res) =>
-          @loginResponse = res
-          done(err)
 
   describe 'Forced context switch on login', ->
     context "When we login as tinat", ->
@@ -467,25 +471,28 @@ describe 'API', ->
           res.should.have.status 200
           done err
 
+  describe "Automatic context switching", ->
+    context "when I'm logged in as test", ->
+      before (done) ->
+        @user = 'test'
+        @password = 'testing'
+        login.call @, done
+
+      context "when I visit ickletest's dataset", ->
+        before (done) ->
+          request.get "#{serverURL}/api/ickletest/datasets/3006375730", (err, res) =>
+            @res = res
+            done()
+
+        it "I become ickletest and can look at ickletest's dataset", ->
+          @res.should.have.status 200
 
   describe 'Logging in as a different user', ->
     context "When I'm a staff member", ->
       before (done) ->
-        # logout
-        request.get "#{serverURL}/logout", done
-      before (done) ->
-        @loginURL = "#{serverURL}/login"
-        @user = "teststaff"
+        @user = 'teststaff'
         @password = process.env.CU_TEST_STAFF_PASSWORD
-        request.get @loginURL, =>
-          request.post
-            uri: @loginURL
-            form:
-              username: @user
-              password: @password
-          , (err, res) =>
-            @loginResponse = res
-            done(err)
+        login.call @, done
 
       before (done) ->
         request.get "#{serverURL}/api/tools", (err, res) =>
@@ -516,6 +523,7 @@ describe 'API', ->
           @token = obj.token
           resp.should.have.status 201
           done(err)
+
       it '... and I can set the password', (done) ->
         request.post
           uri: "#{serverURL}/api/token/#{@token}"

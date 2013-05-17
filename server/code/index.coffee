@@ -195,7 +195,16 @@ js.root = 'code'
 checkThisIsMyDataHub = (req, resp, next) ->
   console.log 'checkThisIsMyDataHub', req.method, req.url, req.user.effective.shortName, req.params.user
   return next() if req.user.effective.shortName == req.params.user
-  return resp.send 403, error: "Unauthorised"
+
+  User.findByShortName req.params.user, (err, switchingTo) ->
+    if switchingTo?.canBeReally and req.user.real.shortName in switchingTo.canBeReally
+      req.user.effective = getSessionUser switchingTo
+      req.session.save()
+      resp.writeHead 302,
+        location: req.url
+      resp.end()
+    else
+      return resp.send 403, error: "Unauthorised"
 
 checkStaff = (req, resp, next) ->
   if req.user.real.isStaff

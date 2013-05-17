@@ -243,11 +243,11 @@ _addView = (user, dataset, attributes, callback) ->
   Dataset.findOneById dataset.box, user.shortName, (err, dataset) ->
     if err?
       console.warn err
-      return resp.send err.statusCode, error: "Error finding dataset: #{err.body}"
+      return callback {statusCode: err.statusCode, error: "Error finding dataset: #{err.body}"}
     Box.create user, (err, box) ->
       if err?
         console.warn err
-        return resp.send err.statusCode, error: "Error creating box: #{err.body}"
+        return callback {err.statusCode, error: "Error creating box: #{err.body}"}
       view =
         box: box.name
         boxServer: box.server

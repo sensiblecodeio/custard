@@ -76,7 +76,7 @@ scraperwiki.json</pre>
 
 <p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe.</p>
 
-<p>This <code>index.html</code> file contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It uses the <a href="#js-introduction">scraperwiki.js library</a> to select data and run the server-side <code>extract.py</code> script.</p>
+<p>This <code>index.html</code> file contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It uses the <a data-nonpushstate href="#js-introduction">scraperwiki.js library</a> to select data and run the server-side <code>extract.py</code> script.</p>
 
 <p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
 
@@ -440,7 +440,7 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
 
 <h2 id="tools-submit">Submit to the Tool Shop</h2>
 
-<p>To sumbit a completed tool (or work in progress!) to ScraperWiki, make a <code>HTTP POST</code> request to <code>/api/tools</code>, with the following body parameters:</p>
+<p>To submit a completed tool (or work in progress!) to ScraperWiki, make a <code>HTTP POST</code> request to <code>/api/tools</code>, with the following body parameters:</p>
 
 <table class="table table-bordered">
   <thead>

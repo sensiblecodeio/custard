@@ -6,7 +6,7 @@
     <li><a data-nonpushstate href="#step3">3. Make a user interface</a></li>
     <li><a data-nonpushstate href="#step4">4. Write your server-side code</a></li>
     <li><a data-nonpushstate href="#step5">5. Test it out</a></li>
-    <li><a data-nonpushstate href="#step6">6. Use other tools on your data</a></li>
+    <li><a data-nonpushstate href="#step6">6. Submit it to the Tool Shop</a></li>
     <li class="nav-header">Related guides:</li>
     <li><a href="/help/code-in-your-browser">Code a scraper in your browser</a></li>
     <li><a href="/help/developer">Full developer docs</a></li>
@@ -19,7 +19,7 @@
 
   <div class="step">
     <img class="thumbnail" src="/image/screenshots/create-new-dataset.png" width="292" height="153" alt="Create New Dataset" />
-    <p>In this guide, we&rsquo;re going to make a tool that populates a dataset of lost kittens. It&rsquo;ll <p>
+    <p>In this guide, we&rsquo;re going to make a simple tool that finds images on Wikipedia, based on a given search term.<p>
     <p>After registering and logging in, click the <strong>&ldquo;Create a new dataset&rdquo;</strong> button on your homepage.</p>
   </div>
 
@@ -29,34 +29,145 @@
     <p>We&rsquo;re going to <strong>&ldquo;Code a Dataset&rdquo;</strong> from scratch. Click it.</p>
   </div>
 
+  <div class="step">
+    <img class="thumbnail" src="/image/screenshots/rename-wikipedia-tool.png" width="387" height="57" alt="Rename Wikipedia Tool">
+    <p>Before we start, let&rsquo;s give this dataset a more memorable name so we can find it later.</p>
+  </div>
+
   <h2 id="step2">2. SSH into the box</h2>
 
   <div class="step">
-    
+    <img class="thumbnail" src="/image/screenshots/ssh-in-to-dataset.png" width="371" height="241" alt="SSH in to dataset">
+    <p>Hover over your new tool&rsquo;s icon in the top right corner of the screen, to show the tools menu.</p>
+    <p>Click the &ldquo;SSH IN&rdquo; link, and follow the instructions to set up your SSH keys.</p>
+  </div>
+  
+  <div class="step full-width">
+    <p class="well well-small"><span class="label label-info">Top tip!</span> This guide assumes you&rsquo;re happy editing files on a remote server using a command-line editor like Vim, Emacs, Nano or Joe. <strong>If you&rsquo;d prefer to edit locally</strong>, using your normal text editor, check out <a href="http://localhost:3001/help/developer/#tools-develop-locally">swbox</a>.</p>
   </div>
 
   <h2 id="step3">3. Make a user interface</h2>
 
   <div class="step">
-    
+    <img src="/image/screenshots/default-dataset-index-html.png" width="859" height="563" alt="Default dataset index.html">
+    <p>Your tool&rsquo;s user interface lives in the <code>~/tool/http/</code> directory.</p>
+    <p>Use an editor like Nano or Vim to edit the <code>index.html</code> file.</p>
+    <pre class="prettyprint" style="float: left; width: 49%">$ nano ~/tool/http/index.html # good for beginners
+$ vim ~/tool/http/index.html # more powerful for coders</pre>
+  </div>
+
+  <div class="step full-width">
+    <p>Edit the <code>index.html</code> file so that it looks like this:</p>
+    <pre class="prettyprint linenums">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Wikipedia Image Search&lt;/title&gt;
+    &lt;meta http-equiv="cleartype" content="on"&gt;
+    &lt;link rel="stylesheet" href="//x.scraperwiki.com/vendor/style/bootstrap.min.css"&gt;
+    &lt;link rel="stylesheet" href="//x.scraperwiki.com/style/scraperwiki.css"&gt;
+    &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script src="//x.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;
+    &lt;script src="//x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+      $(function() {
+          var execSuccess = function(execOutput) {
+            var datasetUrl = "/dataset/" + scraperwiki.box
+            scraperwiki.tool.redirect(datasetUrl)
+          }
+          $('#submit').on('click', function() {
+            $(this).addClass('loading').html('Searching&hellip;')
+            term = $('#q').val()
+            scraperwiki.exec("tool/search.py '" + term + "'", execSuccess)
+          })
+      })
+    &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body style="text-align: center"&gt;
+    &lt;h1&gt;Search Wikipedia Images&lt;/h1&gt;
+    &lt;div class="input-append"&gt;
+      &lt;input type="text" name="q" size="80" id="q" placeholder="Search term, eg: cats"&gt;
+      &lt;button class="btn btn-primary" type="submit" id="submit"&gt;Search&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+    <p>This displays a form with a box for the user to type a search term, and then has some JavaScript that passes the search term to a server-side script which does all the heavy lifting.</p>
+    <p>Extra marks if you can spot the intentional command injection vulnerability!</p>
+  </div>
+  
+  <div class="step full-width">
+    <p><strong>Short on time?</strong> Just run this to download the finished index.html file from <a href="https://github.com/scraperwiki/qs-wikipedia-images-tool/" target="_blank">our Github repo</a>:</p>
+    <pre>curl -o ~/tool/http/index.html "https://raw.github.com/scraperwiki/qs-wikipedia-images-tool/master/http/index.html"</pre>
   </div>
 
   <h2 id="step4">4. Write your server-side code</h2>
 
-  <div class="step">
-    
+  <div class="step full-width">
+    <p>The JavaScript, above, sends the user&rsquo;s search term as a command line argument to a script at <code>tool/search.py</code>. We need to make that file.</p>
+    <p>Create a new file called <code>search.py</code> in the <code>~/tool/</code> directory, and fill it with this code:</p>
+    <pre class="prettyprint linenums">#!/usr/bin/env python
+import sys
+import requests
+import scraperwiki
+
+URL = "http://en.wikipedia.org/w/api.php?action=query&list=allimages&aiprop=url|user|timestamp|size|mime&ailimit=100&format=json&aifrom=%s"
+
+data = requests.get(URL % sys.argv[1]).json()
+images = data['query']['allimages']
+scraperwiki.sqlite.save(['name'], images, 'images')</pre>
+  </div>
+  
+  <div class="step full-width">
+    <p><strong>Short on time?</strong> Just run this to download the finished search.py file from <a href="https://github.com/scraperwiki/qs-wikipedia-images-tool/" target="_blank">our Github repo</a>:</p>
+    <pre>curl -o ~/tool/search.py "https://raw.github.com/scraperwiki/qs-wikipedia-images-tool/master/search.py"</pre>
+  </div>
+  
+  <div class="step full-width">
+    <p>Remember to make your <code>search.py</code> file executable so that the JavaScript frontend can run it.</p>
+    <pre>chmod +x ~/tool/search.py</pre>
   </div>
 
   <h2 id="step5">5. Test it out</h2>
 
   <div class="step">
-    
+    <img src="/image/screenshots/finished-wikipedia-tool.png" width="891" height="655" alt="Finished Wikipedia Tool">
+    <p>Reload your web browser to see your tool&rsquo;s new look!</p>
+    <p>Type in a search term and see whether it works.</p>
+    <p>Once the <code>search.py</code> script has finished running, the JavaScript <code>execSuccess</code> callback function automatically redirects you to a table view of your data. Pretty!</p>
+    <p>Or try visualising your data using the <strong>Summarise Automatically</strong> tool. You&rsquo;ll find it under &ldquo;<strong>More tools&hellip;</strong>&rdquo; in the Tools menu in the top right.</p>
   </div>
 
-  <h2 id="step6">6. Use other tools on your data</h2>
+  <h2 id="step6">6. Submit it to the Tool Shop</h2>
 
-  <div class="step">
-    
+  <div class="step full-width">
+    <p>Let&rsquo;s submit this to the Tool Shop, privately, so you can use it again and again on all your other datasets.</p>
+    <p>Switch back to your SSH session, and create a file called <code>scraperwiki.json</code> in the <code>~/tool/</code> directory.</p>
+    <pre>nano ~/tool/scraperwiki.json</pre>
+    <p>Paste these settings into the file:</p>
+    <pre class="prettyprint">{
+  "displayName": "Search Wikipedia images",
+  "description": "Enter a search term. Get images. Simple."
+}</pre>
+  </div>
+
+  <div class="step full-width">
+    <p>The Tool Shop uses Git to pull your tool&rsquo;s latest code. Set up a Git repo in your <code>~/tool/</code> directory:</p>
+    <pre>cd ~/tool
+git init
+git add .
+git commit -m 'initial commit'</pre>
+
+    <p class="well well-small"><span class="label label-info">Top tip!</span> Follow <a href="http://localhost:3001/help/developer/#tools-develop-remotely">these instructions</a> to magically send your local Git settings to the remote box using SSH Agent Forwarding.</p>
+
+    <p>Then push your code to a third-party Git hosting service like <a href="https://help.github.com/articles/pushing-to-a-remote" target="_blank">Github</a> or <a href="https://confluence.atlassian.com/display/BITBUCKET/Creating+a+Repository" target="_blank">BitBucket</a>.</p>
+  </div>
+  
+  <div class="step full-width">
+    <p>Now your tool has a <code>scraperwiki.json</code> file, and is on Github or BitBucket, you can submit it to the Tool Shop.</p>
+    <p>Right now, the Tool Shop API requires an active ScraperWiki session cookie, which means it&rsquo;s easiest to call it from directly within your browser.</p>
+    <p>Open up your browser&rsquo;s JavaScript console (Ctrl-Shift-J on a PC, Cmd-Alt-J on a Mac) and paste this code in, making sure to replace <strong>git://github.com/your-repo.git</strong> with your tool&rsquo;s new Git URL:</p>
+    <pre class="prettyprint">$.ajax({url: "/api/tools", type: "POST", data: {name: "wikipedia-<%= @user?.shortName or 'search' %>", type: "importer", public: false, gitUrl: "git://github.com/your-repo.git"}}).complete(function(r){ console.log(r.responseText) })</pre>
+    <p>Once you get a response, your tool has been published! You can find it by clicking &ldquo;<strong>Create a new dataset</strong>&rdquo; on your homepage.</p>
   </div>
 
 </div>

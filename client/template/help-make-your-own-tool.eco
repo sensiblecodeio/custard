@@ -41,9 +41,9 @@
     <p>Hover over your new tool&rsquo;s icon in the top right corner of the screen, to show the tools menu.</p>
     <p>Click the &ldquo;SSH IN&rdquo; link, and follow the instructions to set up your SSH keys.</p>
   </div>
-  
+
   <div class="step full-width">
-    <p class="well well-small"><span class="label label-info">Top tip!</span> This guide assumes you&rsquo;re happy editing files on a remote server using a command-line editor like Vim, Emacs, Nano or Joe. <strong>If you&rsquo;d prefer to edit locally</strong>, using your normal text editor, check out <a href="http://localhost:3001/help/developer/#tools-develop-locally">swbox</a>.</p>
+    <p class="well well-small"><span class="label label-info">Top tip!</span> This guide assumes you&rsquo;re happy editing files on a remote server using a command-line editor like Vim, Emacs, Nano or Joe. <strong>If you&rsquo;d prefer to edit locally</strong>, using your normal text editor, check out <a href="/help/developer/#tools-develop-locally">swbox</a>.</p>
   </div>
 
   <h2 id="step3">3. Make a user interface</h2>
@@ -94,7 +94,7 @@ $ vim ~/tool/http/index.html # more powerful for coders</pre>
     <p>This displays a form with a box for the user to type a search term, and then has some JavaScript that passes the search term to a server-side script which does all the heavy lifting.</p>
     <p>Extra marks if you can spot the intentional command injection vulnerability!</p>
   </div>
-  
+
   <div class="step full-width">
     <p><strong>Short on time?</strong> Just run this to download the finished index.html file from <a href="https://github.com/scraperwiki/qs-wikipedia-images-tool/" target="_blank">our Github repo</a>:</p>
     <pre>curl -o ~/tool/http/index.html "https://raw.github.com/scraperwiki/qs-wikipedia-images-tool/master/http/index.html"</pre>
@@ -116,12 +116,12 @@ data = requests.get(URL % sys.argv[1]).json()
 images = data['query']['allimages']
 scraperwiki.sqlite.save(['name'], images, 'images')</pre>
   </div>
-  
+
   <div class="step full-width">
     <p><strong>Short on time?</strong> Just run this to download the finished search.py file from <a href="https://github.com/scraperwiki/qs-wikipedia-images-tool/" target="_blank">our Github repo</a>:</p>
     <pre>curl -o ~/tool/search.py "https://raw.github.com/scraperwiki/qs-wikipedia-images-tool/master/search.py"</pre>
   </div>
-  
+
   <div class="step full-width">
     <p>Remember to make your <code>search.py</code> file executable so that the JavaScript frontend can run it.</p>
     <pre>chmod +x ~/tool/search.py</pre>
@@ -157,11 +157,11 @@ git init
 git add .
 git commit -m 'initial commit'</pre>
 
-    <p class="well well-small"><span class="label label-info">Top tip!</span> Follow <a href="http://localhost:3001/help/developer/#tools-develop-remotely">these instructions</a> to magically send your local Git settings to the remote box using SSH Agent Forwarding.</p>
+    <p class="well well-small"><span class="label label-info">Top tip!</span> Follow <a href="/help/developer/#tools-develop-remotely">these instructions</a> to magically send your local Git settings to the remote box using SSH Agent Forwarding.</p>
 
     <p>Then push your code to a third-party Git hosting service like <a href="https://help.github.com/articles/pushing-to-a-remote" target="_blank">Github</a> or <a href="https://confluence.atlassian.com/display/BITBUCKET/Creating+a+Repository" target="_blank">BitBucket</a>.</p>
   </div>
-  
+
   <div class="step full-width">
     <p>Now your tool has a <code>scraperwiki.json</code> file, and is on Github or BitBucket, you can submit it to the Tool Shop.</p>
     <p>Right now, the Tool Shop API requires an active ScraperWiki session cookie, which means it&rsquo;s easiest to call it from directly within your browser.</p>

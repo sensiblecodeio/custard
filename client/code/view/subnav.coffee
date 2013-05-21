@@ -370,6 +370,8 @@ class Cu.View.HelpNav extends Backbone.View
         name = 'Upload and summarise a spreadsheet of data'
       when 'code-in-your-browser'
         name = 'Code a scraper in your browser'
+      when 'make-your-own-tool'
+        name = 'Make your own tool with HTML, JavaScript & Python'
       when 'whats-new'
         name = 'What’s new?'
 

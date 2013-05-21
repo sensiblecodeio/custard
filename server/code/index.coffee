@@ -217,7 +217,7 @@ checkSwitchUserRights = (req, res, next) ->
   console.log "SWITCH #{req.user.effective.shortName} -> #{switchingTo}"
   User.findByShortName switchingTo, (err, user) ->
     if err? or not user?
-      return resp.send 500, err
+      return res.send 500, err
     # Staff can (still) switch into any profile.
     # Otherwise check the canBeReally field of the target user.
     if req.user.real.isStaff or

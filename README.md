@@ -12,7 +12,7 @@ AGPL Licenced (see LICENCE file).
 
 On Debian or Ubuntu:
 
-    sudo apt-get mongodb
+    sudo apt-get install mongodb
 
 On Mac OSX:
 

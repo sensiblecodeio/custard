@@ -12,6 +12,7 @@ exports.users = [
   sshKeys: [],
   accountLevel: "free",
   canBeReally: ['test'],
+  recurlyAccount: "test-2423432",
   acceptedTerms: 1,
 },
 {
@@ -23,6 +24,7 @@ exports.users = [
   isStaff: true,
   sshKeys: [],
   accountLevel: "free",
+  recurlyAccount: "testsdfs-2423432",
   canBeReally: ['teststaff'],
   acceptedTerms: 1
 },

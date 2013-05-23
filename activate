@@ -89,6 +89,8 @@ export CU_BOX_SERVER="boxecutor-dev-0.scraperwiki.net"
 # prefix for the path that gand sets quotas on.
 export GA_PATH='tmp'
 export GA_ALLOWED_IPS='["127.0.0.1"]'
+export COTEST_USER_API_KEY=asfsdfsfg
+export COTEST_STAFF_API_KEY=oier4j
 
 s=../swops-secret/keys.sh
 test -e "$s" && . "$s" && echo yummm, keys.sh

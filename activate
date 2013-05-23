@@ -79,8 +79,21 @@ turn_off_uglify_mangling() {
   sed  -i '/^    ast = pro.ast_mangle(ast);/s/^/\/\//' node_modules/connect-assets/node_modules/snockets/lib/snockets.js
 }
 
+# Many of these values are also set in keys.sh
+export CU_DB='mongodb://localhost/cu-test'
+export CU_SESSION_SECRET="supersecretsessionkey"
+export CU_TEST_STAFF_PASSWORD="858d14a4"
+export CU_TOOLS_DIR='/tmp/tools'
+# Development server domain name (will override stored box server)
+export CU_BOX_SERVER="boxecutor-dev-0.scraperwiki.net"
+# prefix for the path that gand sets quotas on.
+export GA_PATH='tmp'
+export GA_ALLOWED_IPS='["127.0.0.1"]'
+
 s=../swops-secret/keys.sh
 test -e "$s" && . "$s" && echo yummm, keys.sh
+
+mkdir -p $CU_TOOLS_DIR
 
 if [ "$NODE_ENV" = "production" ]
 then

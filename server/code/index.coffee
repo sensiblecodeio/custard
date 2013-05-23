@@ -247,7 +247,7 @@ _addView = (user, dataset, attributes, callback) ->
     Box.create user, (err, box) ->
       if err?
         console.warn err
-        return callback {err.statusCode, error: "Error creating box: #{err.body}"}
+        return callback {statusCode: err.statusCode, error: "Error creating box: #{err.body}"}
       view =
         box: box.name
         boxServer: box.server

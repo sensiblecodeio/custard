@@ -425,8 +425,8 @@ easier solution. In short, set up a local SSH agent, and add this to <code>~/.ss
 </a>
 
 <pre class="prettyprint">Host box
-HostName <%= @user?.boxServer or 'free.scraperwiki.com'%>
-ForwardAgent yes</pre>
+    HostName <%= @user?.boxServer or 'free.scraperwiki.com'%>
+    ForwardAgent yes</pre>
 
 <p>Full instructions are in Github&rsquo;s help on
 <a href="https://help.github.com/articles/using-ssh-agent-forwarding">Using SSH agent forwarding</a>.

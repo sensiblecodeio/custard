@@ -6,6 +6,13 @@
         "maxNumDatasets": 81,
         "$": true
     },
+    "ec2": {
+        "boxServer": "ec2-184-73-38-186.compute-1.amazonaws.com",
+        "maxDiskSpaceMB": 4000,
+        "maxHourCPUPerDay": 2.0,
+        "maxNumDatasets": 81,
+        "$": true
+    },
     "free": {
         "boxServer": "free.scraperwiki.com",
         "maxDiskSpaceMB": 8,

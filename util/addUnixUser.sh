@@ -2,7 +2,7 @@
 
 USERNAME="$1"
 UID="$2"
-
+# TODO: exit when already exists
 # Create the user
 gid=$(awk -F: '/^databox:/{print $3}' /etc/group)
 passwd_row="${USERNAME}:x:${UID}:${gid}::/home:/bin/bash"

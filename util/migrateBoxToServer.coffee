@@ -11,6 +11,7 @@ request = require 'request'
 {Box} = require 'model/box'
 
 BOX_NAME = process.argv[2]
+NEW_BOX_SERVER = process.argv[3]
 
 boxExec = (cmd, box, user, callback) ->
   request.post
@@ -20,33 +21,45 @@ boxExec = (cmd, box, user, callback) ->
       cmd: cmd
   , callback
 
-unless BOX_NAME?
-  console.log "You must specify a box name"
+unless BOX_NAME? or NEW_BOX_SERVER?
+  console.log "./script <box name> <new box server>"
   process.exit 1
 
 mongoose.connect process.env.CU_DB
 
 migratePasswdEntry = (box, user, callback) ->
-  # Add UID to box in DB
+  # TODO: Add UID to box in DB
+  console.log "Migrating passwd entry..."
   boxExec "id -u", box, user, (err, res, uid) ->
     uid = uid.replace('\n', '')
     exec "util/addUnixUser.sh #{box.name} #{uid}", (err, stdout, stderr) ->
       console.log "migratePasswdEntry", err, stdout, stderr
       callback()
 
-# Force cobalt to distribute SSH keys (steal code from custard?) 1
-# Refactor distributeUserKeys to allow for update of single box
-#
-# Transfer box data (duplicity from backups + rsync) 1
-# Run duplicity to get latest backed up data??
-#
-# Cronfiles (scp) 1
-# Save existing crontab (exec crontab) to crontab file, chown, crontab < crontab
-#
-# Disable cronjob on existing server 1
-# Exec crontab -r
+transferBoxData = (callback) ->
+  # Run duplicity to get latest backed up data??
+  console.log "Transferring box data..."
+  exec "util/transferBoxData.sh #{box.name}", (err, stdout, stderr) ->
+    console.log "transferBoxData", err, stdout, stderr
+    return callback()
+
+transferCrontab = (callback) ->
+  console.log "Transferring crontab..."
+  # Save existing crontab (exec crontab) to crontab file, chown, crontab < crontab
+  return callback()
+
+disableOldCrontab = (callback) ->
+  console.log "Disabling old crontab"
+  # Exec crontab -r
+  return callback()
 
 Box.findOneByName BOX_NAME, (err, box) ->
   User.findByShortName box.users[0], (err, user) ->
     migratePasswdEntry box, user, ->
-      console.log "Migrated passwd entry"
+      transferBoxData ->
+        transferCrontab ->
+          disableOldCrontab ->
+            box.server = NEW_BOX_SERVER
+            box.save (err) ->
+              box.distributeSSHKeys (err, res, body) ->
+                console.log 'distrib', err, res, body

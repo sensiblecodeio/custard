@@ -99,24 +99,13 @@ class exports.User extends ModelBase
       async.forEach boxes, (box, boxCb) ->
         # call cobalt with list of sshkeys of box
         # sshkeys <--> user <--> box
-        Box.findUsersByName box.name, (err, users) ->
-          boxKeys = []
-          async.forEach users, (userName, userCb) ->
-            User.findByShortName userName, (err, user) ->
-              boxKeys = boxKeys.concat user.sshKeys
-              userCb()
-          , ->
-            request.post
-              uri: "#{Box.endpoint box.server, box.name}/sshkeys"
-              form:
-                keys: JSON.stringify boxKeys
-            , (err, res, body) ->
-              try
-                obj = JSON.parse body
-              catch e
-                return boxCb e
-              return boxCb obj?.error if obj?.error?
-              return boxCb err
+        box.distributeSSHKeys (err, res, body) ->
+          try
+            obj = JSON.parse body
+          catch e
+            return boxCb e
+          return boxCb obj?.error if obj?.error?
+          return boxCb err
       , callback
 
   @findByShortName: (shortName, callback) ->

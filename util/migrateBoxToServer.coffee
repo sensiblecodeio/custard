@@ -1,6 +1,7 @@
 #!/usr/bin/env coffee
 # Migrates a single box to a server. Run on server that box is to be
 # migrated to.
+fs = require 'fs'
 {exec} = require 'child_process'
 
 mongoose = require 'mongoose'
@@ -43,15 +44,28 @@ transferBoxData = (callback) ->
     console.log "transferBoxData", err, stdout, stderr
     return callback()
 
-transferCrontab = (callback) ->
+transferCrontab = (box, user, callback) ->
   console.log "Transferring crontab..."
-  # Save existing crontab (exec crontab) to crontab file, chown, crontab < crontab
-  return callback()
+  boxExec "crontab -l", box, user, (err, stdout, crontab) ->
+    if /no crontab for/.test crontab
+      console.log "No crontab"
+      return callback()
+    else
+      crontabPath = "/var/spool/cron/crontabs/#{box.name}"
+      fs.writeFileSync crontabPath, crontab
+      exec "chown #{box.name}:crontab #{crontabPath}", (err, stdout, stderr) ->
+        console.log "chown", err, stdout, stderr
 
-disableOldCrontab = (callback) ->
-  console.log "Disabling old crontab"
-  # Exec crontab -r
-  return callback()
+        exec "chmod 600 #{crontabPath}", (err, stdout, stderr) ->
+          console.log "chmod", err, stdout, stderr
+          return callback()
+
+
+disableOldCrontab = (box, user, callback) ->
+  console.log "Disabling old crontab..."
+  boxExec "crontab -r", box, user, (err, stdout, crontab) ->
+    console.log "disableOldCrontab", err, stdout, crontab
+    return callback()
 
 Box.findOneByName BOX_NAME, (err, box) ->
   User.findByShortName box.users[0], (err, user) ->

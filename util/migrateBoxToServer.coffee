@@ -5,28 +5,31 @@
 
 mongoose = require 'mongoose'
 async = require 'async'
+request = require 'request'
 
 {User} = require 'model/user'
 {Box} = require 'model/box'
 
-boxExec = (cmd, callback) ->
+BOX_NAME = process.argv[2]
+
+boxExec = (cmd, box, user, callback) ->
   request.post
     uri: "#{Box.endpoint box.server, box.name}/exec"
     form:
-      apikey: user.apiKey
+      apikey: user.apikey
       cmd: cmd
   , callback
-
-BOX_NAME = process.argv[2]
-box = null
-user = null
 
 unless BOX_NAME?
   console.log "You must specify a box name"
   process.exit 1
 
-migratePasswdEntry = (callback) ->
-  boxExec "id -u", (err, res, uid) ->
+mongoose.connect process.env.CU_DB
+
+migratePasswdEntry = (box, user, callback) ->
+  # Add UID to box in DB
+  boxExec "id -u", box, user, (err, res, uid) ->
+    uid = uid.replace('\n', '')
     exec "util/addUnixUser.sh #{box.name} #{uid}", (err, stdout, stderr) ->
       console.log "migratePasswdEntry", err, stdout, stderr
       callback()
@@ -45,5 +48,5 @@ migratePasswdEntry = (callback) ->
 
 Box.findOneByName BOX_NAME, (err, box) ->
   User.findByShortName box.users[0], (err, user) ->
-    migratePasswdEntry ->
+    migratePasswdEntry box, user, ->
       console.log "Migrated passwd entry"

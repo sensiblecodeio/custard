@@ -37,10 +37,10 @@ migratePasswdEntry = (box, user, callback) ->
       console.log "migratePasswdEntry", err, stdout, stderr
       callback()
 
-transferBoxData = (callback) ->
+transferBoxData = (box, user, callback) ->
   # Run duplicity to get latest backed up data??
   console.log "Transferring box data..."
-  exec "util/transferBoxData.sh #{box.name}", (err, stdout, stderr) ->
+  exec "util/transferBoxData.sh #{box.name} #{box.server}", (err, stdout, stderr) ->
     console.log "transferBoxData", err, stdout, stderr
     return callback()
 
@@ -63,17 +63,19 @@ transferCrontab = (box, user, callback) ->
 
 disableOldCrontab = (box, user, callback) ->
   console.log "Disabling old crontab..."
-  boxExec "crontab -r", box, user, (err, stdout, crontab) ->
-    console.log "disableOldCrontab", err, stdout, crontab
+  boxExec "crontab -r", box, user, (err, res, body) ->
+    console.log "disableOldCrontab", err, body
     return callback()
 
 Box.findOneByName BOX_NAME, (err, box) ->
+  box = Box.makeModelFromMongo box
   User.findByShortName box.users[0], (err, user) ->
     migratePasswdEntry box, user, ->
-      transferBoxData ->
-        transferCrontab ->
-          disableOldCrontab ->
+      transferBoxData box, user, ->
+        transferCrontab box, user, ->
+          disableOldCrontab box, user, ->
             box.server = NEW_BOX_SERVER
             box.save (err) ->
               box.distributeSSHKeys (err, res, body) ->
-                console.log 'distrib', err, res, body
+                console.log 'distributeSSHKeys', err, body
+                process.exit()

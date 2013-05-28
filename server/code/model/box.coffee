@@ -68,12 +68,12 @@ class Box extends ModelBase
               callback null
 
   distributeSSHKeys: (callback) ->
+    {User} = require 'model/user'
     boxKeys = []
-    User.findByShortName @users[0], (err, user) ->
+    User.findByShortName @users[0], (err, user) =>
       boxKeys = boxKeys.concat user.sshKeys
-    , ->
       request.post
-        uri: "#{Box.endpoint box.server, box.name}/sshkeys"
+        uri: "#{@endpoint()}/sshkeys"
         form:
           keys: JSON.stringify boxKeys
       , callback

@@ -330,6 +330,30 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
     , 0
     @
 
+# Toolbar contains a dataset's name, and all the tools acting on it
+class Cu.View.Toolbar extends Backbone.View
+  id: 'toolbar'
+  className: 'subnav-wrapper'
+
+  events:
+    'click .new-view': 'showChooser'
+
+  showChooser: ->
+    app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true
+
+  initialize: ->
+    super()
+    @model.on 'update:tool', @render, @
+    @toolsView = new Cu.View.DatasetTools
+      model: @model
+      view: @options.view
+
+  render: ->
+    @$el.html """<div id="dataset-meta"><div>#{@model.get 'displayName'}</div></div>"""
+    @$el.append(@toolsView.render().el)
+    @
+
+
 class Cu.View.SignUpNav extends Backbone.View
   className: 'subnav-wrapper'
 

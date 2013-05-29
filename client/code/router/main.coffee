@@ -104,7 +104,7 @@ class Cu.Router.Main extends Backbone.Router
   dataset: (box) ->
     doNotNavigate = false
     render = (dataTablesView) =>
-        subnavView = new Cu.View.DatasetNav {model: model, view: dataTablesView}
+        subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
         @subnavView.showView subnavView
         contentView = new Cu.View.PluginContent {model: dataTablesView}
         @appView.showView contentView
@@ -116,7 +116,7 @@ class Cu.Router.Main extends Backbone.Router
     modelDone = model.fetch()
     $.when.apply( null, [modelDone, toolsDone] ).done =>
       views = model.get 'views'
-      subnavView = new Cu.View.DatasetNav {model: model}
+      subnavView = new Cu.View.Toolbar {model: model}
       @subnavView.showView subnavView
 
       setTimeout =>
@@ -131,7 +131,7 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
-        subnavView = new Cu.View.DatasetNav model: model
+        subnavView = new Cu.View.Toolbar model: model
         contentView = new Cu.View.AppContent model: model
         @appView.showView contentView
         @subnavView.showView subnavView
@@ -152,7 +152,7 @@ class Cu.Router.Main extends Backbone.Router
       success: (dataset, resp, options) =>
         v = dataset.get('views').findById(viewID)
         contentView = new Cu.View.PluginContent model: v
-        subnavView = new Cu.View.DatasetNav model: dataset, view: v
+        subnavView = new Cu.View.Toolbar model: dataset, view: v
         @appView.showView contentView
         @subnavView.showView subnavView
         contentView.showContent()

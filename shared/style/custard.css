@@ -511,32 +511,32 @@ a.tile .hide:hover,
 
 
 
-/* Dropdown menu containing tools on dataset page */
 
-#dataset-tools {
-  display: none;
-  position: absolute;
-  top: -40px;
-  right: 0;
-  z-index: 1000;
-  float: right;
-  min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(204, 204, 204);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -webkit-background-clip: padding-box;
-  -moz-background-clip: padding;
-  background-clip: padding-box;
+/* Toolbar on dataset pages (containing dataset name and installed tools) */
+
+#toolbar {
+  background: #333;
+  color: #fff;
+  height: 74px;
+  /* position: absolute;
+  top: 51px;
+  left: 0;
+  right: 0; */
+  margin-top: -20px;
+  overflow: hidden;
 }
 
-#dataset-tools-toggle:hover + #dataset-tools,
-#dataset-tools:hover {
-  display: block;
+#dataset-meta {
+  float: left;
+  height: 74px;
+  background: #15af90;
+  display: table;
+  padding: 0 20px;
+}
+
+#dataset-meta > div {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 #dataset-tools ul {
@@ -544,128 +544,49 @@ a.tile .hide:hover,
   margin: 0;
 }
 
-#dataset-tools a.tool {
-  position: relative;
-  cursor: pointer;
-  white-space: normal; /* override .btn-group default of no-wrap */
-  width: 320px;
-  text-shadow: none;
-  color: #333;
-  margin-bottom: 0; /* override a.tool:last-child margin */
+#dataset-tools li {
+  float: left;
 }
 
-#dataset-tools a.tool:hover,
-#dataset-tools a.tool:focus,
-#dataset-tools a.new-view:hover,
-#dataset-tools a.new-view:focus {
-  color: #fff;
-  text-decoration: none;
-  background-color: #0081c2;
-  background-image: -moz-linear-gradient(top,#08c,#0077b3);
-  background-image: -webkit-gradient(linear,0 0,0 100%,from(#08c),to(#0077b3));
-  background-image: -webkit-linear-gradient(top,#08c,#0077b3);
-  background-image: -o-linear-gradient(top,#08c,#0077b3);
-  background-image: linear-gradient(to bottom,#08c,#0077b3);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',endColorstr='#ff0077b3',GradientType=0);
+#dataset-tools a.tool {
+  margin-bottom: 0;
+  padding: 0 20px;
+  position: relative;
+  height: 74px;
 }
 
 #dataset-tools a.tool.active {
-  background-color: #eee;
+  background-color: #666;
 }
 
-#dataset-tools a.tool:active {
-  position: relative;
-  top: 0;
+#dataset-tools a .tool-info {
+  max-width: 180px;
 }
 
-#dataset-tools a.tool .hide {
-  background-color: #0081c2;
-  z-index: 100;
+#dataset-tools a .tool-icon {
+  width: 50px;
+  max-width: 50px;
 }
 
-#dataset-tools a.tool .tool-icon {
-  padding-left: 20px; /* add padding between the icon and the left edge of the dropdown menu */
+#dataset-tools a .tool-icon-outer {
+  width: 50px;
+  height: 53px;
 }
 
-#dataset-tools a.tool .tool-info {
-  padding-right: 20px; /* override 30px padding required between #chooser columns */
+#dataset-tools a .tool-icon-inner {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  background-size: 66%;
 }
 
-/* over-specific selector to trump normal .tool-icon-outer style defined later on */
-#dataset-tools .tool-icon-outer,
-#dataset-tools-toggle .tool-icon-outer {
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  border-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
-
-#dataset-tools a.new-view {
-  display: block;
-  padding: 10px 20px;
-  text-align: center;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-#dataset-tools ul.more {
-  border-top: 1px solid #e5e5e5;
-  padding-top: 5px;
-  margin-top: 5px;
-}
-
-#dataset-tools a.tool p span {
-  color: #999;
-}
-
-#dataset-tools a.tool:hover p span {
-  color: #C3DDEB;
-}
-
-#dataset-tools a.tool p span:hover {
-  text-decoration: underline;
+#toolbar .new-view {
   color: #fff;
+  line-height: 74px;
+  padding: 0 20px;
+  cursor: pointer;
 }
 
-#dataset-tools a.tool p span + span {
-  margin-left: 10px;
-}
-
-#dataset-tools-toggle {
-  margin-top: -10px;
-  padding-right: 0; /* apply margin to .tool-name instead, */
-  padding-left: 0; /* so image doesn't show through when element is empty */
-  background: transparent url(../image/dataset-tools-toggle.png) right center no-repeat;
-  height: 42px;
-  text-decoration: none;
-}
-
-#dataset-tools-toggle .tool-icon-outer,
-#dataset-tools-toggle .tool-icon-inner {
-  display: inline-block;
-  width: 40px;
-  height: 42px;
-  vertical-align: middle;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  margin-right: 10px;
-}
-
-#dataset-tools-toggle .tool-icon-inner {
-  height: 40px;
-  line-height: 40px;
-  background-size: 30px;
-  font-size: 30px;
-  margin-right: 0px;
-}
-
-#dataset-tools-toggle .tool-name {
-  font-size: 18px;
-  color: #333;
-  margin-right: 24px;
-  vertical-align: middle;
-}
 
 
 

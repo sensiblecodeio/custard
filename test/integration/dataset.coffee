@@ -22,53 +22,37 @@ describe 'Dataset', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    # :TODO: toolbar
-    xit 'shows this dataset was made by the Test App tool', (done) ->
-      wd40.elementByPartialLinkText 'Test app', (err, link) ->
-        should.exist link
-        done()
-
-    # :TODO: toolbar
-    xit 'has not shown the input box', (done) ->
+    # :TODO: toolbar (done?)
+    it 'has not shown the input box', (done) ->
       wd40.elementByCss '#editable-input', (err, input) ->
         browser.isVisible input, (err, visible) ->
           visible.should.be.false
           done()
 
-    # :TODO: toolbar
-    xcontext 'when I hover over the Test App tool name', (done) ->
-      before (done) ->
-        setTimeout done, 500
+    it 'shows a toolbar including...', (done) ->
+      browser.isVisible 'css selector', '#toolbar', (err, visible) =>
+        visible.should.be.true
+        wd40.getText '#toolbar', (err, text) =>
+          @toolbarText = text
+          done()
 
-      before (done) ->
-        wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
-          browser.moveTo link, (err) ->
-            done()
+    it '...the tool that made this dataset', ->
+      @toolbarText.should.include 'Test app'
 
-      it 'more tools appear in a pop-up menu', (done) ->
-        browser.isVisible 'css selector', '#dataset-tools', (err, visible) =>
-          visible.should.be.true
-          wd40.getText '#dataset-tools', (err, text) =>
-            @dropdownText = text
-            done()
+    it '...the view in a table tool', ->
+      @toolbarText.should.include 'View in a table'
 
-      it '...including the tool that made this dataset', ->
-        @dropdownText.should.include 'Test app'
+    it '...the spreadsheet download tool', ->
+      @toolbarText.should.include 'Download as spreadsheet'
 
-      it '...the view in a table tool', ->
-        @dropdownText.should.include 'View in a table'
+    it '...(only once)', ->
+      @toolbarText.match(/Download as spreadsheet/g).length.should.equal 1
 
-      it '...the spreadsheet download tool', ->
-        @dropdownText.should.include 'Download as spreadsheet'
-
-      it '...(only once)', ->
-        @dropdownText.match(/Download as spreadsheet/g).length.should.equal 1
-
-      it '...and a button to pick more tools', ->
-        @dropdownText.toLowerCase().should.include 'more tools'
+    it '...and a button to pick more tools', ->
+      @toolbarText.toLowerCase().should.include 'more tools'
 
     # :TODO: toolbar
-    xcontext 'when I click the title', ->
+    context 'when I click the title', ->
       before (done) ->
         browser.elementByCssIfExists '#editable-input', (err, wrapper) =>
           @wrapper = wrapper

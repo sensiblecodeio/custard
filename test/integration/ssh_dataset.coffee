@@ -1,11 +1,10 @@
 should = require 'should'
 {wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
+# :TODO: toolbar (done?)
 clickSSHButton = (done) ->
-  wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
-    browser.moveTo link, (err) ->
-      wd40.elementByCss '#dataset-tools a[href$="/settings"] .ssh-in', (err, sshLink) ->
-        sshLink.click done
+  wd40.elementByCss '#toolbar a[href$="/settings"] .ssh-in', (err, sshLink) ->
+    sshLink.click done
 
 describe 'Dataset SSH Details', ->
   prepIntegration()
@@ -22,8 +21,7 @@ describe 'Dataset SSH Details', ->
           link.click done
       , 500
 
-    # :TODO: toolbar
-    xcontext 'when I click on the importer tool\'s SSH in button', (done) ->
+    context 'when I click on the importer tool\'s SSH in button', (done) ->
       before clickSSHButton
 
       it 'a modal window appears', (done) =>

@@ -99,6 +99,7 @@ class exports.User extends ModelBase
       async.forEach boxes, (box, boxCb) ->
         # call cobalt with list of sshkeys of box
         # sshkeys <--> user <--> box
+        box = Box.makeModelFromMongo box
         box.distributeSSHKeys (err, res, body) ->
           try
             obj = JSON.parse body

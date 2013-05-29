@@ -7,6 +7,7 @@ fs = require 'fs'
 mongoose = require 'mongoose'
 async = require 'async'
 request = require 'request'
+mkdirp = require 'mkdirp'
 
 {User} = require 'model/user'
 {Box} = require 'model/box'
@@ -75,6 +76,8 @@ Box.findOneByName BOX_NAME, (err, box) ->
         transferCrontab box, user, ->
           disableOldCrontab box, user, ->
             box.server = NEW_BOX_SERVER
+            process.env.CU_BOX_SERVER = NEW_BOX_SERVER
+            mkdirp.sync "/opt/cobalt/etc/sshkeys/#{box.name}"
             box.save (err) ->
               box.distributeSSHKeys (err, res, body) ->
                 console.log 'distributeSSHKeys', err, body

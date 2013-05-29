@@ -1,6 +1,7 @@
 should = require 'should'
 {wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
+# :TODO: toolbar
 clickSSHButton = (done) ->
   wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
     setTimeout ->
@@ -9,7 +10,8 @@ clickSSHButton = (done) ->
           sshLink.click done
     , 1000
 
-describe 'Platform-specific SSH instructions', ->
+# :TODO: toolbar
+xdescribe 'Platform-specific SSH instructions', ->
   prepIntegration()
 
   before (done) ->

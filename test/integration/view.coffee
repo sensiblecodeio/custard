@@ -18,7 +18,8 @@ describe 'View', ->
           link.click done
       , 1000
 
-    before (done) ->
+    # :TODO: toolbar
+    xbefore (done) ->
       wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
         browser.moveTo link, (err) ->
           wd40.elementByPartialLinkText 'Code a prune!', (err, toolLink) ->
@@ -29,7 +30,8 @@ describe 'View', ->
         result.should.match /\/view\/(\w+)/
         done()
 
-    context 'when I open the Tools menu', ->
+    # :TODO: toolbar
+    xcontext 'when I open the Tools menu', ->
       before (done) ->
         wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
           browser.moveTo link, done

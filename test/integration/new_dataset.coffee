@@ -33,13 +33,15 @@ describe 'New dataset tool', ->
       it 'takes me to the dataset settings page', ->
         @currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/settings")
 
-      it 'and shows that the "Code a dataset" tool is active', (done) ->
+      # :TODO: toolbar
+      xit 'and shows that the "Code a dataset" tool is active', (done) ->
         wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
           link.text (err, text) ->
             text.toLowerCase().should.include 'code a dataset'
             done()
 
-      it 'and shows me the "Code in a dataset" tool contents', (done) ->
+      # :TODO: toolbar
+      xit 'and shows me the "Code in a dataset" tool contents', (done) ->
         wd40.switchToBottomFrame ->
           wd40.trueURL (err, url) ->
             iframeUrl = url
@@ -53,17 +55,20 @@ describe 'New dataset tool', ->
       before (done) ->
         browser.get @currentUrl.replace(/\/settings$/, ''), done
 
-      before (done) ->
+      # :TODO: toolbar
+      xbefore (done) ->
         # wait for the tool menu toggle to load (just in case)
         setTimeout done, 1000
 
-      it 'shows that the "View in a table" tool is active', (done) ->
+      # :TODO: toolbar
+      xit 'shows that the "View in a table" tool is active', (done) ->
         wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
           link.text (err, text) ->
             text.toLowerCase().should.include 'view in a table'
             done()
 
-      it 'and shows me the "View in a table" tool contents', (done) ->
+      # :TODO: toolbar
+      xit 'and shows me the "View in a table" tool contents', (done) ->
         wd40.switchToBottomFrame ->
           wd40.trueURL (err, url) ->
             url.should.not.equal iframeUrl

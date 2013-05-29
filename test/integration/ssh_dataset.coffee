@@ -22,7 +22,8 @@ describe 'Dataset SSH Details', ->
           link.click done
       , 500
 
-    context 'when I click on the importer tool\'s SSH in button', (done) ->
+    # :TODO: toolbar
+    xcontext 'when I click on the importer tool\'s SSH in button', (done) ->
       before clickSSHButton
 
       it 'a modal window appears', (done) =>

@@ -22,18 +22,21 @@ describe 'Dataset', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    it 'shows this dataset was made by the Test App tool', (done) ->
+    # :TODO: toolbar
+    xit 'shows this dataset was made by the Test App tool', (done) ->
       wd40.elementByPartialLinkText 'Test app', (err, link) ->
         should.exist link
         done()
 
-    it 'has not shown the input box', (done) ->
+    # :TODO: toolbar
+    xit 'has not shown the input box', (done) ->
       wd40.elementByCss '#editable-input', (err, input) ->
         browser.isVisible input, (err, visible) ->
           visible.should.be.false
           done()
 
-    context 'when I hover over the Test App tool name', (done) ->
+    # :TODO: toolbar
+    xcontext 'when I hover over the Test App tool name', (done) ->
       before (done) ->
         setTimeout done, 500
 
@@ -64,7 +67,8 @@ describe 'Dataset', ->
       it '...and a button to pick more tools', ->
         @dropdownText.toLowerCase().should.include 'more tools'
 
-    context 'when I click the title', ->
+    # :TODO: toolbar
+    xcontext 'when I click the title', ->
       before (done) ->
         browser.elementByCssIfExists '#editable-input', (err, wrapper) =>
           @wrapper = wrapper

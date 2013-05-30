@@ -83,7 +83,12 @@ Box.findOneByName BOX_NAME, (err, box) ->
               box.distributeSSHKeys (err, res, body) ->
                 console.log 'distributeSSHKeys', err, body
                 Dataset.findOneById box.name, (err, dataset) ->
-                  dataset.boxServer = NEW_BOX_SERVER
-                  dataset.save (err) ->
-                    console.log 'dataset save', err
-                    process.exit()
+                  if dataset?
+                    dataset.boxServer = NEW_BOX_SERVER
+                    dataset.save (err) ->
+                      console.log 'dataset save', err
+                      process.exit()
+                  else
+                    Dataset.View.changeBoxSever box.name, (err) ->
+                      console.log "change view box server", err
+                      process.exit()

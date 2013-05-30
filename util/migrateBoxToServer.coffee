@@ -89,6 +89,6 @@ Box.findOneByName BOX_NAME, (err, box) ->
                       console.log 'dataset save', err
                       process.exit()
                   else
-                    Dataset.View.changeBoxSever box.name, (err) ->
+                    Dataset.View.changeBoxSever box.name, NEW_BOX_SERVER, (err) ->
                       console.log "change view box server", err
                       process.exit()

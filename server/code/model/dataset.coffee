@@ -88,7 +88,7 @@ Dataset.View =
   changeBoxSever: (id, newServer, callback) ->
     Dataset.dbClass.findOne 'views.box': id, (err, dataset) ->
       if err?
-        callback err, null
+        return callback err, null
       view = _.find dataset.views, (view) -> view.box is id
       view.boxServer = newServer
       dataset.save callback

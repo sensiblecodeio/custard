@@ -11,6 +11,7 @@ mkdirp = require 'mkdirp'
 
 {User} = require 'model/user'
 {Box} = require 'model/box'
+{Dataset} = require 'model/dataset'
 
 BOX_NAME = process.argv[2]
 NEW_BOX_SERVER = process.argv[3]
@@ -81,4 +82,8 @@ Box.findOneByName BOX_NAME, (err, box) ->
             box.save (err) ->
               box.distributeSSHKeys (err, res, body) ->
                 console.log 'distributeSSHKeys', err, body
-                process.exit()
+                Dataset.findOneById box.name, (err, dataset) ->
+                  dataset.boxServer = NEW_BOX_SERVER
+                  dataset.save (err) ->
+                    console.log 'dataset save', err
+                    process.exit()

@@ -42,7 +42,7 @@ class Cu.View.ToolMenuItem extends Backbone.View
     if toolName is "datatables-view-tool"
       hideable = false
 
-    html = JST['tool-menu-item']
+    html = JST['toolbar-tile']
       manifest: manifest
       href: href
       id: "instance-#{@model.get 'box'}"
@@ -63,7 +63,7 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
 
   render: ->
     if app.tools().length
-      html = JST['tool-menu-item']
+      html = JST['toolbar-tile']
         manifest: @options.archetype.get 'manifest'
       @$el.html html
     @

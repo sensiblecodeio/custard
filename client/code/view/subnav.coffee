@@ -330,6 +330,7 @@ class Cu.View.DatasetNav extends Cu.View.EditableSubnav
     , 0
     @
 
+
 # Toolbar contains a dataset's name, and all the tools acting on it
 class Cu.View.Toolbar extends Backbone.View
   id: 'toolbar'
@@ -377,6 +378,7 @@ class Cu.View.SignUpNav extends Backbone.View
       <hr>""")
     @
 
+
 class Cu.View.HelpNav extends Backbone.View
   className: 'subnav-wrapper'
 
@@ -417,6 +419,7 @@ class Cu.View.HelpNav extends Backbone.View
 
     @$el.html html
     @
+
 
 class Cu.View.ToolShopNav extends Backbone.View
   className: 'subnav-wrapper'

@@ -338,9 +338,28 @@ class Cu.View.Toolbar extends Backbone.View
 
   events:
     'click .new-view': 'showChooser'
+    'click .hide-dataset': 'hideDataset'
+    'click .rename-dataset': 'renameDataset'
+    'click .dropdown-toggle': 'showDropdownMenuCloser'
 
   showChooser: ->
     app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true
+
+  hideDataset: ->
+    @model.save {state: 'deleted'},
+      success: (model, response, options) =>
+        window.app.navigate "/", {trigger: true}
+      error: (model, xhr, options) =>
+        alert('Sorry, your dataset could not be hidden')
+        console.warn 'Dataset could not be hidden!', model, xhr, options
+
+  renameDataset: ->
+    alert('computer says stop trying to rename your datasets')
+
+  showDropdownMenuCloser: ->
+    # Clicks on tool iframes can't close open dropdowns inside of #toolbar.
+    # So, we show a big transparent mask div, which will absorb the clicks.
+    $('#dropdown-menu-closer').show()
 
   initialize: ->
     super()
@@ -350,7 +369,17 @@ class Cu.View.Toolbar extends Backbone.View
       view: @options.view
 
   render: ->
-    @$el.html """<div id="dataset-meta"><h3>#{@model.get 'displayName'}</h3> <a><img src="http://localhost:3001/image/tile-options-white.png" width="26" height="16" /></a></div>"""
+    @$el.html """<div id="dropdown-menu-closer"></div>
+    <div id="dataset-meta">
+      <h3>#{@model.get 'displayName'}</h3> 
+      <div class="actions">
+        <a class="dropdown-toggle" data-toggle="dropdown">Options</a>
+        <ul class="dropdown-menu pull-right">
+          <li><a class="rename-dataset"><img src="/image/icon-rename.png" width="16" height="16" /> Rename</a></li>
+          <li><a class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Delete</a></li>
+        </ul>
+      </div>
+    </div>"""
     @$el.append(@toolsView.render().el)
     @
 

@@ -475,7 +475,8 @@ a.tile .hide:hover,
   opacity: 1;
 }
 
-.tile li.actions .dropdown-menu:before {
+.tile li.actions .dropdown-menu:before,
+#toolbar .dropdown-menu:before {
   position: absolute;
   top: -7px;
   right: 5px;
@@ -487,7 +488,8 @@ a.tile .hide:hover,
   content: '';
 }
 
-.tile li.actions .dropdown-menu:after {
+.tile li.actions .dropdown-menu:after,
+#toolbar .dropdown-menu:before {
   position: absolute;
   top: -6px;
   right: 6px;
@@ -519,6 +521,22 @@ a.tile .hide:hover,
   color: #fff;
   height: 74px;
   margin-top: -20px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#dropdown-menu-closer {
+  display: none;
+  position: fixed;
+  top: 125px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
 }
 
 #dataset-meta {
@@ -546,7 +564,7 @@ a.tile .hide:hover,
   background: transparent url(../image/toolbar-triangle.png) 0 0 no-repeat;
 }
 
-#dataset-meta h3, #dataset-meta a {
+#dataset-meta h3, #dataset-meta > div {
   display: table-cell;
   vertical-align: middle;
   font-weight: normal;
@@ -556,10 +574,40 @@ a.tile .hide:hover,
   padding: 0;
 }
 
-#dataset-meta a img {
-  vertical-align: -2px;
+#dataset-meta .actions > a {
+  display: inline-block;
+  background: transparent url(../image/tile-options-white.png) 50% 50% no-repeat;
+  width: 26px;
+  height: 30px;
+  text-indent: -9000px;
+  opacity: 0.8;
   margin-left: 10px;
-  cursor: not-allowed;
+  cursor: pointer;
+}
+
+#dataset-meta .actions > a:hover,
+#dataset-meta .open > a {
+  opacity: 1;
+}
+
+#dataset-meta .dropdown-menu {
+  top: 65%; /* override default 100% because parent is 75px high! */
+  right: 1px; /* override default 0px to line up with arrow icon */
+  min-width: 0;
+}
+
+#dataset-meta .dropdown-menu a {
+  text-shadow: none;
+  font-size: 14px;
+  line-height: 21px;
+  cursor: pointer;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#dataset-meta .dropdown-menu a img {
+  vertical-align: -3px; /* override default "middle", so icons line up with text */
+  margin-right: 5px;
 }
 
 #dataset-tools {

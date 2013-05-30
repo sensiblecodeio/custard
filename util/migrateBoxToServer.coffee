@@ -9,12 +9,26 @@ async = require 'async'
 request = require 'request'
 mkdirp = require 'mkdirp'
 
+argv = require('optimist')
+	.usage('Usage: $0 [--verbose] --box <box> --host <host>')
+	.demand(['box', 'host'])
+	.alias('v', 'verbose')
+	.alias('b', 'box')
+	.alias('h', 'host')
+	.describe('host', "Specify the new box's hostname")
+	.boolean('verbose')
+	.argv
+
 {User} = require 'model/user'
 {Box} = require 'model/box'
 {Dataset} = require 'model/dataset'
 
-BOX_NAME = process.argv[2]
-NEW_BOX_SERVER = process.argv[3]
+BOX_NAME = argv.box
+NEW_BOX_SERVER = argv.host
+
+checkVerboseAndPrint = (arg...) ->
+  if argv.verbose
+    console.log.apply this, arg
 
 boxExec = (cmd, box, user, callback) ->
   request.post
@@ -36,14 +50,14 @@ migratePasswdEntry = (box, user, callback) ->
   boxExec "id -u", box, user, (err, res, uid) ->
     uid = uid.replace('\n', '')
     exec "util/addUnixUser.sh #{box.name} #{uid}", (err, stdout, stderr) ->
-      console.log "migratePasswdEntry", err, stdout, stderr
-      callback()
+      checkVerboseAndPrint "migratePasswdEntry", err, stdout, stderr
+	    callback()
 
 transferBoxData = (box, user, callback) ->
   # Run duplicity to get latest backed up data??
   console.log "Transferring box data..."
   exec "util/transferBoxData.sh #{box.name} #{box.server}", (err, stdout, stderr) ->
-    console.log "transferBoxData", err, stdout, stderr
+    checkVerboseAndPrint "transferBoxData", err, stdout, stderr
     return callback()
 
 transferCrontab = (box, user, callback) ->
@@ -56,17 +70,15 @@ transferCrontab = (box, user, callback) ->
       crontabPath = "/var/spool/cron/crontabs/#{box.name}"
       fs.writeFileSync crontabPath, crontab
       exec "chown #{box.name}:crontab #{crontabPath}", (err, stdout, stderr) ->
-        console.log "chown", err, stdout, stderr
-
+        checkVerboseAndPrint "chown", err, stdout, stderr
         exec "chmod 600 #{crontabPath}", (err, stdout, stderr) ->
-          console.log "chmod", err, stdout, stderr
-          return callback()
-
-
+          checkVerboseAndPrint "chmod", err, stdout, stderr
+          disableOldCrontab box, user, callback
+            
 disableOldCrontab = (box, user, callback) ->
   console.log "Disabling old crontab..."
   boxExec "crontab -r", box, user, (err, res, body) ->
-    console.log "disableOldCrontab", err, body
+    checkVerboseAndPrint "disableOldCrontab", err, body
     return callback()
 
 Box.findOneByName BOX_NAME, (err, box) ->
@@ -75,20 +87,19 @@ Box.findOneByName BOX_NAME, (err, box) ->
     migratePasswdEntry box, user, ->
       transferBoxData box, user, ->
         transferCrontab box, user, ->
-          disableOldCrontab box, user, ->
-            box.server = NEW_BOX_SERVER
-            process.env.CU_BOX_SERVER = NEW_BOX_SERVER
-            mkdirp.sync "/opt/cobalt/etc/sshkeys/#{box.name}"
-            box.save (err) ->
-              box.distributeSSHKeys (err, res, body) ->
-                console.log 'distributeSSHKeys', err, body
-                Dataset.findOneById box.name, (err, dataset) ->
-                  if dataset?
-                    dataset.boxServer = NEW_BOX_SERVER
-                    dataset.save (err) ->
-                      console.log 'dataset save', err
-                      process.exit()
-                  else
-                    Dataset.View.changeBoxSever box.name, NEW_BOX_SERVER, (err) ->
-                      console.log "change view box server", err
-                      process.exit()
+          box.server = NEW_BOX_SERVER
+          process.env.CU_BOX_SERVER = NEW_BOX_SERVER
+          mkdirp.sync "/opt/cobalt/etc/sshkeys/#{box.name}"
+          box.save (err) ->
+            box.distributeSSHKeys (err, res, body) ->
+              checkVerboseAndPrint 'distributeSSHKeys', err, body
+              Dataset.findOneById box.name, (err, dataset) ->
+                if dataset?
+                  dataset.boxServer = NEW_BOX_SERVER
+                  dataset.save (err) ->
+                    checkVerboseAndPrint 'dataset save', err
+                    process.exit()
+                else
+                  Dataset.View.changeBoxSever box.name, NEW_BOX_SERVER, (err) ->
+                    checkVerboseAndPrint "change view box server", err
+                    process.exit()

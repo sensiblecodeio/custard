@@ -341,6 +341,7 @@ class Cu.View.Toolbar extends Backbone.View
     'click .hide-dataset': 'hideDataset'
     'click .rename-dataset': 'renameDataset'
     'click .dropdown-toggle': 'showDropdownMenuCloser'
+    'click #dropdown-menu-closer': 'hideDropdownMenuCloser'
 
   showChooser: ->
     app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true
@@ -360,6 +361,11 @@ class Cu.View.Toolbar extends Backbone.View
     # Clicks on tool iframes can't close open dropdowns inside of #toolbar.
     # So, we show a big transparent mask div, which will absorb the clicks.
     $('#dropdown-menu-closer').show()
+
+  hideDropdownMenuCloser: ->
+    # If the user closes the dropdown via normal means, the mask div
+    # will be left in place. This removes it when they click it.
+    $('#dropdown-menu-closer').hide()
 
   initialize: ->
     super()

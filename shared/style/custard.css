@@ -527,25 +527,62 @@ a.tile .hide:hover,
 }
 
 #dataset-meta {
+  display: table-row;
+  position: relative;
   float: left;
   height: 74px;
   background: #15af90;
   display: table;
-  padding: 0 20px;
+  padding: 0 10px 0 20px;
+  font-size: 21px;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
-#dataset-meta > div {
+#dataset-meta:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: -10px;
+  bottom: 0;
+  z-index: 1;
+  width: 10px;
+  background: transparent url(../image/toolbar-triangle.png) 0 0 no-repeat;
+}
+
+#dataset-meta h3, #dataset-meta a {
   display: table-cell;
   vertical-align: middle;
+  font-weight: normal;
+  font-size: 21px;
+  line-height: 21px;
+  margin: 0;
+  padding: 0;
+}
+
+#dataset-meta a img {
+  vertical-align: -2px;
+  margin-left: 10px;
+  cursor: not-allowed;
+}
+
+#dataset-tools {
+  white-space: nowrap; /* stop toolbar items wrapping onto next line */
+  overflow-x: scroll; /* this probably isn't ideal, but it'll do for now */
 }
 
 #dataset-tools ul {
   list-style: none;
   margin: 0;
+  display: inline-block; /* stop toolbar item groups wrapping onto separate lines */
 }
 
 #dataset-tools li {
   float: left;
+}
+
+#dataset-tools .tools li:first-child a.tool {
+  padding-left: 30px;
 }
 
 #dataset-tools a.tool {
@@ -561,30 +598,49 @@ a.tile .hide:hover,
 
 #dataset-tools a .tool-info {
   padding-right: 0;
+  padding-left: 10px;
+}
+
+#dataset-tools a.tool h3 {
+  margin-bottom: 0;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 18px;
 }
 
 #dataset-tools a .tool-icon {
-  width: 50px;
-  max-width: 50px;
+  width: 40px;
+  max-width: 40px;
 }
 
 #dataset-tools a .tool-icon-outer {
-  width: 50px;
-  height: 53px;
+  width: 40px;
+  height: 42px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 #dataset-tools a .tool-icon-inner {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   background-size: 66%;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 #toolbar .new-view {
-  color: #fff;
+  display: inline-block;
   line-height: 74px;
-  padding: 0 20px;
+  height: 74px;
+  padding: 0 20px 0 50px;
+  color: #fff;
+  text-shadow: 0 3px 6px #000;
   cursor: pointer;
+  background: transparent url(../image/toolbar-more.png) left center no-repeat;
+  text-decoration: none;
 }
 
 
@@ -718,6 +774,16 @@ a.tool .tool-icon {
   text-align: center;
   font-weight: bold;
   color: #fff;
+}
+
+a.tool.active {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* lighter shadow in #toolbar .active state */
+}
+
+.active .tool-icon-outer {
+  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.5); /* lighter shadow, as above */
+  -moz-box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  border-box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 a.tool h3 {

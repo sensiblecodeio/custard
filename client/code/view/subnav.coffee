@@ -350,7 +350,7 @@ class Cu.View.Toolbar extends Backbone.View
       view: @options.view
 
   render: ->
-    @$el.html """<div id="dataset-meta"><div>#{@model.get 'displayName'}</div></div>"""
+    @$el.html """<div id="dataset-meta"><h3>#{@model.get 'displayName'}</h3> <a><img src="http://localhost:3001/image/tile-options-white.png" width="26" height="16" /></a></div>"""
     @$el.append(@toolsView.render().el)
     @
 

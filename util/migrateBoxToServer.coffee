@@ -38,10 +38,6 @@ boxExec = (cmd, box, user, callback) ->
       cmd: cmd
   , callback
 
-unless BOX_NAME? or NEW_BOX_SERVER?
-  console.log "./script <box name> <new box server>"
-  process.exit 1
-
 mongoose.connect process.env.CU_DB
 
 migratePasswdEntry = (box, user, callback) ->
@@ -82,6 +78,7 @@ disableOldCrontab = (box, user, callback) ->
     return callback()
 
 Box.findOneByName BOX_NAME, (err, box) ->
+  console.log "Migrating box #{box.name}"
   box = Box.makeModelFromMongo box
   User.findByShortName box.users[0], (err, user) ->
     migratePasswdEntry box, user, ->

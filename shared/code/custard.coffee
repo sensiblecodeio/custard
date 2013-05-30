@@ -1,4 +1,6 @@
-# Utility functions for the Custard frontend
+# Utility functions for
+# the Custard frontend
+
 
 showOrAddSSH = (model, type) =>
 
@@ -46,3 +48,14 @@ showOrAddSSH = (model, type) =>
   $(document).on 'click', '.modal #add-ssh-key', addSSHKey
   $(document).on 'click', '.modal #add-another-ssh-key', ->
     makeModal JST['modal-add-ssh']()
+
+
+String::twoLineWrap = (characters=20) ->
+  return this if this.length <= characters
+  text = this
+  if this.length > characters*2
+    regexp = new RegExp "(.{1,#{characters*2}})[ ](.*)"
+    text = text.replace regexp, "$1\u2026"
+  regexp = new RegExp "(.{1,#{characters}})[ ](.*)"
+  text = text.replace regexp, '$1<br>$2'
+  return text

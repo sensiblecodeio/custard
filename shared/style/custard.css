@@ -515,15 +515,10 @@ a.tile .hide:hover,
 /* Toolbar on dataset pages (containing dataset name and installed tools) */
 
 #toolbar {
-  background: #333;
+  background-color: #333;
   color: #fff;
   height: 74px;
-  /* position: absolute;
-  top: 51px;
-  left: 0;
-  right: 0; */
   margin-top: -20px;
-  overflow: hidden;
 }
 
 #dataset-meta {
@@ -533,7 +528,8 @@ a.tile .hide:hover,
   height: 74px;
   background: #15af90;
   display: table;
-  padding: 0 10px 0 20px;
+  padding: 0 10px 0 220px;
+  margin-left: -200px;
   font-size: 21px;
   text-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
@@ -636,6 +632,7 @@ a.tile .hide:hover,
   line-height: 74px;
   height: 74px;
   padding: 0 20px 0 50px;
+  margin-left: 10px;
   color: #fff;
   text-shadow: 0 3px 6px #000;
   cursor: pointer;

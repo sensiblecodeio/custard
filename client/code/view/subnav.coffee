@@ -212,38 +212,84 @@ class Cu.View.DataHubNav extends Backbone.View
         $('.dataset.tile').show()
 
 
-class Cu.View.EditableSubnav extends Backbone.View
+# Toolbar contains a dataset's name, and all the tools acting on it
+class Cu.View.Toolbar extends Backbone.View
+  id: 'toolbar'
   className: 'subnav-wrapper'
 
+  events:
+    'click .new-view': 'showChooser'
+    'click .hide-dataset': 'hideDataset'
+    'click .rename-dataset': 'renameDataset'
+    'click .dropdown-toggle': 'showDropdownMenuCloser'
+    'click #dropdown-menu-closer': 'hideDropdownMenuCloser'
+    'blur #editable-input input': 'editableNameBlurred'
+    'keyup #editable-input input': 'keypressOnEditableName'
+  
   initialize: ->
-    @model.on 'change', @setDocumentTitle, @
-    @model.on 'change', @render, this
-    # set this so we can override it in Cu.View.ViewNav
-    # (where the model to save is in fact the parent dataset's model)
-    @modelToSave = @model
+    super()
+    @model.on 'update:tool', @render, @
+    @toolsView = new Cu.View.DatasetTools
+      model: @model
+      view: @options.view
 
-  nameClicked: (e) ->
-    e.preventDefault()
-    $a = @$el.find('.editable')
-    $a.next().show(0, ->
-      $(@).children('input').focus()
-    ).children('input').val(@model.get 'displayName').css('width', $a.width() + 30)
-    $a.hide()
+  render: ->
+    @$el.html """<div id="dropdown-menu-closer"></div>
+    <div id="dataset-meta">
+      <h3>#{@model.get 'displayName'}</h3> 
+      <span class="input-append" id="editable-input">
+        <input type="text" value="#{@model.get 'displayName'}">
+        <button class="btn">Save</button>
+      </span>
+      <div class="actions">
+        <a class="dropdown-toggle" data-toggle="dropdown">Options</a>
+        <ul class="dropdown-menu pull-right">
+          <li><a class="rename-dataset"><img src="/image/icon-rename.png" width="16" height="16" /> Rename</a></li>
+          <li><a class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Delete</a></li>
+        </ul>
+      </div>
+    </div>"""
+    @$el.append(@toolsView.render().el)
+    @
+
+  showChooser: ->
+    app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true
+
+  hideDataset: ->
+    @model.save {state: 'deleted'},
+      success: (model, response, options) =>
+        window.app.navigate "/", {trigger: true}
+      error: (model, xhr, options) =>
+        alert('Sorry, your dataset could not be hidden')
+        console.warn 'Dataset could not be hidden!', model, xhr, options
+
+  renameDataset: ->
+    $('#editable-input', @$el).css('display', 'table-cell').prev().hide()
+    $('#editable-input input', @$el).focus()
+
+  showDropdownMenuCloser: ->
+    # Clicks on tool iframes can't close open dropdowns inside of #toolbar.
+    # So, we show a big transparent mask div, which will absorb the clicks.
+    $('#dropdown-menu-closer').show()
+
+  hideDropdownMenuCloser: ->
+    # If the user closes the dropdown via normal means, the mask div
+    # will be left in place. This removes it when they click it.
+    $('#dropdown-menu-closer').hide()
 
   editableNameBlurred: ->
-    $label = @$el.find('.editable')
+    $label = $('#dataset-meta h3')
     $wrapper = $label.next()
     $input = $wrapper.children('input')
     @newName = $.trim($input.val())
     @oldName = $label.text()
     if @newName == '' or @newName == $label.text()
-      $label.show()
-      $wrapper.hide()
+      @editableNameEscaped()
     else
       $wrapper.hide()
       $label.text(@newName).show()
       @model.set 'displayName', @newName
-      @modelToSave.save {},
+      @model.save {},
         success: =>
           $label.addClass 'saved'
           setTimeout ->
@@ -259,135 +305,11 @@ class Cu.View.EditableSubnav extends Backbone.View
 
   editableNameEscaped: (e) ->
     e.preventDefault()
-    @$el.find('.editable').show().next().hide().children('input').val('')
+    $('#editable-input input', @$el).val(@model.get "displayName").parent().hide().prev().show()
 
   keypressOnEditableName: (e) ->
     @editableNameBlurred(e) if e.keyCode is 13
     @editableNameEscaped(e) if e.keyCode is 27
-
-
-class Cu.View.DatasetNav extends Cu.View.EditableSubnav
-  className: 'subnav-wrapper'
-
-  events:
-    'click .editable': 'nameClicked'
-    'click .new-view': 'showChooser'
-    'blur #editable-input input': 'editableNameBlurred'
-    'keyup #editable-input input': 'keypressOnEditableName'
-
-  initialize: ->
-    super()
-    @model.on 'update:tool', @render, @
-    @toolsView = new Cu.View.DatasetTools
-      model: @model
-      view: @options.view
-
-  showChooser: ->
-    app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true
-
-  close: ->
-    @toolsView?.close()
-    super()
-
-  render: ->
-    @$el.html("""
-      <div class="btn-toolbar" id="subnav-path">
-        <div class="btn-group">
-          <a class="btn btn-link" href="/">
-            <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />
-            <span class="datahub-name">#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub</span>
-          </a>
-        </div>
-        <div class="btn-group">
-          <span class="slash">/</span>
-        </div>
-        <div class="btn-group">
-          <span class="btn btn-link editable">#{@model.get 'displayName'}</span>
-          <span class="input-append" id="editable-input">
-            <input type="text">
-            <button class="btn">Save</button>
-          </span>
-        </div>
-      </div>
-      <div class="btn-toolbar" id="subnav-options">
-        <div class="btn-group">
-          <a class="btn btn-link" id="dataset-tools-toggle"></a>
-        </div>
-      </div>""")
-    setTimeout =>
-      if tool is null
-        return @
-      @$el.find('#dataset-tools-toggle').after(@toolsView.render().el)
-      if @options?.view
-        tool = @options.view.get 'tool'
-      else
-        tool = @model.get 'tool'
-
-      currentToolManifest = tool.get 'manifest'
-      toggleHtml = JST['tool-menu-toggle']
-        manifest: currentToolManifest
-      @$el.find('#dataset-tools-toggle').html toggleHtml
-    , 0
-    @
-
-
-# Toolbar contains a dataset's name, and all the tools acting on it
-class Cu.View.Toolbar extends Backbone.View
-  id: 'toolbar'
-  className: 'subnav-wrapper'
-
-  events:
-    'click .new-view': 'showChooser'
-    'click .hide-dataset': 'hideDataset'
-    'click .rename-dataset': 'renameDataset'
-    'click .dropdown-toggle': 'showDropdownMenuCloser'
-    'click #dropdown-menu-closer': 'hideDropdownMenuCloser'
-
-  showChooser: ->
-    app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true
-
-  hideDataset: ->
-    @model.save {state: 'deleted'},
-      success: (model, response, options) =>
-        window.app.navigate "/", {trigger: true}
-      error: (model, xhr, options) =>
-        alert('Sorry, your dataset could not be hidden')
-        console.warn 'Dataset could not be hidden!', model, xhr, options
-
-  renameDataset: ->
-    alert('computer says stop trying to rename your datasets')
-
-  showDropdownMenuCloser: ->
-    # Clicks on tool iframes can't close open dropdowns inside of #toolbar.
-    # So, we show a big transparent mask div, which will absorb the clicks.
-    $('#dropdown-menu-closer').show()
-
-  hideDropdownMenuCloser: ->
-    # If the user closes the dropdown via normal means, the mask div
-    # will be left in place. This removes it when they click it.
-    $('#dropdown-menu-closer').hide()
-
-  initialize: ->
-    super()
-    @model.on 'update:tool', @render, @
-    @toolsView = new Cu.View.DatasetTools
-      model: @model
-      view: @options.view
-
-  render: ->
-    @$el.html """<div id="dropdown-menu-closer"></div>
-    <div id="dataset-meta">
-      <h3>#{@model.get 'displayName'}</h3> 
-      <div class="actions">
-        <a class="dropdown-toggle" data-toggle="dropdown">Options</a>
-        <ul class="dropdown-menu pull-right">
-          <li><a class="rename-dataset"><img src="/image/icon-rename.png" width="16" height="16" /> Rename</a></li>
-          <li><a class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Delete</a></li>
-        </ul>
-      </div>
-    </div>"""
-    @$el.append(@toolsView.render().el)
-    @
 
 
 class Cu.View.SignUpNav extends Backbone.View

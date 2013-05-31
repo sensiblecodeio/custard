@@ -58,9 +58,8 @@ describe 'Dataset', ->
           @wrapper = wrapper
           browser.elementByCssIfExists '#editable-input input', (err, input) =>
             @input = input
-            browser.elementByCssIfExists '#subnav-path .editable', (err, a) =>
-              @a = a
-              wd40.click '#subnav-path .editable', done
+            wd40.click '#dataset-meta .dropdown-toggle', ->
+              wd40.click '#dataset-meta .rename-dataset', done
 
       it 'an input box appears', (done) ->
         should.exist @input
@@ -76,24 +75,20 @@ describe 'Dataset', ->
               done()
 
         it 'hides the input box and shows the new title', (done) =>
-          browser.waitForVisibleByCss '#subnav-path .editable', 4000, (err) =>
+          browser.waitForVisibleByCss '#dataset-meta h3', 4000, (err) =>
             browser.isVisible 'css selector', '#editable-input', (err, inputVisible) ->
               inputVisible.should.be.false
               done()
 
         it 'has updated the title', (done) ->
-          wd40.getText '#subnav-path .editable', (err, text) ->
+          wd40.getText '#dataset-meta h3', (err, text) ->
             text.should.equal randomname
             done()
 
       context 'when I go back home', ->
         before (done) ->
-          browser.elementByCss '#subnav-path a[href="/"]', (err, link) ->
+          browser.elementByCss '#logo', (err, link) ->
             link.click done
-
-        # wait for animation :(
-        before (done) ->
-          setTimeout done, 500
 
         it 'should display the home page', (done) ->
           browser.url (err, url) ->

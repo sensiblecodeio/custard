@@ -169,43 +169,6 @@ body.fullscreen .container {
   padding: 0 4px;
 }
 
-#subnav-path #editable-input {
-  margin: 0; /* remove default margin-bottom 10px on .input-appends */
-  display: none; /* hide by default; show on .editable click */
-}
-
-#subnav-path #editable-input input {
-  color: #333;
-  font-size: 24px;
-  line-height: 32px;
-  padding: 0 4px;
-  margin: 0;
-  height: 32px;
-}
-
-#subnav-path #editable-input button {
-  padding: 6px 10px; /* rather than default 4px 12px, to line up with taller input */
-}
-
-#subnav-path .editable:after,
-#subnav-path .editable.saved:after,
-#subnav-path .editable.error:after {
-    content: "";
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    background: transparent url("../vendor/image/glyphicons-halflings.png") 0 -72px no-repeat;
-    margin-left: 5px;
-}
-
-#subnav-path .editable.saved:after {
-    background-position: -288px 0;
-}
-
-#subnav-path .editable.error:after {
-  background-position: 0 -120px;
-}
-
 #subnav-path > .btn-group:first-child > .btn:first-child {
   margin-left: -4px;
 }
@@ -564,7 +527,7 @@ a.tile .hide:hover,
   background: transparent url(../image/toolbar-triangle.png) 0 0 no-repeat;
 }
 
-#dataset-meta h3, #dataset-meta > div {
+#dataset-meta > * {
   display: table-cell;
   vertical-align: middle;
   font-weight: normal;
@@ -572,6 +535,24 @@ a.tile .hide:hover,
   line-height: 21px;
   margin: 0;
   padding: 0;
+}
+
+#dataset-meta #editable-input {
+  margin: 0; /* remove default margin-bottom 10px on .input-appends */
+  display: none; /* hide by default; show on .editable click */
+}
+
+#dataset-meta #editable-input input {
+  color: #333;
+  font-size: 21px;
+  line-height: 30px;
+  padding: 0 4px;
+  margin: 0;
+  height: 30px;
+}
+
+#dataset-meta #editable-input button {
+  padding: 6px 10px; /* rather than default 4px 12px, to line up with taller input */
 }
 
 #dataset-meta .actions > a {

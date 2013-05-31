@@ -10,7 +10,6 @@ class Cu.View.DatasetTools extends Backbone.View
       @selectedTool = @model
     window.selectedTool = @selectedTool
 
-    @toolInstances = @model.get('views').visible()
     app.tools().on 'add', @addToolArchetype, @
     @model.on 'update:tool', @addToolInstance, @
     @model.get('views').on 'update:tool', @addToolInstance, @
@@ -47,12 +46,10 @@ class Cu.View.DatasetTools extends Backbone.View
     , 0
 
   addToolInstance: (instance) ->
-    id = "instance-#{instance.get 'box'}"
-    l = $("##{id}", @$el)
     if not instance.isVisible()
       # Don't show "hidden" tool instances
       return
-    if l.length > 0
+    if $("#instance-#{instance.get 'box'}", @$el).length > 0
       # Already added as a menu item; don't add again.
       return
     if not instance.get 'tool'
@@ -61,4 +58,8 @@ class Cu.View.DatasetTools extends Backbone.View
     v = new Cu.View.ToolMenuItem model: instance
     el = v.render().el
     $('a', el).addClass('active') if instance is @selectedTool
-    $('.tools', @$el).append el
+    if instance is @model
+      # This is the dataset's main tool instance! Put it first.
+      $('.tools', @$el).prepend el
+    else
+      $('.tools', @$el).append el

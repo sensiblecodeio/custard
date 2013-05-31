@@ -553,7 +553,7 @@ a.tile .hide:hover,
 }
 
 #dataset-meta #editable-input button {
-  padding: 6px 10px; /* rather than default 4px 12px, to line up with taller input */
+  padding: 5px 10px; /* rather than default 4px 12px, to line up with taller input */
 }
 
 #dataset-meta .actions > a {

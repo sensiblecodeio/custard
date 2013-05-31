@@ -242,8 +242,7 @@ class Cu.View.Toolbar extends Backbone.View
     <div id="dataset-meta">
       <h3>#{@model.get 'displayName'}</h3> 
       <span class="input-append" id="editable-input">
-        <input type="text" value="#{@model.get 'displayName'}">
-        <button class="btn">Save</button>
+        <input type="text" value="#{@model.get 'displayName'}"><button class="btn">Save</button>
       </span>
       <div class="actions">
         <a class="dropdown-toggle" data-toggle="dropdown">Options</a>
@@ -268,8 +267,9 @@ class Cu.View.Toolbar extends Backbone.View
         console.warn 'Dataset could not be hidden!', model, xhr, options
 
   renameDataset: ->
+    w = $('#dataset-meta h3').width() + 100
     $('#editable-input', @$el).css('display', 'table-cell').prev().hide()
-    $('#editable-input input', @$el).focus()
+    $('#editable-input input', @$el).css('width', w).focus()
 
   hideTool: (e) ->
     e.stopPropagation()

@@ -1,10 +1,9 @@
 should = require 'should'
 {wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
-# :TODO: toolbar (done?)
 clickSSHButton = (done) ->
-  wd40.elementByCss '#toolbar a[href$="/settings"] .ssh-in', (err, sshLink) ->
-    sshLink.click done
+  wd40.click '#toolbar a[href$="/settings"] .dropdown-toggle', (err) ->
+    wd40.click '#tool-options-menu .git-ssh', done
 
 describe 'Platform-specific SSH instructions', ->
   prepIntegration()

@@ -273,17 +273,15 @@ class Cu.View.Toolbar extends Backbone.View
 
   hideTool: (e) ->
     e.stopPropagation()
-    if @model instanceof Cu.Model.View
-      $('.hide', @$el).hide 0, =>
-        @$el.slideUp =>
-          dataset = @model.get('plugsInTo')
-          @model.set 'state', 'deleted'
-          dataset.save()
-          app.navigate "/dataset/#{dataset.get 'box'}/", trigger: true
+    if window.selectedTool instanceof Cu.Model.View
+      dataset = window.selectedTool.get('plugsInTo')
+      window.selectedTool.set 'state', 'deleted'
+      dataset.save()
+      app.navigate "/dataset/#{dataset.get 'box'}/", trigger: true
 
   gitSshTool: (e) ->
       event.stopPropagation()
-      showOrAddSSH @model, 'tool'
+      showOrAddSSH window.selectedTool, 'tool'
 
   showDropdownMenuCloser: ->
     # Clicks on tool iframes can't close open dropdowns inside of #toolbar.

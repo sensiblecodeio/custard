@@ -37,7 +37,6 @@ describe 'New dataset tool', ->
       it 'and shows that the "Code a dataset" tool is active', (done) ->
         wd40.elementByCss '#toolbar .active', (err, link) ->
           link.text (err, text) ->
-            console.log text.toLowerCase()
             text.toLowerCase().should.include 'code a dataset'
             done()
 

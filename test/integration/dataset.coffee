@@ -43,7 +43,6 @@ describe 'Dataset', ->
       @toolbarText.should.include 'View in a table'
 
     it '...the spreadsheet download tool', ->
-      console.log @toolbarText
       @toolbarText.should.include 'Download as spreadsheet'
 
     it '...(only once)', ->

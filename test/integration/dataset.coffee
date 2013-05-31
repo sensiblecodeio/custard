@@ -33,7 +33,7 @@ describe 'Dataset', ->
       browser.isVisible 'css selector', '#toolbar', (err, visible) =>
         visible.should.be.true
         wd40.getText '#toolbar', (err, text) =>
-          @toolbarText = text
+          @toolbarText = text.replace /\s+/g, ' '
           done()
 
     it '...the tool that made this dataset', ->
@@ -43,6 +43,7 @@ describe 'Dataset', ->
       @toolbarText.should.include 'View in a table'
 
     it '...the spreadsheet download tool', ->
+      console.log @toolbarText
       @toolbarText.should.include 'Download as spreadsheet'
 
     it '...(only once)', ->

@@ -578,7 +578,7 @@ a.tile .hide:hover,
   min-width: 0;
 }
 
-#dataset-meta .dropdown-menu a {
+#toolbar .dropdown-menu a {
   text-shadow: none;
   font-size: 14px;
   line-height: 21px;
@@ -587,7 +587,7 @@ a.tile .hide:hover,
   padding-right: 15px;
 }
 
-#dataset-meta .dropdown-menu a img {
+#toolbar .dropdown-menu a img {
   vertical-align: -3px; /* override default "middle", so icons line up with text */
   margin-right: 5px;
 }

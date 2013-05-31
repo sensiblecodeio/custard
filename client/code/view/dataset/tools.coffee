@@ -1,5 +1,7 @@
 class Cu.View.DatasetTools extends Backbone.View
   id: 'dataset-tools'
+  events:
+    'click .tool': 'toolClick' 
 
   initialize: ->
     if @options.view?
@@ -25,6 +27,11 @@ class Cu.View.DatasetTools extends Backbone.View
     app.tools().each (archetype) =>
       @addToolArchetype archetype
     @
+
+  toolClick: (e) ->
+    $('.tool.active').removeClass("active")
+    $(e.currentTarget).addClass("active")
+    e.preventDefault()
 
   addToolArchetype: (toolModel) ->
     # The setTimeout thing is because we can't work out Backbone (Relational) model loading:

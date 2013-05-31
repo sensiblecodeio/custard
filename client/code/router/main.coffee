@@ -102,27 +102,25 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
 
   dataset: (box) ->
-    doNotNavigate = false
-    render = (dataTablesView) =>
-        subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
-        @subnavView.showView subnavView
-        contentView = new Cu.View.PluginContent {model: dataTablesView}
-        @appView.showView contentView
-        contentView.showContent()
-        doNotNavigate = false
 
     model = Cu.Model.Dataset.findOrCreate box: box, merge: true
     toolsDone = app.tools().fetch()
     modelDone = model.fetch()
     $.when.apply( null, [modelDone, toolsDone] ).done =>
       views = model.get 'views'
-      subnavView = new Cu.View.Toolbar {model: model}
-      @subnavView.showView subnavView
+      unless @subnavView.currentView instanceof Cu.View.Toolbar
+        subnavView = new Cu.View.Toolbar {model: model}
+        @subnavView.showView subnavView
 
       setTimeout =>
         views.findByToolName 'datatables-view-tool', (dataTablesView) =>
           if dataTablesView?
-            render dataTablesView
+            unless @subnavView.currentView instanceof Cu.View.Toolbar
+              subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
+              @subnavView.showView subnavView
+            contentView = new Cu.View.PluginContent {model: dataTablesView}
+            @appView.showView contentView
+            contentView.showContent()
           else
             app.navigate "/dataset/#{model.id}/settings", trigger: true
       , 0
@@ -131,10 +129,11 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
-        subnavView = new Cu.View.Toolbar model: model
+        unless @subnavView.currentView instanceof Cu.View.Toolbar
+          subnavView = new Cu.View.Toolbar model: model
+          @subnavView.showView subnavView
         contentView = new Cu.View.AppContent model: model
         @appView.showView contentView
-        @subnavView.showView subnavView
         contentView.showContent()
       error: (x,y,z) ->
         # TODO: factor into function
@@ -152,10 +151,11 @@ class Cu.Router.Main extends Backbone.Router
       success: (dataset, resp, options) =>
         v = dataset.get('views').findById(viewID)
         contentView = new Cu.View.PluginContent model: v
-        subnavView = new Cu.View.Toolbar model: dataset, view: v
         @appView.showView contentView
-        @subnavView.showView subnavView
         contentView.showContent()
+        unless @subnavView.currentView instanceof Cu.View.Toolbar
+          subnavView = new Cu.View.Toolbar model: dataset, view: v
+          @subnavView.showView subnavView
       error: (model, xhr, options) ->
         console.warn xhr
 

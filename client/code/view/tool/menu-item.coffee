@@ -22,9 +22,6 @@ class Cu.View.ToolMenuItem extends Backbone.View
           dataset.save()
           app.navigate "/dataset/#{dataset.get 'box'}/", trigger: true
 
-  initialize: ->
-    @model.on 'change', @render, this
-
   render: ->
     hideable = true
     toolName = @model.get('tool').get('name')

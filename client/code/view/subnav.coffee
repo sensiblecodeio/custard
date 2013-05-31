@@ -112,7 +112,7 @@ class Cu.View.DataHubNav extends Backbone.View
     if e.which == 40
       e.preventDefault()
       @highlightNextResult()
-    else if e.which == 38
+    else if e.which == 38 
       e.preventDefault()
       @highlightPreviousResult()
     else if e.which == 13

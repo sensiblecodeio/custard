@@ -275,14 +275,14 @@ class Cu.View.Toolbar extends Backbone.View
     # will be left in place. This removes it when they click it.
     $('#dropdown-menu-closer').hide()
 
-  editableNameBlurred: ->
+  editableNameBlurred: (e) ->
     $label = $('#dataset-meta h3')
     $wrapper = $label.next()
     $input = $wrapper.children('input')
     @newName = $.trim($input.val())
     @oldName = $label.text()
     if @newName == '' or @newName == $label.text()
-      @editableNameEscaped()
+      @editableNameEscaped(e)
     else
       $wrapper.hide()
       $label.text(@newName).show()

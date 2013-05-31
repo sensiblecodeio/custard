@@ -115,9 +115,8 @@ class Cu.Router.Main extends Backbone.Router
       setTimeout =>
         views.findByToolName 'datatables-view-tool', (dataTablesView) =>
           if dataTablesView?
-            unless @subnavView.currentView instanceof Cu.View.Toolbar
-              subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
-              @subnavView.showView subnavView
+            subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
+            @subnavView.showView subnavView
             contentView = new Cu.View.PluginContent {model: dataTablesView}
             @appView.showView contentView
             contentView.showContent()

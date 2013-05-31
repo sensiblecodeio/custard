@@ -81,6 +81,11 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
       success: (dataset, resp, options) =>
         dataset.installPlugin @model.get('name'), (err, view) =>
           console.warn 'Error', err if err?
+          v = new Cu.View.ToolMenuItem model: view
+          el = v.render().el
+          $('a', el).addClass('active')
+          $('#toolbar .tool.active').removeClass("active")
+          $('#toolbar .tools').append el
           window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
           $('#chooser').fadeOut 200, ->
             $(this).remove()

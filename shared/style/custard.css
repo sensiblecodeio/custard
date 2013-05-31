@@ -615,17 +615,17 @@ a.tile .hide:hover,
   overflow-x: scroll; /* this probably isn't ideal, but it'll do for now */
 }
 
-#dataset-tools ul {
+#dataset-tools > ul {
   list-style: none;
   margin: 0;
   display: inline-block; /* stop toolbar item groups wrapping onto separate lines */
 }
 
-#dataset-tools li {
+#dataset-tools > ul > li {
   float: left;
 }
 
-#dataset-tools .tools li:first-child a.tool {
+#dataset-tools .tools > li:first-child a.tool {
   padding-left: 30px;
 }
 
@@ -650,6 +650,28 @@ a.tile .hide:hover,
   font-weight: normal;
   font-size: 16px;
   line-height: 18px;
+}
+
+#dataset-tools a.tool .tool-actions {
+  display: none;
+}
+
+#dataset-tools a.tool.active .tool-actions {
+  padding-left: 10px;
+  display: table-cell;
+  opacity: 0.8;
+}
+
+#dataset-tools a.tool.active .tool-actions:hover {
+  opacity: 1;
+}
+
+#dataset-tools a.tool .dropdown-toggle {
+  display: inline-block;
+  background: transparent url(../image/tile-options-white.png) 50% 50% no-repeat;
+  width: 26px;
+  height: 30px;
+  text-indent: -9000px;
 }
 
 #dataset-tools a .tool-icon {

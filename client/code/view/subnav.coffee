@@ -227,8 +227,6 @@ class Cu.View.Toolbar extends Backbone.View
     'keyup #editable-input input': 'keypressOnEditableName'
   
   initialize: ->
-    super()
-    @model.on 'update:tool', @render, @
     @toolsView = new Cu.View.DatasetTools
       model: @model
       view: @options.view

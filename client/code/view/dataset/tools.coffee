@@ -53,9 +53,4 @@ class Cu.View.DatasetTools extends Backbone.View
     v = new Cu.View.ToolMenuItem model: instance
     el = v.render().el
     $('a', el).addClass('active') if instance is @selectedTool
-
-    if instance instanceof Cu.Model.Dataset
-      # So that the tool that imported is at the top.
-      $('.tools', @$el).prepend el
-    else
-      $('.tools', @$el).append el
+    $('.tools', @$el).append el

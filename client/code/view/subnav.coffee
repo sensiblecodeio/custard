@@ -221,6 +221,8 @@ class Cu.View.Toolbar extends Backbone.View
     'click .new-view': 'showChooser'
     'click .hide-dataset': 'hideDataset'
     'click .rename-dataset': 'renameDataset'
+    'click .hide-tool': 'hideTool'
+    'click .git-ssh': 'gitSshTool'
     'click .dropdown-toggle': 'showDropdownMenuCloser'
     'click #dropdown-menu-closer': 'hideDropdownMenuCloser'
     'blur #editable-input input': 'editableNameBlurred'
@@ -233,6 +235,10 @@ class Cu.View.Toolbar extends Backbone.View
 
   render: ->
     @$el.html """<div id="dropdown-menu-closer"></div>
+    <ul id="tool-options-menu" class="dropdown-menu">
+      <li><a class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</a></li>
+      <li><a class="hide-tool"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</a></li>
+    </ul>
     <div id="dataset-meta">
       <h3>#{@model.get 'displayName'}</h3> 
       <span class="input-append" id="editable-input">
@@ -264,6 +270,20 @@ class Cu.View.Toolbar extends Backbone.View
   renameDataset: ->
     $('#editable-input', @$el).css('display', 'table-cell').prev().hide()
     $('#editable-input input', @$el).focus()
+
+  hideTool: (e) ->
+    e.stopPropagation()
+    if @model instanceof Cu.Model.View
+      $('.hide', @$el).hide 0, =>
+        @$el.slideUp =>
+          dataset = @model.get('plugsInTo')
+          @model.set 'state', 'deleted'
+          dataset.save()
+          app.navigate "/dataset/#{dataset.get 'box'}/", trigger: true
+
+  gitSshTool: (e) ->
+      event.stopPropagation()
+      showOrAddSSH @model, 'tool'
 
   showDropdownMenuCloser: ->
     # Clicks on tool iframes can't close open dropdowns inside of #toolbar.

@@ -827,6 +827,7 @@ a.tool .tool-icon {
 
 a.tool.active {
   text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* lighter shadow in #toolbar .active state */
+  top: 0; /* override .tool:active style - don't want tile to bounce when you click it */
 }
 
 .active .tool-icon-outer {

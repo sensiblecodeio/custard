@@ -480,6 +480,7 @@ a.tile .hide:hover,
 /* Toolbar on dataset pages (containing dataset name and installed tools) */
 
 #toolbar {
+  position: relative; /* So that we can position tool instance dropdown menu */
   background-color: #333;
   color: #fff;
   height: 74px;

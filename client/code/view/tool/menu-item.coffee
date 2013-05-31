@@ -10,7 +10,23 @@ class Cu.View.ToolMenuItem extends Backbone.View
         showOrAddSSH @model, 'dataset'
       else if @model instanceof Cu.Model.View
         showOrAddSSH @model, 'view'
+    'click .dropdown-toggle': 'showOptionsDropdown'
 
+  showOptionsDropdown: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    toggleOffset = $(e.currentTarget).offset()
+    toolbarOffset= $('#toolbar').offset()
+    top = toggleOffset.top - toolbarOffset.top
+    left = toggleOffset.left - toolbarOffset.left
+    right = $('#toolbar').width() - left
+    optionsMenu = $("""<ul class="dropdown-menu pull-right">
+      <li><a class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</a></li>
+      <li><a class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</a></li>
+    </ul>""").show().css(
+      top: top + 23
+      right: right - 35
+    ).appendTo('#toolbar')
   hideTool: (e) ->
     e.preventDefault()
     e.stopPropagation()

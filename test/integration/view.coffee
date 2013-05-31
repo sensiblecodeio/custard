@@ -12,13 +12,9 @@ describe 'View', ->
 
   context 'when I click on an Prune dataset then the graph of prunes view', ->
     before (done) ->
-      # wait for tiles to fade in
-      setTimeout ->
-        browser.elementByPartialLinkText 'Prune', (err, link) ->
-          link.click done
-      , 1000
+      browser.elementByPartialLinkText 'Prune', (err, link) ->
+        link.click done
 
-    # :TODO: toolbar (done?)
     before (done) ->
       wd40.elementByPartialLinkText 'Code a prune!', (err, toolLink) ->
         toolLink.click done
@@ -30,25 +26,20 @@ describe 'View', ->
 
     it 'there is a custom-named "Data Scientist\'s Report" tool', (done) ->
       wd40.getText '#dataset-tools', (err, text) ->
-        text.toLowerCase().should.include "data scientist's report"
+        text.replace(/\s+/g, ' ').toLowerCase().should.include "data scientist's report"
         done()
 
     context 'when I click the "hide" link on the "Code a prune" tool', ->
       before (done) ->
-        wd40.elementByCss '#dataset-tools', (err, menu) ->
-          menu.elementByPartialLinkText "Code a prune", (err, view) =>
-            @link = view
-            browser.moveTo @link, =>
-              @link.elementByCss '.hide', (err, hideLink) ->
-                hideLink.click done
+          browser.elementByPartialLinkText "Code a prune!", (err, view) ->
+            view.elementByCss '.dropdown-toggle', (err, optionsToggle) ->
+              optionsToggle.click (err) ->
+                 wd40.click '#tool-options-menu .hide-tool', done
 
-      it 'the tool disappears from the tool menu immediately', (done) ->
-        # TODO: write a waitForInvisible function
-        setTimeout ->
-          browser.elementByPartialLinkTextIfExists "Code a prune", (err, view) ->
-            should.not.exist view
-            done()
-        , 1000
-
-      it "and I'm redirected to the dataset's default tool", (done) ->
+      it "I'm redirected to the dataset's default tool", (done) ->
         wd40.waitForMatchingURL /dataset[/]\w+([/]settings)?[/]?$/, done
+
+      it 'And the "Code a prune" tool is no longer visible', (done) ->
+        browser.elementByPartialLinkTextIfExists "Code a prune", (err, view) ->
+          should.not.exist view
+          done()

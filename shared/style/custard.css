@@ -853,7 +853,7 @@ a.tool canvas {
 }
 
 #content p.loading {
-    margin-top: 100px;
+    margin: 100px 0;
     padding-top: 50px;
     text-align: center;
     background: transparent url('/image/tool-loader.gif') center top no-repeat;

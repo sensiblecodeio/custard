@@ -1,4 +1,4 @@
-class Cu.View.ViewContent extends Backbone.View
+class Cu.View.ToolContent extends Backbone.View
   id: 'fullscreen'
 
   showContent: ->
@@ -60,7 +60,7 @@ class Cu.View.ViewContent extends Backbone.View
                 error: (model, xhr, options) ->
                   console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
 
-class Cu.View.AppContent extends Cu.View.ViewContent
+class Cu.View.AppContent extends Cu.View.ToolContent
   settings: (callback) ->
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null
@@ -73,7 +73,7 @@ class Cu.View.AppContent extends Cu.View.ViewContent
         box: @model.get 'box'
         sqlQuery: query
 
-class Cu.View.PluginContent extends Cu.View.ViewContent
+class Cu.View.PluginContent extends Cu.View.ToolContent
   settings: (callback) ->
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null

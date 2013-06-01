@@ -273,13 +273,12 @@ class Cu.View.Toolbar extends Backbone.View
 
   hideTool: (e) ->
     e.stopPropagation()
-    alert 'deleting tools doesn\'t work yet'
-    return false
     if window.selectedTool instanceof Cu.Model.View
       dataset = window.selectedTool.get('plugsInTo')
       window.selectedTool.set 'state', 'deleted'
-      dataset.save()
-      app.navigate "/dataset/#{dataset.get 'box'}/", trigger: true
+      dataset.save {},
+        success: ->
+          window.location = "/dataset/#{dataset.get 'box'}/"
 
   gitSshTool: (e) ->
       event.stopPropagation()

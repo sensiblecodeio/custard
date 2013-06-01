@@ -111,10 +111,12 @@ class Cu.Router.Main extends Backbone.Router
       unless @subnavView.currentView instanceof Cu.View.Toolbar
         subnavView = new Cu.View.Toolbar {model: model}
         @subnavView.showView subnavView
+        window.selectedTool = model
 
       setTimeout =>
         views.findByToolName 'datatables-view-tool', (dataTablesView) =>
           if dataTablesView?
+            window.selectedTool = dataTablesView
             subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
             @subnavView.showView subnavView
             contentView = new Cu.View.PluginContent {model: dataTablesView}
@@ -128,6 +130,7 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
+        window.selectedTool = model
         unless @subnavView.currentView instanceof Cu.View.Toolbar
           subnavView = new Cu.View.Toolbar model: model
           @subnavView.showView subnavView
@@ -149,6 +152,7 @@ class Cu.Router.Main extends Backbone.Router
     dataset.fetch
       success: (dataset, resp, options) =>
         v = dataset.get('views').findById(viewID)
+        window.selectedTool = v
         contentView = new Cu.View.PluginContent model: v
         @appView.showView contentView
         contentView.showContent()

@@ -8,7 +8,6 @@ class Cu.View.DatasetTools extends Backbone.View
       @selectedTool = @options.view
     else
       @selectedTool = @model
-    window.selectedTool = @selectedTool
 
     app.tools().on 'add', @addToolArchetype, @
     @model.on 'update:tool', @addToolInstance, @

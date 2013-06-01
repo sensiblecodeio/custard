@@ -307,16 +307,8 @@ class Cu.View.Toolbar extends Backbone.View
       $label.text(@newName).show()
       @model.set 'displayName', @newName
       @model.save {},
-        success: =>
-          $label.addClass 'saved'
-          setTimeout ->
-            $label.removeClass 'saved'
-          , 1000
         error: (e) =>
-          $label.text(@oldName).addClass 'error'
-          setTimeout ->
-            $label.removeClass 'error'
-          , 1000
+          $label.text @oldName
           @model.set 'displayName', @oldName
           console.warn 'error saving new name', e
 

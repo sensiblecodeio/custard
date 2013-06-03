@@ -87,6 +87,11 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
       success: (dataset, resp, options) =>
         dataset.installPlugin @options.archetype.get('name'), (err, view) =>
           console.warn 'Error', err if err?
+          v = new Cu.View.ToolMenuItem model: view
+          el = v.render().el
+          $('a', el).addClass('active')
+          $('#toolbar .tool.active').removeClass("active")
+          $('#toolbar .tools').append el
           window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
       error: (model, xhr, options) ->
         @active = false

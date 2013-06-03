@@ -82,8 +82,6 @@ turn_off_uglify_mangling() {
 s=../swops-secret/keys.sh
 test -e "$s" && . "$s" && echo yummm, keys.sh
 
-mkdir -p $CU_TOOLS_DIR
-
 if [ "$NODE_ENV" = "production" ]
 then
   turn_off_uglify_mangling

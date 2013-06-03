@@ -10,6 +10,7 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView = new Cu.AppView '#subnav'
     @overlayView = new Cu.AppView '#overlay'
     @navView ?= new Cu.View.Nav()
+    @on 'route', @trackPageView
 
     # Move somewhere better
     $('#logo').click ->
@@ -51,6 +52,10 @@ class Cu.Router.Main extends Backbone.Router
       @homeLoggedIn()
     else
       @homeAnonymous()
+
+  trackPageView: (e) ->
+    path = Backbone.history.getFragment()
+    _gaq.push ['_trackPageview', "/#{path}"]
 
   homeAnonymous: ->
     contentView = new Cu.View.Home

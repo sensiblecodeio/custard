@@ -34,7 +34,8 @@
     "nodetime": "~0.8.12",
     "mailchimp": "~0.9.5",
     "exceptional-node": "~0.1.1",
-    "optimist": "~0.5.1"
+    "optimist": "~0.5.1",
+    "nodealytics": "0.0.5"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

@@ -38,6 +38,7 @@ class Cu.View.ToolContent extends Backbone.View
                 success: (model, resp, options) ->
                   model.set 'displayName', name
                   model.save()
+                  _gaq.push ['datasets', 'rename-xdm', name]
         pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly
           window.app.pushSqlQuery = query

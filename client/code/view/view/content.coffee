@@ -9,6 +9,8 @@ class Cu.View.ViewContent extends Backbone.View
 
   render: ->
     $('body').addClass('fullscreen')
+    toolName = @model.get('tool').get 'name'
+    _gaq.push ['tools', 'render', toolName]
 
   close: ->
     $('body').removeClass('fullscreen')

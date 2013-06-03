@@ -232,7 +232,8 @@ class Cu.View.Toolbar extends Backbone.View
     @toolsView = new Cu.View.DatasetTools
       model: @model
       view: @options.view
-    @model.on 'change', @render, this
+    @model.on 'change:displayName', @renderName, this
+
 
   render: ->
     @$el.html """<div id="dropdown-menu-closer"></div>
@@ -255,6 +256,10 @@ class Cu.View.Toolbar extends Backbone.View
     </div>"""
     @$el.append(@toolsView.render().el)
     @
+
+  renderName: ->
+    @$el.find('h3').text @model.get 'displayName'
+    @$el.find('input').val @model.get 'displayName'
 
   showChooser: ->
     app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true

@@ -232,6 +232,7 @@ class Cu.View.Toolbar extends Backbone.View
     @toolsView = new Cu.View.DatasetTools
       model: @model
       view: @options.view
+    @model.on 'change', @render, this
 
   render: ->
     @$el.html """<div id="dropdown-menu-closer"></div>

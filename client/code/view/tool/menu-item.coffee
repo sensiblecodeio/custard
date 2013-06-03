@@ -66,6 +66,7 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
     if app.tools().length
       html = JST['toolbar-tile']
         manifest: @options.archetype.get 'manifest'
+        toolName: @options.archetype.get 'name'
       @$el.html html
     @
 
@@ -85,13 +86,15 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
 
     dataset.fetch
       success: (dataset, resp, options) =>
-        dataset.installPlugin @options.archetype.get('name'), (err, view) =>
+        toolName = @options.archetype.get 'name'
+        dataset.installPlugin toolName, (err, view) =>
           console.warn 'Error', err if err?
           v = new Cu.View.ToolMenuItem model: view
           el = v.render().el
           $('a', el).addClass('active')
           $('#toolbar .tool.active').removeClass("active")
           $('#toolbar .tools').append el
+          $("ul.archetypes a[data-toolname='#{toolName}']").parent().remove()
           window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
       error: (model, xhr, options) ->
         @active = false

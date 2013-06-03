@@ -39,7 +39,8 @@ exports.users = [
   accountLevel: "grandfather",
   recurlyAccount: "ehg-2423432",
   acceptedTerms: 1,
-  canBeReally: ['ehg', 'test']
+  canBeReally: ['ehg', 'test'],
+  defaultContext: "ehg"
 },
 {
   shortName: 'ickletest',
@@ -52,7 +53,8 @@ exports.users = [
   accountLevel: "free",
   recurlyAccount: "ickletest-242363",
   acceptedTerms: 1,
-  canBeReally: ['ickletest', 'test', 'ehg']
+  canBeReally: ['ickletest', 'test', 'ehg'],
+  defaultContext: "ickletest"
 },
 {
   shortName: 'nopassword',

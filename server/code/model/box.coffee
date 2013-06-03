@@ -67,6 +67,17 @@ class Box extends ModelBase
             else
               callback null
 
+  distributeSSHKeys: (callback) ->
+    {User} = require 'model/user'
+    boxKeys = []
+    User.findByShortName @users[0], (err, user) =>
+      boxKeys = boxKeys.concat user.sshKeys
+      request.post
+        uri: "#{@endpoint()}/sshkeys"
+        form:
+          keys: JSON.stringify boxKeys
+      , callback
+
   @endpoint: (server, name) ->
     proto_server = "https://#{server}"
     if process.env.CU_BOX_SERVER

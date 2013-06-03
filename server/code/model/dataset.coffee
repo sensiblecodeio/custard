@@ -85,6 +85,17 @@ Dataset.View =
         item.tool is toolName
       callback null, result
 
+  changeBoxSever: (id, newServer, callback) ->
+    Dataset.dbClass.findOne 'views.box': id, (err, dataset) ->
+      if err?
+        return callback err, null
+      if dataset?
+        view = _.find dataset.views, (view) -> view.box is id
+        view.boxServer = newServer
+        dataset.save callback
+      else
+        return callback "Unable to find box id "
+
 exports.Dataset = Dataset
 
 exports.dbInject = (dbObj) ->

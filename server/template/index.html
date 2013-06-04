@@ -37,6 +37,15 @@
     window.user = <%- user %>
     window.recurlyDomain = "<%- recurlyDomain %>"
     window.custardEnvironment = "<%- environment %>"
+    _gaq = [ ['_setAccount', 'UA-21451224-7'] ]
+    if(window.custardEnvironment == 'production'){
+      (function(){
+        var g = document.createElement('script'),
+            s = document.getElementsByTagName('script')[0]
+        g.src = '//www.google-analytics.com/ga.js'
+        s.parentNode.insertBefore(g, s)
+      })()
+    }
   </script>
   <%- templates %>
   <%- scripts %>
@@ -69,14 +78,5 @@
       <li class="pull-right"><a href="https://github.com/scraperwiki/custard/blob/master/LICENCE" title="AGPL License">Open Source</a></li>
     </ul>
   </div>
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-21451224-7']);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
 </body>
 </html>

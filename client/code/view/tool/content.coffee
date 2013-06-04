@@ -7,6 +7,10 @@ class Cu.View.ToolContent extends Backbone.View
 
   render: ->
     $('body').addClass('fullscreen')
+    # work out correct position for fullscreen iframe, accounting for injected lastpass bars etc
+    $c = $('#content')
+    @$el.css 'top', $c.offset().top - $c.outerHeight(true) - $c.innerHeight()
+    @
 
   showContent: ->
     @boxUrl = @model.endpoint()

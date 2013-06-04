@@ -99,6 +99,7 @@ class Cu.View.PluginContent extends Cu.View.ToolContent
     dataset = @model.get 'plugsInTo'
     viewToken = @model.get('boxJSON')?.publish_token
     datasetToken = dataset.get('boxJSON')?.publish_token
+    displayName = dataset.get('displayName')
     callback
       source:
         apikey: window.user.effective.apiKey
@@ -110,3 +111,4 @@ class Cu.View.PluginContent extends Cu.View.ToolContent
         url: "#{@boxUrl}/#{dataset.get 'box'}/#{datasetToken}"
         publishToken: datasetToken
         box: dataset.get 'box'
+        displayName: displayName

@@ -1210,6 +1210,10 @@ a.help-tile h3 {
     z-index: 1;
     background-color: #fff;
   }
+  
+  body.fullscreen #footer {
+    display: none; /* hide footer on tool pages (it's covered by iframe anyway) */
+  }
 
   div.help nav.well {
     position: static;

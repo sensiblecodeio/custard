@@ -46,7 +46,7 @@ describe 'New dataset tool', ->
             iframeUrl = url
             done()
 
-    context 'when I go back to the dataset page', ->
+    context 'when I wait a little while and then go back to the dataset page', ->
       before (done) ->
         # wait for the data tables tool to be installed in the background
         setTimeout done, 5000

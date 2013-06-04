@@ -50,7 +50,7 @@ class Cu.View.AppTile extends Cu.View.ToolTile
     dataset.new = true
     dataset.save {},
       wait: true
-      success: ->
+      success: =>
         _gaq.push ['tools', 'install', @model.get 'name']
         _gaq.push ['datasets', 'create']
         delete dataset.new

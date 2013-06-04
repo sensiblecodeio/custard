@@ -16,6 +16,7 @@ require('http').globalAgent.maxSockets = 4096
 
 _ = require 'underscore'
 express = require 'express'
+na = require 'nodealytics'
 assets = require 'connect-assets'
 ejs = require 'ejs'
 passport = require 'passport'
@@ -49,6 +50,13 @@ mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
 
 Exceptional.API_KEY = process.env.EXCEPTIONAL_KEY
+
+if /production/.test process.env.NODE_ENV
+  na.initialize 'UA-21451224-7', 'scraperwiki.com'
+else
+  na =
+    trackPage: -> return true
+    trackEvent: -> return true
 
 # TODO: move into npm module
 nodetimeLog = (req, res, next) ->
@@ -471,6 +479,13 @@ postTool = (req, resp) ->
                 return resp.send 500, error: 'Error trying to find tool'
               else
                 code = if isNew then 201 else 200
+                if isNew
+                  code = 201
+                  action = 'created'
+                else
+                  code = 200
+                  action = 'updated'
+                na.trackEvent 'tools', action, body.name
                 return resp.send code, tool
 
 updateUser = (req, resp) ->
@@ -625,13 +640,18 @@ listSSHKeys = (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->
     resp.send 200, user.sshKeys
 
+googleAnalytics = (req, resp, next) ->
+  na.trackPage "#{req.method} #{req.url}", req.url, ->
+    return true
+  next()
+
 app.all '*', ensureAuthenticated
 
 app.get '/logout', logout
 
 # API!
 app.get '/api/tools/?', listTools
-app.post '/api/tools/?', postTool
+app.post '/api/tools/?', googleAnalytics, postTool
 
 app.put '/api/user/?', updateUser
 

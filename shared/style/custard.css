@@ -1202,7 +1202,7 @@ a.help-tile h3 {
 
   #fullscreen {
     position: fixed;
-    top: 125px;
+    top: 125px; /* this is overridden by javascript in Cu.View.ToolContent.render() */
     left: 0;
     right: 0;
     bottom: 0;

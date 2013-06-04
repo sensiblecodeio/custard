@@ -9,6 +9,8 @@ class Cu.View.DatasetTools extends Backbone.View
     else
       @selectedTool = @model
 
+    # Tool relations might not have been loaded yet,
+    # so we listen for future tool-related events.
     app.tools().on 'add', @addToolArchetype, @
     @model.on 'update:tool', @addToolInstance, @
     @model.get('views').on 'update:tool', @addToolInstance, @
@@ -52,7 +54,8 @@ class Cu.View.DatasetTools extends Backbone.View
       # Already added as a menu item; don't add again.
       return
     if not instance.get 'tool'
-      # Tool relation not loaded yet, so we don't know what to display.
+      # Tool relation not loaded yet. Bail out.
+      # The instance will be added again later, once tools have loaded.
       return
     v = new Cu.View.ToolMenuItem model: instance
     el = v.render().el

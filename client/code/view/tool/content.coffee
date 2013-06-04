@@ -1,20 +1,27 @@
 class Cu.View.ToolContent extends Backbone.View
   id: 'fullscreen'
 
+  initialize: ->
+    @model.on 'update:tool', @googleAnalytics, @
+    @googleAnalytics()
+
+  render: ->
+    $('body').addClass('fullscreen')
+
   showContent: ->
     @boxUrl = @model.endpoint()
     @settings (settings) =>
       frag = encodeURIComponent JSON.stringify(settings)
       @setupEasyXdm "#{@boxUrl}/#{@model.get 'box'}/#{settings.source.publishToken}/container.html##{frag}"
 
-  render: ->
-    $('body').addClass('fullscreen')
-    toolName = @model.get('tool').get 'name'
-    _gaq.push ['tools', 'render', toolName]
-
   close: ->
     $('body').removeClass('fullscreen')
     super()
+
+  googleAnalytics: ->
+    if @model.get('tool')
+      toolName = @model.get('tool').get 'name'
+      _gaq.push ['tools', 'render', toolName]
 
   setupEasyXdm: (url) ->
     transport = new easyXDM.Rpc

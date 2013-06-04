@@ -3,21 +3,20 @@
 # migrated to.
 fs = require 'fs'
 {exec} = require 'child_process'
-
 mongoose = require 'mongoose'
 async = require 'async'
 request = require 'request'
 mkdirp = require 'mkdirp'
 
 argv = require('optimist')
-	.usage('Usage: $0 [--verbose] --box <box> --host <host>')
-	.demand(['box', 'host'])
-	.alias('v', 'verbose')
-	.alias('b', 'box')
-	.alias('h', 'host')
-	.describe('host', "Specify the new box's hostname")
-	.boolean('verbose')
-	.argv
+  .usage('Usage: $0 [--verbose] --box <box> --host <host>')
+  .demand(['box', 'host'])
+  .alias('v', 'verbose')
+  .alias('b', 'box')
+  .alias('h', 'host')
+  .describe('host', "Specify the new box's hostname")
+  .boolean('verbose')
+  .argv
 
 {User} = require 'model/user'
 {Box} = require 'model/box'
@@ -47,7 +46,7 @@ migratePasswdEntry = (box, user, callback) ->
     uid = uid.replace('\n', '')
     exec "util/addUnixUser.sh #{box.name} #{uid}", (err, stdout, stderr) ->
       checkVerboseAndPrint "migratePasswdEntry", err, stdout, stderr
-	    callback()
+      callback()
 
 transferBoxData = (box, user, callback) ->
   # Run duplicity to get latest backed up data??
@@ -70,7 +69,7 @@ transferCrontab = (box, user, callback) ->
         exec "chmod 600 #{crontabPath}", (err, stdout, stderr) ->
           checkVerboseAndPrint "chmod", err, stdout, stderr
           disableOldCrontab box, user, callback
-            
+
 disableOldCrontab = (box, user, callback) ->
   console.log "Disabling old crontab..."
   boxExec "crontab -r", box, user, (err, res, body) ->

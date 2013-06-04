@@ -7,16 +7,21 @@ class Cu.View.ToolContent extends Backbone.View
 
   render: ->
     $('body').addClass('fullscreen')
-    # work out correct position for fullscreen iframe, accounting for injected lastpass bars etc
+    @positionIframe()
+    @
+
+  positionIframe: ->
+    # Work out correct position for fullscreen iframe, accounting for injected lastpass bars etc.
+    # This is also called in Cu.View.Toolbar, after the toolbar has loaded, just in case.
     $c = $('#content')
     @$el.css 'top', $c.offset().top - $c.outerHeight(true) - $c.innerHeight()
-    @
 
   showContent: ->
     @boxUrl = @model.endpoint()
     @settings (settings) =>
       frag = encodeURIComponent JSON.stringify(settings)
       @setupEasyXdm "#{@boxUrl}/#{@model.get 'box'}/#{settings.source.publishToken}/container.html##{frag}"
+      @positionIframe()
 
   close: ->
     $('body').removeClass('fullscreen')

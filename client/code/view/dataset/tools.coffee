@@ -44,6 +44,7 @@ class Cu.View.DatasetTools extends Backbone.View
           return
         v = new Cu.View.ArchetypeMenuItem { archetype: toolModel, dataset: @model }
         $('.archetypes', @$el).append v.render().el
+        window.app.appView.currentView.positionIframe()
     , 0
 
   addToolInstance: (instance) ->
@@ -65,3 +66,4 @@ class Cu.View.DatasetTools extends Backbone.View
       $('.tools', @$el).prepend el
     else
       $('.tools', @$el).append el
+      window.app.appView.currentView.positionIframe()

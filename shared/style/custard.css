@@ -594,7 +594,7 @@ a.tile .hide:hover,
 
 #dataset-tools {
   white-space: nowrap; /* stop toolbar items wrapping onto next line */
-  overflow-x: scroll; /* this probably isn't ideal, but it'll do for now */
+  overflow: hidden; /* this is made scrollable by Cu.View.Toolbar and jquery.mousewheel.js */
 }
 
 #dataset-tools > ul {

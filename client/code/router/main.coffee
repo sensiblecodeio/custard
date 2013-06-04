@@ -13,8 +13,8 @@ class Cu.Router.Main extends Backbone.Router
     @on 'route', @trackPageView
 
     # Move somewhere better
-    $('#logo').click ->
-      event.preventDefault()
+    $('#logo').click (e) ->
+      e.preventDefault()
       window.app.navigate "/", {trigger: true}
 
     # TODO: this isn't a great place for this constant

@@ -22,7 +22,6 @@ describe 'Dataset', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    # :TODO: toolbar (done?)
     it 'has not shown the input box', (done) ->
       wd40.elementByCss '#editable-input', (err, input) ->
         browser.isVisible input, (err, visible) ->
@@ -51,7 +50,6 @@ describe 'Dataset', ->
     it '...and a button to pick more tools', ->
       @toolbarText.toLowerCase().should.include 'more tools'
 
-    # :TODO: toolbar
     context 'when I click the title', ->
       before (done) ->
         browser.elementByCssIfExists '#editable-input', (err, wrapper) =>

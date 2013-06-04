@@ -22,7 +22,6 @@ describe 'New view tool', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    # :TODO: toolbar (done?)
     context 'when I click on "More tools" in the "Tools" dropdown', ->
       before (done) ->
         wd40.click '#toolbar .new-view', ->

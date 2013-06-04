@@ -33,7 +33,6 @@ describe 'New dataset tool', ->
       it 'takes me to the dataset settings page', ->
         @currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/settings")
 
-      # :TODO: toolbar (done?)
       it 'and shows that the "Code a dataset" tool is active', (done) ->
         wd40.elementByCss '#toolbar .active', (err, link) ->
           link.text (err, text) ->
@@ -54,7 +53,6 @@ describe 'New dataset tool', ->
       before (done) ->
         browser.get @currentUrl.replace(/\/settings$/, ''), done
 
-      # :TODO: toolbar (done?)
       it 'shows that the "View in a table" tool is active', (done) ->
         wd40.elementByCss '#toolbar .active', (err, link) ->
           link.text (err, text) ->

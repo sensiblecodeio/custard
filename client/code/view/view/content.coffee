@@ -1,6 +1,9 @@
 class Cu.View.ViewContent extends Backbone.View
   id: 'fullscreen'
 
+  initialize: ->
+    @model.on 'update:tool', @sendAnalytics, this
+
   showContent: ->
     @boxUrl = @model.endpoint()
     @settings (settings) =>
@@ -9,6 +12,10 @@ class Cu.View.ViewContent extends Backbone.View
 
   render: ->
     $('body').addClass('fullscreen')
+    toolName = @model.get('tool').get 'name'
+    _gaq.push ['tools', 'render', toolName]
+
+  sendAnalytics: ->
     toolName = @model.get('tool').get 'name'
     _gaq.push ['tools', 'render', toolName]
 

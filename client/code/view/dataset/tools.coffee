@@ -1,7 +1,8 @@
 class Cu.View.DatasetTools extends Backbone.View
   id: 'dataset-tools'
   events:
-    'click .tool': 'toolClick' 
+    'click .tool': 'toolClick'
+    'click .scroll': 'scrollMore'
 
   initialize: ->
     if @options.view?
@@ -20,7 +21,8 @@ class Cu.View.DatasetTools extends Backbone.View
       <ul class="archetypes"></ul>
       <ul class="more">
         <li><a class="new-view">More tools&hellip;</a></li>
-      </ul>"""
+      </ul>
+      <span class="scroll"></span>"""
     @addToolInstance @model
     views = @model.get('views').visible()
     views.each (view) =>
@@ -44,7 +46,7 @@ class Cu.View.DatasetTools extends Backbone.View
           return
         v = new Cu.View.ArchetypeMenuItem { archetype: toolModel, dataset: @model }
         $('.archetypes', @$el).append v.render().el
-        window.app.appView.currentView.positionIframe?()
+      @positionIframe()
     , 0
 
   addToolInstance: (instance) ->
@@ -66,4 +68,28 @@ class Cu.View.DatasetTools extends Backbone.View
       $('.tools', @$el).prepend el
     else
       $('.tools', @$el).append el
+      @positionIframe()
+
+  positionIframe: ->
+    if window.app.appView.currentView?.positionIframe?
       window.app.appView.currentView.positionIframe?()
+    @showOrHideScroller()
+
+  scrollMore: ->
+    w = @$el.width()
+    l = @$el[0].scrollLeft + (w * 0.9)
+    @$el.animate {scrollLeft: l}, 250, =>
+      @showOrHideScroller()
+
+  showOrHideScroller: ->
+    totalWidth = 0
+    visibleWidth = @$el.width()
+    scrollLeft = @$el[0].scrollLeft
+    @$el.children('ul').each ->
+      totalWidth += $(this).outerWidth(true)
+    if visibleWidth + scrollLeft > totalWidth
+      @$el.children('.scroll:visible').fadeOut 100
+    else if visibleWidth < totalWidth
+      @$el.children('.scroll:hidden').fadeIn 100
+    else
+      @$el.children('.scroll:visible').fadeOut 100

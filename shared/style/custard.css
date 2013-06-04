@@ -684,12 +684,23 @@ a.tile .hide:hover,
   line-height: 74px;
   height: 74px;
   padding: 0 20px 0 50px;
-  margin-left: 10px;
+  margin-left: 0 10px;
   color: #fff;
   text-shadow: 0 3px 6px #000;
   cursor: pointer;
   background: transparent url(../image/toolbar-more.png) left center no-repeat;
   text-decoration: none;
+}
+
+#toolbar .scroll {
+  display: none;
+  height: 100%;
+  width: 50px;
+  background: transparent url(../image/toolbar-scroll.png) right center no-repeat;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
 }
 
 

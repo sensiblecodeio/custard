@@ -27,8 +27,7 @@ describe 'New view tool', ->
       context 'when I click on the newview tool', ->
         before (done) ->
           wd40.click '.newview.tool', =>
-            # XXX but of a rubbish long wait - what CSS element could we wait for instead?
-            setTimeout =>
+            wd40.waitForInvisibleByCss '#chooser', (err) =>
               browser.url (err, url) =>
                 @currentUrl = url
                 done()

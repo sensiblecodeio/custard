@@ -683,12 +683,11 @@ a.tile .hide:hover,
   display: inline-block;
   line-height: 74px;
   height: 74px;
-  padding: 0 20px 0 50px;
-  margin-left: 0 10px;
+  padding: 0 20px 0 70px;
   color: #fff;
   text-shadow: 0 3px 6px #000;
   cursor: pointer;
-  background: transparent url(../image/toolbar-more.png) left center no-repeat;
+  background: transparent url(../image/toolbar-more.png) 20px center no-repeat;
   text-decoration: none;
 }
 

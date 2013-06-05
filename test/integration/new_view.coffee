@@ -11,18 +11,15 @@ describe 'New view tool', ->
 
   context 'when I click on an Apricot dataset', ->
     before (done) ->
-      # wait for tiles to fade in
-      setTimeout ->
-        browser.elementByPartialLinkText 'Apricot', (err, link) ->
+        wd40.elementByPartialLinkText 'Apricot', (err, link) ->
           link.click done
-      , 500
 
     it 'takes me to the Apricot dataset page', (done) ->
       wd40.trueURL (err, result) ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    context 'when I click on "More tools" in the "Tools" dropdown', ->
+    context 'when I click on "More tools" in the toolbar', ->
       before (done) ->
         wd40.click '#toolbar .new-view', ->
           browser.waitForElementByCss '#chooser .tool', 4000, done
@@ -30,8 +27,7 @@ describe 'New view tool', ->
       context 'when I click on the newview tool', ->
         before (done) ->
           wd40.click '.newview.tool', =>
-            # XXX but of a rubbish long wait - what CSS element could we wait for instead?
-            setTimeout =>
+            wd40.waitForInvisibleByCss '#chooser', (err) =>
               browser.url (err, url) =>
                 @currentUrl = url
                 done()

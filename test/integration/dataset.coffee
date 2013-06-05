@@ -107,12 +107,7 @@ describe 'Dataset', ->
                   hide.click done
 
           it 'the dataset disappears from the homepage immediately', (done) ->
-            # TODO: write a waitForInvisible function
-            setTimeout =>
-              @dataset.isVisible (err, visible) ->
-                visible.should.be.false
-                done()
-            , 400
+            wd40.waitForInvisible @dataset, done
 
           context 'when I revisit the homepage', ->
             before (done) ->

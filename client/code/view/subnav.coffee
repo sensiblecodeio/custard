@@ -318,7 +318,7 @@ class Cu.View.Toolbar extends Backbone.View
       @model.set 'displayName', @newName
       @model.save {},
         success: =>
-          _gaq.push ['datasets', 'rename', @newName]
+          _gaq.push ['_trackEvent', 'datasets', 'rename', @newName]
         error: (e) =>
           $label.text @oldName
           @model.set 'displayName', @oldName

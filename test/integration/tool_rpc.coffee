@@ -127,14 +127,14 @@ describe 'Tool RPC', ->
       before (done) ->
         browser.get @toolURL, ->
           wd40.switchToTopFrame ->
-            wd40.click 'a#dataset-tools-toggle', ->
-              wd40.click '.new-view', ->
+            # we have to scroll the toolbar left, so that we see the "More tools" link
+            browser.execute 'document.getElementById("dataset-tools").scrollLeft = 999999', (err, result) ->
+              wd40.click '.new-view', (err) ->
                 browser.waitForElementByCss '#chooser .tool', 4000, done
 
       context 'when I click on the "Test plugin" tool', ->
         before (done) ->
-          wd40.click '.test-plugin.tool', =>
-            browser.waitForElementByCss 'a#dataset-tools-toggle', 2000, ->
+          wd40.click '#chooser .test-plugin.tool', =>
             setTimeout ->
               wd40.switchToBottomFrame ->
                 browser.waitForElementByCss '#getDatasetName', 2000, done

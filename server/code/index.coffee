@@ -481,10 +481,10 @@ postTool = (req, resp) ->
                 code = if isNew then 201 else 200
                 if isNew
                   code = 201
-                  action = 'created'
+                  action = 'Created'
                 else
                   code = 200
-                  action = 'updated'
+                  action = 'Updated'
                 na.trackEvent 'tools', action, body.name
                 return resp.send code, tool
 

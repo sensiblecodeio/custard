@@ -50,6 +50,8 @@
         g.src = '//www.google-analytics.com/ga.js'
         s.parentNode.insertBefore(g, s)
       })()
+    } else {
+      console.log('Google Analytics disabled in development environment')
     }
   </script>
   <%- templates %>

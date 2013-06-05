@@ -30,7 +30,7 @@ class Cu.View.ToolContent extends Backbone.View
   googleAnalytics: ->
     if @model.get('tool')
       toolName = @model.get('tool').get 'name'
-      _gaq.push ['tools', 'render', toolName]
+      _gaq.push ['_trackEvent', 'tools', 'render', toolName]
 
   setupEasyXdm: (url) ->
     transport = new easyXDM.Rpc
@@ -54,7 +54,7 @@ class Cu.View.ToolContent extends Backbone.View
                 success: (model, resp, options) ->
                   model.set 'displayName', name
                   model.save()
-                  _gaq.push ['datasets', 'rename-xdm', name]
+                  _gaq.push ['_trackEvent', 'datasets', 'rename-xdm', name]
         pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly
           window.app.pushSqlQuery = query

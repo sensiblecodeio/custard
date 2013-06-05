@@ -485,6 +485,7 @@ a.tile .hide:hover,
   color: #fff;
   height: 74px;
   margin-top: -20px;
+  /* disable accidental ugly text selections on double clicks etc */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -536,6 +537,16 @@ a.tile .hide:hover,
   line-height: 21px;
   margin: 0;
   padding: 0;
+}
+
+#dataset-meta h3 {
+  /* re-enable text selection for the dataset title */
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 #dataset-meta #editable-input {

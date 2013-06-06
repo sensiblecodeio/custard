@@ -99,6 +99,12 @@ disableOldCrontab = (box, user, callback) ->
     return callback()
 
 Box.findOneByName BOX_NAME, (err, box) ->
+  if err?
+    console.log "Error #{err}"
+    process.exit 1
+  if not box
+    console.log "Box not found. #{BOX_NAME}"
+    process.exit 1
   console.log "Migrating box #{box.name}"
   box = Box.makeModelFromMongo box
   User.findByShortName box.users[0], (err, user) ->

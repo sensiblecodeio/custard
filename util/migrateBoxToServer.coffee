@@ -28,10 +28,13 @@ NEW_BOX_SERVER = argv.host
 
 if typeof argv.box isnt "string"
   console.log "Box name not specified"
-  process.exit 1
+  process.exit 2
 if typeof argv.host isnt "string"
   console.log "Host name not specified"
-  process.exit 1
+  process.exit 2
+if not fs.existsSync "util"
+  console.log "Should run script from top-level custard directory"
+  process.exit 2
 
 checkVerboseAndPrint = (arg...) ->
   if argv.verbose
@@ -63,7 +66,7 @@ migratePasswdEntry = (box, user, callback) ->
 transferSSHKeys = (box, user) ->
   box.server = NEW_BOX_SERVER
   process.env.CU_BOX_SERVER = NEW_BOX_SERVER
-  mkdirp.sync "/opt/cobalt/etc/sshkeys/#{box.name}"
+  mkdirp.sync "#{process.env.CO_STORAGE_DIR}/sshkeys/#{box.name}"
   box.save (err) ->
     box.distributeSSHKeys (err, res, body) ->
       checkVerboseAndPrint 'distributeSSHKeys', err, body

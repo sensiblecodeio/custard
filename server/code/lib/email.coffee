@@ -10,7 +10,7 @@ exports.signUpEmail = (user, token, callback) ->
       pass: process.env.CU_SENDGRID_PASS
 
   mailOptions =
-    from: 'feedback@scraperwiki.com'
+    from: 'hello@scraperwiki.com'
     to: user.email[0]
     subject: "Activate your ScraperWiki account!"
     text: """

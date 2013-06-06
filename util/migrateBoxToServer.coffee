@@ -10,8 +10,9 @@ mkdirp = require 'mkdirp'
 
 argv = require('optimist')
   .usage('Usage: $0 [--verbose] --box <box> --host <host>')
-  .demand(['box', 'host'])
   .alias('v', 'verbose')
+  .demand(['box', 'host'])
+  .string(['box', 'host'])
   .alias('b', 'box')
   .alias('h', 'host')
   .describe('host', "Specify the new box's hostname")
@@ -25,6 +26,16 @@ argv = require('optimist')
 BOX_NAME = argv.box
 NEW_BOX_SERVER = argv.host
 
+if typeof argv.box isnt "string"
+  console.log "Box name not specified"
+  process.exit 2
+if typeof argv.host isnt "string"
+  console.log "Host name not specified"
+  process.exit 2
+if not fs.existsSync "util"
+  console.log "Should run script from top-level custard directory"
+  process.exit 2
+
 checkVerboseAndPrint = (arg...) ->
   if argv.verbose
     console.log.apply this, arg
@@ -37,6 +48,10 @@ boxExec = (cmd, box, user, callback) ->
       cmd: cmd
   , callback
 
+if not process.env.CU_DB
+  console.log 'CU_DB variable not set.'
+  process.exit 2
+
 mongoose.connect process.env.CU_DB
 
 migratePasswdEntry = (box, user, callback) ->
@@ -47,6 +62,24 @@ migratePasswdEntry = (box, user, callback) ->
     exec "util/addUnixUser.sh #{box.name} #{uid}", (err, stdout, stderr) ->
       checkVerboseAndPrint "migratePasswdEntry", err, stdout, stderr
       callback()
+
+transferSSHKeys = (box, user) ->
+  box.server = NEW_BOX_SERVER
+  process.env.CU_BOX_SERVER = NEW_BOX_SERVER
+  mkdirp.sync "#{process.env.CO_STORAGE_DIR}/sshkeys/#{box.name}"
+  box.save (err) ->
+    box.distributeSSHKeys (err, res, body) ->
+      checkVerboseAndPrint 'distributeSSHKeys', err, body
+      Dataset.findOneById box.name, (err, dataset) ->
+        if dataset?
+          dataset.boxServer = NEW_BOX_SERVER
+          dataset.save (err) ->
+            checkVerboseAndPrint 'dataset save', err
+            process.exit()
+        else
+          Dataset.View.changeBoxSever box.name, NEW_BOX_SERVER, (err) ->
+              checkVerboseAndPrint "change view box server", err
+              process.exit()
 
 transferBoxData = (box, user, callback) ->
   # Run duplicity to get latest backed up data??
@@ -77,25 +110,17 @@ disableOldCrontab = (box, user, callback) ->
     return callback()
 
 Box.findOneByName BOX_NAME, (err, box) ->
+  if err?
+    console.log "Error #{err}"
+    process.exit 1
+  if not box
+    console.log "Box not found. #{BOX_NAME}"
+    process.exit 1
   console.log "Migrating box #{box.name}"
   box = Box.makeModelFromMongo box
   User.findByShortName box.users[0], (err, user) ->
     migratePasswdEntry box, user, ->
       transferBoxData box, user, ->
         transferCrontab box, user, ->
-          box.server = NEW_BOX_SERVER
-          process.env.CU_BOX_SERVER = NEW_BOX_SERVER
-          mkdirp.sync "/opt/cobalt/etc/sshkeys/#{box.name}"
-          box.save (err) ->
-            box.distributeSSHKeys (err, res, body) ->
-              checkVerboseAndPrint 'distributeSSHKeys', err, body
-              Dataset.findOneById box.name, (err, dataset) ->
-                if dataset?
-                  dataset.boxServer = NEW_BOX_SERVER
-                  dataset.save (err) ->
-                    checkVerboseAndPrint 'dataset save', err
-                    process.exit()
-                else
-                  Dataset.View.changeBoxSever box.name, NEW_BOX_SERVER, (err) ->
-                    checkVerboseAndPrint "change view box server", err
-                    process.exit()
+          transferSSHKeys box, user, ->
+            process.exit()

@@ -34,7 +34,7 @@ describe 'New dataset tool', ->
         @currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/settings")
 
       it 'and shows that the "Code a dataset" tool is active', (done) ->
-        wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
+        wd40.elementByCss '#toolbar .active', (err, link) ->
           link.text (err, text) ->
             text.toLowerCase().should.include 'code a dataset'
             done()
@@ -45,7 +45,7 @@ describe 'New dataset tool', ->
             iframeUrl = url
             done()
 
-    context 'when I go back to the dataset page', ->
+    context 'when I wait a little while and then go back to the dataset page', ->
       before (done) ->
         # wait for the data tables tool to be installed in the background
         setTimeout done, 5000
@@ -53,12 +53,8 @@ describe 'New dataset tool', ->
       before (done) ->
         browser.get @currentUrl.replace(/\/settings$/, ''), done
 
-      before (done) ->
-        # wait for the tool menu toggle to load (just in case)
-        setTimeout done, 1000
-
       it 'shows that the "View in a table" tool is active', (done) ->
-        wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
+        wd40.elementByCss '#toolbar .active', (err, link) ->
           link.text (err, text) ->
             text.toLowerCase().should.include 'view in a table'
             done()

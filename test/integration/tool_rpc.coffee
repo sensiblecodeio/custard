@@ -122,3 +122,30 @@ describe 'Tool RPC', ->
 
       it 'should display the correct sql query', (done) ->
         wd40.waitForText "SELECT 1", done
+
+    context 'when I click on "More tools" in the "Tools" dropdown', ->
+      before (done) ->
+        browser.get @toolURL, ->
+          wd40.switchToTopFrame ->
+            # we have to scroll the toolbar left, so that we see the "More tools" link
+            browser.execute 'document.getElementById("dataset-tools").scrollLeft = 999999', (err, result) ->
+              wd40.click '.new-view', (err) ->
+                browser.waitForElementByCss '#chooser .tool', 4000, done
+
+      context 'when I click on the "Test plugin" tool', ->
+        before (done) ->
+          wd40.click '#chooser .test-plugin.tool', =>
+            setTimeout ->
+              wd40.switchToBottomFrame ->
+                browser.waitForElementByCss '#getDatasetName', 2000, done
+            , 4000
+
+        context 'when the "Get dataset name" button is pressed', ->
+          before (done) ->
+            wd40.switchToBottomFrame ->
+              wd40.click '#getDatasetName', done
+    
+          it 'shows the parent dataset name', (done) ->
+            wd40.getText '#datasetName', (err, text) =>
+              text.should.equal "Test Dataset (renamed)"
+              done()

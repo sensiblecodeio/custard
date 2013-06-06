@@ -2,28 +2,29 @@
 class Cu.View.ToolMenuItem extends Backbone.View
   tagName: 'li'
   events:
-    'click .hide': 'hideTool'
-    'click .ssh-in': (event) ->
-      event.preventDefault()
-      event.stopPropagation()
-      if @model instanceof Cu.Model.Dataset
-        Cu.Helpers.showOrAddSSH @model, 'dataset'
-      else if @model instanceof Cu.Model.View
-        Cu.Helpers.showOrAddSSH @model, 'view'
+    'click .dropdown-toggle': 'showOptionsDropdown'
 
-  hideTool: (e) ->
-    e.preventDefault()
+  showOptionsDropdown: (e) ->
     e.stopPropagation()
-    if @model instanceof Cu.Model.View
-      $('.hide', @$el).hide 0, =>
-        @$el.slideUp =>
-          dataset = @model.get('plugsInTo')
-          @model.set 'state', 'deleted'
-          dataset.save()
-          app.navigate "/dataset/#{dataset.get 'box'}/", trigger: true
-
-  initialize: ->
-    @model.on 'change', @render, this
+    e.preventDefault()
+    if $('#tool-options-menu').is(':visible')
+      $('#tool-options-menu, #dropdown-menu-closer').hide()
+      $('body').off 'click.showOptionsDropdown'
+    else
+      toggleOffset = $(e.currentTarget).offset()
+      toolbarOffset = $('#toolbar').offset()
+      top = toggleOffset.top - toolbarOffset.top
+      left = toggleOffset.left - toolbarOffset.left
+      right = $('#toolbar').width() - left
+      $('#tool-options-menu').css(
+        top: top + 25
+        right: right - 35
+        left: 'auto'
+      ).show()
+      $('#dropdown-menu-closer').show()
+      $('body').on 'click.showOptionsDropdown', ->
+        $('#tool-options-menu, #dropdown-menu-closer').hide()
+        $('body').off 'click.showOptionsDropdown'
 
   render: ->
     hideable = true
@@ -42,7 +43,7 @@ class Cu.View.ToolMenuItem extends Backbone.View
     if toolName is "datatables-view-tool"
       hideable = false
 
-    html = JST['tool-menu-item']
+    html = JST['toolbar-tile']
       manifest: manifest
       href: href
       id: "instance-#{@model.get 'box'}"
@@ -63,8 +64,9 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
 
   render: ->
     if app.tools().length
-      html = JST['tool-menu-item']
+      html = JST['toolbar-tile']
         manifest: @options.archetype.get 'manifest'
+        toolName: @options.archetype.get 'name'
       @$el.html html
     @
 
@@ -84,8 +86,15 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
 
     dataset.fetch
       success: (dataset, resp, options) =>
-        dataset.installPlugin @options.archetype.get('name'), (err, view) =>
+        toolName = @options.archetype.get 'name'
+        dataset.installPlugin toolName, (err, view) =>
           console.warn 'Error', err if err?
+          v = new Cu.View.ToolMenuItem model: view
+          el = v.render().el
+          $('a', el).addClass('active')
+          $('#toolbar .tool.active').removeClass("active")
+          $('#toolbar .tools').append el
+          $("ul.archetypes a[data-toolname='#{toolName}']").parent().remove()
           window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
       error: (model, xhr, options) ->
         @active = false

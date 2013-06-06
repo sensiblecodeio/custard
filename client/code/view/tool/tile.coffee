@@ -51,8 +51,8 @@ class Cu.View.AppTile extends Cu.View.ToolTile
     dataset.save {},
       wait: true
       success: =>
-        _gaq.push ['tools', 'install', @model.get 'name']
-        _gaq.push ['datasets', 'create']
+        _gaq.push ['_trackEvent', 'tools', 'install', @model.get 'name']
+        _gaq.push ['_trackEvent', 'datasets', 'create']
         delete dataset.new
         window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
         $('#chooser').fadeOut 200, ->
@@ -83,8 +83,13 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
       success: (dataset, resp, options) =>
         dataset.installPlugin @model.get('name'), (err, view) =>
           console.warn 'Error', err if err?
-          _gaq.push ['tools', 'install', @model.get 'name']
-          _gaq.push ['views', 'create']
+          v = new Cu.View.ToolMenuItem model: view
+          el = v.render().el
+          $('a', el).addClass('active')
+          $('#toolbar .tool.active').removeClass("active")
+          $('#toolbar .tools').append el
+          _gaq.push ['_trackEvent', 'tools', 'install', @model.get 'name']
+          _gaq.push ['_trackEvent', 'views', 'create']
           window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
           $('#chooser').fadeOut 200, ->
             $(this).remove()

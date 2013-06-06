@@ -1,5 +1,8 @@
 class Cu.View.DatasetTools extends Backbone.View
   id: 'dataset-tools'
+  events:
+    'click .tool': 'toolClick'
+    'click .scroll': 'scrollMore'
 
   initialize: ->
     if @options.view?
@@ -7,7 +10,8 @@ class Cu.View.DatasetTools extends Backbone.View
     else
       @selectedTool = @model
 
-    @toolInstances = @model.get('views').visible()
+    # Tool relations might not have been loaded yet,
+    # so we listen for future tool-related events.
     app.tools().on 'add', @addToolArchetype, @
     @model.on 'update:tool', @addToolInstance, @
     @model.get('views').on 'update:tool', @addToolInstance, @
@@ -17,7 +21,8 @@ class Cu.View.DatasetTools extends Backbone.View
       <ul class="archetypes"></ul>
       <ul class="more">
         <li><a class="new-view">More tools&hellip;</a></li>
-      </ul>"""
+      </ul>
+      <span class="scroll"></span>"""
     @addToolInstance @model
     views = @model.get('views').visible()
     views.each (view) =>
@@ -25,6 +30,11 @@ class Cu.View.DatasetTools extends Backbone.View
     app.tools().each (archetype) =>
       @addToolArchetype archetype
     @
+
+  toolClick: (e) ->
+    $('.tool.active').removeClass("active")
+    $(e.currentTarget).addClass("active")
+    e.preventDefault()
 
   addToolArchetype: (toolModel) ->
     # The setTimeout thing is because we can't work out Backbone (Relational) model loading:
@@ -36,26 +46,50 @@ class Cu.View.DatasetTools extends Backbone.View
           return
         v = new Cu.View.ArchetypeMenuItem { archetype: toolModel, dataset: @model }
         $('.archetypes', @$el).append v.render().el
+      @positionIframe()
     , 0
 
   addToolInstance: (instance) ->
-    id = "instance-#{instance.get 'box'}"
-    l = $("##{id}", @$el)
     if not instance.isVisible()
       # Don't show "hidden" tool instances
       return
-    if l.length > 0
+    if $("#instance-#{instance.get 'box'}", @$el).length > 0
       # Already added as a menu item; don't add again.
       return
     if not instance.get 'tool'
-      # Tool relation not loaded yet, so we don't know what to display.
+      # Tool relation not loaded yet. Bail out.
+      # The instance will be added again later, once tools have loaded.
       return
     v = new Cu.View.ToolMenuItem model: instance
     el = v.render().el
     $('a', el).addClass('active') if instance is @selectedTool
-
-    if instance instanceof Cu.Model.Dataset
-      # So that the tool that imported is at the top.
+    if instance is @model
+      # This is the dataset's main tool instance! Put it first.
       $('.tools', @$el).prepend el
     else
       $('.tools', @$el).append el
+      @positionIframe()
+
+  positionIframe: ->
+    if window.app.appView.currentView?.positionIframe?
+      window.app.appView.currentView.positionIframe?()
+    @showOrHideScroller()
+
+  scrollMore: ->
+    w = @$el.width()
+    l = @$el[0].scrollLeft + (w * 0.9)
+    @$el.animate {scrollLeft: l}, 250, =>
+      @showOrHideScroller()
+
+  showOrHideScroller: ->
+    totalWidth = 0
+    visibleWidth = @$el.width()
+    scrollLeft = @$el[0].scrollLeft
+    @$el.children('ul').each ->
+      totalWidth += $(this).outerWidth(true)
+    if visibleWidth + scrollLeft > totalWidth
+      @$el.children('.scroll:visible').fadeOut 100
+    else if visibleWidth < totalWidth
+      @$el.children('.scroll:hidden').fadeIn 100
+    else
+      @$el.children('.scroll:visible').fadeOut 100

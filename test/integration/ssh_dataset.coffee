@@ -2,10 +2,8 @@ should = require 'should'
 {wd40, browser, login_url, home_url, prepIntegration} = require './helper'
 
 clickSSHButton = (done) ->
-  wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
-    browser.moveTo link, (err) ->
-      wd40.elementByCss '#dataset-tools a[href$="/settings"] .ssh-in', (err, sshLink) ->
-        sshLink.click done
+  wd40.click '#toolbar a[href$="/settings"] .dropdown-toggle', (err) ->
+    wd40.click '#tool-options-menu .git-ssh', done
 
 describe 'Dataset SSH Details', ->
   prepIntegration()
@@ -84,8 +82,8 @@ MII...0tXU=
             @modalTextContent = text.toLowerCase()
             done()
 
-        it 'the modal title says "ssh into your Apricot dataset"', =>
-          @modalTextContent.should.include 'apricot dataset'
+        it 'the modal title says "ssh into your Apricot tool"', =>
+          @modalTextContent.should.include 'ssh into your apricot tool'
 
         it 'the modal window no longer asks for my SSH key', =>
           @modalTextContent.should.not.include 'add your ssh key:'

@@ -13,8 +13,8 @@ class Cu.Router.Main extends Backbone.Router
     @on 'route', @trackPageView
 
     # Move somewhere better
-    $('#logo').click ->
-      event.preventDefault()
+    $('#logo').click (e) ->
+      e.preventDefault()
       window.app.navigate "/", {trigger: true}
 
     # TODO: this isn't a great place for this constant
@@ -46,6 +46,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('subscribe/([^/]+)/?'), 'subscribe'
     @route RegExp('terms/?'), 'terms'
     @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
+    @route RegExp('contact/?'), 'contact'
 
   main: ->
     if window.user.effective?
@@ -107,27 +108,26 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
 
   dataset: (box) ->
-    doNotNavigate = false
-    render = (dataTablesView) =>
-        subnavView = new Cu.View.DatasetNav {model: model, view: dataTablesView}
-        @subnavView.showView subnavView
-        contentView = new Cu.View.PluginContent {model: dataTablesView}
-        @appView.showView contentView
-        contentView.showContent()
-        doNotNavigate = false
 
     model = Cu.Model.Dataset.findOrCreate box: box, merge: true
     toolsDone = app.tools().fetch()
     modelDone = model.fetch()
     $.when.apply( null, [modelDone, toolsDone] ).done =>
       views = model.get 'views'
-      subnavView = new Cu.View.DatasetNav {model: model}
-      @subnavView.showView subnavView
+      unless @subnavView.currentView instanceof Cu.View.Toolbar
+        subnavView = new Cu.View.Toolbar {model: model}
+        @subnavView.showView subnavView
+        window.selectedTool = model
 
       setTimeout =>
         views.findByToolName 'datatables-view-tool', (dataTablesView) =>
           if dataTablesView?
-            render dataTablesView
+            window.selectedTool = dataTablesView
+            subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
+            @subnavView.showView subnavView
+            contentView = new Cu.View.PluginContent {model: dataTablesView}
+            @appView.showView contentView
+            contentView.showContent()
           else
             app.navigate "/dataset/#{model.id}/settings", trigger: true
       , 0
@@ -136,10 +136,12 @@ class Cu.Router.Main extends Backbone.Router
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
-        subnavView = new Cu.View.DatasetNav model: model
+        window.selectedTool = model
+        unless @subnavView.currentView instanceof Cu.View.Toolbar
+          subnavView = new Cu.View.Toolbar model: model
+          @subnavView.showView subnavView
         contentView = new Cu.View.AppContent model: model
         @appView.showView contentView
-        @subnavView.showView subnavView
         contentView.showContent()
       error: (x,y,z) ->
         # TODO: factor into function
@@ -156,11 +158,13 @@ class Cu.Router.Main extends Backbone.Router
     dataset.fetch
       success: (dataset, resp, options) =>
         v = dataset.get('views').findById(viewID)
+        window.selectedTool = v
         contentView = new Cu.View.PluginContent model: v
-        subnavView = new Cu.View.DatasetNav model: dataset, view: v
         @appView.showView contentView
-        @subnavView.showView subnavView
         contentView.showContent()
+        unless @subnavView.currentView instanceof Cu.View.Toolbar
+          subnavView = new Cu.View.Toolbar model: dataset, view: v
+          @subnavView.showView subnavView
       error: (model, xhr, options) ->
         console.warn xhr
 
@@ -207,6 +211,12 @@ class Cu.Router.Main extends Backbone.Router
   termsEnterpriseAgreement: ->
     subnavView = new Cu.View.Subnav {text: 'ScraperWiki Enterprise Agreement'}
     contentView = new Cu.View.TermsEnterpriseAgreement()
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  contact: ->
+    subnavView = new Cu.View.Subnav {text: 'Contact Us'}
+    contentView = new Cu.View.Contact()
     @appView.showView contentView
     @subnavView.showView subnavView
 

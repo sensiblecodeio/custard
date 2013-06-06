@@ -1,20 +1,36 @@
-class Cu.View.ViewContent extends Backbone.View
+class Cu.View.ToolContent extends Backbone.View
   id: 'fullscreen'
+
+  initialize: ->
+    @model.on 'update:tool', @googleAnalytics, @
+    @googleAnalytics()
+
+  render: ->
+    $('body').addClass('fullscreen')
+    @positionIframe()
+    @
+
+  positionIframe: ->
+    # Work out correct position for fullscreen iframe, accounting for injected lastpass bars etc.
+    # This is also called in Cu.View.Toolbar, after the toolbar has loaded, just in case.
+    $c = $('#content')
+    @$el.css 'top', $c.offset().top - $c.outerHeight(true) - $c.innerHeight()
 
   showContent: ->
     @boxUrl = @model.endpoint()
     @settings (settings) =>
       frag = encodeURIComponent JSON.stringify(settings)
       @setupEasyXdm "#{@boxUrl}/#{@model.get 'box'}/#{settings.source.publishToken}/container.html##{frag}"
-
-  render: ->
-    $('body').addClass('fullscreen')
-    toolName = @model.get('tool').get 'name'
-    _gaq.push ['tools', 'render', toolName]
+      @positionIframe()
 
   close: ->
     $('body').removeClass('fullscreen')
     super()
+
+  googleAnalytics: ->
+    if @model.get('tool')
+      toolName = @model.get('tool').get 'name'
+      _gaq.push ['_trackEvent', 'tools', 'render', toolName]
 
   setupEasyXdm: (url) ->
     transport = new easyXDM.Rpc
@@ -38,6 +54,7 @@ class Cu.View.ViewContent extends Backbone.View
                 success: (model, resp, options) ->
                   model.set 'displayName', name
                   model.save()
+                  _gaq.push ['_trackEvent', 'datasets', 'rename-xdm', name]
         pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly
           window.app.pushSqlQuery = query
@@ -62,7 +79,7 @@ class Cu.View.ViewContent extends Backbone.View
                 error: (model, xhr, options) ->
                   console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
 
-class Cu.View.AppContent extends Cu.View.ViewContent
+class Cu.View.AppContent extends Cu.View.ToolContent
   settings: (callback) ->
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null
@@ -75,13 +92,14 @@ class Cu.View.AppContent extends Cu.View.ViewContent
         box: @model.get 'box'
         sqlQuery: query
 
-class Cu.View.PluginContent extends Cu.View.ViewContent
+class Cu.View.PluginContent extends Cu.View.ToolContent
   settings: (callback) ->
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null
     dataset = @model.get 'plugsInTo'
     viewToken = @model.get('boxJSON')?.publish_token
     datasetToken = dataset.get('boxJSON')?.publish_token
+    displayName = dataset.get('displayName')
     callback
       source:
         apikey: window.user.effective.apiKey
@@ -93,3 +111,4 @@ class Cu.View.PluginContent extends Cu.View.ViewContent
         url: "#{@boxUrl}/#{dataset.get 'box'}/#{datasetToken}"
         publishToken: datasetToken
         box: dataset.get 'box'
+        displayName: displayName

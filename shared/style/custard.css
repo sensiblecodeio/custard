@@ -53,6 +53,10 @@ body.fullscreen .container {
   text-indent: -9000px;
   outline: none;
   background: transparent url(../image/header-logo.png) 0 11px no-repeat;
+  -moz-transition: margin-left 0.5s;
+  -webkit-transition: margin-left 0.5s;
+  -o-transition: margin-left 0.5s;
+  transition: margin-left 0.5s;
 }
 
 #logo:active {
@@ -163,43 +167,6 @@ body.fullscreen .container {
   font-size: 24px;
   line-height: 32px;
   padding: 0 4px;
-}
-
-#subnav-path #editable-input {
-  margin: 0; /* remove default margin-bottom 10px on .input-appends */
-  display: none; /* hide by default; show on .editable click */
-}
-
-#subnav-path #editable-input input {
-  color: #333;
-  font-size: 24px;
-  line-height: 32px;
-  padding: 0 4px;
-  margin: 0;
-  height: 32px;
-}
-
-#subnav-path #editable-input button {
-  padding: 6px 10px; /* rather than default 4px 12px, to line up with taller input */
-}
-
-#subnav-path .editable:after,
-#subnav-path .editable.saved:after,
-#subnav-path .editable.error:after {
-    content: "";
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    background: transparent url("../vendor/image/glyphicons-halflings.png") 0 -72px no-repeat;
-    margin-left: 5px;
-}
-
-#subnav-path .editable.saved:after {
-    background-position: -288px 0;
-}
-
-#subnav-path .editable.error:after {
-  background-position: 0 -120px;
 }
 
 #subnav-path > .btn-group:first-child > .btn:first-child {
@@ -471,7 +438,8 @@ a.tile .hide:hover,
   opacity: 1;
 }
 
-.tile li.actions .dropdown-menu:before {
+.tile li.actions .dropdown-menu:before,
+#toolbar .dropdown-menu:before {
   position: absolute;
   top: -7px;
   right: 5px;
@@ -483,7 +451,8 @@ a.tile .hide:hover,
   content: '';
 }
 
-.tile li.actions .dropdown-menu:after {
+.tile li.actions .dropdown-menu:after,
+#toolbar .dropdown-menu:before {
   position: absolute;
   top: -6px;
   right: 6px;
@@ -507,161 +476,243 @@ a.tile .hide:hover,
 
 
 
-/* Dropdown menu containing tools on dataset page */
+
+/* Toolbar on dataset pages (containing dataset name and installed tools) */
+
+#toolbar {
+  position: relative; /* So that we can position tool instance dropdown menu */
+  background-color: #333;
+  color: #fff;
+  height: 74px;
+  margin-top: -20px;
+  /* disable accidental ugly text selections on double clicks etc */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#dropdown-menu-closer {
+  display: none;
+  position: fixed;
+  top: 125px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+}
+
+#dataset-meta {
+  display: table-row;
+  position: relative;
+  float: left;
+  height: 74px;
+  background: #15af90;
+  display: table;
+  padding: 0 10px 0 220px;
+  margin-left: -200px;
+  font-size: 21px;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+#dataset-meta:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: -10px;
+  bottom: 0;
+  z-index: 1;
+  width: 10px;
+  background: transparent url(../image/toolbar-triangle.png) 0 0 no-repeat;
+}
+
+#dataset-meta > * {
+  display: table-cell;
+  vertical-align: middle;
+  font-weight: normal;
+  font-size: 21px;
+  line-height: 21px;
+  margin: 0;
+  padding: 0;
+}
+
+#dataset-meta h3 {
+  /* re-enable text selection for the dataset title */
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+#dataset-meta #editable-input {
+  margin: 0; /* remove default margin-bottom 10px on .input-appends */
+  display: none; /* hide by default; show on .editable click */
+}
+
+#dataset-meta #editable-input input {
+  color: #333;
+  font-size: 21px;
+  line-height: 30px;
+  padding: 0 4px;
+  margin: 0;
+  height: 30px;
+}
+
+#dataset-meta #editable-input button {
+  padding: 5px 10px; /* rather than default 4px 12px, to line up with taller input */
+}
+
+#dataset-meta .actions > a {
+  display: inline-block;
+  background: transparent url(../image/tile-options-white.png) 50% 50% no-repeat;
+  width: 26px;
+  height: 30px;
+  text-indent: -9000px;
+  opacity: 0.8;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#dataset-meta .actions > a:hover,
+#dataset-meta .open > a {
+  opacity: 1;
+}
+
+#dataset-meta .dropdown-menu {
+  top: 65%; /* override default 100% because parent is 75px high! */
+  right: 1px; /* override default 0px to line up with arrow icon */
+  min-width: 0;
+}
+
+#toolbar .dropdown-menu a {
+  text-shadow: none;
+  font-size: 14px;
+  line-height: 21px;
+  cursor: pointer;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#toolbar .dropdown-menu a img {
+  vertical-align: -3px; /* override default "middle", so icons line up with text */
+  margin-right: 5px;
+}
 
 #dataset-tools {
-  display: none;
-  position: absolute;
-  top: -40px;
-  right: 0;
-  z-index: 1000;
-  float: right;
-  min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(204, 204, 204);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -webkit-background-clip: padding-box;
-  -moz-background-clip: padding;
-  background-clip: padding-box;
+  white-space: nowrap; /* stop toolbar items wrapping onto next line */
+  overflow: hidden; /* this is made scrollable by Cu.View.Toolbar and jquery.mousewheel.js */
 }
 
-#dataset-tools-toggle:hover + #dataset-tools,
-#dataset-tools:hover {
-  display: block;
-}
-
-#dataset-tools ul {
+#dataset-tools > ul {
   list-style: none;
   margin: 0;
+  display: inline-block; /* stop toolbar item groups wrapping onto separate lines */
+}
+
+#dataset-tools > ul > li {
+  float: left;
+}
+
+#dataset-tools .tools > li:first-child a.tool {
+  padding-left: 30px;
 }
 
 #dataset-tools a.tool {
+  margin-bottom: 0;
+  padding: 0 20px;
   position: relative;
-  cursor: pointer;
-  white-space: normal; /* override .btn-group default of no-wrap */
-  width: 320px;
-  text-shadow: none;
-  color: #333;
-  margin-bottom: 0; /* override a.tool:last-child margin */
-}
-
-#dataset-tools a.tool:hover,
-#dataset-tools a.tool:focus,
-#dataset-tools a.new-view:hover,
-#dataset-tools a.new-view:focus {
-  color: #fff;
-  text-decoration: none;
-  background-color: #0081c2;
-  background-image: -moz-linear-gradient(top,#08c,#0077b3);
-  background-image: -webkit-gradient(linear,0 0,0 100%,from(#08c),to(#0077b3));
-  background-image: -webkit-linear-gradient(top,#08c,#0077b3);
-  background-image: -o-linear-gradient(top,#08c,#0077b3);
-  background-image: linear-gradient(to bottom,#08c,#0077b3);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',endColorstr='#ff0077b3',GradientType=0);
+  height: 74px;
 }
 
 #dataset-tools a.tool.active {
-  background-color: #eee;
+  background-color: #666;
 }
 
-#dataset-tools a.tool:active {
-  position: relative;
-  top: 0;
+#dataset-tools a .tool-info {
+  padding-right: 0;
+  padding-left: 10px;
 }
 
-#dataset-tools a.tool .hide {
-  background-color: #0081c2;
-  z-index: 100;
-}
-
-#dataset-tools a.tool .tool-icon {
-  padding-left: 20px; /* add padding between the icon and the left edge of the dropdown menu */
-}
-
-#dataset-tools a.tool .tool-info {
-  padding-right: 20px; /* override 30px padding required between #chooser columns */
-}
-
-/* over-specific selector to trump normal .tool-icon-outer style defined later on */
-#dataset-tools .tool-icon-outer,
-#dataset-tools-toggle .tool-icon-outer {
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  border-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
-
-#dataset-tools a.new-view {
-  display: block;
-  padding: 10px 20px;
-  text-align: center;
-  cursor: pointer;
+#dataset-tools a.tool h3 {
+  margin-bottom: 0;
+  font-weight: normal;
   font-size: 16px;
+  line-height: 18px;
 }
 
-#dataset-tools ul.more {
-  border-top: 1px solid #e5e5e5;
-  padding-top: 5px;
-  margin-top: 5px;
+#dataset-tools a.tool .tool-actions {
+  display: none;
 }
 
-#dataset-tools a.tool p span {
-  color: #999;
+#dataset-tools a.tool.active .tool-actions {
+  padding-left: 10px;
+  display: table-cell;
+  opacity: 0.8;
 }
 
-#dataset-tools a.tool:hover p span {
-  color: #C3DDEB;
+#dataset-tools a.tool.active .tool-actions:hover {
+  opacity: 1;
 }
 
-#dataset-tools a.tool p span:hover {
-  text-decoration: underline;
-  color: #fff;
+#dataset-tools a.tool .dropdown-toggle {
+  display: inline-block;
+  background: transparent url(../image/tile-options-white.png) 50% 50% no-repeat;
+  width: 26px;
+  height: 30px;
+  text-indent: -9000px;
 }
 
-#dataset-tools a.tool p span + span {
-  margin-left: 10px;
+#dataset-tools a .tool-icon {
+  width: 40px;
+  max-width: 40px;
 }
 
-#dataset-tools-toggle {
-  margin-top: -10px;
-  padding-right: 0; /* apply margin to .tool-name instead, */
-  padding-left: 0; /* so image doesn't show through when element is empty */
-  background: transparent url(../image/dataset-tools-toggle.png) right center no-repeat;
+#dataset-tools a .tool-icon-outer {
+  width: 40px;
   height: 42px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#dataset-tools a .tool-icon-inner {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background-size: 66%;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#toolbar .new-view {
+  display: inline-block;
+  line-height: 74px;
+  height: 74px;
+  padding: 0 20px 0 70px;
+  color: #fff;
+  text-shadow: 0 3px 6px #000;
+  cursor: pointer;
+  background: transparent url(../image/toolbar-more.png) 20px center no-repeat;
   text-decoration: none;
 }
 
-#dataset-tools-toggle .tool-icon-outer,
-#dataset-tools-toggle .tool-icon-inner {
-  display: inline-block;
-  width: 40px;
-  height: 42px;
-  vertical-align: middle;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  margin-right: 10px;
+#toolbar .scroll {
+  display: none;
+  height: 100%;
+  width: 50px;
+  background: transparent url(../image/toolbar-scroll.png) right center no-repeat;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
 }
 
-#dataset-tools-toggle .tool-icon-inner {
-  height: 40px;
-  line-height: 40px;
-  background-size: 30px;
-  font-size: 30px;
-  margin-right: 0px;
-}
-
-#dataset-tools-toggle .tool-name {
-  font-size: 18px;
-  color: #333;
-  margin-right: 24px;
-  vertical-align: middle;
-}
 
 
 
@@ -795,6 +846,17 @@ a.tool .tool-icon {
   color: #fff;
 }
 
+a.tool.active {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* lighter shadow in #toolbar .active state */
+  top: 0; /* override .tool:active style - don't want tile to bounce when you click it */
+}
+
+.active .tool-icon-outer {
+  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.5); /* lighter shadow, as above */
+  -moz-box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  border-box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
 a.tool h3 {
   margin: 0 0 5px 0;
   font-size: 18px;
@@ -812,7 +874,7 @@ a.tool canvas {
 }
 
 #content p.loading {
-    margin-top: 100px;
+    margin: 100px 0;
     padding-top: 50px;
     text-align: center;
     background: transparent url('/image/tool-loader.gif') center top no-repeat;
@@ -1107,6 +1169,10 @@ a.help-tile h3 {
     position: absolute;
     top: 0;
     right: 0;
+    -moz-transition: right 0.5s;
+    -webkit-transition: right 0.5s;
+    -o-transition: right 0.5s;
+    transition: right 0.5s;
   }
 
   .fullscreen #header nav {
@@ -1157,13 +1223,17 @@ a.help-tile h3 {
 
   #fullscreen {
     position: fixed;
-    top: 125px;
+    top: 125px; /* this is overridden by javascript in Cu.View.ToolContent.render() */
     left: 0;
     right: 0;
     bottom: 0;
     border-top: 1px solid #eee;
     z-index: 1;
     background-color: #fff;
+  }
+  
+  body.fullscreen #footer {
+    display: none; /* hide footer on tool pages (it's covered by iframe anyway) */
   }
 
   div.help nav.well {

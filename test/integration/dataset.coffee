@@ -22,47 +22,33 @@ describe 'Dataset', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
-    it 'shows this dataset was made by the Test App tool', (done) ->
-      wd40.elementByPartialLinkText 'Test app', (err, link) ->
-        should.exist link
-        done()
-
     it 'has not shown the input box', (done) ->
       wd40.elementByCss '#editable-input', (err, input) ->
         browser.isVisible input, (err, visible) ->
           visible.should.be.false
           done()
 
-    context 'when I hover over the Test App tool name', (done) ->
-      before (done) ->
-        setTimeout done, 500
+    it 'shows a toolbar including...', (done) ->
+      browser.isVisible 'css selector', '#toolbar', (err, visible) =>
+        visible.should.be.true
+        wd40.getText '#toolbar', (err, text) =>
+          @toolbarText = text.replace /\s+/g, ' '
+          done()
 
-      before (done) ->
-        wd40.elementByCss '#dataset-tools-toggle', (err, link) ->
-          browser.moveTo link, (err) ->
-            done()
+    it '...the tool that made this dataset', ->
+      @toolbarText.should.include 'Test app'
 
-      it 'more tools appear in a pop-up menu', (done) ->
-        browser.isVisible 'css selector', '#dataset-tools', (err, visible) =>
-          visible.should.be.true
-          wd40.getText '#dataset-tools', (err, text) =>
-            @dropdownText = text
-            done()
+    it '...the view in a table tool', ->
+      @toolbarText.should.include 'View in a table'
 
-      it '...including the tool that made this dataset', ->
-        @dropdownText.should.include 'Test app'
+    it '...the spreadsheet download tool', ->
+      @toolbarText.should.include 'Download as spreadsheet'
 
-      it '...the view in a table tool', ->
-        @dropdownText.should.include 'View in a table'
+    it '...(only once)', ->
+      @toolbarText.match(/Download as spreadsheet/g).length.should.equal 1
 
-      it '...the spreadsheet download tool', ->
-        @dropdownText.should.include 'Download as spreadsheet'
-
-      it '...(only once)', ->
-        @dropdownText.match(/Download as spreadsheet/g).length.should.equal 1
-
-      it '...and a button to pick more tools', ->
-        @dropdownText.toLowerCase().should.include 'more tools'
+    it '...and a button to pick more tools', ->
+      @toolbarText.toLowerCase().should.include 'more tools'
 
     context 'when I click the title', ->
       before (done) ->
@@ -70,9 +56,8 @@ describe 'Dataset', ->
           @wrapper = wrapper
           browser.elementByCssIfExists '#editable-input input', (err, input) =>
             @input = input
-            browser.elementByCssIfExists '#subnav-path .editable', (err, a) =>
-              @a = a
-              wd40.click '#subnav-path .editable', done
+            wd40.click '#dataset-meta .dropdown-toggle', ->
+              wd40.click '#dataset-meta .rename-dataset', done
 
       it 'an input box appears', (done) ->
         should.exist @input
@@ -88,24 +73,20 @@ describe 'Dataset', ->
               done()
 
         it 'hides the input box and shows the new title', (done) =>
-          browser.waitForVisibleByCss '#subnav-path .editable', 4000, (err) =>
+          browser.waitForVisibleByCss '#dataset-meta h3', 4000, (err) =>
             browser.isVisible 'css selector', '#editable-input', (err, inputVisible) ->
               inputVisible.should.be.false
               done()
 
         it 'has updated the title', (done) ->
-          wd40.getText '#subnav-path .editable', (err, text) ->
+          wd40.getText '#dataset-meta h3', (err, text) ->
             text.should.equal randomname
             done()
 
       context 'when I go back home', ->
         before (done) ->
-          browser.elementByCss '#subnav-path a[href="/"]', (err, link) ->
+          browser.elementByCss '#logo', (err, link) ->
             link.click done
-
-        # wait for animation :(
-        before (done) ->
-          setTimeout done, 500
 
         it 'should display the home page', (done) ->
           browser.url (err, url) ->
@@ -126,12 +107,7 @@ describe 'Dataset', ->
                   hide.click done
 
           it 'the dataset disappears from the homepage immediately', (done) ->
-            # TODO: write a waitForInvisible function
-            setTimeout =>
-              @dataset.isVisible (err, visible) ->
-                visible.should.be.false
-                done()
-            , 400
+            wd40.waitForInvisible @dataset, done
 
           context 'when I revisit the homepage', ->
             before (done) ->

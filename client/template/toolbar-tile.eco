@@ -1,0 +1,27 @@
+<a class="tool"<% if @id: %> id="<%= @id %>"<% end %><% if @href: %> href="<%= @href %>"<% end %> data-toolname="<%= @toolName %>">
+  <div class="tool-icon">
+    <% if @manifest?.color: %>
+    <span class="tool-icon-outer" style="background-color: <%= chroma.interpolate(@manifest.color, "#000", .3, 'hsl') %>">
+    <% else: %>
+    <span class="tool-icon-outer">
+    <% end %>
+      <% if @manifest?.color and @manifest?.icon: %>
+      <span class="tool-icon-inner" style="background-color: <%= @manifest.color %>; background-image: url(<%= @manifest.icon %>)"></span>
+      <% else if @manifest?.color: %>
+      <span class="tool-icon-inner" style="background-color: <%= @manifest.color %>"><%= @manifest.displayName.charAt(0) %></span>
+      <% else: %>
+      <span class="tool-icon-inner"><%= @manifest.displayName.charAt(0) %></span>
+      <% end %>
+    </span>
+  </div>
+  <div class="tool-info">
+    <h3><%- @manifest.displayName.twoLineWrap() %></h3>
+  </div>
+  <div class="tool-actions">
+    <span class="dropdown-toggle">Options</span>
+    <!--<ul class="dropdown-menu pull-right">
+      <li><span class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</span></li>
+      <li><span class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</span></li>
+    </ul> -->
+  </div>
+</a>

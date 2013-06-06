@@ -37,6 +37,10 @@ boxExec = (cmd, box, user, callback) ->
       cmd: cmd
   , callback
 
+if not process.env.CU_DB
+  console.log 'CU_DB variable not set.'
+  process.exit 2
+
 mongoose.connect process.env.CU_DB
 
 migratePasswdEntry = (box, user, callback) ->
@@ -47,6 +51,24 @@ migratePasswdEntry = (box, user, callback) ->
     exec "util/addUnixUser.sh #{box.name} #{uid}", (err, stdout, stderr) ->
       checkVerboseAndPrint "migratePasswdEntry", err, stdout, stderr
       callback()
+
+transferSSHKeys = (box, user) ->
+  box.server = NEW_BOX_SERVER
+  process.env.CU_BOX_SERVER = NEW_BOX_SERVER
+  mkdirp.sync "/opt/cobalt/etc/sshkeys/#{box.name}"
+  box.save (err) ->
+    box.distributeSSHKeys (err, res, body) ->
+      checkVerboseAndPrint 'distributeSSHKeys', err, body
+      Dataset.findOneById box.name, (err, dataset) ->
+        if dataset?
+          dataset.boxServer = NEW_BOX_SERVER
+          dataset.save (err) ->
+            checkVerboseAndPrint 'dataset save', err
+            process.exit()
+        else
+          Dataset.View.changeBoxSever box.name, NEW_BOX_SERVER, (err) ->
+              checkVerboseAndPrint "change view box server", err
+              process.exit()
 
 transferBoxData = (box, user, callback) ->
   # Run duplicity to get latest backed up data??
@@ -83,19 +105,5 @@ Box.findOneByName BOX_NAME, (err, box) ->
     migratePasswdEntry box, user, ->
       transferBoxData box, user, ->
         transferCrontab box, user, ->
-          box.server = NEW_BOX_SERVER
-          process.env.CU_BOX_SERVER = NEW_BOX_SERVER
-          mkdirp.sync "/opt/cobalt/etc/sshkeys/#{box.name}"
-          box.save (err) ->
-            box.distributeSSHKeys (err, res, body) ->
-              checkVerboseAndPrint 'distributeSSHKeys', err, body
-              Dataset.findOneById box.name, (err, dataset) ->
-                if dataset?
-                  dataset.boxServer = NEW_BOX_SERVER
-                  dataset.save (err) ->
-                    checkVerboseAndPrint 'dataset save', err
-                    process.exit()
-                else
-                  Dataset.View.changeBoxSever box.name, NEW_BOX_SERVER, (err) ->
-                    checkVerboseAndPrint "change view box server", err
-                    process.exit()
+          transferSSHKeys box, user ->
+            process.exit()

@@ -399,6 +399,24 @@ class Cu.View.HelpNav extends Backbone.View
     @
 
 
+class Cu.View.AboutNav extends Backbone.View
+  className: 'subnav-wrapper'
+
+  render: ->
+    @$el.html("""
+      <div class="btn-toolbar" id="subnav-path">
+        <h1 class="btn-group">
+          <a class="btn btn-link" href="#{window.location.href}">#{@options.text}</a>
+        </h1>
+      </div>
+      <ul class="nav nav-pills" id="subnav-options">
+        <li><a href="/about/">About ScraperWiki</a></li>
+        <li><a href="/contact/">Contact Us</a></li>
+      </ul>
+      <hr>""").find(".nav a[href='#{window.location.pathname}']").parent().addClass('active')
+    @
+
+
 class Cu.View.ToolShopNav extends Backbone.View
   className: 'subnav-wrapper'
 

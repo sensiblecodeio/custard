@@ -1125,7 +1125,30 @@ a.help-tile h3 {
   font-size: 14px;
 }
 
+div.home .case-study {
+  margin: 20px 0;
+}
+
+div.home .hero-unit {
+  padding: 30px;
+  margin-bottom: 0;
+}
+
+div.home .case-study h3 {
+  line-height: 30px;
+}
+
+div.home .hero-unit h2 {
+  margin-top: 0;
+}
+
+
 @media only screen and (min-width: 620px) {
+
+  /* chooser should always be centred, even on body.fullscreen pages */
+  #chooser .container {
+    width: 580px;
+  }
 
   #subnav {
     text-align: left;
@@ -1261,14 +1284,14 @@ a.help-tile h3 {
     margin-left: 20px;
   }
 
-  /* chooser should always be centred, even on body.fullscreen pages */
-  #chooser .container {
-    width: 580px;
-  }
-
 }
 
 @media only screen and (min-width: 920px) {
+
+  /* chooser should always be centred, even on body.fullscreen pages */
+  #chooser .container {
+    width: 880px;
+  }
 
   #subnav-path > .context-switch > a {
     width: auto;
@@ -1308,9 +1331,23 @@ a.help-tile h3 {
     padding: 0 150px;
   }
 
-  /* chooser should always be centred, even on body.fullscreen pages */
-  #chooser .container {
-    width: 880px;
+  div.home .hero-unit {
+    padding: 50px;
+  }
+
+  div.home .case-study {
+    float: left;
+    width: 30%;
+    margin-right: 5%;
+    margin-bottom: 30px;
+  }
+
+  div.home .case-study.last {
+    margin-right: 0;
+  }
+
+  div.home .case-study p {
+    font-size: 18px;
   }
 
 }
@@ -1320,6 +1357,14 @@ a.help-tile h3 {
   /* chooser should always be centred, even on body.fullscreen pages */
   #chooser .container {
     width: 1180px;
+  }
+
+  div.home .hero-unit {
+    padding: 60px;
+  }
+
+  div.home .case-study {
+    margin-bottom: 40px;
   }
 
 }

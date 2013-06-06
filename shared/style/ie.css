@@ -1,2 +1,7 @@
 /* IE8-specific CSS styles for ScraperWiki.
    We do not support IE6-7. */
+
+.home .hero-unit img {
+  width: 220px;
+  height: 141px;
+}

@@ -1132,18 +1132,12 @@ div.help .case-study {
 
 div.home .hero-unit,
 div.help .hero-unit {
-  padding: 30px;
   margin-bottom: 0;
 }
 
 div.home .case-study h3,
 div.help .case-study h3 {
   line-height: 30px;
-}
-
-div.home .hero-unit h2,
-div.help .hero-unit h2 {
-  margin-top: 0;
 }
 
 
@@ -1313,11 +1307,6 @@ div.help .hero-unit h2 {
     display: block; /* this is overridden on larger screens */
   }
 
-  div.home .hero-unit,
-  div.help .hero-unit {
-    padding: 50px;
-  }
-
   div.home .case-study,
   div.help .case-study {
     float: left;
@@ -1343,11 +1332,6 @@ div.help .hero-unit h2 {
   /* chooser should always be centred, even on body.fullscreen pages */
   #chooser .container {
     width: 1180px;
-  }
-
-  div.home .hero-unit,
-  div.help .hero-unit {
-    padding: 60px;
   }
 
   div.home .case-study,

@@ -1125,20 +1125,24 @@ a.help-tile h3 {
   font-size: 14px;
 }
 
-div.home .case-study {
+div.home .case-study,
+div.help .case-study {
   margin: 20px 0;
 }
 
-div.home .hero-unit {
+div.home .hero-unit,
+div.help .hero-unit {
   padding: 30px;
   margin-bottom: 0;
 }
 
-div.home .case-study h3 {
+div.home .case-study h3,
+div.help .case-study h3 {
   line-height: 30px;
 }
 
-div.home .hero-unit h2 {
+div.home .hero-unit h2,
+div.help .hero-unit h2 {
   margin-top: 0;
 }
 
@@ -1266,24 +1270,6 @@ div.home .hero-unit h2 {
     margin: 0 20px 20px 0;
   }
 
-  div.home a.banner {
-    padding: 30px;
-  }
-
-  div.home .signup h1,
-  div.home .features {
-    margin-bottom: 25px;
-  }
-
-  div.home .features li {
-    width: 50px;
-    height: 50px;
-  }
-
-  div.home .features li + li {
-    margin-left: 20px;
-  }
-
 }
 
 @media only screen and (min-width: 920px) {
@@ -1327,26 +1313,26 @@ div.home .hero-unit h2 {
     display: block; /* this is overridden on larger screens */
   }
 
-  div.home .signup h2 {
-    padding: 0 150px;
-  }
-
-  div.home .hero-unit {
+  div.home .hero-unit,
+  div.help .hero-unit {
     padding: 50px;
   }
 
-  div.home .case-study {
+  div.home .case-study,
+  div.help .case-study {
     float: left;
     width: 30%;
     margin-right: 5%;
     margin-bottom: 30px;
   }
 
-  div.home .case-study.last {
+  div.home .case-study.last,
+  div.help .case-study.last {
     margin-right: 0;
   }
 
-  div.home .case-study p {
+  div.home .case-study p,
+  div.help .case-study p {
     font-size: 18px;
   }
 
@@ -1359,11 +1345,13 @@ div.home .hero-unit h2 {
     width: 1180px;
   }
 
-  div.home .hero-unit {
+  div.home .hero-unit,
+  div.help .hero-unit {
     padding: 60px;
   }
 
-  div.home .case-study {
+  div.home .case-study,
+  div.help .case-study {
     margin-bottom: 40px;
   }
 

@@ -9,10 +9,9 @@
 </div>
 
 <div class="case-study first">
-  <h3>ScraperWiki is&nbsp;about datasets&nbsp;and&nbsp;tools.</h3>
-  <p>Tools create, update, analyse and export data.</p>
-  <p>You can install new tools, tweak and fix existing ones, or write your own.</p>
-  <p>Some tools will be free, but soon we'll be selling all sorts of awesome tools in the Tool Shop.</p>
+    <h3>ScraperWiki is about datasets&nbsp;and&nbsp;tools.</h3>
+    <p>Tools create, update, analyse and export&nbsp;data.</p>
+    <p>You can install new tools from the tool shop, tweak existing ones, or write your&nbsp;own.</p>
 <% if window?.user?.effective: %>
   <a class="btn btn-primary" href="/chooser">Create a new dataset <i class="icon-chevron-right"></i></a>
 <% else: %>
@@ -21,16 +20,16 @@
 </div>
 
 <div class="case-study">
-  <h3>You can code locally, or in your browser.</h3>
-  <p>When you create a new dataset, you can pick <strong>Code in your Browser</strong>, a tool that lets you code and save right there (like Classic).</p>
-  <p>You can then use ScraperWiki tools to do things to your data. You can even tweak the tool's own code to make it work exactly right for your data.</p>
+    <h3>You can code locally, or in&nbsp;your&nbsp;browser.</h3>
+    <p>You can choose to Code in your Browser (like&nbsp;Classic).</p>
+    <p>You can also develop in your local environment, and push code to&nbsp;Scraperwiki with Git or SSH.</p>
   <a class="btn btn-primary" data-nonpushstate href="/help/developer/#concepts-tools">Read more about boxes <i class="icon-chevron-right"></i></a>
 </div>
 
 <div class="case-study last">
-  <h3>ScraperWiki&rsquo;s secret sauce: Using tools for instant&nbsp;wins.</h3>
-  <p>ScraperWiki itself is a simple platform. All&nbsp;of the magic is performed by&nbsp;<strong>tools</strong>.</p>
-  <p>Tools are focussed, single-purpose programs for doing something with a dataset. They let <strong>domain experts</strong> do exactly what they need to do, without touching a line of code.</p>
+    <h3>The secret sauce: Using&nbsp;tools&nbsp;for instant&nbsp;wins.</h3>
+    <p>ScraperWiki is a simple platform. All of the magic is performed&nbsp;by&nbsp;tools.</p>
+    <p>Tools are single-purpose programs which let domain experts do exactly what they need to do, without touching a line&nbsp;of&nbsp;code.</p>
   <a class="btn btn-primary" data-nonpushstate href="/help/">Try the quick start guides <i class="icon-chevron-right"></i></a>
 </div>
 
@@ -44,13 +43,20 @@
   </div>
   <div class="span8">
     <p class="lead">New ScraperWiki is <span class="highlight">more powerful for end-users</span> and <span class="highlight">more flexible for coders.</span></p>
+
     <p>New ScraperWiki is built for two markets: domain experts who want to use straightforward tools, and coders or data scientists who want to work more flexibly with data.</p>
+
     <p>ScraperWiki Classic tried to shoot down the middle – and while some people loved it, we knew we could do so much better by addressing the two markets individually.</p>
+
     <p>The domain experts shouldn’t have to learn to code just to explore their data. Likewise, the coders shouldn’t be limited by a platform built for hobbyists.</p>
-    <p>And, the best bit is, by bringing these two markets together, the coders get the advantage of simple tools to automate the boring bits, and non-coders get to look under the hood and learn from (and maybe even improve) the tools they use every day.</p>
-    <p>We want to empower people everywhere to get, clean and analyse the data that’s important to them &ndash in a way that just makes sense.</p>
+
+    <p>And, the best bit is, by bringing these two markets together, the coders get the advantage of simple tools to automate the boring bits, and non-coders get to look under the hood and learn from (maybe even improve) the tools they use every day.</p>
+
+    <p>We want to empower people everywhere to get, clean and analyse the data that’s important to them in a way that just makes sense.</p>
+
     <p>That&rsquo;s why we&rsquo;ve changed.</p>
     <p><a class="btn btn-primary" href="http://blog.scraperwiki.com/2012/12/31/a-small-matter-of-programming/">Read more on our blog <i class="icon-chevron-right"></i></a></p>
   </div>
 </div>
+
 

@@ -122,5 +122,5 @@ Box.findOneByName BOX_NAME, (err, box) ->
     migratePasswdEntry box, user, ->
       transferBoxData box, user, ->
         transferCrontab box, user, ->
-          transferSSHKeys box, user ->
+          transferSSHKeys box, user, ->
             process.exit()

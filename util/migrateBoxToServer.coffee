@@ -26,6 +26,8 @@ argv = require('optimist')
 BOX_NAME = argv.box
 NEW_BOX_SERVER = argv.host
 
+process.env.CO_STORAGE_DIR?= ""
+
 if typeof argv.box isnt "string"
   console.log "Box name not specified"
   process.exit 2

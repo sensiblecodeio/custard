@@ -10,8 +10,9 @@ mkdirp = require 'mkdirp'
 
 argv = require('optimist')
   .usage('Usage: $0 [--verbose] --box <box> --host <host>')
-  .demand(['box', 'host'])
   .alias('v', 'verbose')
+  .demand(['box', 'host'])
+  .string(['box', 'host'])
   .alias('b', 'box')
   .alias('h', 'host')
   .describe('host', "Specify the new box's hostname")
@@ -24,6 +25,13 @@ argv = require('optimist')
 
 BOX_NAME = argv.box
 NEW_BOX_SERVER = argv.host
+
+if typeof argv.box isnt "string"
+  console.log "Box name not specified"
+  process.exit 1
+if typeof argv.host isnt "string"
+  console.log "Host name not specified"
+  process.exit 1
 
 checkVerboseAndPrint = (arg...) ->
   if argv.verbose

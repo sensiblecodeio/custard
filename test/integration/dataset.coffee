@@ -150,3 +150,51 @@ describe 'Dataset', ->
         @dataset.text (err, text) ->
           text.should.include 'Prune' 
           done()
+
+  context "When I click on the Prune dataset", ->
+    before (done) ->
+      browser.get home_url, =>
+        setTimeout =>
+          wd40.elementByPartialLinkText 'Prune', (err, dataset) =>
+            dataset.click done
+        , 500
+
+    context "When I delete the dataset using the toolbar menu", ->
+      before (done) ->    
+        wd40.click '#dataset-meta .dropdown-toggle', ->
+          wd40.click '#dataset-meta .hide-dataset', done
+
+      it "takes me back to the homepage", (done) ->
+        console.log "kittens", done
+        browser.waitForElementByCss '.dataset-list', 4000, done
+
+      it "the prune dataset is shown as deleted", (done) ->
+        console.log "platypi"
+        browser.elementByCss '.dataset.tile', (err, tile) =>
+          @dataset = tile
+          @dataset.getAttribute 'class', (err, attr) ->
+            attr.should.include 'deleted'
+            done()
+
+      it "there is an undo button", (done) ->
+          @dataset.text (err, text) ->
+            text.should.include 'Undo'
+            done()
+
+      context "When I click the undo button", ->
+        before (done) ->
+          @dataset.elementByCss '.unhide', (err, link) ->
+            link.click done
+
+        it 'no longer shows an undo button', (done) ->
+          @dataset.text (err, text) ->
+            text.should.not.include 'Undo' 
+            done()
+
+        it "shows the dataset title", (done) ->
+          @dataset.text (err, text) ->
+            text.should.include 'Prune' 
+            done()
+
+
+

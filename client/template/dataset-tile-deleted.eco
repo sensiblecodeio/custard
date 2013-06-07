@@ -1,2 +1,1 @@
-<p>Dataset deleted</p>
-<button class="btn unhide">Undo</button>
+<p>Dataset deleted <button class="btn btn-mini unhide">Undo</button></p>

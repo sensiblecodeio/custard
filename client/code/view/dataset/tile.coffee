@@ -2,15 +2,11 @@ class Cu.View.DatasetTile extends Backbone.View
   className: 'dataset tile swcol'
   tagName: 'a'
   attributes: ->
-    if @options.details?
-      href: "/dataset/#{@model.get 'box'}/settings"
-      'data-box': @model.get 'box'
-    else
-      href: "/dataset/#{@model.get 'box'}"
-      'data-box': @model.get 'box'
+    'data-box': @model.get 'box'
 
   events:
     'click .hide': 'hideDataset'
+    'click .unhide': 'unhideDataset'
     'click .dropdown-menu a': 'dropdownMenuItemClick'
     'click .rename-dataset': 'renameDatasetClick'
     'click .git-ssh': ->
@@ -21,9 +17,14 @@ class Cu.View.DatasetTile extends Backbone.View
     @model.on 'destroy', @destroy, this
 
   render: ->
-    @$el.html JST['dataset-tile']
-      dataset: @model.toJSON()
-      statusUpdatedHuman: @model.statusUpdatedHuman()
+    if @model.get('state') is 'deleted'
+      @$el.attr 'href', false
+      @$el.addClass('deleted').html JST['dataset-tile-deleted']
+    else
+      @$el.attr 'href', "/dataset/#{@model.get 'box'}"
+      @$el.html JST['dataset-tile']
+        dataset: @model.toJSON()
+        statusUpdatedHuman: @model.statusUpdatedHuman()
     @
 
   destroy: ->
@@ -32,8 +33,16 @@ class Cu.View.DatasetTile extends Backbone.View
   hideDataset: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @$el.fadeOut()
     @model.save {state: 'deleted'}
+
+  unhideDataset: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    console.log @model.get 'state'
+    @model.set 'state', undefined
+    console.log @model.get 'state'
+    @model.save (err, dataset) ->
+      console.log err, dataset
 
   dropdownMenuItemClick: (e) ->
     e.preventDefault()

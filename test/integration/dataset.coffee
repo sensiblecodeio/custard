@@ -106,8 +106,10 @@ describe 'Dataset', ->
                 @dataset.elementByCss '.hide', (err, hide) ->
                   hide.click done
 
-          it 'the dataset disappears from the homepage immediately', (done) ->
-            wd40.waitForInvisible @dataset, done
+          it 'the dataset is replaced by an undo button', (done) ->
+            @dataset.text (err, text) ->
+              text.should.include 'Undo'
+              done()
 
           context 'when I revisit the homepage', ->
             before (done) ->
@@ -117,3 +119,40 @@ describe 'Dataset', ->
               wd40.getText 'body', (err, text) ->
                 text.should.not.include randomname
                 done()
+  
+  context "When I hide the Prune dataset", ->            
+    before (done) ->
+      browser.get home_url, =>
+        setTimeout =>
+          wd40.elementByPartialLinkText 'Prune', (err, dataset) =>
+            @dataset = dataset
+            browser.moveTo @dataset, =>
+              @dataset.elementByCss '.hide', (err, hide) ->
+                hide.click done
+        , 500
+
+    it 'shows an undo button', (done) ->
+      @dataset.text (err, text) ->
+        text.should.include 'Undo' 
+        done()
+
+    context "When I click the undo button", ->
+      before (done) ->
+        @dataset.elementByCss '.unhide', (err, link) ->
+          link.click
+          done()
+
+      it 'no longer shows an undo button', (done) ->
+        @dataset.text (err, text) ->
+          text.should.not.include 'Undo' 
+          done()
+
+      it "shows the dataset title", (done) ->
+        @dataset.text (err, text) ->
+          text.should.include 'Prune' 
+          done()
+
+
+
+
+

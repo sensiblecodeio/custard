@@ -165,11 +165,9 @@ describe 'Dataset', ->
           wd40.click '#dataset-meta .hide-dataset', done
 
       it "takes me back to the homepage", (done) ->
-        console.log "kittens", done
         browser.waitForElementByCss '.dataset-list', 4000, done
 
       it "the prune dataset is shown as deleted", (done) ->
-        console.log "platypi"
         browser.elementByCss '.dataset.tile', (err, tile) =>
           @dataset = tile
           @dataset.getAttribute 'class', (err, attr) ->

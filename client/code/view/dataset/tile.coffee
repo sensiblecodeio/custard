@@ -19,9 +19,11 @@ class Cu.View.DatasetTile extends Backbone.View
   render: ->
     if @model.get('state') is 'deleted'
       @$el.attr 'href', false
-      @$el.addClass('deleted').html JST['dataset-tile-deleted']
+      @$el.addClass 'deleted'
+      @$el.html JST['dataset-tile-deleted']
     else
       @$el.attr 'href', "/dataset/#{@model.get 'box'}"
+      @$el.removeClass 'deleted'
       @$el.html JST['dataset-tile']
         dataset: @model.toJSON()
         statusUpdatedHuman: @model.statusUpdatedHuman()
@@ -38,11 +40,7 @@ class Cu.View.DatasetTile extends Backbone.View
   unhideDataset: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    console.log @model.get 'state'
-    @model.set 'state', undefined
-    console.log @model.get 'state'
-    @model.save (err, dataset) ->
-      console.log err, dataset
+    @model.save {state: null}
 
   dropdownMenuItemClick: (e) ->
     e.preventDefault()

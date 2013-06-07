@@ -119,8 +119,8 @@ describe 'Dataset', ->
               wd40.getText 'body', (err, text) ->
                 text.should.not.include randomname
                 done()
-  
-  context "When I hide the Prune dataset", ->            
+
+  context "When I hide the Prune dataset", ->
     before (done) ->
       browser.get home_url, =>
         setTimeout =>
@@ -139,8 +139,7 @@ describe 'Dataset', ->
     context "When I click the undo button", ->
       before (done) ->
         @dataset.elementByCss '.unhide', (err, link) ->
-          link.click
-          done()
+          link.click done
 
       it 'no longer shows an undo button', (done) ->
         @dataset.text (err, text) ->
@@ -151,8 +150,3 @@ describe 'Dataset', ->
         @dataset.text (err, text) ->
           text.should.include 'Prune' 
           done()
-
-
-
-
-

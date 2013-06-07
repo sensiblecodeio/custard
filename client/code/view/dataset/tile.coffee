@@ -18,7 +18,7 @@ class Cu.View.DatasetTile extends Backbone.View
 
   render: ->
     if @model.get('state') is 'deleted'
-      @$el.attr 'href', false
+      @$el.removeAttr 'href'
       @$el.addClass 'deleted'
       @$el.html JST['dataset-tile-deleted']
     else

@@ -60,10 +60,14 @@ migratePasswdEntry = (box, user, callback) ->
   # TODO: Add UID to box in DB
   console.log "Migrating passwd entry..."
   boxExec "id -u", box, user, (err, res, uid) ->
-    uid = uid.replace('\n', '')
-    exec "util/addUnixUser.sh #{box.name} #{uid}", (err, stdout, stderr) ->
-      checkVerboseAndPrint "migratePasswdEntry", err, stdout, stderr
-      callback()
+    box.uid = uid.replace('\n', '')
+    box.save (err) ->
+      if err?
+        checkVerboseAndPrint "box save error", err
+
+      exec "util/addUnixUser.sh #{box.name} #{box.uid}", (err, stdout, stderr) ->
+        checkVerboseAndPrint "migratePasswdEntry", err, stdout, stderr
+        callback()
 
 transferSSHKeys = (box, user) ->
   box.server = NEW_BOX_SERVER

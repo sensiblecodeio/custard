@@ -40,6 +40,7 @@ getGitURL = (tool, server) ->
 
 class Box extends ModelBase
   @dbClass: zDbBox
+  duplicateErrorCount: 0
 
   installTool: (arg, callback) ->
     Tool.findOneByName arg.toolName, (err, tool) =>
@@ -81,14 +82,25 @@ class Box extends ModelBase
           keys: JSON.stringify boxKeys
       , callback
 
+  endpoint: () ->
+    Box.endpoint @server, @name
+
+  save: (callback) ->
+    @uid = Box.generateUid()
+    super (err) =>
+      if err? and err.code is 11000
+        if @duplicateErrorCount <3
+          @save callback
+          @duplicateErrorCount += 1
+        else
+          callback err
+      else callback err
+
   @endpoint: (server, name) ->
     proto_server = "https://#{server}"
     if process.env.CU_BOX_SERVER
       proto_server = "http://#{process.env.CU_BOX_SERVER}"
     return "#{proto_server}/#{name}"
-
-  endpoint: () ->
-    Box.endpoint @server, @name
 
   @findAllByUser: (shortName, callback) ->
     @dbClass.find users: shortName, callback
@@ -121,14 +133,19 @@ class Box extends ModelBase
       uri: uri
       form:
         apikey: user.apiKey
-    , (err, res, body) ->
+    , (err, res, body) =>
       console.log "server #{server} boxName #{boxName}"
 
       if err?
         return callback err, null
       # TODO: we don't need multiple users
       boxJSON = JSON.parse body
-      box = new Box({users: [user.shortName], name: boxName, server: server, boxJSON: boxJSON})
+      box = new Box
+        users: [user.shortName]
+        name: boxName
+        server: server
+        boxJSON: boxJSON
+
       box.save (err) ->
         if err?
           callback err, null
@@ -142,6 +159,11 @@ class Box extends ModelBase
   @_generateBoxName: ->
     r = Math.random() * Math.pow(10,9)
     return nibbler.b32encode(String.fromCharCode(r>>24,(r>>16)&0xff,(r>>8)&0xff,r&0xff)).replace(/[=]/g,'').toLowerCase()
+
+  @generateUid: ->
+    max = 429496729
+    min = 4000
+    Math.floor(Math.random() * (max - min + 1)) + min
 
 exports.Box = Box
 

@@ -167,6 +167,6 @@ exports.datasets = [
 ]
 
 exports.boxes = [
-  { "users" : ['ehg'], "name": "3006375731" },
-  { "users" : ['ehg'], "name": "3006375815" }
+  { "users" : ['ehg'], "name": "3006375731", "uid": 4678 },
+  { "users" : ['ehg'], "name": "3006375815", "uid": 5678 }
 ]

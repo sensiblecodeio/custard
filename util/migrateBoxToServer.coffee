@@ -1,6 +1,8 @@
 #!/usr/bin/env coffee
 # Migrates a single box to a server. Run on server that box is to be
 # migrated to.
+# NOTE: if you're migrating from a development server, set CU_BOX_SERVER
+# to the server, so we don't get confused about SSL certs.
 fs = require 'fs'
 {exec} = require 'child_process'
 mongoose = require 'mongoose'

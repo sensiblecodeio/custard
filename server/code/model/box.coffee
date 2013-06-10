@@ -121,40 +121,40 @@ class Box extends ModelBase
         statusCode: 500
         body: JSON.stringify(error: "Plan/Server not present")
       , null
-    # The URI we need should have "box" between the server name and the
-    # box name. Bit tricky to do. :todo: make better (by fixing cobalt?).
-    uri = "#{Box.endpoint server, boxName}"
-    uri = uri.split '/'
-    # Insert 'box' just after 3rd element.
-    uri.splice 3, 0, 'box'
-    uri = uri.join '/'
-    console.log "BOX CREATE posting to #{uri}"
-    request.post
-      uri: uri
-      form:
-        apikey: user.apiKey
-    , (err, res, body) =>
-      console.log "server #{server} boxName #{boxName}"
 
-      if err?
-        return callback err, null
-      # TODO: we don't need multiple users
-      boxJSON = JSON.parse body
-      box = new Box
-        users: [user.shortName]
-        name: boxName
-        server: server
-        boxJSON: boxJSON
+    console.log "server #{server} boxName #{boxName}"
 
-      box.save (err) ->
-        if err?
-          callback err, null
-        else if res.statusCode isnt 200
-          callback {statusCode: res.statusCode, body: body}, null
-        else
-          Plan.setDiskQuota box, user.accountLevel, (err) ->
-            console.warn "setDiskQuota on #{box.name} error: #{err}"
-          callback null, box
+    # TODO: we don't need multiple users
+    box = new Box
+      users: [user.shortName]
+      name: boxName
+      server: server
+
+    box.save (err) ->
+      # The URI we need should have "box" between the server name and the
+      # box name. Bit tricky to do. :todo: make better (by fixing cobalt?).
+      uri = "#{Box.endpoint server, boxName}"
+      uri = uri.split '/'
+      # Insert 'box' just after 3rd element.
+      uri.splice 3, 0, 'box'
+      uri = uri.join '/'
+      console.log "BOX CREATE posting to #{uri}"
+      request.post
+        uri: uri
+        form:
+          apikey: user.apiKey
+          uid: box.uid
+      , (err, res, body) ->
+        box.boxJSON = JSON.parse body
+        box.save (err) ->
+          if err?
+            callback err, null
+          else if res.statusCode isnt 200
+            callback {statusCode: res.statusCode, body: body}, null
+          else
+            Plan.setDiskQuota box, user.accountLevel, (err) ->
+              console.warn "setDiskQuota on #{box.name} error: #{err}"
+            callback null, box
 
   @_generateBoxName: ->
     r = Math.random() * Math.pow(10,9)

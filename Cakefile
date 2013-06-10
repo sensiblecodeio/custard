@@ -28,6 +28,13 @@ build = (watch, callback) ->
     (cb) -> compile('shared/js', 'shared/code', watch, cb)
   ]
 
+task 'clean', ->
+  console.log "Cleaning database and inserting fixtures"
+  cp = require 'child_process'
+  cp.exec 'test/cleaner.coffee'
+   
+  
+
 task 'build', ->
   build false, ->
     process.exit 0

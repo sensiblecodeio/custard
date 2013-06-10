@@ -16,6 +16,9 @@ boxSchema = new Schema
     index: unique: true
   server: String
   boxJSON: Schema.Types.Mixed
+  uid:
+    type: Number
+    index: unique: true
 
 zDbBox = mongoose.model 'Box', boxSchema
 

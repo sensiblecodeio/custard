@@ -20,6 +20,12 @@ class ModelBase
     delete res.dbInstance
     return res
 
+  isNew: () ->
+    """true when freshly created. false when the object has been saved
+    or fetched from the database."""
+
+    return not @id?
+
   save: (callback) ->
     err = if @validate? then @validate() else null
     if err?

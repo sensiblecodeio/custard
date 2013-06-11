@@ -30,14 +30,15 @@ describe 'Box (server)', ->
 
   context 'when there is a uid collision', ->
     before (done) ->
-      returnedOneFake = Boolean(false)
+      returnedOneFake = false
 
       testUid = =>
-        if returnedOneFake is true
-          return 324234324234
+        if returnedOneFake
+          res =  324234324234
         else
           returnedOneFake = true
-          return firstBox.uid
+          res = firstBox.uid
+        return res
 
       sinon.stub Box, 'generateUid', testUid
 
@@ -51,3 +52,16 @@ describe 'Box (server)', ->
     it "doesn't break, and assigns another random value", ->
       should.exist @secondBox.uid
       @secondBox.uid.should.not.equal firstBox.uid
+
+  context 'when a box has been given a uid', ->
+    before (done) ->
+      firstBox.server = 'bob.scraperwiki.com'
+      firstBox.save done
+
+    before (done) ->
+      Box.findOneByName firstBox.name, (err, box) =>
+        @sameBox = box
+        done()
+
+    it "doesn't change its uid", ->
+      @sameBox.uid.should.equal firstBox.uid

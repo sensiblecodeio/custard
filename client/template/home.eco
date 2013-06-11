@@ -1,0 +1,28 @@
+<style type="text/css">
+.use-case { height: 600px; }
+</style>
+
+<div class="hero-unit" style="background-color: #DAF0FF">
+  <img class="pull-right" src="/image/tractor-500x320.png" width="220" height="141" alt="The ScraperWiki digger" style="margin: 0 0 10px 10px">
+  <h2>Liberate your data <span style="opacity: 0.5">with ScraperWiki!</></h2>
+  <p class="lead" style="margin-bottom: 5px">ScraperWiki helps you do data science on the&nbsp;web.</p>
+  <p class="lead" style="margin-bottom: 0">Get, clean, analyse, visualise and manage your data, with&nbsp;simple tools or custom-written code.</p>
+</div>
+
+<ul id="use-cases">
+  <li><a href="#explore" data-nonpushstate>I&rsquo;m a data explorer</a></li>
+  <li><a href="#datascience" data-nonpushstate>I&rsquo;m a data scientist</a></li>
+  <li><a href="#professional" data-nonpushstate>I&rsquo;m a business</a></li>
+</ul>
+
+<section class="use-case" id="explore">
+  <h1>Data Explorers</h1>
+</section>
+
+<section class="use-case" id="datascience">
+  <h1>Data Scientists</h1>
+</section>
+
+<section class="use-case" id="professional">
+  <h1>Professional Services</h1>
+</section>

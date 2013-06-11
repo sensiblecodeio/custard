@@ -415,6 +415,9 @@ app.get '/pricing/?*', renderClientApp
 app.get '/signup/?*', renderClientApp
 app.get '/help/?*', renderClientApp
 app.get '/terms/?*', renderClientApp
+app.get '/explore/?*', renderClientApp
+app.get '/datascience/?*', renderClientApp
+app.get '/professional/?*', renderClientApp
 app.get '/', renderClientApp
 
 # Switch is protected by a specific function.

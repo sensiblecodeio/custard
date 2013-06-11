@@ -86,10 +86,12 @@ class Box extends ModelBase
     Box.endpoint @server, @name
 
   save: (callback) ->
-    @uid = Box.generateUid()
+    if @isNew()
+      @uid = Box.generateUid()
     super (err) =>
       if err? and err.code is 11000
         if @duplicateErrorCount <3
+          @uid = Box.generateUid()
           @save callback
           @duplicateErrorCount += 1
         else

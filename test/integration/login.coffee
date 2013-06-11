@@ -86,6 +86,7 @@ describe 'Password', ->
   context 'when I use the password reset link', ->
     newUser = String(Math.random()).replace('0.', 'pass-')
     newPass = newUser
+
     before (done) ->
       login 'teststaff', process.env.CU_TEST_STAFF_PASSWORD, (err, res, body) =>
         form =
@@ -105,6 +106,11 @@ describe 'Password', ->
 
     before (done) ->
       browser.get "#{home_url}/set-password/#{@token}", done
+
+    it 'shows my username', (done) ->
+      wd40.getText '#content', (err, text) ->
+        text.should.include newUser
+        done()
 
     it 'shows a page with a password field', (done) ->
       browser.elementByCssIfExists '#password', (err, element) ->

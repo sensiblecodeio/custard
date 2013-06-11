@@ -5,7 +5,7 @@ class Cu.View.SetPassword extends Backbone.View
     'click .btn-primary': 'setPassword'
 
   render: ->
-    @el.innerHTML = JST['set-password']()
+    @el.innerHTML = JST['set-password'] @options
     @
 
   setPassword: (e) ->

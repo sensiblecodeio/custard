@@ -295,6 +295,13 @@ login = (req, resp) ->
     failureFlash: true
   )(req,resp)
 
+getToken = (req, resp) ->
+  Token.find req.params.token, (err, token) ->
+    if token?.shortName
+      return resp.send 200, { token: token.token, shortName: token.shortName }
+    else
+      return resp.send 404, { error: 'Specified token could not be found' }
+
 setPassword = (req, resp) ->
   Token.find req.params.token, (err, token) ->
     if token?.shortName and req.body.password?
@@ -417,6 +424,7 @@ app.post "/login", login
 
 # Set a password using a token.
 # TODO: :token should be in POST body
+app.get '/api/token/:token/?', getToken
 app.post '/api/token/:token/?', setPassword
 
 app.post '/api/user/?', addUser

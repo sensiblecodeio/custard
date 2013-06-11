@@ -183,11 +183,22 @@ class Cu.Router.Main extends Backbone.Router
     @appView.showView contentView
     @subnavView.showView subnavView
 
-  setPassword: ->
-    subnavView = new Cu.View.Subnav {text: 'Set your password'}
-    contentView = new Cu.View.SetPassword()
-    @appView.showView contentView
-    @subnavView.showView subnavView
+  setPassword: (token) ->
+    $.ajax
+      url: "/api/token/#{token}"
+      dataType: 'json'
+      success: (tokenInfo) =>
+        if tokenInfo.shortName?
+          @shortName = tokenInfo.shortName
+          console.log 'success', @shortName
+        else
+          console.log 'no shortName!'
+      complete: =>
+        console.log 'complete', @shortName
+        subnavView = new Cu.View.Subnav {text: 'Set your password'}
+        contentView = new Cu.View.SetPassword {shortName: @shortName}
+        @appView.showView contentView
+        @subnavView.showView subnavView
 
   fourOhFour: ->
     subnavView = new Cu.View.Subnav {text: '404: Not Found'}

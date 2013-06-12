@@ -3,7 +3,7 @@
         <p>
             <label for="accountlevel">Account level:</label>
             <select name="accountlevel" id="accountlevel">
-              <option value="dataservices" selected>Data Services Customer</option>
+              <option value="dataservices-ec2" selected>Data Services Customer</option>
               <option value="large">Large ($29)</option>
               <option value="medium">Medium ($9)</option>
               <option value="free">Community (Free)</option>

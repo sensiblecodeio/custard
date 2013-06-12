@@ -13,6 +13,13 @@
         "maxNumDatasets": 81,
         "$": true
     },
+    "dataservices-ec2": {
+        "boxServer": "ds-ec2.scraperwiki.com",
+        "maxDiskSpaceMB": 4000,
+        "maxHourCPUPerDay": 2.0,
+        "maxNumDatasets": 81,
+        "$": true
+    },
     "free": {
         "boxServer": "free.scraperwiki.com",
         "maxDiskSpaceMB": 8,

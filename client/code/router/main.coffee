@@ -48,6 +48,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('terms/?'), 'terms'
     @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
     @route RegExp('contact/?'), 'contact'
+    @route RegExp('about/?'), 'about'
 
   main: ->
     if window.user.effective?
@@ -232,8 +233,14 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.showView subnavView
 
   contact: ->
-    subnavView = new Cu.View.Subnav {text: 'Contact Us'}
+    subnavView = new Cu.View.AboutNav {text: 'Contact Us'}
     contentView = new Cu.View.Contact()
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  about: ->
+    subnavView = new Cu.View.AboutNav {text: 'About ScraperWiki'}
+    contentView = new Cu.View.About()
     @appView.showView contentView
     @subnavView.showView subnavView
 

@@ -1151,18 +1151,12 @@ div.help .case-study {
 
 div.home .hero-unit,
 div.help .hero-unit {
-  padding: 30px;
   margin-bottom: 0;
 }
 
 div.home .case-study h3,
 div.help .case-study h3 {
   line-height: 30px;
-}
-
-div.home .hero-unit h2,
-div.help .hero-unit h2 {
-  margin-top: 0;
 }
 
 /* Home page */
@@ -1194,6 +1188,100 @@ div.home #more-links h3 {
 div.home #more-links p {
   margin-bottom: 0;
 }
+
+
+/* About page */
+
+div.about .hero-unit {
+  background-color: #FFEDA8;
+  color: #000;
+  font-size: 22px;
+  line-height: 30px;
+}
+
+div.about .hero-unit h1 {
+  font-size: 36px;
+  line-height: 36px;
+  margin-bottom: 20px;
+}
+
+div.about .hero-unit p a {
+  color: #000;
+  border-bottom: 1px solid;
+  text-decoration: none;
+}
+
+div.about .hero-unit p a:hover {
+  color: #B86700;
+}
+
+div.about .hero-unit p a:active {
+  position: relative;
+  top: 1px;
+}
+
+div.about .hero-unit p:last-child {
+  margin-bottom: 0;
+}
+
+div.about h2 {
+  font-size: 26px;
+  line-height: 30px;
+  margin: 40px 0 20px;
+}
+
+div.about .people {
+  margin-bottom: 10px;
+}
+
+div.about .people h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+div.about .people h3 small {
+  font-weight: inherit;
+}
+
+div.about .people h3 a {
+  color: #000;
+}
+
+div.about .people img {
+  width: 60px;
+  border: 1px solid #fff;
+  -webkit-box-shadow: 0 1px 2px #ccc;
+  -moz-box-shadow: 0 1px 2px #ccc;
+  box-shadow: 0 1px 2px #ccc;
+}
+
+div.about .people p {
+  color: #888;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+div.about .people p a {
+  color: #444;
+}
+
+div.about p.logos {
+  margin: 20px 0;
+}
+
+
+
+@media only screen and (max-width: 619px) {
+
+  div.about .row-fluid .span6 {
+    float: none;
+    width: 100%;
+  }
+
+}
+
+
 
 @media only screen and (min-width: 620px) {
 
@@ -1318,6 +1406,7 @@ div.home #more-links p {
     margin: 0 20px 20px 0;
   }
 
+
   /* Home page */
 
   div.home ul#use-cases,
@@ -1406,6 +1495,16 @@ div.home #more-links p {
     font-size: 20px;
     line-height: 24px;
   }
+
+
+  /* About page */
+
+  div.about .hero-unit h1 {
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 25px;
+  }
+
 }
 
 
@@ -1450,6 +1549,7 @@ div.home #more-links p {
     display: block; /* this is overridden on larger screens */
   }
 
+
   /* Home page */
 
   div.home .hero-unit,
@@ -1487,6 +1587,37 @@ div.home #more-links p {
 
   div.home .use-case {
     padding: 20px;
+
+
+  /* About page */
+
+  div.about .hero-unit h1 {
+    font-size: 50px;
+    line-height: 50px;
+    margin-bottom: 30px;
+    max-width: 700px;
+  }
+
+  #history_and_funding, #thanks {
+    overflow: auto;
+  }
+
+  div.about p.left {
+    float: left;
+    width: 48%;
+  }
+
+  div.about p.right {
+    float: right;
+    width: 48%;
+  }
+
+  div.about p.logos {
+    margin: 10px 0;
+  }
+
+  #history_and_funding + h2 {
+    margin-top: 30px;
   }
 
 }
@@ -1496,11 +1627,6 @@ div.home #more-links p {
   /* chooser should always be centred, even on body.fullscreen pages */
   #chooser .container {
     width: 1180px;
-  }
-
-  div.home .hero-unit,
-  div.help .hero-unit {
-    padding: 60px;
   }
 
   div.home .case-study,

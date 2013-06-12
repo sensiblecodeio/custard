@@ -1,0 +1,141 @@
+<div class="hero-unit">
+  <h1>ScraperWiki is a platform for doing data science on the web</h1>
+  <p>We help individuals and businesses get, clean and analyse data from thousands of sources, for science, journalism, lead generation&mdash;whatever you need.</p>
+  <p>The magic happens via &ldquo;tools&rdquo; running on our <a href="/pricing/">self-service platform</a>. But we also offer <a href="/professional">managed services</a> for corporate customers who want to make the most of their public and private data.</p>
+</div>
+
+<h2>Our team</h2>
+
+<div class="row-fluid people">
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/frabcus" title="@frabcus on Twitter"><img src="https://media.scraperwiki.com/images/about_francis.png" /></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/frabcus" title="@frabcus on Twitter">Francis Irving</a> <small>CEO</small></h3>
+        <p>Former <a href="http://www.mysociety.org">mySociety</a> developer, and creator of the popular developer tool <a href="http://www.tortoisecvs.org">TortoiseCVS</a>.
+      </div>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/amcguire62" title="@amcguire62 on Twitter"><img src="https://media.scraperwiki.com/images/about_aidan.png" /></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/amcguire62" title="@amcguire62 on Twitter">Aidan McGuire</a> <small>CFO</small></h3>
+        <p>Founder of <a href="http://www.bluefountain.com/">Blue Fountain</a>, with a banking background.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid people">
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/ainemcguire" title="@ainemcguire on Twitter"><img src="https://media.scraperwiki.com/images/about_aine.png" /></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/ainemcguire" title="@ainemcguire on Twitter">Aine McGuire</a> <small>CMO</small></h3>
+        <p>Founded <a href="http://www.pygmalionsolutions.com/">Pygmalion</a>, the UK&rsquo;s first Microsoft Gold Certified Partner.</p>
+      </div>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/zarino" title="@zarino on Twitter"><img src="https://media.scraperwiki.com/images/about_zarino.png" /></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/zarino" title="@zarino on Twitter">Zarino Zappia</a> <small>VP,&nbsp;Product</small></h3>
+        <p>Designer, coder and Internetologist, with a Masters from the <a href="http://www.oii.ox.ac.uk">Oxford Internet Institute</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid people">
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/smallcasserole" title="@smallcasserole on Twitter"><img src="https://media.scraperwiki.com/images/about_ian.png"></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/smallcasserole" title="@smallcasserole on Twitter">Ian Hopkinson</a> <small>Senior&nbsp;Data&nbsp;Scientist</small></h3>
+        <p>Former academic physicist, then researcher at a megacorp now being paid to do what I used to do for fun.</p>
+      </div>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="media">
+      <img class="pull-left" src="https://media.scraperwiki.com/images/about_dragon.png" />
+      <div class="media-body">
+        <h3>&lsquo;Dragon&rsquo; Dave McKee <small>Data&nbsp;Scientist</small></h3>
+        <p>When not liberating data, Dragon <a href="http://www.profounddecisions.co.uk">hits people over the head with swords</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid people">
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/paul_furley" title="@paul_furley on Twitter"><img src="https://media.scraperwiki.com/images/about_paul.png" /></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/paul_furley" title="@paul_furley on Twitter">Paul Furley</a> <small>Data&nbsp;Scientist</small></h3>
+        <p>Security engineer, stock market scraper and chocolate retailer.</p>
+      </div>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/drjtwit" title="@drjtwit on Twitter"><img src="https://media.scraperwiki.com/images/about_david.png" /></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/drjtwit" title="@drjtwit on Twitter">David Jones</a> <small>First&nbsp;Engineer</small></h3>
+        <p>Coder, climber, and director of <a href="http://climatecode.org">Climate Code Foundation</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid people">
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/chrisb33" title="@chrisb33 on Twitter"><img src="https://media.scraperwiki.com/images/about_chris.png" /></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/chrisb33" title="@chrisb33 on Twitter">Chris Blower</a> <small>Platform&nbsp;Engineer</small></h3>
+        <p>Enjoys learning different technologies, flashpacking and photography.</p>
+      </div>
+    </div>
+  </div>
+  <div class="span6"></div>
+</div>
+
+<h2>Our board</h2>
+<div class="row-fluid people">
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/silbs" title="@silbs on Twitter"><img src="https://media.scraperwiki.com/images/about_jane.png" /></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/silbs" title="@silbs on Twitter">Jane Silber</a> <small>Chair&nbsp;of&nbsp;the&nbsp;Board</small></h3>
+        <p>CEO of <a href="http://canonical.com">Canonical</a>. World-class businesswoman and Open Source evangelist.</p>
+      </div>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="media">
+      <a class="pull-left" href="http://twitter.com/goatchurch" title="@goatchurch on Twitter"><img src="https://media.scraperwiki.com/images/about_julian.png" /></a>
+      <div class="media-body">
+        <h3><a href="http://twitter.com/goatchurch" title="@goatchurch on Twitter">Julian Todd</a> <small>Director</small></h3>
+        <p>Creator of <a href="http://www.theyworkforyou.com">TheyWorkForYou.com</a>, Julian dives and caves, but would never cave dive.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>Company History</h2>
+<div id="history_and_funding">
+  <p class="left">Back in 2003, ScraperWiki&rsquo;s founders were the first people in the world to write computer programs to download Government information and make it more accessible to citizens. They created websites like <a href="http://theyworkforyou.com/">TheyWorkForYou</a>, which inspired <a href="http://sunlightfoundation.com/">the Sunlight Foundation</a>.</p>
+  <p class="right">ScraperWiki was founded in 2009 by Julian Todd and Aidan McGuire. We received initial funding from British TV station Channel 4. After fostering an active community of open data coders and data journalists, ScraperWiki won the <a href="http://thenextweb.com/uk/2011/06/23/scraperwiki-a-uk-open-data-project-wins-280k-award/">Knight News Challenge</a> in 2011.</p>
+  <p class="left logos"><img src="/image/company_history_logos.gif" width="320" height="40" alt="Company History Logos"></p>
+  <p class="right">In 2012 ScraperWiki closed a <a href="http://blog.scraperwiki.com/2012/02/09/1-million-to-build-a-data-platform-2/">million dollar round of investment</a> led by EV, to improve our platform for coders and build out our business offering.</p>
+</div>
+
+<h2>Thanks</h2>
+<div id="thanks">
+  <p class="left">As well as our awesome team, above, we&rsquo;d also like to thank; Richard Pope, product manager for the first version of ScraperWiki; Tom Mortimer-Jones, Ross Jones, Anna Powell-Smith, Mike Richardson and Sym Roe, who helped build it; Nicola Hughes, Judith Townend and Zach Beauvais; Tom Steinberg and Jamie Arnold, for mentoring; and Francis Davey, for legal advice.</p>
+  <p class="right">Our logo is a &lsquo;<a href="http://en.wikipedia.org/wiki/Wheel_tractor-scraper">wheel tractor-scraper</a>&rsquo; (like a huge cheese slice for moving soil) and it was designed by James Weiner.</p>
+  <p class="right">The ScraperWiki website is Open Source and licensed under the <a href="http://www.gnu.org/licenses/agpl-3.0.html">Affero GPL</a>. Check us out on <a href="https://github.com/scraperwiki/custard">Github</a>.
+</div>

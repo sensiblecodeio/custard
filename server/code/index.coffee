@@ -140,7 +140,7 @@ getSessionUsersFromDB = (reqUser, cb) ->
 getEffectiveUser = (user, callback) ->
   User.findCanBeReally user.shortName, (err, canBeReally) ->
     if canBeReally.length == 0
-      return callback(getSessionUser user)
+      return callback user
     else
       if user.defaultContext in _.pluck(canBeReally, 'shortName')
         effectiveUser = _.findWhere canBeReally, shortName: user.defaultContext
@@ -418,6 +418,8 @@ app.get '/terms/?*', renderClientApp
 app.get '/explore/?*', renderClientApp
 app.get '/datascience/?*', renderClientApp
 app.get '/professional/?*', renderClientApp
+app.get '/contact/?*', renderClientApp
+app.get '/about/?*', renderClientApp
 app.get '/', renderClientApp
 
 # Switch is protected by a specific function.

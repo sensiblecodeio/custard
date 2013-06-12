@@ -15,7 +15,9 @@ class Cu.View.Home extends Backbone.View
     # have they requested a particular section?
     if @options?.section
       $("##{@options.section}", @$el).show()
-      $("#use-cases a[href='##{@options.section}']", @$el).parent().addClass('active')
+      $("#use-cases a[href='##{@options.section}']", @$el).parent()
+        .addClass('active').siblings().addClass('inactive')
+
       setTimeout =>
         $('html, body').animate
           scrollTop: $('#use-cases', @$el).offset().top - 20
@@ -33,7 +35,7 @@ class Cu.View.Home extends Backbone.View
       # change the url
       app.navigate "/", trigger: false
       # hide the current section
-      $tab.parent().removeClass('active')
+      $tab.parent().removeClass('active').siblings().removeClass 'inactive'
       $section.slideUp()
     else
       # change the url
@@ -42,9 +44,10 @@ class Cu.View.Home extends Backbone.View
       if $('.use-case:visible', @$el).length
         # another section is already visible, hide it first
         $('section:visible', @$el).slideUp =>
-          $tab.parent().addClass('active').siblings('.active').removeClass('active')
+          $tab.parent().removeClass('inactive').addClass('active')
+            .siblings().removeClass('active').addClass('inactive')
           $section.slideDown()
       else
         # no visible sections yet, just show the one they want
-        $tab.parent().addClass('active')
+        $tab.parent().addClass('active').siblings().addClass('inactive')
         $section.slideDown()

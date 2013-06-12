@@ -43,3 +43,18 @@
   Data workshops - sessions to help businesses understand methods in data collection, analysis and management.
   ScraperWiki Team - we need to reference our team and make a link to our ABOUT PAGE which shows our bods and their amazing skills!
 </section>
+
+<ul id="more-links" class="nav nav-stacked nav-tabs">
+  <li>
+    <a href="/about">
+      <h3>About us</h3>
+      <p>Find out more about ScraperWiki and the people behind it.</p>
+    </a>
+  </li>
+  <li>
+    <a href="/help">
+      <h3>Help and documentation</h3>
+      <p>See what's new in the beta, try our quick start guides and read the developer docs.</p>
+    </a>
+  </li>
+</ul>

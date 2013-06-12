@@ -703,20 +703,39 @@ body {
   margin: 0 0 20px 20px;
 }
 
+
+/* Less shouty hero unit please, we're British */
+
+.hero-unit {
+  padding: 30px;
+}
+
+.hero-unit > h2 {
+  margin-top: 0;
+}
+
 @media only screen and (min-width: 620px) {
-    .container {
-        width: 580px;
-    }
+  .container {
+    width: 580px;
+  }
 }
 
 @media only screen and (min-width: 920px) {
-    .container {
-        width: 880px;
-    }
+  .container {
+    width: 880px;
+  }
+
+  .hero-unit {
+    padding: 50px;
+  }
 }
 
 @media only screen and (min-width: 1220px) {
-    .container {
-        width: 1180px;
-    }
+  .container {
+    width: 1180px;
+  }
+
+  .hero-unit {
+    padding: 60px;
+  }
 }

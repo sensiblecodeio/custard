@@ -32,9 +32,11 @@ class Cu.View.DatasetTools extends Backbone.View
     @
 
   toolClick: (e) ->
-    $('.tool.active').removeClass("active")
-    $(e.currentTarget).addClass("active")
-    e.preventDefault()
+    # Do nothing if cmd or ctrl keys are held down (allows cmd-click for new tabs).
+    # The global link handler in app.coffee will deal with navigation.
+    unless e.metaKey or e.ctrlKey
+      $('.tool.active').removeClass("active")
+      $(e.currentTarget).addClass("active")
 
   addToolArchetype: (toolModel) ->
     # The setTimeout thing is because we can't work out Backbone (Relational) model loading:

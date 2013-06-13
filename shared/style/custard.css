@@ -110,6 +110,7 @@ body.fullscreen .container {
 }
 
 #footer {
+  margin-top: 50px;
   padding: 15px 0;
   font-size: 14px;
 }
@@ -1025,7 +1026,6 @@ div.pricing .plan.corporate p {
 
 div.help {
   line-height: 24px; /* the default 21px is a bit tight for so much text */
-  margin-bottom: 80px; /* prevent content from hitting bottom of window */
 }
 
 div.help nav.well {
@@ -1160,10 +1160,6 @@ div.help .case-study h3 {
 }
 
 /* Home page */
-
-div.home {
-  margin-bottom: 20px;
-}
 
 div.home #use-cases,
 div.home #more-links {
@@ -1527,7 +1523,6 @@ div.about p.logos {
 
   div.help .wrapper {
     padding-left: 280px;
-    padding-bottom: 40px;
   }
 
   div.help nav.well {

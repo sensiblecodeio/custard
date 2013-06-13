@@ -4,9 +4,9 @@
 
 <div class="hero-unit" style="background-color: #DAF0FF">
   <img class="pull-right" src="/image/tractor-500x320.png" width="220" height="141" alt="The ScraperWiki digger" style="margin: 0 0 10px 10px">
-  <h2>Liberate your data <span style="opacity: 0.5">with ScraperWiki!</></h2>
-  <p class="lead" style="margin-bottom: 5px">ScraperWiki helps you do data science on the&nbsp;web.</p>
-  <p class="lead" style="margin-bottom: 0">Get, clean, analyse, visualise and manage your data, with&nbsp;simple tools or custom-written code.</p>
+  <h1>Liberate your data <span style="opacity: 0.5">with ScraperWiki!</></h1>
+  <p class="lead" style="margin-bottom: 0.5em">ScraperWiki helps you do data science on the&nbsp;web.</p>
+  <p class="lead">Get, clean, analyse, visualise and manage your data, with&nbsp;simple tools or custom-written code.</p>
 </div>
 
 <ul id="use-cases" class="nav nav-tabs nav-stacked">

@@ -1144,17 +1144,10 @@ a.help-tile h3 {
   font-size: 14px;
 }
 
-div.home .case-study,
 div.help .case-study {
   margin: 20px 0;
 }
 
-div.home .hero-unit,
-div.help .hero-unit {
-  margin-bottom: 0;
-}
-
-div.home .case-study h3,
 div.help .case-study h3 {
   line-height: 30px;
 }
@@ -1191,14 +1184,6 @@ div.home #more-links p {
 div.about .hero-unit {
   background-color: #FFEDA8;
   color: #000;
-  font-size: 22px;
-  line-height: 30px;
-}
-
-div.about .hero-unit h1 {
-  font-size: 36px;
-  line-height: 36px;
-  margin-bottom: 20px;
 }
 
 div.about .hero-unit p a {
@@ -1214,10 +1199,6 @@ div.about .hero-unit p a:hover {
 div.about .hero-unit p a:active {
   position: relative;
   top: 1px;
-}
-
-div.about .hero-unit p:last-child {
-  margin-bottom: 0;
 }
 
 div.about h2 {
@@ -1405,6 +1386,10 @@ div.about p.logos {
 
   /* Home page */
 
+  div.home .hero-unit h1 span {
+    white-space: nowrap; /* typographical hack to avoid "with ScraperWiki" widow */
+  }
+
   div.home ul#use-cases,
   div.home ul#more-links {
     display: table;
@@ -1492,15 +1477,6 @@ div.about p.logos {
     line-height: 24px;
   }
 
-
-  /* About page */
-
-  div.about .hero-unit h1 {
-    font-size: 40px;
-    line-height: 40px;
-    margin-bottom: 25px;
-  }
-
 }
 
 
@@ -1544,15 +1520,6 @@ div.about p.logos {
     display: block; /* this is overridden on larger screens */
   }
 
-
-  /* Home page */
-
-  div.home .hero-unit,
-  div.help .hero-unit {
-    padding: 50px;
-  }
-
-  div.home .case-study,
   div.help .case-study {
     float: left;
     width: 30%;
@@ -1560,15 +1527,16 @@ div.about p.logos {
     margin-bottom: 30px;
   }
 
-  div.home .case-study.last,
   div.help .case-study.last {
     margin-right: 0;
   }
 
-  div.home .case-study p,
   div.help .case-study p {
     font-size: 18px;
   }
+
+
+  /* Home page */
 
   div.home #use-cases a,
   div.home #more-links a {
@@ -1588,9 +1556,6 @@ div.about p.logos {
   /* About page */
 
   div.about .hero-unit h1 {
-    font-size: 50px;
-    line-height: 50px;
-    margin-bottom: 30px;
     max-width: 700px;
   }
 
@@ -1630,7 +1595,6 @@ div.about p.logos {
     width: 1180px;
   }
 
-  div.home .case-study,
   div.help .case-study {
     margin-bottom: 40px;
   }

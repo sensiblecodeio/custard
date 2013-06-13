@@ -12,9 +12,9 @@
 <div id="use-cases">
 
   <ul>
-    <li><a href="#explore" data-nonpushstate>I&rsquo;m a dab hand at Excel and I want to take my data analysis to the next level.</a></li>
-    <li><a href="#datascience" data-nonpushstate>I want a place to place to run code that does stuff with data.</a></li>
-    <li><a href="#professional" data-nonpushstate>I&rsquo;m a business and I need an enterprise grade data analysis and management solution.</a></li>
+    <li><a href="#explore" data-nonpushstate><img>I&rsquo;m a dab hand at Excel and I want to take my data analysis to the next level.</a></li>
+    <li><a href="#datascience" data-nonpushstate><img>I want a place to place to run code that does stuff with data.</a></li>
+    <li><a href="#professional" data-nonpushstate><img>I need an enterprise grade data analysis and management solution.</a></li>
   </ul>
 
   <section id="explore">

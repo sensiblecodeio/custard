@@ -1154,6 +1154,52 @@ div.help .case-study h3 {
 
 /* Home page */
 
+#use-cases > ul {
+  margin: 0;
+}
+
+#use-cases > ul li {
+  margin-bottom: -1px;
+  list-style: none;
+  line-height: 22px;
+}
+
+#use-cases > ul a {
+  display: block;
+  position: relative;
+  border: 1px solid #ddd;
+  padding: 8px 12px 8px 74px; /* 12px + 50px image + 12px = 74px total padding */
+  text-decoration: none;
+}
+
+#use-cases > ul a:hover {
+  background-color: #eee;
+}
+
+#use-cases > ul :first-child a {
+  -webkit-border-top-right-radius: 4px;
+  -webkit-border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+#use-cases > ul :last-child a {
+  -webkit-border-bottom-right-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+#use-cases > ul a img {
+  width: 50px;
+  height: 50px;
+  background-color: #ccc;
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  margin-top: -25px;
+}
+
 #more-links {
   padding-top: 40px;
   margin-top: 40px;
@@ -1398,8 +1444,41 @@ div.about p.logos {
   div.home .hero-unit h1 span {
     white-space: nowrap; /* typographical hack to avoid "with ScraperWiki" widow */
   }
+  
+  div.home #use-cases ul {
+    overflow: auto;
+  }
 
-  #more-links h3 {
+  div.home #use-cases > ul li {
+    width: 194px;
+    float: left;
+    margin: 0 -1px 0 0;
+    -moz-transition: width 0.5s;
+    -webkit-transition: width 0.5s;
+    -o-transition: width 0.5s;
+    transition: width 0.5s;
+  }
+
+  div.home #use-cases > ul li a {
+    -webkit-border-radius: none;
+    border-radius: none;
+  }
+
+  div.home #use-cases > ul :first-child a {
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  div.home #use-cases > ul :last-child a {
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  div.home #more-links h3 {
     font-size: 21px;
     line-height: 24px;
     margin: 0 0 7px 0;
@@ -1466,6 +1545,14 @@ div.about p.logos {
 
   /* Home page */
 
+  div.home #use-cases > ul li {
+    width: 294px;
+  }
+
+  div.home #use-cases > ul li a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 
 
   /* About page */
@@ -1512,6 +1599,17 @@ div.about p.logos {
 
   div.help .case-study {
     margin-bottom: 40px;
+  }
+
+  /* Home page */
+
+  div.home #use-cases > ul li {
+    width: 394px;
+  }
+
+  div.home #use-cases > ul li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
 }

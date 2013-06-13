@@ -707,7 +707,7 @@ body {
 /* Less shouty hero unit please, we're British */
 
 .hero-unit {
-  padding: 30px;
+  padding: 25px 30px;
   font-size: 18px;
   line-height: 26px;
 }
@@ -745,7 +745,7 @@ body {
   }
 
   .hero-unit {
-    padding: 50px;
+    padding: 42px 50px;
     font-size: 22px;
     line-height: 30px;
   }
@@ -770,7 +770,7 @@ body {
   }
 
   .hero-unit {
-    padding: 60px;
+    padding: 50px 60px;
     font-size: 28px;
     line-height: 36px;
   }

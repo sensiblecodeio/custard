@@ -1251,9 +1251,20 @@ div.about p.logos {
 
 @media only screen and (max-width: 619px) {
 
-  div.about .row-fluid .span6 {
+  #footer {
+    text-align: center;
+  }
+
+  #footer li, #footer li + li {
+    margin: 0 5px;
+    float: none;
+  }
+
+  div.about .row-fluid .span6,
+  div.home #more-links .span6 {
     float: none;
     width: 100%;
+    margin-left: 0;
   }
 
 }

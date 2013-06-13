@@ -1599,6 +1599,11 @@ div.about p.logos {
     max-width: 700px;
   }
 
+  div.about .people p {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
   #history_and_funding, #thanks {
     overflow: auto;
   }

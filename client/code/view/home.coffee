@@ -6,16 +6,16 @@
 class Cu.View.Home extends Backbone.View
   className: 'home'
   events:
-    'click #use-cases a': 'showUseCase'
+    'click #use-cases > ul a': 'showUseCase'
 
   render: ->
     @el.innerHTML = JST['home']()
-    @$el.find('.use-case').hide()
+    @$el.find('#use-cases section').hide()
 
     # have they requested a particular section?
     if @options?.section
       $("##{@options.section}", @$el).show()
-      $("#use-cases a[href='##{@options.section}']", @$el).parent()
+      $("#use-cases > ul a[href='##{@options.section}']", @$el).parent()
         .addClass('active').siblings().addClass('inactive')
 
       setTimeout =>
@@ -41,9 +41,10 @@ class Cu.View.Home extends Backbone.View
       # change the url
       app.navigate "/#{sectionId}", trigger: false
       _gaq.push ['_trackEvent', 'show-use-case', sectionId]
-      if $('.use-case:visible', @$el).length
+      visibleSections = $('#use-cases section:visible', @$el)
+      if visibleSections.length
         # another section is already visible, hide it first
-        $('section:visible', @$el).slideUp =>
+        visibleSections.slideUp =>
           $tab.parent().removeClass('inactive').addClass('active')
             .siblings().removeClass('active').addClass('inactive')
           $section.slideDown()

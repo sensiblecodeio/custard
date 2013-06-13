@@ -9,52 +9,47 @@
   <p class="lead">Get, clean, analyse, visualise and manage your data, with&nbsp;simple tools or custom-written code.</p>
 </div>
 
-<ul id="use-cases" class="nav nav-tabs nav-stacked">
-  <li><a href="#explore" data-nonpushstate>I&rsquo;m a dab hand at Excel and I want to take my data analysis to the next level.</a></li>
-  <li><a href="#datascience" data-nonpushstate>I want a place to place to run code that does stuff with data.</a></li>
-  <li><a href="#professional" data-nonpushstate>I&rsquo;m a business and I need an enterprise grade data analysis and management solution.</a></li>
-</ul>
+<div id="use-cases">
 
-<section class="use-case" id="explore">
-  <h1>Data Explorers</h1>
-</section>
+  <ul>
+    <li><a href="#explore" data-nonpushstate>I&rsquo;m a dab hand at Excel and I want to take my data analysis to the next level.</a></li>
+    <li><a href="#datascience" data-nonpushstate>I want a place to place to run code that does stuff with data.</a></li>
+    <li><a href="#professional" data-nonpushstate>I&rsquo;m a business and I need an enterprise grade data analysis and management solution.</a></li>
+  </ul>
 
-<section class="use-case" id="datascience">
-  <h1>Data Scientists</h1>
-</section>
+  <section id="explore">
+    <h1>Data Explorers</h1>
+  </section>
 
-<section class="use-case" id="professional">
-  <p class="lead">ScraperWiki is a place where data professionals get, clean, analyse, visualise and manage data</p>
+  <section id="datascience">
+    <h1>Data Scientists</h1>
+  </section>
 
-  <p>
-  ScraperWiki’s data scientists help customers collect data through automation, ask the right questions of their data, and analyse it forensically. They are experts at extracting value from external data, and combining it with internal datasets.
-  </p>
-  <p>
-  Our data scientists bring a wealth of experience to each and every customer project. And our custom-built data hub keeps the process transparent and collaborative.
-  </p>
-  <p>
-  Here are some of our services:-
-  </p>
-  Data subscriptions – regular scheduled custom data provision for a monthly fee with a setup charge. This might include pricing data, lead generation data, research data. Monitoring services for social media and websites. Market data collection.
-  Data transformations – data collection at scale through scraping external or internal resources with transformation to formats for reuse.
-  Data sciences - analysis and visualisation of data, either acquired through scraping or ingested via more conventional means.
-  Data hub - a collaborative platform for sharing, managing and analysing your data. This might be a standalone product where you carry out provision and analysis data yourselves, or a joint endeavour where we source and analyse data with you.
-  Data tools - The ScraperWiki platform includes ‘off the shelf’ data tools that our data services team use for customers.  In addition they can write customised data tools for specific projects.
-  Data workshops - sessions to help businesses understand methods in data collection, analysis and management.
-  ScraperWiki Team - we need to reference our team and make a link to our ABOUT PAGE which shows our bods and their amazing skills!
-</section>
+  <section id="professional">
+    <p class="lead">ScraperWiki is a place where data professionals get, clean, analyse, visualise and manage data</p>
+    <p>ScraperWiki’s data scientists help customers collect data through automation, ask the right questions of their data, and analyse it forensically. They are experts at extracting value from external data, and combining it with internal datasets.</p>
+    <p>Our data scientists bring a wealth of experience to each and every customer project. And our custom-built data hub keeps the process transparent and collaborative.</p>
+    <h2>Our services include:</h2>
+    <ul>
+      <li><strong>Data subscriptions</strong> – regular scheduled custom data provision for a monthly fee with a setup charge. This might include pricing data, lead generation data, research data. Monitoring services for social media and websites. Market data collection.</li>
+      <li><strong>Data transformations</strong> – data collection at scale through scraping external or internal resources with transformation to formats for reuse.</li>
+      <li><strong>Data sciences</strong> - analysis and visualisation of data, either acquired through scraping or ingested via more conventional means.</li>
+      <li><strong>Data hub</strong> - a collaborative platform for sharing, managing and analysing your data. This might be a standalone product where you carry out provision and analysis data yourselves, or a joint endeavour where we source and analyse data with you.</li>
+      <li><strong>Data tools</strong> - The ScraperWiki platform includes ‘off the shelf’ data tools that our data services team use for customers.  In addition they can write customised data tools for specific projects.</li>
+      <li><strong>Data workshops</strong> - sessions to help businesses understand methods in data collection, analysis and management.</li>
+    </ul>
 
-<ul id="more-links" class="nav nav-stacked nav-tabs">
-  <li>
-    <a href="/about">
-      <h3>About us</h3>
-      <p>Find out more about ScraperWiki and the people behind it.</p>
-    </a>
-  </li>
-  <li>
-    <a href="/help">
-      <h3>Help and documentation</h3>
-      <p>See what's new in the beta, try our quick start guides and read the developer docs.</p>
-    </a>
-  </li>
-</ul>
+  </section>
+
+</div>
+
+<div id="more-links" class="row-fluid">
+  <a class="span6" href="/about">
+    <h3>About us</h3>
+    <p>Find out more about ScraperWiki and the people behind it.</p>
+  </a>
+  <a class="span6" href="/help">
+    <h3>Help and documentation</h3>
+    <p>See what's new in the beta, try our quick start guides and read the developer docs.</p>
+  </a>
+</div>

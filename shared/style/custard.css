@@ -1154,17 +1154,17 @@ div.help .case-study h3 {
 
 /* Home page */
 
-#use-cases > ul {
+div.home #use-cases > ul {
   margin: 0;
 }
 
-#use-cases > ul li {
+div.home #use-cases > ul li {
   margin-bottom: -1px;
   list-style: none;
   line-height: 22px;
 }
 
-#use-cases > ul a {
+div.home #use-cases > ul a {
   display: block;
   position: relative;
   border: 1px solid #ddd;
@@ -1172,25 +1172,25 @@ div.help .case-study h3 {
   text-decoration: none;
 }
 
-#use-cases > ul a:hover {
+div.home #use-cases > ul a:hover {
   background-color: #eee;
 }
 
-#use-cases > ul :first-child a {
+div.home #use-cases > ul :first-child a {
   -webkit-border-top-right-radius: 4px;
   -webkit-border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
 }
 
-#use-cases > ul :last-child a {
+div.home #use-cases > ul :last-child a {
   -webkit-border-bottom-right-radius: 4px;
   -webkit-border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
 }
 
-#use-cases > ul a img {
+div.home #use-cases > ul a img {
   width: 50px;
   height: 50px;
   background-color: #ccc;
@@ -1200,22 +1200,22 @@ div.help .case-study h3 {
   margin-top: -25px;
 }
 
-#more-links {
+div.home #more-links {
   padding-top: 40px;
   margin-top: 40px;
   border-top: 1px solid #eee;
 }
 
-#more-links a {
+div.home #more-links a {
   color: #999;
   text-decoration: none;
 }
 
-#more-links a:hover {
+div.home #more-links a:hover {
   color: #666;
 }
 
-#more-links h3 {
+div.home #more-links h3 {
   font-size: 18px;
   line-height: 24px;
   margin: 0 0 5px 0;

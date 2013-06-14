@@ -1172,13 +1172,43 @@ div.home #use-cases > ul li {
   border-bottom: 2px solid #fff;
   background-color: #666;
   color: #fff;
+  text-shadow: 0 1px 1px rgba(100,0,0,0.5);
   cursor: pointer;
+}
+
+div.home #use-cases > ul li:hover {
+  background-color: #999;
+}
+
+div.home #use-cases > ul li.explore {
+  background-color: #F0AD00;
+}
+
+div.home #use-cases > ul li.explore:hover {
+  background-color: #ffbb0b;
+}
+
+div.home #use-cases > ul li.datascience {
+  background-color: #D58917;
+}
+
+div.home #use-cases > ul li.datascience:hover {
+  background-color: #e7971f;
+}
+
+div.home #use-cases > ul li.professional {
+  background-color: #BB5D06;
+}
+
+div.home #use-cases > ul li.professional:hover {
+  background-color: #d46907;
 }
 
 div.home #use-cases > ul li.active,
 div.home #use-cases > ul li.active:hover {
-  background-color: #eee;
+  background-color: #FFFCE4;
   color: #333;
+  text-shadow: none;
 }
 
 div.home #use-cases > ul li:last-child {
@@ -1186,12 +1216,8 @@ div.home #use-cases > ul li:last-child {
   border-right: none;
 }
 
-div.home #use-cases > ul li:hover {
-  background-color: #999;
-}
-
 div.home #use-cases section {
-  background-color: #eee;
+  background-color: #FFFCE4;
   padding: 20px;
 }
 

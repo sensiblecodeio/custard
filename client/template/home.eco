@@ -8,9 +8,9 @@
 <div id="use-cases">
 
   <ul>
-    <li><a href="#explore" data-nonpushstate><img>I&rsquo;m a dab hand at Excel and I want to take my data analysis to the next level.</a></li>
-    <li><a href="#datascience" data-nonpushstate><img>I want a place to place to run code that does stuff with data.</a></li>
-    <li><a href="#professional" data-nonpushstate><img>I need an enterprise grade data analysis and management solution.</a></li>
+    <li data-section="explore">I usually explore data in Excel, but I want to take my data analysis to the next level.</li>
+    <li data-section="datascience">I want a place to write and run code that does awesome stuff with data.</li>
+    <li data-section="professional">I&rsquo;m a business and I need professional data extraction, analysis and management.</li>
   </ul>
 
   <section id="explore">

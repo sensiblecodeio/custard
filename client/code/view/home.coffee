@@ -6,7 +6,7 @@
 class Cu.View.Home extends Backbone.View
   className: 'home'
   events:
-    'click #use-cases > ul a': 'showUseCase'
+    'click #use-cases > ul li': 'showUseCase'
 
   render: ->
     @el.innerHTML = JST['home']()
@@ -15,7 +15,7 @@ class Cu.View.Home extends Backbone.View
     # have they requested a particular section?
     if @options?.section
       $("##{@options.section}", @$el).show()
-      $("#use-cases > ul a[href='##{@options.section}']", @$el).parent()
+      $("#use-cases > ul li[data-section='#{@options.section}']", @$el)
         .addClass('active').siblings().addClass('inactive')
 
       setTimeout =>
@@ -28,14 +28,14 @@ class Cu.View.Home extends Backbone.View
   showUseCase: (e) ->
     e.preventDefault()
     $tab = $(e.currentTarget)
-    sectionId = $tab.attr('href').replace('#', '')
+    sectionId = $tab.attr('data-section')
     $section = $("##{sectionId}", @$el)
 
     if $section.is(':visible')
       # change the url
       app.navigate "/", trigger: false
       # hide the current section
-      $tab.parent().removeClass('active').siblings().removeClass 'inactive'
+      $tab.removeClass('active').siblings().removeClass 'inactive'
       $section.slideUp()
     else
       # change the url
@@ -45,10 +45,10 @@ class Cu.View.Home extends Backbone.View
       if visibleSections.length
         # another section is already visible, hide it first
         visibleSections.slideUp =>
-          $tab.parent().removeClass('inactive').addClass('active')
+          $tab.removeClass('inactive').addClass('active')
             .siblings().removeClass('active').addClass('inactive')
           $section.slideDown()
       else
         # no visible sections yet, just show the one they want
-        $tab.parent().addClass('active').siblings().addClass('inactive')
+        $tab.addClass('active').siblings().addClass('inactive')
         $section.slideDown()

@@ -31,7 +31,7 @@ _exec = (arg, callback) ->
   , callback
 
 getGitURL = (tool, server) ->
-  if /^ec2/.test server
+  if /ec2/.test server
     return tool.gitUrl
   if process.env.NODE_ENV is 'production'
     return "git://git.scraperwiki.net/#{tool.name}"

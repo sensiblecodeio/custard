@@ -1,0 +1,14 @@
+#!/usr/bin/env coffee
+fs = require 'fs'
+
+mongoose = require 'mongoose'
+async = require 'async'
+
+{Box} = require 'model/box'
+
+mongoose.connect process.env.CU_DB
+
+Box.find {server: process.argv[2]}, (err, boxen) ->
+  for box in boxen
+    console.log "#{box.name}:x:15607:0:99999:7:::"
+  process.exit()

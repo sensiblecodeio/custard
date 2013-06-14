@@ -7,6 +7,6 @@ case $SERVER in
     rsync --archive --verbose -e 'ssh' --rsync-path 'sudo rsync' ubuntu@${SERVER}:/home/$BOX_NAME/ ${CO_STORAGE_DIR}/home/$BOX_NAME
     ;;
   (*)
-    rsync --archive --verbose -e 'ssh -i /tmp/something' root@${SERVER}:/home/$BOX_NAME/ ${CO_STORAGE_DIR}/home/$BOX_NAME
+    rsync --archive --verbose -e 'ssh -oIdentitiesOnly=yes -i /tmp/something' root@${SERVER}:/home/$BOX_NAME/ ${CO_STORAGE_DIR}/home/$BOX_NAME
     ;;
 esac

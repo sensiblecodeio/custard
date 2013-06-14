@@ -1,6 +1,6 @@
 <ul>
 <li><a href="/">Data Hub</a></li>
-<% if window.user.effective?.isStaff: %>
+<% if window?.user.effective?.isStaff: %>
 <li><a href="/tools/people-pack">Tool Packs</a></li>
 <% end %>
 <li><a href="https://scraperwiki.com/dataservices/">Data Services</a></li>

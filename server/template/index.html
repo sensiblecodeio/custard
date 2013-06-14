@@ -63,7 +63,9 @@
     <div class="container">
       <a id="logo" href="/">ScraperWiki</a>
       <a id="beta" href="https://github.com/scraperwiki/custard/issues">Beta</a>
-      <nav></nav>
+      <nav>
+        <%- nav %>
+      </nav>
     </div>
   </header>
   <% if (flash.error && flash.error.length > 0) { %>
@@ -78,7 +80,9 @@
   <% } %>
   <div id="overlay"></div>
   <div id="subnav" class="container"></div>
-  <div id="content" class="container"></div>
+  <div id="content" class="container">
+    <%- stuff %>
+  </div>
   <div id="footer">
     <ul class="container inline">
       <li><a href="/about/">About ScraperWiki</a></li>

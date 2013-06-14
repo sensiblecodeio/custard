@@ -28,6 +28,7 @@ eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
 {Exceptional} = require 'exceptional-node'
+Backbone = require 'backbone'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
@@ -239,6 +240,8 @@ checkSwitchUserRights = (req, res, next) ->
 renderClientApp = (req, resp) ->
   getSessionUsersFromDB req.user, (usersObj) ->
     resp.render 'index',
+      nav: ''
+      stuff: ''
       scripts: js 'app'
       templates: js 'template/index'
       user: JSON.stringify usersObj
@@ -407,17 +410,48 @@ verifyRecurly = (req, resp) ->
         req.session.save()
         resp.send 201, success: "Verified and upgraded"
 
+renderServerAndClientSide = (page, req, resp) ->
+  template = fs.readFileSync "client/template/#{page}.eco"
+  getSessionUsersFromDB req.user, (usersObj) ->
+    resp.render 'index',
+        nav: eco.render fs.readFileSync("client/template/nav.eco").toString()
+        stuff: eco.render(template.toString(), {})
+        scripts: js 'app'
+        templates: js 'template/index'
+        user: JSON.stringify usersObj
+        recurlyDomain: process.env.RECURLY_DOMAIN
+        flash: req.flash()
+        environment: process.env.NODE_ENV
+#
 # Allow set-password, signup, docs, etc, to be visited by anons
 # Note: these are NOT regular expressions!!
 app.get '/set-password/:token/?', renderClientApp
 app.get '/subscribe/?*', renderClientApp
-app.get '/pricing/?*', renderClientApp
-app.get '/signup/?*', renderClientApp
-app.get '/help/?*', renderClientApp
-app.get '/terms/?*', renderClientApp
-app.get '/contact/?*', renderClientApp
-app.get '/about/?*', renderClientApp
-app.get '/', renderClientApp
+
+app.get '/pricing/?*', (req, resp) ->
+  renderServerAndClientSide 'pricing', req, resp
+
+app.get '/signup/?*', (req, resp) ->
+  renderServerAndClientSide 'sign-up', req, resp
+
+app.get '/help/?:section', (req, resp) ->
+  req.params.section ?= 'home'
+  renderServerAndClientSide "help-#{section}", req, resp
+
+app.get '/help/?*', (req, resp) ->
+  renderServerAndClientSide 'help-home', req, resp
+
+app.get '/terms/?*', (req, resp) ->
+  renderServerAndClientSide 'terms', req, resp
+
+app.get '/contact/?*', (req, resp) ->
+  renderServerAndClientSide "contact", req, resp
+
+app.get '/about/?*', (req, resp) ->
+  renderServerAndClientSide "about", req, resp
+
+app.get '/', (req, resp) ->
+  renderServerAndClientSide "help-whats-new", req, resp
 
 # Switch is protected by a specific function.
 app.get '/switch/:username/?', checkSwitchUserRights, switchUser
@@ -695,6 +729,7 @@ server = app.listen port, ->
 
 # Wait for all connections to finish before quitting
 process.on 'SIGTERM', ->
+  process.exit()
   console.log "Gracefully stopping..."
   server.close ->
     console.log "All connections finished, exiting"

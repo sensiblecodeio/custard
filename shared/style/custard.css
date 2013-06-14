@@ -1154,6 +1154,18 @@ div.help .case-study h3 {
 
 /* Home page */
 
+div.home .hero-unit {
+  background: #a9d9f9;
+  background: -moz-linear-gradient(45deg,  #a9d9f9 0%, #edf7ff 100%);
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#a9d9f9), color-stop(100%,#edf7ff));
+  background: -webkit-linear-gradient(45deg,  #a9d9f9 0%,#edf7ff 100%);
+  background: -o-linear-gradient(45deg,  #a9d9f9 0%,#edf7ff 100%);
+  background: -ms-linear-gradient(45deg,  #a9d9f9 0%,#edf7ff 100%);
+  background: linear-gradient(45deg,  #a9d9f9 0%,#edf7ff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9d9f9', endColorstr='#edf7ff',GradientType=1 );
+  text-shadow: 0 1px 1px #edf7ff;
+}
+
 div.home #use-cases {
   -webkit-border-radius: 4px;
   border-radius: 4px;

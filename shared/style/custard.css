@@ -13,7 +13,7 @@ body {
 }
 
 /* A .container style is set in scraperwiki.css, which most pages will use.
-   Some tools, however, might look better full screen. When this happens,
+   Tools, however, look better full screen. When this happens,
    the other .container elements (eg: header) should get 100% width too. */
 
 body.fullscreen .container {

@@ -15,39 +15,9 @@ class Cu.Model.Tool extends Backbone.RelationalModel
     @on 'add change', =>
       manifest = @get('manifest')
       n = manifest.displayName.toLowerCase()
-      if n.indexOf('in your browser') > -1
-        manifest.icon = '/image/tool-icon-classic.png'
-        manifest.color = '#6AAFD1'
-      else if n.indexOf('code') == 0
-        manifest.icon = '/image/tool-icon-code.png'
-        manifest.color = '#555'
-      else if n.indexOf('twitter') > -1 or n.indexOf('tweet') > -1
-        manifest.icon = '/image/tool-icon-twitter.png'
-        manifest.color = '#3cf'
-      else if n.indexOf('upload') == 0
-        manifest.icon = '/image/tool-icon-spreadsheet-upload.png'
-        manifest.color = '#029745'
-      else if n.indexOf('download') == 0
-        manifest.icon = '/image/tool-icon-spreadsheet-upload.png'
-        manifest.color = '#029745'
-      else if n.indexOf('test') == 0
-        manifest.icon = '/image/tool-icon-test.png'
+      if n.indexOf('test') == 0
+        manifest.icon = 'https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-test.png'
         manifest.color = '#b0df18'
-      else if n.indexOf('table') > -1
-        manifest.icon = '/image/tool-icon-data-table.png'
-        manifest.color = '#f6b730'
-      else if n.indexOf('query with sql') == 0
-        manifest.icon = '/image/tool-icon-sql.png'
-        manifest.color = '#17959d'
-      else if n.indexOf('summarise') == 0
-        manifest.icon = '/image/tool-icon-summarise.png'
-        manifest.color = '#27affd'
-      else if n.indexOf('last.fm') > -1
-        manifest.icon = '/image/tool-icon-lastfm.png'
-        manifest.color = '#D51007'
-      else if n == 'view on a map'
-        manifest.icon = '/image/tool-icon-map.png'
-        manifest.color = '#b46106'
       @set 'manifest', manifest
 
 Cu.Model.Tool.setup()

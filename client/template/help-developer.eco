@@ -82,7 +82,9 @@ scraperwiki.json</pre>
 
 <pre class="prettyprint linenums">{
   "displayName": "Upload a Spreadsheet",
-  "description": "Upload an Excel file or CSV"
+  "description": "Upload an Excel file or CSV",
+  "icon": "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-spreadsheet-upload.png",
+  "color": "#029745"
 }</pre>
 
 <p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
@@ -473,7 +475,18 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
 $.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", public: true, gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
 </pre>
 
-<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#concepts-tools">the structure outlined above</a>. It must, for example, include a <strong>scraperwiki.json</strong> file that describes the tool.</p>
+<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#concepts-tools">the structure outlined above</a>. It must, for example, include a <strong>scraperwiki.json</strong> file that looks something like this:</p>
+
+<pre class="prettyprint linenums">{
+  "displayName": "Download as Spreadsheet",
+  "description": "An Excel or CSV file",
+  "icon": "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-spreadsheet-upload.png",
+  "color": "#029745"
+}</pre>
+
+<p><code>displayName</code> and <code>description</code> should follow the <a href="/help/zig" data-nonpushstate>suggestions laid out in the ZIG</a>.</p>
+
+<p>The <code>icon</code> and <code>color</code> fields are optional. If supplied, <code>icon</code> should be a link to an image file of roughly 40&times;40 pixels. <code>color</code> should be a tool background colour, defined in hex or rgb notation.</p>
 
 <p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="text-error">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
 
@@ -487,16 +500,9 @@ Other parameters are ignored.</p>
 $.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download"}}).complete(function(r){ console.log(r.responseText) })
 </pre>
 
-<p>ScraperWiki will get the latest display name and description from <code>scraperwiki.json</code>.
+<p>ScraperWiki will get the latest display name, description, icon and colour from <code>scraperwiki.json</code>.
 It will also update the code of any datasets or views that were made using the tool by
-running <code>git pull</code> in their <code>tool</code> directory.
-</p>
-
-<p class="well well-small"><span class="label label-warning">Warning!</span>
-If you update the git repository of a tool without calling
-<code>/api/tools</code>, then new datasets/views will get the latest code and
-old ones will keep their old code.
-</p>
+running <code>git pull</code> in their <code>tool</code> directory.</p>
 
 <hr>
 

@@ -475,7 +475,7 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
 $.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", public: true, gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
 </pre>
 
-<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#concepts-tools">the structure outlined above</a>. It must, for example, include a <strong>scraperwiki.json</strong> file that looks something like this:</p>
+<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#concepts-tools" data-nonpushstate>the structure outlined above</a>. It must, for example, include a <strong>scraperwiki.json</strong> file that looks something like this:</p>
 
 <pre class="prettyprint linenums">{
   "displayName": "Download as Spreadsheet",

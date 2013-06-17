@@ -1335,6 +1335,10 @@ div.home #use-cases h3 {
   width: 225px;
 }
 
+#professional textarea {
+  height: 100px;
+}
+
 #professional #faq h3 {
   padding-left: 20px;
   position: relative;
@@ -1582,7 +1586,7 @@ div.about p.logos {
     white-space: nowrap; /* typographical hack to avoid "with ScraperWiki" widow */
   }
 
-  div.home #use-cases ul {
+  div.home #use-cases > ul {
     display: table-row;
   }
 
@@ -1597,11 +1601,52 @@ div.about p.logos {
   div.home #use-cases > ul li.inactive {
     border-bottom: 2px solid #fff;
   }
+  
+  div.home #use-cases section {
+    border-top: none;
+  }
 
   div.home #more-links h3 {
     font-size: 21px;
     line-height: 24px;
     margin: 0 0 7px 0;
+  }
+
+
+  /* Data services / Professional services page */
+
+  #professional #process {
+    overflow: auto;
+  }
+
+  #professional #process p {
+    float: right;
+    width: 260px;
+  }
+
+  #professional #process .lead {
+    font-size: 24px;
+    float: none;
+    width: auto;
+  }
+
+  #professional #process .lead + p {
+    float: left;
+    width: 260px;
+  }
+
+  #professional #process #about-our-team a {
+    display: block;
+  }
+  
+  #professional #request {
+    float: right;
+    width: 240px;
+    margin: 20px -20px -20px 20px;
+  }
+  
+  #professional #faq {
+    margin-top: 50px;
   }
 
 }

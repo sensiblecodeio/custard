@@ -22,10 +22,12 @@
   </section>
 
   <section id="professional">
-    <p class="lead">ScraperWiki is a place where data professionals get, clean, analyse, visualise and manage data</p>
-    <p>ScraperWiki’s data scientists help customers collect data through automation, ask the right questions of their data, and analyse it forensically. They are experts at extracting value from external data, and combining it with internal datasets.</p>
-    <p>Our data scientists bring a wealth of experience to each and every customer project. And our custom-built data hub keeps the process transparent and collaborative.</p>
-    <p id="about-our-team"><a data-nonpushstate class="btn btn-warning" href="/about/">See more about our team</a></p>
+    <div id="process">
+      <p class="lead">ScraperWiki is a place where data professionals get, clean, analyse, visualise and manage data</p>
+      <p>ScraperWiki’s data scientists help customers collect data through automation, ask the right questions of their data, and analyse it forensically. They are experts at extracting value from external data, and combining it with internal datasets.</p>
+      <p>Our data scientists bring a wealth of experience to each and every customer project. And our custom-built data hub keeps the process transparent and collaborative.</p>
+      <p id="about-our-team"><a data-nonpushstate class="btn btn-warning" href="/about/">See more about our team</a></p>
+    </div>
 
     <div id="services">
       <h2>Our services include:</h2>
@@ -114,7 +116,7 @@
             <textarea id="id_description" rows="10" cols="40" name="description"></textarea></p>
           </div>
           <div class="last">
-            <input type="submit" value="Call me back" class="btn btn-primary">
+            <input type="submit" value="Call me back" class="btn btn-success">
           </div>
         </form>
       </div>
@@ -125,7 +127,7 @@
       <h3><i class="icon-chevron-right"></i> How do I request your services?</h3>
       <p>We ask you to complete our simple form [link] to give your contact details and provide a brief summary of your requirements. This will generate a unique identifier which we will use to track your request through our systems.</p>
       <h3><i class="icon-chevron-right"></i> What information do I need to provide?</h3>
-      <p>we will discuss your requirements with you but as a guide we would need you to provide a short brief for the project and a link to the data you wish us to work on, either as a URL or sample files. We would need a precise description of what data fields you require to be extracted from the source files, and the frequency with which you want the data to be collected. It also helpful to know your expectations for a delivery date.</p>
+      <p>We will discuss your requirements with you but as a guide we would need you to provide a short brief for the project and a link to the data you wish us to work on, either as a URL or sample files. We would need a precise description of what data fields you require to be extracted from the source files, and the frequency with which you want the data to be collected. It also helpful to know your expectations for a delivery date.</p>
       <h3><i class="icon-chevron-right"></i> Can you give me some indication of cost?</h3>
       <p>The setup cost for a data feed or a one off data transformation project will be in the order of $3000&ndash;$10000 (€3000&ndash;€10000) although the upper end of this scale will depend on how much work is involved. To maintain an ongoing data feed will cost in the region of $200&ndash;$500 (€200&ndash;€500) per month.</p>
       <h3><i class="icon-chevron-right"></i> What&rsquo;s your process for managing service requests?</h3>
@@ -133,6 +135,8 @@
       <h3><i class="icon-chevron-right"></i> Do you have a service level agreement (SLA)?</h3>
       <p>Yes, we understand the requirements that our corporate customers will have and provide SLAs to suit those needs, at different price points.</p>
     </div>
+
+    <div class="clearfix"></div>
 
   </section>
 

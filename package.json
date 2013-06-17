@@ -52,7 +52,6 @@
     "optimist": "~0.5.2",
     "jquery": "~1.7.3",
     "pow-mongodb-fixtures": "*",
-    "zombie": "2.0.0-alpha9",
     "backbone-relational": "~0.7.0",
     "jsdom": "~0.3.4",
     "wd": "0.0.30",

@@ -8,8 +8,8 @@ mkdirp = require 'mkdirp'
 
 argv = require('optimist')
   .usage('Only for Linode->EC2 currently!\nUsage: $0 [--verbose] --source-box <box> --target-box <box> --source-host <host> --target-host <host>')
-  .demand(['source-box', 'target-box', 'new-host'])
-  .string(['source-box', 'target-box', 'new-host'])
+  .demand(['source-box', 'target-box', 'source-host', 'target-host'])
+  .string(['source-box', 'target-box', 'source-host', 'target-host'])
   .alias('bs', 'source-box')
   .alias('v', 'verbose')
   .alias('bt', 'target-box')
@@ -64,16 +64,19 @@ rsyncData = (box, callback) ->
   cmd = "rsync --archive --verbose -e 'ssh' --rsync-path 'sudo rsync' /home/#{SOURCE_BOX}/ ubuntu@#{box.server}:/ebs/home/#{box.name}"
   exec cmd, (err, stdout, stderr) ->
     checkVerboseAndPrint cmd, err, stdout, stderr
+    callback()
 
 chownBox = (box, callback) ->
   cmd = "ssh ubuntu@#{box.server} 'sudo chown -R #{box.name}: /ebs/home/#{box.name}'"
   exec cmd, (err, stdout, stderr) ->
     checkVerboseAndPrint cmd, err, stdout, stderr
+    callback()
 
 copyCrontab = (box, callback) ->
-  cmd = """cat /var/spool/cron/crontabs/#{SOURCE_BOX} | ssh ubuntu@#{box.server} 'sudo sh -c "cat > /ebs/crontabs/#{TARGET_BOX}; chown #{TARGET_BOX}:crontab /etc/crontabs/#{TARGET_BOX}"'"""
+  cmd = """cat /var/spool/cron/crontabs/#{SOURCE_BOX} | ssh ubuntu@#{box.server} 'sudo sh -c "cat > /ebs/crontabs/#{TARGET_BOX}; chown #{TARGET_BOX}:crontab /ebs/crontabs/#{TARGET_BOX}"'"""
   exec cmd, (err, stdout, stderr) ->
     checkVerboseAndPrint cmd, err, stdout, stderr
+    callback()
 
 Box.findOneByName TARGET_BOX, (err, box) ->
   unless box?.name?

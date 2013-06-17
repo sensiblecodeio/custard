@@ -25,15 +25,114 @@
     <p class="lead">ScraperWiki is a place where data professionals get, clean, analyse, visualise and manage data</p>
     <p>ScraperWiki’s data scientists help customers collect data through automation, ask the right questions of their data, and analyse it forensically. They are experts at extracting value from external data, and combining it with internal datasets.</p>
     <p>Our data scientists bring a wealth of experience to each and every customer project. And our custom-built data hub keeps the process transparent and collaborative.</p>
-    <h2>Our services include:</h2>
-    <ul>
-      <li><strong>Data subscriptions</strong> – regular scheduled custom data provision for a monthly fee with a setup charge. This might include pricing data, lead generation data, research data. Monitoring services for social media and websites. Market data collection.</li>
-      <li><strong>Data transformations</strong> – data collection at scale through scraping external or internal resources with transformation to formats for reuse.</li>
-      <li><strong>Data sciences</strong> - analysis and visualisation of data, either acquired through scraping or ingested via more conventional means.</li>
-      <li><strong>Data hub</strong> - a collaborative platform for sharing, managing and analysing your data. This might be a standalone product where you carry out provision and analysis data yourselves, or a joint endeavour where we source and analyse data with you.</li>
-      <li><strong>Data tools</strong> - The ScraperWiki platform includes ‘off the shelf’ data tools that our data services team use for customers.  In addition they can write customised data tools for specific projects.</li>
-      <li><strong>Data workshops</strong> - sessions to help businesses understand methods in data collection, analysis and management.</li>
-    </ul>
+    <a data-nonpushstate id="about-out-team" href="/about/">See more about our team</a>
+
+    <div id="services">
+      <h2>Our services include:</h2>
+      <ul>
+        <li><strong>Data subscriptions</strong> – regular scheduled custom data provision for a monthly fee with a setup charge. This might include pricing data, lead generation data, research data. Monitoring services for social media and websites. Market data collection.</li>
+        <li><strong>Data transformations</strong> – data collection at scale through scraping external or internal resources with transformation to formats for reuse.</li>
+        <li><strong>Data sciences</strong> - analysis and visualisation of data, either acquired through scraping or ingested via more conventional means.</li>
+        <li><strong>Data hub</strong> - a collaborative platform for sharing, managing and analysing your data. This might be a standalone product where you carry out provision and analysis data yourselves, or a joint endeavour where we source and analyse data with you.</li>
+        <li><strong>Data tools</strong> - The ScraperWiki platform includes ‘off the shelf’ data tools that our data services team use for customers.  In addition they can write customised data tools for specific projects.</li>
+        <li><strong>Data workshops</strong> - sessions to help businesses understand methods in data collection, analysis and management.</li>
+      </ul>
+    </div>
+
+    <div id="case-studies">
+      <div class="case-study">
+        <h3>UK Government Digital Services</h3>
+        <p>When the government wanted to migrate its disparate departmental web sites to a unified central location, <a href="http://gov.uk">gov.uk</a>, they brought us in to carry out content scraping and transformation for upload to their new content management system.</p>
+        <p>We delivered this work to a tight timeline, scraping dozens of sites and thousands of web pages. As a result of this work <a href="http://govstore.service.gov.uk/cloudstore/supplier/info/scraperwiki-ltd/">we are now suppliers on GCloud</a>.</p>
+      </div>
+      <div class="case-study">
+        <h3>Channel 4 Dispatches</h3>
+        <p>When Channel 4&rsquo;s Dispatches program wished to investigate whether selling off Britain&rsquo;s assets could cut the national debt they turned to us to extract data from The National Asset Register 2007 which was locked up in PDF files.</p>
+        <p>We created a sophisticated visualisation which enabled reporters and viewers to get an overview of the data with the ability to drill down to single lines in the original source documents.</p>
+      </div>
+      <div class="case-study">
+        <h3>Brownfield sites</h3>
+        <p>As an extension of our work with Channel 4 Dispatches we were asked to help establish whether councils could sell 11,000 acres of land to fill budget holes. Our response was to create a visualisation tool where any viewer could type in a postcode to see available brownfield sites in their area.</p>
+        <p>This visualisation was based on 25,000 data points stored in an Excel spreadsheet file, which we ingested into our data hub which provides richer analysis, visualisation and publication.</p>
+      </div>
+      <div class="case-study">
+        <h3>Corporate data hub</h3>
+        <p>A major business to business publisher has an ongoing need to source and share commodity pricing data amongst its journalists, and they find conventional mechanisms such as document management systems and shared drives lacking.</p>
+        <p>The ScraperWiki data hub allows them to easily share data which they have sourced themselves and we are providing data using scrapers. The data hub also provides analysis and visualisation through an ever growing set of data tools. As part of our service we have delivered a Data 101 Workshop to their journalists and data professionals.</p>
+      </div>
+      <div class="case-study">
+        <h3>Lead generation</h3>
+        <p>A firm of lawyers in the US receives a &lsquo;Judgement Abstract Report&rsquo; as a PDF from the state every week. The report is used to identify potential clients for the law firm. It has a regular layout but it is not machine readable and reusing it once required manual retyping.</p>
+        <p>We wrote a script which automatically receives the PDF, ingests it into their ScraperWiki datahub, schedules itself weekly to collect the incremental data, and makes the data available privately to the lawyers.</p>
+      </div>
+      <div class="case-study">
+        <h3>Liverpool John Moores University health map</h3>
+        <p>A research department at the University wanted to provide data to the emergency services to support their work. For example, identifying factors such as numbers of assaults near licensed premises and schools, or numbers of ambulance call outs to falls by local demographics.</p>
+        <p>For this work we matched up public data from the Office of National Statistics and local authorities with internal data from the emergency services. This data was then displayed on an interactive map which enabled researchers to make sense of the complex interactions in the data.</p>
+        <p>You can see a <a href="http://">live version of this map</a> using simulated data here, with <a href="http://">a video walkthrough here</a>.</p>
+      </div>
+      <div class="case-study">
+        <h3>Devon and Somerset Fire Incident Data</h3>
+        <p>As data scientists we are always eager to probe new and interesting data sources. One of our founders, Julian Todd, was interested in the <a href="http://">Fire Incident Data</a> published by Devon &amp; Somerset&rsquo;s Fire and Rescue Service. The data is functionally and clearly presented, but it lacks the opportunity to see a bigger picture of how their resources are used and applied.</p>
+        <p>By ingesting the data into the ScraperWiki data hub, and combining this with a sophisticated interactive visualisation, we are able to make much more of the underlying data.</p>
+      </div>
+      <div class="case-study">
+        <h3>EU NewsReader Project (FP7)</h3>
+        <p>We are working with academic groups and companies in a pan-European collaboration under the EU&rsquo;s Framework 7 research and innovation programme. The project ingests vast quantities of news and related data and uses natural language processing to offer enhanced navigation and analysis.</p>
+        <p>Our role is to provide data sources in the form of scrapers for openly available material such as parliamentary proceedings and to support the exploitation and dissemination of results and technologies arising from the project.</p>
+      </div>
+    </div>
+
+    <div id="request">
+      <h3>Get in touch</h3>
+      <p>Our data scientists are ready to help you make the most of your data. Let&rsquo;s discuss where to start&nbsp;</p>
+      <div class="medium" id="phone">
+        <h4>Call us on:</h4>
+        <a href="tel:00441513315200">+44 (0)151 3315200</a>
+      </div>
+      <div class="medium" id="email">
+        <h4>Email us at:</h4>
+        <a href="mailto:dataservices@scraperwiki.com">dataservices@scraperwiki.com</a>
+      </div>
+      <div class="medium" id="callback">
+        <h4>Or request a call-back:</h4>
+        <form action=".#get-in-touch" method="post" id="request">
+          <div class="question name ">
+            <p><label for="id_name">Your Name:</label>
+            <input type="text" name="name" id="id_name"></p>
+          </div>
+          <div class="question phone ">
+            <p><label for="id_phone">Your Phone or Skype:</label>
+            <input type="text" name="phone" id="id_phone"></p>
+          </div>
+          <div class="question email ">
+            <p><label for="id_email">Your Email address:</label>
+            <input type="text" name="email" id="id_email"></p>
+          </div>
+          <div class="question description">
+            <p><label for="id_description">Project brief: (optional)</label>
+            <textarea id="id_description" rows="10" cols="40" name="description"></textarea></p>
+          </div>
+          <div class="last">
+            <input type="submit" value="Call me back" class="btn btn-primary">
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="faq">
+      <h2>FAQ</h2>
+      <h3>How do I request your services?</h3>
+      <p>We ask you to complete our simple form [link] to give your contact details and provide a brief summary of your requirements. This will generate a unique identifier which we will use to track your request through our systems.</p>
+      <h3>What information do I need to provide?</h3>
+      <p>we will discuss your requirements with you but as a guide we would need you to provide a short brief for the project and a link to the data you wish us to work on, either as a URL or sample files. We would need a precise description of what data fields you require to be extracted from the source files, and the frequency with which you want the data to be collected. It also helpful to know your expectations for a delivery date.</p>
+      <h3>Can you give me some indication of cost?</h3>
+      <p>The setup cost for a data feed or a one off data transformation project will be in the order of $3000&ndash;$10000 (€3000&ndash;€10000) although the upper end of this scale will depend on how much work is involved. To maintain an ongoing data feed will cost in the region of $200&ndash;$500 (€200&ndash;€500) per month.</p>
+      <h3>What&rsquo;s your process for managing service requests?</h3>
+      <p>Typically the first stage of the process will be a discussion with one of our technical marketing team. For particularly complex requests this may involve one of our data scientists. The next stage in the process will be for us to conduct a detailed investigation, typically taking one of our data scientists half a day and often but not always resulting in the production of a sample dataset. There is a nominal charge of $300 (€300) for this investigation. Following this we will either proceed to the production phase, upon your approval or if the project has a significant level of risk we may propose a feasibility study.</p>
+      <h3>Do you have a service level agreement (SLA)?</h3>
+      <p>Yes, we understand the requirements that our corporate customers will have and provide SLAs to suit those needs, at different price points.</p>
+    </div>
 
   </section>
 

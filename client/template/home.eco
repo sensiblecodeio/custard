@@ -47,7 +47,7 @@
       </div>
       <div class="case-study">
         <h3>Channel 4 Dispatches</h3>
-        <p>When Channel 4&rsquo;s Dispatches program wished to investigate whether selling off Britain&rsquo;s assets could cut the national debt they turned to us to extract data from The National Asset Register 2007 which was locked up in PDF files.</p>
+        <p>When Channel 4&rsquo;s Dispatches program wished to investigate whether selling off Britain&rsquo;s assets could cut the national debt they turned to us to extract data from <a href="http://webarchive.nationalarchives.gov.uk/+/http://www.hm-treasury.gov.uk/psr_investment_nar_2007_index.htm">The National Asset Register 2007</a> which was locked up in PDF files.</p>
         <p>We created a sophisticated visualisation which enabled reporters and viewers to get an overview of the data with the ability to drill down to single lines in the original source documents.</p>
       </div>
       <div class="case-study">
@@ -69,16 +69,16 @@
         <h3>Liverpool John Moores University health map</h3>
         <p>A research department at the University wanted to provide data to the emergency services to support their work. For example, identifying factors such as numbers of assaults near licensed premises and schools, or numbers of ambulance call outs to falls by local demographics.</p>
         <p>For this work we matched up public data from the Office of National Statistics and local authorities with internal data from the emergency services. This data was then displayed on an interactive map which enabled researchers to make sense of the complex interactions in the data.</p>
-        <p>You can see a <a href="http://">live version of this map</a> using simulated data here, with <a href="http://">a video walkthrough here</a>.</p>
+        <p>You can see a <a href="https://box.scraperwiki.com/scraperwiki.health-map-demo/1486710f485b45d/http/">live version of this map</a> using simulated data here, with <a href="https://box.scraperwiki.com/scraperwiki.health-map-demo/1486710f485b45d/http/demo.mp4">a video walkthrough here</a>.</p>
       </div>
       <div class="case-study">
         <h3>Devon and Somerset Fire Incident Data</h3>
-        <p>As data scientists we are always eager to probe new and interesting data sources. One of our founders, Julian Todd, was interested in the <a href="http://">Fire Incident Data</a> published by Devon &amp; Somerset&rsquo;s Fire and Rescue Service. The data is functionally and clearly presented, but it lacks the opportunity to see a bigger picture of how their resources are used and applied.</p>
+        <p>As data scientists we are always eager to probe new and interesting data sources. One of our founders, Julian Todd, was interested in the <a href="http://www.dsfire.gov.uk/News/Newsdesk/IncidentsPast7days.cfm?siteCategoryId=3&T1ID=26&T2ID=35">Fire Incident Data</a> published by Devon &amp; Somerset&rsquo;s Fire and Rescue Service. The data is functionally and clearly presented, but it lacks the opportunity to see a bigger picture of how their resources are used and applied.</p>
         <p>By ingesting the data into the ScraperWiki data hub, and combining this with a sophisticated interactive visualisation, we are able to make much more of the underlying data.</p>
       </div>
       <div class="case-study">
         <h3>EU NewsReader Project (FP7)</h3>
-        <p>We are working with academic groups and companies in a pan-European collaboration under the EU&rsquo;s Framework 7 research and innovation programme. The project ingests vast quantities of news and related data and uses natural language processing to offer enhanced navigation and analysis.</p>
+        <p>We are working with academic groups and companies in a pan-European collaboration under the EU&rsquo;s Framework 7 research and innovation programme. The <a href="http://www.newsreader-project.eu/">NewsReader project</a> ingests vast quantities of news and related data and uses natural language processing to offer enhanced navigation and analysis.</p>
         <p>Our role is to provide data sources in the form of scrapers for openly available material such as parliamentary proceedings and to support the exploitation and dissemination of results and technologies arising from the project.</p>
       </div>
     </div>

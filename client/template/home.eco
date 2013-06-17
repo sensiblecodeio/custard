@@ -33,9 +33,9 @@
       <h2>Our services include:</h2>
       <ul>
         <li><strong>Data subscriptions</strong> – regular scheduled custom data provision for a monthly fee with a setup charge. This might include pricing data, lead generation data, research data. Monitoring services for social media and websites. Market data collection.</li>
+        <li><strong>Data hub</strong> - a collaborative platform for sharing, managing and analysing your data. This might be a standalone product where you carry out provision and analysis data yourselves, or a joint endeavour where we source and analyse data with you.</li>
         <li><strong>Data transformations</strong> – data collection at scale through scraping external or internal resources with transformation to formats for reuse.</li>
         <li><strong>Data sciences</strong> - analysis and visualisation of data, either acquired through scraping or ingested via more conventional means.</li>
-        <li><strong>Data hub</strong> - a collaborative platform for sharing, managing and analysing your data. This might be a standalone product where you carry out provision and analysis data yourselves, or a joint endeavour where we source and analyse data with you.</li>
         <li><strong>Data tools</strong> - The ScraperWiki platform includes ‘off the shelf’ data tools that our data services team use for customers.  In addition they can write customised data tools for specific projects.</li>
         <li><strong>Data workshops</strong> - sessions to help businesses understand methods in data collection, analysis and management.</li>
       </ul>

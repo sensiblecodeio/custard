@@ -1231,6 +1231,7 @@ div.home #use-cases > ul li:last-child {
 div.home #use-cases section {
   background-color: #FFFCE4;
   padding: 20px;
+  border-top: 2px solid #fff;
 }
 
 div.home #more-links {
@@ -1252,6 +1253,109 @@ div.home #more-links h3 {
   font-size: 18px;
   line-height: 24px;
   margin: 0 0 5px 0;
+}
+
+
+/* Data Services  / Professional Services page */
+
+#professional #about-our-team {
+  text-align: center;
+}
+
+#professional #about-our-team a {
+  padding: 8px 15px;
+  font-size: 16px;
+}
+
+#professional #services,
+#professional #case-studies {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #DBCFA0;
+}
+
+#professional #services li,
+#professional #case-studies p,
+#professional #faq p {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+
+div.home #use-cases h2 {
+  font-size: 24px;
+  line-height: 26px;
+  margin-bottom: 15px;
+}
+
+div.home #use-cases h3 {
+  font-size: 18px;
+  line-height: 21px;
+}
+
+#professional .medium {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #D3B954;
+}
+
+#professional .medium h4 {
+  font-size: 14px;
+  margin: 0;
+}
+
+#professional #request {
+  background-color: #FFE07C;
+  margin: 20px -20px 20px -20px;
+  padding: 20px;
+}
+
+#professional form {
+  margin-bottom: 0;
+}
+
+#professional #request :first-child {
+  margin-top: 0;
+}
+
+#professional .question:first-child {
+  margin-top: 10px;
+}
+
+#professional .question p {
+  margin-bottom: 0;
+}
+
+#professional form .last {
+  text-align: center;
+}
+
+#professional input[type="text"],
+#professional textarea {
+  width: 225px;
+}
+
+#professional #faq h3 {
+  padding-left: 20px;
+  position: relative;
+  font-size: 16px;
+  line-height: 18px;
+  cursor: pointer;
+}
+
+#professional #faq h3 i {
+  position: absolute;
+  top: 50%;
+  margin-top: -7px;
+  left: -2px;
+}
+
+#professional #faq h3.open i {
+  background-position: -313px -119px;
+}
+
+#professional #faq p {
+  display: none;
 }
 
 

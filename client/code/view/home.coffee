@@ -7,6 +7,7 @@ class Cu.View.Home extends Backbone.View
   className: 'home'
   events:
     'click #use-cases > ul li': 'showUseCase'
+    'click #faq h3': 'showFaq'
 
   render: ->
     @el.innerHTML = JST['home']()
@@ -52,3 +53,13 @@ class Cu.View.Home extends Backbone.View
         # no visible sections yet, just show the one they want
         $tab.addClass('active').siblings().addClass('inactive')
         $section.slideDown()
+
+  showFaq: (e) ->
+    $h3 = $(e.currentTarget)
+    $p = $h3.next('p')
+    if $h3.is('.open')
+      $h3.removeClass('open')
+      $p.slideUp()
+    else
+      $h3.addClass('open').siblings('.open').removeClass('open').next('p').slideUp()
+      $p.slideDown()

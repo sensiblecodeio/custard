@@ -1258,13 +1258,10 @@ div.home #more-links h3 {
 
 /* Data Services  / Professional Services page */
 
-#professional #about-our-team {
-  text-align: center;
-}
-
 #professional #about-our-team a {
   padding: 8px 15px;
   font-size: 16px;
+  display: block;
 }
 
 #professional #services,
@@ -1796,6 +1793,7 @@ div.about p.logos {
     margin-bottom: 40px;
   }
 
+
   /* Home page */
 
   div.home #use-cases > ul li {
@@ -1804,4 +1802,34 @@ div.about p.logos {
     line-height: 24px;
   }
 
+
+  /* Data services / Professional services page */
+
+  div.home #professional #process p {
+    width: 335px;
+    float: left;
+    margin-left: 50px;
+  }
+  
+  div.home #professional #process p.lead {
+    margin-left: 0;
+  }
+
+  #professional #process #about-our-team a {
+    display: inline-block;
+  }
+
+  div.home #professional #services li {
+    float: left;
+    width: 335px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    clear: none;
+  }
+
+  div.home #professional #services li:first-child,
+  div.home #professional #services li:nth-child(4) {
+    clear: left;
+    margin-left: 25px;
+  }
 }

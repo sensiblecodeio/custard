@@ -1306,12 +1306,27 @@ div.home #case-studies .case-study {
 }
 
 div.home #case-studies .nav {
-  float: right;
-  margin: 15px 0 0 0;
+  margin: 0 0 10px 0;
 }
 
 div.home #case-studies .nav a {
   cursor: pointer;
+}
+
+#case-studies .nav-pills > li > a {
+  color: #A5822A;
+}
+
+#case-studies .nav-pills > li > a:hover, 
+#case-studies .nav-pills > li > a:focus {
+  background-color: #F1E7B0;
+}
+
+#case-studies .nav-pills > .active > a, 
+#case-studies .nav-pills > .active > a:hover, 
+#case-studies .nav-pills > .active > a:focus {
+  background-color: #FFE07C;
+  color: #000;
 }
 
 #professional .medium {
@@ -1471,6 +1486,10 @@ div.about p.logos {
     float: none;
     width: 100%;
     margin-left: 0;
+  }
+
+  #case-studies .nav-pills > li > a {
+    padding: 6px 8px;
   }
 
 }
@@ -1658,6 +1677,11 @@ div.about p.logos {
 
   #professional #process #about-our-team a {
     display: block;
+  }
+
+  div.home #case-studies .nav {
+    float: right;
+    margin: 15px 0 0 0;
   }
 
   div.home #case-studies .carousel-wrapper,

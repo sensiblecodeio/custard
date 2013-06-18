@@ -18,8 +18,8 @@ class Cu.View.Home extends Backbone.View
     if @options?.section
       $section = $("##{@options.section}", @$el)
       $section.show()
-      $("#use-cases > ul li[data-section='#{@options.section}']", @$el)
-        .addClass('active').siblings().addClass('inactive')
+      $tab = $("#use-cases > ul li[data-section='#{@options.section}']", @$el)
+      @activateTab $tab
 
       setTimeout =>
         @setUpCarousel($section)
@@ -31,6 +31,16 @@ class Cu.View.Home extends Backbone.View
 
   close: ->
     $(window).off('resize.carousel')
+
+  activateTab: ($tab) ->
+    $tab.addClass('active').removeClass('inactive').children('img').attr 'src', ->
+      $(this).attr('src').replace('.png', '-selected.png')
+
+    @deactivateTab $tab.siblings()
+
+  deactivateTab: ($tab) ->
+    $tab.addClass('inactive').removeClass('active').children('img').attr 'src', ->
+      $(this).attr('src').replace('-selected.png', '.png')
 
   showUseCase: (e) ->
     e.preventDefault()
@@ -54,13 +64,12 @@ class Cu.View.Home extends Backbone.View
       if visibleSections.length
         # another section is already visible, hide it first
         visibleSections.slideUp =>
-          $tab.removeClass('inactive').addClass('active')
-            .siblings().removeClass('active').addClass('inactive')
+          @activateTab $tab
           $section.slideDown =>
             @setUpCarousel($section)
       else
         # no visible sections yet, just show the one they want
-        $tab.addClass('active').siblings().addClass('inactive')
+        @activateTab $tab
         $section.slideDown =>
           @setUpCarousel($section)
 

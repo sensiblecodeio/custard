@@ -1178,6 +1178,7 @@ div.home #use-cases > ul {
 
 div.home #use-cases > ul li {
   display: block;
+  position: relative;
   padding: 8px 12px 8px 74px; /* 12px + 50px image + 12px = 74px total padding */
   list-style: none;
   line-height: 22px;
@@ -1233,6 +1234,17 @@ div.home #use-cases > ul li.active:hover {
 div.home #use-cases > ul li:last-child {
   border-bottom: none;
   border-right: none;
+}
+
+div.home #use-cases > ul li img {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  margin-top: -25px;
+}
+
+div.home #use-cases > ul li.professional img {
+  left: 9px;
 }
 
 div.home #use-cases section {
@@ -1662,6 +1674,19 @@ div.about p.logos {
     vertical-align: middle;
     border-bottom: none;
     border-right: 2px solid #fff;
+    padding: 72px 12px 12px 12px;
+  }
+
+  div.home #use-cases > ul li img {
+    left: 50%;
+    top: 12px;
+    margin-left: -25px;
+    margin-top: 0;
+  }
+
+  div.home #use-cases > ul li.professional img {
+    left: 50%;
+    margin-left: -30px;
   }
 
   div.home #use-cases > ul li.inactive {
@@ -1790,6 +1815,18 @@ div.about p.logos {
     padding: 15px 20px 15px 90px;
     font-size: 17px;
     line-height: 22px;
+  }
+
+  div.home #use-cases > ul li img {
+    left: 20px;
+    top: 50%;
+    margin-top: -25px;
+    margin-left: 0;
+  }
+
+  div.home #use-cases > ul li.professional img {
+    left: 15px;
+    margin-left: 0;
   }
 
 

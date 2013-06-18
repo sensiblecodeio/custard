@@ -8,9 +8,9 @@
 <div id="use-cases">
 
   <ul>
-    <li class="explore" data-section="explore">I usually explore data in Excel, but I want to take my data analysis to the next level.</li>
-    <li class="datascience" data-section="datascience">I want a place to write and run code that does awesome stuff with data.</li>
-    <li class="professional" data-section="professional">I&rsquo;m a business and I need professional data extraction, analysis and management.</li>
+    <li class="explore" data-section="explore"><img src="/image/use-case-excel.png" width="50" height="50" alt="">I usually explore data in Excel, but I want to take my data analysis to the next level.</li>
+    <li class="datascience" data-section="datascience"><img src="/image/use-case-command.png" width="50" height="50" alt="">I want a place to write and run code that does awesome stuff with data.</li>
+    <li class="professional" data-section="professional"><img src="/image/use-case-cash.png" width="59" height="50" alt="">I&rsquo;m a business and I need professional data extraction, analysis and management.</li>
   </ul>
 
   <section id="explore">

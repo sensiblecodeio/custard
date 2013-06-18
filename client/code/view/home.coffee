@@ -52,7 +52,7 @@ class Cu.View.Home extends Backbone.View
       # change the url
       app.navigate "/", trigger: false
       # hide the current section
-      $tab.removeClass('active').siblings().removeClass 'inactive'
+      @deactivateTab $tab
       $section.slideUp()
       # stop listening for resize events
       $(window).off('resize.carousel')

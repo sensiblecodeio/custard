@@ -29,6 +29,10 @@
       <p id="about-our-team"><a data-nonpushstate class="btn btn-warning" href="/about/">See more about our team</a></p>
     </div>
 
+    <div id="customers">
+      <img src="/image/logos.gif" width="1045" height="110" alt="Logos">
+    </div>
+
     <div id="services">
       <h2>Our services include:</h2>
       <ul>

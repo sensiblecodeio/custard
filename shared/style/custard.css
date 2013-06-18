@@ -1265,10 +1265,15 @@ div.home #more-links h3 {
 }
 
 #professional #services,
-#professional #case-studies {
+#professional #case-studies,
+#professional #customers {
   margin-top: 20px;
-  padding-top: 15px;
+  padding-top: 25px;
   border-top: 1px solid #DBCFA0;
+}
+
+#professional #customers {
+  padding-top: 20px;
 }
 
 #professional #services li,
@@ -1313,6 +1318,10 @@ div.home #case-studies .nav a {
   cursor: pointer;
 }
 
+div.home #case-studies h2 {
+  margin-top: 0;
+}
+
 #case-studies .nav-pills > li > a {
   color: #A5822A;
 }
@@ -1344,6 +1353,8 @@ div.home #case-studies .nav a {
   background-color: #FFE07C;
   margin: 20px -20px 20px -20px;
   padding: 20px;
+  position: relative;
+  z-index: 10; /* fix css bug where clicks were absorbed by the #faq list */
 }
 
 #professional form {
@@ -1486,6 +1497,14 @@ div.about p.logos {
     float: none;
     width: 100%;
     margin-left: 0;
+  }
+
+  div.home #customers {
+    overflow-x: scroll;
+  }
+
+  div.home #customers img {
+    min-width: 800px;
   }
 
   #case-studies .nav-pills > li > a {
@@ -1681,7 +1700,7 @@ div.about p.logos {
 
   div.home #case-studies .nav {
     float: right;
-    margin: 15px 0 0 0;
+    margin: 0;
   }
 
   div.home #case-studies .carousel-wrapper,

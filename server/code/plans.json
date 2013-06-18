@@ -34,6 +34,13 @@
         "maxNumDatasets": 100,
         "$": false
     },
+    "grandfather-ec2": {
+        "boxServer": "premium.scraperwiki.com",
+        "maxDiskSpaceMB": 8000,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 100,
+        "$": false
+    },
     "large": {
         "boxServer": "box.scraperwiki.com",
         "maxDiskSpaceMB": 256,

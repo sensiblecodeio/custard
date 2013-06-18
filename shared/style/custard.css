@@ -1290,6 +1290,30 @@ div.home #use-cases h3 {
   line-height: 21px;
 }
 
+div.home #case-studies .carousel-wrapper {
+  overflow: hidden;
+  width: 240px;
+  height: 400px;
+}
+
+div.home #case-studies .carousel {
+  width: 16800px; /* 20 x 840px */
+}
+
+div.home #case-studies .case-study {
+  float: left;
+  width: 240px;
+}
+
+div.home #case-studies .nav {
+  float: right;
+  margin: 15px 0 0 0;
+}
+
+div.home #case-studies .nav a {
+  cursor: pointer;
+}
+
 #professional .medium {
   margin-top: 10px;
   padding-top: 10px;
@@ -1635,6 +1659,11 @@ div.about p.logos {
   #professional #process #about-our-team a {
     display: block;
   }
+
+  div.home #case-studies .carousel-wrapper,
+  div.home #case-studies .case-study {
+    width: 540px;
+  }
   
   #professional #request {
     float: right;
@@ -1746,6 +1775,11 @@ div.about p.logos {
     width: 380px;
   }
 
+  div.home #case-studies .carousel-wrapper,
+  div.home #case-studies .case-study {
+    width: 840px;
+  }
+
 
   /* About page */
 
@@ -1832,4 +1866,10 @@ div.about p.logos {
     clear: left;
     margin-left: 25px;
   }
+
+  div.home #case-studies .carousel-wrapper,
+  div.home #case-studies .case-study {
+    width: 1140px;
+  }
+
 }

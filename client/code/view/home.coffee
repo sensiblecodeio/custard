@@ -8,6 +8,7 @@ class Cu.View.Home extends Backbone.View
   events:
     'click #use-cases > ul li': 'showUseCase'
     'click #faq h3': 'showFaq'
+    'click .carousel-nav a': 'scrollCarousel'
 
   render: ->
     @el.innerHTML = JST['home']()
@@ -15,16 +16,21 @@ class Cu.View.Home extends Backbone.View
 
     # have they requested a particular section?
     if @options?.section
-      $("##{@options.section}", @$el).show()
+      $section = $("##{@options.section}", @$el)
+      $section.show()
       $("#use-cases > ul li[data-section='#{@options.section}']", @$el)
         .addClass('active').siblings().addClass('inactive')
 
       setTimeout =>
+        @setUpCarousel($section)
         $('html, body').animate
           scrollTop: $('#use-cases', @$el).offset().top - 20
         , 250
       , 200
     @
+
+  close: ->
+    $(window).off('resize.carousel')
 
   showUseCase: (e) ->
     e.preventDefault()
@@ -38,6 +44,8 @@ class Cu.View.Home extends Backbone.View
       # hide the current section
       $tab.removeClass('active').siblings().removeClass 'inactive'
       $section.slideUp()
+      # stop listening for resize events
+      $(window).off('resize.carousel')
     else
       # change the url
       app.navigate "/#{sectionId}", trigger: false
@@ -48,11 +56,60 @@ class Cu.View.Home extends Backbone.View
         visibleSections.slideUp =>
           $tab.removeClass('inactive').addClass('active')
             .siblings().removeClass('active').addClass('inactive')
-          $section.slideDown()
+          $section.slideDown =>
+            @setUpCarousel($section)
       else
         # no visible sections yet, just show the one they want
         $tab.addClass('active').siblings().addClass('inactive')
-        $section.slideDown()
+        $section.slideDown =>
+          @setUpCarousel($section)
+
+  setUpCarousel: ($section) ->
+    if $('.carousel-wrapper', $section).length == 0
+      $(window).off('resize.carousel')
+      return true
+
+    $wrapper = $('.carousel-wrapper', $section)
+    $carousel = $wrapper.children '.carousel'
+    $firstCaseStudy = $carousel.children().eq 0
+    $carouselNav = $('.carousel-wrapper').siblings '.nav'
+
+    $wrapper.css 'height', $firstCaseStudy.height()
+    $carousel.scrollLeft 0
+
+    if $carouselNav.length == 0
+      $nav = $('<ul class="nav nav-pills carousel-nav">').insertBefore $wrapper.prev()
+      $carousel.children().each (i) ->
+        $nav.append '<li><a>' + (i+1) + '</a></li>'
+      $nav.children().eq(0).addClass('active')
+
+    lazyResize = _.debounce =>
+      @scrollCarousel $wrapper
+    , 200
+
+    $(window).on 'resize.carousel', lazyResize
+
+  scrollCarousel: (e) ->
+    if e.currentTarget
+      $link = $(e.currentTarget)
+      $li = $link.parent()
+      $wrapper = $li.parent().siblings('.carousel-wrapper')
+      $carousel = $wrapper.children '.carousel'
+    else
+      $wrapper = $(e)
+      $carousel = $(e).children('.carousel')
+      $link = $wrapper.siblings('.carousel-nav').find('.active a')
+      $li = $link.parent()
+
+    $li.addClass('active').siblings('.active').removeClass('active')
+
+    eq = $li.prevAll().length
+    $target = $carousel.children().eq eq
+
+    $wrapper.animate
+      scrollLeft: eq * $target.width()
+      height: $target.height()
+    , 250
 
   showFaq: (e) ->
     $h3 = $(e.currentTarget)

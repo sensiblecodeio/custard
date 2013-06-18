@@ -42,46 +42,51 @@
     </div>
 
     <div id="case-studies">
-      <div class="case-study">
-        <h3>UK Government Digital Services</h3>
-        <p>When the government wanted to migrate its disparate departmental web sites to a unified central location, <a href="http://gov.uk">gov.uk</a>, they brought us in to carry out content scraping and transformation for upload to their new content management system.</p>
-        <p>We delivered this work to a tight timeline, scraping dozens of sites and thousands of web pages. As a result of this work <a href="http://govstore.service.gov.uk/cloudstore/supplier/info/scraperwiki-ltd/">we are now suppliers on GCloud</a>.</p>
-      </div>
-      <div class="case-study">
-        <h3>Channel 4 Dispatches</h3>
-        <p>When Channel 4&rsquo;s Dispatches program wished to investigate whether selling off Britain&rsquo;s assets could cut the national debt they turned to us to extract data from <a href="http://webarchive.nationalarchives.gov.uk/+/http://www.hm-treasury.gov.uk/psr_investment_nar_2007_index.htm">The National Asset Register 2007</a> which was locked up in PDF files.</p>
-        <p>We created a sophisticated visualisation which enabled reporters and viewers to get an overview of the data with the ability to drill down to single lines in the original source documents.</p>
-      </div>
-      <div class="case-study">
-        <h3>Brownfield sites</h3>
-        <p>As an extension of our work with Channel 4 Dispatches we were asked to help establish whether councils could sell 11,000 acres of land to fill budget holes. Our response was to create a visualisation tool where any viewer could type in a postcode to see available brownfield sites in their area.</p>
-        <p>This visualisation was based on 25,000 data points stored in an Excel spreadsheet file, which we ingested into our data hub which provides richer analysis, visualisation and publication.</p>
-      </div>
-      <div class="case-study">
-        <h3>Corporate data hub</h3>
-        <p>A major business to business publisher has an ongoing need to source and share commodity pricing data amongst its journalists, and they find conventional mechanisms such as document management systems and shared drives lacking.</p>
-        <p>The ScraperWiki data hub allows them to easily share data which they have sourced themselves and we are providing data using scrapers. The data hub also provides analysis and visualisation through an ever growing set of data tools. As part of our service we have delivered a Data 101 Workshop to their journalists and data professionals.</p>
-      </div>
-      <div class="case-study">
-        <h3>Lead generation</h3>
-        <p>A firm of lawyers in the US receives a &lsquo;Judgement Abstract Report&rsquo; as a PDF from the state every week. The report is used to identify potential clients for the law firm. It has a regular layout but it is not machine readable and reusing it once required manual retyping.</p>
-        <p>We wrote a script which automatically receives the PDF, ingests it into their ScraperWiki datahub, schedules itself weekly to collect the incremental data, and makes the data available privately to the lawyers.</p>
-      </div>
-      <div class="case-study">
-        <h3>Liverpool John Moores University health map</h3>
-        <p>A research department at the University wanted to provide data to the emergency services to support their work. For example, identifying factors such as numbers of assaults near licensed premises and schools, or numbers of ambulance call outs to falls by local demographics.</p>
-        <p>For this work we matched up public data from the Office of National Statistics and local authorities with internal data from the emergency services. This data was then displayed on an interactive map which enabled researchers to make sense of the complex interactions in the data.</p>
-        <p>You can see a <a href="https://box.scraperwiki.com/scraperwiki.health-map-demo/1486710f485b45d/http/">live version of this map</a> using simulated data here, with <a href="https://box.scraperwiki.com/scraperwiki.health-map-demo/1486710f485b45d/http/demo.mp4">a video walkthrough here</a>.</p>
-      </div>
-      <div class="case-study">
-        <h3>Devon and Somerset Fire Incident Data</h3>
-        <p>As data scientists we are always eager to probe new and interesting data sources. One of our founders, Julian Todd, was interested in the <a href="http://www.dsfire.gov.uk/News/Newsdesk/IncidentsPast7days.cfm?siteCategoryId=3&T1ID=26&T2ID=35">Fire Incident Data</a> published by Devon &amp; Somerset&rsquo;s Fire and Rescue Service. The data is functionally and clearly presented, but it lacks the opportunity to see a bigger picture of how their resources are used and applied.</p>
-        <p>By ingesting the data into the ScraperWiki data hub, and combining this with a sophisticated interactive visualisation, we are able to make much more of the underlying data.</p>
-      </div>
-      <div class="case-study">
-        <h3>EU NewsReader Project (FP7)</h3>
-        <p>We are working with academic groups and companies in a pan-European collaboration under the EU&rsquo;s Framework 7 research and innovation programme. The <a href="http://www.newsreader-project.eu/">NewsReader project</a> ingests vast quantities of news and related data and uses natural language processing to offer enhanced navigation and analysis.</p>
-        <p>Our role is to provide data sources in the form of scrapers for openly available material such as parliamentary proceedings and to support the exploitation and dissemination of results and technologies arising from the project.</p>
+      <h2>Case studies</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel">
+          <div class="case-study">
+            <h3>UK Government Digital Services</h3>
+            <p>When the government wanted to migrate its disparate departmental web sites to a unified central location, <a href="http://gov.uk">gov.uk</a>, they brought us in to carry out content scraping and transformation for upload to their new content management system.</p>
+            <p>We delivered this work to a tight timeline, scraping dozens of sites and thousands of web pages. As a result of this work <a href="http://govstore.service.gov.uk/cloudstore/supplier/info/scraperwiki-ltd/">we are now suppliers on GCloud</a>.</p>
+          </div>
+          <div class="case-study">
+            <h3>Channel 4 Dispatches</h3>
+            <p>When Channel 4&rsquo;s Dispatches program wished to investigate whether selling off Britain&rsquo;s assets could cut the national debt they turned to us to extract data from <a href="http://webarchive.nationalarchives.gov.uk/+/http://www.hm-treasury.gov.uk/psr_investment_nar_2007_index.htm">The National Asset Register 2007</a> which was locked up in PDF files.</p>
+            <p>We created a sophisticated visualisation which enabled reporters and viewers to get an overview of the data with the ability to drill down to single lines in the original source documents.</p>
+          </div>
+          <div class="case-study">
+            <h3>Brownfield sites</h3>
+            <p>As an extension of our work with Channel 4 Dispatches we were asked to help establish whether councils could sell 11,000 acres of land to fill budget holes. Our response was to create a visualisation tool where any viewer could type in a postcode to see available brownfield sites in their area.</p>
+            <p>This visualisation was based on 25,000 data points stored in an Excel spreadsheet file, which we ingested into our data hub which provides richer analysis, visualisation and publication.</p>
+          </div>
+          <div class="case-study">
+            <h3>Corporate data hub</h3>
+            <p>A major business to business publisher has an ongoing need to source and share commodity pricing data amongst its journalists, and they find conventional mechanisms such as document management systems and shared drives lacking.</p>
+            <p>The ScraperWiki data hub allows them to easily share data which they have sourced themselves and we are providing data using scrapers. The data hub also provides analysis and visualisation through an ever growing set of data tools. As part of our service we have delivered a Data 101 Workshop to their journalists and data professionals.</p>
+          </div>
+          <div class="case-study">
+            <h3>Lead generation</h3>
+            <p>A firm of lawyers in the US receives a &lsquo;Judgement Abstract Report&rsquo; as a PDF from the state every week. The report is used to identify potential clients for the law firm. It has a regular layout but it is not machine readable and reusing it once required manual retyping.</p>
+            <p>We wrote a script which automatically receives the PDF, ingests it into their ScraperWiki datahub, schedules itself weekly to collect the incremental data, and makes the data available privately to the lawyers.</p>
+          </div>
+          <div class="case-study">
+            <h3>Liverpool John Moores University health map</h3>
+            <p>A research department at the University wanted to provide data to the emergency services to support their work. For example, identifying factors such as numbers of assaults near licensed premises and schools, or numbers of ambulance call outs to falls by local demographics.</p>
+            <p>For this work we matched up public data from the Office of National Statistics and local authorities with internal data from the emergency services. This data was then displayed on an interactive map which enabled researchers to make sense of the complex interactions in the data.</p>
+            <p>You can see a <a href="https://box.scraperwiki.com/scraperwiki.health-map-demo/1486710f485b45d/http/">live version of this map</a> using simulated data here, with <a href="https://box.scraperwiki.com/scraperwiki.health-map-demo/1486710f485b45d/http/demo.mp4">a video walkthrough here</a>.</p>
+          </div>
+          <div class="case-study">
+            <h3>Devon and Somerset Fire Incident Data</h3>
+            <p>As data scientists we are always eager to probe new and interesting data sources. One of our founders, Julian Todd, was interested in the <a href="http://www.dsfire.gov.uk/News/Newsdesk/IncidentsPast7days.cfm?siteCategoryId=3&T1ID=26&T2ID=35">Fire Incident Data</a> published by Devon &amp; Somerset&rsquo;s Fire and Rescue Service. The data is functionally and clearly presented, but it lacks the opportunity to see a bigger picture of how their resources are used and applied.</p>
+            <p>By ingesting the data into the ScraperWiki data hub, and combining this with a sophisticated interactive visualisation, we are able to make much more of the underlying data.</p>
+          </div>
+          <div class="case-study">
+            <h3>EU NewsReader Project (FP7)</h3>
+            <p>We are working with academic groups and companies in a pan-European collaboration under the EU&rsquo;s Framework 7 research and innovation programme. The <a href="http://www.newsreader-project.eu/">NewsReader project</a> ingests vast quantities of news and related data and uses natural language processing to offer enhanced navigation and analysis.</p>
+            <p>Our role is to provide data sources in the form of scrapers for openly available material such as parliamentary proceedings and to support the exploitation and dissemination of results and technologies arising from the project.</p>
+          </div>
+        </div>
       </div>
     </div>
 

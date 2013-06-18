@@ -41,7 +41,6 @@ class exports.User extends ModelBase
     return 'invalid shortName' unless /^[a-zA-Z0-9-.]{3,24}$/g.test @shortName
     return 'invalid displayName' unless /^[^<>;\b]+$/g.test @displayName
     return 'invalid email' unless /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/gi.test @email[0]
-    return 'please accept the terms and conditions' if isNaN @acceptedTerms
 
   checkPassword: (password, callback) ->
     User.findByShortName @shortName, (err, user) ->

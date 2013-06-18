@@ -105,7 +105,7 @@
         <h4>Email us at:</h4>
         <a href="mailto:dataservices@scraperwiki.com">dataservices@scraperwiki.com</a>
       </div>
-      <div class="medium" id="callback">
+      <div class="medium" id="callback" style="display: none">
         <h4>Or request a call-back:</h4>
         <form action="" method="post">
           <div class="question name ">

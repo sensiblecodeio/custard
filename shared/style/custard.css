@@ -1291,6 +1291,12 @@ div.home #more-links h3 {
   border-top: 1px solid #DBCFA0;
 }
 
+#professional #case-studies {
+  padding-bottom: 25px;
+  border-bottom: 1px solid #DBCFA0;
+  margin-bottom: 20px;
+}
+
 #professional #customers {
   padding-top: 20px;
 }
@@ -1341,6 +1347,11 @@ div.home #case-studies h2 {
   margin-top: 0;
 }
 
+div.home #case-studies .thumbnail {
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
 #case-studies .nav-pills > li > a {
   color: #A5822A;
 }
@@ -1372,8 +1383,6 @@ div.home #case-studies h2 {
   background-color: #FFE07C;
   margin: 20px -20px 20px -20px;
   padding: 20px;
-  position: relative;
-  z-index: 10; /* fix css bug where clicks were absorbed by the #faq list */
 }
 
 #professional form {
@@ -1739,15 +1748,23 @@ div.about p.logos {
   div.home #case-studies .case-study {
     width: 540px;
   }
-  
+
+  div.home #case-studies .thumbnail {
+    max-width: 50%;
+    float: right;
+    margin-left: 40px;
+    margin-top: 15px;
+  }
+
   #professional #request {
     float: right;
     width: 240px;
     margin: 20px -20px -20px 20px;
   }
-  
+
   #professional #faq {
     margin-top: 50px;
+    margin-right: 280px; /* avoid text wrapping underneath #request form */
   }
 
 }
@@ -1843,7 +1860,8 @@ div.about p.logos {
     margin: 0;
   }
 
-  #professional #services li {
+  #professional #services li,
+  #professional #case-studies p {
     font-size: 16px;
     line-height: 22px;
     margin-bottom: 15px;
@@ -1865,6 +1883,10 @@ div.about p.logos {
   div.home #case-studies .carousel-wrapper,
   div.home #case-studies .case-study {
     width: 840px;
+  }
+
+  div.home #case-studies .thumbnail {
+    max-width: 40%;
   }
 
 

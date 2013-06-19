@@ -50,21 +50,33 @@
       <div class="carousel-wrapper">
         <div class="carousel">
           <div class="case-study">
+            <a class="thumbnail" href="">
+              <img src="/image/case-study-gov-uk.gif" width="1033" height="648" alt="gov.uk website">
+            </a>
             <h3>UK Government Digital Services</h3>
             <p>When the government wanted to migrate its disparate departmental web sites to a unified central location, <a href="http://gov.uk">gov.uk</a>, they brought us in to carry out content scraping and transformation for upload to their new content management system.</p>
             <p>We delivered this work to a tight timeline, scraping dozens of sites and thousands of web pages. As a result of this work <a href="http://govstore.service.gov.uk/cloudstore/supplier/info/scraperwiki-ltd/">we are now suppliers on GCloud</a>.</p>
           </div>
           <div class="case-study">
+            <a class="thumbnail" href="http://blog.scraperwiki.com/2011/03/08/600-lines-of-code-748-revisions-a-load-of-bubbles/">
+              <img src="/image/case-study-bubbles.png" width="547" height="498" alt="Spending bubble visualisation">
+            </a>
             <h3>Channel 4 Dispatches</h3>
             <p>When Channel 4&rsquo;s Dispatches program wished to investigate whether selling off Britain&rsquo;s assets could cut the national debt they turned to us to extract data from <a href="http://webarchive.nationalarchives.gov.uk/+/http://www.hm-treasury.gov.uk/psr_investment_nar_2007_index.htm">The National Asset Register 2007</a> which was locked up in PDF files.</p>
             <p>We created a sophisticated visualisation which enabled reporters and viewers to get an overview of the data with the ability to drill down to single lines in the original source documents.</p>
           </div>
           <div class="case-study">
+            <a class="thumbnail" href="http://blog.scraperwiki.com/2011/03/08/600-lines-of-code-748-revisions-a-load-of-bubbles/">
+              <img src="/image/case-study-brownfield.png" width="623" height="532" alt="Brownfield site visualisation">
+            </a>
             <h3>Brownfield sites</h3>
             <p>As an extension of our work with Channel 4 Dispatches we were asked to help establish whether councils could sell 11,000 acres of land to fill budget holes. Our response was to create a visualisation tool where any viewer could type in a postcode to see available brownfield sites in their area.</p>
             <p>This visualisation was based on 25,000 data points stored in an Excel spreadsheet file, which we ingested into our data hub which provides richer analysis, visualisation and publication.</p>
           </div>
           <div class="case-study">
+            <span class="thumbnail">
+              <img src="/image/case-study-data-hub.jpg" width="920" height="560" alt="Corporate Data Hub screenshot">
+            </span>
             <h3>Corporate data hub</h3>
             <p>A major business to business publisher has an ongoing need to source and share commodity pricing data amongst its journalists, and they find conventional mechanisms such as document management systems and shared drives lacking.</p>
             <p>The ScraperWiki data hub allows them to easily share data which they have sourced themselves and we are providing data using scrapers. The data hub also provides analysis and visualisation through an ever growing set of data tools. As part of our service we have delivered a Data 101 Workshop to their journalists and data professionals.</p>
@@ -75,12 +87,18 @@
             <p>We wrote a script which automatically receives the PDF, ingests it into their ScraperWiki datahub, schedules itself weekly to collect the incremental data, and makes the data available privately to the lawyers.</p>
           </div>
           <div class="case-study">
+            <a class="thumbnail" href="https://ds-ec2.scraperwiki.com/edvno5y/8c908b4be29946c/http/#%7B%22source%22%3A%7B%22apikey%22%3A%22c2ece9db-9830-430b-bd32-9b5941b521ae%22%2C%22url%22%3A%22https%3A%2F%2Fds-ec2.scraperwiki.com%2Fedvno5y%2F8c908b4be29946c%22%2C%22publishToken%22%3A%228c908b4be29946c%22%2C%22box%22%3A%22edvno5y%22%7D%7D">
+              <img src="/image/case-study-health-map.jpg" width="1055" height="637" alt="Health Map visualisation">
+            </a>
             <h3>Liverpool John Moores University health map</h3>
             <p>A research department at the University wanted to provide data to the emergency services to support their work. For example, identifying factors such as numbers of assaults near licensed premises and schools, or numbers of ambulance call outs to falls by local demographics.</p>
             <p>For this work we matched up public data from the Office of National Statistics and local authorities with internal data from the emergency services. This data was then displayed on an interactive map which enabled researchers to make sense of the complex interactions in the data.</p>
             <p>You can see a <a href="https://box.scraperwiki.com/scraperwiki.health-map-demo/1486710f485b45d/http/">live version of this map</a> using simulated data here, with <a href="https://box.scraperwiki.com/scraperwiki.health-map-demo/1486710f485b45d/http/demo.mp4">a video walkthrough here</a>.</p>
           </div>
           <div class="case-study">
+            <a class="thumbnail" href="https://ds-ec2.scraperwiki.com/am2xg4q/2c2d9b43fd9746f/http/#%7B%22source%22%3A%7B%22apikey%22%3A%22c2ece9db-9830-430b-bd32-9b5941b521ae%22%2C%22url%22%3A%22https%3A%2F%2Fds-ec2.scraperwiki.com%2Fam2xg4q%2F2c2d9b43fd9746f%22%2C%22publishToken%22%3A%222c2d9b43fd9746f%22%2C%22box%22%3A%22am2xg4q%22%2C%22sqlQuery%22%3Anull%7D%2C%22target%22%3A%7B%22url%22%3A%22https%3A%2F%2Fds-ec2.scraperwiki.com%2Ff2iy7si%2F1c21ceaaced2490%22%2C%22publishToken%22%3A%221c21ceaaced2490%22%2C%22box%22%3A%22f2iy7si%22%2C%22displayName%22%3A%22Somerset%20Fires%22%7D%7D">
+              <img src="/image/case-study-rose.gif" width="1018" height="550" alt="Rose diagram showing accident callouts">
+            </a>
             <h3>Devon and Somerset Fire Incident Data</h3>
             <p>As data scientists we are always eager to probe new and interesting data sources. One of our founders, Julian Todd, was interested in the <a href="http://www.dsfire.gov.uk/News/Newsdesk/IncidentsPast7days.cfm?siteCategoryId=3&T1ID=26&T2ID=35">Fire Incident Data</a> published by Devon &amp; Somerset&rsquo;s Fire and Rescue Service. The data is functionally and clearly presented, but it lacks the opportunity to see a bigger picture of how their resources are used and applied.</p>
             <p>By ingesting the data into the ScraperWiki data hub, and combining this with a sophisticated interactive visualisation, we are able to make much more of the underlying data.</p>

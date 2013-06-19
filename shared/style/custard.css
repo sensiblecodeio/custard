@@ -1518,6 +1518,19 @@ div.about .people p a {
   color: #444;
 }
 
+div.about .people .showMore i {
+  color: #39c;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 14px;
+  margin-left: 3px;
+  cursor: pointer;
+}
+
+div.about .people .showMore i:hover {
+  text-decoration: underline;
+}
+
 div.about p.logos {
   margin: 20px 0;
 }

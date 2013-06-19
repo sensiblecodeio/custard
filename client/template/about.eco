@@ -9,40 +9,19 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <a class="pull-left" href="http://twitter.com/frabcus" title="@frabcus on Twitter"><img src="https://media.scraperwiki.com/images/about_francis.png" /></a>
+      <img src="https://media.scraperwiki.com/images/about_francis.png" class="pull-left" />
       <div class="media-body">
-        <h3><a href="http://twitter.com/frabcus" title="@frabcus on Twitter">Francis Irving</a> <small>CEO</small></h3>
-        <p>Former <a href="http://www.mysociety.org">mySociety</a> developer, and creator of the popular developer tool <a href="http://www.tortoisecvs.org">TortoiseCVS</a>.
+        <h3>Francis Irving <small>CEO</small></h3>
+        <p>A technology leader, Francis created the original TortoiseCVS, which has improved<span class="more"> version control for tens of millions of people. He was a founder of TheyWorkForYou and WhatDoTheyKnow, which show the world how to use scraping and good user experience to improve democracy. BA Mathematics (Oxford).</span></p>
       </div>
     </div>
   </div>
   <div class="span6">
     <div class="media">
-      <a class="pull-left" href="http://twitter.com/amcguire62" title="@amcguire62 on Twitter"><img src="https://media.scraperwiki.com/images/about_aidan.png" /></a>
+      <img src="https://media.scraperwiki.com/images/about_aidan.png" class="pull-left" />
       <div class="media-body">
-        <h3><a href="http://twitter.com/amcguire62" title="@amcguire62 on Twitter">Aidan McGuire</a> <small>CFO</small></h3>
-        <p>Founder of <a href="http://www.bluefountain.com/">Blue Fountain</a>, with a banking background.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row-fluid people">
-  <div class="span6">
-    <div class="media">
-      <a class="pull-left" href="http://twitter.com/ainemcguire" title="@ainemcguire on Twitter"><img src="https://media.scraperwiki.com/images/about_aine.png" /></a>
-      <div class="media-body">
-        <h3><a href="http://twitter.com/ainemcguire" title="@ainemcguire on Twitter">Aine McGuire</a> <small>CMO</small></h3>
-        <p>Founded <a href="http://www.pygmalionsolutions.com/">Pygmalion</a>, the UK&rsquo;s first Microsoft Gold Certified Partner.</p>
-      </div>
-    </div>
-  </div>
-  <div class="span6">
-    <div class="media">
-      <a class="pull-left" href="http://twitter.com/zarino" title="@zarino on Twitter"><img src="https://media.scraperwiki.com/images/about_zarino.png" /></a>
-      <div class="media-body">
-        <h3><a href="http://twitter.com/zarino" title="@zarino on Twitter">Zarino Zappia</a> <small>VP,&nbsp;Product</small></h3>
-        <p>Designer, coder and Internetologist, with a Masters from the <a href="http://www.oii.ox.ac.uk">Oxford Internet Institute</a>.</p>
+        <h3>Aidan McGuire <small>CFO</small></h3>
+        <p>Started Blue Fountain, one of the first open source service businesses in the UK<span class="more">, and previously had a career in the Forex market in London.  Aidan founded ScraperWiki with Dr Julian Todd and raised seed and series A funding with Channel 4 and Enterprise Ventures respectively. Aidan is CFO. BBS (Trinity College Dublin).</span></p>
       </div>
     </div>
   </div>
@@ -51,19 +30,40 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <a class="pull-left" href="http://twitter.com/smallcasserole" title="@smallcasserole on Twitter"><img src="https://media.scraperwiki.com/images/about_ian.png"></a>
+      <img src="/image/team_aine.jpg" class="pull-left" />
       <div class="media-body">
-        <h3><a href="http://twitter.com/smallcasserole" title="@smallcasserole on Twitter">Ian Hopkinson</a> <small>Senior&nbsp;Data&nbsp;Scientist</small></h3>
-        <p>Former academic physicist, then researcher at a megacorp now being paid to do what I used to do for fun.</p>
+        <h3>Aine McGuire <small>CMO</small></h3>
+        <p>Founded Pygmalion, the UK’s first Microsoft Gold Certified Partner and prior to<span class="more"> that had a career selling Hewlett Packard systems into the City of London. She builds brand awareness, identifies routes to market, partner channels and also cultivates relationships with ScraperWiki’s large data science community. BBS (Trinity College Dublin).</span></p>
       </div>
     </div>
   </div>
   <div class="span6">
     <div class="media">
-      <img class="pull-left" src="https://media.scraperwiki.com/images/about_dragon.png" />
+      <img src="https://media.scraperwiki.com/images/about_zarino.png" class="pull-left" />
+      <div class="media-body">
+        <h3>Zarino Zappia <small>VP,&nbsp;Product</small></h3>
+        <p>Designer, programmer and Internetologist. Zarino is responsible for the look and feel<span class="more"> of the site, its tools, and ScraperWiki’s customer visualisations. MSc Social Science of the Internet (Oxford), BA in Media &amp; Comms (Goldsmiths, London).</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid people">
+  <div class="span6">
+    <div class="media">
+      <img src="https://media.scraperwiki.com/images/about_ian.png" class="pull-left" />
+      <div class="media-body">
+        <h3>Ian Hopkinson <small>Senior&nbsp;Data&nbsp;Scientist</small></h3>
+        <p>8 years as an academic soft matter physicist, then research scientist at Unilever<span class="more"> Plc for 8 years with experience of numerical models, simulations, data analysis, visualisation, image processing using Matlab, R and Python amongst other technologies. BSc Chemical Physics (Bristol), PhD Polymer physical chemistry (Durham).</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="media">
+      <img class="pull-left" src="/image/team_dragon.jpg" class="pull-left" />
       <div class="media-body">
         <h3>&lsquo;Dragon&rsquo; Dave McKee <small>Data&nbsp;Scientist</small></h3>
-        <p>When not liberating data, Dragon <a href="http://www.profounddecisions.co.uk">hits people over the head with swords</a>.</p>
+        <p>Radiation physicist at Sellafield Limited, calculating shielding requirements<span class="more"> and dose assessments to support safety in legacy nuclear installations; 3D modelling and simulation, human factors studies. Strong background in Python, relational databases and XPath. MSci Physics (Durham).</span></p>
       </div>
     </div>
   </div>
@@ -72,19 +72,19 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <a class="pull-left" href="http://twitter.com/paul_furley" title="@paul_furley on Twitter"><img src="https://media.scraperwiki.com/images/about_paul.png" /></a>
+      <img src="https://media.scraperwiki.com/images/about_paul.png" class="pull-left" />
       <div class="media-body">
-        <h3><a href="http://twitter.com/paul_furley" title="@paul_furley on Twitter">Paul Furley</a> <small>Data&nbsp;Scientist</small></h3>
-        <p>Security engineer, stock market scraper and chocolate retailer.</p>
+        <h3>Paul Furley <small>Data&nbsp;Scientist</small></h3>
+        <p>Started his career at a leading technology consultancy, developing super-fast<span class="more"> data processing systems which also needed high reliability. This required strong software engineering skills including test-driven development of object oriented software in C++ and Python. Paul is a data scientist.  MEng Communications Engineering.</span></p>
       </div>
     </div>
   </div>
   <div class="span6">
     <div class="media">
-      <a class="pull-left" href="http://twitter.com/drjtwit" title="@drjtwit on Twitter"><img src="https://media.scraperwiki.com/images/about_david.png" /></a>
+      <img src="https://media.scraperwiki.com/images/about_david.png" class="pull-left" />
       <div class="media-body">
-        <h3><a href="http://twitter.com/drjtwit" title="@drjtwit on Twitter">David Jones</a> <small>First&nbsp;Engineer</small></h3>
-        <p>Coder, climber, and director of <a href="http://climatecode.org">Climate Code Foundation</a>.</p>
+        <h3>David Jones <small>First&nbsp;Engineer</small></h3>
+        <p>An 18 year career in the innovative Cambridge software scene has left David skilled<span class="more"> in everything from memory management and text-retrieval to 3D collision physics and earth surface temperature observations. His weapons of choice are C, Python, Shell, and CoffeeScript. MA Maths (Cambridge), Diploma in Computer Science (Cambridge).</span></p>
       </div>
     </div>
   </div>
@@ -93,10 +93,10 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <a class="pull-left" href="http://twitter.com/chrisb33" title="@chrisb33 on Twitter"><img src="https://media.scraperwiki.com/images/about_chris.png" /></a>
+      <img src="https://media.scraperwiki.com/images/about_chris.png" class="pull-left" />
       <div class="media-body">
-        <h3><a href="http://twitter.com/chrisb33" title="@chrisb33 on Twitter">Chris Blower</a> <small>Platform&nbsp;Engineer</small></h3>
-        <p>Enjoys learning different technologies, flashpacking and photography.</p>
+        <h3>Chris Blower <small>Platform&nbsp;Engineer</small></h3>
+        <p>An entrepreneurial technologist, Chris likes helping people and their<span class="more"> communities communicate more effectively. He has 20 years experience with a wide range of technologies from web to telecommunications. He introduced Extreme Programming to ScraperWiki. BSc Computer Science (Manchester).</span></p>
       </div>
     </div>
   </div>
@@ -107,18 +107,18 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <a class="pull-left" href="http://twitter.com/silbs" title="@silbs on Twitter"><img src="https://media.scraperwiki.com/images/about_jane.png" /></a>
+      <img src="https://media.scraperwiki.com/images/about_jane.png" class="pull-left" />
       <div class="media-body">
-        <h3><a href="http://twitter.com/silbs" title="@silbs on Twitter">Jane Silber</a> <small>Chair&nbsp;of&nbsp;the&nbsp;Board</small></h3>
+        <h3>Jane Silber <small>Chair&nbsp;of&nbsp;the&nbsp;Board</small></h3>
         <p>CEO of <a href="http://canonical.com">Canonical</a>. World-class businesswoman and Open Source evangelist.</p>
       </div>
     </div>
   </div>
   <div class="span6">
     <div class="media">
-      <a class="pull-left" href="http://twitter.com/goatchurch" title="@goatchurch on Twitter"><img src="https://media.scraperwiki.com/images/about_julian.png" /></a>
+      <img src="https://media.scraperwiki.com/images/about_julian.png" class="pull-left" />
       <div class="media-body">
-        <h3><a href="http://twitter.com/goatchurch" title="@goatchurch on Twitter">Julian Todd</a> <small>Director</small></h3>
+        <h3>Julian Todd <small>Director</small></h3>
         <p>Creator of <a href="http://www.theyworkforyou.com">TheyWorkForYou.com</a>, Julian dives and caves, but would never cave dive.</p>
       </div>
     </div>

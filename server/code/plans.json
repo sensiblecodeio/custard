@@ -54,5 +54,12 @@
         "maxHourCPUPerDay": 0.5,
         "maxNumDatasets": 10,
         "$": true
+    },
+    "medium-ec2": {
+        "boxServer": "premium.scraperwiki.com",
+        "maxDiskSpaceMB": 64,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 10,
+        "$": true
     }
 }

@@ -101,6 +101,12 @@ passport.deserializeUser (obj, done) ->
 
 # Convert user into session appropriate user
 getSessionUser = (user) ->
+  # Guards against the obscure situation when a logged in user
+  # (including users who are switched into) has the shortName
+  # changed (which can only be done by an admin using the database
+  # panel).
+  if not user
+    return {}
   [err_, plan] = Plan.getPlan user.accountLevel
   session =
     shortName: user.shortName

@@ -12,7 +12,7 @@
       <img src="https://media.scraperwiki.com/images/about_francis.png" class="pull-left" />
       <div class="media-body">
         <h3>Francis Irving <small>CEO</small></h3>
-        <p>A technology leader, Francis created the original TortoiseCVS, which has improved<span class="more"> version control for tens of millions of people. He was a founder of TheyWorkForYou and WhatDoTheyKnow, which show the world how to use scraping and good user experience to improve democracy. BA Mathematics (Oxford).</span></p>
+        <p>A technology leader, Francis created the original TortoiseCVS, which has improved<span class="more"> version control for tens of millions of people. He was a founder of <a href="http://www.theyworkforyou.com">TheyWorkForYou</a> and <a href="http://whatdotheyknow.com">WhatDoTheyKnow</a>, which show the world how to use scraping and good user experience to improve democracy. BA Mathematics (Oxford).</span></p>
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
       <img src="https://media.scraperwiki.com/images/about_aidan.png" class="pull-left" />
       <div class="media-body">
         <h3>Aidan McGuire <small>CFO</small></h3>
-        <p>Started Blue Fountain, one of the first open source service businesses in the UK<span class="more">, and previously had a career in the Forex market in London.  Aidan founded ScraperWiki with Dr Julian Todd and raised seed and series A funding with Channel 4 and Enterprise Ventures respectively. Aidan is CFO. BBS (Trinity College Dublin).</span></p>
+        <p>Started Blue Fountain, one of the first open source service businesses in the UK<span class="more">, and previously had a career in the Forex market in London.  Aidan founded ScraperWiki with Dr Julian Todd and raised seed and series A funding with Channel 4 and Enterprise Ventures respectively. Aidan is CFO. BBS (Trinity, Dublin).</span></p>
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@
       <img src="/image/team_aine.jpg" class="pull-left" />
       <div class="media-body">
         <h3>Aine McGuire <small>CMO</small></h3>
-        <p>Founded Pygmalion, the UK’s first Microsoft Gold Certified Partner and prior to<span class="more"> that had a career selling Hewlett Packard systems into the City of London. She builds brand awareness, identifies routes to market, partner channels and also cultivates relationships with ScraperWiki’s large data science community. BBS (Trinity College Dublin).</span></p>
+        <p>Founded Pygmalion, the UK’s first Microsoft Gold Certified Partner and prior to<span class="more"> that had a career selling Hewlett Packard systems into the City of London. She builds brand awareness, identifies routes to market, partner channels and also cultivates relationships with ScraperWiki’s large data science community. BBS (Trinity, Dublin).</span></p>
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@
       <img src="https://media.scraperwiki.com/images/about_zarino.png" class="pull-left" />
       <div class="media-body">
         <h3>Zarino Zappia <small>VP,&nbsp;Product</small></h3>
-        <p>Designer, programmer and Internetologist. Zarino is responsible for the look and feel<span class="more"> of the site, its tools, and ScraperWiki’s customer visualisations. MSc Social Science of the Internet (Oxford), BA in Media &amp; Comms (Goldsmiths, London).</span></p>
+        <p>Designer, programmer and Internetologist. Zarino is responsible for the look and feel<span class="more"> of the site, its tools, and ScraperWiki’s customer visualisations. He researched Open Data communities at the <a href="http://www.oii.ox.ac.uk">Oxford Internet Institute</a> in 2012. MSc Social Science of the Internet (Oxford), BA in Media &amp; Comms (Goldsmiths, London).</span></p>
       </div>
     </div>
   </div>
@@ -53,7 +53,7 @@
     <div class="media">
       <img src="https://media.scraperwiki.com/images/about_ian.png" class="pull-left" />
       <div class="media-body">
-        <h3>Ian Hopkinson <small>Senior&nbsp;Data&nbsp;Scientist</small></h3>
+        <h3>Dr Ian Hopkinson <small>Senior&nbsp;Data&nbsp;Scientist</small></h3>
         <p>8 years as an academic soft matter physicist, then research scientist at Unilever<span class="more"> Plc for 8 years with experience of numerical models, simulations, data analysis, visualisation, image processing using Matlab, R and Python amongst other technologies. BSc Chemical Physics (Bristol), PhD Polymer physical chemistry (Durham).</span></p>
       </div>
     </div>
@@ -62,7 +62,7 @@
     <div class="media">
       <img class="pull-left" src="/image/team_dragon.jpg" class="pull-left" />
       <div class="media-body">
-        <h3>&lsquo;Dragon&rsquo; Dave McKee <small>Data&nbsp;Scientist</small></h3>
+        <h3>Dave &lsquo;Dragon&rsquo; McKee <small>Data&nbsp;Scientist</small></h3>
         <p>Radiation physicist at Sellafield Limited, calculating shielding requirements<span class="more"> and dose assessments to support safety in legacy nuclear installations; 3D modelling and simulation, human factors studies. Strong background in Python, relational databases and XPath. MSci Physics (Durham).</span></p>
       </div>
     </div>
@@ -75,7 +75,7 @@
       <img src="https://media.scraperwiki.com/images/about_paul.png" class="pull-left" />
       <div class="media-body">
         <h3>Paul Furley <small>Data&nbsp;Scientist</small></h3>
-        <p>Started his career at a leading technology consultancy, developing super-fast<span class="more"> data processing systems which also needed high reliability. This required strong software engineering skills including test-driven development of object oriented software in C++ and Python. Paul is a data scientist.  MEng Communications Engineering.</span></p>
+        <p>Started his career at a leading technology consultancy, developing super-fast<span class="more"> data processing systems which also needed high reliability. This required strong software engineering skills including test-driven development of object oriented software in C++ and Python. Paul is a data scientist.  MEng Communications Engineering (Durham).</span></p>
       </div>
     </div>
   </div>
@@ -110,7 +110,7 @@
       <img src="https://media.scraperwiki.com/images/about_jane.png" class="pull-left" />
       <div class="media-body">
         <h3>Jane Silber <small>Chair&nbsp;of&nbsp;the&nbsp;Board</small></h3>
-        <p>CEO of <a href="http://canonical.com">Canonical</a>. World-class businesswoman and Open Source evangelist.</p>
+        <p>CEO of <a href="http://canonical.com">Canonical</a>. World-class business<span class="more"> person bringing global experience with Ubuntu, open source, and high growth companies.</span></p>
       </div>
     </div>
   </div>
@@ -118,8 +118,8 @@
     <div class="media">
       <img src="https://media.scraperwiki.com/images/about_julian.png" class="pull-left" />
       <div class="media-body">
-        <h3>Julian Todd <small>Director</small></h3>
-        <p>Creator of <a href="http://www.theyworkforyou.com">TheyWorkForYou.com</a>, Julian dives and caves, but would never cave dive.</p>
+        <h3>Dr Julian Todd <small>Director</small></h3>
+        <p>10 years of computational geometry for machine tool software at NC Graphics<span class="more">, followed by 4 years part time web scraping and parsing UK Parliament transcripts for <a href="http://www.theyworkforyou.com">TheyWorkForYou.com</a> at mySociety whilst developing a new generation of geometric software for HSMWorks, now part of Autodesk. Julian is one of the founders of ScraperWiki. BA Pure Mathematics (Cambridge), PhD Vector Algebra (Bristol).</span></p>
       </div>
     </div>
   </div>

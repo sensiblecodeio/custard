@@ -48,6 +48,13 @@
         "maxNumDatasets": 81,
         "$": true
     },
+    "large-ec2": {
+        "boxServer": "premium.scraperwiki.com",
+        "maxDiskSpaceMB": 256,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 81,
+        "$": true
+    },
     "medium": {
         "boxServer": "box.scraperwiki.com",
         "maxDiskSpaceMB": 64,

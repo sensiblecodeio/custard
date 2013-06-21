@@ -1,7 +1,7 @@
 # :todo: really should extract this information from the API.
 planConvert =
-  explorer: 'medium'
-  datascientist: 'large'
+  explorer: 'medium-ec2'
+  datascientist: 'large-ec2'
 
 # Translate from user-visible plan to
 # the shortname used for the plan on the subscribe page.

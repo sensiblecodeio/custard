@@ -26,6 +26,24 @@ describe 'API', ->
   before ->
     @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
   context "When I'm not logged in", ->
+    
+    describe 'Data request form', ->
+      context 'POST /api/data-request', ->
+        before (done) ->
+          request.post
+            uri: "#{serverURL}/api/data-request/"
+            form:
+              name: 'Steve Jobs'
+              phone: '1-800-MY-APPLE'
+              email: 'steve@example.com'
+              description: 'Need data for thermonuclear war against android. Pls help. Kthxbai.'
+          , (err, res, body) =>
+            @body = body
+            done()
+
+        it 'returns ok', ->
+          @body.should.include '9999'
+    
     describe 'Sign up', ->
       context 'POST /api/<username>', ->
         before (done) ->

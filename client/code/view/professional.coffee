@@ -88,9 +88,14 @@ class Cu.View.Professional extends Backbone.View
     }
     dataRequest = new Cu.Model.DataRequest values
     dataRequest.on 'invalid', @displayErrors, @
+    dataRequest.on 'sync', @sayThanks, @
     dataRequest.save()
 
   displayErrors: (model_, errors) ->
     $('#request form :submit').removeClass('loading').attr('disabled', false).val('Call me back')
     for key of errors
       $("#id_#{key}").prev().text("#{errors[key]}:").parent('.control-group').addClass('error')
+
+  sayThanks: (model) ->
+    $('#request form').remove()
+    $("""<div id="thanks"><p>Thank you for getting in touch.</p><p>We will email you shortly.</p><p>Your ticket ID is <strong>##{model.id}</strong></p></div>""").appendTo('#callback')

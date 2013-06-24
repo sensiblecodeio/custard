@@ -36,6 +36,7 @@ request = require 'request'
 {Box} = require 'model/box'
 {Subscription} = require 'model/subscription'
 {Plan} = require 'model/plan'
+{DataRequest} = require 'model/data_request'
 
 recurlySign = require 'lib/sign'
 
@@ -351,6 +352,19 @@ addUser = (req, resp) ->
     else
       return resp.json 201, user
 
+dataRequest = (req, resp) ->
+  dataRequest = new DataRequest
+    name: req.body.name
+    phone: req.body.phone
+    email: req.body.email
+    description: req.body.description
+  dataRequest.send (err) ->
+    if err?
+      return resp.send 500, error: 'Error trying submit data request'
+    else
+      console.log dataRequest
+      return resp.send 201, dataRequest
+
 postStatus = (req, resp) ->
   console.log "POST /api/status/ from ident #{req.ident}"
   Dataset.findOneById req.ident, (err, dataset) ->
@@ -431,6 +445,7 @@ app.get '/api/token/:token/?', getToken
 app.post '/api/token/:token/?', setPassword
 
 app.post '/api/user/?', addUser
+app.post '/api/data-request/?', dataRequest
 
 # :todo: Add IP address check (at the moment, anyone running an identd
 # can post to anyone's status).

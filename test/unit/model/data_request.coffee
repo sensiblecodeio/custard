@@ -1,11 +1,8 @@
-mongoose = require 'mongoose'
 sinon = require 'sinon'
 should = require 'should'
 _ = require 'underscore'
 
-request = require 'request'
-
-describe 'Data Request', ->
+describe 'Data Request (client)', ->
   helper = require '../helper'
   helper.evalConcatenatedFile 'client/code/model/data_request.coffee'
 
@@ -15,7 +12,7 @@ describe 'Data Request', ->
       @attrs =
         name: 'Steve Jobs'
         phone: '1-800-MY-APPLE'
-        email: ['steve@example.com']
+        email: 'steve@example.com'
         description: 'Need data for thermonuclear war against android. Pls help. Kthxbai.'
 
       @eventSpy = sinon.spy()
@@ -34,3 +31,37 @@ describe 'Data Request', ->
       @attrs.email = 'tabby@example.org@DROP TABLES;'
       @dataRequest.set @attrs, validate: true
       @eventSpy.calledOnce.should.be.true
+
+request = require 'request'
+mongoose = require 'mongoose'
+
+{DataRequest} = require 'model/data_request'
+
+describe 'Data request (server)', ->
+  before ->
+    @requestStub = sinon.stub request, 'post', (options, cb) ->
+      cb null, 'fake request', 9999
+    @dataRequest = new DataRequest
+      name: 'Steve Jobs'
+      phone: '1-800-MY-APPLE'
+      email: 'steve@example.com'
+      description: 'Thermonuclear war.'
+    @emailStub = sinon.stub @dataRequest, 'email'
+
+  context 'when the data request is sent to the box', ->
+    before (done) ->
+      @dataRequest.sendToBox done
+
+    it 'the correct data is sent', ->
+      correct = @requestStub.calledWith
+        uri: "#{process.env.CU_BOX_SERVER}/scraperwiki-ds/#{process.env.CU_REQUEST_BOX_ID}/#{process.env.CU_REQUEST_BOX_TOKEN}/exec"
+        form:
+          apikey: process.env.CU_REQUEST_API_KEY
+          cmd: "~/tool/request.py 'Steve Jobs' '1-800-MY-APPLE' 'steve@example.com' 'Thermonuclear war.'"
+      correct.should.be.true
+
+    it 'a ticket ID is returned', ->
+      @dataRequest.id.should.equal 9999
+
+    it 'sends an email to the customer', ->
+      @emailStub.called.should.be.true

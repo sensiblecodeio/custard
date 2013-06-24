@@ -7,15 +7,17 @@
   <a class="btn btn-warning" href="/pricing/">Sign up <span class="muted">&ndash; Free</span></a>
 </div>
 
-<div id="use-cases">
-
-  <ul>
-    <li class="explore"><img src="/image/use-case-excel.png" width="50" height="50" alt="">I usually explore data in Excel, but I want to take my data analysis to the next level.</li>
-    <li class="datascience"><img src="/image/use-case-command.png" width="50" height="50" alt="">I want a place to write and run code that does awesome stuff with data.</li>
-    <li class="professional"><img src="/image/use-case-cash.png" width="59" height="50" alt="">I&rsquo;m a business and I need professional data extraction, analysis and management.</li>
-  </ul>
-
-</div>
+<ul id="use-cases">
+  <li class="explore">
+    <a href="/help"><img src="/image/use-case-excel.png" width="50" height="50" alt="">I usually explore data in Excel, but I want to take my data analysis to the next level.</a>
+  </li>
+  <li class="datascience">
+    <a href="/help"><img src="/image/use-case-command.png" width="50" height="50" alt="">I want a place to write and run code that does awesome stuff with data.</a>
+  </li>
+  <li class="professional">
+    <a href="/professional"><img src="/image/use-case-cash.png" width="59" height="50" alt="">I&rsquo;m a business and I need professional data extraction, analysis and management.</a>
+  </li>
+</ul>
 
 <div id="more-links" class="row-fluid">
   <a class="span6" href="/about">

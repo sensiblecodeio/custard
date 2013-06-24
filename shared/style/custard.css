@@ -1182,26 +1182,25 @@ div.home .hero-unit .btn .muted {
 }
 
 div.home #use-cases {
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-div.home #use-cases > ul {
   margin: 0;
 }
 
-div.home #use-cases > ul li {
+div.home #use-cases > li {
   display: block;
   position: relative;
-  padding: 8px 12px 8px 74px; /* 12px + 50px image + 12px = 74px total padding */
   list-style: none;
-  line-height: 22px;
-  border-bottom: 2px solid #fff;
-  background-color: #666;
+  margin-bottom: 2px;
+}
+
+div.home #use-cases a {
+  display: block;
+  padding: 8px 12px 8px 74px; /* 12px + 50px image + 12px = 74px total padding */
   color: #fff;
-  text-shadow: 0 1px 1px rgba(100,0,0,0.5);
-  cursor: pointer;
+  text-decoration: none;
+  line-height: 22px;
+  background-color: #666;
+  border: 1px solid #666;
+  text-shadow: 0 1px 0 rgba(100,0,0,0.5);
   background: -moz-linear-gradient(top,  rgba(255,242,0,0.3) 0%, rgba(255,246,0,0) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,242,0,0.3)), color-stop(100%,rgba(255,246,0,0)));
   background: -webkit-linear-gradient(top,  rgba(255,242,0,0.3) 0%,rgba(255,246,0,0) 100%);
@@ -1209,63 +1208,64 @@ div.home #use-cases > ul li {
   background: -ms-linear-gradient(top,  rgba(255,242,0,0.3) 0%,rgba(255,246,0,0) 100%);
   background: linear-gradient(to bottom,  rgba(255,242,0,0.3) 0%,rgba(255,246,0,0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dfff200', endColorstr='#00fff600',GradientType=0 );
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
 }
 
-div.home #use-cases > ul li:hover {
-  background-color: #999;
-}
-
-div.home #use-cases > ul li.explore {
+div.home #use-cases .explore a {
   background-color: #F0AD00;
+  border-color: #F0AD00;
 }
 
-div.home #use-cases > ul li.explore:hover {
+div.home #use-cases .explore a:hover {
   background-color: #ffbb0b;
+  border-color: #ffbb0b;
 }
 
-div.home #use-cases > ul li.datascience {
+div.home #use-cases .datascience a {
   background-color: #D58917;
+  border-color: #D58917;
 }
 
-div.home #use-cases > ul li.datascience:hover {
+div.home #use-cases .datascience a:hover {
   background-color: #e7971f;
+  border-color: #e7971f;
 }
 
-div.home #use-cases > ul li.professional {
+div.home #use-cases .professional a {
   background-color: #E66E00;
+  border-color: #E66E00;
 }
 
-div.home #use-cases > ul li.professional:hover {
+div.home #use-cases .professional a:hover {
   background-color: #ff7a00;
+  border-color: #ff7a00;
 }
 
-div.home #use-cases > ul li.active,
-div.home #use-cases > ul li.active:hover {
-  background-color: #FFFCE4;
-  color: #333;
-  text-shadow: none;
+div.home #use-cases li:first-child a {
+  -webkit-border-top-right-radius: 4px;
+  -webkit-border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
 }
 
-div.home #use-cases > ul li:last-child {
-  border-bottom: none;
-  border-right: none;
+div.home #use-cases li:last-child a {
+  -webkit-border-bottom-right-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
-div.home #use-cases > ul li img {
+div.home #use-cases li img {
   position: absolute;
   left: 12px;
   top: 50%;
   margin-top: -25px;
 }
 
-div.home #use-cases > ul li.professional img {
+div.home #use-cases .professional img {
   left: 9px;
-}
-
-div.home #use-cases section {
-  background-color: #FFFCE4;
-  padding: 20px;
-  border-top: 2px solid #fff;
 }
 
 div.home #more-links {
@@ -1704,33 +1704,50 @@ div.about p.logos {
     margin: 0 0 0 10px;
   }
 
-  div.home #use-cases > ul {
+  div.home #use-cases {
     display: table-row;
   }
 
-  div.home #use-cases > ul li {
+  div.home #use-cases li {
     display: table-cell;
     width: 33%;
     vertical-align: middle;
-    border-bottom: none;
-    border-right: 2px solid #fff;
-    padding: 72px 12px 12px 12px;
   }
 
-  div.home #use-cases > ul li img {
+  div.home #use-cases li a {
+    padding: 72px 12px 12px 12px;
+    margin-left: 4px;
+  }
+
+  div.home #use-cases li:first-child a {
+    margin-left: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+  }
+
+  div.home #use-cases li:last-child a {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  div.home #use-cases li img {
     left: 50%;
     top: 12px;
     margin-left: -25px;
     margin-top: 0;
   }
 
-  div.home #use-cases > ul li.professional img {
+  div.home #use-cases li.professional img {
     left: 50%;
     margin-left: -30px;
-  }
-
-  div.home #use-cases > ul li.inactive {
-    border-bottom: 2px solid #fff;
   }
   
   div.home #more-links h3 {
@@ -1855,20 +1872,20 @@ div.about p.logos {
 
   /* Home page */
 
-  div.home #use-cases > ul li {
+  div.home #use-cases li a {
     padding: 15px 20px 15px 90px;
     font-size: 17px;
     line-height: 22px;
   }
 
-  div.home #use-cases > ul li img {
+  div.home #use-cases li img {
     left: 20px;
     top: 50%;
     margin-top: -25px;
     margin-left: 0;
   }
 
-  div.home #use-cases > ul li.professional img {
+  div.home #use-cases li.professional img {
     left: 15px;
     margin-left: 0;
   }
@@ -1966,7 +1983,7 @@ div.about p.logos {
 
   /* Home page */
 
-  div.home #use-cases > ul li {
+  div.home #use-cases li a {
     padding: 20px 25px 20px 90px;
     font-size: 18px;
     line-height: 24px;

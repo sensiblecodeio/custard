@@ -101,21 +101,21 @@
   </div>
   <div class="medium" id="callback">
     <h4>Or request a call-back:</h4>
-    <form action="" method="post">
+    <form>
       <div class="question name ">
-        <p><label for="id_name">Your Name:</label>
+        <p class="control-group"><label class="control-label" for="id_name">Your Name:</label>
         <input type="text" name="name" id="id_name"></p>
       </div>
       <div class="question phone ">
-        <p><label for="id_phone">Your Phone or Skype:</label>
+        <p class="control-group"><label class="control-label" for="id_phone">Your Phone or Skype:</label>
         <input type="text" name="phone" id="id_phone"></p>
       </div>
       <div class="question email ">
-        <p><label for="id_email">Your Email address:</label>
+        <p class="control-group"><label class="control-label" for="id_email">Your Email address:</label>
         <input type="text" name="email" id="id_email"></p>
       </div>
       <div class="question description">
-        <p><label for="id_description">Project brief: (optional)</label>
+        <p class="control-group"><label class="control-label" for="id_description">Project brief: (optional)</label>
         <textarea id="id_description" rows="10" cols="40" name="description"></textarea></p>
       </div>
       <div class="last">

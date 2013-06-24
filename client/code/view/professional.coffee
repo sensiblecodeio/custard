@@ -8,6 +8,7 @@ class Cu.View.Professional extends Backbone.View
   events:
     'click #faq h3': 'showFaq'
     'click .carousel-nav a': 'scrollCarousel'
+    'submit #request form': 'submitRequest'
 
   render: ->
     @el.innerHTML = JST['professional']()
@@ -75,3 +76,21 @@ class Cu.View.Professional extends Backbone.View
     else
       $h3.addClass('open').siblings('.open').removeClass('open').next('p').slideUp()
       $p.slideDown()
+
+  submitRequest: (e) ->
+    e.preventDefault()
+    $('#request form :submit').attr('disabled', true).addClass('loading').val('Saving your details\u2026')
+    values = {
+      name: $('#id_name').val(),
+      phone: $('#id_phone').val(),
+      email: $('#id_email').val(),
+      description: $('#id_description').val()
+    }
+    dataRequest = new Cu.Model.DataRequest values
+    dataRequest.on 'invalid', @displayErrors, @
+    dataRequest.save()
+
+  displayErrors: (model_, errors) ->
+    $('#request form :submit').removeClass('loading').attr('disabled', false).val('Call me back')
+    for key of errors
+      $("#id_#{key}").prev().text("#{errors[key]}:").parent('.control-group').addClass('error')

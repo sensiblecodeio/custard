@@ -1395,12 +1395,12 @@ div.professional .medium h4 {
 
 div.professional #request {
   background-color: #FFE07C;
-  margin: 20px -20px 20px -20px;
+  margin: 20px 0;
   padding: 20px;
 }
 
 div.professional form {
-  margin-bottom: 0;
+  margin: 10px 0 0 0;
 }
 
 div.professional #request :first-child {
@@ -1748,7 +1748,7 @@ div.about p.logos {
 
   div.professional #process p {
     float: right;
-    width: 260px;
+    width: 270px;
   }
 
   div.professional #process .lead {
@@ -1759,7 +1759,7 @@ div.about p.logos {
 
   div.professional #process .lead + p {
     float: left;
-    width: 260px;
+    width: 270px;
   }
 
   div.professional #process #about-our-team a {
@@ -1786,7 +1786,7 @@ div.about p.logos {
   div.professional #request {
     float: right;
     width: 240px;
-    margin: 20px -20px -20px 20px;
+    margin: 20px 0 0 20px;
   }
 
   div.professional #faq {
@@ -1879,7 +1879,7 @@ div.about p.logos {
   div.professional #process .lead {
     float: left;
     width: 260px;
-    margin-right: 20px;
+    margin-right: 40px;
   }
 
   div.professional #services ul {
@@ -1995,6 +1995,8 @@ div.about p.logos {
   }
   
   div.professional #process p.lead {
+    width: 375px;
+    margin-right: 0;
     margin-left: 0;
   }
 

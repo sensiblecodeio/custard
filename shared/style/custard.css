@@ -1986,7 +1986,9 @@ div.about p.logos {
 
   /* Data services / Professional services page */
 
-  div.professional #process p {
+  div.professional #process p,
+  div.professional #process p.lead,
+  div.professional #process .lead + p {
     width: 335px;
     float: left;
     margin-left: 50px;
@@ -2000,16 +2002,20 @@ div.about p.logos {
     display: inline-block;
   }
 
-  div.professional #services li {
+  div.professional #customers {
+    text-align: center;
+  }
+
+  #content div.professional #services li {
     float: left;
     width: 335px;
-    margin-left: 50px;
+    margin-left: 70px;
     margin-bottom: 20px;
     clear: none;
   }
 
-  div.professional #services li:first-child,
-  div.professional #services li:nth-child(4) {
+  #content div.professional #services li:first-child,
+  #content div.professional #services li:nth-child(4) {
     clear: left;
     margin-left: 25px;
   }

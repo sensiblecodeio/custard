@@ -1292,77 +1292,77 @@ div.home #more-links h3 {
 
 /* Data Services  / Professional Services page */
 
-#professional #about-our-team a {
+div.professional #about-our-team a {
   padding: 8px 15px;
   font-size: 16px;
   display: block;
 }
 
-#professional #services,
-#professional #case-studies,
-#professional #customers {
+div.professional #services,
+div.professional #case-studies,
+div.professional #customers {
   margin-top: 20px;
   padding-top: 25px;
   border-top: 1px solid #DBCFA0;
 }
 
-#professional #case-studies {
+div.professional #case-studies {
   padding-bottom: 25px;
   border-bottom: 1px solid #DBCFA0;
   margin-bottom: 20px;
 }
 
-#professional #customers {
+div.professional #customers {
   padding-top: 20px;
 }
 
-#professional #services li,
-#professional #case-studies p,
-#professional #faq p {
+div.professional #services li,
+div.professional #case-studies p,
+div.professional #faq p {
   font-size: 14px;
   line-height: 20px;
   margin-bottom: 8px;
 }
 
-div.home #use-cases h2 {
+div.professional h2 {
   font-size: 24px;
   line-height: 26px;
   margin-bottom: 15px;
 }
 
-div.home #use-cases h3 {
+div.professional h3 {
   font-size: 18px;
   line-height: 21px;
 }
 
-div.home #case-studies .carousel-wrapper {
+div.professional #case-studies .carousel-wrapper {
   overflow: hidden;
   width: 240px;
   height: 400px;
 }
 
-div.home #case-studies .carousel {
+div.professional #case-studies .carousel {
   width: 16800px; /* 20 x 840px */
 }
 
-div.home #case-studies .case-study {
+div.professional #case-studies .case-study {
   float: left;
   width: 240px;
 }
 
-div.home #case-studies .nav {
+div.professional #case-studies .nav {
   margin: 0 0 10px 0;
 }
 
-div.home #case-studies .nav a {
+div.professional #case-studies .nav a {
   cursor: pointer;
 }
 
-div.home #case-studies h2 {
+div.professional #case-studies h2 {
   margin-top: 0;
 }
 
-div.home #case-studies .thumbnail {
+div.professional #case-studies .thumbnail {
   margin-bottom: 10px;
   background-color: #fff;
 }
@@ -1383,53 +1383,53 @@ div.home #case-studies .thumbnail {
   color: #000;
 }
 
-#professional .medium {
+div.professional .medium {
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid #D3B954;
 }
 
-#professional .medium h4 {
+div.professional .medium h4 {
   font-size: 14px;
   margin: 0;
 }
 
-#professional #request {
+div.professional #request {
   background-color: #FFE07C;
   margin: 20px -20px 20px -20px;
   padding: 20px;
 }
 
-#professional form {
+div.professional form {
   margin-bottom: 0;
 }
 
-#professional #request :first-child {
+div.professional #request :first-child {
   margin-top: 0;
 }
 
-#professional .question:first-child {
+div.professional .question:first-child {
   margin-top: 10px;
 }
 
-#professional .question p {
+div.professional .question p {
   margin-bottom: 0;
 }
 
-#professional form .last {
+div.professional form .last {
   text-align: center;
 }
 
-#professional input[type="text"],
-#professional textarea {
+div.professional input[type="text"],
+div.professional textarea {
   width: 225px;
 }
 
-#professional textarea {
+div.professional textarea {
   height: 100px;
 }
 
-#professional #faq h3 {
+div.professional #faq h3 {
   padding-left: 20px;
   position: relative;
   font-size: 16px;
@@ -1437,18 +1437,18 @@ div.home #case-studies .thumbnail {
   cursor: pointer;
 }
 
-#professional #faq h3 i {
+div.professional #faq h3 i {
   position: absolute;
   top: 50%;
   margin-top: -7px;
   left: -2px;
 }
 
-#professional #faq h3.open i {
+div.professional #faq h3.open i {
   background-position: -313px -119px;
 }
 
-#professional #faq p {
+div.professional #faq p {
   display: none;
 }
 
@@ -1555,11 +1555,11 @@ div.about p.logos {
     margin-left: 0;
   }
 
-  div.home #customers {
+  div.professional #customers {
     overflow-x: scroll;
   }
 
-  div.home #customers img {
+  div.professional #customers img {
     min-width: 800px;
   }
 
@@ -1734,10 +1734,6 @@ div.about p.logos {
     border-bottom: 2px solid #fff;
   }
   
-  div.home #use-cases section {
-    border-top: none;
-  }
-
   div.home #more-links h3 {
     font-size: 21px;
     line-height: 24px;
@@ -1747,54 +1743,54 @@ div.about p.logos {
 
   /* Data services / Professional services page */
 
-  #professional #process {
+  div.professional #process {
     overflow: auto;
   }
 
-  #professional #process p {
+  div.professional #process p {
     float: right;
     width: 260px;
   }
 
-  #professional #process .lead {
+  div.professional #process .lead {
     font-size: 24px;
     float: none;
     width: auto;
   }
 
-  #professional #process .lead + p {
+  div.professional #process .lead + p {
     float: left;
     width: 260px;
   }
 
-  #professional #process #about-our-team a {
+  div.professional #process #about-our-team a {
     display: block;
   }
 
-  div.home #case-studies .nav {
+  div.professional #case-studies .nav {
     float: right;
     margin: 0;
   }
 
-  div.home #case-studies .carousel-wrapper,
-  div.home #case-studies .case-study {
+  div.professional #case-studies .carousel-wrapper,
+  div.professional #case-studies .case-study {
     width: 540px;
   }
 
-  div.home #case-studies .thumbnail {
+  div.professional #case-studies .thumbnail {
     max-width: 50%;
     float: right;
     margin-left: 40px;
     margin-top: 15px;
   }
 
-  #professional #request {
+  div.professional #request {
     float: right;
     width: 240px;
     margin: 20px -20px -20px 20px;
   }
 
-  #professional #faq {
+  div.professional #faq {
     margin-top: 50px;
     margin-right: 280px; /* avoid text wrapping underneath #request form */
   }
@@ -1881,43 +1877,43 @@ div.about p.logos {
 
   /* Data services / Professional services page */
   
-  #professional #process .lead {
+  div.professional #process .lead {
     float: left;
     width: 260px;
     margin-right: 20px;
   }
 
-  #professional #services ul {
+  div.professional #services ul {
     overflow: auto;
     margin: 0;
   }
 
-  #professional #services li,
-  #professional #case-studies p {
+  div.professional #services li,
+  div.professional #case-studies p {
     font-size: 16px;
     line-height: 22px;
     margin-bottom: 15px;
   }
 
-  #professional #services li:nth-child(odd){
+  div.professional #services li:nth-child(odd){
     float: left;
     clear: left;
     width: 380px;
     margin-left: 25px;
   }
 
-  #professional #services li:nth-child(even){
+  div.professional #services li:nth-child(even){
     float: right;
     clear: right;
     width: 380px;
   }
 
-  div.home #case-studies .carousel-wrapper,
-  div.home #case-studies .case-study {
+  div.professional #case-studies .carousel-wrapper,
+  div.professional #case-studies .case-study {
     width: 840px;
   }
 
-  div.home #case-studies .thumbnail {
+  div.professional #case-studies .thumbnail {
     max-width: 40%;
   }
 
@@ -1991,21 +1987,21 @@ div.about p.logos {
 
   /* Data services / Professional services page */
 
-  div.home #professional #process p {
+  div.professional #process p {
     width: 335px;
     float: left;
     margin-left: 50px;
   }
   
-  div.home #professional #process p.lead {
+  div.professional #process p.lead {
     margin-left: 0;
   }
 
-  #professional #process #about-our-team a {
+  div.professional #process #about-our-team a {
     display: inline-block;
   }
 
-  div.home #professional #services li {
+  div.professional #services li {
     float: left;
     width: 335px;
     margin-left: 50px;
@@ -2013,14 +2009,14 @@ div.about p.logos {
     clear: none;
   }
 
-  div.home #professional #services li:first-child,
-  div.home #professional #services li:nth-child(4) {
+  div.professional #services li:first-child,
+  div.professional #services li:nth-child(4) {
     clear: left;
     margin-left: 25px;
   }
 
-  div.home #case-studies .carousel-wrapper,
-  div.home #case-studies .case-study {
+  div.professional #case-studies .carousel-wrapper,
+  div.professional #case-studies .case-study {
     width: 1140px;
   }
 

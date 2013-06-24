@@ -1303,12 +1303,11 @@ div.professional #case-studies,
 div.professional #customers {
   margin-top: 20px;
   padding-top: 25px;
-  border-top: 1px solid #DBCFA0;
+  border-top: 1px solid #eee;
 }
 
 div.professional #case-studies {
   padding-bottom: 25px;
-  border-bottom: 1px solid #DBCFA0;
   margin-bottom: 20px;
 }
 
@@ -1342,12 +1341,12 @@ div.professional #case-studies .carousel-wrapper {
 }
 
 div.professional #case-studies .carousel {
-  width: 16800px; /* 20 x 840px */
+  width: 17600px; /* 20 x 880px */
 }
 
 div.professional #case-studies .case-study {
   float: left;
-  width: 240px;
+  width: 280px;
 }
 
 div.professional #case-studies .nav {
@@ -1774,7 +1773,7 @@ div.about p.logos {
 
   div.professional #case-studies .carousel-wrapper,
   div.professional #case-studies .case-study {
-    width: 540px;
+    width: 580px;
   }
 
   div.professional #case-studies .thumbnail {
@@ -1910,7 +1909,7 @@ div.about p.logos {
 
   div.professional #case-studies .carousel-wrapper,
   div.professional #case-studies .case-study {
-    width: 840px;
+    width: 880px;
   }
 
   div.professional #case-studies .thumbnail {
@@ -2017,7 +2016,7 @@ div.about p.logos {
 
   div.professional #case-studies .carousel-wrapper,
   div.professional #case-studies .case-study {
-    width: 1140px;
+    width: 1180px;
   }
 
 }

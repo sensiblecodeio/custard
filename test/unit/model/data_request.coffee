@@ -36,9 +36,11 @@ request = require 'request'
 mongoose = require 'mongoose'
 
 {DataRequest} = require 'model/data_request'
+email = require 'lib/email'
 
 describe 'Data request (server)', ->
   before ->
+    @emailStub = sinon.stub email, 'dataRequestEmail'
     @requestStub = sinon.stub request, 'post', (options, cb) ->
       cb null, 'fake request', 9999
     @dataRequest = new DataRequest
@@ -46,11 +48,10 @@ describe 'Data request (server)', ->
       phone: '1-800-MY-APPLE'
       email: 'steve@example.com'
       description: 'Thermonuclear war.'
-    @emailStub = sinon.stub @dataRequest, 'sendEmail'
 
   context 'when the data request is sent to the box', ->
     before (done) ->
-      @dataRequest.sendToBox done
+      @dataRequest.send done
 
     it 'the correct data is sent', ->
       correct = @requestStub.calledWith

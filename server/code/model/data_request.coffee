@@ -1,5 +1,6 @@
 _ = require 'underscore'
 request = require 'request'
+email = require 'lib/email'
 
 class exports.DataRequest
   constructor: (options) ->
@@ -20,19 +21,15 @@ class exports.DataRequest
         @id = parseInt(body)
         cb null
 
-  sendEmail: (cb) ->
-    cb()
-
   send: (cb) ->
     @sendToBox (err) =>
       if err?
         return cb err
       else
-        @sendEmail (err) =>
+        email.dataRequestEmail this, (err) =>
           if err?
-            return cb err
-          else
-            return cb()
+            console.warn "Error sending data request email: #{err}"
+        return cb()
 
   shellEscape: (command) ->
     return "'#{command.replace /'/g, "'\"'\"'" }'"

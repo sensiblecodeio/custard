@@ -48,4 +48,7 @@ class exports.DataRequest
           return cb()
 
   shellEscape: (command) ->
-    return "'#{command.replace /'/g, "'\"'\"'" }'"
+    if command?
+      return "'#{command?.replace /'/g, "'\"'\"'" }'"
+    else
+      return "''"

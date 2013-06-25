@@ -46,7 +46,6 @@ describe 'Data request (server)', ->
       cb null, 'fake request', 9999
     @dataRequest = new DataRequest
       name: 'Steve Jobs'
-      phone: '1-800-MY-APPLE'
       email: 'stevejobs@sharklasers.com'
       description: 'Thermonuclear war.'
       ip: '8.8.8.8'
@@ -60,7 +59,7 @@ describe 'Data request (server)', ->
         uri: "#{process.env.CU_REQUEST_BOX_URL}/exec"
         form:
           apikey: process.env.CU_REQUEST_API_KEY
-          cmd: "~/tool/request.py 'Steve Jobs' '1-800-MY-APPLE' 'stevejobs@sharklasers.com' 'Thermonuclear war.' '8.8.8.8'"
+          cmd: "~/tool/request.py 'Steve Jobs' '' 'stevejobs@sharklasers.com' 'Thermonuclear war.' '8.8.8.8'"
       correct.should.be.true
 
     it 'a ticket ID is returned', ->

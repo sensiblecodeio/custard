@@ -35,7 +35,7 @@ describe 'API', ->
             form:
               name: 'Steve Jobs'
               phone: '1-800-MY-APPLE'
-              email: 'steve@example.com'
+              email: 'stevejobs@sharklasers.com'
               description: 'Need data for thermonuclear war against android. Pls help. Kthxbai.'
           , (err, res, body) =>
             @body = body

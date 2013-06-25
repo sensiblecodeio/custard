@@ -28,7 +28,10 @@ class exports.DataRequest
       else
         email.dataRequestEmail this, (err) =>
           if err?
-            console.warn "Error sending data request email: #{err}"
+            console.warn "Error sending data request email to professional services team: #{err}"
+        email.dataRequestConfirmation this, (err) =>
+          if eff?
+            console.warn "Error sending data request confirmation to customer: #{err}"
         return cb()
 
   shellEscape: (command) ->

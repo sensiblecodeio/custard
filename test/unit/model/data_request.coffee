@@ -12,7 +12,7 @@ describe 'Data Request (client)', ->
       @attrs =
         name: 'Steve Jobs'
         phone: '1-800-MY-APPLE'
-        email: 'steve@example.com'
+        email: 'stevejobs@sharklasers.com'
         description: 'Need data for thermonuclear war against android. Pls help. Kthxbai.'
 
       @eventSpy = sinon.spy()
@@ -40,13 +40,14 @@ email = require 'lib/email'
 
 describe 'Data request (server)', ->
   before ->
-    @emailStub = sinon.stub email, 'dataRequestEmail'
+    @dsEmailStub = sinon.stub email, 'dataRequestEmail'
+    @customerEmailStub = sinon.stub email, 'dataRequestConfirmation'
     @requestStub = sinon.stub request, 'post', (options, cb) ->
       cb null, 'fake request', 9999
     @dataRequest = new DataRequest
       name: 'Steve Jobs'
       phone: '1-800-MY-APPLE'
-      email: 'steve@example.com'
+      email: 'stevejobs@sharklasers.com'
       description: 'Thermonuclear war.'
 
   context 'when the data request is sent to the box', ->
@@ -58,11 +59,14 @@ describe 'Data request (server)', ->
         uri: "#{process.env.CU_REQUEST_BOX_URL}/exec"
         form:
           apikey: process.env.CU_REQUEST_API_KEY
-          cmd: "~/tool/request.py 'Steve Jobs' '1-800-MY-APPLE' 'steve@example.com' 'Thermonuclear war.'"
+          cmd: "~/tool/request.py 'Steve Jobs' '1-800-MY-APPLE' 'stevejobs@sharklasers.com' 'Thermonuclear war.'"
       correct.should.be.true
 
     it 'a ticket ID is returned', ->
       @dataRequest.id.should.equal 9999
 
+    it 'sends an email to the professional services team', ->
+      @dsEmailStub.called.should.be.true
+
     it 'sends an email to the customer', ->
-      @emailStub.called.should.be.true
+      @customerEmailStub.called.should.be.true

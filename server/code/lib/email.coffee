@@ -63,3 +63,34 @@ exports.dataRequestEmail = (dataRequest, callback) ->
       callback err
     else
       callback null
+
+exports.dataRequestConfirmation = (dataRequest, callback) ->
+  transport = nodemailer.createTransport 'SMTP',
+    service: "SendGrid"
+    auth:
+      user: process.env.CU_SENDGRID_USER
+      pass: process.env.CU_SENDGRID_PASS
+
+  mailOptions =
+    from: process.env.CU_REQUEST_EMAIL
+    to: dataRequest.email
+    subject: "Thank you for your ScraperWiki call-back request [ID #{dataRequest.id}]"
+    text: """
+    Dear #{dataRequest.name},
+    
+    Thank you for your ScraperWiki call-back request.
+    
+    Your ticket ID is ##{dataRequest.id}. A member of our Professional Services team will be in touch shortly.
+    
+    Regards,
+    
+    ScraperWiki
+    """
+
+  # send mail with defined transport object
+  transport.sendMail mailOptions, (err, res) ->
+    transport.close()
+    if err?
+      callback err
+    else
+      callback null

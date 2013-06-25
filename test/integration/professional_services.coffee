@@ -12,7 +12,7 @@ describe 'Professional Services', ->
     before (done) ->
       wd40.fill '#id_name', 'Steve Jobs', ->
         wd40.fill '#id_phone', '1-800-MY-APPLE', ->
-          wd40.fill '#id_email', 'steve@example.com', ->
+          wd40.fill '#id_email', 'stevejobs@sharklasers.com', ->
             wd40.fill '#id_description', 'Need data for thermonuclear war against android. Pls help. Kthxbai.', ->
               wd40.click '#request input[type="submit"]', done
 

@@ -15,7 +15,28 @@ PATH=$(pwd)/node_modules/.bin:$(pwd)/bin:$PATH
 # See http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_06_02
 export NODE_PATH=$(pwd)/server/code${NODE_PATH+:}${NODE_PATH}
 
-thisdir=$(basename "$(pwd)")
+closest () {
+  # Searches parent directories to find the first one that contains
+  # "$1" then prints the full path, including the appended "$1".
+  # example use:
+  # cd $(closest swops-secret)
+
+  while ! [ -e "$1" ]
+  do
+    if [ "$(pwd)" = '/' ]
+    then
+      # Didn't find it, blank output
+      return 1
+    fi
+    cd ..
+  done
+  printf "%s\n" "$(pwd)/$1"
+}
+# let $here be the directory that contains the LICENCE file.
+here=$(closest LICENCE)
+here=$(dirname "$here")
+
+thisdir=$(basename "$here")
 first2=$(printf '%.2s' "$thisdir")
 
 PS1="[$first2]$PS1"
@@ -29,7 +50,7 @@ deactivate () {
 
 mocha () {
     # Clean DB out and load fixtures
-    coffee test/cleaner.coffee
+    test -f test/cleaner.coffee && coffee test/cleaner.coffee
 
     # Consider pushing to external program.
     eval last=\${$#}

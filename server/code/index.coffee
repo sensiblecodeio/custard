@@ -360,9 +360,9 @@ dataRequest = (req, resp) ->
     description: req.body.description
   dataRequest.send (err) ->
     if err?
+      console.warn "Error trying submit data request", err
       return resp.send 500, error: 'Error trying submit data request'
     else
-      console.log dataRequest
       return resp.send 201, dataRequest
 
 postStatus = (req, resp) ->

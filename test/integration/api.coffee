@@ -41,8 +41,8 @@ describe 'API', ->
             @body = body
             done()
 
-        it 'returns ok', ->
-          @body.should.include '9999'
+        it 'returns a valid ticket ID', ->
+          JSON.parse(@body).id.should.be.above 1999
     
     describe 'Sign up', ->
       context 'POST /api/<username>', ->

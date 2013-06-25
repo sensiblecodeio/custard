@@ -4,7 +4,6 @@ request = require 'request'
 class exports.DataRequest
   constructor: (options) ->
     _.extend this, options
-    @id = 9999
 
   sendToBox: (cb) ->
     request.post
@@ -18,7 +17,7 @@ class exports.DataRequest
       else if parseInt(body) is NaN
         cb "Returned ticket ID is not a number: #{body}"
       else
-        @id = body
+        @id = parseInt(body)
         cb null
 
   sendEmail: (cb) ->

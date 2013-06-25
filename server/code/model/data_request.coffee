@@ -20,7 +20,7 @@ class exports.DataRequest
       uri: "#{process.env.CU_REQUEST_BOX_URL}/exec"
       form:
         apikey: process.env.CU_REQUEST_API_KEY
-        cmd: "~/tool/request.py #{@shellEscape @name} #{@shellEscape @phone} #{@shellEscape @email} #{@shellEscape @description}"
+        cmd: "~/tool/request.py #{@shellEscape @name} #{@shellEscape @phone} #{@shellEscape @email} #{@shellEscape @description} #{@shellEscape @ip}"
     , (err, resp, body) =>
       if err
         cb err

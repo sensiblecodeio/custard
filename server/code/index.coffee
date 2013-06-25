@@ -358,6 +358,7 @@ dataRequest = (req, resp) ->
     phone: req.body.phone
     email: req.body.email
     description: req.body.description
+    ip: req.ip
   dataRequest.send (err) ->
     if err?
       console.warn "Error trying submit data request", err

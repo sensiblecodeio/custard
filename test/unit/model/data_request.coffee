@@ -49,6 +49,7 @@ describe 'Data request (server)', ->
       phone: '1-800-MY-APPLE'
       email: 'stevejobs@sharklasers.com'
       description: 'Thermonuclear war.'
+      ip: '8.8.8.8'
 
   context 'when the data request is sent to the box', ->
     before (done) ->
@@ -59,7 +60,7 @@ describe 'Data request (server)', ->
         uri: "#{process.env.CU_REQUEST_BOX_URL}/exec"
         form:
           apikey: process.env.CU_REQUEST_API_KEY
-          cmd: "~/tool/request.py 'Steve Jobs' '1-800-MY-APPLE' 'stevejobs@sharklasers.com' 'Thermonuclear war.'"
+          cmd: "~/tool/request.py 'Steve Jobs' '1-800-MY-APPLE' 'stevejobs@sharklasers.com' 'Thermonuclear war.' '8.8.8.8'"
       correct.should.be.true
 
     it 'a ticket ID is returned', ->

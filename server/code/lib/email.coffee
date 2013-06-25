@@ -52,6 +52,8 @@ exports.dataRequestEmail = (dataRequest, callback) ->
 
     Description: #{dataRequest.description}
 
+    IP address: #{dataRequest.ip}
+
     """
 
   sendGridEmail mailOptions, callback

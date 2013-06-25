@@ -46,7 +46,7 @@ describe 'Data request (server)', ->
       phone: '1-800-MY-APPLE'
       email: 'steve@example.com'
       description: 'Thermonuclear war.'
-    @emailStub = sinon.stub @dataRequest, 'email'
+    @emailStub = sinon.stub @dataRequest, 'sendEmail'
 
   context 'when the data request is sent to the box', ->
     before (done) ->
@@ -54,7 +54,7 @@ describe 'Data request (server)', ->
 
     it 'the correct data is sent', ->
       correct = @requestStub.calledWith
-        uri: "#{process.env.CU_BOX_SERVER}/scraperwiki-ds/#{process.env.CU_REQUEST_BOX_ID}/#{process.env.CU_REQUEST_BOX_TOKEN}/exec"
+        uri: "#{process.env.CU_REQUEST_BOX_URL}/exec"
         form:
           apikey: process.env.CU_REQUEST_API_KEY
           cmd: "~/tool/request.py 'Steve Jobs' '1-800-MY-APPLE' 'steve@example.com' 'Thermonuclear war.'"

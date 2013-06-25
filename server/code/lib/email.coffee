@@ -2,13 +2,23 @@ nodemailer = require("nodemailer")
 
 #TODO: html email (templates?)
 
-exports.signUpEmail = (user, token, callback) ->
+sendGridEmail = (mailOptions, callback) ->
   transport = nodemailer.createTransport 'SMTP',
     service: "SendGrid"
     auth:
       user: process.env.CU_SENDGRID_USER
       pass: process.env.CU_SENDGRID_PASS
 
+  # send mail with defined transport object
+  transport.sendMail mailOptions, (err, res) ->
+    transport.close()
+    if err?
+      callback err
+    else
+      callback null
+
+
+exports.signUpEmail = (user, token, callback) ->
   mailOptions =
     from: 'hello@scraperwiki.com'
     to: user.email[0]
@@ -24,21 +34,9 @@ exports.signUpEmail = (user, token, callback) ->
     ScraperWiki
     """
 
-  # send mail with defined transport object
-  transport.sendMail mailOptions, (err, res) ->
-    transport.close()
-    if err?
-      callback err
-    else
-      callback null
+  sendGridEmail mailOptions, callback
 
 exports.dataRequestEmail = (dataRequest, callback) ->
-  transport = nodemailer.createTransport 'SMTP',
-    service: "SendGrid"
-    auth:
-      user: process.env.CU_SENDGRID_USER
-      pass: process.env.CU_SENDGRID_PASS
-
   mailOptions =
     from: dataRequest.email
     to: process.env.CU_REQUEST_EMAIL
@@ -56,21 +54,9 @@ exports.dataRequestEmail = (dataRequest, callback) ->
 
     """
 
-  # send mail with defined transport object
-  transport.sendMail mailOptions, (err, res) ->
-    transport.close()
-    if err?
-      callback err
-    else
-      callback null
+  sendGridEmail mailOptions, callback
 
 exports.dataRequestConfirmation = (dataRequest, callback) ->
-  transport = nodemailer.createTransport 'SMTP',
-    service: "SendGrid"
-    auth:
-      user: process.env.CU_SENDGRID_USER
-      pass: process.env.CU_SENDGRID_PASS
-
   mailOptions =
     from: process.env.CU_REQUEST_EMAIL
     to: dataRequest.email
@@ -87,10 +73,4 @@ exports.dataRequestConfirmation = (dataRequest, callback) ->
     ScraperWiki
     """
 
-  # send mail with defined transport object
-  transport.sendMail mailOptions, (err, res) ->
-    transport.close()
-    if err?
-      callback err
-    else
-      callback null
+  sendGridEmail mailOptions, callback

@@ -34,11 +34,17 @@ scraperwiki.exec = (cmd, success, error) ->
     data:
       apikey: settings.source.apikey
       cmd: cmd
+    complete: ->
+      scraperwiki.exec.pending -= 1
+
   if success?
     options.success = success
   if error?
     options.error = error
+  scraperwiki.exec.pending += 1
   $.ajax options
+
+scraperwiki.exec.pending = 0
 
 scraperwiki.shellEscape = (command) ->
   "'#{command.replace(/'/g,"'\"'\"'")}'"

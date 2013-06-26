@@ -21,7 +21,7 @@
         "$": true
     },
     "free": {
-        "boxServer": "free.scraperwiki.com",
+        "boxServer": "free-ec2.scraperwiki.com",
         "maxDiskSpaceMB": 8,
         "maxHourCPUPerDay": 0.5,
         "maxNumDatasets": 3,

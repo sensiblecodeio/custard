@@ -1,0 +1,27 @@
+#!/bin/sh
+
+closest () {
+  # Searches parent directories to find the first one that contains
+  # "$1" then prints the full path, including the appended "$1".
+  # example use:
+  # cd $(closest swops-secret)
+
+  while ! [ -e "$1" ]
+  do
+    if [ "$(pwd)" = '/' ]
+    then
+      # Didn't find it, blank output
+      return 1
+    fi
+    cd ..
+  done
+  printf "%s\n" "$(pwd)/$1"
+}
+
+possibly_quoted=$(
+  cd $(closest charm-secrets)
+  sed -n '/CU_DB/s/.* \(.*\)/\1/p' config/live/cobalt.yaml)
+
+eval url=$possibly_quoted
+cd $(closest custard)
+bin/mongurl $url

@@ -72,7 +72,7 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.showView subnavView
 
   professional: -> 
-    subnavView = new Cu.View.Subnav {text: 'Professional services'}
+    subnavView = new Cu.View.ProfessionalNav
     contentView = new Cu.View.Professional
     @appView.showView contentView
     @subnavView.showView subnavView

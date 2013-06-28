@@ -437,3 +437,34 @@ class Cu.View.ToolShopNav extends Backbone.View
       </div>
       <hr>""")
     @
+
+
+class Cu.View.ProfessionalNav extends Backbone.View
+  className: 'subnav-wrapper'
+
+  events:
+      'click .nav-pills a': 'navClick'
+
+  navClick: (e) ->
+    console.log e.target.hash
+    e.preventDefault()
+    e.stopPropagation()
+    if $(e.target.hash).length > 0
+      $('html, body').animate
+        scrollTop: $(e.target.hash).offset().top - 40
+      , 250
+
+  render: ->
+    @$el.html("""
+      <div class="btn-toolbar" id="subnav-path">
+        <h1 class="btn-group">
+          <a class="btn btn-link" href="/professional">Professional Services</a>
+        </h1>
+      </div>
+      <ul class="nav nav-pills" id="subnav-options">
+        <li><a data-nonpushstate href="#services">Our Services</a></li>
+        <li><a data-nonpushstate href="#case-studies">Case Studies</a></li>
+        <li><a data-nonpushstate href="#request">Get in touch</a></li>
+      </ul>
+      <hr>""").find(".nav a[href='#{window.location.pathname}']").parent().addClass('active')
+    @

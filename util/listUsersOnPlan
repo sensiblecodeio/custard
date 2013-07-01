@@ -1,0 +1,16 @@
+#!/usr/bin/env coffee
+fs = require 'fs'
+
+mongoose = require 'mongoose'
+async = require 'async'
+
+{User} = require 'model/user'
+
+
+mongoose.connect process.env.CU_DB
+User.find accountLevel: process.argv[2], (err, users) ->
+  async.eachLimit users, 1, (user, callback) ->
+    console.log user.shortName
+    callback()
+  , ->
+    process.exit()

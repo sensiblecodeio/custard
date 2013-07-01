@@ -1,0 +1,39 @@
+#!/bin/sh
+
+out () {
+  printf '%s\n' "$1"
+}
+die () {
+  printf '%s\n' "$1" 1>&2
+  exit 4
+}
+
+usage () {
+  out "mongurl [-p] mongodb://..."
+}
+
+print=false
+while [ $# -gt 0 ]
+do
+  case $1 in
+    (-p|--print) shift; print=true;;
+    (-*) usage 1>&2; exit 2;;
+    (*) break;;
+  esac
+done
+
+# Validate input
+out "$1" | grep '^mongodb://' > /dev/null ||
+  die "Mongo URI should start mongodb://"
+
+split () {
+  sed 's,^mongodb://\([^:]*\):\([^@]*\)@\(.*\),--username \1 --password \2 \3,'
+}
+
+if $print
+then
+  out "$1" | split
+  exit 0
+fi
+
+mongo $(out "$1" | split)

@@ -11,7 +11,7 @@
   "dependencies": {
     "express": "3.x",
     "coffee-script": "~1.4",
-    "connect-assets": "2.2.1",
+    "connect-assets": "~2.4.3",
     "bcrypt": "~0.7.3",
     "nibbler": "git+https://github.com/mattrobenolt/node_nibbler.git",
     "passport": "~0.1.15",
@@ -31,7 +31,7 @@
     "nodemailer": "~0.3.43",
     "qs": "~0.5.5",
     "xml2js": "~0.2.6",
-    "nodetime": "~0.8.12",
+    "nodetime": "~0.8.13",
     "mailchimp": "~0.9.5",
     "exceptional-node": "~0.1.1",
     "nodealytics": "0.0.5"
@@ -52,7 +52,6 @@
     "optimist": "~0.5.2",
     "jquery": "~1.7.3",
     "pow-mongodb-fixtures": "*",
-    "zombie": "2.0.0-alpha9",
     "backbone-relational": "~0.7.0",
     "jsdom": "~0.3.4",
     "wd": "0.0.30",

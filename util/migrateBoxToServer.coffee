@@ -126,6 +126,9 @@ Box.findOneByName BOX_NAME, (err, box) ->
     process.exit 1
   console.log "Migrating box #{box.name}"
   box = Box.makeModelFromMongo box
+  if box.server == NEW_BOX_SERVER
+    console.log "Already Migrated" 
+    process.exit 1
   User.findByShortName box.users[0], (err, user) ->
     migratePasswdEntry box, user, ->
       transferBoxData box, user, ->

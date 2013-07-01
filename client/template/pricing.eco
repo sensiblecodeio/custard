@@ -8,9 +8,9 @@
   <p class="cost">$29<small>/mth</small></p>
   <p>Unlimited datasets</p>
   <p class="muted">Each dataset can store 256MB data<br/>and use 30 CPU minutes per day</p>
-  <% if window?.user.effective?.accountLevel == 'large': %>
+  <% if window?.user.effective?.accountLevel.match /large/: %>
   <span class="currentPlan"><i class="icon-ok space"></i> Current Plan</span>
-  <% else if window?.user.effective?.accountLevel == 'free': %>
+  <% else if window?.user.effective?.accountLevel.match /free/: %>
   <span class="cta">Upgrade</span>
   <% else: %>
   <span class="cta">Sign Up</span>
@@ -22,9 +22,9 @@
   <p class="cost">$9<small>/mth</small></p>
   <p>10 datasets</p>
   <p class="muted">Each dataset can store 64MB data<br/>and use 30 CPU minutes per day</p>
-  <% if window?.user.effective?.accountLevel == 'medium': %>
+  <% if window?.user.effective?.accountLevel.match /medium/: %>
   <span class="currentPlan"><i class="icon-ok space"></i> Current Plan</span>
-  <% else if window?.user.effective?.accountLevel == 'free': %>
+  <% else if window?.user.effective?.accountLevel.match /free/: %>
   <span class="cta">Upgrade</span>
   <% else: %>
   <span class="cta">Sign Up</span>
@@ -37,7 +37,7 @@
   <p class="cost">Free</p>
   <p>3 datasets</p>
   <p class="muted">Each dataset can store 8MB data<br/>and use 30 CPU minutes per day</p>
-  <% if window?.user.effective?.accountLevel == 'free': %>
+  <% if window?.user.effective?.accountLevel.match /free/: %>
   <span class="currentPlan"><i class="icon-ok space"></i> Current Plan</span>
   <% else: %>
   <span class="cta">Sign Up</span>

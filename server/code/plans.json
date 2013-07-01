@@ -21,7 +21,7 @@
         "$": true
     },
     "free": {
-        "boxServer": "free.scraperwiki.com",
+        "boxServer": "free-ec2.scraperwiki.com",
         "maxDiskSpaceMB": 8,
         "maxHourCPUPerDay": 0.5,
         "maxNumDatasets": 3,
@@ -34,6 +34,13 @@
         "maxNumDatasets": 100,
         "$": false
     },
+    "grandfather-ec2": {
+        "boxServer": "premium.scraperwiki.com",
+        "maxDiskSpaceMB": 8000,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 100,
+        "$": false
+    },
     "large": {
         "boxServer": "box.scraperwiki.com",
         "maxDiskSpaceMB": 256,
@@ -41,8 +48,22 @@
         "maxNumDatasets": 81,
         "$": true
     },
+    "large-ec2": {
+        "boxServer": "premium.scraperwiki.com",
+        "maxDiskSpaceMB": 256,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 81,
+        "$": true
+    },
     "medium": {
         "boxServer": "box.scraperwiki.com",
+        "maxDiskSpaceMB": 64,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 10,
+        "$": true
+    },
+    "medium-ec2": {
+        "boxServer": "premium.scraperwiki.com",
         "maxDiskSpaceMB": 64,
         "maxHourCPUPerDay": 0.5,
         "maxNumDatasets": 10,

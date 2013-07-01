@@ -336,6 +336,7 @@ class Cu.View.SignUpNav extends Backbone.View
     # Assumes @options.plan is set
     plan = @options.plan
     plan = plan.toUpperCase()[0] + plan.toLowerCase()[1..]
+    @$el.html JST['signupnav'] plan: plan
     this
 
 
@@ -351,7 +352,7 @@ class Cu.View.AboutNav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
-    @$el.html(JST['aboutnav']()).find(".nav a[href='#{window.location.pathname}']").parent().addClass('active')
+    @$el.html(JST['aboutnav'] @options).find(".nav a[href='#{window.location.pathname}']").parent().addClass('active')
     this
 
 
@@ -373,3 +374,25 @@ class Cu.View.ToolShopNav extends Backbone.View
       </div>
       <hr>""")
     @
+
+
+class Cu.View.ProfessionalNav extends Backbone.View
+  className: 'subnav-wrapper professional'
+
+  events:
+      'click .nav-pills a': 'navClick'
+
+  navClick: (e) ->
+    console.log e.target.hash
+    e.preventDefault()
+    e.stopPropagation()
+    if $(e.target.hash).length > 0
+      $('html, body').animate
+        scrollTop: $(e.target.hash).offset().top - 40
+      , 250
+
+  render: ->
+    @$el.html(JST['professionalnav'])
+      .find(".nav a[href='#{window.location.pathname}']")
+      .parent().addClass('active')
+    this

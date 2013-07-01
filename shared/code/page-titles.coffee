@@ -29,6 +29,8 @@ SubNav =
     text: 'Contact Us'
   'about':
     text: 'About ScraperWiki'
+  'professional':
+    text: 'Professional Services'
   'index':
     text: ''
 

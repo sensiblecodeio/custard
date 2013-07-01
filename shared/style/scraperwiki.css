@@ -707,35 +707,77 @@ body {
 /* Less shouty hero unit please, we're British */
 
 .hero-unit {
-  padding: 30px;
+  padding: 25px 30px;
+  font-size: 18px;
+  line-height: 26px;
 }
 
-.hero-unit > h2 {
-  margin-top: 0;
+.hero-unit > h1 {
+  font-size: 32px;
+  line-height: 40px;
+  margin: 0 0 20px 0;
 }
+
+.hero-unit > p:last-child {
+  margin-bottom: 0;
+}
+
+
 
 @media only screen and (min-width: 620px) {
+
   .container {
     width: 580px;
   }
+
+  .hero-unit > h1 {
+    font-size: 36px;
+    line-height: 42px;
+    margin-bottom: 25px;
+  }
+
 }
 
 @media only screen and (min-width: 920px) {
+
   .container {
     width: 880px;
   }
 
   .hero-unit {
-    padding: 50px;
+    padding: 42px 50px;
+    font-size: 22px;
+    line-height: 30px;
   }
+
+  .hero-unit .lead {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .hero-unit > h1 {
+    font-size: 42px;
+    line-height: 50px;
+    margin-bottom: 30px;
+  }
+
 }
 
 @media only screen and (min-width: 1220px) {
+
   .container {
     width: 1180px;
   }
 
   .hero-unit {
-    padding: 60px;
+    padding: 50px 60px;
+    font-size: 28px;
+    line-height: 36px;
   }
+
+  .hero-unit > h1 {
+    font-size: 50px;
+    line-height: 56px;
+  }
+
 }

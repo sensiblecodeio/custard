@@ -3,7 +3,7 @@
 <% if window.user.effective?.isStaff: %>
 <li><a href="/tools/people-pack">Tool Packs</a></li>
 <% end %>
-<li><a href="https://scraperwiki.com/dataservices/">Data Services</a></li>
+<li><a href="/professional">Professional Services</a></li>
 <li><a href="/help">Help</a></li>
 <% if @displayName: %>
 <li class="logout"><a href="/logout" data-nonpushstate>Log out</a></li>

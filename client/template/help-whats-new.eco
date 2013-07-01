@@ -1,6 +1,6 @@
 <div class="hero-unit" style="background-color: #DAF0FF">
   <img class="pull-right" src="/image/tractor-500x320.png" width="220" height="141" alt="The ScraperWiki digger" style="margin: 0 0 10px 10px">
-  <h2>Welcome to the ScraperWiki beta!</h2>
+  <h1>Welcome to the ScraperWiki beta!</h1>
   <p class="lead">The new ScraperWiki is quite different to ScraperWiki&nbsp;Classic.<br>Here&rsquo;s a sixty-second rundown of what&rsquo;s changed and&nbsp;why.</p>
   <p style="margin-bottom: 0">
     <a class="btn btn-large" data-nonpushstate href="/help/" style="margin-right: 20px;">Read the docs</a>
@@ -37,7 +37,7 @@
 
 <hr>
 
-<div class="row-fluid" style="margin-bottom: 80px;">
+<div class="row-fluid">
   <div class="span4">
     <h2 style="margin-top: -4px;">Why the change?</h2>
   </div>

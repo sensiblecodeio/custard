@@ -24,6 +24,7 @@ class Cu.Router.Main extends Backbone.Router
     # TODO: revert to standard routes?
     @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'main'
+    @route RegExp('professional/?'), 'professional'
     @route RegExp('(?:docs|help)/?'), 'help'
     @route RegExp('(?:docs|help)/([^/]+)/?'), 'help'
     @route RegExp('pricing/?'), 'pricing'
@@ -62,6 +63,12 @@ class Cu.Router.Main extends Backbone.Router
   homeLoggedIn: ->
     contentView = new Cu.View.DatasetList
     subnavView = new Cu.View.DataHubNav
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  professional: -> 
+    subnavView = new Cu.View.ProfessionalNav
+    contentView = new Cu.View.Professional
     @appView.showView contentView
     @subnavView.showView subnavView
 

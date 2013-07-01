@@ -13,7 +13,7 @@ body {
 }
 
 /* A .container style is set in scraperwiki.css, which most pages will use.
-   Some tools, however, might look better full screen. When this happens,
+   Tools, however, look better full screen. When this happens,
    the other .container elements (eg: header) should get 100% width too. */
 
 body.fullscreen .container {
@@ -110,6 +110,7 @@ body.fullscreen .container {
 }
 
 #footer {
+  margin-top: 50px;
   padding: 15px 0;
   font-size: 14px;
 }
@@ -1025,7 +1026,6 @@ div.pricing .plan.corporate p {
 
 div.help {
   line-height: 24px; /* the default 21px is a bit tight for so much text */
-  margin-bottom: 80px; /* prevent content from hitting bottom of window */
 }
 
 div.help nav.well {
@@ -1144,20 +1144,350 @@ a.help-tile h3 {
   font-size: 14px;
 }
 
-div.home .case-study,
 div.help .case-study {
   margin: 20px 0;
 }
 
-div.home .hero-unit,
-div.help .hero-unit {
-  margin-bottom: 0;
-}
-
-div.home .case-study h3,
 div.help .case-study h3 {
   line-height: 30px;
 }
+
+/* Home page */
+
+div.home .hero-unit {
+  background: #a9d9f9;
+  background: -moz-linear-gradient(45deg,  #a9d9f9 0%, #edf7ff 100%);
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#a9d9f9), color-stop(100%,#edf7ff));
+  background: -webkit-linear-gradient(45deg,  #a9d9f9 0%,#edf7ff 100%);
+  background: -o-linear-gradient(45deg,  #a9d9f9 0%,#edf7ff 100%);
+  background: -ms-linear-gradient(45deg,  #a9d9f9 0%,#edf7ff 100%);
+  background: linear-gradient(45deg,  #a9d9f9 0%,#edf7ff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9d9f9', endColorstr='#edf7ff',GradientType=1 );
+  text-shadow: 0 1px 1px #edf7ff;
+}
+
+div.home .hero-unit .btn {
+  font-size: 16px;
+  padding: 8px 15px;
+  line-height: 18px;
+}
+
+div.home .hero-unit .btn + .btn {
+  margin: 10px 0 0 0;
+}
+
+div.home .hero-unit .btn .muted {
+  color: #fff;
+  opacity: 0.7;
+}
+
+div.home #use-cases {
+  margin: 0;
+}
+
+div.home #use-cases > li {
+  display: block;
+  position: relative;
+  list-style: none;
+  margin-bottom: 2px;
+}
+
+div.home #use-cases a {
+  display: block;
+  padding: 8px 12px 8px 74px; /* 12px + 50px image + 12px = 74px total padding */
+  color: #fff;
+  text-decoration: none;
+  line-height: 22px;
+  background-color: #666;
+  border: 1px solid #666;
+  text-shadow: 0 1px 0 rgba(100,0,0,0.5);
+  background: -moz-linear-gradient(top,  rgba(255,242,0,0.3) 0%, rgba(255,246,0,0) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,242,0,0.3)), color-stop(100%,rgba(255,246,0,0)));
+  background: -webkit-linear-gradient(top,  rgba(255,242,0,0.3) 0%,rgba(255,246,0,0) 100%);
+  background: -o-linear-gradient(top,  rgba(255,242,0,0.3) 0%,rgba(255,246,0,0) 100%);
+  background: -ms-linear-gradient(top,  rgba(255,242,0,0.3) 0%,rgba(255,246,0,0) 100%);
+  background: linear-gradient(to bottom,  rgba(255,242,0,0.3) 0%,rgba(255,246,0,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dfff200', endColorstr='#00fff600',GradientType=0 );
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+}
+
+div.home #use-cases .explore a {
+  background-color: #F0AD00;
+  border-color: #F0AD00;
+}
+
+div.home #use-cases .explore a:hover {
+  background-color: #ffbb0b;
+  border-color: #ffbb0b;
+}
+
+div.home #use-cases .datascience a {
+  background-color: #D58917;
+  border-color: #D58917;
+}
+
+div.home #use-cases .datascience a:hover {
+  background-color: #e7971f;
+  border-color: #e7971f;
+}
+
+div.home #use-cases .professional a {
+  background-color: #E66E00;
+  border-color: #E66E00;
+}
+
+div.home #use-cases .professional a:hover {
+  background-color: #ff7a00;
+  border-color: #ff7a00;
+}
+
+div.home #use-cases li:first-child a {
+  -webkit-border-top-right-radius: 4px;
+  -webkit-border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+div.home #use-cases li:last-child a {
+  -webkit-border-bottom-right-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+div.home #use-cases li img {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  margin-top: -25px;
+}
+
+div.home #use-cases .professional img {
+  left: 9px;
+}
+
+div.home #more-links {
+  padding-top: 40px;
+  margin-top: 40px;
+  border-top: 1px solid #eee;
+}
+
+div.home #more-links a {
+  color: #999;
+  text-decoration: none;
+}
+
+div.home #more-links a:hover {
+  color: #666;
+}
+
+div.home #more-links h3 {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0 0 5px 0;
+}
+
+
+/* Data Services  / Professional Services page */
+
+div.professional #about-our-team a {
+  padding: 8px 15px;
+  font-size: 16px;
+  display: block;
+}
+
+div.professional #services,
+div.professional #case-studies,
+div.professional #customers {
+  margin-top: 20px;
+  padding-top: 25px;
+  border-top: 1px solid #eee;
+}
+
+div.professional #case-studies {
+  padding-bottom: 25px;
+  margin-bottom: 20px;
+}
+
+div.professional #customers {
+  padding-top: 20px;
+}
+
+div.professional #services li,
+div.professional #case-studies p,
+div.professional #faq p {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+
+div.professional h2 {
+  font-size: 24px;
+  line-height: 26px;
+  margin-bottom: 15px;
+}
+
+div.professional h3 {
+  font-size: 18px;
+  line-height: 21px;
+}
+
+div.professional #case-studies .carousel-wrapper {
+  overflow: hidden;
+  width: 240px;
+  height: 400px;
+}
+
+div.professional #case-studies .carousel {
+  width: 17600px; /* 20 x 880px */
+}
+
+div.professional #case-studies .case-study {
+  float: left;
+  width: 280px;
+}
+
+div.professional #case-studies .nav {
+  margin: 0 0 10px 0;
+}
+
+div.professional #case-studies .nav a {
+  cursor: pointer;
+}
+
+div.professional #case-studies h2 {
+  margin-top: 0;
+}
+
+div.professional #case-studies .thumbnail {
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+.professional .nav-pills > li > a {
+  color: #A5822A;
+}
+
+.professional .nav-pills > li > a:hover, 
+.professional .nav-pills > li > a:focus {
+  background-color: #F1E7B0;
+}
+
+.professional .nav-pills > .active > a, 
+.professional .nav-pills > .active > a:hover, 
+.professional .nav-pills > .active > a:focus {
+  background-color: #FFE07C;
+  color: #000;
+}
+
+.subnav-wrapper.professional .nav-pills > li:last-child > a {
+  margin-top: 1px;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #faa732;
+  background-image: -moz-linear-gradient(top,#fbb450,#f89406);
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#fbb450),to(#f89406));
+  background-image: -webkit-linear-gradient(top,#fbb450,#f89406);
+  background-image: -o-linear-gradient(top,#fbb450,#f89406);
+  background-image: linear-gradient(to bottom,#fbb450,#f89406);
+  background-repeat: repeat-x;
+  border: 1px solid #ccc;
+  border-color: #f89406 #f89406 #ad6704;
+  border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450',endColorstr='#fff89406',GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+div.professional .medium {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #D3B954;
+}
+
+div.professional .medium h4 {
+  font-size: 14px;
+  margin: 0;
+}
+
+div.professional #request {
+  background-color: #FFE07C;
+  margin: 20px 0;
+  padding: 20px;
+}
+
+div.professional form {
+  margin: 10px 0 0 0;
+}
+
+div.professional #request :first-child {
+  margin-top: 0;
+}
+
+div.professional .question:first-child {
+  margin-top: 10px;
+}
+
+div.professional .question p {
+  margin-bottom: 0;
+}
+
+div.professional form .last {
+  text-align: center;
+}
+
+div.professional input[type="text"],
+div.professional textarea {
+  width: 225px;
+}
+
+div.professional textarea {
+  height: 100px;
+}
+
+div.professional #thanks {
+  padding: 10px 10px 0 10px;
+  margin-top: 10px;
+  background: rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.7);
+}
+
+div.professional #thanks p {
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 10px;
+}
+
+div.professional #faq h3 {
+  padding-left: 20px;
+  position: relative;
+  font-size: 16px;
+  line-height: 18px;
+  cursor: pointer;
+}
+
+div.professional #faq h3 i {
+  position: absolute;
+  top: 50%;
+  margin-top: -7px;
+  left: -2px;
+}
+
+div.professional #faq h3.open i {
+  background-position: -313px -119px;
+}
+
+div.professional #faq p {
+  display: none;
+}
+
 
 
 /* About page */
@@ -1165,14 +1495,6 @@ div.help .case-study h3 {
 div.about .hero-unit {
   background-color: #FFEDA8;
   color: #000;
-  font-size: 22px;
-  line-height: 30px;
-}
-
-div.about .hero-unit h1 {
-  font-size: 36px;
-  line-height: 36px;
-  margin-bottom: 20px;
 }
 
 div.about .hero-unit p a {
@@ -1188,10 +1510,6 @@ div.about .hero-unit p a:hover {
 div.about .hero-unit p a:active {
   position: relative;
   top: 1px;
-}
-
-div.about .hero-unit p:last-child {
-  margin-bottom: 0;
 }
 
 div.about h2 {
@@ -1236,6 +1554,19 @@ div.about .people p a {
   color: #444;
 }
 
+div.about .people .showMore i {
+  color: #39c;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 14px;
+  margin-left: 3px;
+  cursor: pointer;
+}
+
+div.about .people .showMore i:hover {
+  text-decoration: underline;
+}
+
 div.about p.logos {
   margin: 20px 0;
 }
@@ -1244,9 +1575,32 @@ div.about p.logos {
 
 @media only screen and (max-width: 619px) {
 
-  div.about .row-fluid .span6 {
+  #footer {
+    text-align: center;
+  }
+
+  #footer li, #footer li + li {
+    margin: 0 5px;
+    float: none;
+  }
+
+  div.about .row-fluid .span6,
+  div.home #more-links .span6 {
     float: none;
     width: 100%;
+    margin-left: 0;
+  }
+
+  div.professional #customers {
+    overflow-x: scroll;
+  }
+
+  div.professional #customers img {
+    min-width: 800px;
+  }
+
+  #case-studies .nav-pills > li > a {
+    padding: 6px 8px;
   }
 
 }
@@ -1365,7 +1719,7 @@ div.about p.logos {
     z-index: 1;
     background-color: #fff;
   }
-  
+
   body.fullscreen #footer {
     display: none; /* hide footer on tool pages (it's covered by iframe anyway) */
   }
@@ -1376,15 +1730,126 @@ div.about p.logos {
     margin: 0 20px 20px 0;
   }
 
-  /* About page */
 
-  div.about .hero-unit h1 {
-    font-size: 40px;
-    line-height: 40px;
-    margin-bottom: 25px;
+  /* Home page */
+
+  div.home .hero-unit h1 span {
+    white-space: nowrap; /* typographical hack to avoid "with ScraperWiki" widow */
+  }
+
+  div.home .hero-unit .btn + .btn {
+    margin: 0 0 0 10px;
+  }
+
+  div.home #use-cases {
+    display: table-row;
+  }
+
+  div.home #use-cases li {
+    display: table-cell;
+    width: 33%;
+    vertical-align: middle;
+  }
+
+  div.home #use-cases li a {
+    padding: 72px 12px 12px 12px;
+    margin-left: 4px;
+  }
+
+  div.home #use-cases li:first-child a {
+    margin-left: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+  }
+
+  div.home #use-cases li:last-child a {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  div.home #use-cases li img {
+    left: 50%;
+    top: 12px;
+    margin-left: -25px;
+    margin-top: 0;
+  }
+
+  div.home #use-cases li.professional img {
+    left: 50%;
+    margin-left: -30px;
+  }
+  
+  div.home #more-links h3 {
+    font-size: 21px;
+    line-height: 24px;
+    margin: 0 0 7px 0;
+  }
+
+
+  /* Data services / Professional services page */
+
+  div.professional #process {
+    overflow: auto;
+  }
+
+  div.professional #process p {
+    float: right;
+    width: 270px;
+  }
+
+  div.professional #process .lead {
+    font-size: 24px;
+    float: none;
+    width: auto;
+  }
+
+  div.professional #process .lead + p {
+    float: left;
+    width: 270px;
+  }
+
+  div.professional #process #about-our-team a {
+    display: block;
+  }
+
+  div.professional #case-studies .nav {
+    float: right;
+    margin: 0;
+  }
+
+  div.professional #case-studies .carousel-wrapper,
+  div.professional #case-studies .case-study {
+    width: 580px;
+  }
+
+  div.professional #case-studies .thumbnail {
+    max-width: 50%;
+    float: right;
+    margin-left: 40px;
+    margin-top: 15px;
+  }
+
+  div.professional #request {
+    float: right;
+    width: 240px;
+    margin: 20px 0 0 20px;
+  }
+
+  div.professional #faq {
+    margin-top: 50px;
+    margin-right: 280px; /* avoid text wrapping underneath #request form */
   }
 
 }
+
 
 @media only screen and (min-width: 920px) {
 
@@ -1405,7 +1870,6 @@ div.about p.logos {
 
   div.help .wrapper {
     padding-left: 280px;
-    padding-bottom: 40px;
   }
 
   div.help nav.well {
@@ -1427,7 +1891,6 @@ div.about p.logos {
     display: block; /* this is overridden on larger screens */
   }
 
-  div.home .case-study,
   div.help .case-study {
     float: left;
     width: 30%;
@@ -1435,23 +1898,88 @@ div.about p.logos {
     margin-bottom: 30px;
   }
 
-  div.home .case-study.last,
   div.help .case-study.last {
     margin-right: 0;
   }
 
-  div.home .case-study p,
   div.help .case-study p {
     font-size: 18px;
   }
 
+
+  /* Home page */
+
+  div.home #use-cases li a {
+    padding: 15px 20px 15px 90px;
+    font-size: 17px;
+    line-height: 22px;
+  }
+
+  div.home #use-cases li img {
+    left: 20px;
+    top: 50%;
+    margin-top: -25px;
+    margin-left: 0;
+  }
+
+  div.home #use-cases li.professional img {
+    left: 15px;
+    margin-left: 0;
+  }
+
+
+  /* Data services / Professional services page */
+  
+  div.professional #process .lead {
+    float: left;
+    width: 260px;
+    margin-right: 40px;
+  }
+
+  div.professional #services ul {
+    overflow: auto;
+    margin: 0;
+  }
+
+  div.professional #services li,
+  div.professional #case-studies p {
+    font-size: 16px;
+    line-height: 22px;
+    margin-bottom: 15px;
+  }
+
+  div.professional #services li:nth-child(odd){
+    float: left;
+    clear: left;
+    width: 380px;
+    margin-left: 25px;
+  }
+
+  div.professional #services li:nth-child(even){
+    float: right;
+    clear: right;
+    width: 380px;
+  }
+
+  div.professional #case-studies .carousel-wrapper,
+  div.professional #case-studies .case-study {
+    width: 880px;
+  }
+
+  div.professional #case-studies .thumbnail {
+    max-width: 40%;
+  }
+
+
   /* About page */
 
   div.about .hero-unit h1 {
-    font-size: 50px;
-    line-height: 50px;
-    margin-bottom: 30px;
     max-width: 700px;
+  }
+
+  div.about .people p {
+    font-size: 16px;
+    line-height: 22px;
   }
 
   #history_and_funding, #thanks {
@@ -1485,9 +2013,80 @@ div.about p.logos {
     width: 1180px;
   }
 
-  div.home .case-study,
   div.help .case-study {
     margin-bottom: 40px;
+  }
+
+
+  /* Home page */
+
+  div.home #use-cases li a {
+    padding: 20px 15px 20px 100px;
+    font-size: 18px;
+    line-height: 24px;
+    }
+
+  div.home #use-cases li img {
+    left: 30px;
+  }
+  
+  div.home #use-cases li.professional img {
+    left: 25px;
+  }
+
+  div.home .hero-unit .btn {
+    font-size: 20px;
+    padding: 10px 16px;
+    line-height: 22px;
+    margin-top: 10px;
+  }
+
+  div.home .hero-unit .btn + .btn {
+    margin: 10px 0 0 20px;
+  }
+
+
+  /* Data services / Professional services page */
+
+  div.professional #process p,
+  div.professional #process p.lead,
+  div.professional #process .lead + p {
+    width: 335px;
+    float: left;
+    margin-left: 50px;
+  }
+  
+  div.professional #process p.lead {
+    width: 375px;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  div.professional #process #about-our-team a {
+    display: inline-block;
+  }
+
+  div.professional #customers {
+    text-align: center;
+  }
+
+  #content div.professional #services li {
+    float: left;
+    width: 335px;
+    margin-left: 70px;
+    margin-bottom: 20px;
+    clear: none;
+  }
+
+  #content div.professional #services li:first-child,
+  #content div.professional #services li:nth-child(4) {
+    clear: left;
+    margin-left: 25px;
+  }
+
+  div.professional #case-studies .carousel-wrapper,
+  div.professional #case-studies .case-study {
+    width: 1180px;
   }
 
 }

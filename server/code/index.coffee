@@ -242,7 +242,8 @@ renderClientApp = (req, resp) ->
   getSessionUsersFromDB req.user, (usersObj) ->
     resp.render 'index',
       nav: ''
-      stuff: ''
+      subnav: ''
+      content: ''
       scripts: js 'app'
       templates: js 'template/index'
       user: JSON.stringify usersObj
@@ -433,7 +434,6 @@ renderServerAndClientSide = (options, req, resp) ->
 app.get '/set-password/:token/?', renderClientApp
 app.get '/subscribe/?*', renderClientApp
 
-# nEED
 app.get '/pricing/?*', (req, resp) ->
   renderServerAndClientSide page: 'pricing', req, resp
 

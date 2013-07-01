@@ -413,21 +413,22 @@ verifyRecurly = (req, resp) ->
         resp.send 201, success: "Verified and upgraded"
 
 renderServerAndClientSide = (options, req, resp) ->
-  template = fs.readFileSync "client/template/#{options.page}.eco"
-  _.extend options, pageTitles.SubNav[options.page]
-  options.subnav ?= 'subnav'
-  console.log options
-  getSessionUsersFromDB req.user, (usersObj) ->
-    resp.render 'index',
-        nav: eco.render fs.readFileSync("client/template/nav.eco").toString()
-        subnav: """<div class="subnav-wrapper">#{eco.render(fs.readFileSync("client/template/#{options.subnav}.eco").toString(), options)}</div>"""
-        content: """<div class="#{options.page}">#{eco.render(template.toString(), {})}</div>"""
-        scripts: js 'app'
-        templates: js 'template/index'
-        user: JSON.stringify usersObj
-        recurlyDomain: process.env.RECURLY_DOMAIN
-        flash: req.flash()
-        environment: process.env.NODE_ENV
+  fs.readFile "client/template/#{options.page}.eco", (err, contentTemplate) ->
+    _.extend options, pageTitles.SubNav[options.page]
+    options.subnav ?= 'subnav'
+    fs.readFile "client/template/#{options.subnav}.eco", (err, subnavTemplate) ->
+      fs.readFile "client/template/nav.eco", (err, navTemplate) ->
+        getSessionUsersFromDB req.user, (usersObj) ->
+          resp.render 'index',
+              nav: eco.render navTemplate.toString()
+              subnav: """<div class="subnav-wrapper">#{eco.render subnavTemplate.toString(), options}</div>"""
+              content: """<div class="#{options.page}">#{eco.render contentTemplate.toString(), {} }</div>"""
+              scripts: js 'app'
+              templates: js 'template/index'
+              user: JSON.stringify usersObj
+              recurlyDomain: process.env.RECURLY_DOMAIN
+              flash: req.flash()
+              environment: process.env.NODE_ENV
 #
 # Allow set-password, signup, docs, etc, to be visited by anons
 # Note: these are NOT regular expressions!!

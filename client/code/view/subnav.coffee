@@ -440,7 +440,7 @@ class Cu.View.ToolShopNav extends Backbone.View
 
 
 class Cu.View.ProfessionalNav extends Backbone.View
-  className: 'subnav-wrapper'
+  className: 'subnav-wrapper professional'
 
   events:
       'click .nav-pills a': 'navClick'

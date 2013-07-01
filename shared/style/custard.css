@@ -1366,20 +1366,44 @@ div.professional #case-studies .thumbnail {
   background-color: #fff;
 }
 
-#case-studies .nav-pills > li > a {
+.professional .nav-pills > li > a {
   color: #A5822A;
 }
 
-#case-studies .nav-pills > li > a:hover, 
-#case-studies .nav-pills > li > a:focus {
+.professional .nav-pills > li > a:hover, 
+.professional .nav-pills > li > a:focus {
   background-color: #F1E7B0;
 }
 
-#case-studies .nav-pills > .active > a, 
-#case-studies .nav-pills > .active > a:hover, 
-#case-studies .nav-pills > .active > a:focus {
+.professional .nav-pills > .active > a, 
+.professional .nav-pills > .active > a:hover, 
+.professional .nav-pills > .active > a:focus {
   background-color: #FFE07C;
   color: #000;
+}
+
+.subnav-wrapper.professional .nav-pills > li:last-child > a {
+  margin-top: 1px;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #faa732;
+  background-image: -moz-linear-gradient(top,#fbb450,#f89406);
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#fbb450),to(#f89406));
+  background-image: -webkit-linear-gradient(top,#fbb450,#f89406);
+  background-image: -o-linear-gradient(top,#fbb450,#f89406);
+  background-image: linear-gradient(to bottom,#fbb450,#f89406);
+  background-repeat: repeat-x;
+  border: 1px solid #ccc;
+  border-color: #f89406 #f89406 #ad6704;
+  border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450',endColorstr='#fff89406',GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
 
 div.professional .medium {
@@ -1997,10 +2021,18 @@ div.about p.logos {
   /* Home page */
 
   div.home #use-cases li a {
-    padding: 20px 25px 20px 90px;
+    padding: 20px 15px 20px 100px;
     font-size: 18px;
     line-height: 24px;
     }
+
+  div.home #use-cases li img {
+    left: 30px;
+  }
+  
+  div.home #use-cases li.professional img {
+    left: 25px;
+  }
 
   div.home .hero-unit .btn {
     font-size: 20px;

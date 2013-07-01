@@ -14,7 +14,7 @@ class Cu.Router.Main extends Backbone.Router
 
     # TODO: this isn't a great place for this constant
     window.latestTerms = 1
-    
+
     if window.user?.real
       if isNaN(window.user.real.acceptedTerms) or window.user.real.acceptedTerms < window.latestTerms
         @termsAlertView = new Cu.View.TermsAlert
@@ -66,7 +66,7 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.showView subnavView
 
   pricing: (upgrade) ->
-    subnavView = new Cu.View.Subnav {text: 'Pricing'}
+    subnavView = new Cu.View.Subnav SubNav.pricing
     contentView = new Cu.View.Pricing upgrade: upgrade
     @appView.showView contentView
     @subnavView.showView subnavView
@@ -204,33 +204,31 @@ class Cu.Router.Main extends Backbone.Router
 
   help: (section) ->
     section ?= 'home'
-    subnavView = new Cu.View.HelpNav {section: section}
+    subnavView = new Cu.View.HelpNav SubNav["help-#{section}"]
     contentView = new Cu.View.Help {template: "help-#{section}"}
     @appView.showView contentView
     @subnavView.showView subnavView
 
   terms: ->
-    subnavView = new Cu.View.Subnav {text: 'Terms & Conditions'}
+    subnavView = new Cu.View.Subnav SubNav.terms
     contentView = new Cu.View.Terms()
     @appView.showView contentView
     @subnavView.showView subnavView
 
   termsEnterpriseAgreement: ->
-    subnavView = new Cu.View.Subnav {text: 'ScraperWiki Enterprise Agreement'}
+    subnavView = new Cu.View.Subnav SubNav['terms-enterprise-agreement']
     contentView = new Cu.View.TermsEnterpriseAgreement()
     @appView.showView contentView
     @subnavView.showView subnavView
 
   contact: ->
-    subnavView = new Cu.View.AboutNav {text: 'Contact Us'}
+    subnavView = new Cu.View.AboutNav SubNav.contact
     contentView = new Cu.View.Contact()
     @appView.showView contentView
     @subnavView.showView subnavView
 
   about: ->
-    subnavView = new Cu.View.AboutNav {text: 'About ScraperWiki'}
+    subnavView = new Cu.View.AboutNav SubNav.about
     contentView = new Cu.View.About()
     @appView.showView contentView
     @subnavView.showView subnavView
-
-

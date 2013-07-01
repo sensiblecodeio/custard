@@ -2,13 +2,7 @@ class Cu.View.Subnav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
-    @$el.html("""
-      <div class="btn-toolbar" id="subnav-path">
-        <h1 class="btn-group">
-          <a class="btn btn-link" href="#{@options.url or window.location.href}">#{@options.text}</a>
-        </h1>
-      </div>
-      <hr>""")
+    @$el.html JST['subnav'] @options
     @
 
   # THIS IS NOT USED
@@ -112,7 +106,7 @@ class Cu.View.DataHubNav extends Backbone.View
     if e.which == 40
       e.preventDefault()
       @highlightNextResult()
-    else if e.which == 38 
+    else if e.which == 38
       e.preventDefault()
       @highlightPreviousResult()
     else if e.which == 13
@@ -227,7 +221,7 @@ class Cu.View.Toolbar extends Backbone.View
     'click #dropdown-menu-closer': 'hideDropdownMenuCloser'
     'blur #editable-input input': 'editableNameBlurred'
     'keyup #editable-input input': 'keypressOnEditableName'
-  
+
   initialize: ->
     @toolsView = new Cu.View.DatasetTools
       model: @model
@@ -241,7 +235,7 @@ class Cu.View.Toolbar extends Backbone.View
       <li><a class="hide-tool"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</a></li>
     </ul>
     <div id="dataset-meta">
-      <h3>#{@model.get 'displayName'}</h3> 
+      <h3>#{@model.get 'displayName'}</h3>
       <span class="input-append" id="editable-input">
         <input type="text" value="#{@model.get 'displayName'}"><button class="btn">Save</button>
       </span>
@@ -342,81 +336,23 @@ class Cu.View.SignUpNav extends Backbone.View
     # Assumes @options.plan is set
     plan = @options.plan
     plan = plan.toUpperCase()[0] + plan.toLowerCase()[1..]
-
-    @$el.html("""
-      <div class="btn-toolbar" id="subnav-path">
-        <h1 class="btn-group">
-          <a class="btn btn-link" href="/">Sign Up</a>
-        </h1>
-        <div class="btn-group">
-          <span class="slash">/</span>
-        </div>
-        <h1 class="btn-group" style="margin-left: 7px">
-          <a class="btn btn-link" href="#{window.location.href}">#{plan}</a>
-        </h1>
-      </div>
-      <hr>""")
-    @
+    this
 
 
 class Cu.View.HelpNav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
-    switch @options.section
-      when 'corporate'
-        name = 'Corporate FAQs'
-      when 'developer'
-        name = 'Developer Docs'
-      when 'zig'
-        name = 'ZIG'
-      when 'twitter-search'
-        name = 'Scrape Tweets and download as a spreadsheet'
-      when 'upload-and-summarise'
-        name = 'Upload and summarise a spreadsheet of data'
-      when 'code-in-your-browser'
-        name = 'Code a scraper in your browser'
-      when 'make-your-own-tool'
-        name = 'Make your own tool with HTML, JavaScript & Python'
-      when 'whats-new'
-        name = 'What’s new?'
-
-    html = """
-      <div class="btn-toolbar" id="subnav-path">
-        <h1 class="btn-group">
-          <a class="btn btn-link" href="/help">Help</a>
-        </h1>"""
-
-    if name
-      html += """<div class="btn-group">
-          <span class="slash">/</span>
-        </div>
-        <h1 class="btn-group" style="margin-left: 7px">
-          <a class="btn btn-link">#{name}</a>
-        </h1>"""
-
-    html += "</div><hr>"
-
-    @$el.html html
-    @
+    @$el.html JST['helpnav'] @options
+    this
 
 
 class Cu.View.AboutNav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
-    @$el.html("""
-      <div class="btn-toolbar" id="subnav-path">
-        <h1 class="btn-group">
-          <a class="btn btn-link" href="#{window.location.href}">#{@options.text}</a>
-        </h1>
-      </div>
-      <ul class="nav nav-pills" id="subnav-options">
-        <li><a href="/about/">About ScraperWiki</a></li>
-        <li><a href="/contact/">Contact Us</a></li>
-      </ul>
-      <hr>""").find(".nav a[href='#{window.location.pathname}']").parent().addClass('active')
-    @
+    @$el.html(JST['aboutnav']()).find(".nav a[href='#{window.location.pathname}']").parent().addClass('active')
+    this
 
 
 class Cu.View.ToolShopNav extends Backbone.View

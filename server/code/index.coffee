@@ -39,6 +39,7 @@ Backbone = require 'backbone'
 {Plan} = require 'model/plan'
 
 recurlySign = require 'lib/sign'
+pageTitles = require '../../shared/code/page-titles'
 
 # Set up database connection
 mongoose.connect process.env.CU_DB,
@@ -410,12 +411,16 @@ verifyRecurly = (req, resp) ->
         req.session.save()
         resp.send 201, success: "Verified and upgraded"
 
-renderServerAndClientSide = (page, req, resp) ->
-  template = fs.readFileSync "client/template/#{page}.eco"
+renderServerAndClientSide = (options, req, resp) ->
+  template = fs.readFileSync "client/template/#{options.page}.eco"
+  _.extend options, pageTitles.SubNav[options.page]
+  options.subnav ?= 'subnav'
+  console.log options
   getSessionUsersFromDB req.user, (usersObj) ->
     resp.render 'index',
         nav: eco.render fs.readFileSync("client/template/nav.eco").toString()
-        stuff: eco.render(template.toString(), {})
+        subnav: """<div class="subnav-wrapper">#{eco.render(fs.readFileSync("client/template/#{options.subnav}.eco").toString(), options)}</div>"""
+        content: """<div class="#{options.page}">#{eco.render(template.toString(), {})}</div>"""
         scripts: js 'app'
         templates: js 'template/index'
         user: JSON.stringify usersObj
@@ -428,30 +433,34 @@ renderServerAndClientSide = (page, req, resp) ->
 app.get '/set-password/:token/?', renderClientApp
 app.get '/subscribe/?*', renderClientApp
 
+# nEED
 app.get '/pricing/?*', (req, resp) ->
-  renderServerAndClientSide 'pricing', req, resp
+  renderServerAndClientSide page: 'pricing', req, resp
 
 app.get '/signup/?*', (req, resp) ->
-  renderServerAndClientSide 'sign-up', req, resp
+  renderServerAndClientSide {page: "sign-up", subnav: 'signupnav'}, req, resp
 
 app.get '/help/?:section', (req, resp) ->
   req.params.section ?= 'home'
-  renderServerAndClientSide "help-#{section}", req, resp
+  renderServerAndClientSide {page: "help-#{req.params.section}", section: req.params.section, subnav: 'helpnav'}, req, resp
 
 app.get '/help/?*', (req, resp) ->
-  renderServerAndClientSide 'help-home', req, resp
+  renderServerAndClientSide {page: 'help-home', subnav: 'helpnav'}, req, resp
 
-app.get '/terms/?*', (req, resp) ->
-  renderServerAndClientSide 'terms', req, resp
+app.get '/terms/enterprise-agreement/?', (req, resp) ->
+  renderServerAndClientSide page: 'terms-enterprise-agreement', req, resp
+
+app.get '/terms/?', (req, resp) ->
+  renderServerAndClientSide page: 'terms', req, resp
 
 app.get '/contact/?*', (req, resp) ->
-  renderServerAndClientSide "contact", req, resp
+  renderServerAndClientSide page: 'contact', req, resp
 
 app.get '/about/?*', (req, resp) ->
-  renderServerAndClientSide "about", req, resp
+  renderServerAndClientSide {page: "about", subnav: 'aboutnav'}, req, resp
 
 app.get '/', (req, resp) ->
-  renderServerAndClientSide "help-whats-new", req, resp
+  renderServerAndClientSide page: "help-whats-new", req, resp
 
 # Switch is protected by a specific function.
 app.get '/switch/:username/?', checkSwitchUserRights, switchUser

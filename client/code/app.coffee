@@ -6,6 +6,7 @@
 #= require_tree model
 #= require_tree router
 #= require_tree view
+#= require shared/code/page-titles
 
 Backbone.View::close = ->
   @off()

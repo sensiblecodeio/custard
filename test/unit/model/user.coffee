@@ -149,7 +149,6 @@ describe 'User (server)', ->
         User.distributeUserKeys 'ickletest', done
 
       it "posts to pigbox with ickletest's ssh keys", ->
-        console.log @request.args[0]
         correctArgs = @request.calledWithMatch
           uri: "http://#{process.env.CU_BOX_SERVER}/pigbox/sshkeys"
           form:

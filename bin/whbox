@@ -1,0 +1,37 @@
+#!/usr/bin/env coffee
+fs = require 'fs'
+{MongoClient} = require('mongodb')
+
+rmQuote = (s) ->
+  if not /^['"]/.test s
+    return s
+  t = s.replace /[^\\]|\\./g, (x) ->
+    # Strip bar quotes (which should be only leading and trailing)
+    if /['"]/.test x
+      return ''
+    # Escape
+    if x[0] == '\\'
+      return x[1]
+    return x
+  return t
+
+dir = '../charm-secrets'
+file = "#{dir}/config/live/cobalt.yaml"
+yamltext = fs.readFileSync file, 'utf-8'
+m = yamltext.match /CU_DB:\s*(.+?)\s*($|\n)/
+dbURL = m[1]
+
+dbURL = rmQuote dbURL
+if /url/.test process.env.WHBOX_DEBUG
+  console.warn "using #{dbURL} from #{file}"
+
+MongoClient.connect dbURL, (err, db) ->
+  if err
+    throw err
+  boxes = db.collection 'boxes'
+  box = process.argv[2]
+  boxes.find({name: box}).each (err, doc) ->
+    if null == doc
+      process.exit()
+    console.log doc
+

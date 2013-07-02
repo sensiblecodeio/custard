@@ -3,8 +3,10 @@ should = require 'should'
 
 describe 'Client model: View', ->
   helper = require '../helper'
-  helper.evalConcatenatedFile 'client/code/model/tool.coffee'
-  helper.evalConcatenatedFile 'client/code/model/view.coffee'
+  unless Cu.Model.Tool?
+    helper.evalConcatenatedFile 'client/code/model/tool.coffee'
+  unless Cu.Model.View?
+    helper.evalConcatenatedFile 'client/code/model/view.coffee'
 
   describe 'URL', ->
     beforeEach ->
@@ -21,19 +23,3 @@ describe 'Client model: View', ->
     it 'has a related tool', ->
       tool = @view.get('tool')
       tool.get('manifest').displayName.should.equal 'Test Plugin'
-
-class TestDb
-  class Model
-    constructor: (obj) ->
-      for k of obj
-        @[k] = obj[k]
-
-    toObject: -> @
-
-  save: (callback) ->
-    callback null
-  @find: (_args, callback) ->
-    callback null, [ new Model(name: 'test'),
-      new Model(name: 'test2')
-    ]
-

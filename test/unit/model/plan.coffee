@@ -3,7 +3,7 @@ should = require 'should'
 _ = require 'underscore'
 request = require 'request'
 
-plan = require('model/plan')
+{Plan} = require 'model/plan'
 {Box} = require 'model/box'
 
 describe 'Plan (Server)', ->
@@ -18,7 +18,7 @@ describe 'Plan (Server)', ->
         users: ['freetard']
         name: 'ehaf921'
 
-      plan.setDiskQuota box, 'free', done
+      Plan.setDiskQuota box, 'free', done
 
     after ->
       request.post.restore()

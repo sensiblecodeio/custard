@@ -50,6 +50,11 @@ describe 'Data request (server)', ->
       description: 'Thermonuclear war.'
       ip: '8.8.8.8'
 
+  after ->
+    email.dataRequestEmail.restore()
+    request.post.restore()
+    email.dataRequestConfirmation.restore()
+
   context 'when the data request is sent to the box', ->
     before (done) ->
       @dataRequest.send done

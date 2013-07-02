@@ -7,9 +7,12 @@ should = require 'should'
 
 describe 'Client model: Dataset', ->
   helper = require '../helper'
-  helper.evalConcatenatedFile 'client/code/model/tool.coffee'
-  helper.evalConcatenatedFile 'client/code/model/view.coffee'
-  helper.evalConcatenatedFile 'client/code/model/dataset.coffee'
+  unless Cu.Model.Tool?
+    helper.evalConcatenatedFile 'client/code/model/tool.coffee'
+  unless Cu.Model.View?
+    helper.evalConcatenatedFile 'client/code/model/view.coffee'
+  unless Cu.Model.Dataset?
+    helper.evalConcatenatedFile 'client/code/model/dataset.coffee'
 
   describe 'URL', ->
     beforeEach ->

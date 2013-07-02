@@ -130,10 +130,10 @@ describe 'Server model: Tool', ->
         tool.updateInstances done
 
     it 'has updated the dataset boxes', ->
-      pulledInDSBox = @requestStub.calledWithMatch
+      pulledInDSBox = @requestStub.calledWith
         uri: sinon.match /2416349265/
         form:
-          apikey: sinon.match new RegExp(process.env.COTEST_USER_API_KEY)
+          apikey: 'zarino'
           cmd: sinon.match /git pull/
       pulledInDSBox.should.be.true
 

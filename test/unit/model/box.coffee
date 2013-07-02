@@ -49,6 +49,9 @@ describe 'Box (server)', ->
         @secondBox = box
         done()
 
+    after ->
+      Box.generateUid.restore()
+
     it "doesn't break, and assigns another random value", ->
       should.exist @secondBox.uid
       @secondBox.uid.should.not.equal firstBox.uid

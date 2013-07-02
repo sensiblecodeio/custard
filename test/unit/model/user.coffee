@@ -149,24 +149,11 @@ describe 'User (server)', ->
         User.distributeUserKeys 'ickletest', done
 
       it "posts to pigbox with ickletest's ssh keys", ->
-        correctArgs = @request.calledWith
-          uri: "#{process.env.CU_BOX_SERVER}/pigbox/sshkeys"
+        console.log @request.args[0]
+        correctArgs = @request.calledWithMatch
+          uri: "http://#{process.env.CU_BOX_SERVER}/pigbox/sshkeys"
           form:
             keys: '["a","b","c"]'
-        correctArgs.should.be.true
-
-      it "posts to luxurypigbox with zarino's and ickletest's ssh keys", ->
-        # Note: the "keys" argument in the form is sensitive to some
-        # essentially random dictionary iteration order. We naughtily test
-        # both plausible orders.
-        correctArgs = @request.calledWith
-          uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
-          form:
-            keys: '["d","e","f","a","b","c"]'
-        correctArgs ||= @request.calledWith
-          uri: "#{process.env.CU_BOX_SERVER}/luxurypigbox/sshkeys"
-          form:
-            keys: '["a","b","c","d","e","f"]'
         correctArgs.should.be.true
 
   describe 'Validation', ->
@@ -294,6 +281,9 @@ describe 'User (server)', ->
         User.findByShortName 'ehg', (err, user) =>
           @user = user
           user.setDiskQuotasForPlan done
+
+      after ->
+        Plan.setDiskQuota.restore()
 
       it "should update the disk quota for each dataset", ->
         correctArgs = @stub.calledWithMatch {name: '3006375731'}, 'grandfather'

@@ -1194,6 +1194,7 @@ div.home #use-cases > li {
 
 div.home #use-cases a {
   display: block;
+  position: relative; /* so that the icon inside can be positioned absolutely */
   padding: 8px 12px 8px 74px; /* 12px + 50px image + 12px = 74px total padding */
   color: #fff;
   text-decoration: none;

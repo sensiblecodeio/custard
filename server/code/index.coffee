@@ -28,7 +28,6 @@ eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
 {Exceptional} = require 'exceptional-node'
-Backbone = require 'backbone'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'

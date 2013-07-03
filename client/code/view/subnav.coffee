@@ -235,6 +235,7 @@ class Cu.View.Toolbar extends Backbone.View
       <li><a class="hide-tool"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</a></li>
     </ul>
     <div id="dataset-meta">
+      <a href="/"><i class="icon-home icon-white"></i></a>
       <h3>#{@model.get 'displayName'}</h3>
       <span class="input-append" id="editable-input">
         <input type="text" value="#{@model.get 'displayName'}"><button class="btn">Save</button>

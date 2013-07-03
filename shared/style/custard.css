@@ -531,7 +531,7 @@ a.tile .hide:hover,
   height: 74px;
   background: #15af90;
   display: table;
-  padding: 0 10px 0 220px;
+  padding: 0 10px 0 200px;
   margin-left: -200px;
   font-size: 21px;
   text-shadow: 0 1px 1px rgba(0,0,0,0.2);
@@ -559,6 +559,25 @@ a.tile .hide:hover,
   padding: 0;
 }
 
+#dataset-meta > a {
+  padding: 0 15px;
+  border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+#dataset-meta > a:hover {
+  background-color: rgba(255,255,255,0.05);
+}
+
+#dataset-meta > a i {
+  margin: 0;
+  vertical-align: 0;
+  opacity: 0.7;
+}
+
+#dataset-meta > a:hover i {
+  opacity: 1;
+}
+
 #dataset-meta h3 {
   /* re-enable text selection for the dataset title */
   -webkit-touch-callout: default;
@@ -567,11 +586,14 @@ a.tile .hide:hover,
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+  padding-left: 15px;
+  border-left: 1px solid rgba(255,255,255,0.1);
 }
 
 #dataset-meta #editable-input {
   margin: 0; /* remove default margin-bottom 10px on .input-appends */
   display: none; /* hide by default; show on .editable click */
+  border-left: 1px solid rgba(255,255,255,0.1);
 }
 
 #dataset-meta #editable-input input {
@@ -581,6 +603,7 @@ a.tile .hide:hover,
   padding: 0 4px;
   margin: 0;
   height: 30px;
+  margin-left: 15px;
 }
 
 #dataset-meta #editable-input button {
@@ -593,7 +616,7 @@ a.tile .hide:hover,
   width: 26px;
   height: 30px;
   text-indent: -9000px;
-  opacity: 0.8;
+  opacity: 0.7;
   margin-left: 10px;
   cursor: pointer;
 }

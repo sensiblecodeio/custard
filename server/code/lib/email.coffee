@@ -27,9 +27,9 @@ exports.signUpEmail = (user, token, callback) ->
     Hi #{user.displayName},
 
     To activate your ScraperWiki account, please go to:
-      https://beta.scraperwiki.com/set-password/#{token}
+      https://scraperwiki.com/set-password/#{token}
 
-    Ta,
+    Thanks,
 
     ScraperWiki
     """

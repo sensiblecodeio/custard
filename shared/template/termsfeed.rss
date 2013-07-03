@@ -3,11 +3,11 @@
 
 <channel>
   <title>New ScraperWiki Terms and Conditions</title>
-  <link>https://beta.scraperwiki.com/</link>
+  <link>https://scraperwiki.com/</link>
   <description>Changes to our website terms</description>
   <item>
     <title>First version 1</title>
-    <link>https://beta.scraperwiki.com/terms</link>
+    <link>https://scraperwiki.com/terms</link>
     <description>This is the first version.</description>
   </item>
 </channel>

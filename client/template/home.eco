@@ -1,6 +1,6 @@
 <div class="hero-unit">
   <img class="pull-right" src="/image/tractor-500x320.png" width="220" height="141" alt="The ScraperWiki digger" style="margin: 0 0 10px 10px">
-  <h1>Liberate your data <span style="opacity: 0.5">with ScraperWiki!</></h1>
+  <h1>Liberate your data <span style="opacity: 0.5">with ScraperWiki!</span></h1>
   <p class="lead" style="margin-bottom: 0.5em">ScraperWiki helps you do data science on the&nbsp;web.</p>
   <p class="lead">Get, clean, analyse, visualise and manage your data,<br/>with&nbsp;simple tools or custom-written code.</p>
   <a class="btn btn-info" href="/professional/">ScraperWiki for businesses</a>

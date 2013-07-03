@@ -29,9 +29,11 @@ MongoClient.connect dbURL, (err, db) ->
   if err
     throw err
   boxes = db.collection 'boxes'
-  box = process.argv[2]
-  boxes.find({name: box}).each (err, doc) ->
-    if null == doc
+  name = process.argv[2]
+  boxes.find({name: name}).each (err, box) ->
+    if null == box
       process.exit()
-    console.log doc
+    console.log "ssh #{box.name}@#{box.server}"
+    console.log "https://#{box.server}/#{box.name}/#{box.boxJSON.publish_token}/http/"
+    console.log "#{box.name}:x:#{box.uid}:10000::/home:/bin/bash"
 

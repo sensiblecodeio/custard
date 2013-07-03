@@ -19,13 +19,65 @@
   </li>
 </ul>
 
-<div id="more-links" class="row-fluid">
-  <a class="span6" href="/about">
-    <h3>About us</h3>
-    <p>Find out more about ScraperWiki and the people behind it.</p>
-  </a>
-  <a class="span6" href="/help">
-    <h3>Help and documentation</h3>
-    <p>See what's new in the beta, try our quick start guides and read the developer docs.</p>
-  </a>
+<div id="tools">
+  <h2>Super-charge your data analysis with tools including&hellip;</h2>
+  <div class="row-fluid">
+    <div class="span4 media">
+      <span class="pull-left tool-icon-outer" style="background-color: #00A1D6">
+        <span class="tool-icon-inner" style="background-color: #3cf; background-image: url(https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-twitter.png)"></span>
+        </span>
+      <div class="media-body">
+        <h4>Search for Tweets</h4>
+        <p>The simplest way to collect tweets matching a search time over time.</p>
+      </div>
+    </div>
+    <div class="span4 media">
+      <span class="pull-left tool-icon-outer" style="background-color: #016A30">
+        <span class="tool-icon-inner" style="background-color: #029745; background-image: url(https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-spreadsheet-upload.png)"></span>
+        </span>
+      <div class="media-body">
+        <h4>Upload a spreadsheet</h4>
+        <p>Transforms and extends your data beyond the limitations of a spreadsheet.</p>
+      </div>
+    </div>
+    <div class="span4 media">
+      <span class="pull-left tool-icon-outer" style="background-color: #3482A8">
+        <span class="tool-icon-inner" style="background-color: #6AAFD1; background-image: url(https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-classic.png)"></span>
+      </span>
+      <div class="media-body">
+        <h4>Code in your browser</h4>
+        <p>Write scripts that transform data or scrape the web, in any language you like.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span4 media">
+      <span class="pull-left tool-icon-outer" style="background-color: #0281CB">
+        <span class="tool-icon-inner" style="background-color: #27affd; background-image: url(https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-summarise.png)"></span>
+      </span>
+      <div class="media-body">
+        <h4>Summarise this data</h4>
+        <p>Intelligently looks at data and interprets and visualises it for quick insights.</p>
+      </div>
+    </div>
+    <div class="span4 media">
+      <span class="pull-left tool-icon-outer" style="background-color: #10686E">
+        <span class="tool-icon-inner" style="background-color: #17959d; background-image: url(https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-sql.png)"></span>
+      </span>
+      <div class="media-body">
+        <h4>Query with SQL</h4>
+        <p>Get under the hood and do powerful analysis of your data. Then deploy via our JSON API.</p>
+      </div>
+    </div>
+    <div class="span4 media">
+      <span class="pull-left tool-icon-outer" style="background-color: #7E4404">
+        <span class="tool-icon-inner" style="background-color: #b46106; background-image: url(https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-map.png)"></span>
+      </span>
+      <div class="media-body">
+        <h4>View on a Map</h4>
+        <p>Get a simple, effective, and zero-configuration bird&rsquo;s eye view of your data.</p>
+      </div>
+    </div>
+  </div>
+  <p class="last"><a class="btn btn-warning" href="/pricing/">Get a free account</a> to try them all out</p>
 </div>

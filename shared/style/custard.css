@@ -1269,25 +1269,55 @@ div.home #use-cases .professional img {
   left: 9px;
 }
 
-div.home #more-links {
-  padding-top: 40px;
-  margin-top: 40px;
+div.home #tools {
+  margin: 40px 0 0 0;
+}
+
+div.home #tools h2 {
+  margin: 0 0 40px 0;
+  padding: 10px 0;
   border-top: 1px solid #eee;
-}
-
-div.home #more-links a {
-  color: #999;
-  text-decoration: none;
-}
-
-div.home #more-links a:hover {
-  color: #666;
-}
-
-div.home #more-links h3 {
-  font-size: 18px;
+  border-bottom: 1px solid #eee;
+  font-size: 21px;
   line-height: 24px;
+  color: #bbb;
+  text-align: center;
+  font-weight: 200;
+}
+
+div.home #tools h4 {
   margin: 0 0 5px 0;
+}
+
+div.home #tools .media {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+div.home #tools .tool-icon-outer {
+  margin: 0 15px 0 5px;
+  -webkitbox-shadow: 0 1px 3px #999;
+  -moz-box-shadow: 0 1px 3px #999;
+  box-shadow: 0 1px 3px #999;
+}
+
+div.home p.last {
+  background: #FFFCD5;
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 200;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+div.home p.last a.btn {
+  font-weight: normal;
+  margin-right: 5px;
+  vertical-align: 1px;
 }
 
 
@@ -1586,7 +1616,7 @@ div.about p.logos {
   }
 
   div.about .row-fluid .span6,
-  div.home #more-links .span6 {
+  div.home #tools .span4 {
     float: none;
     width: 100%;
     margin-left: 0;
@@ -1786,12 +1816,6 @@ div.about p.logos {
   div.home #use-cases li.professional img {
     left: 50%;
     margin-left: -30px;
-  }
-  
-  div.home #more-links h3 {
-    font-size: 21px;
-    line-height: 24px;
-    margin: 0 0 7px 0;
   }
 
 

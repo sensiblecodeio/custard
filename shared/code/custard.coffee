@@ -50,12 +50,20 @@ showOrAddSSH = (model, type) =>
     makeModal JST['modal-add-ssh']()
 
 
-String::twoLineWrap = (characters=20) ->
-  return this if this.length <= characters
-  text = this
-  if this.length > characters*2
-    regexp = new RegExp "(.{1,#{characters*2}})[ ](.*)"
-    text = text.replace regexp, "$1\u2026"
-  regexp = new RegExp "(.{1,#{characters}})[ ](.*)"
-  text = text.replace regexp, '$1<br>$2'
-  return text
+String::twoLineWrap = ->
+  # find middle character, or one before it
+  half = Math.round(this.length / 2)
+
+  # starting from the middle, hunt for the nearest space in both directions
+  splitpos = null
+  for i in [0...half]
+    # prioritise backwards so weight is below if two similar choices
+    if this[half - i] == ' '
+      splitpos = half - i
+      break
+    if this[half + i] == ' '
+      splitpos = half + i
+      break
+
+  return String(this) if not splitpos
+  return this[0..splitpos-1] + '<br>' + this[splitpos+1..]

@@ -28,7 +28,7 @@
         </span>
       <div class="media-body">
         <h4>Search for Tweets</h4>
-        <p>The simplest way to collect tweets matching a search time over time.</p>
+        <p>The simplest way to collect tweets matching a search term over time.</p>
       </div>
     </div>
     <div class="span4 media">

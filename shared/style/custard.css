@@ -1343,7 +1343,8 @@ div.home p.last a.btn {
   vertical-align: 1px;
 }
 
-div.home #back-to-classic {
+div.home #back-to-classic,
+div.classic-login-page a {
   display: block;
   position: relative;
   margin: 40px 0 0 0;
@@ -1361,7 +1362,8 @@ div.home #back-to-classic {
   text-decoration: none;
 }
 
-div.home #back-to-classic:hover {
+div.home #back-to-classic:hover,
+div.classic-login-page a:hover {
   border: 2px solid #369;
   margin: 39px -1px -1px -1px;
 }
@@ -1371,11 +1373,13 @@ div.home #back-to-classic h3 {
   line-height: 32px;
 }
 
-div.home #back-to-classic p {
+div.home #back-to-classic p,
+div.classic-login-page a p {
   margin: 0;
 }
 
-div.home #back-to-classic img {
+div.home #back-to-classic img,
+div.classic-login-page img {
   position: absolute;
   bottom: 0;
   right: 70px;
@@ -1661,6 +1665,31 @@ div.about .people .showMore i:hover {
 
 div.about p.logos {
   margin: 20px 0;
+}
+
+
+/* Login page */
+
+div.login-page {
+  width: 50%;
+  float: left;
+}
+
+div.classic-login-page {
+  width: 45%;
+  float: right;
+}
+
+div.classic-login-page a {
+  margin-top: 10px;
+}
+
+div.classic-login-page a:hover {
+  margin-top: 9px;
+}
+
+div.classic-login-page h4 {
+  margin: 0 0 10px 0;
 }
 
 
@@ -2104,6 +2133,21 @@ div.about p.logos {
 
   #history_and_funding + h2 {
     margin-top: 30px;
+  }
+  
+  
+  /* Log in page */
+  
+  div.classic-login-page a {
+    padding-bottom: 20px;
+  }
+  
+  div.classic-login-page p {
+    width: 50%;
+  }
+  
+  div.classic-login-page img {
+    right: 10px;
   }
 
 }

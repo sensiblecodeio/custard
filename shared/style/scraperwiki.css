@@ -119,6 +119,20 @@ code {
   margin: 0 0 5px 0;
 }
 
+/* Better link colours in alerts */
+
+.alert a {
+  color: #7E6500;
+}
+
+.alert-info a {
+  color: #006186;
+}
+
+.alert-error a {
+  color: #8A0000;
+}
+
 /* Search input improvements */
 
 input.search-query,

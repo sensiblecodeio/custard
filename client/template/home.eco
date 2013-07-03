@@ -81,3 +81,9 @@
   </div>
   <p class="last"><a class="btn btn-warning" href="/pricing/">Get a free account</a> to try them all out</p>
 </div>
+
+<a id="back-to-classic" href="https://classic.scraperwiki.com">
+  <h3>Looking for ScraperWiki Classic?</h3>
+  <p>Click here to access all your old scrapers on <strong>classic.scraperwiki.com</strong></p>
+  <img src="/image/classic-test-card.png" width="140" height="90" alt="">
+</a>

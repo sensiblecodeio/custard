@@ -531,7 +531,7 @@ a.tile .hide:hover,
   height: 74px;
   background: #15af90;
   display: table;
-  padding: 0 10px 0 220px;
+  padding: 0 10px 0 200px;
   margin-left: -200px;
   font-size: 21px;
   text-shadow: 0 1px 1px rgba(0,0,0,0.2);
@@ -559,6 +559,25 @@ a.tile .hide:hover,
   padding: 0;
 }
 
+#dataset-meta > a {
+  padding: 0 15px;
+  border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+#dataset-meta > a:hover {
+  background-color: rgba(255,255,255,0.05);
+}
+
+#dataset-meta > a i {
+  margin: 0;
+  vertical-align: 0;
+  opacity: 0.7;
+}
+
+#dataset-meta > a:hover i {
+  opacity: 1;
+}
+
 #dataset-meta h3 {
   /* re-enable text selection for the dataset title */
   -webkit-touch-callout: default;
@@ -567,11 +586,14 @@ a.tile .hide:hover,
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+  padding-left: 15px;
+  border-left: 1px solid rgba(255,255,255,0.1);
 }
 
 #dataset-meta #editable-input {
   margin: 0; /* remove default margin-bottom 10px on .input-appends */
   display: none; /* hide by default; show on .editable click */
+  border-left: 1px solid rgba(255,255,255,0.1);
 }
 
 #dataset-meta #editable-input input {
@@ -581,6 +603,7 @@ a.tile .hide:hover,
   padding: 0 4px;
   margin: 0;
   height: 30px;
+  margin-left: 15px;
 }
 
 #dataset-meta #editable-input button {
@@ -593,7 +616,7 @@ a.tile .hide:hover,
   width: 26px;
   height: 30px;
   text-indent: -9000px;
-  opacity: 0.8;
+  opacity: 0.7;
   margin-left: 10px;
   cursor: pointer;
 }
@@ -1194,6 +1217,7 @@ div.home #use-cases > li {
 
 div.home #use-cases a {
   display: block;
+  position: relative; /* so that the icon inside can be positioned absolutely */
   padding: 8px 12px 8px 74px; /* 12px + 50px image + 12px = 74px total padding */
   color: #fff;
   text-decoration: none;
@@ -1268,25 +1292,93 @@ div.home #use-cases .professional img {
   left: 9px;
 }
 
-div.home #more-links {
-  padding-top: 40px;
-  margin-top: 40px;
-  border-top: 1px solid #eee;
+div.home #tools {
+  margin: 40px 0 0 0;
 }
 
-div.home #more-links a {
-  color: #999;
+div.home #tools h2 {
+  margin: 0 0 40px 0;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  font-size: 21px;
+  line-height: 24px;
+  color: #bbb;
+  text-align: center;
+  font-weight: 200;
+}
+
+div.home #tools h4 {
+  margin: 0 0 5px 0;
+}
+
+div.home #tools .media {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+div.home #tools .tool-icon-outer {
+  margin: 0 15px 0 5px;
+  -webkitbox-shadow: 0 1px 3px #999;
+  -moz-box-shadow: 0 1px 3px #999;
+  box-shadow: 0 1px 3px #999;
+}
+
+div.home p.last {
+  background: #FFFCD5;
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 200;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+div.home p.last a.btn {
+  font-weight: normal;
+  margin-right: 5px;
+  vertical-align: 1px;
+}
+
+div.home #back-to-classic {
+  display: block;
+  position: relative;
+  margin: 40px 0 0 0;
+  background: #dceefb url('/image/classic-graph-paper.gif') 8px 6px repeat;
+  border: 1px solid #cdcdcd;
+  color: #369;
+  padding: 15px 20px 110px 20px;
+  text-shadow: 0 1px 0 #fff;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 2px #ccc;
+  -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 2px #ccc;
+  box-shadow: inset 0 1px 0 #fff, 0 1px 2px #ccc;
   text-decoration: none;
 }
 
-div.home #more-links a:hover {
-  color: #666;
+div.home #back-to-classic:hover {
+  border: 2px solid #369;
+  margin: 39px -1px -1px -1px;
 }
 
-div.home #more-links h3 {
-  font-size: 18px;
-  line-height: 24px;
+div.home #back-to-classic h3 {
   margin: 0 0 5px 0;
+  line-height: 32px;
+}
+
+div.home #back-to-classic p {
+  margin: 0;
+}
+
+div.home #back-to-classic img {
+  position: absolute;
+  bottom: 0;
+  right: 70px;
 }
 
 
@@ -1585,7 +1677,7 @@ div.about p.logos {
   }
 
   div.about .row-fluid .span6,
-  div.home #more-links .span6 {
+  div.home #tools .span4 {
     float: none;
     width: 100%;
     margin-left: 0;
@@ -1787,10 +1879,16 @@ div.about p.logos {
     margin-left: -30px;
   }
   
-  div.home #more-links h3 {
-    font-size: 21px;
-    line-height: 24px;
-    margin: 0 0 7px 0;
+  div.home #back-to-classic {
+    padding-bottom: 20px;
+  }
+  
+  div.home #back-to-classic p {
+    padding-right: 200px;
+  }
+  
+  div.home #back-to-classic img {
+    right: 10px;
   }
 
 
@@ -1925,6 +2023,10 @@ div.about p.logos {
   div.home #use-cases li.professional img {
     left: 15px;
     margin-left: 0;
+  }
+
+  div.home #back-to-classic img {
+    right: 20px;
   }
 
 

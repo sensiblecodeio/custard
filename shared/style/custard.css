@@ -1175,6 +1175,40 @@ div.help .case-study h3 {
   line-height: 30px;
 }
 
+div.hero-classic {
+  position: relative;
+  padding: 15px;
+  margin-bottom: 30px;
+  background: #dceefb url('/image/classic-graph-paper.gif') 8px 6px repeat;
+  border: 1px solid #cdcdcd;
+  color: #369;
+  text-shadow: 0 1px 0 #fff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  clear: both;
+}
+
+div.hero-classic img {
+  display: none;
+}
+
+div.hero-classic > h1 {
+  margin-top: 0;
+  font-size: 32px;
+  line-height: 40px;
+  margin: 0 0 10px 0;
+}
+
+div.hero-classic p {
+  font-size: 18px;
+  line-height: 26px;
+}
+
+div.hero-classic p:last-child {
+  margin-bottom: 0;
+}
+
 /* Home page */
 
 div.home .hero-unit {
@@ -1850,6 +1884,21 @@ div.classic-login-page h4 {
     float: left;
     margin: 0 20px 20px 0;
   }
+  
+  div.hero-classic {
+    padding: 20px;
+  }
+  
+  div.hero-classic p {
+    margin-right: 150px;
+  }
+
+  div.hero-classic img {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+  }
 
 
   /* Home page */
@@ -2031,6 +2080,11 @@ div.classic-login-page h4 {
 
   div.help .case-study p {
     font-size: 18px;
+  }
+
+  div.hero-classic p {
+    font-size: 21px;
+    line-height: 30px;
   }
 
 

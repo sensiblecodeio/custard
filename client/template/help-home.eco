@@ -7,7 +7,11 @@
   </a>
 
   <a class="swcol help-tile" href="/help/whats-new/" style="background: #f1c40f">
-    <h3>What&rsquo;s new in the ScraperWiki beta?</h3>
+    <h3>What&rsquo;s the new ScraperWiki all about?</h3>
+  </a>
+
+  <a class="swcol help-tile" href="/help/scraperwiki-classic/" style="background: #73B3D6">
+    <h3>One-stop ScraperWiki Classic user guide</h3>
   </a>
 
 </div>
@@ -42,7 +46,7 @@
     <h3>Developer docs</h3>
   </a>
 
-  <a class="swcol help-tile corporate" href="/help/corporate/" style="background: #F10F0F">
+  <a class="swcol help-tile corporate" href="/help/corporate/" style="background: #1F5DA2">
     <h3>Corporate FAQs</h3>
   </a>
 

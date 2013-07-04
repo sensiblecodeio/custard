@@ -17,6 +17,8 @@ SubNav =
     text: 'Code a scraper in your browser'
   'help-make-your-own-tool':
     text: 'Make your own tool with HTML, JavaScript & Python'
+  'help-scraperwiki-classic':
+    text: 'One-stop ScraperWiki Classic user guide'
   'terms':
     text: 'Terms & Conditions'
   'terms-enterprise-agreement':

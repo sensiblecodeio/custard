@@ -1,0 +1,52 @@
+<nav class="well">
+  <ul class="nav nav-list">
+    <li class="nav-header">Topics:</li>
+    <li class="active"><a data-nonpushstate href="#login">Help! I can&rsquo;t log in!</a></li>
+    <li><a data-nonpushstate href="#migration">How do I migrate my Classic account?</a></li>
+    <li><a data-nonpushstate href="#open-data">How do I open up my code and data?</a></li>
+  </ul>
+</nav>
+
+<div class="wrapper">
+  
+  <div class="hero-classic">
+    <img src="/image/classic-test-card.png" width="140" height="90" alt="">
+    <h1>Confused about Classic and the new ScraperWiki?</h1>
+    <p class="lead">We want to help everyone make the most of their data. And that includes ScraperWiki Classic users. How&nbsp;can&nbsp;we&nbsp;help?</p>
+  </div>
+  
+  <h2 id="login">Help! I can&rsquo;t log in!</h2>
+  
+  <p>The new ScraperWiki and ScraperWiki Classic are two entirely separate products. Their login systems are separate too.</p>
+  
+  <p><strong>If you had a Premium Account on Classic,</strong> you should already have been migrated to the new platform. <a href="/contact/">Contact us</a> if you&rsquo;ve mislaid your login details.</p>
+  
+  <p><strong>If you had a free account on Classic,</strong> you will need to <a href="/pricing/">sign up for an account on the new ScraperWiki</a>, and then log into that.</p>
+  
+  <hr/>
+  
+  <h2 id="migration">How do I migrate my Classic account?</h2>
+  
+  <p>You should first <a href="https://scraperwiki.com/pricing">sign up to the new ScraperWiki</a> (you will <em>not</em> simply be able to log in with your Classic details – the two products are entirely separate, and you'll need a new account on the new site).</p>
+
+  <p>Once you&rsquo;ve verified your account, click "Create a new dataset" on the homepage, and then pick the "Code in your browser" tool. You'll be taken to an editor window you might recognise from ScraperWiki Classic!</p>
+
+  <p>If you don&rsquo;t care about copying your old data from ScraperWiki Classic, you can just copy your old scraper source code and then paste it into this new <strong>Code in your browser</strong> window. Make sure to add a &ldquo;hashbang&rdquo; line at the top, like this <code>#!/usr/bin/env python</code> substituting <code>python</code> for <code>ruby</code> or <code>php</code> if neccessary.</p>
+
+  <p>If you <em>do want</em> to migrate all your old data along with the code from Classic, we suggest you try a migration script like <a href="http://rdjcode.wordpress.com/2013/07/03/moving-from-scraperwiki-classic-to-scraperwiki-awesome/">the one Ross Jones voluntarily wrote</a>.</p>
+
+  <p>If you encounter any bugs with the new platform, <a href="https://github.com/scraperwiki/custard/issues">file them here</a>. We've worked hard on the new ScraperWiki, and we really value your input on how to make it even more awesome.</p>
+  
+  <hr/>
+  
+  <h2 id="open-data">How do I open up my code and data?</h2>
+  
+  <p>Unlike Classic, the new ScraperWiki is not aiming to be a place where people publically share code and data. The new ScraperWiki is, at its heart, a more private, personal service.</p>
+  
+  <p>That said, you&rsquo;ll be able to share and export your data via tools on the new platform. For example, we&rsquo;ll soon be releasing an <strong>Open your data</strong> tool that publishes your ScraperWiki datasets to public open data catalogues like <a href="http://datahub.io">datahub.io</a>.</p>
+  
+  <p>And you can share your code by pushing it into a version control service like <a href="http://github.com">Github</a>, <a href="http://bitbucket.org">BitBucket</a> or <a href="http://gitorious.org">Gitorious</a>.</p>
+  
+  <p>Individual tools like the <strong>Plot a graph</strong> tool, and the <strong>Make a map</strong> tool, will eventually have options to save snapshots of the visualisations you make, so you can share your findings with others.</p>
+  
+</div>

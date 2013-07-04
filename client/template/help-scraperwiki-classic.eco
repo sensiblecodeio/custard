@@ -2,6 +2,7 @@
   <ul class="nav nav-list">
     <li class="nav-header">Topics:</li>
     <li class="active"><a data-nonpushstate href="#login">Help! I can&rsquo;t log in!</a></li>
+    <li><a data-nonpushstate href="#where-is-my-stuff">Where are all my scrapers?</a></li>
     <li><a data-nonpushstate href="#migration">How do I migrate my Classic account?</a></li>
     <li><a data-nonpushstate href="#open-data">How do I open up my code and data?</a></li>
   </ul>
@@ -23,6 +24,16 @@
   
   <p><strong>If you had a free account on Classic,</strong> you will need to <a href="/pricing/">sign up for an account on the new ScraperWiki</a>, and then log into that.</p>
   
+  <p>You can log into your ScraperWiki Classic account at <a href="https://classic.scraperwiki.com">classic.scraperwiki.com</a>.</p>
+  
+  <hr/>
+  
+  <h2 id="where-is-my-stuff">Where are all my scrapers?</h2>
+  
+  <p>Your old scrapers are still safe and sound on <a href="https://classic.scraperwiki.com">classic.scraperwiki.com</a>. They’re running and gathering data as usual.</p>
+  
+  <p>If you want to continue working on these scrapers in the future (and get the advantage of running all our awesome tools on your data) you should migrate your Classic scrapers to the new ScraperWiki, using the instructions below.</p>
+  
   <hr/>
   
   <h2 id="migration">How do I migrate my Classic account?</h2>
@@ -43,9 +54,9 @@
   
   <p>Unlike Classic, the new ScraperWiki is not aiming to be a place where people publically share code and data. The new ScraperWiki is, at its heart, a more private, personal service.</p>
   
-  <p>That said, you&rsquo;ll be able to share and export your data via tools on the new platform. For example, we&rsquo;ll soon be releasing an <strong>Open your data</strong> tool that publishes your ScraperWiki datasets to public open data catalogues like <a href="http://datahub.io">datahub.io</a>.</p>
+  <p>That said, you&rsquo;re able to share and export your data <i>via tools</i> on the new platform. For example, we&rsquo;ll soon be releasing an <strong>Open your data</strong> tool that publishes your ScraperWiki datasets to public open data catalogues like <a href="http://datahub.io">datahub.io</a>.</p>
   
-  <p>And you can share your code by pushing it into a version control service like <a href="http://github.com">Github</a>, <a href="http://bitbucket.org">BitBucket</a> or <a href="http://gitorious.org">Gitorious</a>.</p>
+  <p>You can share your code by pushing it into a version control service like <a href="http://github.com">Github</a>, <a href="http://bitbucket.org">BitBucket</a> or <a href="http://gitorious.org">Gitorious</a>.</p>
   
   <p>Individual tools like the <strong>Plot a graph</strong> tool, and the <strong>Make a map</strong> tool, will eventually have options to save snapshots of the visualisations you make, so you can share your findings with others.</p>
   

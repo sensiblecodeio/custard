@@ -195,7 +195,7 @@ scraperwiki.tool.exec = (cmd, success, error) ->
     $(document).trigger('execsPending')
   $.ajax options
 
-scraperwiki.tool.exec.pending += 1
+scraperwiki.tool.exec.pending = 0
 
 
 scraperwiki.shellEscape = (command) ->

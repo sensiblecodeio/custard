@@ -1,15 +1,15 @@
-  https://scraperwiki.com/
-  https://scraperwiki.com/about/
-  https://scraperwiki.com/contact/
-  https://scraperwiki.com/help/
-  https://scraperwiki.com/help/code-in-your-browser/
-  https://scraperwiki.com/help/corporate/
-  https://scraperwiki.com/help/developer/
-  https://scraperwiki.com/help/make-your-own-tool/
-  https://scraperwiki.com/help/twitter-search/
-  https://scraperwiki.com/help/whats-new/
-  https://scraperwiki.com/help/zig/
-  https://scraperwiki.com/login/
-  https://scraperwiki.com/pricing/
-  https://scraperwiki.com/professional/
-  https://scraperwiki.com/terms/
+https://scraperwiki.com/
+https://scraperwiki.com/about/
+https://scraperwiki.com/contact/
+https://scraperwiki.com/help/
+https://scraperwiki.com/help/code-in-your-browser/
+https://scraperwiki.com/help/corporate/
+https://scraperwiki.com/help/developer/
+https://scraperwiki.com/help/make-your-own-tool/
+https://scraperwiki.com/help/twitter-search/
+https://scraperwiki.com/help/whats-new/
+https://scraperwiki.com/help/zig/
+https://scraperwiki.com/login/
+https://scraperwiki.com/pricing/
+https://scraperwiki.com/professional/
+https://scraperwiki.com/terms/

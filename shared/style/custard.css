@@ -1066,6 +1066,8 @@ div.help nav.well.optional {
 
 div.help nav.well a {
   font-size: 14px;
+  line-height: 18px;
+  padding: 7px 15px;
 }
 
 div.help .well {

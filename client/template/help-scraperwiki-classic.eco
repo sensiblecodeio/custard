@@ -4,7 +4,9 @@
     <li class="active"><a data-nonpushstate href="#login">Help! I can&rsquo;t log in!</a></li>
     <li><a data-nonpushstate href="#where-is-my-stuff">Where are all my scrapers?</a></li>
     <li><a data-nonpushstate href="#migration">How do I migrate my Classic account?</a></li>
+    <li><a data-nonpushstate href="#how-about-no">What if I don&rsquo;t want to migrate my account?</a></li>
     <li><a data-nonpushstate href="#open-data">How do I open up my code and data?</a></li>
+    <li><a data-nonpushstate href="#classic-shutdown">What happens after Classic shuts down in September?</a></li>
   </ul>
 </nav>
 
@@ -40,7 +42,7 @@
   
   <p>You should first <a href="https://scraperwiki.com/pricing">sign up to the new ScraperWiki</a> (you will <em>not</em> simply be able to log in with your Classic details – the two products are entirely separate, and you'll need a new account on the new site).</p>
 
-  <p>Once you&rsquo;ve verified your account, click "Create a new dataset" on the homepage, and then pick the "Code in your browser" tool. You'll be taken to an editor window you might recognise from ScraperWiki Classic!</p>
+  <p>Once you&rsquo;ve verified your account, click <strong>Create a new dataset</strong> on the homepage, and then pick the <strong>Code in your browser</strong> tool. You'll be taken to an editor window you might recognise from ScraperWiki Classic!</p>
 
   <p>If you don&rsquo;t care about copying your old data from ScraperWiki Classic, you can just copy your old scraper source code and then paste it into this new <strong>Code in your browser</strong> window. Make sure to add a &ldquo;hashbang&rdquo; line at the top, like this <code>#!/usr/bin/env python</code> substituting <code>python</code> for <code>ruby</code> or <code>php</code> if neccessary.</p>
 
@@ -50,14 +52,44 @@
   
   <hr/>
   
+  <h2 id="how-about-no">What if I don&rsquo;t want to migrate my account?</h2>
+  
+  <p>You are welcome to continue using ScraperWiki Classic until it is retired in September. But you should probably copy your code and data elsewhere if you want to continue working on it after that.</p>
+  
+  <p>The code for every public scraper can be downloaded by visiting a URL like this:</p>
+  
+  <pre>https://classic.scraperwiki.com/editor/raw/<strong>your_scraper_name_here</strong></pre>
+  
+  <p>Likewise, you can download a scraper&rsquo;s SQLite database using a URL like this:</p>
+  
+  <pre>https://classic.scraperwiki.com/scrapers/export_sqlite/<strong>your_scraper_name_here</strong></pre>
+  
+  <p>There&rsquo;s also <a href="http://rdjcode.wordpress.com/2013/07/03/backing-up-all-your-scraperwiki-data/">a handy script</a> that will automate the backup process for you.</p>
+  
+  <p>Remember, even after September, we&rsquo;ll <em>still</em> be making all this code and data available, for free, in a read-only archive on the web (see below).</p>
+  
+  <hr/>
+  
   <h2 id="open-data">How do I open up my code and data?</h2>
   
   <p>Unlike Classic, the new ScraperWiki is not aiming to be a place where people publically share code and data. The new ScraperWiki is, at its heart, a more private, personal service.</p>
   
   <p>That said, you&rsquo;re able to share and export your data <i>via tools</i> on the new platform. For example, we&rsquo;ll soon be releasing an <strong>Open your data</strong> tool that publishes your ScraperWiki datasets to public open data catalogues like <a href="http://datahub.io">datahub.io</a>.</p>
   
-  <p>You can share your code by pushing it into a version control service like <a href="http://github.com">Github</a>, <a href="http://bitbucket.org">BitBucket</a> or <a href="http://gitorious.org">Gitorious</a>.</p>
+  <p>You can share your code by pushing it into a version control service like <a href="http://github.com">Github</a>, <a href="http://bitbucket.org">BitBucket</a> or <a href="http://gitorious.org">Gitorious</a> via SSH.</p>
   
   <p>Individual tools like the <strong>Plot a graph</strong> tool, and the <strong>Make a map</strong> tool, will eventually have options to save snapshots of the visualisations you make, so you can share your findings with others.</p>
+  
+  <hr/>
+  
+  <h2 id="classic-shutdown">What happens after ScraperWiki Classic shuts down* in September?</h2>
+  
+  <p>In September, we&rsquo;ll be removing all non-essential functionality from ScraperWiki Classic, so that we can focus our development and engineering efforts on making the new platform as awesome as you&rsquo;d expect.</p>
+  
+  <p>As part of that process, we&rsquo;ll move <strong>all public scrapers</strong> into a publically-accessible archive, probably stored on Github, so you and future generations can access the wealth of code and data accumulated by ScraperWiki Classic over its lifetime.</p>
+  
+  <p>You don&rsquo;t need to do anything to have your scrapers included in this archive. It&rsquo;ll happen automatically, and we&rsquo;ll publish more information about it closer to the time.</p>
+  
+  <p class="muted">* <small>We prefer to call it retirement :-)</small></p>
   
 </div>

@@ -183,8 +183,8 @@ scraperwiki.tool.exec = (cmd, success, error) ->
       apikey: settings.source.apikey
       cmd: cmd
     complete: ->
-      scraperwiki.exec.pending -= 1
-      if scraperwiki.exec.pending is 0
+      scraperwiki.tool.exec.pending -= 1
+      if scraperwiki.tool.exec.pending is 0
         $(document).trigger('execsComplete')
   if success?
     options.success = success

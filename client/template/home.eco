@@ -27,7 +27,7 @@
         <span class="tool-icon-inner" style="background-color: #3cf; background-image: url(https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-twitter.png)"></span>
         </span>
       <div class="media-body">
-        <h4>Search for Tweets</h4>
+        <h4>Search for tweets</h4>
         <p>The simplest way to collect tweets matching a search term over time.</p>
       </div>
     </div>
@@ -74,7 +74,7 @@
         <span class="tool-icon-inner" style="background-color: #b46106; background-image: url(https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-map.png)"></span>
       </span>
       <div class="media-body">
-        <h4>View on a Map</h4>
+        <h4>View on a map</h4>
         <p>Get a simple, effective, and zero-configuration bird&rsquo;s eye view of your data.</p>
       </div>
     </div>

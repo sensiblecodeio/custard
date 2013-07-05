@@ -11,18 +11,20 @@
 
     <div id="content" class="container">
       <div class="login-page">
-        <% if (errors.length > 0) { %>
-        <div id="error" class="alert alert-error">
-          <strong><%=errors %></strong>
-        </div>
-        <% } %>
-        <form action="/login" method="post">
+
+        <form action="/login" method="post" class="new-login">
+          <h2>New ScraperWiki</h2>
+          <% if (errors.length > 0) { %>
+          <div id="error" class="alert alert-error">
+            <strong><%=errors %></strong>
+          </div>
+          <% } %>
           <p>
             <label for="username">Username:</label>
             <input type="text" id="username" name="username"/>
           </p>
           <p>
-            <label for="password">Password:</label>
+            <label for="password">Password: <span class="pull-right muted" id="forgotten-password">Forgotten?</span></label>
             <input type="password" id="password" name="password"/>
           </p>
           <p>
@@ -34,14 +36,13 @@
             <img src="/image/loader-btn-primary.png" width="16" height="16" style="position: absolute; left: -4000px;">
           </p>
         </form>
-      </div>
 
-      <div class="classic-login-page">
-        <a id="back-to-classic" href="https://classic.scraperwiki.com">
-          <h4>Looking for ScraperWiki Classic?</h4>
-          <p>Click here to access all your old scrapers on <strong>classic.scraperwiki.com</strong></p>
-          <img src="/image/classic-test-card.png" width="140" height="90" alt="">
-        </a>
+        <div class="classic-login">
+          <h2>ScraperWiki Classic</h2>
+          <p>If you don&rsquo;t get have an account on the new ScraperWiki, click here to access all your old scrapers on ScraperWiki Classic.</p>
+          <a class="btn" href="https://classic.scraperwiki.com">Log into Classic <i class="icon-arrow-right"></i></a>
+        </div>
+
       </div>
 
       <span class="clear"></span>
@@ -52,6 +53,15 @@
       $('#content form').on('submit', function(){
           $('#login').addClass('loading').html('Logging In&hellip;')
       })
+      $('#forgotten-password').popover({
+        title: "No problem!",
+        content: 'Email us for a reset link: <a href="mailto:feedback@scraperwiki.com">feedback@scraperwiki.com</a>',
+        html: true,
+        placement: 'bottom'
+      }).on('click', function(e){
+        e.preventDefault()
+        e.stopPropagation()
+      }).css('cursor', 'pointer')
     </script>
 
 <% include base_footer.html %>

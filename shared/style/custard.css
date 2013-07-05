@@ -1379,8 +1379,7 @@ div.home p.last a.btn {
   vertical-align: 1px;
 }
 
-div.home #back-to-classic,
-div.classic-login-page a {
+div.home #back-to-classic {
   display: block;
   position: relative;
   margin: 40px 0 0 0;
@@ -1398,8 +1397,7 @@ div.classic-login-page a {
   text-decoration: none;
 }
 
-div.home #back-to-classic:hover,
-div.classic-login-page a:hover {
+div.home #back-to-classic:hover {
   border: 2px solid #369;
   margin: 39px -1px -1px -1px;
 }
@@ -1409,13 +1407,11 @@ div.home #back-to-classic h3 {
   line-height: 32px;
 }
 
-div.home #back-to-classic p,
-div.classic-login-page a p {
+div.home #back-to-classic p {
   margin: 0;
 }
 
-div.home #back-to-classic img,
-div.classic-login-page img {
+div.home #back-to-classic img {
   position: absolute;
   bottom: 0;
   right: 70px;
@@ -1706,27 +1702,41 @@ div.about p.logos {
 
 /* Login page */
 
-div.login-page {
-  width: 50%;
-  float: left;
+.login-page {
+  padding: 0 30px;
+  -moz-transition: padding 0.5s;
+  -webkit-transition: padding 0.5s;
+  -o-transition: padding 0.5s;
+  transition: padding 0.5s;
 }
 
-div.classic-login-page {
-  width: 45%;
-  float: right;
+.login-page label {
+  width: 220px;
 }
 
-div.classic-login-page a {
-  margin-top: 10px;
+.login-page .alert {
+  padding: 8px 14px;
+  width: 190px;
 }
 
-div.classic-login-page a:hover {
-  margin-top: 9px;
+.login-page .popover {
+  width: 15em;
 }
 
-div.classic-login-page h4 {
-  margin: 0 0 10px 0;
+.login-page .popover.bottom .arrow:after {
+  border-bottom-color: #f7f7f7;
 }
+
+.login-page h2 {
+  font-size: 21px;
+  line-height: 28px;
+}
+
+.classic-login {
+  margin-top: 40px;
+}
+
+
 
 
 
@@ -2026,6 +2036,25 @@ div.classic-login-page h4 {
     margin-right: 280px; /* avoid text wrapping underneath #request form */
   }
 
+
+  /* Login page */
+
+  .login-page {
+    padding: 0;
+  }
+  
+  .login-page .new-login {
+    width: 275px;
+    float: left;
+    border-right: 1px solid #ddd;
+  }
+  
+  .login-page .classic-login {
+    width: 250px;
+    float: right;
+    margin-top: 0;
+  }
+
 }
 
 
@@ -2190,20 +2219,12 @@ div.classic-login-page h4 {
   #history_and_funding + h2 {
     margin-top: 30px;
   }
-  
-  
-  /* Log in page */
-  
-  div.classic-login-page a {
-    padding-bottom: 20px;
-  }
-  
-  div.classic-login-page p {
-    width: 50%;
-  }
-  
-  div.classic-login-page img {
-    right: 10px;
+
+
+  /* Login page */
+
+  .login-page {
+    padding: 20px 150px;
   }
 
 }
@@ -2289,6 +2310,13 @@ div.classic-login-page h4 {
   div.professional #case-studies .carousel-wrapper,
   div.professional #case-studies .case-study {
     width: 1180px;
+  }
+
+
+  /* Login page */
+
+  .login-page {
+    padding: 20px 300px;
   }
 
 }

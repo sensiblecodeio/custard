@@ -84,6 +84,11 @@
         <p>We are working with academic groups and companies in a pan-European collaboration under the EU&rsquo;s Framework 7 research and innovation programme. The <a href="http://www.newsreader-project.eu/">NewsReader project</a> ingests vast quantities of news and related data and uses natural language processing to offer enhanced navigation and analysis.</p>
         <p>Our role is to provide data sources in the form of scrapers for openly available material such as parliamentary proceedings and to support the exploitation and dissemination of results and technologies arising from the project.</p>
       </div>
+      <div class="case-study">
+        <h3>Company data for the academic sector</h3>
+        <p>When Marko Klasnja, a PhD politics student at <a href="http://www.nyu.edu/">New York University</a>, wanted to get data on thousands of companies from the website of the Romanian Ministry of Finances he turned to us.</p>
+        <p>Following his exemplary brief we were able to quickly extract the data from the HTML tables on the site and present it to him along with a report which highlighted discrepancies in the underlying data. Our experience with and in academia means we understand the problems academic customers face.</p>
+      </div>
     </div>
   </div>
 </div>

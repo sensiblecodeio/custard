@@ -5,7 +5,7 @@ class Cu.View.About extends Backbone.View
 
   render: ->
     @el.innerHTML = JST['about']()
-    $('.more', @$el).hide().before('<span class="showMore">&hellip; <i>More &raquo;</i></span>')
+    $('.more', @$el).hide().before('<span class="showMore">&hellip; <i>More&nbsp;&raquo;</i></span>')
     @
 
   showMore: (e) ->

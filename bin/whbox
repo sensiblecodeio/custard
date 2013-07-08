@@ -6,7 +6,7 @@ rmQuote = (s) ->
   if not /^['"]/.test s
     return s
   t = s.replace /[^\\]|\\./g, (x) ->
-    # Strip bar quotes (which should be only leading and trailing)
+    # Strip all quotes (which should be only leading and trailing)
     if /['"]/.test x
       return ''
     # Escape

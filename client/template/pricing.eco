@@ -11,7 +11,7 @@
   <% if window?.user.effective?.accountLevel.match /large/: %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else if window?.user.effective?: %>
-  <a class="cta upgrade">Upgrade</a>
+  <a class="cta upgrade" data-plan="datascientist">Upgrade</a>
   <% else: %>
   <a class="cta" href="/signup/datascientist">Sign Up</a>
   <% end %>
@@ -25,7 +25,7 @@
   <% if window?.user.effective?.accountLevel.match /medium/: %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else if window?.user.effective?: %>
-  <a class="cta upgrade">Upgrade</a>
+  <a class="cta upgrade" data-plan="explorer">Upgrade</a>
   <% else: %>
   <a class="cta" href="/signup/explorer">Sign Up</a>
   <% end %>

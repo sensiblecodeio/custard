@@ -12,3 +12,6 @@ class Cu.View.Pricing extends Backbone.View
 
   upgradeClick: (e) ->
     e.preventDefault()
+    if window.user.effective?.accountLevel is 'free'
+      truePlan = app.truePlan $(e.target).attr('data-plan')
+      window.app.navigate "/subscribe/#{truePlan}", {trigger: true}

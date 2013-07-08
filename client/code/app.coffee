@@ -33,6 +33,23 @@ $ ->
           window.app.navigate href, trigger: true
           window.scrollTo 0,0
 
+  # :todo: really should extract this information from the API.
+  window.app.planConvert =
+    explorer: 'medium-ec2'
+    datascientist: 'large-ec2'
+
+  # Translate from user-visible plan to
+  # the shortname used for the plan on the subscribe page.
+  # Only returns a non-null string for paid plans.
+  window.app.truePlan = (plan) ->
+    window.app.planConvert[plan]
+
+  # Return the user-visible name of the plan, but only when that
+  # is a paid plan.
+  window.app.cashPlan = (plan) ->
+    plan if plan of window.app.planConvert
+
+
 class Cu.AppView
   constructor: (@selector) ->
 

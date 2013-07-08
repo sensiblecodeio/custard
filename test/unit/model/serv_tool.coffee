@@ -37,6 +37,18 @@ describe 'Server model: Tool', ->
       our_tool.should.be.an.instanceOf Tool
       our_tool.name.should.equal 'dataset-tool'
 
+  context 'when saving a tool', ->
+    before (done) ->
+      @tool = new Tool { name: 'newTool', allowedUsers: ['user1', 'user2'] }
+      @tool.save done
+    before (done) ->
+      Tool.findOneByName "newTool", (error, tool) =>
+        @foundTool = tool
+        done()
+    it 'should have saved the allowed users field', ->
+      @foundTool.should.have.property "allowedUsers"
+      @foundTool.allowedUsers.should.equal ['user1', 'user2']
+  
   context 'when loading from git', ->
     before ->
       @exec = sinon.stub child_process, 'exec', (child, cb) -> cb()

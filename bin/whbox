@@ -36,4 +36,5 @@ MongoClient.connect dbURL, (err, db) ->
     console.log "ssh #{box.name}@#{box.server}"
     console.log "https://#{box.server}/#{box.name}/#{box.boxJSON.publish_token}/http/"
     console.log "#{box.name}:x:#{box.uid}:10000::/home:/bin/bash"
+    console.log "users: #{box.users}"
 

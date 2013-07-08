@@ -47,7 +47,7 @@ describe 'Server model: Tool', ->
         done()
     it 'should have saved the allowed users field', ->
       @foundTool.should.have.property "allowedUsers"
-      @foundTool.allowedUsers.should.equal ['user1', 'user2']
+      @foundTool.allowedUsers.should.eql ['user1', 'user2']
   
   context 'when loading from git', ->
     before ->

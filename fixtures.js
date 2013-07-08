@@ -126,7 +126,7 @@ exports.users = [
   recurlyAccount: "tinat-1045756",
   defaultContext: "testersonltd",
   acceptedTerms: 1
-},
+}
 ];
 
 exports.tokens = [

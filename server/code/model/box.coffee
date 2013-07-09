@@ -41,9 +41,11 @@ class Box extends ModelBase
   duplicateErrorCount: 0
 
   installTool: (arg, callback) ->
-    Tool.findOneByName arg.toolName, (err, tool) =>
+    Tool.findOneForUser {name: arg.toolName, user: arg.user}, (err, tool) =>
       if err?
         callback "Can't find tool"
+      else if not tool?
+        callback "You don't seem to have permission to install this"
       else
         # EG: https://git.scraperwiki.com/tool-name
         # :todo: When we have paid-for tools (private), then

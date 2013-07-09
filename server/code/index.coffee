@@ -629,6 +629,7 @@ updateDataset = (req, resp) ->
 
 addDataset = (req, resp) ->
   user = req.user.effective
+  body = req.body
   console.log "POST dataset user", user
   User.canCreateDataset user, (err, can) ->
     if err?
@@ -640,31 +641,31 @@ addDataset = (req, resp) ->
         return resp.send err.statusCode, error: "Error creating box: #{err.body}"
       console.log "POST dataset boxName=#{box.name}"
       console.log "POST dataset boxServer = #{box.server}"
-      # Save dataset
-      body = req.body
-      dataset = new Dataset
-        box: box.name
-        boxServer: box.server
-        user: user.shortName
-        tool: body.tool
-        name: body.name
-        displayName: body.displayName
-        boxJSON: box.boxJSON
-
-      dataset.save (err) ->
+      # TODO: a box will still be created here
+      box.installTool {user: user, toolName: body.tool}, (err) ->
         if err?
           console.warn err
-          return resp.send 400, error: "Error saving dataset: #{err}"
-        # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
-        User.distributeUserKeys user.shortName, (err) ->
-          if err?
-            console.warn "SSH key distribution error"
-            err = null
-        console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
-        box.installTool {user: user, toolName: body.tool}, (err) ->
+          return resp.send 500, error: "Error installing tool: #{err}"
+        # Save dataset
+        dataset = new Dataset
+          box: box.name
+          boxServer: box.server
+          user: user.shortName
+          tool: body.tool
+          name: body.name
+          displayName: body.displayName
+          boxJSON: box.boxJSON
+
+        dataset.save (err) ->
           if err?
             console.warn err
-            return resp.send 500, error: "Error installing tool: #{err}"
+            return resp.send 400, error: "Error saving dataset: #{err}"
+          # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
+          User.distributeUserKeys user.shortName, (err) ->
+            if err?
+              console.warn "SSH key distribution error"
+              err = null
+          console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
           Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
             console.warn err if err?
             resp.send 200, dataset

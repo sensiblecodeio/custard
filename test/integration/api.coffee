@@ -26,7 +26,7 @@ describe 'API', ->
   before ->
     @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
   context "When I'm not logged in", ->
-    
+
     describe 'Data request form', ->
       context 'POST /api/data-request', ->
         before (done) ->
@@ -63,7 +63,7 @@ describe 'API', ->
 
         it 'response should include an error message', ->
           @body.should.include "Please tell us your email address"
-    
+
     describe 'Sign up', ->
       context 'POST /api/<username>', ->
         before (done) ->
@@ -300,6 +300,19 @@ describe 'API', ->
               createDatasets 1, (err, res, body) ->
                 res.should.have.status 402
                 done()
+
+           context "I try to create a dataset with a tool I don't have access to", ->
+             before (done) ->
+               createDatasets 1,
+                 displayName: 'BADMAN'
+                 tool: 'private-tool'
+                 user: @user
+               , (err, res, body) =>
+                 @response = res
+                 done()
+
+             it "doesn't let me create the dataset", ->
+               @response.should.have.status 402
 
         describe 'Views', ->
           context 'when I create a view on a dataset', ->
@@ -569,7 +582,7 @@ describe 'API', ->
             password: @newPassword
         , (err, resp, body) ->
           resp.should.have.status 200
-          done(err) 
+          done(err)
 
   describe "Private tools", ->
     context 'When I add allowedUsers', ->
@@ -586,25 +599,23 @@ describe 'API', ->
           @response = res
           @tool = JSON.parse res.body
           done()
-      
+
       it 'is shared with some users', ->
         @tool.allowedUsers.should.eql ['test', 'ickletest']
 
     context 'When I log in as test', ->
-      before (done) -> 
+      before (done) ->
        @user = "test"
        @password = "testing"
        login.call @, done
 
-      before (done) -> 
+      before (done) ->
         @toolsURL = "#{serverURL}/api/tools"
         request.get
           uri: @toolsURL,
         , (err, res, body) =>
           @tools = JSON.parse body
           done()
-    
+
       it "includes the private tool", ->
         should.exist(_.find @tools, (x) => x.name == "shared-private")
-
-

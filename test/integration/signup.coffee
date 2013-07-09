@@ -9,8 +9,7 @@ describe 'Sign up', ->
     before (done) ->
       browser.get "#{home_url}/pricing/", done
     before (done) ->
-      wd40.elementByPartialLinkText 'Free', (err, link) ->
-        link.click done
+      wd40.click '.plan.community a', done
 
     context 'when I enter my details and click go', ->
       before (done) ->

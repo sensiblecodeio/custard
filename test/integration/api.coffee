@@ -585,7 +585,6 @@ describe 'API', ->
           , (err, resp, body) =>
             obj = JSON.parse body
             @resp = resp
-            console.log body
             done(err)
 
         it "returns a success", ->
@@ -594,7 +593,7 @@ describe 'API', ->
     context "When I'm downgrading from large to medium", ->
       context 'PUT /api/:user/subscription/change/medium-ec2', ->
         before (done) ->
-          @user = 'largelucy'
+          @user = 'mediummary'
           @password = 'testing'
           login.call @, done
 
@@ -604,11 +603,25 @@ describe 'API', ->
           , (err, resp, body) =>
             obj = JSON.parse body
             @resp = resp
-            console.log body
             done(err)
 
         it "returns a success", ->
           @resp.should.have.status 200
 
     context "When Recurly can't find my account", ->
-      it "returns a failure"
+      context 'PUT /api/:user/subscription/change/large-ec2', ->
+        before (done) ->
+          @user = 'ickletest'
+          @password = 'toottoot'
+          login.call @, done
+
+        before (done) ->
+          request.put
+            uri: "#{serverURL}/api/#{@user}/subscription/change/large-ec2"
+          , (err, resp, body) =>
+            obj = JSON.parse body
+            @resp = resp
+            done(err)
+
+        it "returns a failure", ->
+          @resp.should.have.status 404

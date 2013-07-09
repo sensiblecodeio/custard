@@ -80,3 +80,24 @@ describe 'Upgrade from medium account to large account', ->
           wd40.elementByCss '.account-large .currentPlan', (err, span) ->
             should.exist span
             done()
+
+    context 'when I downgrade again', ->
+      before (done) ->
+        wd40.click '.account-medium a', done
+
+      it 'it opens a modal window checking I\'m sure', (done) ->
+        wd40.elementByCss '.modal', (err, modal) ->
+          should.exist modal
+          done()
+
+      context 'when I click the only button on the modal', ->
+        before (done) ->
+          wd40.click '.modal .btn', done
+
+        it 'it closes the modal window', (done) ->
+          wd40.waitForInvisibleByCss '.modal', done
+
+        it 'it shows I am on the medium plan', (done) ->
+          wd40.elementByCss '.account-medium .currentPlan', (err, span) ->
+            should.exist span
+            done()

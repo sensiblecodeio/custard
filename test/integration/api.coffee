@@ -193,16 +193,35 @@ describe 'API', ->
                   type: 'view'
                   gitUrl: 'git://github.com/scraperwiki/test-app-tool.git'
                   public: false
-                  allowedUsers: ['ehg', 'ickletest']
+                  allowedUsers: ['test', 'ickletest']
               , (err, res, body) =>
                 @response = res
                 @tool = JSON.parse res.body
                 done()
             
             it 'is shared with some users', ->
-              @tool.allowedUsers.should.eql ['ehg', 'ickletest']
+              @tool.allowedUsers.should.eql ['test', 'ickletest']
 
-  
+          context 'When I log in as test', ->
+            before (done) ->
+              @jar = request.jar()
+              @loginURL = "#{serverURL}/login"
+              @user = "test"
+              @password = process.env.CU_TEST_PASSWORD
+              request.get uri: @loginURL
+                jar: @jar
+              , =>
+                request.post
+                  uri: @loginURL
+                  jar: @jar
+                  form:
+                    username: @user
+                    password: "testing"
+                , (err, res) =>
+                  @loginResponse = res
+                  done(err)
+
+
 
         context 'When I create a public tool', ->
           before (done) ->

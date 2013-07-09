@@ -27,7 +27,6 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
-xml2js = require 'xml2js'
 {Exceptional} = require 'exceptional-node'
 
 {User} = require 'model/user'
@@ -725,69 +724,29 @@ googleAnalytics = (req, resp, next) ->
   next()
 
 changePlan = (req, resp) ->
-  user = req.user.effective
-  # TODO: name these properly
-  [err, currentPlan] = Plan.getPlan user.accountLevel
-  [err, newPlan] = Plan.getPlan req.params.plan
-
-  # Get Recurly account subscriptions
-  request.get
-    uri: "https://#{process.env.RECURLY_API_KEY}:@#{process.env.RECURLY_DOMAIN}.recurly.com/v2/accounts/#{user.recurlyAccount}/subscriptions"
-    strictSSL: true
-    headers:
-      'Accept': 'application/xml'
-      'Content-Type': 'application/xml; charset=utf-8'
-  , (err, recurlyResp, body) ->
+  [err, dummy] = Plan.getPlan req.params.plan
+  if err
+    return resp.send 500, error: "That plan does not exist!"
+  User.findByShortName req.user.real.shortName, (err, user) ->
     if err?
-      return resp.send 500, error: err
-    else if recurlyResp.statusCode is 404
-      return resp.send 404, error: "You have no Recurly account. Sign up for a paid plan at http://scraperwiki.com/pricing"
-    else if recurlyResp.statusCode isnt 200
-      return resp.send 500, { statusCode: recurlyResp.statusCode, error: recurlyResp.body }
-
-    parser = new xml2js.Parser
-      ignoreAttrs: true
-      explicitArray: false
-    parser.parseString body, (err, obj) ->
+      console.warn "error searching for user model!", err
+      return resp.send 500, error: "Couldn't find your user object"
+    if not user
+      return resp.send 500, error: "No users with the specified shortName"
+    user.getCurrentSubscription (err, currentSubscription) ->
       if err?
-        console.warn err
-        return resp.send 500, error: "Can't parse Recurly XML"
-
-      if not obj.subscriptions
-        return resp.send 404, error: "You do not have a paid subscription. Sign up at http://scraperwiki.com/pricing"
-
-      # xml2js converts multiple entities within entities as an array,
-      # but a single one is a single object. So we wrap into a list where necessary.
-      if not obj.subscriptions.subscription[0]
-        obj.subscriptions.subscription = [ obj.subscriptions.subscription ]
-
-      currentSubscription = _.find obj.subscriptions.subscription, (item) ->
-        return item.plan.plan_code is user.accountLevel and item.state is 'active'
-
-      if not currentSubscription
         return resp.send 404, error: "Couldn't find your subscription"
-
-      request.put
-        uri: "https://#{process.env.RECURLY_API_KEY}:@#{process.env.RECURLY_DOMAIN}.recurly.com/v2/subscriptions/#{currentSubscription.uuid}/"
-        strictSSL: true
-        headers:
-          'Accept': 'application/xml'
-          'Content-Type': 'application/xml; charset=utf-8'
-        body: "<subscription><timeframe>now</timeframe><plan_code>#{req.params.plan}</plan_code></subscription>"
-      , (err, subResp, body) ->
+      if not currentSubscription
+        return resp.send 404, error: "You do not have a recurly subscription. Please get one at https://scraperwiki.com/pricing"
+      currentSubscription.upgrade req.params.plan, (err, recurlyResp) ->
         if err?
-          return resp.send 500, error: err
-        else if subResp.statusCode isnt 200
-          return resp.send 500, { statusCode: subResp.statusCode, error: subResp.body }
-
-        User.findByShortName user.shortName, (err, user) ->
-          user.accountLevel = req.params.plan
-          user.save (err, user) ->
-            if err?
-              console.warn "could not save user model!", err
-              return resp.send 500, error: "Subscription changed, but user model could not be saved"
-            return resp.send 200, user
-
+          return resp.send 500, error: "Couldn't change your subscription"
+        user.accountLevel = req.params.plan
+        user.save (err, user) ->
+          if err?
+            console.warn "could not save user model!", err
+            return resp.send 500, error: "Subscription changed, but user model could not be saved"
+          return resp.send 200, user
 
 app.all '*', ensureAuthenticated
 

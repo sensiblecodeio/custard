@@ -3,6 +3,8 @@ mongoose = require 'mongoose'
 async = require 'async'
 request = require 'request'
 uuid = require 'uuid'
+_ = require 'underscore'
+xml2js = require 'xml2js'
 
 mailchimp = require('mailchimp')
 
@@ -10,6 +12,7 @@ ModelBase = require 'model/base'
 {Box} = require 'model/box'
 {Token} = require 'model/token'
 {Plan} = require 'model/plan'
+{Subscription} = require 'model/subscription'
 
 {signUpEmail} = require 'lib/email'
 
@@ -73,6 +76,48 @@ class exports.User extends ModelBase
   setAccountLevel: (plan, callback) ->
     @accountLevel = plan
     @save callback
+
+  getCurrentSubscription: (callback) ->
+    # find the subscription with that plan name
+    request.get
+      uri: "https://#{process.env.RECURLY_API_KEY}:@#{process.env.RECURLY_DOMAIN}.recurly.com/v2/accounts/#{@recurlyAccount}/subscriptions"
+      strictSSL: true
+      headers:
+        'Accept': 'application/xml'
+        'Content-Type': 'application/xml; charset=utf-8'
+    , (err, recurlyResp, body) =>
+      if err?
+        return callback err, null
+      else if recurlyResp.statusCode is 404
+        return callback { error: "You have no Recurly account. Sign up for a paid plan at http://scraperwiki.com/pricing" }, null
+      else if recurlyResp.statusCode isnt 200
+        return callback { statusCode: recurlyResp.statusCode, error: recurlyResp.body }, null
+
+      parser = new xml2js.Parser
+        ignoreAttrs: true
+        explicitArray: false
+      parser.parseString body, (err, obj) =>
+        if err?
+          console.warn err
+          return callback { error: "Can't parse Recurly XML" }, null
+
+        if not obj.subscriptions
+          return callback { error: "You do not have a paid subscription. Sign up at http://scraperwiki.com/pricing" }, null
+
+        # xml2js converts multiple entities within entities as an array,
+        # but a single one is a single object. So we wrap into a list where necessary.
+        if not obj.subscriptions.subscription[0]
+          obj.subscriptions.subscription = [ obj.subscriptions.subscription ]
+
+        currentSubscription = _.find obj.subscriptions.subscription, (item) =>
+          console.log item.plan.plan_code, @accountLevel, item.state
+          return item.plan.plan_code is @accountLevel and item.state is 'active'
+
+        if not currentSubscription
+          console.log 'kitten'
+          return callback null, null
+
+        return callback null, new Subscription currentSubscription
 
   @canCreateDataset: (user, callback) ->
     {Dataset} = require 'model/dataset'

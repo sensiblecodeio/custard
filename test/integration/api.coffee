@@ -583,7 +583,6 @@ describe 'API', ->
           request.put
             uri: "#{serverURL}/api/#{@user}/subscription/change/large-ec2"
           , (err, resp, body) =>
-            obj = JSON.parse body
             @resp = resp
             done(err)
 
@@ -601,7 +600,6 @@ describe 'API', ->
           request.put
             uri: "#{serverURL}/api/#{@user}/subscription/change/medium-ec2"
           , (err, resp, body) =>
-            obj = JSON.parse body
             @resp = resp
             done(err)
 
@@ -619,7 +617,6 @@ describe 'API', ->
           request.put
             uri: "#{serverURL}/api/#{@user}/subscription/change/large-ec2"
           , (err, resp, body) =>
-            obj = JSON.parse body
             @resp = resp
             done(err)
 

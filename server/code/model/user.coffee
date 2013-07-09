@@ -110,7 +110,7 @@ class exports.User extends ModelBase
           obj.subscriptions.subscription = [ obj.subscriptions.subscription ]
 
         currentSubscription = _.find obj.subscriptions.subscription, (item) =>
-          console.log item.plan.plan_code, @accountLevel, item.state
+          console.log "recurly", item.plan.plan_code, "user", @accountLevel, item.state
           return item.plan.plan_code is @accountLevel and item.state is 'active'
 
         if not currentSubscription

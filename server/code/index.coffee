@@ -27,6 +27,7 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
+xml2js = require 'xml2js'
 {Exceptional} = require 'exceptional-node'
 
 {User} = require 'model/user'
@@ -504,7 +505,6 @@ app.post '/api/data-request/?', dataRequest
 app.post '/api/status/?', checkIdent, postStatus
 
 app.get '/api/:user/subscription/:plan/sign/?', signPlan
-# app.get '/api/:user/subscription/:plan/change/?', changePlan
 app.post '/api/:user/subscription/verify/?', verifyRecurly
 
 ############ AUTHENTICATED ############
@@ -724,6 +724,57 @@ googleAnalytics = (req, resp, next) ->
     return true
   next()
 
+changePlan = (req, resp) ->
+  user = req.user.effective
+  # TODO: name these properly
+  [err, currentPlan] = Plan.getPlan user.accountLevel
+  [err, newPlan] = Plan.getPlan req.params.plan
+
+  # Get Recurly account subscriptions
+  request.get
+    uri: "https://#{process.env.RECURLY_API_KEY}:@#{process.env.RECURLY_DOMAIN}.recurly.com/v2/accounts/#{user.recurlyAccount}/subscriptions"
+    strictSSL: true
+    headers:
+      'Accept': 'application/xml'
+      'Content-Type': 'application/xml; charset=utf-8'
+  , (err, recurlyResp, body) ->
+    #TODO: handle error
+    parser = new xml2js.Parser
+      ignoreAttrs: true
+      explicitArray: false
+    parser.parseString body, (err, obj) ->
+      if err?
+        console.warn err
+        resp.send 500, error: "Can't parse Recurly XML"
+      else
+        # TODO: handle cases of multiple subscriptions
+        #   xml2js converts multiple entities within entities as an array,
+        #   but a single one is a single object
+        currentSubscription = obj.subscriptions.subscription
+        if currentSubscription.plan.plan_code is user.accountLevel
+          xml = """
+                <subscription>
+                    <timeframe>now</timeframe>
+                    <plan_code>#{req.params.plan}</plan_code>
+                </subscription>
+                """
+          request.put
+            uri: "https://#{process.env.RECURLY_API_KEY}:@#{process.env.RECURLY_DOMAIN}.recurly.com/v2/subscriptions/#{currentSubscription.uuid}/"
+            strictSSL: true
+            headers:
+              'Accept': 'application/xml'
+              'Content-Type': 'application/xml; charset=utf-8'
+            body: xml
+          , (err, subResp, body) ->
+            #TODO: handle error
+            User.findByShortName user.shortName, (err, user) ->
+              user.accountLevel = req.params.plan
+              user.save (err, user) ->
+                #TODO: hande error
+                resp.send 200, user
+        else
+          resp.send 500, {error: "Couldn't find your subscription"}
+
 app.all '*', ensureAuthenticated
 
 app.get '/logout', logout
@@ -746,6 +797,8 @@ app.get '/api/user/?', listUsers
 
 app.post '/api/:user/sshkeys/?', addSSHKey
 app.get '/api/:user/sshkeys/?', listSSHKeys
+
+app.put '/api/:user/subscription/change/:plan/?', changePlan
 
 # Catch all other routes, send to client app
 app.get '*', renderClientApp

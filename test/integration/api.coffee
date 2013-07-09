@@ -570,3 +570,45 @@ describe 'API', ->
         , (err, resp, body) ->
           resp.should.have.status 200
           done(err)
+
+  describe 'Upgrading my account', ->
+    context "When I'm upgrading from medium to large", ->
+      context 'PUT /api/:user/subscription/change/large-ec2', ->
+        before (done) ->
+          @user = 'mediummary'
+          @password = 'testing'
+          login.call @, done
+
+        before (done) ->
+          request.put
+            uri: "#{serverURL}/api/#{@user}/subscription/change/large-ec2"
+          , (err, resp, body) =>
+            obj = JSON.parse body
+            @resp = resp
+            console.log body
+            done(err)
+
+        it "returns a success", ->
+          @resp.should.have.status 200
+
+    context "When I'm downgrading from large to medium", ->
+      context 'PUT /api/:user/subscription/change/medium-ec2', ->
+        before (done) ->
+          @user = 'largelucy'
+          @password = 'testing'
+          login.call @, done
+
+        before (done) ->
+          request.put
+            uri: "#{serverURL}/api/#{@user}/subscription/change/medium-ec2"
+          , (err, resp, body) =>
+            obj = JSON.parse body
+            @resp = resp
+            console.log body
+            done(err)
+
+        it "returns a success", ->
+          @resp.should.have.status 200
+
+    context "When Recurly can't find my account", ->
+      it "returns a failure"

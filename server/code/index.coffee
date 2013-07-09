@@ -528,11 +528,10 @@ postTool = (req, resp) ->
         user: req.user.effective.shortName
         type: body.type
         gitUrl: body.gitUrl
+        allowedUsers: body.allowedUsers
         public: publicBool
-    # :todo: Should edit the fields of tool, using the key/value
-    # pairs in req.body (_.update tool, body). So that for
-    # example the gitUrl can be changed and we git clone from the
-    # new one.
+    else
+      _.extend tool, body
     # Start updating the tool instances (datasets and views)
     console.log "Starting to update tool instances..."
     tool.updateInstances (err, res) ->

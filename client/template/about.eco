@@ -10,7 +10,7 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <img src="https://media.scraperwiki.com/images/about_francis.png" class="pull-left" />
+      <img src="/image/team_francis.png" class="pull-left" />
       <div class="media-body">
         <h3>Francis Irving <small>CEO</small></h3>
         <p>A technology leader, Francis created the original TortoiseCVS, which has improved<span class="more"> version control for tens of millions of people. He was a founder of <a href="http://www.theyworkforyou.com">TheyWorkForYou</a> and <a href="http://whatdotheyknow.com">WhatDoTheyKnow</a>, which show the world how to use scraping and good user experience to improve democracy. BA Mathematics (Oxford).</span></p>
@@ -19,7 +19,7 @@
   </div>
   <div class="span6">
     <div class="media">
-      <img src="https://media.scraperwiki.com/images/about_aidan.png" class="pull-left" />
+      <img src="/image/team_aidan.png" class="pull-left" />
       <div class="media-body">
         <h3>Aidan McGuire <small>CFO</small></h3>
         <p>Started Blue Fountain, one of the first open source service businesses in the UK<span class="more">, and previously had a career in the Forex market in London.  Aidan founded ScraperWiki with Dr Julian Todd and raised seed and series A funding with Channel 4 and Enterprise Ventures respectively. Aidan is CFO. BBS (Trinity, Dublin).</span></p>
@@ -40,7 +40,7 @@
   </div>
   <div class="span6">
     <div class="media">
-      <img src="https://media.scraperwiki.com/images/about_zarino.png" class="pull-left" />
+      <img src="/image/team_zarino.png" class="pull-left" />
       <div class="media-body">
         <h3>Zarino Zappia <small>VP,&nbsp;Product</small></h3>
         <p>Designer, programmer and Internetologist. Zarino is responsible for the look and feel<span class="more"> of the site, its tools, and ScraperWiki’s customer visualisations. He researched Open Data communities at the <a href="http://www.oii.ox.ac.uk">Oxford Internet Institute</a> in 2012. MSc Social Science of the Internet (Oxford), BA in Media &amp; Comms (Goldsmiths, London).</span></p>
@@ -52,7 +52,7 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <img src="https://media.scraperwiki.com/images/about_ian.png" class="pull-left" />
+      <img src="/image/team_ian.png" class="pull-left" />
       <div class="media-body">
         <h3>Dr Ian Hopkinson <small>Senior&nbsp;Data&nbsp;Scientist</small></h3>
         <p>8 years as an academic soft matter physicist, then research scientist at Unilever<span class="more"> Plc for 8 years with experience of numerical models, simulations, data analysis, visualisation, image processing using Matlab, R and Python amongst other technologies. BSc Chemical Physics (Bristol), PhD Polymer physical chemistry (Durham).</span></p>
@@ -73,7 +73,7 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <img src="https://media.scraperwiki.com/images/about_paul.png" class="pull-left" />
+      <img src="/image/team_paul.png" class="pull-left" />
       <div class="media-body">
         <h3>Paul Furley <small>Data&nbsp;Scientist</small></h3>
         <p>Started his career at a leading technology consultancy, developing super-fast<span class="more"> data processing systems which also needed high reliability. This required strong software engineering skills including test-driven development of object oriented software in C++ and Python. Paul is a data scientist.  MEng Communications Engineering (Durham).</span></p>
@@ -82,7 +82,7 @@
   </div>
   <div class="span6">
     <div class="media">
-      <img src="https://media.scraperwiki.com/images/about_david.png" class="pull-left" />
+      <img src="/image/team_david.png" class="pull-left" />
       <div class="media-body">
         <h3>David Jones <small>First&nbsp;Engineer</small></h3>
         <p>An 18 year career in the innovative Cambridge software scene has left David skilled<span class="more"> in everything from memory management and text-retrieval to 3D collision physics and earth surface temperature observations. His weapons of choice are C, Python, Shell, and CoffeeScript. MA Maths (Cambridge), Diploma in Computer Science (Cambridge).</span></p>
@@ -94,7 +94,7 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <img src="https://media.scraperwiki.com/images/about_chris.png" class="pull-left" />
+      <img src="/image/team_chris.png" class="pull-left" />
       <div class="media-body">
         <h3>Chris Blower <small>Platform&nbsp;Engineer</small></h3>
         <p>An entrepreneurial technologist, Chris likes helping people and their<span class="more"> communities communicate more effectively. He has 20 years experience with a wide range of technologies from web to telecommunications. He introduced Extreme Programming to ScraperWiki. BSc Computer Science (Manchester).</span></p>
@@ -108,7 +108,7 @@
 <div class="row-fluid people">
   <div class="span6">
     <div class="media">
-      <img src="https://media.scraperwiki.com/images/about_jane.png" class="pull-left" />
+      <img src="/image/team_jane.png" class="pull-left" />
       <div class="media-body">
         <h3>Jane Silber <small>Chair&nbsp;of&nbsp;the&nbsp;Board</small></h3>
         <p>CEO of <a href="http://canonical.com">Canonical</a>. World-class business person<span class="more"> bringing global experience with Ubuntu, open source, and high growth companies.</span></p>
@@ -117,7 +117,7 @@
   </div>
   <div class="span6">
     <div class="media">
-      <img src="https://media.scraperwiki.com/images/about_julian.png" class="pull-left" />
+      <img src="/image/team_julian.png" class="pull-left" />
       <div class="media-body">
         <h3>Dr Julian Todd <small>Director</small></h3>
         <p>10 years of computational geometry for machine tool software at NC Graphics<span class="more">, followed by 4 years part time web scraping and parsing UK Parliament transcripts for <a href="http://www.theyworkforyou.com">TheyWorkForYou.com</a> at mySociety whilst developing a new generation of geometric software for HSMWorks, now part of Autodesk. Julian is one of the founders of ScraperWiki. BA Pure Mathematics (Cambridge), PhD Vector Algebra (Bristol).</span></p>

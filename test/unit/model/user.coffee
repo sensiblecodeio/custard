@@ -75,8 +75,10 @@ describe 'User (server)', ->
       @password = 'toottoot'
 
     it 'can be verified as wrong', (done) ->
-      @user.checkPassword 'WRONG', (correct) ->
-        correct.should.be.false
+      @user.checkPassword 'WRONG', (err, user) ->
+        err.should.include {statusCode: 401}
+        err.should.include {error: "Incorrect password"}
+        should.not.exist user
         done()
 
     context "when the user doesn't exist", ->
@@ -84,20 +86,23 @@ describe 'User (server)', ->
         @user = new User {shortName: 'IDONOTEXIST'}
 
       it 'returns false', (done) ->
-        @user.checkPassword @password, (correct) ->
-          correct.should.be.false
+        @user.checkPassword @password, (err, user) ->
+          err.should.include {statusCode: 404}
+          err.should.include {error: "No such user"}
+          should.not.exist user
           done()
 
     context "when the password doesn't exist", ->
       before (done) ->
         User.findByShortName 'nopassword', (err, user) =>
           delete user.password
-          user.checkPassword 'nonono', (correct) =>
-            @correct = correct
+          user.checkPassword 'nonono', (err) =>
+            @err = err
             done()
 
       it 'returns false', ->
-        @correct.should.be.false
+        @err.should.include {statusCode: 403}
+        @err.should.include {error: "User has no password"}
 
     context "when trying to set a password", ->
       before (done) ->
@@ -107,8 +112,9 @@ describe 'User (server)', ->
 
       it "sets the password and is correct", (done) ->
         User.findByShortName 'ickletest', (err, user) =>
-          user.checkPassword @newPassword, (correct) ->
-            correct.should.be.true
+          user.checkPassword @newPassword, (err, user) ->
+            should.not.exist err
+            user.should.include {shortName: "ickletest"}
             done()
 
   describe 'Finding', ->

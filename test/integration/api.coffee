@@ -184,6 +184,26 @@ describe 'API', ->
           it 'is private', ->
             @tool.public.should.be.false
 
+          context 'When I add allowedUsers', ->
+            before (done) ->
+              request.post
+                uri: "#{serverURL}/api/tools"
+                form:
+                  name: "#{@toolName}-private"
+                  type: 'view'
+                  gitUrl: 'git://github.com/scraperwiki/test-app-tool.git'
+                  public: false
+                  allowedUsers: ['ehg', 'ickletest']
+              , (err, res, body) =>
+                @response = res
+                @tool = JSON.parse res.body
+                done()
+            
+            it 'is shared with some users', ->
+              @tool.allowedUsers.should.eql ['ehg', 'ickletest']
+
+  
+
         context 'When I create a public tool', ->
           before (done) ->
             request.post

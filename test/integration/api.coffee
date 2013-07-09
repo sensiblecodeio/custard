@@ -184,45 +184,6 @@ describe 'API', ->
           it 'is private', ->
             @tool.public.should.be.false
 
-          context 'When I add allowedUsers', ->
-            before (done) ->
-              request.post
-                uri: "#{serverURL}/api/tools"
-                form:
-                  name: "#{@toolName}-private"
-                  type: 'view'
-                  gitUrl: 'git://github.com/scraperwiki/test-app-tool.git'
-                  public: false
-                  allowedUsers: ['test', 'ickletest']
-              , (err, res, body) =>
-                @response = res
-                @tool = JSON.parse res.body
-                done()
-            
-            it 'is shared with some users', ->
-              @tool.allowedUsers.should.eql ['test', 'ickletest']
-
-          context 'When I log in as test', ->
-            before (done) ->
-              @jar = request.jar()
-              @loginURL = "#{serverURL}/login"
-              @user = "test"
-              @password = process.env.CU_TEST_PASSWORD
-              request.get uri: @loginURL
-                jar: @jar
-              , =>
-                request.post
-                  uri: @loginURL
-                  jar: @jar
-                  form:
-                    username: @user
-                    password: "testing"
-                , (err, res) =>
-                  @loginResponse = res
-                  done(err)
-
-
-
         context 'When I create a public tool', ->
           before (done) ->
             request.post
@@ -608,4 +569,42 @@ describe 'API', ->
             password: @newPassword
         , (err, resp, body) ->
           resp.should.have.status 200
-          done(err)
+          done(err) 
+
+  describe "Private tools", ->
+    context 'When I add allowedUsers', ->
+      before (done) ->
+        request.post
+          uri: "#{serverURL}/api/tools"
+          form:
+            name: "shared-private"
+            type: 'view'
+            gitUrl: 'git://github.com/scraperwiki/test-plugin-tool.git'
+            public: false
+            allowedUsers: ['test', 'ickletest']
+        , (err, res, body) =>
+          @response = res
+          @tool = JSON.parse res.body
+          done()
+      
+      it 'is shared with some users', ->
+        @tool.allowedUsers.should.eql ['test', 'ickletest']
+
+    context 'When I log in as test', ->
+      before (done) -> 
+       @user = "test"
+       @password = "testing"
+       login.call @, done
+
+      before (done) -> 
+        @toolsURL = "#{serverURL}/api/tools"
+        request.get
+          uri: @toolsURL,
+        , (err, res, body) =>
+          @tools = JSON.parse body
+          done()
+    
+      it "includes the private tool", ->
+        should.exist(_.find @tools, (x) => x.name == "shared-private")
+
+

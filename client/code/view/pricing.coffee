@@ -26,11 +26,14 @@ class Cu.View.Pricing extends Backbone.View
         $(e.target).addClass('loading').html('Upgrading&hellip;')
         $.ajax
           type: 'PUT',
-          url: "/api/#{req.user.real.shortName}/subscription/change/#{truePlan}/"
+          url: "/api/#{window.user.real.shortName}/subscription/change/#{truePlan}/"
           success: (data) ->
             window.location.reload()
           error: (jqXHR, textStatus, errorThrown) ->
-            modalWindow.find('.modal-body').html('Sorry, an error occurred. <a href="/contact/">Contact us for help</a>.')
-            modalWindow.find('.btn-primary').removeClass('btn-primary').addClass('btn-danger')
+            modalWindow.find('.modal-body').html('Sorry, an error occurred.<br><a href="/contact/">Contact us for help</a>.')
+            modalWindow.find('.btn-primary')
+              .removeClass('btn-primary loading')
+              .addClass('btn-danger')
+              .html('Aww shucks!')
       modalWindow.on 'click', '.btn-danger', (e) ->
-        modalWindow.hide()
+        modalWindow.modal 'hide'

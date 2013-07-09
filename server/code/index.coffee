@@ -504,6 +504,7 @@ app.post '/api/data-request/?', dataRequest
 app.post '/api/status/?', checkIdent, postStatus
 
 app.get '/api/:user/subscription/:plan/sign/?', signPlan
+# app.get '/api/:user/subscription/:plan/change/?', changePlan
 app.post '/api/:user/subscription/verify/?', verifyRecurly
 
 ############ AUTHENTICATED ############

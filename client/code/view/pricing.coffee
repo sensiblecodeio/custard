@@ -24,5 +24,13 @@ class Cu.View.Pricing extends Backbone.View
       modalWindow.on 'hidden', -> modalWindow.remove()
       modalWindow.on 'click', '.btn-primary', (e) ->
         $(e.target).addClass('loading').html('Upgrading&hellip;')
-      # then renew their plan to truePlan magically
-      # and reload the page
+        $.ajax
+          type: 'PUT',
+          url: "/api/#{req.user.real.shortName}/subscription/change/#{truePlan}/"
+          success: (data) ->
+            window.location.reload()
+          error: (jqXHR, textStatus, errorThrown) ->
+            modalWindow.find('.modal-body').html('Sorry, an error occurred. <a href="/contact/">Contact us for help</a>.')
+            modalWindow.find('.btn-primary').removeClass('btn-primary').addClass('btn-danger')
+      modalWindow.on 'click', '.btn-danger', (e) ->
+        modalWindow.hide()

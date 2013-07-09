@@ -25,7 +25,7 @@
     "rimraf": "~2.1.1",
     "ident-express": "*",
     "uuid": "~1.4.0",
-    "request": "~2.12",
+    "request": "~2.21",
     "which": "*",
     "async": "~0.2.6",
     "nodemailer": "~0.3.43",

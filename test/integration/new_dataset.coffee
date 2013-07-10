@@ -36,7 +36,7 @@ describe 'New dataset tool', ->
       it 'and shows that the "Code a dataset" tool is active', (done) ->
         wd40.elementByCss '#toolbar .active', (err, link) ->
           link.text (err, text) ->
-            text.toLowerCase().should.include 'code a dataset'
+            text.toLowerCase().replace('\n',' ').should.include 'code a dataset'
             done()
 
       it 'and shows me the "Code in a dataset" tool contents', (done) ->
@@ -56,7 +56,7 @@ describe 'New dataset tool', ->
       it 'shows that the "View in a table" tool is active', (done) ->
         wd40.elementByCss '#toolbar .active', (err, link) ->
           link.text (err, text) ->
-            text.toLowerCase().should.include 'view in a table'
+            text.toLowerCase().replace('\n',' ').should.include 'view in a table'
             done()
 
       it 'and shows me the "View in a table" tool contents', (done) ->

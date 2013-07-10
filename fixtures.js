@@ -172,7 +172,8 @@ exports.tools = [
 { name: "spreadsheet-upload", public: true, type: "importer", gitUrl: "git://github.com/scraperwiki/spreadsheet-upload-tool.git", manifest: { description: "Upload an Excel file or CSV", displayName: "Upload a spreadsheet", color: "#029745", icon: "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-spreadsheet-upload.png" } },
 { name: "view-source-pro", public: true, type: "view", gitUrl: "git://github.com/zarino/view-source-tool.git", manifest: { description: "Browse the filesystem behind ScraperWiki a dataset and see how it ticks.", displayName: "View source: Pro" } },
 { name: "datatables-view-tool", public: true, type: "view", gitUrl: "https://github.com/scraperwiki/datatables-view-tool", manifest: { description: "Sort, search and page through your data.", displayName: "View in a table", color: "#f6b730", icon: "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-data-table.png" } },
-{ name: "prune-graph", public: true, type: "view", gitUrl: "https://github.com/scraperwiki/prune-graph-tool.git", manifest: { description: "GRAPH OF THE PRUNES", displayName: "Code a prune!" } }
+{ name: "prune-graph", public: true, type: "view", gitUrl: "https://github.com/scraperwiki/prune-graph-tool.git", manifest: { description: "GRAPH OF THE PRUNES", displayName: "Code a prune!" } },
+{ name: "private-tool", public: false, user: 'testersonltd', type: "view", gitUrl: "https://github.com/scraperwiki/doesnotexist.git", manifest: { description: "Super Secret", displayName: "Super Secret" } }
 ]
 
 exports.datasets = [

@@ -117,6 +117,20 @@ class exports.Tool extends ModelBase
       else
         callback null, @makeModelFromMongo doc
 
+  @findOneForUser: (args, callback) ->
+    @dbClass.findOne
+      name: args.name
+      $or: [
+        {user: args.user.shortName}
+        {public: true}
+        allowedUsers: { $in:  [args.user.shortName] }
+      ]
+    , (err, doc) =>
+      if doc is null
+        callback err, null
+      else
+        callback null, @makeModelFromMongo doc
+
   @findForUser: (shortName, cb) ->
     @dbClass.find $or: [{user: shortName}, {public: true}, {allowedUsers: { $in:  [shortName]}}], (err, docs) =>
       if docs is null

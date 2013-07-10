@@ -39,7 +39,7 @@ createProfile = (options, done) ->
           password: options.password
       , done
 
-describe 'Login', ->
+describe 'Successful login', ->
   prepIntegration()
 
   before (done) ->
@@ -50,7 +50,7 @@ describe 'Login', ->
       email: 'ickle@example.com'
     , done
 
-  context 'when I visit the homepage', ->
+  context 'when I visit the login page', ->
     before (done) ->
       browser.get login_url, done
 
@@ -78,7 +78,55 @@ describe 'Login', ->
             url.should.equal home_url + "/"
             done()
 
-     xcontext 'when I try to login with my email address as my username', ->
+
+describe 'Failed login', ->
+  prepIntegration()
+
+  before (done) ->
+    createProfile
+      shortName: 'ickletest'
+      displayName: 'Mr Ickle Test'
+      password: 'toottoot'
+      email: 'ickle@example.com'
+    , done
+
+  context 'when I visit the login page', ->
+    before (done) ->
+      browser.get login_url, done
+
+    context 'when I try to login with a non-existant username', ->
+      before (done) ->
+        wd40.fill '#username', 'IDONOTEXIST', ->
+          wd40.fill '#password', 'toottoot', ->
+            wd40.click '#login', ->
+              setTimeout ->
+                done()
+              , 500
+
+      it 'it tells me the user does not exist', (done) ->
+        wd40.getText '#error', (err, text) ->
+          text.should.include 'user does not exist'
+          done()
+
+      it 'it suggests I try logging into ScraperWiki Classic', (done) ->
+        wd40.elementByCss '#error a[href="https://classic.scraperwiki.com"]', (err, link) ->
+          should.exist link
+          done()
+
+    context 'when I try to login with the wrong password', ->
+      before (done) ->
+        wd40.fill '#username', 'ickletest', ->
+          wd40.fill '#password', 'INCORRECT', ->
+            wd40.click '#login', ->
+              setTimeout ->
+                done()
+              , 500
+
+      it 'it tells me the password is wrong', (done) ->
+        wd40.getText '#error', (err, text) ->
+          text.should.include 'Incorrect password'
+          done()
+
 
 describe 'Password', ->
   prepIntegration()

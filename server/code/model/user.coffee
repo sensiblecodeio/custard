@@ -47,14 +47,20 @@ class exports.User extends ModelBase
 
   checkPassword: (password, callback) ->
     User.findByShortName @shortName, (err, user) ->
-      console.warn err if err?
-      if not user?.password then return callback false
+      if err
+        return callback {statusCode: 500, error: "Error calling users database"}, null
+      if not user
+        return callback {statusCode: 404, error: "No such user"}, null
+      if not user.password
+        return callback {statusCode: 403, error: "User has no password"}, null
 
       bcrypt.compare password, user.password, (err, correct) ->
+        if err
+          return callback {statusCode: 500, error: "Error comparing passwords"}, null
         if correct
-          callback true, user
+          return callback null, user
         else
-          callback false
+          return callback {statusCode: 401, error: "Incorrect password"}, null
 
   setPassword: (password, callback) ->
     bcrypt.hash password, 10, (err, hash) =>

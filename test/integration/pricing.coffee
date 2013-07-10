@@ -27,8 +27,7 @@ describe 'Pricing', ->
 
     context 'when I click the "explorer" plan', ->
       before (done) ->
-        browser.elementByCssIfExists '.plan.explorer', (err, free) ->
-          free.click done
+        wd40.click '.plan.explorer a', done
 
       it 'takes me to the sign up page', (done) ->
         wd40.trueURL (err, url) ->

@@ -3,51 +3,51 @@
   <strong>Please upgrade your account</strong> to create more datasets.
 </div>
 <% end %>
-<a class="plan datascientist account-large swcol" href="/signup/datascientist">
+<div class="plan datascientist account-large swcol">
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
   <p>Unlimited datasets</p>
   <p class="muted">Each dataset can store 256MB data<br/>and use 30 CPU minutes per day</p>
   <% if window?.user.effective?.accountLevel.match /large/: %>
-  <span class="currentPlan"><i class="icon-ok space"></i> Current Plan</span>
-  <% else if window?.user.effective?.accountLevel.match /free/: %>
-  <span class="cta">Upgrade</span>
+  <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
+  <% else if window?.user.effective?: %>
+  <a class="cta upgrade" data-plan="datascientist">Upgrade</a>
   <% else: %>
-  <span class="cta">Sign Up</span>
+  <a class="cta" href="/signup/datascientist">Sign Up</a>
   <% end %>
-</a>
+</div>
 
-<a class="plan explorer account-medium swcol" href="/signup/explorer">
+<div class="plan explorer account-medium swcol">
   <h2>Explorer</h2>
   <p class="cost">$9<small>/mth</small></p>
   <p>10 datasets</p>
   <p class="muted">Each dataset can store 64MB data<br/>and use 30 CPU minutes per day</p>
   <% if window?.user.effective?.accountLevel.match /medium/: %>
-  <span class="currentPlan"><i class="icon-ok space"></i> Current Plan</span>
-  <% else if window?.user.effective?.accountLevel.match /free/: %>
-  <span class="cta">Upgrade</span>
+  <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
+  <% else if window?.user.effective?: %>
+  <a class="cta upgrade" data-plan="explorer">Upgrade</a>
   <% else: %>
-  <span class="cta">Sign Up</span>
+  <a class="cta" href="/signup/explorer">Sign Up</a>
   <% end %>
 
-</a>
+</div>
 
-<a class="plan community account-free swcol" href="/signup/community">
+<div class="plan community account-free swcol">
   <h2>Community</h2>
   <p class="cost">Free</p>
   <p>3 datasets</p>
   <p class="muted">Each dataset can store 8MB data<br/>and use 30 CPU minutes per day</p>
   <% if window?.user.effective?.accountLevel.match /free/: %>
-  <span class="currentPlan"><i class="icon-ok space"></i> Current Plan</span>
+  <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else: %>
-  <span class="cta">Sign Up</span>
+  <a class="cta" href="/signup/community">Sign Up</a>
   <% end %>
 
-</a>
+</div>
 
-<a class="plan corporate swcol" href="https://scraperwiki.com/dataservices">
+<div class="plan corporate swcol">
   <small>We also have</small>
   <h2>Corporate plans</h2>
   <p>Including sub-accounts,<br/>SLA, dedicated hardware,<br/>and hourly backups.</p>
-  <span class="cta">Contact Us</span>
-</a>
+  <a class="cta" href="/professional">Contact Us</a>
+</div>

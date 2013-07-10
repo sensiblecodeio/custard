@@ -722,6 +722,31 @@ googleAnalytics = (req, resp, next) ->
     return true
   next()
 
+changePlan = (req, resp) ->
+  [err, dummy] = Plan.getPlan req.params.plan
+  if err
+    return resp.send 500, error: "That plan does not exist!"
+  User.findByShortName req.user.real.shortName, (err, user) ->
+    if err?
+      console.warn "error searching for user model!", err
+      return resp.send 500, error: "Couldn't find your user object"
+    if not user
+      return resp.send 500, error: "No users with the specified shortName"
+    user.getCurrentSubscription (err, currentSubscription) ->
+      if err?
+        return resp.send 404, error: "Couldn't find your subscription"
+      if not currentSubscription
+        return resp.send 404, error: "You do not have a recurly subscription. Please get one at https://scraperwiki.com/pricing"
+      currentSubscription.upgrade req.params.plan, (err, recurlyResp) ->
+        if err?
+          return resp.send 500, error: "Couldn't change your subscription"
+        user.accountLevel = req.params.plan
+        user.save (err, user) ->
+          if err?
+            console.warn "could not save user model!", err
+            return resp.send 500, error: "Subscription changed, but user model could not be saved"
+          return resp.send 200, user
+
 app.all '*', ensureAuthenticated
 
 app.get '/logout', logout
@@ -744,6 +769,8 @@ app.get '/api/user/?', listUsers
 
 app.post '/api/:user/sshkeys/?', addSSHKey
 app.get '/api/:user/sshkeys/?', listSSHKeys
+
+app.put '/api/:user/subscription/change/:plan/?', changePlan
 
 # Catch all other routes, send to client app
 app.get '*', renderClientApp

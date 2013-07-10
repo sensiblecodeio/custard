@@ -1,19 +1,3 @@
-# :todo: really should extract this information from the API.
-planConvert =
-  explorer: 'medium-ec2'
-  datascientist: 'large-ec2'
-
-# Translate from user-visible plan to
-# the shortname used for the plan on the subscribe page.
-# Only returns a non-null string for paid plans.
-truePlan = (plan) ->
-  planConvert[plan]
-
-# Return the user-visible name of the plan, but only when that
-# is a paid plan.
-cashPlan = (plan) ->
-  plan if plan of planConvert
-
 class Cu.View.SignUp extends Backbone.View
   className: 'sign-up'
   events:
@@ -34,7 +18,7 @@ class Cu.View.SignUp extends Backbone.View
     model = new Cu.Model.User
     model.on 'invalid', @displayErrors, @
 
-    subscribingTo = cashPlan @options.plan
+    subscribingTo = app.cashPlan @options.plan
     model.save
       shortName: $('#shortName').val()
       email: $('#email').val()
@@ -45,7 +29,7 @@ class Cu.View.SignUp extends Backbone.View
     ,
       success: (model, response, options) =>
         console.log model, response, options
-        plan = truePlan @options.plan
+        plan = app.truePlan @options.plan
         if plan?
           # Note: not logged in, but going to use in the /subscribe page
           window.user = effective: model.toJSON()

@@ -607,4 +607,54 @@ describe 'API', ->
       it "includes the private tool", ->
         should.exist(_.find @tools, (x) => x.name == "shared-private")
 
+  describe 'Upgrading my account', ->
+    context "When I'm upgrading from medium to large", ->
+      context 'PUT /api/:user/subscription/change/large-ec2', ->
+        before (done) ->
+          @user = 'mediummary'
+          @password = 'testing'
+          login.call @, done
 
+        before (done) ->
+          request.put
+            uri: "#{serverURL}/api/#{@user}/subscription/change/large-ec2"
+          , (err, resp, body) =>
+            @resp = resp
+            done(err)
+
+        it "returns a success", ->
+          @resp.should.have.status 200
+
+    context "When I'm downgrading from large to medium", ->
+      context 'PUT /api/:user/subscription/change/medium-ec2', ->
+        before (done) ->
+          @user = 'mediummary'
+          @password = 'testing'
+          login.call @, done
+
+        before (done) ->
+          request.put
+            uri: "#{serverURL}/api/#{@user}/subscription/change/medium-ec2"
+          , (err, resp, body) =>
+            @resp = resp
+            done(err)
+
+        it "returns a success", ->
+          @resp.should.have.status 200
+
+    context "When Recurly can't find my account", ->
+      context 'PUT /api/:user/subscription/change/large-ec2', ->
+        before (done) ->
+          @user = 'ickletest'
+          @password = 'toottoot'
+          login.call @, done
+
+        before (done) ->
+          request.put
+            uri: "#{serverURL}/api/#{@user}/subscription/change/large-ec2"
+          , (err, resp, body) =>
+            @resp = resp
+            done(err)
+
+        it "returns a failure", ->
+          @resp.should.have.status 404

@@ -14,7 +14,7 @@ describe 'Subscription Workflow', ->
 
   context 'when I click the "explorer" plan', ->
     before (done) ->
-      browser.elementByCssIfExists '.plan.explorer', (err, free) ->
+      browser.elementByCssIfExists '.plan.explorer a', (err, free) ->
         free.click done
 
     it 'takes me to the sign up page', (done) ->

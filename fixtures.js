@@ -127,6 +127,30 @@ exports.users = [
   defaultContext: "testersonltd",
   acceptedTerms: 1
 },
+{
+  shortName: 'mediummary',
+  email: ['mary@example.com'],
+  displayName: 'Medium Mary',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: 'mediummary',
+  sshKeys: [],
+  isStaff: false,
+  accountLevel: "medium-ec2",
+  recurlyAccount: "mediummary-4837253",
+  acceptedTerms: 1
+},
+{
+  shortName: 'largelucy',
+  email: ['lucy@example.com'],
+  displayName: 'Large Lucy',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: 'largelucy',
+  sshKeys: [],
+  isStaff: false,
+  accountLevel: "large-ec2",
+  recurlyAccount: "largelucy-583734",
+  acceptedTerms: 1
+}
 ];
 
 exports.tokens = [

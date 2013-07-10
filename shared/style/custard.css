@@ -945,13 +945,6 @@ div.pricing .plan {
   transition: box-shadow 0.1s linear, top 0.1s linear;
 }
 
-div.pricing .plan:hover {
-  text-decoration: none;
-  top: -1px;
-  -webkit-box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-}
-
 div.pricing .plan.glowing {
   margin: -6px -1px 14px 19px;
   padding: 6px 0 26px 0;
@@ -1016,7 +1009,13 @@ div.pricing .plan p.muted {
   margin-bottom: 15px;
 }
 
+div.pricing .plan a {
+  text-decoration: none;
+  color: inherit;
+}
+
 div.pricing .cta {
+  cursor: pointer;
   background: #fff;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;

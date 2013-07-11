@@ -1,6 +1,7 @@
 #!/usr/bin/env coffee
 fs = require 'fs'
 {MongoClient} = require('mongodb')
+async = require 'async'
 
 rmQuote = (s) ->
   if not /^['"]/.test s
@@ -30,11 +31,27 @@ MongoClient.connect dbURL, (err, db) ->
     throw err
   boxes = db.collection 'boxes'
   name = process.argv[2]
-  boxes.find({name: name}).each (err, box) ->
-    if null == box
+  boxes.find({name: name}).toArray (err, boxes) ->
+    async.eachSeries boxes, (box, cb) ->
+      if null == box
+        return
+      console.log "ssh #{box.name}@#{box.server}"
+      console.log "https://#{box.server}/#{box.name}/#{box.boxJSON.publish_token}/http/"
+      console.log "#{box.name}:x:#{box.uid}:10000::/home:/bin/bash"
+      console.log "users: #{box.users}"
+      datasets = db.collection 'datasets'
+      datasets.find({$or: [{box:box.name},{"views.box":box.name}]}).toArray (err, datasets) ->
+        for dataset in datasets
+          if not dataset
+            return
+          if dataset.box == box.name
+            console.log "DATASET"
+          else
+            console.log "VIEW"
+          console.log "dataset state: #{dataset.state}"
+          console.log dataset
+        cb()
+    , ->
       process.exit()
-    console.log "ssh #{box.name}@#{box.server}"
-    console.log "https://#{box.server}/#{box.name}/#{box.boxJSON.publish_token}/http/"
-    console.log "#{box.name}:x:#{box.uid}:10000::/home:/bin/bash"
-    console.log "users: #{box.users}"
+
 

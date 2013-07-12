@@ -89,10 +89,10 @@ described in <a href="/help#views-basics">the Documentation</a>.
 </p>
 
 <pre class="prettyprint">
-&lt;link rel="stylesheet" href="//x.scraperwiki.com/vendor/style/bootstrap.min.css">
-&lt;link rel="stylesheet" href="//x.scraperwiki.com/style/scraperwiki.css">
+&lt;link rel="stylesheet" href="//scraperwiki.com/vendor/style/bootstrap.min.css">
+&lt;link rel="stylesheet" href="//scraperwiki.com/style/scraperwiki.css">
 &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js">&lt;/script>
-&lt;script src="//x.scraperwiki.com/vendor/js/bootstrap.min.js">&lt;/script>
+&lt;script src="//scraperwiki.com/vendor/js/bootstrap.min.js">&lt;/script>
 </pre>
 
 <h3>Button loading state</h3>

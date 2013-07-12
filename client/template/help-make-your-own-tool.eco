@@ -65,11 +65,11 @@ $ vim ~/tool/http/index.html # more powerful for coders</pre>
     &lt;meta charset="utf-8"&gt;
     &lt;title&gt;Wikipedia Image Search&lt;/title&gt;
     &lt;meta http-equiv="cleartype" content="on"&gt;
-    &lt;link rel="stylesheet" href="//x.scraperwiki.com/vendor/style/bootstrap.min.css"&gt;
-    &lt;link rel="stylesheet" href="//x.scraperwiki.com/style/scraperwiki.css"&gt;
+    &lt;link rel="stylesheet" href="//scraperwiki.com/vendor/style/bootstrap.min.css"&gt;
+    &lt;link rel="stylesheet" href="//scraperwiki.com/style/scraperwiki.css"&gt;
     &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"&gt;&lt;/script&gt;
-    &lt;script src="//x.scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;
-    &lt;script src="//x.scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
+    &lt;script src="//scraperwiki.com/vendor/js/bootstrap.min.js"&gt;&lt;/script&gt;
+    &lt;script src="//scraperwiki.com/js/scraperwiki.js"&gt;&lt;/script&gt;
     &lt;script&gt;
       $(function() {
           var execSuccess = function(execOutput) {

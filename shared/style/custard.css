@@ -379,6 +379,7 @@ a.tile .hide,
   padding-top: 22px;
   overflow: hidden;
   background: #15af90 url(../vendor/image/glyphicons-halflings-white.png) no-repeat -308px 4px;
+  background-color: inherit;
   -webkit-border-radius: 14px;
   -moz-border-radius: 14px;
   border-radius: 14px;
@@ -472,7 +473,7 @@ a.tile .hide:hover,
 }
 
 .tile li.actions .dropdown-menu:after,
-#toolbar .dropdown-menu:before {
+#toolbar .dropdown-menu:after {
   position: absolute;
   top: -6px;
   right: 6px;
@@ -529,24 +530,12 @@ a.tile .hide:hover,
   position: relative;
   float: left;
   height: 74px;
-  background: #15af90;
+  background: #15af90 url(../image/toolbar-triangle.png) top right no-repeat;
   display: table;
-  padding: 0 10px 0 200px;
+  padding: 0 20px 0 200px;
   margin-left: -200px;
   font-size: 21px;
   text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-}
-
-#dataset-meta:after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  right: -10px;
-  bottom: 0;
-  z-index: 1;
-  width: 10px;
-  background: transparent url(../image/toolbar-triangle.png) 0 0 no-repeat;
 }
 
 #dataset-meta > * {
@@ -628,7 +617,7 @@ a.tile .hide:hover,
 
 #dataset-meta .dropdown-menu {
   top: 65%; /* override default 100% because parent is 75px high! */
-  right: 1px; /* override default 0px to line up with arrow icon */
+  right: 11px; /* override default 0px to line up with arrow icon */
   min-width: 0;
 }
 
@@ -657,12 +646,12 @@ a.tile .hide:hover,
   display: inline-block; /* stop toolbar item groups wrapping onto separate lines */
 }
 
-#dataset-tools > ul > li {
-  float: left;
+#dataset-tools > ul.tools {
+  padding-left: 10px;
 }
 
-#dataset-tools .tools > li:first-child a.tool {
-  padding-left: 30px;
+#dataset-tools > ul > li {
+  float: left;
 }
 
 #dataset-tools a.tool {
@@ -745,15 +734,22 @@ a.tile .hide:hover,
   text-decoration: none;
 }
 
-#toolbar .scroll {
+#toolbar .scroll-right,
+#toolbar .scroll-left {
   display: none;
   height: 100%;
   width: 50px;
-  background: transparent url(../image/toolbar-scroll.png) right center no-repeat;
+  background: transparent url(../image/toolbar-scroll-right.png) right center no-repeat;
   position: absolute;
   top: 0;
   right: 0;
   cursor: pointer;
+}
+
+#toolbar .scroll-left {
+  right: auto;
+  left: 0;
+  background: transparent url(../image/toolbar-scroll-left.png) left center no-repeat;
 }
 
 

@@ -61,10 +61,11 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.hideView()
 
   homeLoggedIn: ->
-    contentView = new Cu.View.DatasetList
-    subnavView = new Cu.View.DataHubNav
-    @appView.showView contentView
-    @subnavView.showView subnavView
+    app.tools().fetch().done =>
+      contentView = new Cu.View.DatasetList
+      subnavView = new Cu.View.DataHubNav
+      @appView.showView contentView
+      @subnavView.showView subnavView
 
   professional: ->
     subnavView = new Cu.View.ProfessionalNav

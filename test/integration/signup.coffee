@@ -23,4 +23,4 @@ describe 'Sign up', ->
                   wd40.click '#go', done
 
       it 'says thanks', (done) ->
-        browser.waitForVisibleByCss '#thanks', 4000, done
+        browser.waitForVisibleByCss '#thanks', 8000, done

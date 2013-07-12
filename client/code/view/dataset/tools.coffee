@@ -2,7 +2,8 @@ class Cu.View.DatasetTools extends Backbone.View
   id: 'dataset-tools'
   events:
     'click .tool': 'toolClick'
-    'click .scroll': 'scrollMore'
+    'click .scroll-right': 'scrollRight'
+    'click .scroll-left': 'scrollLeft'
 
   initialize: ->
     if @options.view?
@@ -22,7 +23,8 @@ class Cu.View.DatasetTools extends Backbone.View
       <ul class="more">
         <li><a class="new-view">More tools&hellip;</a></li>
       </ul>
-      <span class="scroll"></span>"""
+      <span class="scroll-left"></span>
+      <span class="scroll-right"></span>"""
     @addToolInstance @model
     views = @model.get('views').visible()
     views.each (view) =>
@@ -77,9 +79,15 @@ class Cu.View.DatasetTools extends Backbone.View
       window.app.appView.currentView.positionIframe?()
     @showOrHideScroller()
 
-  scrollMore: ->
+  scrollRight: ->
     w = @$el.width()
     l = @$el[0].scrollLeft + (w * 0.9)
+    @$el.animate {scrollLeft: l}, 250, =>
+      @showOrHideScroller()
+
+  scrollLeft: ->
+    w = @$el.width()
+    l = @$el[0].scrollLeft - (w * 0.9)
     @$el.animate {scrollLeft: l}, 250, =>
       @showOrHideScroller()
 
@@ -87,11 +95,26 @@ class Cu.View.DatasetTools extends Backbone.View
     totalWidth = 0
     visibleWidth = @$el.width()
     scrollLeft = @$el[0].scrollLeft
+
+    datasetMetaWidth = @$el.prev().outerWidth() - 200
+    @$el.children('.scroll-left').css('left', datasetMetaWidth)
+
     @$el.children('ul').each ->
       totalWidth += $(this).outerWidth(true)
     if visibleWidth + scrollLeft > totalWidth
-      @$el.children('.scroll:visible').fadeOut 100
+      # ribbon is at its maximum travel to the right
+      @$el.children('.scroll-right:visible').fadeOut 100
     else if visibleWidth < totalWidth
-      @$el.children('.scroll:hidden').fadeIn 100
+      # ribbon is wider than the window, but is not yet
+      # at its maximum travel to the left (default position)
+      @$el.children('.scroll-right:hidden').fadeIn 100
     else
-      @$el.children('.scroll:visible').fadeOut 100
+      # ribbon fits into window without need for scrollers
+      @$el.children('.scroll-right:visible').fadeOut 100
+
+    if scrollLeft == 0
+      # ribbon is at its maximum travel to the left (default position)
+      @$el.children('.scroll-left:visible').fadeOut 100
+    else
+      # ribbon is not yet at its maximum travel to the left
+      @$el.children('.scroll-left:hidden').fadeIn 100

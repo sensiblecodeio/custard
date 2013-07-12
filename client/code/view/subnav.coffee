@@ -229,32 +229,25 @@ class Cu.View.Toolbar extends Backbone.View
     @model.on 'change:displayName', @renderName, this
 
   render: ->
-    @$el.html """<div id="dropdown-menu-closer"></div>
-    <ul id="tool-options-menu" class="dropdown-menu">
-      <li><a class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</a></li>
-      <li><a class="hide-tool"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</a></li>
-    </ul>
-    <div id="dataset-meta">
-      <a href="/"><i class="icon-home icon-white"></i></a>
-      <h3>#{@model.get 'displayName'}</h3>
-      <span class="input-append" id="editable-input">
-        <input type="text" value="#{@model.get 'displayName'}"><button class="btn">Save</button>
-      </span>
-      <div class="actions">
-        <a class="dropdown-toggle" data-toggle="dropdown">Options</a>
-        <ul class="dropdown-menu pull-right">
-          <li><a class="rename-dataset"><img src="/image/icon-rename.png" width="16" height="16" /> Rename</a></li>
-          <li><a class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Delete</a></li>
-        </ul>
-      </div>
-    </div>"""
-    @$el.append(@toolsView.render().el)
+    if app.tools().length
+      @renderToolbar()
+    else
+      app.tools().fetch().done =>
+        setTimeout =>
+          @renderToolbar()
+        , 1
+    @
+
+  renderToolbar: ->
+    @$el.html JST['subnav-toolbar']
+      displayName: @model.get 'displayName'
+      color: @model.get('tool').get('manifest')?.color
+    @$el.append @toolsView.render().el
     @$el.on 'mousewheel', (e, delta, deltaX, deltaY) ->
       e.preventDefault()
       $('#tool-options-menu, #dropdown-menu-closer', @$el).hide()
-      $('#dataset-tools', @$el)[0].scrollLeft -= delta
+      $('#dataset-tools', @$el)[0].scrollLeft -= delta * 5
       window.app.subnavView.currentView.toolsView.showOrHideScroller()
-    @
 
   renderName: ->
     @$el.find('#dataset-meta h3').text @model.get 'displayName'
@@ -267,8 +260,10 @@ class Cu.View.Toolbar extends Backbone.View
     @model.save {state: 'deleted'},
       success: (model, response, options) =>
         window.app.navigate "/", {trigger: true}
-        view = new Cu.View.DatasetTile {model: model}
-        $('.new-dataset-tile').after view.render().el
+        setTimeout ->
+          view = new Cu.View.DatasetTile {model: model}
+          $('.new-dataset-tile').after view.render().el
+        , 500
       error: (model, xhr, options) =>
         alert('Sorry, your dataset could not be hidden')
         console.warn 'Dataset could not be hidden!', model, xhr, options

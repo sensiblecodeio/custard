@@ -77,4 +77,4 @@ class Cu.Collection.Datasets extends Backbone.Collection
     new Cu.Collection.Datasets visibles
 
   comparator: (model) ->
-    model.get 'displayName'
+    model.get('displayName').toLowerCase()

@@ -246,7 +246,7 @@ class Cu.View.Toolbar extends Backbone.View
     @$el.on 'mousewheel', (e, delta, deltaX, deltaY) ->
       e.preventDefault()
       $('#tool-options-menu, #dropdown-menu-closer', @$el).hide()
-      $('#dataset-tools', @$el)[0].scrollLeft -= delta
+      $('#dataset-tools', @$el)[0].scrollLeft -= delta * 5
       window.app.subnavView.currentView.toolsView.showOrHideScroller()
 
   renderName: ->

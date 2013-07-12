@@ -34,7 +34,7 @@ describe 'Subscription Workflow', ->
                 wd40.click '#go', done
 
     before (done) ->
-      wd40.waitForText 'Order Total', done
+      wd40.waitForText 'Order Total', 8000, done
 
     it 'takes me to the subscription page', (done) ->
       wd40.trueURL (err, url) ->

@@ -48,8 +48,16 @@ class wd40
     @switchToFrame 'iframe', =>
       @switchToFrame 'iframe', cb
 
-  @waitForText: (text, cb) ->
-    endTime = Date.now() + 4000
+  @waitForText: (text, arg1, arg2) ->
+    if typeof(arg1) is 'number' and typeof(arg2) is 'function'
+      cb = arg2
+      timeout = arg1
+    else if typeof(arg1) is 'function'
+      cb = arg1
+      timeout = 4000
+    else
+      return new Error("Invalid arguments supplied to waitForText()")
+    endTime = Date.now() + timeout
     poll = ->
       browser.text 'body', (err, result) ->
         if err

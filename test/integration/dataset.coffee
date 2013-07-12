@@ -168,7 +168,8 @@ describe 'Dataset', ->
         browser.waitForElementByCss '.dataset-list', 4000, done
 
       it "the prune dataset is shown as deleted", (done) ->
-        browser.elementByCss '.dataset.tile', (err, tile) =>
+        wd40.elementByCss '.dataset.tile', (err, tile) =>
+          console.log err, tile
           @dataset = tile
           @dataset.getAttribute 'class', (err, attr) ->
             attr.should.include 'deleted'

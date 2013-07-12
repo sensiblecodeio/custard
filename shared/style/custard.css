@@ -379,6 +379,7 @@ a.tile .hide,
   padding-top: 22px;
   overflow: hidden;
   background: #15af90 url(../vendor/image/glyphicons-halflings-white.png) no-repeat -308px 4px;
+  background-color: inherit;
   -webkit-border-radius: 14px;
   -moz-border-radius: 14px;
   border-radius: 14px;

@@ -732,15 +732,22 @@ a.tile .hide:hover,
   text-decoration: none;
 }
 
-#toolbar .scroll {
+#toolbar .scroll-right,
+#toolbar .scroll-left {
   display: none;
   height: 100%;
   width: 50px;
-  background: transparent url(../image/toolbar-scroll.png) right center no-repeat;
+  background: transparent url(../image/toolbar-scroll-right.png) right center no-repeat;
   position: absolute;
   top: 0;
   right: 0;
   cursor: pointer;
+}
+
+#toolbar .scroll-left {
+  right: auto;
+  left: 0;
+  background: transparent url(../image/toolbar-scroll-left.png) left center no-repeat;
 }
 
 

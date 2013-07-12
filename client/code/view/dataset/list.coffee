@@ -2,8 +2,9 @@ class Cu.View.DatasetList extends Backbone.View
   className: 'dataset-list row'
 
   initialize: ->
-    app.datasets().on 'add', @addDataset, @
-    app.datasets().on 'change:state', @addDatasets, @
+    app.datasets().on 'change:state change:displayName', () ->
+      app.datasets().sort()
+    app.datasets().on 'sort', @addDatasets, @
 
   events:
     'click .new-dataset-tile': ->
@@ -12,7 +13,7 @@ class Cu.View.DatasetList extends Backbone.View
   render: ->
     @$el.append $('<a class="new-dataset-tile swcol" title="Add a new dataset">Create a<br/>new dataset</a>').hide().fadeIn(150)
     @$el.remove('.dataset')
-    @addDatasets() if app.datasets().length
+    app.datasets().sort() if app.datasets().length
     @
 
   addDatasets: ->

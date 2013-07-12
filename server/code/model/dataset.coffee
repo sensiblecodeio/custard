@@ -24,6 +24,7 @@ datasetSchema = new Schema
   state: String
   views: [viewSchema]
   boxJSON: Schema.Types.Mixed
+  createdDate: {type: Date, default: Date.now}
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 

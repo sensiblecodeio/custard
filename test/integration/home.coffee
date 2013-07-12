@@ -30,6 +30,11 @@ describe 'Home page (logged in)', ->
       elements.length.should.be.above 0
       done()
 
+  it 'the datasets are ordered by date created, newest at the top', (done) ->
+    wd40.getText 'body', (err, text) ->
+      text.split('Prune')[1].should.include('Apricot')
+      done()
+  
   context 'when I click the "new dataset" button', ->
     before (done) ->
       wd40.click '.new-dataset', done

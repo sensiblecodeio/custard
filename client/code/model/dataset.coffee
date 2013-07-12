@@ -77,4 +77,6 @@ class Cu.Collection.Datasets extends Backbone.Collection
     new Cu.Collection.Datasets visibles
 
   comparator: (model) ->
-    model.get('displayName').toLowerCase()
+    d = model.get('createdDate') || '0001-01-01T00:00:00Z'
+    u = new Date(d).getTime()
+    "#{32472144000000 - u}|#{model.get('displayName')}"

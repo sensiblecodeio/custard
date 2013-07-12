@@ -229,6 +229,16 @@ class Cu.View.Toolbar extends Backbone.View
     @model.on 'change:displayName', @renderName, this
 
   render: ->
+    if app.tools().length
+      @renderToolbar()
+    else
+      app.tools().fetch().done =>
+        setTimeout =>
+          @renderToolbar()
+        , 1
+    @
+
+  renderToolbar: ->
     @$el.html JST['subnav-toolbar']
       displayName: @model.get 'displayName'
       color: @model.get('tool').get('manifest')?.color
@@ -238,7 +248,6 @@ class Cu.View.Toolbar extends Backbone.View
       $('#tool-options-menu, #dropdown-menu-closer', @$el).hide()
       $('#dataset-tools', @$el)[0].scrollLeft -= delta
       window.app.subnavView.currentView.toolsView.showOrHideScroller()
-    @
 
   renderName: ->
     @$el.find('#dataset-meta h3').text @model.get 'displayName'

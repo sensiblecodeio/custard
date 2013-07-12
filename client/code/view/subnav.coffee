@@ -229,26 +229,10 @@ class Cu.View.Toolbar extends Backbone.View
     @model.on 'change:displayName', @renderName, this
 
   render: ->
-    @$el.html """<div id="dropdown-menu-closer"></div>
-    <ul id="tool-options-menu" class="dropdown-menu">
-      <li><a class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</a></li>
-      <li><a class="hide-tool"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</a></li>
-    </ul>
-    <div id="dataset-meta">
-      <a href="/"><i class="icon-home icon-white"></i></a>
-      <h3>#{@model.get 'displayName'}</h3>
-      <span class="input-append" id="editable-input">
-        <input type="text" value="#{@model.get 'displayName'}"><button class="btn">Save</button>
-      </span>
-      <div class="actions">
-        <a class="dropdown-toggle" data-toggle="dropdown">Options</a>
-        <ul class="dropdown-menu pull-right">
-          <li><a class="rename-dataset"><img src="/image/icon-rename.png" width="16" height="16" /> Rename</a></li>
-          <li><a class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Delete</a></li>
-        </ul>
-      </div>
-    </div>"""
-    @$el.append(@toolsView.render().el)
+    @$el.html JST['subnav-toolbar']
+      displayName: @model.get 'displayName'
+      color: @model.get('tool').get('manifest')?.color
+    @$el.append @toolsView.render().el
     @$el.on 'mousewheel', (e, delta, deltaX, deltaY) ->
       e.preventDefault()
       $('#tool-options-menu, #dropdown-menu-closer', @$el).hide()

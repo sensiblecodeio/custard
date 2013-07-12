@@ -18,12 +18,10 @@ class Cu.View.DatasetTile extends Backbone.View
 
   render: ->
     if @model.get('state') is 'deleted'
-      console.log @model.get('displayName'), 'deleted', @model.get('tool')
       @$el.removeAttr 'href'
       @$el.addClass 'deleted'
       @$el.html JST['dataset-tile-deleted']
     else
-      console.log @model.get('displayName'), 'notDeleted', @model.get('tool')
       toolManifest = @model.get('tool').get('manifest')
       if toolManifest.color
         @$el.css 'background-color', toolManifest.color

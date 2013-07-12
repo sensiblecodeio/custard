@@ -267,8 +267,10 @@ class Cu.View.Toolbar extends Backbone.View
     @model.save {state: 'deleted'},
       success: (model, response, options) =>
         window.app.navigate "/", {trigger: true}
-        view = new Cu.View.DatasetTile {model: model}
-        $('.new-dataset-tile').after view.render().el
+        setTimeout ->
+          view = new Cu.View.DatasetTile {model: model}
+          $('.new-dataset-tile').after view.render().el
+        , 500
       error: (model, xhr, options) =>
         alert('Sorry, your dataset could not be hidden')
         console.warn 'Dataset could not be hidden!', model, xhr, options

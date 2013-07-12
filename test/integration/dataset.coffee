@@ -169,7 +169,6 @@ describe 'Dataset', ->
 
       it "the prune dataset is shown as deleted", (done) ->
         wd40.elementByCss '.dataset.tile', (err, tile) =>
-          console.log err, tile
           @dataset = tile
           @dataset.getAttribute 'class', (err, attr) ->
             attr.should.include 'deleted'

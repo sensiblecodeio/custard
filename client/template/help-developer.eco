@@ -1,4 +1,4 @@
-<nav class="well">
+nav class="well">
   <ul class="nav nav-list">
     <li class="nav-header">Core concepts</li>
     <li><a data-nonpushstate href="#concepts">Datasets, Tools &amp; Boxes</a></li>
@@ -347,7 +347,7 @@ well with Bootstrap</a>.
 
 <h3 id="tools-develop-locally">Develop locally</h3>
 
-<p>The simplest way to develop locally is to use a tool called <a href="https://github.com/zarino/swbox">swbox</a>. It&rsquo;s essentially a wrapper around rsync that makes it easy to create a local copy of a tool, and then push local changes back up to the box on demand. Like so:</p>
+<p>The simplest way to develop locally is to use a command line utility called <a href="https://github.com/zarino/swbox">swbox</a>. It&rsquo;s essentially a wrapper around rsync that makes it easy to create a local copy of a tool, and then push local changes back up to the box on demand. Like so:</p>
 
 <pre class="prettyprint">swbox clone c7bc6s5
 cd c7bc6s5

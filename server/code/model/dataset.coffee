@@ -30,7 +30,7 @@ zDbDataset = mongoose.model 'Dataset', datasetSchema
 
 class Dataset extends ModelBase
   @dbClass: zDbDataset
-  @redisClient: redis.createClient()
+  @redisClient: redis.createClient 6379, process.env.REDIS_SERVER
 
   validate: ->
     return 'no tool' unless @tool? and @tool.length > 0

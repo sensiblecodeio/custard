@@ -1,4 +1,4 @@
-nav class="well">
+<nav class="well">
   <ul class="nav nav-list">
     <li class="nav-header">Core concepts</li>
     <li><a data-nonpushstate href="#concepts">Datasets, Tools &amp; Boxes</a></li>

@@ -32,6 +32,13 @@ class Dataset extends ModelBase
   @dbClass: zDbDataset
   @redisClient: redis.createClient 6379, process.env.REDIS_SERVER
 
+  Dataset.redisClient.on 'connect', ->
+    if /production|staging/.test process.env.NODE_ENV
+      Dataset.redisClient.auth process.env.REDIS_PASSWORD, (err) ->
+        if err?
+          console.warn 'Redis auth error: ', err
+
+
   validate: ->
     return 'no tool' unless @tool? and @tool.length > 0
     return 'no display name' unless @displayName? and @displayName.length > 0

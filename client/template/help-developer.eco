@@ -258,6 +258,38 @@ href="http://www.sqlite.org/lang_keywords.html">(more info)</a>.</td>
   </tr>
 </table>
 
+<h3 id="js-sqlmeta">SQL Metadata API</h3>
+
+<p>Use <code>scraperwiki.sql.meta()</code> returns information about the tables and columns in the database.</p>
+
+<p>The <code>scraperwiki.sql.meta()</code> function takes two arguments:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Argument</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td><code>success(data, textStatus, jqXHR)</code></td>
+    <td>A callback to run on success. This is a standard <a href="http://api.jquery.com/jQuery.ajax/">jQuery $.ajax()</a> success callback.</td>
+  </tr>
+  <tr>
+    <td><code>error(jqXHR, textStatus, errorThrown)</code></td>
+    <td>A callback to run on error. This is a standard <a href="http://api.jquery.com/jQuery.ajax/">jQuery $.ajax()</a> error callback.</td>
+  </tr>
+</table>
+
+<p>Example usage:</p>
+
+<pre class="prettyprint linenums">scraperwiki.sql.meta(function(data, textStatus, jqXHR) {
+    console.log('Great! Here is the database schema:', data)
+}, function(jqXHR, textStatus, errorThrown){
+    console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
+})</pre>
+
+
 <h3 id="js-exec">Exec API</h3>
 
 <p>Use <code>scraperwiki.exec()</code> to execute arbitrary Unix commands inside your tool&rsquo;s box.</p>

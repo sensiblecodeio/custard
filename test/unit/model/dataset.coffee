@@ -3,6 +3,7 @@ _ = require 'underscore'
 util = require 'util'
 sinon = require 'sinon'
 should = require 'should'
+redis = require 'redis'
 
 
 describe 'Client model: Dataset', ->
@@ -130,9 +131,13 @@ describe 'Server model: Dataset', ->
     context 'with an ok', ->
       before ->
         @saveSpy = sinon.spy Dataset.dbClass.prototype, 'save'
+        # TODO: will actually connect to redis, stub properly
+        @publishStub = sinon.stub Dataset.redisClient, 'publish'
 
       after ->
         Dataset.dbClass.prototype.save.restore()
+        Dataset.redisClient.publish.restore()
+        Dataset.redisClient.end()
 
       before (done) ->
         @dataset = new Dataset
@@ -140,6 +145,10 @@ describe 'Server model: Dataset', ->
           box: 'box'
           tool: 'tool'
           displayName: 'Test'
+          views: [
+            {box: 'foo'}
+            {box: 'bar'}
+          ]
         @dataset.updateStatus
           type: 'ok'
           message: 'I scrapped some page :D'
@@ -155,6 +164,15 @@ describe 'Server model: Dataset', ->
 
       it 'saves the status', ->
         @saveSpy.calledOnce.should.be.true
+
+      it 'publishes the update to redis', ->
+        channel = 'cobalt.dataset.box.updated'
+        message = JSON.stringify
+          boxes: ['foo', 'bar', 'box']
+          message: 'I scrapped some page :D'
+
+        published = @publishStub.calledWith channel, message
+        published.should.be.true
 
     context 'with an unknown type', ->
       before ->

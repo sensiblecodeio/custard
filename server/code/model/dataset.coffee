@@ -51,11 +51,11 @@ class Dataset extends ModelBase
     @status.type = 'ok' unless status.type in ['ok', 'error']
     @save (err) =>
       boxes = _.map @views, (v) -> v.box
-      boxes.push @box
       message = JSON.stringify
         boxes: boxes
         message: status.message
-      Dataset.redisClient.publish "cobalt.dataset.#{@box}.updated", message
+      env = process.env.NODE_ENV
+      Dataset.redisClient.publish "#{env}.cobalt.dataset.#{@box}.updated", message
       callback err
 
   @countVisibleDatasets: (user, callback) ->

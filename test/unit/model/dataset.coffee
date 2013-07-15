@@ -166,9 +166,9 @@ describe 'Server model: Dataset', ->
         @saveSpy.calledOnce.should.be.true
 
       it 'publishes the update to redis', ->
-        channel = 'cobalt.dataset.box.updated'
+        channel = "#{process.env.NODE_ENV}.cobalt.dataset.box.updated"
         message = JSON.stringify
-          boxes: ['foo', 'bar', 'box']
+          boxes: ['foo', 'bar']
           message: 'I scrapped some page :D'
 
         published = @publishStub.calledWith channel, message

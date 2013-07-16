@@ -749,7 +749,7 @@ has no order, the keys in these objects are in the same order as the columns in 
 
 <h3 id="boxes-status">Dataset status API</h3>
 
-<p>The ScraperWiki website can display the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://scraperwiki.com/api/status</code>.</p>
+<p>ScraperWiki can be informed of the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://scraperwiki.com/api/status</code>. The dataset status will be shown on the ScraperWiki website, in users' dataset lists.</p>
 
 <table class="table table-bordered">
   <thead>
@@ -771,6 +771,8 @@ has no order, the keys in these objects are in the same order as the columns in 
     </td>
   </tr>
 </table>
+
+<p>When you <code>POST</code> to the status API, the tools that are related to that dataset will have their "update" hook executed. This is located in the <code>tool/hooks</code> directory and should be made executable, e.g. <code>chmod +x tool/hooks/update</code></p>
 
 <p>This API requires no <code>publish_token</code> or <code>apikey</code> because it automatically detects the credentials of the box from which it&rsquo;s called. Magic!</p>
 

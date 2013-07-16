@@ -9,7 +9,7 @@ exports.throttle = (getIdentifier, timeout = 1000) ->
     identifier = getIdentifier(arguments)
 
     unless identifier of cache
-       cache[identifier] = _.throttle(callNext, timeout, {trailing: false})
+      cache[identifier] = _.throttle(callNext, timeout, {trailing: false})
 
     cache[identifier](next)
 

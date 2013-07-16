@@ -4,7 +4,7 @@ _ = require 'underscore'
 throttle = require 'lib/throttle'
 
 describe 'Throttle', ->
-  beforeEach ->
+  before ->
     @throttleRoute = throttle.throttle (args) -> (args[0].foo)
     
   context 'First time call', ->
@@ -17,23 +17,23 @@ describe 'Throttle', ->
   context 'Multiple calls (before time elapsed)', ->
     it 'denies the call', -> 
       next = sinon.stub()
-      @throttleRoute {foo: 'bar'}, {}, next
+      @throttleRoute {foo: 'baz'}, {}, next
 
-      @throttleRoute {foo: 'bar'}, {}, next
+      @throttleRoute {foo: 'baz'}, {}, next
 
-      next.calledOnce.should.be.true
+      next.callCount.should.equal 1
 
   context 'Multiple calls (after time elapsed)', ->
     it 'allows the call', ->
       clock = sinon.useFakeTimers();
 
       next = sinon.stub()
-      @throttleRoute {foo: 'bar'}, {}, next
+      @throttleRoute {foo: 'qux'}, {}, next
 
       clock.tick 2000
 
-      @throttleRoute {foo: 'bar'}, {}, next
+      @throttleRoute {foo: 'qux'}, {}, next
 
-      next.calledTwice.should.be.true
+      next.callCount.should.equal 2
 
       clock.restore()

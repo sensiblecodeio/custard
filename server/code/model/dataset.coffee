@@ -1,6 +1,7 @@
 _ = require 'underscore'
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
+redis = require 'redis'
 
 ModelBase = require 'model/base'
 
@@ -30,6 +31,14 @@ zDbDataset = mongoose.model 'Dataset', datasetSchema
 
 class Dataset extends ModelBase
   @dbClass: zDbDataset
+  @redisClient: redis.createClient 6379, process.env.REDIS_SERVER
+
+  Dataset.redisClient.on 'connect', ->
+    if /production|staging/.test process.env.NODE_ENV
+      Dataset.redisClient.auth process.env.REDIS_PASSWORD, (err) ->
+        if err?
+          console.warn 'Redis auth error: ', err
+
 
   validate: ->
     return 'no tool' unless @tool? and @tool.length > 0
@@ -41,7 +50,14 @@ class Dataset extends ModelBase
       message: status.message
       updated: new Date()
     @status.type = 'ok' unless status.type in ['ok', 'error']
-    @save callback
+    @save (err) =>
+      boxes = _.map @views, (v) -> v.box
+      message = JSON.stringify
+        boxes: boxes
+        message: status.message
+      env = process.env.NODE_ENV
+      Dataset.redisClient.publish "#{env}.cobalt.dataset.#{@box}.updated", message
+      callback err
 
   @countVisibleDatasets: (user, callback) ->
     @dbClass.find({user: user, state: {$ne: 'deleted'}}).count callback

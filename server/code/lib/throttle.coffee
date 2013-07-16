@@ -1,7 +1,7 @@
 _ = require 'underscore'
       
 exports.throttle = (getIdentifier, timeout = 1000) ->
-  cache = {tom: 'cool'}
+  cache = {}
   throttleInner = (req, resp, next) ->
     identifier = getIdentifier(arguments)
 

@@ -61,6 +61,7 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.hideView()
 
   homeLoggedIn: ->
+    $('#content').empty()
     app.tools().fetch().done =>
       contentView = new Cu.View.DatasetList
       subnavView = new Cu.View.DataHubNav

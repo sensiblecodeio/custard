@@ -530,7 +530,7 @@ a.tile .hide:hover,
   position: relative;
   float: left;
   height: 74px;
-  background: #15af90 url(../image/toolbar-triangle.png) top right no-repeat;
+  background: #15af90 url(../image/toolbar-triangle-mask.png) top right no-repeat;
   display: table;
   padding: 0 20px 0 200px;
   margin-left: -200px;

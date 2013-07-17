@@ -13,16 +13,19 @@ AGPL Licenced (see LICENCE file).
 On Debian or Ubuntu:
 
     sudo apt-get install mongodb
+    sudo apt-get install mongodb
 
 On Mac OSX:
 
     brew install mongodb
+    brew install redis
 
 Then on all platforms:
 
     mkdir mongo
     npm install pow-mongodb-fixtures -g
     mongod --dbpath=mongo
+    redis-server
 
 # Every time you need to develop custard:
 

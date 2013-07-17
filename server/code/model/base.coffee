@@ -35,7 +35,7 @@ class ModelBase
       @dbInstance = new @constructor.dbClass(@)
       @id = @dbInstance._id
       @_id = @dbInstance._id #TODO: we should use ONE of these
-      @createdDate = Date.now()
+      @createdDate = @dbInstance.createdDate = Date.now()
     else
       for k of @dbInstance
         @dbInstance[k] = @[k] if @hasOwnProperty k

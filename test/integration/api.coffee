@@ -277,8 +277,14 @@ describe 'API', ->
         context 'GET /api/:user/datasets/:id', ->
           it 'returns a single dataset', (done)  ->
             request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
-              @dataset = JSON.parse res.body
-              should.exist @dataset.box
+              newDataset = JSON.parse res.body
+              should.exist newDataset.box
+              done()
+
+          it 'dataset has a created date', (done)  ->
+            request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
+              newDataset = JSON.parse res.body
+              Date.parse(newDataset.createdDate).should.be.above(0)
               done()
 
           it "404 errors if the dataset doesn't exist", (done) ->

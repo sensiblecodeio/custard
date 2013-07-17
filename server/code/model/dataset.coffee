@@ -55,7 +55,7 @@ class Dataset extends ModelBase
         boxes: boxes
         message: status.message
       env = process.env.NODE_ENV
-      Dataset.redisClient.publish "#{env}.cobalt.dataset.#{@box}.updated", message
+      Dataset.redisClient.publish "#{env}.cobalt.dataset.#{@box}.update", message
       callback err
 
   @countVisibleDatasets: (user, callback) ->

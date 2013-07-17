@@ -6,7 +6,7 @@ throttle = require 'lib/throttle'
 describe 'Throttle', ->
   before ->
     @throttleRoute = throttle.throttle (args) -> (args[0].foo)
-    
+
   context 'First time call', ->
     it 'allows the call', ->
       next = sinon.stub()
@@ -15,7 +15,7 @@ describe 'Throttle', ->
       next.called.should.be.true
 
   context 'Multiple calls (before time elapsed)', ->
-    it 'denies the call', -> 
+    it 'denies the call', ->
       next = sinon.stub()
       @throttleRoute {foo: 'baz'}, {}, next
 

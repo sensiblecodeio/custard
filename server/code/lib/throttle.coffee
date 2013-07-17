@@ -1,5 +1,5 @@
 _ = require 'underscore'
-      
+
 callNext = (next) ->
   next()
 

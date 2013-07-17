@@ -23,8 +23,8 @@ class Cu.View.DatasetTile extends Backbone.View
       @$el.addClass 'deleted'
       @$el.html JST['dataset-tile-deleted']
     else
-      toolManifest = @model.get('tool').get('manifest')
-      if toolManifest.color
+      toolManifest = @model.get('tool')?.get('manifest')
+      if toolManifest?.color
         @$el.css 'background-color', toolManifest.color
       @$el.attr 'href', "/dataset/#{@model.get 'box'}"
       @$el.removeClass 'deleted'

@@ -39,6 +39,7 @@ request = require 'request'
 {DataRequest} = require 'model/data_request'
 
 recurlySign = require 'lib/sign'
+throttle = require 'lib/throttle'
 pageTitles = require '../../shared/code/page-titles'
 
 # Set up database connection
@@ -501,7 +502,8 @@ app.post '/api/data-request/?', dataRequest
 
 # :todo: Add IP address check (at the moment, anyone running an identd
 # can post to anyone's status).
-app.post '/api/status/?', checkIdent, postStatus
+throttleRoute = throttle.throttle((args) -> (args[0].ident))
+app.post '/api/status/?', checkIdent, throttleRoute, postStatus
 
 app.get '/api/:user/subscription/:plan/sign/?', signPlan
 app.post '/api/:user/subscription/verify/?', verifyRecurly

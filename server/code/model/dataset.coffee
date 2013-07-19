@@ -53,7 +53,8 @@ class Dataset extends ModelBase
       boxes = _.map @views, (v) -> v.box
       message = JSON.stringify
         boxes: boxes
-        message: status.message
+        type: @status.type
+        message: @status.message
       env = process.env.NODE_ENV
       Dataset.redisClient.publish "#{env}.cobalt.dataset.#{@box}.update", message
       callback err

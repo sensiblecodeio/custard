@@ -13,7 +13,7 @@ AGPL Licenced (see LICENCE file).
 On Debian or Ubuntu:
 
     sudo apt-get install mongodb
-    sudo apt-get install mongodb
+    sudo apt-get install -y redis-server
 
 On Mac OSX:
 

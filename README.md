@@ -32,7 +32,7 @@ Then on all platforms:
     . activate
     . ~/.nvm/nvm.sh # Only on linux, and could be in your .profile.
     nvm use 0.10 # Only if you're using nvm.
-    npm install # Only needed if package.json changes.
+    npm install # Only needed when package.json changes.
 
     # This will start a development web server.  Best
     # done in a separate window.

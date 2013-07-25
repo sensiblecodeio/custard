@@ -131,7 +131,7 @@ scraperwiki.readSettings()
   }
 }</pre>
 
-<p>For example, this gets the target dataset&rsquo;s <a data-nonpushstate href="#datasets-endpoints-sql">SQL data endpoint</a>.</p>
+<p>For example, this gets the target dataset&rsquo;s <a data-nonpushstate href="#boxes-sql">SQL data endpoint</a>.</p>
 
 <pre class="prettyprint">
 scraperwiki.readSettings().target.url + "/sqlite"

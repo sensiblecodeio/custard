@@ -1,6 +1,5 @@
 sinon = require 'sinon'
 should = require 'should'
-_ = require 'underscore'
 throttle = require 'lib/throttle'
 
 describe 'Throttle', ->
@@ -15,17 +14,19 @@ describe 'Throttle', ->
       next.called.should.be.true
 
   context 'Multiple calls (before time elapsed)', ->
-    it 'denies the call', ->
+    it 'errors the second call', ->
       next = sinon.stub()
       @throttleRoute {foo: 'baz'}, {}, next
 
       @throttleRoute {foo: 'baz'}, {}, next
 
-      next.callCount.should.equal 1
+      
+      next.firstCall.calledWith().should.be.true
+      next.secondCall.calledWith(new Error("Throttled")).should.be.true
 
   context 'Multiple calls (after time elapsed)', ->
     it 'allows the call', ->
-      clock = sinon.useFakeTimers();
+      clock = sinon.useFakeTimers()
 
       next = sinon.stub()
       @throttleRoute {foo: 'qux'}, {}, next

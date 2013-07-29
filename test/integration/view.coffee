@@ -16,8 +16,7 @@ describe 'View', ->
         link.click done
 
     before (done) ->
-      wd40.elementByPartialLinkText 'Code a prune!', (err, toolLink) ->
-        toolLink.click done
+      wd40.click '#toolbar .tool[data-toolname="prune-graph"] .tool-icon', done
 
     it 'takes me to the Graph of Prunes page', (done) ->
       wd40.trueURL (err, result) ->
@@ -31,8 +30,8 @@ describe 'View', ->
 
     context 'when I click the "hide" link on the "Code a prune" tool', ->
       before (done) ->
-          browser.elementByPartialLinkText "Code a prune!", (err, view) ->
-            view.elementByCss '.dropdown-toggle', (err, optionsToggle) ->
+          browser.elementByCss '#toolbar .tool[data-toolname="prune-graph"]', (err, el) ->
+            el.elementByCss '.dropdown-toggle', (err, optionsToggle) ->
               optionsToggle.click (err) ->
                  wd40.click '#tool-options-menu .hide-tool', done
 
@@ -40,6 +39,6 @@ describe 'View', ->
         wd40.waitForMatchingURL /dataset[/]\w+([/]settings)?[/]?$/, done
 
       it 'And the "Code a prune" tool is no longer visible', (done) ->
-        browser.elementByPartialLinkTextIfExists "Code a prune", (err, view) ->
-          should.not.exist view
+        browser.elementByCss '#toolbar .tool[data-toolname="prune-graph"]', (err, el) ->
+          should.not.exist el
           done()

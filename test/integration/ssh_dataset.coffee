@@ -134,28 +134,3 @@ MII...0tXU=
 
             it 'the modal tells me the command I should run', =>
               @modalTextContent.should.include 'ssh-keygen'
-
-
-  context 'when I click on the list of datasets', ->
-    before (done) ->
-      browser.get "#{home_url}/", ->
-        setTimeout done, 500
-
-    context 'when I click the "SSH in" menu link', ->
-      before (done) ->
-        wd40.elementByPartialLinkText 'Apricot', (err, tile) ->
-          tile.elementByCss '.dropdown-toggle', (err, settingsLink) ->
-            settingsLink.click ->
-              tile.elementByCss '.git-ssh', (err, link) ->
-                link.click done
-
-      it 'a modal window appears', (done) =>
-        wd40.getText '.modal', (err, text) =>
-          @modalTextContent = text.toLowerCase()
-          done()
-
-      it 'the modal window does not ask for my SSH key', =>
-        @modalTextContent.should.not.include 'add your ssh key:'
-
-      it 'the modal window tells me how to SSH in', =>
-        @modalTextContent.should.include 'ssh 3006375731@localhost'

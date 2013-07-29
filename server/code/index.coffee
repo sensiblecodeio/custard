@@ -39,7 +39,7 @@ request = require 'request'
 {DataRequest} = require 'model/data_request'
 
 recurlySign = require 'lib/sign'
-throttle = require 'lib/throttle'
+throttle = require 'throttler-express'
 pageTitles = require '../../shared/code/page-titles'
 
 # Set up database connection

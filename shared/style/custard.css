@@ -406,7 +406,6 @@ a.tile .hide:hover,
   line-height: 34px;
   color: rgba(255,255,255,0.8);
   border-top: 1px solid rgba(255,255,255,0.5);
-  background-color: rgba(0,0,0,0.1);
   -webkit-transition: color linear 0.1s;
      -moz-transition: color linear 0.1s;
        -o-transition: color linear 0.1s;
@@ -429,37 +428,6 @@ a.tile .hide:hover,
   color: #fff;
 }
 
-.tile li.actions {
-  left: auto;
-  right: 0;
-  width: 45px;
-  border-top: none;
-  border-left: 1px solid rgba(255,255,255,0.5);
-  text-shadow: none;
-}
-
-.tile.view .actions {
-  line-height: 41px;
-  top: 0; /* full-height button, for tiles with very long (multi-line) titles */
-  bottom: 0;
-}
-
-.tile li.actions > a {
-  display: block;
-  text-indent: -9000px;
-  background: transparent url(../image/tile-options-white.png) 50% 50% no-repeat;
-  opacity: 0.7;
-  -webkit-transition: opacity linear 0.1s;
-     -moz-transition: opacity linear 0.1s;
-       -o-transition: opacity linear 0.1s;
-          transition: opacity linear 0.1s;
-}
-
-.tile:hover li.actions > a {
-  opacity: 1;
-}
-
-.tile li.actions .dropdown-menu:before,
 #toolbar .dropdown-menu:before {
   position: absolute;
   top: -7px;
@@ -472,7 +440,6 @@ a.tile .hide:hover,
   content: '';
 }
 
-.tile li.actions .dropdown-menu:after,
 #toolbar .dropdown-menu:after {
   position: absolute;
   top: -6px;
@@ -482,17 +449,6 @@ a.tile .hide:hover,
   border-bottom: 6px solid #fff;
   border-left: 6px solid transparent;
   content: '';
-}
-
-.tile li.actions .dropdown-menu > li > a {
-  padding-left: 15px; /* down from the default of 20px */
-  padding-right: 15px;
-  line-height: 21px; /* down from the default of 24px */
-}
-
-.tile li.actions .dropdown-menu a img {
-  vertical-align: -3px;
-  margin-right: 3px;
 }
 
 

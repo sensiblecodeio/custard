@@ -19,9 +19,5 @@
   </div>
   <div class="tool-actions">
     <span class="dropdown-toggle">Options</span>
-    <!--<ul class="dropdown-menu pull-right">
-      <li><span class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> Git clone or SSH in</span></li>
-      <li><span class="hide-dataset"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</span></li>
-    </ul> -->
   </div>
 </a>

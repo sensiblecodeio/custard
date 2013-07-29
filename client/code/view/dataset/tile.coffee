@@ -7,10 +7,6 @@ class Cu.View.DatasetTile extends Backbone.View
   events:
     'click .hide': 'hideDataset'
     'click .unhide': 'unhideDataset'
-    'click .dropdown-menu a': 'dropdownMenuItemClick'
-    'click .rename-dataset': 'renameDatasetClick'
-    'click .git-ssh': ->
-      showOrAddSSH  @model, 'dataset'
 
   initialize: ->
     @model.on 'change', @render, this
@@ -45,15 +41,3 @@ class Cu.View.DatasetTile extends Backbone.View
     e.preventDefault()
     e.stopPropagation()
     @model.save {state: null}
-
-  dropdownMenuItemClick: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
-
-  renameDatasetClick: ->
-    # This is a bit of a hack, to avoid writing yet another rename widget.
-    # Hopefully it'll also teach people they can directly edit dataset names.
-    window.app.navigate "/dataset/#{@model.attributes.box}", trigger: true
-    setTimeout ->
-      $('#subnav-path .editable').trigger('click')
-    , 300

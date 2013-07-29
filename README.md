@@ -2,13 +2,11 @@
 
 A platform for tools that do stuff with data.
 
-Together with cobalt, forms x.scraperwiki.com, the new ScraperWiki platform.
+Together with cobalt, custard powers the [new ScraperWiki platform](https://scraperwiki.com).
 
 AGPL Licenced (see LICENCE file).
 
-# Stuff you need to do only once (installing)
-
-## Install mongodb
+## Stuff you need to do only once (installing mongo & redis)
 
 On Debian or Ubuntu:
 
@@ -27,24 +25,29 @@ Then on all platforms:
     mongod --dbpath=mongo
     redis-server
 
-# Every time you need to develop custard:
+Optionally, OSX users might want to install the mongodb and redis System Preference Panes, which make it dead easy to turn both servers on and off whenever required:
+
+- https://github.com/remysaissy/mongodb-macosx-prefspane
+- https://github.com/dquimper/Redis.prefPane
+
+## Every time you need to develop custard:
 
     . activate
     . ~/.nvm/nvm.sh # Only on linux, and could be in your .profile.
     nvm use 0.10 # Only if you're using nvm.
     npm install # Only needed when package.json changes.
 
-    # This will start a development web server.  Best
-    # done in a separate window.
+    # This will start a development web server.
+    # Best done in a separate window.
     cake dev
 
-    # You'll also need swops-secret and you'll need to git pull it
-    # every now and then.
+    # You'll also need swops-secret and you'll
+    # need to git pull it every now and then.
 
     # Some of the tests may need to start a selenium server
     (```cake se```).
 
-# Tests
+## Tests
 
 We love them. First download Selenium:
 

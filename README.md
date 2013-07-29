@@ -6,12 +6,17 @@ Together with cobalt, custard powers the [new ScraperWiki platform](https://scra
 
 AGPL Licenced (see LICENCE file).
 
-## Stuff you need to do only once (installing mongo & redis)
+## Initial setup (mongo, redis, nvm)
 
 On Debian or Ubuntu:
 
     sudo apt-get install mongodb
     sudo apt-get install -y redis-server
+
+And fix the node vesion by adding these lines to your `.profile`:
+
+    . ~/.nvm/nvm.sh
+    nvm use 0.10
 
 On Mac OSX:
 
@@ -30,37 +35,41 @@ Optionally, OSX users might want to install the mongodb and redis System Prefere
 - https://github.com/remysaissy/mongodb-macosx-prefspane
 - https://github.com/dquimper/Redis.prefPane
 
-## Every time you need to develop custard:
+## Every now and then (npm updates)
 
     . activate
-    . ~/.nvm/nvm.sh # Only on linux, and could be in your .profile.
-    nvm use 0.10 # Only if you're using nvm.
-    npm install # Only needed when package.json changes.
+    npm install
 
-    # This will start a development web server.
-    # Best done in a separate window.
+## Every time you need to develop custard
+
+    # Start a web server (best done in a new window)
+    . activate
     cake dev
 
-    # You'll also need swops-secret and you'll
-    # need to git pull it every now and then.
-
-    # Some of the tests may need to start a selenium server
-    (```cake se```).
+    # If you're running tests, you'll want to
+    # start a selenium server (best done in another new window)
+    .activate
+    cake se
 
 ## Tests
 
 We love them. First download Selenium:
 
+    # Linux:
     wget http://selenium.googlecode.com/files/selenium-server-standalone-2.29.0.jar
-    (linux) wget http://chromedriver.googlecode.com/files/chromedriver_linux64_26.0.1383.0.zip
-    (mac) wget https://chromedriver.googlecode.com/files/chromedriver_mac_26.0.1383.0.zip
+    wget http://chromedriver.googlecode.com/files/chromedriver_linux64_26.0.1383.0.zip
+    unzip chromedriver
+
+    # Mac:
+    curl -O http://selenium.googlecode.com/files/selenium-server-standalone-2.29.0.jar
+    curl -O https://chromedriver.googlecode.com/files/chromedriver_mac_26.0.1383.0.zip
     unzip chromedriver
 
 Then start a Selenium server:
 
     . activate && cake se
 
-(this is a shortcut for running ```java -jar selenium-server-standalone-2.29.0.jar -Dwebdriver.chrome.driver=chromedriver```)
+(this is a shortcut for running `java -jar selenium-server-standalone-2.29.0.jar -Dwebdriver.chrome.driver=chromedriver`)
 
 To run the tests:
 
@@ -73,4 +82,5 @@ or one of these:
     mocha test/integration
 
 or even ehg's special:
+
     mocha test

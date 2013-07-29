@@ -269,6 +269,10 @@ body.fullscreen .container {
   width: 100px;
 }
 
+
+
+/* Homepage dataset tiles */
+
 .dataset-list {
   margin-bottom: 40px;
 }
@@ -396,12 +400,17 @@ a.tile .hide:hover,
   background-color: #e11b2c;
 }
 
-.tile > ul > li {
+a.tile p.status {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   display: block;
+  margin: 0;
+  padding-left: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   font-size: 14px;
   line-height: 34px;
   color: rgba(255,255,255,0.8);
@@ -412,45 +421,14 @@ a.tile .hide:hover,
           transition: color linear 0.1s;
 }
 
-.tile:hover > ul > li {
+a.tile:hover p.status {
   color: #fff;
 }
 
-.tile li.status {
-  padding: 0 55px 0 10px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.tile li.error {
+a.tile p.error {
   background-color: #e11b2c;
   color: #fff;
 }
-
-#toolbar .dropdown-menu:before {
-  position: absolute;
-  top: -7px;
-  right: 5px;
-  display: inline-block;
-  border-right: 7px solid transparent;
-  border-bottom: 7px solid #ccc;
-  border-left: 7px solid transparent;
-  border-bottom-color: rgba(0, 0, 0, 0.2);
-  content: '';
-}
-
-#toolbar .dropdown-menu:after {
-  position: absolute;
-  top: -6px;
-  right: 6px;
-  display: inline-block;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid #fff;
-  border-left: 6px solid transparent;
-  content: '';
-}
-
 
 
 
@@ -479,6 +457,29 @@ a.tile .hide:hover,
   right: 0;
   bottom: 0;
   z-index: 5;
+}
+
+#toolbar .dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  right: 5px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+#toolbar .dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  right: 6px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #fff;
+  border-left: 6px solid transparent;
+  content: '';
 }
 
 #dataset-meta {

@@ -444,7 +444,6 @@ describe 'API', ->
         before (done) ->
           """Check that a local identd is running."""
           socket = net.connect 113, ->
-            console.log "connected"
             socket.end()
             done()
           socket.on 'error', (err) =>

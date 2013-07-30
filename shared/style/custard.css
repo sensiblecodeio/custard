@@ -307,11 +307,11 @@ a.tile:hover {
 }
 
 a.tile.deleted {
-  background-color: #eee;
+  background-color: #f9f9f9;
   text-align: center;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  color: #ccc;
+  -webkit-box-shadow: inset 0 0 3px #e9e9e9;
+  box-shadow: inset 0 0 3px #e9e9e9;
+  color: #aaa;
   text-shadow: 0 1px 0 #fff;
   top: 0;
 }

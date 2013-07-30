@@ -1,3 +1,5 @@
+net = require 'net'
+
 _ = require 'underscore'
 request = require 'request'
 should = require 'should'
@@ -437,6 +439,35 @@ describe 'API', ->
               obj = JSON.parse res.body
               obj.canBeReally.should.eql ['test', 'teststaff']
               done err
+
+      context 'POST: /api/status', ->
+        before (done) ->
+          """Check that a local identd is running."""
+          socket = net.connect 113, ->
+            console.log "connected"
+            socket.end()
+            done()
+          socket.on 'error', (err) =>
+            if /REFUS/.test err.code # ECONNREFUSED
+              console.warn "You are not running an identd locally, so this test won't work"
+              @skip = true
+            else
+              throw err
+            done()
+
+        it 'lets me POST to the status API endpoint', (done) ->
+          if @skip
+            return done new Error "Skipped because no local identd"
+          request.put
+            uri: "#{serverURL}/api/status"
+            form:
+              type: "ok"
+              message: "just testing"
+          , (err, res, body) =>
+            res.should.have.status 200
+            obj = JSON.parse body
+            console.log obj
+            done err
 
     describe 'Billing', ->
       context 'GET /api/:user/subscription/medium/sign', ->

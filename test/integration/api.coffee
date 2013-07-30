@@ -457,7 +457,7 @@ describe 'API', ->
         it 'lets me POST to the status API endpoint', (done) ->
           if @skip
             return done new Error "Skipped because no local identd"
-          request.put
+          request.post
             uri: "#{serverURL}/api/status"
             form:
               type: "ok"

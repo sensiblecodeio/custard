@@ -470,6 +470,21 @@ describe 'API', ->
             obj = JSON.parse body
             done err
 
+        it 'gives me a 429 if another request is made within 1 second', (done) ->
+          if @skip
+            return done new Error "Skipped because no local identd"
+          request.post
+            uri: "#{serverURL}/api/status"
+            form:
+              type: "ok"
+              message: "just testing"
+          , (err, res, body) =>
+            # This relies on the fact that there is a box with
+            # the same name as your userid. Add one to
+            # fixtures.js if there isn't one already.
+            res.should.have.status 429
+            done err
+
     describe 'Billing', ->
       context 'GET /api/:user/subscription/medium/sign', ->
         before (done) ->

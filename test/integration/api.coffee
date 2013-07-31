@@ -466,7 +466,7 @@ describe 'API', ->
             # This relies on the fact that there is a box with
             # the same name as your userid. Add one to
             # fixtures.js if there isn't one already.
-            # res.should.have.status 200
+            res.should.have.status 200
             obj = JSON.parse body
             done err
 

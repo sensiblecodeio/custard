@@ -497,14 +497,14 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
   </tr>
   <tr>
     <td><code>gitUrl</code></td>
-    <td>URL of your tool&rsquo;s Git repo, eg: <code>git://github.com/scraperwiki/spreadsheet-download-tool.git</code></td>
+    <td>URL of your tool&rsquo;s Git repo, eg: <code>git://github.com/scraperwiki/spreadsheet-upload-tool.git</code></td>
   </tr>
 </table>
 
 <p>This API endpoint currently requires an active ScraperWiki login session. It is therefore easiest to call the API from the Javascript console in your web browser, while you are logged into ScraperWiki. eg:</p>
 
 <pre class="prettyprint">
-$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download", type: "view", public: true, gitUrl: "git://github.com/scraperwiki/spreadsheet-download-tool.git"}}).complete(function(r){ console.log(r.responseText) })
+$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-upload", type: "view", public: true, gitUrl: "git://github.com/scraperwiki/spreadsheet-upload-tool.git"}}).complete(function(r){ console.log(r.responseText) })
 </pre>
 
 <p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#concepts-tools" data-nonpushstate>the structure outlined above</a>. It must, for example, include a <strong>scraperwiki.json</strong> file that looks something like this:</p>
@@ -529,7 +529,7 @@ Specify the <code>name</code>, spelt the same as when you submitted the tool.
 Other parameters are ignored.</p>
 
 <pre class="prettyprint">
-$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-download"}}).complete(function(r){ console.log(r.responseText) })
+$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-upload"}}).complete(function(r){ console.log(r.responseText) })
 </pre>
 
 <p>ScraperWiki will get the latest display name, description, icon and colour from <code>scraperwiki.json</code>.

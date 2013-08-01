@@ -5,6 +5,11 @@ redis = require 'redis'
 
 ModelBase = require 'model/base'
 
+# Time in milliseconds to wait before submitting
+# expensive endpoint requests so that they can be
+# de-duplicated
+DEBOUNCE_PERIOD = 1000
+
 viewSchema = new Schema
   box: String
   boxServer: String
@@ -28,6 +33,19 @@ datasetSchema = new Schema
   createdDate: {type: Date}
   creatorShortName: String
   creatorDisplayName: String
+
+
+# Return a memoized debounce function, keyed on the box,
+# which lasts as long as the debounce period.
+getDebouncedCache = {}
+getDebounced = (key, f) =>
+  if not getDebouncedCache[key]
+    getDebouncedCache[key] = _.debounce =>
+      result = f.apply null, arguments
+      delete getDebouncedCache[key]
+      return result
+    , DEBOUNCE_PERIOD
+  return getDebouncedCache[key]
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 
@@ -58,7 +76,9 @@ class Dataset extends ModelBase
         type: @status.type
         message: @status.message
       env = process.env.NODE_ENV
-      Dataset.redisClient.publish "#{env}.cobalt.dataset.#{@box}.update", message
+      debouncedPublish = getDebounced @box, ->
+        Dataset.redisClient.publish.apply Dataset.redisClient, arguments
+      debouncedPublish "#{env}.cobalt.dataset.#{@box}.update", message
       callback err
 
   @countVisibleDatasets: (user, callback) ->

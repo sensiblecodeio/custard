@@ -36,7 +36,8 @@
     "exceptional-node": "~0.1.1",
     "nodealytics": "0.0.5",
     "redis": "~0.8.4",
-    "hiredis": "~0.1.15"
+    "hiredis": "~0.1.15",
+    "throttler-express": "git+https://github.com/scraperwiki/throttler-express.git"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

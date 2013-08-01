@@ -1,10 +1,18 @@
+net = require 'net'
+
 _ = require 'underscore'
 request = require 'request'
 should = require 'should'
 async = require 'async'
+redis = require 'redis'
 
 settings = require '../settings.json'
 serverURL = process.env.CU_TEST_SERVER or settings.serverURL
+
+# Timeout period in milliseconds for duplicate request
+# debouncing. (see underscore debounce and test that uses these)
+DEBOUNCE_PERIOD = 1000
+EPSILON = 100
 
 login = (done) ->
   @loginURL = "#{serverURL}/login"
@@ -449,6 +457,63 @@ describe 'API', ->
               obj = JSON.parse res.body
               obj.canBeReally.should.eql ['test', 'teststaff']
               done err
+
+      context 'POST: /api/status', ->
+        before (done) ->
+          """Check that a local identd is running."""
+          socket = net.connect 113, ->
+            socket.end()
+            done()
+          socket.on 'error', (err) =>
+            if /REFUS/.test err.code # ECONNREFUSED
+              console.warn "You are not running an identd locally, so this test won't work"
+              @skip = true
+            else
+              throw err
+            done()
+
+        before (done) ->
+          @redisClient = redis.createClient 6379, 'localhost'
+          @redisClient.on 'psubscribe', -> done()
+          @messagesReceived = 0
+          @redisClient.on 'pmessage', (pattern, channel, message) =>
+            @messagesReceived += 1
+
+          @redisClient.psubscribe("*.cobalt.dataset.#{process.env.USER}.update")
+
+        doRequest = (_, cb) ->
+          request.post
+            uri: "#{serverURL}/api/status"
+            form:
+              type: "ok"
+              message: "just testing"
+          , (err, res, body) ->
+            # This relies on the fact that there is a box with
+            # the same name as your userid. Add one to
+            # fixtures.js if there isn't one already.
+            res.should.have.status 200
+            obj = JSON.parse body
+            cb err
+
+        it 'lets me POST to the status API endpoint (and is debounced)', (done) ->
+          # Debounce meaning rate limit requests
+          if @skip
+            return done new Error "Skipped because no local identd"
+          # Fire off 10 post requests (where only the last causes
+          # redis activity)
+          async.each [1..10], doRequest, (err) =>
+            # Wait long enough for debounce and message to propagate
+            setTimeout =>
+              @messagesReceived.should.equal 1
+
+              # Make another request and ensure that this one wasn't
+              # culled by the debouncer
+              doRequest "THIS PARAMETER NOT USED", =>
+                setTimeout =>
+                  @messagesReceived.should.equal 2
+                  done()
+                , DEBOUNCE_PERIOD + EPSILON
+            , DEBOUNCE_PERIOD + EPSILON
 
     describe 'Billing', ->
       context 'GET /api/:user/subscription/medium/sign', ->

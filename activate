@@ -113,4 +113,6 @@ then
   fix_connect_file_cache
 fi
 
+export ACK_OPTIONS="--type-add coffee=.coffee${ACK_OPTIONS+ $ACK_OPTIONS}"
+alias ack=ack-grep
 true

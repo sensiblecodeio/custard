@@ -177,6 +177,12 @@ exports.tools = [
 ]
 
 exports.datasets = [
+{ "box" : "drj", "tool": "just-testing-identd",
+"displayName":"drj", "user": "drj", boxServer: "localhost",
+"views":[]},
+{ "box" : "bfs", "tool": "just-testing-identd",
+"displayName":"bfs", "user": "bfs", boxServer: "localhost",
+"views":[]},
 { "box" : "3006375730", "tool": "test-app", "displayName" : "Cheese", "user" : "ickletest", "boxServer": "localhost", "views" : [] },
 { "box" : "3006375731", "tool": "test-app", "displayName" : "Apricot", "createdDate": "2013-07-12T09:23:36.113Z", "user" : "ehg", "boxServer": "localhost", "views" : [ { "name": "downloader", "displayName": "Download a Spreadsheet", "box": "4001815731", "state": "state", "boxServer": "localhost", "tool": "spreadsheet-download" }] },
 { "box" : "3006375815", "tool": "test-app", "displayName" : "Prune", "createdDate": "2013-07-13T09:23:36.113Z", "user" : "ehg","boxServer": "localhost",  "views" : [  { "name": "prune-graph", "displayName": "Graph of Prunes", "box": "4008115731", "boxServer": "localhost", "state": "state", "tool": "prune-graph" }, { "name": "newview", "displayName": "Data Scientist's Report", "box": "4028374628", "boxServer": "localhost", "state": "state", "tool": "newview" } ] },

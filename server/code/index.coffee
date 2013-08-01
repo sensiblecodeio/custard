@@ -502,8 +502,9 @@ app.post '/api/data-request/?', dataRequest
 
 # :todo: Add IP address check (at the moment, anyone running an identd
 # can post to anyone's status).
-throttleRoute = throttle.throttle (req) -> req.ident
-app.post '/api/status/?', checkIdent, throttleRoute, postStatus
+# throttleRoute = throttle.throttle (req) -> req.ident
+
+app.post '/api/status/?', checkIdent, postStatus
 
 app.get '/api/:user/subscription/:plan/sign/?', signPlan
 app.post '/api/:user/subscription/verify/?', verifyRecurly

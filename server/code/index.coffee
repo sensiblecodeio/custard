@@ -657,6 +657,8 @@ addDataset = (req, resp) ->
           name: body.name
           displayName: body.displayName
           boxJSON: box.boxJSON
+          creatorShortName: req.user.real.shortName
+          creatorDisplayName: req.user.real.displayName
 
         dataset.save (err) ->
           if err?

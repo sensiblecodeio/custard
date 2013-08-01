@@ -287,6 +287,18 @@ describe 'API', ->
               Date.parse(newDataset.createdDate).should.be.above(0)
               done()
 
+          it 'dataset has a creator short name', (done)  ->
+            request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
+              newDataset = JSON.parse res.body
+              newDataset.creatorShortName.should.equal 'ickletest'
+              done()
+
+          it 'dataset has a creator display name', (done)  ->
+            request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
+              newDataset = JSON.parse res.body
+              newDataset.creatorDisplayName.should.equal 'Ickle Test'
+              done()
+
           it "404 errors if the dataset doesn't exist", (done) ->
             request.get "#{serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
               res.should.have.status 404

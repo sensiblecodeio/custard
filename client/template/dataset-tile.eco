@@ -1,4 +1,7 @@
 <h3><%= @dataset.displayName %></h3>
+<% if @dataset.creatorDisplayName: %>
+  <h4>by <%= @dataset.creatorDisplayName %></h4>
+<% end %>
 <% if @dataset.status?.type is 'error': %>
   <% if @dataset.status?.message: %>
     <p class="status error" title="<%= @dataset.status.message %> (<%= @statusUpdatedHuman %>)"><i class="icon-exclamation-sign icon-white"></i> <%= @dataset.status.message %></p>

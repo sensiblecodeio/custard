@@ -242,6 +242,7 @@ class Cu.View.Toolbar extends Backbone.View
     @$el.html JST['subnav-toolbar']
       displayName: @model.get 'displayName'
       color: @model.get('tool')?.get('manifest')?.color
+      creatorDisplayName: @model.get 'creatorDisplayName'
     @$el.append @toolsView.render().el
     @$el.on 'mousewheel', (e, delta, deltaX, deltaY) ->
       e.preventDefault()

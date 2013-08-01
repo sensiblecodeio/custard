@@ -483,6 +483,7 @@ describe 'API', ->
             # the same name as your userid. Add one to
             # fixtures.js if there isn't one already.
             res.should.have.status 429
+            obj = JSON.parse body
             done err
 
     describe 'Billing', ->

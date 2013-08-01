@@ -469,30 +469,38 @@ describe 'API', ->
 
           @redisClient.psubscribe("*.cobalt.dataset.#{process.env.USER}.update")
 
+        doRequest = (_, cb) ->
+          request.post
+            uri: "#{serverURL}/api/status"
+            form:
+              type: "ok"
+              message: "just testing"
+          , (err, res, body) ->
+            # This relies on the fact that there is a box with
+            # the same name as your userid. Add one to
+            # fixtures.js if there isn't one already.
+            res.should.have.status 200
+            obj = JSON.parse body
+            cb err
+
         it 'lets me POST to the status API endpoint (and is debounced)', (done) ->
           # Debounce meaning rate limit requests
           if @skip
             return done new Error "Skipped because no local identd"
           # Fire off 10 post requests (where only the last causes
           # redis activity)
-          async.each [1..10], (_, cb) =>
-            request.post
-              uri: "#{serverURL}/api/status"
-              form:
-                type: "ok"
-                message: "just testing"
-            , (err, res, body) =>
-              # This relies on the fact that there is a box with
-              # the same name as your userid. Add one to
-              # fixtures.js if there isn't one already.
-              res.should.have.status 200
-              obj = JSON.parse body
-              cb err
-          , (err) =>
+          async.each [1..10], doRequest, (err) =>
             # Wait long enough for debounce and message to propagate
             setTimeout =>
               @messagesReceived.should.equal 1
-              done()
+
+              # Make another request and ensure that this one wasn't
+              # culled by the debouncer
+              doRequest "THIS PARAMETER NOT USED", =>
+                setTimeout =>
+                  @messagesReceived.should.equal 2
+                  done()
+                , DEBOUNCE_PERIOD + EPSILON
             , DEBOUNCE_PERIOD + EPSILON
 
     describe 'Billing', ->

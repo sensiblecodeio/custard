@@ -1,6 +1,6 @@
 <h3><%= @dataset.displayName %></h3>
 <% if @dataset.creatorDisplayName: %>
-  <h4>by <%= @dataset.creatorDisplayName %></h4>
+  <h4 class="owner">by <%= @dataset.creatorDisplayName %></h4>
 <% end %>
 <% if @dataset.status?.type is 'error': %>
   <% if @dataset.status?.message: %>

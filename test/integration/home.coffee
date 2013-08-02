@@ -30,11 +30,17 @@ describe 'Home page (logged in)', ->
       elements.length.should.be.above 0
       done()
 
+  it 'shows that each dataset was created by Chris Blower', (done) ->
+    browser.elementsByCss '.dataset .owner', (err, elements) ->
+      should.exist elements
+      elements.length.should.equal 2
+      done()
+
   it 'the datasets are ordered by date created, newest at the top', (done) ->
     wd40.getText 'body', (err, text) ->
       text.split('Prune')[1].should.include('Apricot')
       done()
-  
+
   context 'when I click the "new dataset" button', ->
     before (done) ->
       wd40.click '.new-dataset', done

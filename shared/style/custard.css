@@ -372,6 +372,14 @@ a.view.tile h3 {
   padding: 10px 55px 10px 10px; /* extra padding-right for the "settings" cog button */
 }
 
+a.tile .owner {
+  font-weight: normal;
+  padding: 0px 10px 5px 10px;
+  font-size: 14px;
+  margin: 0;
+  opacity: 0.8;
+}
+
 a.tile .hide,
 #dataset-tools a.tool .hide {
   position: absolute;
@@ -524,7 +532,7 @@ a.tile p.error {
   opacity: 1;
 }
 
-#dataset-meta h3 {
+#dataset-meta > div {
   /* re-enable text selection for the dataset title */
   -webkit-touch-callout: default;
   -webkit-user-select: text;
@@ -534,6 +542,24 @@ a.tile p.error {
   user-select: text;
   padding-left: 15px;
   border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+#dataset-meta > .actions {
+  border-left: none;
+  padding: 0;
+}
+#dataset-meta h3 {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+
+#dataset-meta .owner {
+  display: block;
+  font-size: 14px;
+  opacity: 0.8;
+  line-height: 16px;
+  margin-top: 5px;
 }
 
 #dataset-meta #editable-input {
@@ -563,7 +589,7 @@ a.tile p.error {
   height: 30px;
   text-indent: -9000px;
   opacity: 0.7;
-  margin-left: 10px;
+  margin-left: 15px;
   cursor: pointer;
 }
 

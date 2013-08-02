@@ -242,6 +242,7 @@ class Cu.View.Toolbar extends Backbone.View
     @$el.html JST['subnav-toolbar']
       displayName: @model.get 'displayName'
       color: @model.get('tool')?.get('manifest')?.color
+      creatorDisplayName: @model.get 'creatorDisplayName'
     @$el.append @toolsView.render().el
     @$el.on 'mousewheel', (e, delta, deltaX, deltaY) ->
       e.preventDefault()
@@ -298,7 +299,7 @@ class Cu.View.Toolbar extends Backbone.View
 
   editableNameBlurred: (e) ->
     $label = $('#dataset-meta h3')
-    $wrapper = $label.next()
+    $wrapper = $('#dataset-meta #editable-input')
     $input = $wrapper.children('input')
     @newName = $.trim($input.val())
     @oldName = $label.text()
@@ -306,7 +307,7 @@ class Cu.View.Toolbar extends Backbone.View
       @editableNameEscaped(e)
     else
       $wrapper.hide()
-      $label.text(@newName).show()
+      $label.text(@newName).parent().show()
       @model.set 'displayName', @newName
       @model.save {},
         success: =>

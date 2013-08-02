@@ -194,7 +194,11 @@ exports.datasets = [
 { "box" : "2416349265", "boxServer": "localhost", "tool": "spreadsheet-upload", "displayName" : "My Spreadsheet", "user" : "zarino", "views" : [] },
 { "box" : "1057304856", "boxServer": "localhost", "tool": "test-app", "displayName" : "Hamburger", "user" : "mrgreedy", "views" : [] },
 { "box" : "3046586739", "tool": "test-app", "boxServer": "localhost", "displayName" : "Fries", "user" : "mrgreedy", "views" : [] },
-{ "box" : "4057690375", "tool": "test-app", "boxServer": "localhost", "displayName" : "Cola", "user" : "mrgreedy", "views" : [] }
+{ "box" : "4057690375", "tool": "test-app", "boxServer": "localhost", "displayName" : "Cola", "user" : "mrgreedy", "views" : [] },
+{ "box" : "4057690376", "tool": "test-app", "boxServer": "localhost", "displayName" : "Deleted and cleaned", "user" : "mrgreedy", "views" : [] , "toBeDeleted": null, "state": "deleted" },
+{ "box" : "4057690377", "tool": "test-app", "boxServer": "localhost", "displayName" : "Deleted not cleaned 1", "user" : "mrgreedy", "views" : [] , "toBeDeleted": new Date(1978, 3, 16), "state": "deleted" },
+{ "box" : "4057690378", "tool": "test-app", "boxServer": "localhost", "displayName" : "Deleted not cleaned 2", "user" : "mrgreedy", "views" : [] , "toBeDeleted": new Date(1978, 3, 16), "state": "deleted" },
+{ "box" : "4057690379", "tool": "test-app", "boxServer": "localhost", "displayName" : "Deleted in future", "user" : "mrgreedy", "views" : [] , "toBeDeleted": new Date(3000, 3, 16), "state": "deleted" }
 ]
 
 exports.boxes = [

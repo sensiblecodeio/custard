@@ -202,3 +202,9 @@ describe 'Server model: Dataset', ->
 
       it 'saves the status', ->
         @saveSpy.calledOnce.should.be.true
+
+  context 'when dataset.findToBeDeleted is called', ->
+    it 'returns datasets with toBeDeleted in the past', (done) ->
+      Dataset.findToBeDeleted (err, datasets) ->
+        datasets.length.should.equal 2
+        done(err)

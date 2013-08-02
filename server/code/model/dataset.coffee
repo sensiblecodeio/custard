@@ -104,6 +104,9 @@ class Dataset extends ModelBase
   @findAllByTool: (toolName, callback) ->
     @dbClass.find {tool: toolName, state: {$ne: 'deleted'}}, callback
 
+  @findToBeDeleted: (callback) ->
+    @dbClass.find {state: 'deleted', toBeDeleted: {$lte: new Date()}}, callback
+
 Dataset.View =
   findAllByTool: (toolName, callback) ->
     Dataset.dbClass.find

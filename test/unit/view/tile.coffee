@@ -17,24 +17,45 @@ describe "View: DatasetTile", ->
   afterEach ->
     @clock.restore()
 
-  it "model.toBeDeleted is set to 5 mins in future when hideDataset is called", ->
-    @view.hideDataset(jQuery.Event())
+  context "When hideDataset is called", ->
+    it "model.toBeDeleted is set to 5 mins in future", ->
+      @view.hideDataset(jQuery.Event())
 
-    @save.firstCall.args[0].toBeDeleted.should.be.instanceOf Date
+      @save.firstCall.args[0].toBeDeleted.should.be.instanceOf Date
 
-    (@save.firstCall.args[0].toBeDeleted - new Date().getTime()).should.equal 5 * 60000
+      (@save.firstCall.args[0].toBeDeleted - new Date().getTime()).should.equal 5 * 60000
 
-  it "model.state is set to 'deleted' when hideDateset is called", ->
-    @view.hideDataset(jQuery.Event())
+    it "model.state is set to 'deleted'", ->
+      @view.hideDataset(jQuery.Event())
 
-    @save.firstCall.args[0].state.should.equal 'deleted'
+      @save.firstCall.args[0].state.should.equal 'deleted'
 
-  it "model.toBeDeleted is set to null when unhideDataset is called", ->
-    @view.unhideDataset(jQuery.Event())
+    it "should setTimeout to remove tile after 5 minutes", ->
+      @view.hideDataset(jQuery.Event())
 
-    should.not.exist @save.firstCall.args[0].toBeDeleted
+      removeSpy = sinon.spy(@view, 'remove')
 
-  it "model.state is set to null when unhideDataset is called", ->
-    @view.unhideDataset(jQuery.Event())
+      @clock.tick 6 * 600000
 
-    should.not.exist @save.firstCall.args[0].state
+      removeSpy.calledOnce.should.be.true
+
+  context "When unhideDataset is called", ->
+    it "model.toBeDeleted is set to null", ->
+      @view.unhideDataset(jQuery.Event())
+
+      should.not.exist @save.firstCall.args[0].toBeDeleted
+
+    it "model.state is set to null", ->
+      @view.unhideDataset(jQuery.Event())
+
+      should.not.exist @save.firstCall.args[0].state
+
+    it "should clear the timeout", ->
+      @view.hideDataset(jQuery.Event())
+      @view.unhideDataset(jQuery.Event())
+
+      removeSpy = sinon.spy(@view, 'remove')
+
+      @clock.tick 6 * 600000
+
+      removeSpy.called.should.be.false

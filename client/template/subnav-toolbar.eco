@@ -5,10 +5,12 @@
 </ul>
 <div id="dataset-meta" <% if @color: %>style="background-color: <%= @color %>"<% end %>>
   <a href="/"><i class="icon-home icon-white"></i></a>
-  <h3><%= @displayName %></h3>
-  <% if @creatorDisplayName: %>
-    <h4 class="owner">by <%= @creatorDisplayName %></h4>
-  <% end %>
+  <div>
+    <h3><%= @displayName %></h3>
+    <% if @creatorDisplayName: %>
+      <span class="owner">by <%= @creatorDisplayName %></span>
+    <% end %>
+  </div>
   <span class="input-append" id="editable-input">
     <input type="text" value="<%= @displayName %>"><button class="btn">Save</button>
   </span>

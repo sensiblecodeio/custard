@@ -299,7 +299,7 @@ class Cu.View.Toolbar extends Backbone.View
 
   editableNameBlurred: (e) ->
     $label = $('#dataset-meta h3')
-    $wrapper = $label.next()
+    $wrapper = $('#dataset-meta #editable-input')
     $input = $wrapper.children('input')
     @newName = $.trim($input.val())
     @oldName = $label.text()
@@ -307,7 +307,7 @@ class Cu.View.Toolbar extends Backbone.View
       @editableNameEscaped(e)
     else
       $wrapper.hide()
-      $label.text(@newName).show()
+      $label.text(@newName).parent().show()
       @model.set 'displayName', @newName
       @model.save {},
         success: =>

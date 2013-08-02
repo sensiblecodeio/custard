@@ -61,16 +61,30 @@
   </div>
   <div class="span6">
     <div class="media">
-      <img class="pull-left" src="/image/team_dragon.jpg" class="pull-left" />
+      <img src="/image/team_ed.png" class="pull-left" />
+      <div class="media-body">
+        <h3>Ed Cawthorne <small>Product Manager</small></h3>
+        <p>Started life as a trainee pilot for the RAF, yet has somehow <span class="more"> ended
+up as a Product Manager! Ed co-founded product management
+tools provider - Buzz 22. At ScraperWiki, he is responsible for understanding
+what our customers want and defining our commercial offerings. BEng Materials
+Science (Sheffield) and MSc Information Systems and Technology (City).</span></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row-fluid people">
+  <div class="span6">
+    <div class="media">
+      <img src="/image/team_dragon.jpg" class="pull-left" />
       <div class="media-body">
         <h3>Dave &lsquo;Dragon&rsquo; McKee <small>Data&nbsp;Scientist</small></h3>
         <p>Radiation physicist at Sellafield Limited, calculating shielding requirements<span class="more"> and dose assessments to support safety in legacy nuclear installations; 3D modelling and simulation, human factors studies. Strong background in Python, relational databases and XPath. MSci Physics (Durham).</span></p>
       </div>
     </div>
   </div>
-</div>
-
-<div class="row-fluid people">
   <div class="span6">
     <div class="media">
       <img src="/image/team_paul.png" class="pull-left" />
@@ -80,6 +94,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="row-fluid people">
   <div class="span6">
     <div class="media">
       <img src="/image/team_peter.png" class="pull-left" />
@@ -96,9 +113,6 @@ the data scientists and the platform operators at ScraperWiki.  MPhys
       </div>
     </div>
   </div>
-</div>
-
-<div class="row-fluid people">
   <div class="span6">
     <div class="media">
       <img src="/image/team_david.png" class="pull-left" />
@@ -108,6 +122,9 @@ the data scientists and the platform operators at ScraperWiki.  MPhys
       </div>
     </div>
   </div>
+</div>
+
+<div class="row-fluid people">
   <div class="span6">
     <div class="media">
       <img src="/image/team_chris.png" class="pull-left" />

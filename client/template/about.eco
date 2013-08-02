@@ -85,9 +85,14 @@
       <img src="/image/team_peter.png" class="pull-left" />
       <div class="media-body">
         <h3>Peter Waller <small>Data&nbsp;Scientist</small></h3>
-        <p>Previously a physicist on the ATLAS experiment at CERN, <span class="more">
+        <p>Previously a particle physicist at CERN, Peter is interested in big
+data <span class="more">
+and the power of technology to solve problems. With his knowledge of
+networks and binary file formats he can extract data from anything. A
+generalist with a nose for programming languages, he bridges the gap between
+the data scientists and the platform operators at ScraperWiki.  MPhys
+(Manchester).
         </span></p>
-An 18 year career in the innovative Cambridge software scene has left David skilled<span class="more"> in everything from memory management and text-retrieval to 3D collision physics and earth surface temperature observations. His weapons of choice are C, Python, Shell, and CoffeeScript. MA Maths (Cambridge), Diploma in Computer Science (Cambridge).</span></p>
       </div>
     </div>
   </div>

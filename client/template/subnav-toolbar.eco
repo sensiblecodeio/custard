@@ -7,7 +7,7 @@
   <a href="/"><i class="icon-home icon-white"></i></a>
   <h3><%= @displayName %></h3>
   <% if @creatorDisplayName: %>
-    <h4>by <%= @creatorDisplayName %></h4>
+    <h4 class="owner">by <%= @creatorDisplayName %></h4>
   <% end %>
   <span class="input-append" id="editable-input">
     <input type="text" value="<%= @displayName %>"><button class="btn">Save</button>

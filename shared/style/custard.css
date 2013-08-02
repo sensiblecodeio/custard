@@ -372,6 +372,14 @@ a.view.tile h3 {
   padding: 10px 55px 10px 10px; /* extra padding-right for the "settings" cog button */
 }
 
+a.tile .owner {
+  font-weight: normal;
+  padding: 0px 10px 5px 10px;
+  font-size: 14px;
+  margin: 0;
+  opacity: 0.8;
+}
+
 a.tile .hide,
 #dataset-tools a.tool .hide {
   position: absolute;

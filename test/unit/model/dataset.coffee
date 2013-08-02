@@ -4,6 +4,7 @@ util = require 'util'
 sinon = require 'sinon'
 should = require 'should'
 redis = require 'redis'
+request = require 'request'
 
 
 describe 'Client model: Dataset', ->
@@ -208,3 +209,23 @@ describe 'Server model: Dataset', ->
       Dataset.findToBeDeleted (err, datasets) ->
         datasets.length.should.equal 2
         done(err)
+
+  context 'when dataset.cleanCrontab is called', ->
+    before () ->
+      @dataset = new Dataset
+        user: 'zarino'
+        box: '2416349265'
+
+      @requestStub = sinon.stub request, 'post', (options, callback) ->
+        callback null, {statusCode: 200}, {}
+
+    it 'should call the exec endpoint correctly', (done) ->
+      @dataset.cleanCrontab (err) =>
+        calledCorrectly = @requestStub.calledWith
+          uri: sinon.match /2416349265/
+          form:
+            apikey: 'zarino'
+            cmd: sinon.match /crontab -r/
+        calledCorrectly.should.be.true
+
+        done()

@@ -2,6 +2,7 @@ _ = require 'underscore'
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 redis = require 'redis'
+request = require 'request'
 
 ModelBase = require 'model/base'
 
@@ -50,6 +51,15 @@ getDebounced = (key, f) =>
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 
+_exec = (arg, callback) ->
+  {Box} = require 'model/box'
+  request.post
+    uri: "#{Box.endpoint arg.boxServer, arg.boxName}/exec"
+    form:
+      apikey: arg.user.apikey
+      cmd: arg.cmd
+  , callback
+
 class Dataset extends ModelBase
   @dbClass: zDbDataset
   @redisClient: redis.createClient 6379, process.env.REDIS_SERVER
@@ -81,6 +91,22 @@ class Dataset extends ModelBase
         Dataset.redisClient.publish.apply Dataset.redisClient, arguments
       debouncedPublish "#{env}.cobalt.dataset.#{@box}.update", message
       callback err
+
+  cleanCrontab: (callback) ->
+    {User} = require 'model/user'
+    User.findByShortName @user, (err, user) =>
+      _exec
+        user: user
+        boxName: @box
+        boxServer: @boxServer
+        cmd: "crontab -r"
+      , (err, res, body) ->
+        if err?
+          callback err
+        else if res.statusCode isnt 200
+          callback {statusCode: res.statusCode, body: body}
+        else
+          callback null
 
   @countVisibleDatasets: (user, callback) ->
     @dbClass.find({user: user, state: {$ne: 'deleted'}}).count callback

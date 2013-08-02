@@ -35,9 +35,10 @@ class Cu.View.DatasetTile extends Backbone.View
   hideDataset: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @model.save {state: 'deleted'}
+    fiveMinutesInFuture = new Date(new Date().getTime() + 5 * 60000)
+    @model.save {state: 'deleted', toBeDeleted: fiveMinutesInFuture}
 
   unhideDataset: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @model.save {state: null}
+    @model.save {state: null, toBeDeleted: null}

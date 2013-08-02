@@ -33,6 +33,7 @@ datasetSchema = new Schema
   createdDate: {type: Date}
   creatorShortName: String
   creatorDisplayName: String
+  toBeDeleted: Date
 
 
 # Return a memoized debounce function, keyed on the box,

@@ -3,9 +3,9 @@ _ = require 'underscore'
 util = require 'util'
 sinon = require 'sinon'
 should = require 'should'
-redis = require 'redis'
 request = require 'request'
 
+RedisClient = require('lib/redisClient').RedisClient
 
 describe 'Client model: Dataset', ->
   helper = require '../helper'
@@ -133,12 +133,12 @@ describe 'Server model: Dataset', ->
       before ->
         @saveSpy = sinon.spy Dataset.dbClass.prototype, 'save'
         # TODO: will actually connect to redis, stub properly
-        @publishStub = sinon.stub Dataset.redisClient, 'publish'
+        @publishStub = sinon.stub RedisClient.client, 'publish'
 
       after ->
         Dataset.dbClass.prototype.save.restore()
-        Dataset.redisClient.publish.restore()
-        Dataset.redisClient.end()
+        RedisClient.client.publish.restore()
+        RedisClient.client.end()
 
       before (done) ->
         @dataset = new Dataset

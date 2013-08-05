@@ -1,10 +1,10 @@
 _ = require 'underscore'
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
-redis = require 'redis'
 request = require 'request'
 
 ModelBase = require 'model/base'
+RedisClient = require('lib/redisClient').RedisClient
 
 # Time in milliseconds to wait before submitting
 # expensive endpoint requests so that they can be
@@ -62,13 +62,6 @@ _exec = (arg, callback) ->
 
 class Dataset extends ModelBase
   @dbClass: zDbDataset
-  @redisClient: redis.createClient 6379, process.env.REDIS_SERVER
-
-  if /production|staging/.test process.env.NODE_ENV
-    Dataset.redisClient.auth process.env.REDIS_PASSWORD, (err) ->
-      if err?
-        console.warn 'Redis auth error: ', err
-
 
   validate: ->
     return 'no tool' unless @tool? and @tool.length > 0
@@ -88,7 +81,7 @@ class Dataset extends ModelBase
         message: @status.message
       env = process.env.NODE_ENV
       debouncedPublish = getDebounced @box, ->
-        Dataset.redisClient.publish.apply Dataset.redisClient, arguments
+        RedisClient.client.publish.apply RedisClient.client, arguments
       debouncedPublish "#{env}.cobalt.dataset.#{@box}.update", message
       callback err
 

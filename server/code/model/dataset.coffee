@@ -98,13 +98,14 @@ class Dataset extends ModelBase
         boxName: @box
         boxServer: @boxServer
         cmd: "crontab -r"
-      , (err, res, body) ->
+      , (err, res, body) =>
         if err?
           callback err
         else if res.statusCode isnt 200
           callback {statusCode: res.statusCode, body: body}
         else
-          callback null
+          @toBeDeleted = null
+          @save callback
 
   @countVisibleDatasets: (user, callback) ->
     @dbClass.find({user: user, state: {$ne: 'deleted'}}).count callback

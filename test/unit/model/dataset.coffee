@@ -211,13 +211,19 @@ describe 'Server model: Dataset', ->
         done(err)
 
   context 'when dataset.cleanCrontab is called', ->
-    before () ->
+    before ->
       @dataset = new Dataset
         user: 'zarino'
         box: '2416349265'
 
       @requestStub = sinon.stub request, 'post', (options, callback) ->
         callback null, {statusCode: 200}, {}
+
+      @saveSpy = sinon.spy Dataset.prototype, 'save'
+
+    after ->
+      Dataset.prototype.save.restore()
+      request.post.restore()
 
     it 'should call the exec endpoint correctly', (done) ->
       @dataset.cleanCrontab (err) =>
@@ -229,3 +235,7 @@ describe 'Server model: Dataset', ->
         calledCorrectly.should.be.true
 
         done()
+
+    it 'if successful, it should set toBeDeleted to null', ->
+      should.not.exist @dataset.toBeDeleted
+      @saveSpy.calledOnce.should.be.true

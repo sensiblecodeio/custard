@@ -1,18 +1,25 @@
 #!/usr/bin/env coffee
 
+process.env.NODE_ENV = 'cron'
+
 mongoose = require 'mongoose'
-_ = require 'underscore'
+async = require 'async'
 mongoose.connect process.env.CU_DB
 
 {Dataset} = require 'model/dataset'
 
+CLI = false
+
 main = (TheDataset) ->
   TheDataset.findToBeDeleted (err, datasets)->
-    _.each datasets, (dataset) ->
-      dataset.cleanCrontab()
+    async.each datasets, (dataset, cb) ->
+      dataset.cleanCrontab cb
+    , (err) ->
+      console.warn(err) if err?
+      process.exit() if CLI?
 
 if require.main == module
+  CLI = true
   main(Dataset)
-  process.exit()
 
 exports.main = main

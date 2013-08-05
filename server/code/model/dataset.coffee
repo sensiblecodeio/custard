@@ -67,6 +67,11 @@ class Dataset extends ModelBase
     return 'no tool' unless @tool? and @tool.length > 0
     return 'no display name' unless @displayName? and @displayName.length > 0
 
+  save: (callback) ->
+    if @toBeDeleted?
+      @toBeDeleted = new Date(@toBeDeleted)
+    super callback
+
   updateStatus: (status, callback) ->
     @status =
       type: status.type

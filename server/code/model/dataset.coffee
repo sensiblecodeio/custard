@@ -1,9 +1,10 @@
 _ = require 'underscore'
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
-redis = require 'redis'
+request = require 'request'
 
 ModelBase = require 'model/base'
+RedisClient = require('lib/redisClient').RedisClient
 
 # Time in milliseconds to wait before submitting
 # expensive endpoint requests so that they can be
@@ -33,6 +34,7 @@ datasetSchema = new Schema
   createdDate: {type: Date}
   creatorShortName: String
   creatorDisplayName: String
+  toBeDeleted: Date
 
 
 # Return a memoized debounce function, keyed on the box,
@@ -49,19 +51,26 @@ getDebounced = (key, f) =>
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 
+_exec = (arg, callback) ->
+  {Box} = require 'model/box'
+  request.post
+    uri: "#{Box.endpoint arg.boxServer, arg.boxName}/exec"
+    form:
+      apikey: arg.user.apikey
+      cmd: arg.cmd
+  , callback
+
 class Dataset extends ModelBase
   @dbClass: zDbDataset
-  @redisClient: redis.createClient 6379, process.env.REDIS_SERVER
-
-  if /production|staging/.test process.env.NODE_ENV
-    Dataset.redisClient.auth process.env.REDIS_PASSWORD, (err) ->
-      if err?
-        console.warn 'Redis auth error: ', err
-
 
   validate: ->
     return 'no tool' unless @tool? and @tool.length > 0
     return 'no display name' unless @displayName? and @displayName.length > 0
+
+  save: (callback) ->
+    if @toBeDeleted?
+      @toBeDeleted = new Date(@toBeDeleted)
+    super callback
 
   updateStatus: (status, callback) ->
     @status =
@@ -77,9 +86,26 @@ class Dataset extends ModelBase
         message: @status.message
       env = process.env.NODE_ENV
       debouncedPublish = getDebounced @box, ->
-        Dataset.redisClient.publish.apply Dataset.redisClient, arguments
+        RedisClient.client.publish.apply RedisClient.client, arguments
       debouncedPublish "#{env}.cobalt.dataset.#{@box}.update", message
       callback err
+
+  cleanCrontab: (callback) ->
+    {User} = require 'model/user'
+    User.findByShortName @user, (err, user) =>
+      _exec
+        user: user
+        boxName: @box
+        boxServer: @boxServer
+        cmd: "crontab -r"
+      , (err, res, body) =>
+        if err?
+          callback err
+        else if res.statusCode isnt 200
+          callback {statusCode: res.statusCode, body: body}
+        else
+          @toBeDeleted = null
+          @save callback
 
   @countVisibleDatasets: (user, callback) ->
     @dbClass.find({user: user, state: {$ne: 'deleted'}}).count callback
@@ -102,6 +128,9 @@ class Dataset extends ModelBase
 
   @findAllByTool: (toolName, callback) ->
     @dbClass.find {tool: toolName, state: {$ne: 'deleted'}}, callback
+
+  @findToBeDeleted: (callback) ->
+    @find {state: 'deleted', toBeDeleted: {$lte: new Date()}}, callback
 
 Dataset.View =
   findAllByTool: (toolName, callback) ->

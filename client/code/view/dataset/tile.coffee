@@ -29,15 +29,22 @@ class Cu.View.DatasetTile extends Backbone.View
         statusUpdatedHuman: @model.statusUpdatedHuman()
     @
 
-  destroy: ->
+  destroy: =>
     @remove()
 
   hideDataset: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @model.save {state: 'deleted'}
+
+    @timeout = setTimeout(@destroy, 5 * 60000)
+
+    fiveMinutesInFuture = new Date(new Date().getTime() + 5 * 60000)
+    @model.save {state: 'deleted', toBeDeleted: fiveMinutesInFuture}
 
   unhideDataset: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    @model.save {state: null}
+
+    clearTimeout(@timeout)
+
+    @model.save {state: null, toBeDeleted: null}

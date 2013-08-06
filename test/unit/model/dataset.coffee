@@ -3,8 +3,9 @@ _ = require 'underscore'
 util = require 'util'
 sinon = require 'sinon'
 should = require 'should'
-redis = require 'redis'
+request = require 'request'
 
+RedisClient = require('lib/redisClient').RedisClient
 
 describe 'Client model: Dataset', ->
   helper = require '../helper'
@@ -132,12 +133,12 @@ describe 'Server model: Dataset', ->
       before ->
         @saveSpy = sinon.spy Dataset.dbClass.prototype, 'save'
         # TODO: will actually connect to redis, stub properly
-        @publishStub = sinon.stub Dataset.redisClient, 'publish'
+        @publishStub = sinon.stub RedisClient.client, 'publish'
 
       after ->
         Dataset.dbClass.prototype.save.restore()
-        Dataset.redisClient.publish.restore()
-        Dataset.redisClient.end()
+        RedisClient.client.publish.restore()
+        RedisClient.client.end()
 
       before (done) ->
         @dataset = new Dataset
@@ -202,3 +203,39 @@ describe 'Server model: Dataset', ->
 
       it 'saves the status', ->
         @saveSpy.calledOnce.should.be.true
+
+  context 'when dataset.findToBeDeleted is called', ->
+    it 'returns datasets with toBeDeleted in the past', (done) ->
+      Dataset.findToBeDeleted (err, datasets) ->
+        datasets.length.should.equal 2
+        done(err)
+
+  context 'when dataset.cleanCrontab is called', ->
+    before ->
+      @dataset = new Dataset
+        user: 'zarino'
+        box: '2416349265'
+
+      @requestStub = sinon.stub request, 'post', (options, callback) ->
+        callback null, {statusCode: 200}, {}
+
+      @saveSpy = sinon.spy Dataset.prototype, 'save'
+
+    after ->
+      Dataset.prototype.save.restore()
+      request.post.restore()
+
+    it 'should call the exec endpoint correctly', (done) ->
+      @dataset.cleanCrontab (err) =>
+        calledCorrectly = @requestStub.calledWith
+          uri: sinon.match /2416349265/
+          form:
+            apikey: 'zarino'
+            cmd: sinon.match /crontab -r/
+        calledCorrectly.should.be.true
+
+        done()
+
+    it 'if successful, it should set toBeDeleted to null', ->
+      should.not.exist @dataset.toBeDeleted
+      @saveSpy.calledOnce.should.be.true

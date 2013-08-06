@@ -92,18 +92,29 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
             console.warn 'Error', err if err?
             v = new Cu.View.ToolMenuItem model: view
             el = v.render().el
-            $('a', el).addClass('active')
             $('#toolbar .tool.active').removeClass("active")
+            $('a', el).addClass('active')
             $('#toolbar .tools').append el
             $("ul.archetypes a[data-toolname='#{toolName}']").parent().remove()
+            _gaq.push ['_trackEvent', 'tools', 'install', toolName]
+            _gaq.push ['_trackEvent', 'views', 'create']
             window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
           else
+            # this will probably only ever happen for the View in a table tool
+            # since that's the only suggested "archetype" that's installed secretly
+            # in the background.
             view = dataset.get('views').findWhere(tool: @options.archetype)
+            # we wait 4 seconds, and pretend the tool is installing
+            # because it probably still is, in the background.
             setTimeout ->
-              $("ul.archetypes a[data-toolname='#{toolName}']").addClass('active')
+              v = new Cu.View.ToolMenuItem model: view
+              el = v.render().el
               $('#toolbar .tool.active').removeClass("active")
+              $('a', el).addClass('active')
+              $('#toolbar .tools').append el
+              $("ul.archetypes a[data-toolname='#{toolName}']").parent().remove()
               window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
-            , 4000
+            , 2000
 
       error: (model, xhr, options) ->
         @active = false

@@ -228,6 +228,7 @@ describe 'Server model: Dataset', ->
     it 'should call the exec endpoint correctly', (done) ->
       @dataset.cleanCrontab (err) =>
         calledCorrectly = @requestStub.calledWith
+          followAllRedirects: true
           uri: sinon.match /2416349265/
           form:
             apikey: 'zarino'

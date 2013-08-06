@@ -54,6 +54,7 @@ zDbDataset = mongoose.model 'Dataset', datasetSchema
 _exec = (arg, callback) ->
   {Box} = require 'model/box'
   request.post
+    followAllRedirects: true
     uri: "#{Box.endpoint arg.boxServer, arg.boxName}/exec"
     form:
       apikey: arg.user.apikey

@@ -13,7 +13,9 @@ CLI = false
 main = (TheDataset) ->
   TheDataset.findToBeDeleted (err, datasets)->
     async.each datasets, (dataset, cb) ->
-      dataset.cleanCrontab cb
+      dataset.cleanCrontab (err) ->
+        console.warn(dataset.box, err) if err?
+        cb()
     , (err) ->
       console.warn(err) if err?
       process.exit() if CLI?

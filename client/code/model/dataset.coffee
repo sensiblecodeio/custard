@@ -66,6 +66,13 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
   isVisible: ->
     @get('state') isnt 'deleted'
 
+  destroy: (options) ->
+    fiveMinutesInFuture = new Date(new Date().getTime() + 5 * 60000)
+    @save {state: 'deleted', toBeDeleted: fiveMinutesInFuture}, options
+
+  recover: ->
+    @save {state: null, toBeDeleted: null}
+
 Cu.Model.Dataset.setup()
 
 class Cu.Collection.Datasets extends Backbone.Collection

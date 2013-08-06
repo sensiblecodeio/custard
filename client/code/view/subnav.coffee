@@ -258,8 +258,7 @@ class Cu.View.Toolbar extends Backbone.View
     app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true
 
   hideDataset: ->
-    fiveMinutesInFuture = new Date(new Date().getTime() + 5 * 60000)
-    @model.save {state: 'deleted', toBeDeleted: fiveMinutesInFuture},
+    @model.destroy
       success: (model, response, options) =>
         window.app.navigate "/", {trigger: true}
         setTimeout ->

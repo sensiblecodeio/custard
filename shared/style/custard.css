@@ -364,7 +364,7 @@ a.tile h3 {
   padding: 10px 10px 5px 10px;
   font-weight: normal;
   font-size: 21px;
-  line-height: 21px;
+  line-height: 22px;
 }
 
 a.view.tile h3 {
@@ -421,6 +421,7 @@ a.tile p.status {
   white-space: nowrap;
   font-size: 14px;
   line-height: 34px;
+  background-color: inherit;
   color: rgba(255,255,255,0.8);
   border-top: 1px solid rgba(255,255,255,0.5);
   -webkit-transition: color linear 0.1s;
@@ -548,10 +549,15 @@ a.tile p.error {
   border-left: none;
   padding: 0;
 }
+
 #dataset-meta h3 {
   font-size: inherit;
-  line-height: inherit;
+  line-height: 26px;
   margin: 0;
+  max-width: 360px;
+  white-space: pre;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #dataset-meta .owner {
@@ -559,7 +565,7 @@ a.tile p.error {
   font-size: 14px;
   opacity: 0.8;
   line-height: 16px;
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 #dataset-meta #editable-input {

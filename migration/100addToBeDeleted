@@ -10,6 +10,8 @@ mongoose.connect process.env.CU_DB
 addToBeleted = (dataset, callback) ->
   fiveMinutesInFuture = new Date(new Date().getTime() + 5 * 60000)
   dataset.toBeDeleted = fiveMinutesInFuture
+  if dataset.tool is null
+    dataset.tool = 'fakingtool'
   dataset.save callback
 
 Dataset.find

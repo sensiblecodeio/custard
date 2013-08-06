@@ -82,15 +82,21 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
     dataset.fetch
       success: (dataset, resp, options) =>
         dataset.installPlugin @model.get('name'), (err, view) =>
-          console.warn 'Error', err if err?
-          v = new Cu.View.ToolMenuItem model: view
-          el = v.render().el
-          $('a', el).addClass('active')
-          $('#toolbar .tool.active').removeClass("active")
-          $('#toolbar .tools').append el
-          _gaq.push ['_trackEvent', 'tools', 'install', @model.get 'name']
-          _gaq.push ['_trackEvent', 'views', 'create']
-          window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
+          if err == "already installed"
+            console.log(@model)
+            view = @options.dataset.get('views').findWhere(tool: @model)
+            window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", {trigger: true}
+          else
+            console.warn 'Error', err if err?
+            v = new Cu.View.ToolMenuItem model: view
+            el = v.render().el
+            $('a', el).addClass('active')
+            $('#toolbar .tool.active').removeClass("active")
+            $('#toolbar .tools').append el
+            _gaq.push ['_trackEvent', 'tools', 'install', @model.get 'name']
+            _gaq.push ['_trackEvent', 'views', 'create']
+            window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
+
           $('#chooser').fadeOut 200, ->
             $(this).remove()
       error: (model, xhr, options) ->

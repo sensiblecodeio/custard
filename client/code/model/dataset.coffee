@@ -38,18 +38,27 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
       success: =>
         tool = app.tools().get name
         console.warn "tool #{name} not found" unless tool?
-        view = new Cu.Model.View
-          user: user.shortName
-          name: tool.get 'name'
-          displayName: tool.get('manifest').displayName
-          tool: tool
-        @get('views').add view
-        view.save wait:true,
-          success: (view) ->
-            callback null, view
-          error: (view, err) ->
-            console.warn err
-            callback err, null
+        @fetch
+          success: (dataset) =>
+            existingTool = dataset.get('views').find (v) ->
+              v.get('tool') is tool
+
+            if not existingTool?
+              view = new Cu.Model.View
+                user: user.shortName
+                name: tool.get 'name'
+                displayName: tool.get('manifest').displayName
+                tool: tool
+              @get('views').add view
+              view.save wait:true,
+                success: (view) ->
+                  callback null, view
+                error: (view, err) ->
+                  console.warn err
+                  callback err, null
+            else
+              callback 'already installed', null
+
       error: (model_, xhr_, err) =>
         callback err
 

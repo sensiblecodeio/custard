@@ -30,7 +30,7 @@ class Cu.View.ToolMenuItem extends Backbone.View
     hideable = true
     toolName = @model.get('tool').get('name')
     manifest = @model.get('tool').get('manifest')
-    
+
     if toolName is 'newview'
       manifest.displayName = @model.get('displayName')
 
@@ -88,14 +88,23 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
       success: (dataset, resp, options) =>
         toolName = @options.archetype.get 'name'
         dataset.installPlugin toolName, (err, view) =>
-          console.warn 'Error', err if err?
-          v = new Cu.View.ToolMenuItem model: view
-          el = v.render().el
-          $('a', el).addClass('active')
-          $('#toolbar .tool.active').removeClass("active")
-          $('#toolbar .tools').append el
-          $("ul.archetypes a[data-toolname='#{toolName}']").parent().remove()
-          window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
+          unless err == 'already installed'
+            console.warn 'Error', err if err?
+            v = new Cu.View.ToolMenuItem model: view
+            el = v.render().el
+            $('a', el).addClass('active')
+            $('#toolbar .tool.active').removeClass("active")
+            $('#toolbar .tools').append el
+            $("ul.archetypes a[data-toolname='#{toolName}']").parent().remove()
+            window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
+          else
+            view = dataset.get('views').findWhere(tool: @options.archetype)
+            setTimeout ->
+              $("ul.archetypes a[data-toolname='#{toolName}']").addClass('active')
+              $('#toolbar .tool.active').removeClass("active")
+              window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
+            , 4000
+
       error: (model, xhr, options) ->
         @active = false
         console.warn xhr

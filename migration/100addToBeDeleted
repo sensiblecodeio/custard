@@ -1,0 +1,22 @@
+#!/usr/bin/env coffee
+mongoose = require 'mongoose'
+async = require 'async'
+
+{Dataset} = require 'model/dataset'
+
+mongoose.connect process.env.CU_DB
+
+
+addToBeleted = (dataset, callback) ->
+  fiveMinutesInFuture = new Date(new Date().getTime() + 5 * 60000)
+  dataset.toBeDeleted = fiveMinutesInFuture
+  dataset.save callback
+
+Dataset.find
+  state: 'deleted'
+  toBeDeleted:
+    $exists: false
+, (err, dataseten) ->
+  async.eachLimit dataseten, 1, addToBeleted, (err) ->
+    console.log err if err?
+    process.exit()

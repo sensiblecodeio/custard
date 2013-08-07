@@ -88,8 +88,8 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
       success: (dataset, resp, options) =>
         toolName = @options.archetype.get 'name'
         dataset.installPlugin toolName, (err, view) =>
+          console.warn 'Error', err if err?
           unless err == 'already installed'
-            console.warn 'Error', err if err?
             v = new Cu.View.ToolMenuItem model: view
             el = v.render().el
             $('#toolbar .tool.active').removeClass("active")
@@ -103,18 +103,27 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
             # this will probably only ever happen for the View in a table tool
             # since that's the only suggested "archetype" that's installed secretly
             # in the background.
-            view = dataset.get('views').findWhere(tool: @options.archetype)
             # we wait 4 seconds, and pretend the tool is installing
             # because it probably still is, in the background.
-            setTimeout ->
-              v = new Cu.View.ToolMenuItem model: view
-              el = v.render().el
-              $('#toolbar .tool.active').removeClass("active")
-              $('a', el).addClass('active')
-              $('#toolbar .tools').append el
-              $("ul.archetypes a[data-toolname='#{toolName}']").parent().remove()
-              window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
-            , 2000
+            poll = (dataset) =>
+              timeout = setTimeout =>
+                console.log dataset.get('views').models
+                view = dataset.get('views').findWhere(tool: @options.archetype)
+                if view.get('state') is 'installed'
+                  menuItem = new Cu.View.ToolMenuItem model: view
+                  el = menuItem.render().el
+                  $('#toolbar .tool.active').removeClass("active")
+                  $('a', el).addClass('active')
+                  $('#toolbar .tools').append el
+                  $("ul.archetypes a[data-toolname='#{toolName}']").parent().remove()
+                  clearTimeout timeout
+                  window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
+                else
+                  console.log 'polling'
+                  dataset.fetch success: (dataset) -> poll dataset
+              , 1000
+
+            poll dataset
 
       error: (model, xhr, options) ->
         @active = false

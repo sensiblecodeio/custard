@@ -274,6 +274,7 @@ _addView = (user, dataset, attributes, callback) ->
         tool: attributes.tool
         displayName: attributes.displayName
         boxJSON: box.boxJSON
+        state: 'installing'
       dataset.views.push view
       dataset.save (err) ->
         if err?
@@ -289,7 +290,9 @@ _addView = (user, dataset, attributes, callback) ->
             console.warn err
             return callback {500, error: "Error installing tool: #{err}"}
           view = _.findWhere dataset.views, box: box.name
-          callback null, view
+          view.state = 'installed'
+          dataset.save (err) ->
+            callback null, view
 
 switchUser = (req, resp) ->
   shortName = req.params.username

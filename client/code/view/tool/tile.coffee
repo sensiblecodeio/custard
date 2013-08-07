@@ -83,8 +83,9 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
       success: (dataset, resp, options) =>
         dataset.installPlugin @model.get('name'), (err, view) =>
           if err == "already installed"
-            console.log(@model)
             view = @options.dataset.get('views').findWhere(tool: @model)
+            $('#toolbar .tool.active').removeClass('active')
+            $("#instance-#{view.id}").addClass('active')
             window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", {trigger: true}
           else
             console.warn 'Error', err if err?

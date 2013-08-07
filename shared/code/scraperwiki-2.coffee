@@ -203,68 +203,12 @@ scraperwiki.shellEscape = (command) ->
   "'#{command.replace(/'/g,"'\"'\"'")}'"
 
 
-
-
 # HERE BE DEPRECATED FUNCTIONS:
-
 
 scraperwiki.tool.pushSql = scraperwiki.dataset.installTool
 scraperwiki.tool.rename = scraperwiki.dataset.name
 scraperwiki.tool.getUrl = scraperwiki.tool.redirect = scraperwiki.url
-
-
-scraperwiki.sql = (sql, success, error) ->
-  settings = scraperwiki.readSettings()
-  # Points to the dataset box, when used from either the dataset or a view.
-  boxSettings = settings.target ? settings.source
-  options =
-    url: "#{boxSettings.url}/sql/"
-    type: "GET"
-    dataType: "json"
-    data:
-      q: sql
-  if success?
-    options.success = success
-  if error?
-    options.error = error
-  $.ajax options
-
-
-scraperwiki.sql.meta = (success, error) ->
-  settings = scraperwiki.readSettings()
-  # Points to the dataset box, when used from either the dataset or a view.
-  boxSettings = settings.target ? settings.source
-  options =
-    url: "#{boxSettings.url}/sql/meta"
-    type: "GET"
-    dataType: "json"
-  if success?
-    options.success = success
-  if error?
-    options.error = error
-  $.ajax options
-
-
-scraperwiki.exec = (cmd, success, error) ->
-  settings = scraperwiki.readSettings()
-  options =
-    url: "#{window.location.protocol}//#{window.location.host}/#{scraperwiki.box}/exec"
-    type: "POST"
-    dataType: "text"
-    data:
-      apikey: settings.source.apikey
-      cmd: cmd
-    complete: ->
-      scraperwiki.exec.pending -= 1
-      if scraperwiki.exec.pending is 0
-        $(document).trigger('execsComplete')
-  if success?
-    options.success = success
-  if error?
-    options.error = error
-  scraperwiki.exec.pending += 1
-  if scraperwiki.exec.pending is 1
-    $(document).trigger('execsPending')
-  $.ajax options
-
-scraperwiki.exec.pending = 0
+scraperwiki.sql = scraperwiki.dataset.sql
+scraperwiki.sql.meta = scraperwiki.dataset.sql.meta
+scraperwiki.exec = scraperwiki.tool.exec
+scraperwiki.exec.pending = scraperwiki.tool.exec.pending

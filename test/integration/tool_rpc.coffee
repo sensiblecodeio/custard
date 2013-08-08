@@ -128,7 +128,7 @@ describe 'Tool RPC', ->
         browser.get @toolURL, ->
           wd40.switchToTopFrame ->
             # we have to scroll the toolbar left, so that we see the "More tools" link
-            browser.execute 'document.getElementById("dataset-tools").scrollLeft = 999999', (err, result) ->
+            browser.eval 'document.getElementById("dataset-tools").scrollLeft = 999999', (err, result) ->
               wd40.click '.new-view', (err) ->
                 browser.waitForElementByCss '#chooser .tool', 4000, done
 
@@ -144,7 +144,7 @@ describe 'Tool RPC', ->
           before (done) ->
             wd40.switchToBottomFrame ->
               wd40.click '#getDatasetName', done
-    
+
           it 'shows the parent dataset name', (done) ->
             wd40.getText '#datasetName', (err, text) =>
               text.should.equal "Test Dataset (renamed)"

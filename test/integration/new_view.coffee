@@ -31,7 +31,32 @@ describe 'New view tool', ->
               browser.url (err, url) =>
                 @currentUrl = url
                 done()
-            , 2000
+            , 4000
 
-        it 'takes me to the view page', ->
-          @currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/view/[^/]+")
+        before (done) ->
+          setTimeout done, 2000
+
+        it 'takes me to the view page', (done) ->
+          wd40.waitForMatchingURL new RegExp("#{home_url}/dataset/[^/]+/view/[^/]+"), done
+
+    context 'when I click on "More tools" in the toolbar (again)', ->
+      before (done) ->
+        wd40.click '#toolbar .new-view', ->
+          browser.waitForElementByCss '#chooser .tool', 4000, done
+
+      context 'when I click on the newview tool', ->
+        before (done) ->
+          wd40.click '.newview.tool', (err) =>
+            wd40.waitForInvisibleByCss '#chooser', (err) =>
+              browser.url (err, url) =>
+                @currentUrl = url
+                done()
+            , 4000
+
+        it 'takes me to the view page', (done) ->
+          wd40.waitForMatchingURL new RegExp("#{home_url}/dataset/[^/]+/view/[^/]+"), done
+
+        it 'does not show two new view tools', (done) ->
+          browser.elementsByCssSelector '[data-toolname=newview]', (err, tools) ->
+            tools.length.should.equal 1
+            done()

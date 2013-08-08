@@ -32,4 +32,4 @@ class Cu.View.TermsAlert extends Backbone.View
         @$el.slideUp 250, =>
           @$el.remove()
       error: (model, xhr, options) =>
-        console.log 'error saving user model!', JSON.parse(xhr.responseText)
+        console.warn 'error saving user model!', JSON.parse(xhr.responseText)

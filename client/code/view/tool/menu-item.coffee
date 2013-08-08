@@ -88,8 +88,8 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
       success: (dataset, resp, options) =>
         toolName = @options.archetype.get 'name'
         dataset.installPlugin toolName, (err, view) =>
-          console.warn 'Error', err if err?
           unless err == 'already installed'
+            console.warn 'Error', err if err?
             v = new Cu.View.ToolMenuItem model: view
             el = v.render().el
             $('#toolbar .tool.active').removeClass("active")
@@ -107,7 +107,6 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
             # because it probably still is, in the background.
             poll = (dataset) =>
               timeout = setTimeout =>
-                console.log dataset.get('views').models
                 view = dataset.get('views').findWhere(tool: @options.archetype)
                 if view.get('state') is 'installed'
                   menuItem = new Cu.View.ToolMenuItem model: view
@@ -119,7 +118,6 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
                   clearTimeout timeout
                   window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
                 else
-                  console.log 'polling'
                   dataset.fetch success: (dataset) -> poll dataset
               , 1000
 

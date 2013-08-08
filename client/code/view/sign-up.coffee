@@ -28,7 +28,6 @@ class Cu.View.SignUp extends Backbone.View
       emailMarketing: $('#emailMarketing').is(':checked')
     ,
       success: (model, response, options) =>
-        console.log model, response, options
         plan = app.truePlan @options.plan
         if plan?
           # Note: not logged in, but going to use in the /subscribe page

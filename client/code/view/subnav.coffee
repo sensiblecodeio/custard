@@ -380,7 +380,6 @@ class Cu.View.ProfessionalNav extends Backbone.View
       'click .nav-pills a': 'navClick'
 
   navClick: (e) ->
-    console.log e.target.hash
     e.preventDefault()
     e.stopPropagation()
     if $(e.target.hash).length > 0

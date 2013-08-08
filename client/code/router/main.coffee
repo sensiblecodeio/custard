@@ -195,11 +195,9 @@ class Cu.Router.Main extends Backbone.Router
       success: (tokenInfo) =>
         if tokenInfo.shortName?
           @shortName = tokenInfo.shortName
-          console.log 'success', @shortName
         else
-          console.log 'no shortName!'
+          console.warn 'no shortName!'
       complete: =>
-        console.log 'complete', @shortName
         subnavView = new Cu.View.Subnav {text: 'Set your password'}
         contentView = new Cu.View.SetPassword {shortName: @shortName}
         @appView.showView contentView

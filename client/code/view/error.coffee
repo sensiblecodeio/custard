@@ -7,7 +7,7 @@ class Cu.View.Error extends Backbone.View
 
 class Cu.View.ErrorAlert extends Backbone.View
   render: (errorHTML) ->
-    @el.innerHTML = """<p class="container">#{errorHTML}</p>"""
+    @$el.find('span').html errorHTML
     @$el.show()
     # http://stackoverflow.com/a/1145297/2653738
     $("html, body").animate scrollTop: 0

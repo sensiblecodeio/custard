@@ -47,6 +47,15 @@ when you enter the directory. Briefly:
     # append direnv setup to your bash profile
     echo 'eval "$(direnv hook $0)"' >> ${HOME}/.bashrc
 
+    # Then cd to the custard directory and enable the .envrc with direnv:
+    :~$ cd sw/custard/
+    .envrc is not allowed
+
+    :~/sw/custard$ direnv allow
+    direnv: loading ~/sw/.envrc
+    connect-assets not found, please run npm install
+    direnv export: +NODE_PATH +PYTHONPATH +VIRTUAL_ENV ~PATH
+
 ## Every now and then (npm updates)
 
     . activate

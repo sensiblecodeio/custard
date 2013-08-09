@@ -10,6 +10,7 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView = new Cu.AppView '#subnav'
     @overlayView = new Cu.AppView '#overlay'
     @navView ?= new Cu.View.Nav()
+    @errorView ?= new Cu.View.ErrorAlert el: '#error-alert'
     @on 'route', @trackPageView
 
     # TODO: this isn't a great place for this constant
@@ -44,6 +45,11 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
     @route RegExp('contact/?'), 'contact'
     @route RegExp('about/?'), 'about'
+
+    $(document).ajaxError (event, jqXHR, ajaxSettings, thrownError) =>
+      console.warn "AJAX Error"
+      console.warn event, jqXHR, ajaxSettings, thrownError
+      @errorView.displayAJAXError.apply @errorView, arguments
 
   main: ->
     if window.user.effective?

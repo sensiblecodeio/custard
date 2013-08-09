@@ -45,6 +45,10 @@ body.fullscreen .container {
   background: transparent url(../image/header-highlight.png) 0 0 no-repeat;
 }
 
+#error-alert {
+  display: none;
+}
+
 #logo {
   display: inline-block;
   width: 180px;

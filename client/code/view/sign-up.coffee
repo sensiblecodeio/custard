@@ -39,7 +39,6 @@ class Cu.View.SignUp extends Backbone.View
       error: (model, response, options) =>
         $('#go', @$el).removeClass('loading').html('Go!')
 
-        console.warn model, response, options
         if response.responseText
           # Probably an xhr object.
           xhr = response

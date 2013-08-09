@@ -48,8 +48,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('about/?'), 'about'
 
     $(document).ajaxError (event, jqXHR, ajaxSettings, thrownError) =>
-      console.warn "AJAX Error"
-      console.warn event, jqXHR, ajaxSettings, thrownError
       @errorView.displayAJAXError.apply @errorView, arguments
 
   main: ->
@@ -178,7 +176,7 @@ class Cu.Router.Main extends Backbone.Router
           subnavView = new Cu.View.Toolbar model: dataset, view: v
           @subnavView.showView subnavView
       error: (model, xhr, options) ->
-        console.warn xhr
+        Backbone.trigger 'error', xhr
 
   toolShop: ->
     app.navigate '/tools/people-pack/', true
@@ -203,7 +201,7 @@ class Cu.Router.Main extends Backbone.Router
         if tokenInfo.shortName?
           @shortName = tokenInfo.shortName
         else
-          console.warn 'no shortName!'
+          Backbone.trigger 'error', 'no shortName!'
       complete: =>
         subnavView = new Cu.View.Subnav {text: 'Set your password'}
         contentView = new Cu.View.SetPassword {shortName: @shortName}

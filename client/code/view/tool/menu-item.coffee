@@ -89,7 +89,7 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
         toolName = @options.archetype.get 'name'
         dataset.installPlugin toolName, (err, view) =>
           unless err == 'already installed'
-            console.warn 'Error', err if err?
+            Backbone.trigger('error', err) if err?
             v = new Cu.View.ToolMenuItem model: view
             el = v.render().el
             $('#toolbar .tool.active').removeClass("active")
@@ -125,4 +125,4 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
 
       error: (model, xhr, options) ->
         @active = false
-        console.warn xhr
+        Backbone.trigger 'error', 'Error fetching dataset', xhr

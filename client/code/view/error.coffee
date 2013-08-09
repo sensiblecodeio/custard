@@ -36,4 +36,4 @@ class Cu.View.ErrorAlert extends Backbone.View
     # 504 is Gateway Timeout, this will happen if a custard request times out
     if jqXHR?.status in [0, 502, 504]
       message = "Sorry! We couldn't connect to the server, please try again."
-    return @render message
+      return @render message

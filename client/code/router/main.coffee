@@ -11,6 +11,7 @@ class Cu.Router.Main extends Backbone.Router
     @overlayView = new Cu.AppView '#overlay'
     @navView ?= new Cu.View.Nav()
     @errorView ?= new Cu.View.ErrorAlert el: '#error-alert'
+    @on 'route', @errorView.hide
     @on 'route', @trackPageView
 
     # TODO: this isn't a great place for this constant

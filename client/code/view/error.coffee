@@ -6,23 +6,21 @@ class Cu.View.Error extends Backbone.View
     @
 
 class Cu.View.ErrorAlert extends Backbone.View
-  events:
-    'click button.close': 'hide'
-
   initialize: ->
+    _.bindAll this, 'hide'
     Backbone.on 'error', @onError, this
 
   render: (errorHTML) ->
     $('#fullscreen').css 'top': '173px'
     @$el.find('span').html errorHTML
-    @$el.show()
     # http://stackoverflow.com/a/1145297/2653738
     $("html, body").animate scrollTop: 0
-    @$el.fadeIn 300
+    @$el.fadeOut 100, =>
+      @$el.fadeIn 300
     @
 
-  hide: =>
-    @$el.fadeOut 100
+  hide: ->
+    @$el.hide()
 
   onError: (message) ->
     @render message

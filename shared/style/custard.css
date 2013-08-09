@@ -47,6 +47,7 @@ body.fullscreen .container {
 
 #error-alert {
   display: none;
+  margin-bottom: 0;
 }
 
 #logo {
@@ -1486,13 +1487,13 @@ div.professional #case-studies .thumbnail {
   color: #A5822A;
 }
 
-.professional .nav-pills > li > a:hover, 
+.professional .nav-pills > li > a:hover,
 .professional .nav-pills > li > a:focus {
   background-color: #F1E7B0;
 }
 
-.professional .nav-pills > .active > a, 
-.professional .nav-pills > .active > a:hover, 
+.professional .nav-pills > .active > a,
+.professional .nav-pills > .active > a:hover,
 .professional .nav-pills > .active > a:focus {
   background-color: #FFE07C;
   color: #000;
@@ -1897,11 +1898,11 @@ div.about p.logos {
     float: left;
     margin: 0 20px 20px 0;
   }
-  
+
   div.hero-classic {
     padding: 20px;
   }
-  
+
   div.hero-classic p {
     margin-right: 150px;
   }
@@ -1969,15 +1970,15 @@ div.about p.logos {
     left: 50%;
     margin-left: -30px;
   }
-  
+
   div.home #back-to-classic {
     padding-bottom: 20px;
   }
-  
+
   div.home #back-to-classic p {
     padding-right: 200px;
   }
-  
+
   div.home #back-to-classic img {
     right: 10px;
   }
@@ -2043,13 +2044,13 @@ div.about p.logos {
   .login-page {
     padding: 0;
   }
-  
+
   .login-page .new-login {
     width: 275px;
     float: left;
     border-right: 1px solid #ddd;
   }
-  
+
   .login-page .classic-login {
     width: 250px;
     float: right;
@@ -2146,7 +2147,7 @@ div.about p.logos {
 
 
   /* Data services / Professional services page */
-  
+
   div.professional #process .lead {
     float: left;
     width: 260px;
@@ -2264,7 +2265,7 @@ div.about p.logos {
   div.home #use-cases li img {
     left: 30px;
   }
-  
+
   div.home #use-cases li.professional img {
     left: 25px;
   }
@@ -2290,7 +2291,7 @@ div.about p.logos {
     float: left;
     margin-left: 50px;
   }
-  
+
   div.professional #process p.lead {
     width: 375px;
     margin-right: 0;

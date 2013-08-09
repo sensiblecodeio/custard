@@ -21,9 +21,6 @@ $ ->
   window.app = new Cu.Router.Main()
   Backbone.history.start {pushState: on}
 
-  window.app.on 'route', ->
-    $('body > .alert').not('.permanent').remove()
-
   if Backbone.history and Backbone.history._hasPushState
     $(document).delegate "a[href]:not([href^=http])", "click", (evt) ->
       unless $(@).is '[data-nonpushstate]'

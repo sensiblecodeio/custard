@@ -77,7 +77,14 @@
     <p class="container"><%=flash.info[0] %></p>
   </div>
   <% } %>
-  <div class="alert alert-error" id="error-alert"></div>
+  <div class="alert alert-error" id="error-alert">
+    <p class="container">
+      <a class="btn btn-small pull-right"
+        href="https://github.com/scraperwiki/custard/issues"
+        target="_blank">Report Bug</a>
+      <span></span>
+    </p>
+  </div>
   <div id="overlay"></div>
   <div id="subnav" class="container">
     <%- subnav %>

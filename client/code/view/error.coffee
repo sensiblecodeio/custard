@@ -13,12 +13,9 @@ class Cu.View.ErrorAlert extends Backbone.View
     Backbone.on 'error', @onError, this
 
   render: (errorHTML) ->
-    @el.innerHTML = """
-      <p class="container">
-        #{errorHTML}
-        <button class="close">&times;</button>
-      </p>
-    """
+    $('#fullscreen').css 'top': '173px'
+    @$el.find('span').html errorHTML
+    @$el.show()
     # http://stackoverflow.com/a/1145297/2653738
     $("html, body").animate scrollTop: 0
     @$el.fadeIn 300

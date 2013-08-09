@@ -6,12 +6,29 @@ class Cu.View.Error extends Backbone.View
     @
 
 class Cu.View.ErrorAlert extends Backbone.View
+  events:
+    'click button.close': 'hide'
+
+  initialize: ->
+    Backbone.on 'error', @onError, this
+
   render: (errorHTML) ->
-    @el.innerHTML = """<p class="container">#{errorHTML}</p>"""
-    @$el.show()
+    @el.innerHTML = """
+      <p class="container">
+        #{errorHTML}
+        <button class="close">&times;</button>
+      </p>
+    """
     # http://stackoverflow.com/a/1145297/2653738
     $("html, body").animate scrollTop: 0
+    @$el.fadeIn 300
     @
+
+  hide: =>
+    @$el.fadeOut 100
+
+  onError: (message) ->
+    @render message
 
   displayAJAXError: (event, jqXHR, ajaxSettings, thrownError) ->
     message = "xhr.statusText: #{jqXHR.statusText}"
@@ -21,6 +38,7 @@ class Cu.View.ErrorAlert extends Backbone.View
     # when developing because we front with nginx).
     # 502 is Bad Gateway which nginx will serve when custard is
     # basically dead (or starting up).
-    if jqXHR?.status in [0, 502]
-      message = "Connection Refused to #{ajaxSettings.url}"
+    # 504 is Gateway Timeout, this will happen if a custard request times out
+    if jqXHR?.status in [0, 502, 504]
+      message = "Sorry! We couldn't connect to the server, please try again."
     return @render message

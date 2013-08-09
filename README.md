@@ -35,6 +35,27 @@ Optionally, OSX users might want to install the mongodb and redis System Prefere
 - https://github.com/remysaissy/mongodb-macosx-prefspane
 - https://github.com/dquimper/Redis.prefPane
 
+## Automatically getting the correct environment with direnv
+
+[direnv](http://direnv.net) can be used to automatically "activate" the environment
+when you enter the directory. Briefly:
+
+    # (install go and set up your GOPATH and PATH sensibly)
+    go get github.com/zimbatm/direnv
+    go install github.com/zimbatm/direnv
+
+    # append direnv setup to your bash profile
+    echo 'eval "$(direnv hook $0)"' >> ${HOME}/.bashrc
+
+    # Then cd to the custard directory and enable the .envrc with direnv:
+    :~$ cd sw/custard/
+    .envrc is not allowed
+
+    :~/sw/custard$ direnv allow
+    direnv: loading ~/sw/.envrc
+    connect-assets not found, please run npm install
+    direnv export: +NODE_PATH +PYTHONPATH +VIRTUAL_ENV ~PATH
+
 ## Every now and then (npm updates)
 
     . activate

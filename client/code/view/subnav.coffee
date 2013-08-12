@@ -284,7 +284,7 @@ class Cu.View.Toolbar extends Backbone.View
           window.location = "/dataset/#{dataset.get 'box'}/"
 
   gitSshTool: (e) ->
-      event.stopPropagation()
+      e.stopPropagation()
       showOrAddSSH window.selectedTool, 'tool'
 
   showDropdownMenuCloser: ->

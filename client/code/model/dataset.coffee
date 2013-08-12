@@ -37,7 +37,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     app.tools().fetch
       success: =>
         tool = app.tools().get name
-        console.warn "tool #{name} not found" unless tool?
+        Backbone.trigger('error', "Tool #{name} not found") unless tool?
         _.defer =>
           @fetch
             success: (dataset) =>
@@ -55,7 +55,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
                   success: (view) ->
                     callback null, view
                   error: (view, err) ->
-                    console.warn err
+                    Backbone.trigger 'error', 'Error saving view'
                     callback err, null
               else
                 callback 'already installed', null

@@ -25,6 +25,7 @@ Cu.Model.Tool.setup()
 class Cu.Collection.Tools extends Backbone.Collection
   model: Cu.Model.Tool
   url: "/api/tools/"
+  name: 'Tools'
 
   importers: ->
     importers = @filter (t) -> t.isImporter()

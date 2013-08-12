@@ -25,6 +25,7 @@ Cu.Model.View.setup()
 
 class Cu.Collection.ViewList extends Backbone.Collection
   model: Cu.Model.View
+  name: 'ViewList'
   url: -> "/api/#{window.user.effective.shortName}/views"
 
   findById: (id) ->

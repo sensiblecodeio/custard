@@ -87,6 +87,7 @@ Cu.Model.Dataset.setup()
 
 class Cu.Collection.Datasets extends Backbone.Collection
   model: Cu.Model.Dataset
+  name: 'Datasets'
   url: -> "/api/#{window.user.effective.shortName}/datasets"
 
   visible: ->

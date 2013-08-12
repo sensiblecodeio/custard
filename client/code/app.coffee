@@ -69,8 +69,9 @@ class Cu.CollectionManager
   @collections: {}
 
   @get: (klass) ->
-    name = klass.name
+    name = klass.prototype.name
     if not @collections[name]
+      console.log "No #{name} in @collections"
       collection = new klass()
       collection.fetch
         success: ->

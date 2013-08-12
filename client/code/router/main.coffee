@@ -47,9 +47,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('contact/?'), 'contact'
     @route RegExp('about/?'), 'about'
 
-    $(document).ajaxError (event, jqXHR, ajaxSettings, thrownError) =>
-      @errorView.displayAJAXError.apply @errorView, arguments
-
   main: ->
     if window.user.effective?
       @homeLoggedIn()

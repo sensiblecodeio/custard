@@ -7,6 +7,7 @@ class Cu.View.Error extends Backbone.View
 
 class Cu.View.ErrorAlert extends Backbone.View
   initialize: ->
+    $(document).ajaxError @displayAJAXError
     Backbone.on 'error', @onError, this
 
   render: (errorHTML) ->
@@ -24,7 +25,7 @@ class Cu.View.ErrorAlert extends Backbone.View
   onError: (message) ->
     @render message
 
-  displayAJAXError: (event, jqXHR, ajaxSettings, thrownError) ->
+  displayAJAXError: (event, jqXHR, ajaxSettings, thrownError) =>
     message = "xhr.statusText: #{jqXHR.statusText}"
     # Possibly translate the error into a more helpful error
     # message to display.

@@ -7,7 +7,6 @@ class Cu.View.Error extends Backbone.View
 
 class Cu.View.ErrorAlert extends Backbone.View
   initialize: ->
-    _.bindAll this, 'hide'
     Backbone.on 'error', @onError, this
 
   render: (errorHTML) ->
@@ -19,7 +18,7 @@ class Cu.View.ErrorAlert extends Backbone.View
       @$el.fadeIn 300
     @
 
-  hide: ->
+  hide: =>
     @$el.hide()
 
   onError: (message) ->

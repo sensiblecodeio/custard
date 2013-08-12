@@ -60,8 +60,8 @@ class Cu.View.ToolContent extends Backbone.View
           window.app.pushSqlQuery = query
 
           app.tools().fetch
-            error: (a, b, c) ->
-              console.warn model, xhr, options
+            error: (collection, xhr, options) ->
+              Backbone.trigger 'error', 'Error fetching tools', collection, xhr, options
             success: (tools, resp, options) ->
               tool = app.tools().findByName toolName
               # TODO: DRY with tool tile install
@@ -77,7 +77,7 @@ class Cu.View.ToolContent extends Backbone.View
                   delete dataset.new
                   window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
                 error: (model, xhr, options) ->
-                  console.warn "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
+                  Backbone.trigger 'error', "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
 
 class Cu.View.AppContent extends Cu.View.ToolContent
   settings: (callback) ->

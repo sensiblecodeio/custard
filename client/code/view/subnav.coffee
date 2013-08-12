@@ -100,7 +100,7 @@ class Cu.View.DataHubNav extends Backbone.View
           $('.context-switch input').removeClass('loading').trigger 'keyup'
       error: (jqXHR, textStatus, errorThrown) ->
         $('.context-switch input').removeClass 'loading'
-        console.warn 'Could not query users API', errorThrown
+        Backbone.trigger 'error', 'Could not query users API', errorThrown
 
   keyupContextSearch: (e) ->
     if e.which == 40
@@ -266,8 +266,7 @@ class Cu.View.Toolbar extends Backbone.View
           $('.new-dataset-tile').after view.render().el
         , 500
       error: (model, xhr, options) =>
-        alert('Sorry, your dataset could not be hidden')
-        console.warn 'Dataset could not be hidden!', model, xhr, options
+        Backbone.trigger 'error', 'Dataset could not be hidden!', model, xhr, options
 
   renameDataset: ->
     w = $('#dataset-meta h3').width() + 100
@@ -315,7 +314,7 @@ class Cu.View.Toolbar extends Backbone.View
         error: (e) =>
           $label.text @oldName
           @model.set 'displayName', @oldName
-          console.warn 'error saving new name', e
+          Backbone.trigger 'error', 'Error saving new name :(', e
 
   editableNameEscaped: (e) ->
     e.preventDefault()

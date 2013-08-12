@@ -17,6 +17,14 @@ Backbone.history.on 'route', ->
   Backbone.history.routeCount += 1
   Backbone.history.firstLoad = false
 
+oldFetch = Backbone.Collection.prototype.fetch
+Backbone.Collection.prototype.fetch = (options) ->
+  options ?= {}
+  unless options.error?
+    options.error = (collection, response, options) ->
+      Backbone.trigger 'error', collection, response, options
+  oldFetch.apply this, arguments
+
 $ ->
   window.app = new Cu.Router.Main()
   Backbone.history.start {pushState: on}

@@ -309,7 +309,7 @@ href="http://www.sqlite.org/lang_keywords.html">(more info)</a>.</td>
   </tr>
   <tr>
     <td><code>success(data, textStatus, jqXHR)</code></td>
-    <td>A callback to run on success. This is a standard <a href="http://api.jquery.com/jQuery.ajax/">jQuery $.ajax()</a> error callback.</td>
+    <td>A callback to run on success. This is a standard <a href="http://api.jquery.com/jQuery.ajax/">jQuery $.ajax()</a> success callback.</td>
   </tr>
   <tr>
     <td><code>error(jqXHR, textStatus, errorThrown)</code></td>

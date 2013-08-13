@@ -7,7 +7,7 @@
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
   <p>Unlimited datasets</p>
-  <p class="muted">Each dataset can store 256MB data<br/>and use 30 CPU minutes per day</p>
+  <p class="muted">256MB storage per dataset<br/>30 CPU minutes per process</p>
   <% if window?.user.effective?.accountLevel.match /large/: %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else if window?.user.effective?: %>
@@ -21,7 +21,7 @@
   <h2>Explorer</h2>
   <p class="cost">$9<small>/mth</small></p>
   <p>10 datasets</p>
-  <p class="muted">Each dataset can store 64MB data<br/>and use 30 CPU minutes per day</p>
+  <p class="muted">64MB storage per dataset<br/>30 CPU minutes per process</p>
   <% if window?.user.effective?.accountLevel.match /medium/: %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else if window?.user.effective?: %>
@@ -36,7 +36,7 @@
   <h2>Community</h2>
   <p class="cost">Free</p>
   <p>3 datasets</p>
-  <p class="muted">Each dataset can store 8MB data<br/>and use 30 CPU minutes per day</p>
+  <p class="muted">8MB storage per dataset<br/>30 CPU minutes per process</p>
   <% if window?.user.effective?.accountLevel.match /free/: %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else: %>

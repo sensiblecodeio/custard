@@ -119,10 +119,10 @@ scraperwiki.dataset.sql.meta = (success, error) ->
   $.ajax options
 
 
-scraperwiki.dataset.installTool = (toolName, query) ->
+scraperwiki.dataset.installTool = (query, toolName) ->
   ###
-  Installs the specified tool into the current dataset,
-  passing it the optional [query] in scraperwiki.readSettings().sqlQuery
+  Passes the specified [query] to the specified [toolName],
+  installing it into the current dataset if necessary.
   ###
   parent.scraperwiki.xdm.pushSQL(query, toolName)
 

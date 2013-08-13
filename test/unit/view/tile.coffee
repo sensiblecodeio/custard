@@ -7,9 +7,12 @@ unless Cu.View.DatasetTile?
 
 describe "View: DatasetTile", ->
   beforeEach ->
-    model = new Backbone.Model()
+    Model = Backbone.Model.extend({'recover': ->})
+    model = new Model()
     sync = sinon.stub(model, 'sync')
     @save = sinon.stub(model, 'save')
+    @destroy = sinon.stub(model, 'destroy')
+    @recover = sinon.stub(model, 'recover')
     @view = new Cu.View.DatasetTile({model: model})
 
     @clock = sinon.useFakeTimers()
@@ -18,17 +21,10 @@ describe "View: DatasetTile", ->
     @clock.restore()
 
   context "When hideDataset is called", ->
-    it "model.toBeDeleted is set to 5 mins in future", ->
+    it "model.destroy is called", ->
       @view.hideDataset(jQuery.Event())
 
-      @save.firstCall.args[0].toBeDeleted.should.be.instanceOf Date
-
-      (@save.firstCall.args[0].toBeDeleted - new Date().getTime()).should.equal 5 * 60000
-
-    it "model.state is set to 'deleted'", ->
-      @view.hideDataset(jQuery.Event())
-
-      @save.firstCall.args[0].state.should.equal 'deleted'
+      @destroy.calledOnce.should.be.true
 
     it "should setTimeout to remove tile after 5 minutes", ->
       @view.hideDataset(jQuery.Event())
@@ -40,15 +36,10 @@ describe "View: DatasetTile", ->
       removeSpy.calledOnce.should.be.true
 
   context "When unhideDataset is called", ->
-    it "model.toBeDeleted is set to null", ->
+    it "model.destroy is called", ->
       @view.unhideDataset(jQuery.Event())
 
-      should.not.exist @save.firstCall.args[0].toBeDeleted
-
-    it "model.state is set to null", ->
-      @view.unhideDataset(jQuery.Event())
-
-      should.not.exist @save.firstCall.args[0].state
+      @recover.calledOnce.should.be.true
 
     it "should clear the timeout", ->
       @view.hideDataset(jQuery.Event())

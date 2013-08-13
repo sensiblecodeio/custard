@@ -16,15 +16,19 @@ scraperwiki.box = window.location.pathname.split('/')[1]
 
 
 scraperwiki.alert = (title, message, level=0) ->
-  # [title] and [message] should be html strings. The first is displayed in bold.
-  # If [level] is a truthful value, the alert is printed in red.
+  ###
+  [title] and [message] should be html strings. The first is displayed in bold.
+  If [level] is a truthful value, the alert is printed in red.
+  ###
   $a = $('<div>').addClass('alert').prependTo('body')
   $a.addClass('alert-error') if level
   $a.html """<button type="button" class="close" data-dismiss="alert">&times;</button> <strong>#{title}</strong> #{message}"""
 
 
 scraperwiki.readSettings = ->
-  # returns dataset and tool settings from the current tool's URL hash
+  ###
+  Returns dataset and tool settings from the current tool's URL hash
+  ###
   return null if window.location.hash is ''
   hash = window.location.hash.substr(1)
   try
@@ -35,10 +39,12 @@ scraperwiki.readSettings = ->
 
 
 scraperwiki.url = (arg) ->
-  # [arg] should either be a string (to redirect the browser),
-  # a callback function (which will be passed the current url),
-  # or undefined, in which case a jQuery deferred object is
-  # returned, on which you can call .done() and .always()
+  ###
+  [arg] should either be a string (to redirect the browser),
+  a callback function (which will be passed the current url),
+  or undefined, in which case a jQuery deferred object is
+  returned, on which you can call .done() and .always()
+  ###
   if typeof(arg) is 'string'
     # they want to set the url (ie: redirect)
     parent.scraperwiki.xdm.redirect(arg)
@@ -53,11 +59,13 @@ scraperwiki.url = (arg) ->
 
 
 scraperwiki.dataset.name = (arg) ->
-  # [arg] should either be a string (to set the dataset's name),
-  # a function (to get the dataset's current name, and pass it 
-  # to the callback function),
-  # or undefined, in which case we get the dataset's current name
-  # and pass it to a jQuery deferred object.
+  ###
+  [arg] should either be a string (to set the dataset's name),
+  a function (to get the dataset's current name, and pass it 
+  to the callback function),
+  or undefined, in which case we get the dataset's current name
+  and pass it to a jQuery deferred object.
+  ###
   if typeof(arg) is 'string'
     parent.scraperwiki.xdm.rename(scraperwiki.box, arg)
   else
@@ -70,10 +78,12 @@ scraperwiki.dataset.name = (arg) ->
 
 
 scraperwiki.dataset.sql = (sql, success, error) ->
-  # execute a SQL query on the main dataset.
-  # [success] and [error] callbacks are optional,
-  # since this returns a jQuery deferred object on which
-  # you can chain .done() and .fail() handlers.
+  ###
+  Execute a SQL query on the main dataset.
+  [success] and [error] callbacks are optional,
+  since this returns a jQuery deferred object on which
+  you can chain .done() and .fail() handlers.
+  ###
   settings = scraperwiki.readSettings()
   boxSettings = settings.target ? settings.source
   options =
@@ -90,10 +100,12 @@ scraperwiki.dataset.sql = (sql, success, error) ->
 
 
 scraperwiki.dataset.sql.meta = (success, error) ->
-  # get info about the main dataset's SQL database.
-  # [success] and [error] callbacks are optional,
-  # since this returns a jQuery deferred object on which
-  # you can chain .done() and .fail() handlers.
+  ###
+  Get info about the main dataset's SQL database.
+  [success] and [error] callbacks are optional,
+  since this returns a jQuery deferred object on which
+  you can chain .done() and .fail() handlers.
+  ###
   settings = scraperwiki.readSettings()
   boxSettings = settings.target ? settings.source
   options =
@@ -108,17 +120,21 @@ scraperwiki.dataset.sql.meta = (success, error) ->
 
 
 scraperwiki.dataset.installTool = (toolName, query) ->
-  # installs the specified tool into the current dataset,
-  # passing it the optional [query] in scraperwiki.readSettings().sqlQuery
+  ###
+  Installs the specified tool into the current dataset,
+  passing it the optional [query] in scraperwiki.readSettings().sqlQuery
+  ###
   parent.scraperwiki.xdm.pushSQL(query, toolName)
 
 
 scraperwiki.tool.name = (arg) ->
-  # [arg] should either be a string (to set the tool's name),
-  # a function (to get the tool's current name, and pass it 
-  # to the callback function),
-  # or undefined, in which case we get the tool's current name
-  # and pass it to a jQuery deferred object.
+  ###
+  [arg] should either be a string (to set the tool's name),
+  a function (to get the tool's current name, and pass it 
+  to the callback function),
+  or undefined, in which case we get the tool's current name
+  and pass it to a jQuery deferred object.
+  ###
   if typeof(arg) is 'string'
     # we can't currently rename a tool; only a dataset!!
     # parent.scraperwiki.xdm.rename(scraperwiki.box, arg)
@@ -134,10 +150,12 @@ scraperwiki.tool.name = (arg) ->
 
 
 scraperwiki.tool.sql = (sql, success, error) ->
-  # execute a SQL query on the tool's own internal database.
-  # [success] and [error] callbacks are optional,
-  # since this returns a jQuery deferred object on which
-  # you can chain .done() and .fail() handlers.
+  ###
+  Execute a SQL query on the tool's own internal database.
+  [success] and [error] callbacks are optional,
+  since this returns a jQuery deferred object on which
+  you can chain .done() and .fail() handlers.
+  ###
   settings = scraperwiki.readSettings()
   options =
     url: "#{settings.source.url}/sql/"
@@ -153,10 +171,12 @@ scraperwiki.tool.sql = (sql, success, error) ->
 
 
 scraperwiki.tool.sql.meta = (success, error) ->
-  # get info about this tool's internal SQL database.
-  # [success] and [error] callbacks are optional,
-  # since this returns a jQuery deferred object on which
-  # you can chain .done() and .fail() handlers.
+  ###
+  Get info about this tool's internal SQL database.
+  [success] and [error] callbacks are optional,
+  since this returns a jQuery deferred object on which
+  you can chain .done() and .fail() handlers.
+  ###
   settings = scraperwiki.readSettings()
   options =
     url: "#{settings.source.url}/sql/meta"
@@ -170,10 +190,12 @@ scraperwiki.tool.sql.meta = (success, error) ->
 
 
 scraperwiki.tool.exec = (cmd, success, error) ->
-  # Execute a unix command inside this tool's box.
-  # [success] and [error] callbacks are optional,
-  # since this returns a jQuery deferred object on which
-  # you can chain .done() and .fail() handlers.
+  ###
+  Execute a unix command inside this tool's box.
+  [success] and [error] callbacks are optional,
+  since this returns a jQuery deferred object on which
+  you can chain .done() and .fail() handlers.
+  ###
   settings = scraperwiki.readSettings()
   options =
     url: "#{window.location.protocol}//#{window.location.host}/#{scraperwiki.box}/exec"
@@ -199,7 +221,9 @@ scraperwiki.tool.exec.pending = 0
 
 
 scraperwiki.shellEscape = (command) ->
-  # useful for making variables "safe" for inclusion in exec commands.
+  ###
+  Useful for making variables "safe" for inclusion in exec commands.
+  ###
   "'#{command.replace(/'/g,"'\"'\"'")}'"
 
 

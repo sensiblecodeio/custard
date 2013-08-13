@@ -4,7 +4,7 @@
     <li class="nav-header">User Interface</li>
     <li><a data-nonpushstate href="#ui-naming">Naming your tool</a></li>
     <li class="nav-header">Technical Standards</li>
-    <li><a data-nonpushstate href="#ts-html">HTML</a></li>
+    <li><a data-nonpushstate href="#ts-sql">SQL</a></li>
     <li><a data-nonpushstate href="#ts-css">CSS</a></li>
   </ul>
 </nav>
@@ -64,13 +64,22 @@ If you find you have lots of sentences, your description is too long.
 
 
 
-<h2 id="ts-html">HTML</h2>
+<h2 id="ts-sql">SQL</h2>
 
-<p>HTML5 is great.</p>
+<p>ScraperWiki tools currently store data in SQLite databases.</p>
+
+<p>A convention has developed whereby you can signal to other tools that a table or column should not be shown to end-users: prefixing the table or column name with an underscore.</p>
+
+<pre class="prettyprint">
+  CREATE TABLE "example" (first_name, last_name, _ignore_this_column)
+  CREATE TABLE "_hide_this_table" (log_id, log_text)
+</pre>
+
+<p>In this way, the tables and columns are still available to tool developers and power-users, but typical end-users won&rsquo;t see them.</p>
 
 <hr />
 
-<h2 id="ts-css">CSS</h2>
+<h2 id="ts-css">HTML &amp; CSS</h2>
 
 <h3>
 When in doubt, use <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>

@@ -94,10 +94,6 @@ describe 'Upgrade from medium account to large account', ->
         before (done) ->
           wd40.click '.modal .btn', done
 
-        # TODO: Not sure why we need this timeout. 
-        before (done) ->
-          setTimeout done, 5000
-
         it 'it closes the modal window', (done) ->
           wd40.waitForInvisibleByCss '.modal', done
 
@@ -118,10 +114,6 @@ describe 'Upgrade from medium account to large account', ->
       context 'when I click the only button on the modal', ->
         before (done) ->
           wd40.click '.modal .btn', done
-        
-        # TODO: Not sure why we need this timeout. 
-        before (done) ->
-          setTimeout done, 5000
 
         it 'it closes the modal window', (done) ->
           wd40.waitForInvisibleByCss '.modal', done

@@ -100,7 +100,7 @@ class Cu.View.DataHubNav extends Backbone.View
           $('.context-switch input').removeClass('loading').trigger 'keyup'
       error: (jqXHR, textStatus, errorThrown) ->
         $('.context-switch input').removeClass 'loading'
-        Backbone.trigger 'error', '{"responseText": "Could not query users API"}', errorThrown
+        Backbone.trigger 'error', null, {responseText: "Could not query users API"}, errorThrown
 
   keyupContextSearch: (e) ->
     if e.which == 40

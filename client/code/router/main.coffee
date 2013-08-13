@@ -165,6 +165,9 @@ class Cu.Router.Main extends Backbone.Router
     dataset.fetch
       success: (dataset, resp, options) =>
         v = dataset.get('views').findById(viewID)
+        if not v?
+          Backbone.trigger 'error', null, {responseText: "View not found"}
+          return
         window.selectedTool = v
         contentView = new Cu.View.PluginContent model: v
         @appView.showView contentView
@@ -196,7 +199,7 @@ class Cu.Router.Main extends Backbone.Router
         if tokenInfo.shortName?
           @shortName = tokenInfo.shortName
         else
-          Backbone.trigger 'error', null, '{"responseText": "no shortName!"}'
+          Backbone.trigger 'error', null, {responseText: "no shortName!"}
       complete: =>
         subnavView = new Cu.View.Subnav {text: 'Set your password'}
         contentView = new Cu.View.SetPassword {shortName: @shortName}

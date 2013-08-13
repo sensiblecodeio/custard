@@ -37,7 +37,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     app.tools().fetch
       success: =>
         tool = app.tools().get name
-        Backbone.trigger('error', """{"responseText": "Tool #{name} not found"}""") unless tool?
+        Backbone.trigger('error', null, {responseText: "Tool #{name} not found"}) unless tool?
         _.defer =>
           @fetch
             success: (dataset) =>

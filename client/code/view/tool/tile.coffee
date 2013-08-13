@@ -88,7 +88,7 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
             $("#instance-#{view.id}").addClass('active')
             window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", {trigger: true}
           else
-            Backbone.trigger('error', null, """{"responseText": "#{err}"}""") if err?
+            Backbone.trigger('error', null, {responseText: err}) if err?
             v = new Cu.View.ToolMenuItem model: view
             el = v.render().el
             $('a', el).addClass('active')

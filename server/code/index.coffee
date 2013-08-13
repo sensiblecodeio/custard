@@ -244,7 +244,7 @@ checkSwitchUserRights = (req, res, next) ->
       req.switchingTo = user
       return next()
     if user.canBeReally and req.user.real.shortName in user.canBeReally
-      # the specified shortName is in the requesting user's canBeReally 
+      # the specified shortName is in the requesting user's canBeReally
       req.switchingTo = user
       return next()
     # otherwise, the specified shortName exists, this is not a staff user,

@@ -89,7 +89,7 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
         toolName = @options.archetype.get 'name'
         dataset.installPlugin toolName, (err, view) =>
           unless err == 'already installed'
-            Backbone.trigger('error', null, """{"responseText": "#{err}"}""") if err?
+            Backbone.trigger('error', null, {responseText: err}) if err?
             v = new Cu.View.ToolMenuItem model: view
             el = v.render().el
             $('#toolbar .tool.active').removeClass("active")

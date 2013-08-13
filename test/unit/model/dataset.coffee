@@ -42,6 +42,51 @@ describe 'Client model: Dataset', ->
       tool = @dataset.get('tool')
       tool.get('displayName').should.equal 'Test App'
 
+  context "when model.destroy is called", ->
+    before ->
+      @dataset = new Cu.Model.Dataset
+        user: 'zarino'
+        box: '2416349265'
+
+      @save = sinon.stub @dataset, 'save'
+
+      @clock = sinon.useFakeTimers()
+
+      @dataset.destroy()
+
+    after ->
+      @dataset.save.restore()
+
+      @clock.restore()
+
+    it "model.toBeDeleted is set to 5 mins in future", ->
+      @save.firstCall.args[0].toBeDeleted.should.be.instanceOf Date
+
+      console.log new Date().getTime()
+      (@save.firstCall.args[0].toBeDeleted - new Date().getTime()).should.equal 5 * 60000
+
+    it "model.state is set to 'deleted'", ->
+      @save.firstCall.args[0].state.should.equal 'deleted'
+
+  context "when model.recover is called", ->
+    before ->
+      @dataset = new Cu.Model.Dataset
+        user: 'zarino'
+        box: '2416349266'
+
+      @save = sinon.stub @dataset, 'save'
+
+      @dataset.recover()
+
+    after ->
+      @dataset.save.restore()
+
+    it "model.toBeDeleted is set to null", ->
+      should.not.exist @save.firstCall.args[0].toBeDeleted
+
+    it "model.state is set to null", ->
+      should.not.exist @save.firstCall.args[0].state
+
 describe 'Server model: Dataset', ->
 
   Dataset = null

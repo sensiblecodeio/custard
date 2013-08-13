@@ -172,8 +172,6 @@ class Cu.Router.Main extends Backbone.Router
         unless @subnavView.currentView instanceof Cu.View.Toolbar
           subnavView = new Cu.View.Toolbar model: dataset, view: v
           @subnavView.showView subnavView
-      error: (model, xhr, options) ->
-        Backbone.trigger 'error', xhr
 
   toolShop: ->
     app.navigate '/tools/people-pack/', true
@@ -198,7 +196,7 @@ class Cu.Router.Main extends Backbone.Router
         if tokenInfo.shortName?
           @shortName = tokenInfo.shortName
         else
-          Backbone.trigger 'error', 'no shortName!'
+          Backbone.trigger 'error', null, '{"responseText": "no shortName!"}'
       complete: =>
         subnavView = new Cu.View.Subnav {text: 'Set your password'}
         contentView = new Cu.View.SetPassword {shortName: @shortName}

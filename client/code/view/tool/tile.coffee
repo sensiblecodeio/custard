@@ -64,7 +64,7 @@ class Cu.View.AppTile extends Cu.View.ToolTile
           @trigger 'install:failed'
           app.navigate '/pricing/upgrade', trigger: true
         else
-          Backbone.trigger 'error', "Error creating dataset (xhr status: #{xhr.status} #{xhr.statusText})"
+          Backbone.trigger 'error', model, xhr, options
 
 class Cu.View.PluginTile extends Cu.View.ToolTile
   events:
@@ -88,7 +88,7 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
             $("#instance-#{view.id}").addClass('active')
             window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", {trigger: true}
           else
-            Backbone.trigger('error', err) if err?
+            Backbone.trigger('error', null, """{"responseText": "#{err}"}""") if err?
             v = new Cu.View.ToolMenuItem model: view
             el = v.render().el
             $('a', el).addClass('active')
@@ -103,4 +103,4 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
       error: (model, xhr, options) ->
         @active = false
         @$el.removeClass 'loading'
-        Backbone.trigger 'error', 'Error fetching dataset', xhr
+        Backbone.trigger 'error', model, xhr, options

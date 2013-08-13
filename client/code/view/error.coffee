@@ -22,11 +22,11 @@ class Cu.View.ErrorAlert extends Backbone.View
   hide: =>
     @$el.hide()
 
-  onError: (message, response) =>
-    if typeof message is 'string'
-      @render message
-    else
-      @render JSON.parse(response.responseText).error
+  onError: (model, xhr, options) =>
+    try
+      @render JSON.parse(xhr.responseText).error
+    catch error
+      @render xhr.responseText
 
   displayAJAXError: (event, jqXHR, ajaxSettings, thrownError) =>
     message = "xhr.statusText: #{jqXHR.statusText}"

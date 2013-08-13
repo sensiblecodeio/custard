@@ -31,5 +31,3 @@ class Cu.View.TermsAlert extends Backbone.View
         window.user.real.acceptedTerms = window.latestTerms
         @$el.slideUp 250, =>
           @$el.remove()
-      error: (model, xhr, options) =>
-        Backbone.trigger 'error', 'Error saving user model!', JSON.parse(xhr.responseText)

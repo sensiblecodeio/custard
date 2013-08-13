@@ -75,6 +75,10 @@ describe 'Upgrade from medium account to large account', ->
           done()
 
       context 'when I click the only button on the modal', ->
+        # wait a little while for the modal fade effect to finish
+        before (done) ->
+          setTimeout done, 500
+
         before (done) ->
           wd40.click '.modal .btn', done
 
@@ -96,6 +100,10 @@ describe 'Upgrade from medium account to large account', ->
           done()
 
       context 'when I click the only button on the modal', ->
+        # wait a little while for the modal fade effect to finish
+        before (done) ->
+          setTimeout done, 500
+
         before (done) ->
           wd40.click '.modal .btn', done
 

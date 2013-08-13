@@ -6,11 +6,6 @@ request = require 'request'
 ModelBase = require 'model/base'
 RedisClient = require('lib/redisClient').RedisClient
 
-# Time in milliseconds to wait before submitting
-# expensive endpoint requests so that they can be
-# de-duplicated
-DEBOUNCE_PERIOD = 1000
-
 viewSchema = new Schema
   box: String
   boxServer: String
@@ -35,19 +30,6 @@ datasetSchema = new Schema
   creatorShortName: String
   creatorDisplayName: String
   toBeDeleted: Date
-
-
-# Return a memoized debounce function, keyed on the box,
-# which lasts as long as the debounce period.
-getDebouncedCache = {}
-getDebounced = (key, f) =>
-  if not getDebouncedCache[key]
-    getDebouncedCache[key] = _.debounce =>
-      result = f.apply null, arguments
-      delete getDebouncedCache[key]
-      return result
-    , DEBOUNCE_PERIOD
-  return getDebouncedCache[key]
 
 zDbDataset = mongoose.model 'Dataset', datasetSchema
 
@@ -86,9 +68,8 @@ class Dataset extends ModelBase
         type: @status.type
         message: @status.message
       env = process.env.NODE_ENV
-      debouncedPublish = getDebounced @box, ->
-        RedisClient.client.publish.apply RedisClient.client, arguments
-      debouncedPublish "#{env}.cobalt.dataset.#{@box}.update", message
+      channel = "#{env}.cobalt.dataset.#{@box}.update"
+      RedisClient.debouncedPublish @box, channel, message
       callback err
 
   cleanCrontab: (callback) ->

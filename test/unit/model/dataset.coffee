@@ -178,11 +178,11 @@ describe 'Server model: Dataset', ->
       before ->
         @saveSpy = sinon.spy Dataset.dbClass.prototype, 'save'
         # TODO: will actually connect to redis, stub properly
-        @publishStub = sinon.stub RedisClient.client, 'publish'
+        @publishStub = sinon.stub RedisClient, 'debouncedPublish'
 
       after ->
         Dataset.dbClass.prototype.save.restore()
-        RedisClient.client.publish.restore()
+        RedisClient.debouncedPublish.restore()
         RedisClient.client.end()
 
       before (done) ->
@@ -212,12 +212,13 @@ describe 'Server model: Dataset', ->
         @saveSpy.calledOnce.should.be.true
 
       it 'publishes the update to redis', ->
-        channel = "#{process.env.NODE_ENV}.cobalt.dataset.box.updated"
+        channel = "#{process.env.NODE_ENV}.cobalt.dataset.box.update"
         message = JSON.stringify
           boxes: ['foo', 'bar']
+          type: 'ok'
           message: 'I scrapped some page :D'
 
-        published = @publishStub.calledWith channel, message
+        published = @publishStub.calledWith @dataset.box, channel, message
         published.should.be.true
 
     context 'with an unknown type', ->

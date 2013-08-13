@@ -200,5 +200,6 @@ describe 'Dataset', ->
 
     it 'shows a not found error', (done) ->
       wd40.getText '#error-alert', (err, text) ->
-        text.should.include "Not Found"
+        text.should.be.a 'string'
+        text.should.not.be.empty
         done err

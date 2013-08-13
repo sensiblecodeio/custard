@@ -233,16 +233,23 @@ checkSwitchUserRights = (req, res, next) ->
   switchingTo = req.params.username
   console.log "SWITCH #{req.user.effective.shortName} -> #{switchingTo}"
   User.findByShortName switchingTo, (err, user) ->
-    if err? or not user?
+    if err?
+      # findByShortName encountered an unexpected error
       return res.send 500, err
-    # Staff can (still) switch into any profile.
-    # Otherwise check the canBeReally field of the target user.
-    if req.user.real.isStaff or
-     (user.canBeReally and req.user.real.shortName in user.canBeReally)
+    if not user?
+      # findByShortName couldn't find the specified shortName
+      return res.send 404, { error: "The specified user does not exist"}
+    if req.user.real.isStaff
+      # the requesting user is staff: they can switch regardless of canBeReally
       req.switchingTo = user
       return next()
-    return res.send 403, { error:
-      "#{req.user.real.shortName} cannot switch to #{switchingTo}"}
+    if user.canBeReally and req.user.real.shortName in user.canBeReally
+      # the specified shortName is in the requesting user's canBeReally 
+      req.switchingTo = user
+      return next()
+    # otherwise, the specified shortName exists, this is not a staff user,
+    # and the shortName is not in canBeReally, which means they can't switch.
+    return res.send 403, { error: "#{req.user.real.shortName} cannot switch to #{switchingTo}"}
 
 # Render the main client side app
 renderClientApp = (req, resp) ->

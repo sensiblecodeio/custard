@@ -1,4 +1,5 @@
 net = require 'net'
+helper = require './helper'
 
 _ = require 'underscore'
 request = require 'request'
@@ -705,6 +706,10 @@ describe 'API', ->
 
   describe 'Upgrading my account', ->
     context "When I'm upgrading from medium to large", ->
+
+      before (done) ->
+        helper.mediumizeMary done
+
       context 'PUT /api/:user/subscription/change/large-ec2', ->
         before (done) ->
           @user = 'mediummary'

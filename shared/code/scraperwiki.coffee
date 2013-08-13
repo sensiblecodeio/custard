@@ -231,7 +231,7 @@ scraperwiki.shellEscape = (command) ->
 
 scraperwiki.tool.pushSql = scraperwiki.dataset.installTool
 scraperwiki.tool.rename = scraperwiki.dataset.name
-scraperwiki.tool.getUrl = scraperwiki.tool.redirect = scraperwiki.url
+scraperwiki.tool.getUrl = scraperwiki.tool.getURL = scraperwiki.tool.redirect = scraperwiki.url
 scraperwiki.sql = scraperwiki.dataset.sql
 scraperwiki.sql.meta = scraperwiki.dataset.sql.meta
 scraperwiki.exec = scraperwiki.tool.exec

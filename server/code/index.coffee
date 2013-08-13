@@ -606,7 +606,7 @@ getDataset = (req, resp) ->
       return resp.send 500, error: 'Error trying to find datasets'
     else if not dataset
       console.warn "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
-      return resp.send 404
+      return resp.send 404, error: "We can't find this dataset, or you don't have permission to access it."
     else
       return resp.send 200, dataset
 

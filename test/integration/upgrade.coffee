@@ -1,12 +1,29 @@
 should = require 'should'
+request = require 'request'
 {wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+
+
+# Ensures medium-mary starts on the right plan
+prepRecurly = (done) ->
+  sub_uuid = '21cc59ce00cb05f2bbc397452a99369c' # medium-mary's subscription
+  domain = process.env.RECURLY_DOMAIN
+  pub_key = process.env.RECURLY_API_KEY
+
+  request.put "https://#{domain}.recurly.com/v2/subscriptions/#{sub_uuid}",
+    auth:
+      user: pub_key
+      pass: ''
+    body: '<subscription><plan_code>medium-ec2</plan_code></subscription>'
+  , done
+
 
 describe 'Upgrade from free account to paid', ->
   prepIntegration()
 
   before (done) ->
     wd40.fill '#username', 'ickletest', ->
-      wd40.fill '#password', 'toottoot', -> wd40.click '#login', done
+      wd40.fill '#password', 'toottoot', ->
+        wd40.click '#login', done
 
   context 'when I go to the pricing page', ->
     before (done) ->
@@ -42,8 +59,12 @@ describe 'Upgrade from medium account to large account', ->
   prepIntegration()
 
   before (done) ->
+    prepRecurly done
+
+  before (done) ->
     wd40.fill '#username', 'mediummary', ->
-      wd40.fill '#password', 'testing', -> wd40.click '#login', done
+      wd40.fill '#password', 'testing', ->
+        wd40.click '#login', done
 
   context 'when I go to the pricing page', ->
     before (done) ->

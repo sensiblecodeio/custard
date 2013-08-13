@@ -3,3 +3,4 @@ window.Cu =
   Collection: {}
   View: {}
   Router: {}
+  Util: {}

@@ -194,5 +194,11 @@ describe 'Dataset', ->
             text.should.include 'Prune' 
             done()
 
+  context "When I go to a dataset URL that does not exist", ->
+    before (done) ->
+      browser.get "#{home_url}/dataset/doesnotexist", done
 
-
+    it 'shows a not found error', (done) ->
+      wd40.getText '#error-alert', (err, text) ->
+        text.should.include "Not Found"
+        done err

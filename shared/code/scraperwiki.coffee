@@ -229,7 +229,7 @@ scraperwiki.shellEscape = (command) ->
 
 # HERE BE DEPRECATED FUNCTIONS:
 
-scraperwiki.tool.pushSql = scraperwiki.dataset.installTool
+scraperwiki.tool.pushSql = scraperwiki.tool.pushSQL = scraperwiki.dataset.installTool
 scraperwiki.tool.rename = scraperwiki.dataset.name
 scraperwiki.tool.getUrl = scraperwiki.tool.getURL = scraperwiki.tool.redirect = scraperwiki.url
 scraperwiki.sql = scraperwiki.dataset.sql

@@ -34,8 +34,6 @@ build = (watch, callback) ->
 task 'clean', ->
   console.log "Cleaning database and inserting fixtures"
   exec 'test/cleaner.coffee'
-   
-  
 
 task 'build', ->
   build false, ->

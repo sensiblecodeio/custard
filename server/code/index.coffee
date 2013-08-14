@@ -1,3 +1,5 @@
+process.title = 'custard ' + process.argv[2..].join ' '
+
 nodetime = require 'nodetime'
 
 if process.env.NODETIME_KEY

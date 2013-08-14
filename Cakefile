@@ -1,7 +1,10 @@
-fs = require 'fs'
-which = require 'which'
 {spawn, exec} = require 'child_process'
+fs = require 'fs'
+
+which = require 'which'
 async = require 'async'
+
+process.title = 'cake ' + process.argv[2..].join ' '
 
 pkg = JSON.parse fs.readFileSync('./package.json')
 testCmd = pkg.scripts.test
@@ -30,10 +33,7 @@ build = (watch, callback) ->
 
 task 'clean', ->
   console.log "Cleaning database and inserting fixtures"
-  cp = require 'child_process'
-  cp.exec 'test/cleaner.coffee'
-   
-  
+  exec 'test/cleaner.coffee'
 
 task 'build', ->
   build false, ->

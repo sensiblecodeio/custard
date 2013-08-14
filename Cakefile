@@ -4,6 +4,8 @@ fs = require 'fs'
 which = require 'which'
 async = require 'async'
 
+process.title = 'cake ' + process.argv[2..].join ' '
+
 pkg = JSON.parse fs.readFileSync('./package.json')
 testCmd = pkg.scripts.test
 startCmd = pkg.scripts.start

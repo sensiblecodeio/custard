@@ -56,31 +56,6 @@ class exports.Tool extends ModelBase
       else
         callback null, null
 
-  updateInstances: (done) ->
-    {Box} = require 'model/box'
-    {User} = require 'model/user' # Avoids circular dependency
-    # updates all of the boxes on cobalt that use this tool.
-    if @type == 'importer'
-      M = Dataset
-    else if @type == 'view'
-      M = Dataset.View
-    else
-      console.warn "unexpected tool type"
-      return done "tooltypewrong"
-    M.findAllByTool @name, (err, datasets) =>
-      async.forEach datasets, (item, cb) =>
-        User.findByShortName item.user, (err, user) =>
-          if err? or not user?
-            cb err or "no user"
-          else
-            request.post
-              uri: "#{Box.endpoint item.boxServer, item.box}/exec"
-              form:
-                apikey: user.apikey
-                cmd: "cd ~/tool && git pull >> tool-update.log 2>&1"
-            , cb
-      , done
-
   loadManifest: (callback) ->
     fs.exists @directory, (isok) =>
       if not isok

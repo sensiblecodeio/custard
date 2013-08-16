@@ -545,10 +545,6 @@ postTool = (req, resp) ->
         public: publicBool
     else
       _.extend tool, body
-    # Start updating the tool instances (datasets and views)
-    console.log "Starting to update tool instances..."
-    tool.updateInstances (err, res) ->
-      console.log "Finished updating tool instances. #{err} #{res}"
     tool.gitCloneOrPull dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
       console.log err, stdout, stderr
       if err?

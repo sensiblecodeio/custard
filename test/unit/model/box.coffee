@@ -68,3 +68,10 @@ describe 'Box (server)', ->
 
     it "doesn't change its uid", ->
       @sameBox.uid.should.equal firstBox.uid
+
+  context 'when I call Box.listServers', ->
+    it 'returns an array of all the box servers', ->
+      @servers = Box.listServers()
+      @servers.should.include 'premium.scraperwiki.com'
+      @servers.should.include 'free-ec2.scraperwiki.com'
+      @servers.should.include 'ds-ec2.scraperwiki.com'

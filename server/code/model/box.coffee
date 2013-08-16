@@ -8,6 +8,7 @@ Schema = mongoose.Schema
 ModelBase = require 'model/base'
 {Tool} = require 'model/tool'
 {Plan} = require 'model/plan'
+plans = require 'plans.json'
 
 boxSchema = new Schema
   users: [String]
@@ -166,6 +167,10 @@ class Box extends ModelBase
     max = 429496729
     min = 4000
     Math.floor(Math.random() * (max - min + 1)) + min
+
+  @listServers: ->
+    obj.boxServer for plan, obj of plans
+
 
 exports.Box = Box
 

@@ -19,7 +19,7 @@ describe 'Box (server)', ->
     before (done) ->
       Box.create
         shortName: 'testofferson'
-        accountLevel: 'grandfather'
+        accountLevel: 'grandfather-ec2'
       , (err, box) =>
         firstBox = box
         done err
@@ -44,7 +44,7 @@ describe 'Box (server)', ->
 
       Box.create
         shortName: 'testofferson'
-        accountLevel: 'grandfather'
+        accountLevel: 'grandfather-ec2'
       , (err, box) =>
         @secondBox = box
         done()

@@ -61,9 +61,8 @@ class Box extends ModelBase
             user: arg.user
             boxName: @name
             boxServer: @server
-            # :todo: we don't really need to remove the http directory any more,
-            # because cobalt no longer furnishes it.
-            cmd: "rm -fr http ; mkdir incoming ; git clone #{gitURL} --depth 1 tool ; ln -s tool/http http"
+            #TODO(ehg): don't create http dir in cobalt
+            cmd: "rm -fr http ; mkdir incoming ; ln -s /tools/#{@tool.name} tool ; ln -s tool/http http"
           , (err, res, body) ->
             if err?
               callback err

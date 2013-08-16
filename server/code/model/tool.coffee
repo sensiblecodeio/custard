@@ -33,7 +33,11 @@ zDbTool = mongoose.model 'Tool', toolSchema
 class exports.Tool extends ModelBase
   @dbClass: zDbTool
 
+  rsync: (boxServer, callback) =>
+    child_process.exec "rsync -avz -e 'ssh -i /root/tools_rsa' /opt/tools/#{@name} tools@#{boxServer}:", callback
+
   gitCloneOrPull: (options, callback) ->
+    {Box} = require 'model/box'
     @directory = "#{options.dir}/#{@name}"
     # :todo: whitelist @directory
     fs.exists @directory, (exists) =>
@@ -42,17 +46,23 @@ class exports.Tool extends ModelBase
       else
         cmd = "cd #{@directory}; git pull"
       cmd += "; chown -R www-data:www-data ." if process.env.NODE_ENV?
-      child_process.exec cmd, callback
+      child_process.exec cmd, =>
+        async.each Box.listServers(), @rsync, callback
+
 
   # TODO: DRY
+  # This is only used in the edge case where the tool is in the custard DB,
+  # but not on the custard server
   gitCloneIfNotExists: (options, callback) ->
+    {Box} = require 'model/box'
     @directory = "#{options.dir}/#{@name}"
     # :todo: whitelist @directory
     fs.exists @directory, (exists) =>
       if not exists
         cmd = "git clone #{@gitUrl} #{@directory}; cd #{@directory}"
         cmd += "; chown -R www-data:www-data ."
-        child_process.exec cmd, callback
+        child_process.exec cmd, =>
+          async.each Box.listServers(), @rsync, callback
       else
         callback null, null
 

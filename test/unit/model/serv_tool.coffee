@@ -64,7 +64,12 @@ describe 'Server model: Tool', ->
         @tool.gitCloneOrPull dir: "test/tmp/repos", done
 
       it 'should git clone a directory', ->
-        @exec.calledWithMatch(/^git clone/).should.be.true
+        @exec.firstCall.calledWithMatch(/^git clone/).should.be.true
+
+      it 'should rsync the tool to all box servers', ->
+        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*premium/).should.be.true
+        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*free-ec2/).should.be.true
+        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*ds-ec2/).should.be.true
 
       before (done) ->
         @spy = sinon.spy JSON, 'parse'
@@ -105,8 +110,10 @@ describe 'Server model: Tool', ->
         @tool = new Tool name: 'test'
         @tool.gitCloneOrPull dir: "test/tmp/repos", done
 
-      it 'should run a git pull', ->
-        @exec.calledWithMatch(/git pull/).should.be.true
+      it 'should rsync the tool to all box servers', ->
+        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*premium/).should.be.true
+        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*free-ec2/).should.be.true
+        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*ds-ec2/).should.be.true
 
       before (done) ->
         @fsRead = sinon.stub fs, 'readFile', (path_, cb) ->

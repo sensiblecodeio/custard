@@ -9,7 +9,7 @@ async = require 'async'
 
 mongoose.connect process.env.CU_DB
 
-listBoxServer = (dir, cb) ->
+listGitRepoInfo = (dir, cb) ->
   Dataset.dbClass.findOne {box: dir}, (err, dataset) ->
     if dataset? and dataset.tool?
       Tool.dbClass.findOne {name: dataset.tool}, (err, tool) ->
@@ -23,5 +23,5 @@ listBoxServer = (dir, cb) ->
 
 files = fs.readdirSync process.argv[2]
 
-async.eachSeries files, listBoxServer, ->
+async.eachSeries files, listGitRepoInfo, ->
   process.exit 0

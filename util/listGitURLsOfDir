@@ -1,0 +1,27 @@
+#!/usr/bin/env coffee
+fs = require 'fs'
+
+mongoose = require 'mongoose'
+async = require 'async'
+
+{Dataset} = require 'model/dataset'
+{Tool} = require 'model/tool'
+
+mongoose.connect process.env.CU_DB
+
+listBoxServer = (dir, cb) ->
+  Dataset.dbClass.findOne {box: dir}, (err, dataset) ->
+    if dataset? and dataset.tool?
+      Tool.dbClass.findOne {name: dataset.tool}, (err, tool) ->
+        console.log("#{dataset.box} #{tool.gitUrl} #{dataset.tool}") if tool?
+    else
+      Dataset.dbClass.findOne {'views.box': dir}, (err, view) ->
+        if view? and view.tool?
+          Tool.dbClass.findOne {name: view.tool}, (err, tool) ->
+            console.log("#{view.box} #{tool.gitUrl} #{view.tool}") if tool?
+    return cb null, null
+
+files = fs.readdirSync process.argv[2]
+
+async.eachSeries files, listBoxServer, ->
+  process.exit 0

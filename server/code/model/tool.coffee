@@ -34,7 +34,7 @@ class exports.Tool extends ModelBase
   @dbClass: zDbTool
 
   rsync: (boxServer, callback) =>
-    child_process.exec "rsync -avz -e 'ssh -i /root/tools_rsa' /opt/tools/#{@name} tools@#{boxServer}:", callback
+    child_process.exec "rsync --delete -avz -e 'ssh -i /etc/custard/tools_rsa' /opt/tools/#{@name} tools@#{boxServer}:", callback
 
   gitCloneOrPull: (options, callback) ->
     {Box} = require 'model/box'

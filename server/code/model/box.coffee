@@ -168,6 +168,8 @@ class Box extends ModelBase
     Math.floor(Math.random() * (max - min + 1)) + min
 
   @listServers: ->
+    if /staging/.test process.env.NODE_ENV
+      return [process.env.CU_BOX_SERVER]
     obj.boxServer for plan, obj of plans
 
 

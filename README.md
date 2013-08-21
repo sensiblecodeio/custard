@@ -119,3 +119,22 @@ or one of these:
 or even ehg's special:
 
     mocha test
+    
+## Optional: you may wish to disable redis-server and mongodb services from autostarting on boot when not developing custard
+
+(Tested on Ubuntu 12.04)
+Disable mongo service:
+
+    echo "manual" | sudo tee /etc/init/mongodb.override
+
+Enable mongo service:
+
+    sudo rm /etc/init/mongodb.override
+    
+Disable redis-server service:
+
+    sudo update-rc.d redis-server disable
+    
+Enable redis-server service:
+
+    sudo update-rc.d redis-server enable

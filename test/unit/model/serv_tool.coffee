@@ -66,7 +66,7 @@ describe 'Server model: Tool', ->
       it 'should make a directory for the repository', ->
         @exec.firstCall.calledWithMatch(/^mkdir/).should.be.true
       it 'should git init and fetch a repository', ->
-        @exec.firstCall.calledWithMatch(/git init && git fetch/).should.be.true
+        @exec.firstCall.calledWithMatch(/git init; git fetch .*; git checkout FETCH_HEAD/).should.be.true
 
       it 'should rsync the tool to all box servers', ->
         @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*premium/).should.be.true
@@ -118,7 +118,7 @@ describe 'Server model: Tool', ->
         @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*ds-ec2/).should.be.true
    
       it 'should fetch the contents of the repository from upstream and check it out', ->
-        @exec.calledWithMatch(/git fetch .* && git checkout FETCH_HEAD/).should.be.true
+        @exec.calledWithMatch(/git fetch .*; git checkout FETCH_HEAD/).should.be.true
 
       before (done) ->
         @fsRead = sinon.stub fs, 'readFile', (path_, cb) ->

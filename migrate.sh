@@ -37,10 +37,14 @@ then
   exit
 fi
 
-count=$(git status --porcelain | wc -l)
+IGNORE_FILES="egrep -v tool-update.log"
+
+count=$(git status --porcelain | eval "$IGNORE_FILES" | wc -l)
 if [ $count -ne 0 ]
 then
-  echo "Box $1 has a extra stuff"
+  echo "Box $1 has extra stuff"
+  git status --porcelain
+  echo "##########################"
   exit
 fi
 
@@ -51,7 +55,7 @@ then
   exit
 fi
 
-IGNORE_FETCHREFS="egrep -v '^\\s+fetch = \\+refs/heads/master:refs/remotes/origin/master$' | egrep -v '^\\s+fetch = \\+refs/heads/\\*:refs/remotes/origin/\\*$'"
+IGNORE_FETCHREFS="egrep -v '^\\s+fetch = \\+refs/heads/master:refs/remotes/origin/master$' | egrep -v '^\\s+fetch = \\+refs/heads/\\*:refs/remotes/origin/\\*$' | egrep -v '^\\s+url ='"
 
 
 cat .git/config | eval "$IGNORE_FETCHREFS" > /tmp/sw-git-tool

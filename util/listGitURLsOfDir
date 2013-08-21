@@ -9,19 +9,33 @@ async = require 'async'
 
 mongoose.connect process.env.CU_DB
 
-listGitRepoInfo = (dir, cb) ->
-  Dataset.dbClass.findOne {box: dir}, (err, dataset) ->
-    if dataset? and dataset.tool?
-      Tool.dbClass.findOne {name: dataset.tool}, (err, tool) ->
-        console.log("#{dataset.box} #{tool.gitUrl} #{dataset.tool}") if tool?
-    else
-      Dataset.dbClass.findOne {'views.box': dir}, (err, view) ->
-        if view? and view.tool?
-          Tool.dbClass.findOne {name: view.tool}, (err, tool) ->
-            console.log("#{view.box} #{tool.gitUrl} #{view.tool}") if tool?
-    return cb null, null
 
-files = fs.readdirSync process.argv[2]
+datasets = {}
+tools = {}
+boxes = {}
 
-async.eachSeries files, listGitRepoInfo, ->
-  process.exit 0
+Tool.dbClass.find {}, (err, tools_) ->
+  for tool in tools_
+    tools[tool.name] = tool
+ 
+  Dataset.dbClass.find {}, (err, datasets_) ->
+    for dataset in datasets_
+      datasets[dataset.box] = dataset
+    
+    for view in dataset.views
+      datasets[view.box] = view
+    
+    for boxname, box of datasets
+      if box.tool? and tools[box.tool]?
+        tool = tools[box.tool]
+        boxes[boxname] = [tool.gitUrl, box.tool]
+
+    files = fs.readdirSync process.argv[2]
+    
+    for dir in files
+    
+      if boxes[dir]?
+        box = boxes[dir]
+        console.log "#{dir} #{box[0]} #{box[1]}"
+ 
+    process.exit 0

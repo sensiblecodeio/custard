@@ -125,6 +125,7 @@ or even ehg's special:
 You may wish to disable redis-server and mongodb services from autostarting on boot when not developing custard.
 
 (Tested on Ubuntu 12.04)
+
 Disable mongo service:
 
     echo "manual" | sudo tee /etc/init/mongodb.override

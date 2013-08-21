@@ -67,9 +67,9 @@ describe 'Server model: Tool', ->
         @exec.firstCall.calledWithMatch(/^git clone/).should.be.true
 
       it 'should rsync the tool to all box servers', ->
-        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*premium/).should.be.true
-        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*free-ec2/).should.be.true
-        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*ds-ec2/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*premium/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*free-ec2/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*ds-ec2/).should.be.true
 
       before (done) ->
         @spy = sinon.spy JSON, 'parse'
@@ -111,9 +111,9 @@ describe 'Server model: Tool', ->
         @tool.gitCloneOrPull dir: "test/tmp/repos", done
 
       it 'should rsync the tool to all box servers', ->
-        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*premium/).should.be.true
-        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*free-ec2/).should.be.true
-        @exec.calledWithMatch(/^rsync .* \/opt\/tools\/test .*ds-ec2/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*premium/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*free-ec2/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*ds-ec2/).should.be.true
 
       before (done) ->
         @fsRead = sinon.stub fs, 'readFile', (path_, cb) ->

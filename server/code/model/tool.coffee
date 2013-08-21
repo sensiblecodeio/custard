@@ -45,7 +45,7 @@ class exports.Tool extends ModelBase
         cmd = "mkdir #{@directory} && git init && git fetch #{@gitUrl}; cd #{@directory}"
       else
         cmd = "cd #{@directory}; git fetch #{@gitUrl} && git checkout FETCH_HEAD"
-      cmd += "; chown -R tools:tools ." if process.env.NODE_ENV?
+      cmd += "; chown -R www-data:www-data ." if process.env.NODE_ENV?
       child_process.exec cmd, =>
         async.each Box.listServers(), @rsync, callback
 
@@ -60,7 +60,7 @@ class exports.Tool extends ModelBase
     fs.exists @directory, (exists) =>
       if not exists
         cmd = "mkdir #{@directory} && git init && git fetch #{@gitUrl}; cd #{@directory}"
-        cmd += "; chown -R tools:tools ."
+        cmd += "; chown -R www-data:www-data ."
         child_process.exec cmd, =>
           async.each Box.listServers(), @rsync, callback
       else

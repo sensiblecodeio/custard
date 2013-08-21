@@ -10,25 +10,40 @@ AGPL Licenced (see LICENCE file).
 
 On Debian or Ubuntu:
 
-    sudo apt-get install mongodb
+    sudo apt-get install -y mongodb
     sudo apt-get install -y redis-server
 
-And fix the node vesion by adding these lines to your `.profile`:
+You'll need a bunch of node stuff:
+
+    sudo apt-get install -y npm
+    curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+
+And fix the node version by adding these lines to your `.profile`:
 
     . ~/.nvm/nvm.sh
     nvm use 0.10
+    
+start a new bash terminal (in order to get nvm which is a shell function)
+
+   nvm install 0.10
 
 On Mac OSX:
 
     brew install mongodb
     brew install redis
 
+Clone this repo (inside `~/sw` preferable) and from within the `custard` directory:
+
 Then on all platforms:
 
     mkdir mongo
     npm install pow-mongodb-fixtures -g
-    mongod --dbpath=mongo
-    redis-server
+    mongod --dbpath=mongo # might be running already
+    # redis-server # probably don't need this, as it's already running
+    
+Alongside custard, you will need to git clone swops-secret
+
+    git clone blah blah blah
 
 Optionally, OSX users might want to install the mongodb and redis System Preference Panes, which make it dead easy to turn both servers on and off whenever required:
 
@@ -56,21 +71,20 @@ when you enter the directory. Briefly:
     connect-assets not found, please run npm install
     direnv export: +NODE_PATH +PYTHONPATH +VIRTUAL_ENV ~PATH
 
-## Every now and then (npm updates)
+## The first time and then every now and then (npm updates)
 
+    # cd into the custard directory
     . activate
     npm install
 
 ## Every time you need to develop custard
 
     # Start a web server (best done in a new window)
-    . activate
+    . activate # don't need to do this again if you've already done it in this terminal
     cake dev
-
-    # If you're running tests, you'll want to
-    # start a selenium server (best done in another new window)
-    .activate
-    cake se
+    
+The `cake dev` above starts custard the web server. It's listening on a local port (usually 3001),
+so you should be able to visit `localhost:3001` in a web browser.
 
 ## Tests
 

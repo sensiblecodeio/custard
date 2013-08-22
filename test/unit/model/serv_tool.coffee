@@ -63,8 +63,15 @@ describe 'Server model: Tool', ->
         @tool = new Tool name: 'test'
         @tool.gitCloneOrPull dir: "test/tmp/repos", done
 
-      it 'should git clone a directory', ->
-        @exec.calledWithMatch(/^git clone/).should.be.true
+      it 'should make a directory for the repository', ->
+        @exec.firstCall.calledWithMatch(/^mkdir/).should.be.true
+      it 'should git init and fetch a repository', ->
+        @exec.firstCall.calledWithMatch(/git init; git fetch .*; git checkout FETCH_HEAD/).should.be.true
+
+      it 'should rsync the tool to all box servers', ->
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*premium/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*free-ec2/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*ds-ec2/).should.be.true
 
       before (done) ->
         @spy = sinon.spy JSON, 'parse'
@@ -105,8 +112,13 @@ describe 'Server model: Tool', ->
         @tool = new Tool name: 'test'
         @tool.gitCloneOrPull dir: "test/tmp/repos", done
 
-      it 'should run a git pull', ->
-        @exec.calledWithMatch(/git pull/).should.be.true
+      it 'should rsync the tool to all box servers', ->
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*premium/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*free-ec2/).should.be.true
+        @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*ds-ec2/).should.be.true
+   
+      it 'should fetch the contents of the repository from upstream and check it out', ->
+        @exec.calledWithMatch(/git fetch .*; git checkout FETCH_HEAD/).should.be.true
 
       before (done) ->
         @fsRead = sinon.stub fs, 'readFile', (path_, cb) ->
@@ -134,37 +146,3 @@ describe 'Server model: Tool', ->
 
       it 'should have a gitUrl', ->
         should.exist @tool.manifest.gitUrl
-
-  context 'An "importer" tool: when tool.updateInstances is called', ->
-    before (done) ->
-      @requestStub = sinon.stub(request, 'post').callsArg(1)
-      Tool.findOneByName 'spreadsheet-upload', (err, tool) =>
-        tool.updateInstances done
-
-    it 'has updated the dataset boxes', ->
-      pulledInDSBox = @requestStub.calledWith
-        uri: sinon.match /2416349265/
-        form:
-          apikey: 'zarino'
-          cmd: sinon.match /git pull/
-      pulledInDSBox.should.be.true
-
-    after ->
-      request.post.restore()
-
-  xcontext 'A "view" tool: when tool.updateInstances is called', ->
-    before (done) ->
-      @requestStub = sinon.stub(request, 'post').callsArg(1)
-      Tool.findOneByName 'test-plugin', (err, tool) =>
-        tool.updateInstances done
-
-    it 'has updated the view boxes', ->
-      pulledInViewBox = @requestStub.calledWithMatch
-        uri: sinon.match /4008115731/
-        form:
-          apikey: sinon.match new RegExp(process.env.COTEST_USER_API_KEY)
-          cmd: sinon.match /git pull/
-      pulledInViewBox.should.be.true
-
-    after ->
-      request.post.restore()

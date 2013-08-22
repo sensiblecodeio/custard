@@ -1,7 +1,7 @@
 
 export NODE_ENV=cron
 
-sudo tee /tmp/migrate.log < /dev/null
+tee /tmp/migrate.log < /dev/null
 
 mkfifo /tmp/sw-pipe
 trap "wait" EXIT
@@ -18,7 +18,7 @@ exec 2>&1
 util/listGitURLsOfDir /ebs/home | grep -v newdataset | sort -u |
   while read -r BOX GIT_URL TOOLNAME
   do
-    if ./should-migrate.sh $BOX $GIT_URL $TOOLNAME &>> /tmp/migrate.log
+    if sudo ./should-migrate.sh $BOX $GIT_URL $TOOLNAME &>> /tmp/migrate.log
     then
       echo ---- Migrating box $BOX -- $TOOLNAME
     else

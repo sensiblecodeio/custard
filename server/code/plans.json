@@ -1,4 +1,11 @@
 {
+    "dataservices": {
+        "boxServer": "ds.scraperwiki.com",
+        "maxDiskSpaceMB": 4000,
+        "maxHourCPUPerDay": 2.0,
+        "maxNumDatasets": 81,
+        "$": true
+    },
     "dataservices-ec2": {
         "boxServer": "ds-ec2.scraperwiki.com",
         "maxDiskSpaceMB": 4000,
@@ -13,6 +20,13 @@
         "maxNumDatasets": 3,
         "$": false
     },
+    "grandfather": {
+        "boxServer": "box.scraperwiki.com",
+        "maxDiskSpaceMB": 8000,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 100,
+        "$": false
+    },
     "grandfather-ec2": {
         "boxServer": "premium.scraperwiki.com",
         "maxDiskSpaceMB": 8000,
@@ -20,11 +34,25 @@
         "maxNumDatasets": 100,
         "$": false
     },
+    "large": {
+        "boxServer": "box.scraperwiki.com",
+        "maxDiskSpaceMB": 256,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 81,
+        "$": true
+    },
     "large-ec2": {
         "boxServer": "premium.scraperwiki.com",
         "maxDiskSpaceMB": 256,
         "maxHourCPUPerDay": 0.5,
         "maxNumDatasets": 81,
+        "$": true
+    },
+    "medium": {
+        "boxServer": "box.scraperwiki.com",
+        "maxDiskSpaceMB": 64,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 10,
         "$": true
     },
     "medium-ec2": {

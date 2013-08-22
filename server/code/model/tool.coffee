@@ -33,38 +33,53 @@ zDbTool = mongoose.model 'Tool', toolSchema
 class exports.Tool extends ModelBase
   @dbClass: zDbTool
 
-  rsync: (boxServer, callback) =>
-    child_process.exec "run-this-one rsync --delete -avz -e 'ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -i /etc/custard/tools_rsa' /opt/tools/ tools@#{boxServer}:", callback
-
   gitCloneOrPull: (options, callback) ->
-    {Box} = require 'model/box'
     @directory = "#{options.dir}/#{@name}"
     # :todo: whitelist @directory
     fs.exists @directory, (exists) =>
       if not exists
-        cmd = "mkdir #{@directory}; cd #{@directory}; git init; git fetch #{@gitUrl}; git checkout FETCH_HEAD"
+        cmd = "git clone #{@gitUrl} #{@directory}; cd #{@directory}"
       else
-        cmd = "cd #{@directory}; git fetch #{@gitUrl}; git checkout FETCH_HEAD"
+        cmd = "cd #{@directory}; git pull"
       cmd += "; chown -R www-data:www-data ." if process.env.NODE_ENV?
-      child_process.exec cmd, =>
-        async.each Box.listServers(), @rsync, callback
-
+      child_process.exec cmd, callback
 
   # TODO: DRY
-  # This is only used in the edge case where the tool is in the custard DB,
-  # but not on the custard server
   gitCloneIfNotExists: (options, callback) ->
-    {Box} = require 'model/box'
     @directory = "#{options.dir}/#{@name}"
     # :todo: whitelist @directory
     fs.exists @directory, (exists) =>
       if not exists
-        cmd = "mkdir #{@directory}; cd #{@directory}; git init; git fetch #{@gitUrl}"
+        cmd = "git clone #{@gitUrl} #{@directory}; cd #{@directory}"
         cmd += "; chown -R www-data:www-data ."
-        child_process.exec cmd, =>
-          async.each Box.listServers(), @rsync, callback
+        child_process.exec cmd, callback
       else
         callback null, null
+
+  updateInstances: (done) ->
+    {Box} = require 'model/box'
+    {User} = require 'model/user' # Avoids circular dependency
+    # updates all of the boxes on cobalt that use this tool.
+    if @type == 'importer'
+      M = Dataset
+    else if @type == 'view'
+      M = Dataset.View
+    else
+      console.warn "unexpected tool type"
+      return done "tooltypewrong"
+    M.findAllByTool @name, (err, datasets) =>
+      async.forEach datasets, (item, cb) =>
+        User.findByShortName item.user, (err, user) =>
+          if err? or not user?
+            cb err or "no user"
+          else
+            request.post
+              uri: "#{Box.endpoint item.boxServer, item.box}/exec"
+              form:
+                apikey: user.apikey
+                cmd: "cd ~/tool && git pull >> tool-update.log 2>&1"
+            , cb
+      , done
 
   loadManifest: (callback) ->
     fs.exists @directory, (isok) =>

@@ -2,39 +2,26 @@
 
 set -e
 
-cd /ebs/home/$1/tool
+cd /ebs/home/$1/tool 2> /dev/null || { echo "Box $1 doesn't have a tool."; exit 1; }
 
-mkfifo /tmp/sw-pipe
-trap "wait" EXIT
-trap "exec 1>&-" EXIT
-trap "rm /tmp/sw-pipe" EXIT
-
-exec 3>&1
-exec 4>&2
-
-# exec &> /tmp/sw-pipe
-tee -a /tmp/migrate.log < /tmp/sw-pipe >&3 &
-exec 1>/tmp/sw-pipe
-exec 2>&1
-
-if [ -e ../.gitconfig ]; then
+if [ "$3" != "code-scraper-in-browser" ] && [ -e ../.gitconfig ] && grep -qv "Anon" ../.gitconfig; then
   echo "-----------------------------------"
   echo "Box $1 has a customised .gitconfig:"
   cat ../.gitconfig
-  exit
+  exit 1
 fi
 
 if git branch | grep -q -v master
 then
   echo "Box $1 has a unrecognised git branch"
-  exit
+  exit 1
 fi
 
 count=$(git log origin/master..HEAD | wc -l)
 if [ $count -ne 0 ]
 then
   echo "Box $1 has a extra commits"
-  exit
+  exit 1
 fi
 
 IGNORE_FILES="egrep -v tool-update.log"
@@ -45,14 +32,14 @@ then
   echo "Box $1 has extra stuff"
   git status --porcelain
   echo "##########################"
-  exit
+  exit 1
 fi
 
 count=$(git stash list | wc -l)
 if [ $count -ne 0 ]
 then
   echo "Box $1 has a stash"
-  exit
+  exit 1
 fi
 
 IGNORE_FETCHREFS="egrep -v '^\\s+fetch = \\+refs/heads/master:refs/remotes/origin/master$' | egrep -v '^\\s+fetch = \\+refs/heads/\\*:refs/remotes/origin/\\*$' | egrep -v '^\\s+url ='"
@@ -72,7 +59,7 @@ then
   echo "'$md5sum2'"
   diff -u /tmp/sw-git-tool-original /tmp/sw-git-tool 
   echo "------------------------------"
-  exit
+  exit 1
 fi
 
 # compare .git

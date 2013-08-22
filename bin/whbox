@@ -17,7 +17,7 @@ rmQuote = (s) ->
   return t
 
 dir = '../charm-secrets'
-file = "#{dir}/config/live/cobalt.yaml"
+file = "#{dir}/config/live/custard.yaml"
 yamltext = fs.readFileSync file, 'utf-8'
 m = yamltext.match /CU_DB:\s*(.+?)\s*($|\n)/
 dbURL = m[1]

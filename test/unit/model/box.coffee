@@ -19,7 +19,7 @@ describe 'Box (server)', ->
     before (done) ->
       Box.create
         shortName: 'testofferson'
-        accountLevel: 'grandfather'
+        accountLevel: 'grandfather-ec2'
       , (err, box) =>
         firstBox = box
         done err
@@ -44,7 +44,7 @@ describe 'Box (server)', ->
 
       Box.create
         shortName: 'testofferson'
-        accountLevel: 'grandfather'
+        accountLevel: 'grandfather-ec2'
       , (err, box) =>
         @secondBox = box
         done()
@@ -68,3 +68,14 @@ describe 'Box (server)', ->
 
     it "doesn't change its uid", ->
       @sameBox.uid.should.equal firstBox.uid
+
+  context 'when I call Box.listServers', ->
+    before -> @servers = Box.listServers()
+
+    it 'returns an array of all the box servers', ->
+      @servers.should.include 'premium.scraperwiki.com'
+      @servers.should.include 'free-ec2.scraperwiki.com'
+      @servers.should.include 'ds-ec2.scraperwiki.com'
+
+    it 'gives me three servers (because that is how many there currently are)', ->
+      @servers.length.should.equal 3

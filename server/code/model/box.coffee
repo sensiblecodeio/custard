@@ -1,3 +1,4 @@
+_ = require 'underscore'
 mongoose = require 'mongoose'
 async = require 'async'
 nibbler = require 'nibbler'
@@ -170,7 +171,7 @@ class Box extends ModelBase
   @listServers: ->
     if /staging/.test process.env.NODE_ENV
       return [process.env.CU_BOX_SERVER]
-    obj.boxServer for plan, obj of plans
+    _.uniq (obj.boxServer for plan, obj of plans)
 
 
 exports.Box = Box

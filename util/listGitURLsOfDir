@@ -22,8 +22,8 @@ Tool.dbClass.find {}, (err, tools_) ->
     for dataset in datasets_
       datasets[dataset.box] = dataset
     
-    for view in dataset.views
-      datasets[view.box] = view
+      for view in dataset.views
+        datasets[view.box] = view
     
     for boxname, box of datasets
       if box.tool? and tools[box.tool]?

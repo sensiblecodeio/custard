@@ -1,0 +1,7 @@
+#! /usr/bin/env node
+
+var id = process.argv[2]
+var timehex = id.substring(0,8);
+var secondsSinceEpoch = parseInt(timehex, 16);
+var dt = new Date(secondsSinceEpoch*1000);
+console.log(dt);

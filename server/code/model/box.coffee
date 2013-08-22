@@ -1,4 +1,3 @@
-_ = require 'underscore'
 mongoose = require 'mongoose'
 async = require 'async'
 nibbler = require 'nibbler'
@@ -9,7 +8,6 @@ Schema = mongoose.Schema
 ModelBase = require 'model/base'
 {Tool} = require 'model/tool'
 {Plan} = require 'model/plan'
-plans = require 'plans.json'
 
 boxSchema = new Schema
   users: [String]
@@ -62,8 +60,9 @@ class Box extends ModelBase
             user: arg.user
             boxName: @name
             boxServer: @server
-            #TODO(ehg): don't create http dir in cobalt
-            cmd: "rm -fr http ; mkdir incoming ; ln -s /tools/#{tool.name} tool ; ln -s tool/http http"
+            # :todo: we don't really need to remove the http directory any more,
+            # because cobalt no longer furnishes it.
+            cmd: "rm -fr http ; mkdir incoming ; git clone #{gitURL} --depth 1 tool ; ln -s tool/http http"
           , (err, res, body) ->
             if err?
               callback err
@@ -167,12 +166,6 @@ class Box extends ModelBase
     max = 429496729
     min = 4000
     Math.floor(Math.random() * (max - min + 1)) + min
-
-  @listServers: ->
-    if /staging/.test process.env.NODE_ENV
-      return [process.env.CU_BOX_SERVER]
-    _.uniq (obj.boxServer for plan, obj of plans)
-
 
 exports.Box = Box
 

@@ -448,7 +448,8 @@ verifyRecurly = (req, resp) ->
 renderServerAndClientSide = (options, req, resp) ->
   fs.readFile "client/template/#{options.page}.eco", (err, contentTemplate) ->
     if err?
-      resp.send 500, {error: "Template not found: #{err}"}
+      console.warn "Template #{options.page} not found when rendering server side"
+      return resp.send 500, {error: "Template not found: #{err}"}
     _.extend options, pageTitles.SubNav[options.page]
     options.subnav ?= 'subnav'
     fs.readFile "client/template/#{options.subnav}.eco", (err, subnavTemplate) ->

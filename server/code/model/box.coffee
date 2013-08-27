@@ -62,8 +62,7 @@ class Box extends ModelBase
             user: arg.user
             boxName: @name
             boxServer: @server
-            #TODO(ehg): don't create http dir in cobalt
-            cmd: "rm -fr http ; mkdir incoming ; ln -s /tools/#{tool.name} tool ; ln -s tool/http http"
+            cmd: "mkdir incoming ; ln -s /tools/#{tool.name} tool"
           , (err, res, body) ->
             if err?
               callback err

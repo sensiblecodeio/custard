@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 cd /ebs/home/$1/tool 2> /dev/null || { echo "Box $1 doesn't have a tool."; exit 1; }
@@ -24,13 +23,13 @@ then
   exit 1
 fi
 
-IGNORE_FILES="egrep -v tool-update.log"
+IGNORE_FILES="egrep -v tool-update.log | egrep -v '^(!!|\?\?) http/' | egrep -v '\.pyc$'"
 
-count=$(git status --porcelain | eval "$IGNORE_FILES" | wc -l)
+count=$(git status --porcelain --ignored | eval "$IGNORE_FILES" | wc -l)
 if [ $count -ne 0 ]
 then
   echo "Box $1 has extra stuff"
-  git status --porcelain
+  git status --porcelain --ignored
   echo "##########################"
   exit 1
 fi

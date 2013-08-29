@@ -93,12 +93,12 @@ We love them. First download Selenium:
     # Linux:
     wget http://selenium.googlecode.com/files/selenium-server-standalone-2.29.0.jar
     wget http://chromedriver.googlecode.com/files/chromedriver_linux64_26.0.1383.0.zip
-    unzip chromedriver
+    unzip chromedriver<TAB>
 
     # Mac:
     curl -O http://selenium.googlecode.com/files/selenium-server-standalone-2.29.0.jar
     curl -O https://chromedriver.googlecode.com/files/chromedriver_mac_26.0.1383.0.zip
-    unzip chromedriver
+    unzip chromedriver<TAB>
 
 Then start a Selenium server:
 

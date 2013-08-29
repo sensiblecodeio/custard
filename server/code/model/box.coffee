@@ -62,7 +62,7 @@ class Box extends ModelBase
             user: arg.user
             boxName: @name
             boxServer: @server
-            cmd: "mkdir incoming ; ln -s /tools/#{tool.name} tool"
+            cmd: "mkdir incoming http; ln -s /tools/#{tool.name} tool"
           , (err, res, body) ->
             if err?
               callback err

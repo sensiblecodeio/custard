@@ -16,7 +16,7 @@ tee -a /tmp/migrate.log < /tmp/sw-pipe >&3 &
 exec 1>/tmp/sw-pipe
 exec 2>&1
 
-util/listGitURLsOfDir /ebs/home | grep -v newdataset | sort -u |
+util/listGitURLsOfDir /ebs/home | egrep -v 'new(view|dataset)$' | sort -u |
   while read -r BOX GIT_URL TOOLNAME
   do
     if ./should-migrate.sh $BOX $GIT_URL $TOOLNAME &>> /tmp/migrate.log

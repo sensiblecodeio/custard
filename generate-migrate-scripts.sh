@@ -44,8 +44,12 @@ egrep -v 'new(view|dataset)$' | sort -u |
 # Migrate box $BOX
 cd /ebs/home/$BOX
 mkdir pre-symlink-migration
-mv http tool pre-symlink-migration
-mkdir http
+mv tool pre-symlink-migration
+if [ -L http ]
+then
+  rm http
+fi
+mkdir -p http
 ln -s /tools/$TOOLNAME tool
 $MIGRATED_HTTP_FILES
 cat <<ROLLBACK >> \$UNMIGRATE_FILE
@@ -53,7 +57,7 @@ cd /ebs/home/$BOX
 rm tool
 mv pre-symlink-migration/* .
 rmdir pre-symlink-migration
-ROLLBACK 
+ROLLBACK
 EOF
 )
     else

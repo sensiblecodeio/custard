@@ -22,8 +22,9 @@ cat <<EOF > $MIGRATE_FILE
 UNMIGRATE_FILE="${PWD}/unmigrate-$(hostname).sh"
 : > \$UNMIGRATE_FILE
 EOF
-#echo "ffaalqy -- spreadsheet-download "
-util/listGitURLsOfDir /ebs/home | egrep -v 'new(view|dataset)$' | sort -u |
+#echo "ffaalqy -- spreadsheet-download " |
+util/listGitURLsOfDir /ebs/home | 
+egrep -v 'new(view|dataset)$' | sort -u |
   while read -r BOX GIT_URL TOOLNAME
   do
     if ./should-migrate.sh $BOX $GIT_URL $TOOLNAME &>> /tmp/migrate.log
@@ -33,8 +34,8 @@ util/listGitURLsOfDir /ebs/home | egrep -v 'new(view|dataset)$' | sort -u |
       (
       cd "/ebs/home/$BOX/tool" 
       MHF="$(git status --porcelain --ignored http | egrep '^(!!|\?\?) http/' || true)"
-      MHF="$(echo "$MHF" | cut -d' ' -f2-)"
-      MIGRATED_HTTP_FILES="$(echo "$MHF" | while read -r f; do echo "mkdir -p $(dirname $f); mv tool/$f $(dirname $f)"; done)"
+      MHF="$(echo -n "$MHF" | cut -d' ' -f2-)"
+      MIGRATED_HTTP_FILES="$(echo -n "$MHF" | while read -r f; do echo "mkdir -p $(dirname $f); mv tool/$f $(dirname $f)"; done)"
       #MIGRATED_HTTP_FILES="$(for f in $MHF; do echo "mkdir -p $(dirname $f); mv $f $(dirname $f)"; done)" 
       cat <<EOF >> $MIGRATE_FILE
 

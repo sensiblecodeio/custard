@@ -19,6 +19,10 @@ exec 2>&1
 MIGRATE_FILE="${PWD}/migrate-$(hostname).sh"
 
 cat <<EOF > $MIGRATE_FILE
+#!/bin/bash
+
+set -e
+
 UNMIGRATE_FILE="${PWD}/unmigrate-$(hostname).sh"
 : > \$UNMIGRATE_FILE
 EOF
@@ -44,14 +48,14 @@ egrep -v 'new(view|dataset)$' | sort -u |
 # Migrate box $BOX
 cd /ebs/home/$BOX
 mkdir pre-symlink-migration
-mv tool pre-symlink-migration
 if [ -L http ]
 then
   rm http
 fi
 mkdir -p http
-ln -s /tools/$TOOLNAME tool
 $MIGRATED_HTTP_FILES
+mv tool pre-symlink-migration
+ln -s /tools/$TOOLNAME tool
 cat <<ROLLBACK >> \$UNMIGRATE_FILE
 cd /ebs/home/$BOX
 rm tool

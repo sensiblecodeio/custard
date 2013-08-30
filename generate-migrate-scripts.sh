@@ -39,7 +39,7 @@ egrep -v 'new(view|dataset)$' | sort -u |
       cd "/ebs/home/$BOX/tool" 
       MHF="$(git status --porcelain --ignored http | egrep '^(!!|\?\?) http/' || true)"
       MHF="$(echo -n "$MHF" | cut -d' ' -f2-)"
-      MIGRATED_HTTP_FILES="$(echo -n "$MHF" | while read -r f; do echo "mkdir -p $(dirname $f); mv tool/$f $(dirname $f)"; done)"
+      MIGRATED_HTTP_FILES="$(echo -n "$MHF" | while read -r f; do echo "mkdir -p $(dirname $f); mv tool/$f $(dirname $f) || true"; done)"
       #MIGRATED_HTTP_FILES="$(for f in $MHF; do echo "mkdir -p $(dirname $f); mv $f $(dirname $f)"; done)" 
       cat <<EOF >> $MIGRATE_FILE
 

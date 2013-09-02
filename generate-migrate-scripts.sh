@@ -47,8 +47,9 @@ egrep -v 'new(view|dataset)$' | sort -u |
 
 ##################
 # Migrate box $BOX
+echo Migrating $BOX
 cd /ebs/home/$BOX
-mkdir pre-symlink-migration
+mkdir -p pre-symlink-migration
 chown $BOX:databox pre-symlink-migration 
 if [ -L http ]
 then

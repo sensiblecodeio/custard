@@ -26,6 +26,7 @@ set -e
 UNMIGRATE_FILE="${PWD}/unmigrate-$(hostname).sh"
 : > \$UNMIGRATE_FILE
 EOF
+i=0
 #echo "ffaalqy -- spreadsheet-download " |
 util/listGitURLsOfDir /ebs/home | 
 egrep -v 'new(view|dataset)$' | sort -u |
@@ -34,6 +35,7 @@ egrep -v 'new(view|dataset)$' | sort -u |
     if ./should-migrate.sh $BOX $GIT_URL $TOOLNAME &>> /tmp/migrate.log
     then
       echo ---- Migrating box $BOX -- $TOOLNAME
+      export I=$(((i++)))
       #   
       (
       cd "/ebs/home/$BOX/tool" 
@@ -47,7 +49,7 @@ egrep -v 'new(view|dataset)$' | sort -u |
 
 ##################
 # Migrate box $BOX
-echo Migrating $BOX
+echo Migrating ${I} $BOX
 cd /ebs/home/$BOX
 mkdir -p pre-symlink-migration
 chown $BOX:databox pre-symlink-migration 

@@ -59,9 +59,7 @@ describe 'Successful login', ->
         wd40.fill '#username', 'ickletest', ->
           wd40.fill '#password', 'toottoot', ->
             wd40.click '#login', ->
-              setTimeout ->
-                done()
-              , 500
+              setTimeout done, 500
 
       it 'shows my name', (done) ->
         # change "does not show my name" below as well if you change this

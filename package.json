@@ -59,6 +59,7 @@
     "backbone-relational": "~0.7.0",
     "jsdom": "~0.3.4",
     "wd": "~0.1.1",
+    "wd40": "*",
     "mongodb": "~1.2.12",
     "sqlite3": "~2.1.7"
   },

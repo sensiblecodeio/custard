@@ -1,6 +1,6 @@
 # Shared before/after functions for all integration tests
 
-{wd40, browser} = require '../wd40'
+{wd40, browser} = require 'wd40'
 cleaner = require '../cleaner'
 request = require 'request'
 

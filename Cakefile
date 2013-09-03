@@ -1,6 +1,7 @@
 {spawn, exec} = require 'child_process'
 fs = require 'fs'
 
+glob = require 'glob'
 which = require 'which'
 async = require 'async'
 
@@ -52,11 +53,13 @@ task 'dev', 'start dev env', ->
     # watch_js
 
 Selenium = ->
-  se = spawn 'java', ['-jar', 'selenium-server-standalone-2.29.0.jar',
-    '-Dwebdriver.chrome.driver=chromedriver']
-  se.stdout.pipe process.stdout
-  se.stderr.pipe process.stderr
-  log 'Selenium started'
+  glob "selenium-server-standalone-2.*.jar", null, (err, files) ->
+    jarfile = files[files.length-1]
+    se = spawn 'java', ['-jar', jarfile,
+      '-Dwebdriver.chrome.driver=chromedriver']
+    se.stdout.pipe process.stdout
+    se.stderr.pipe process.stderr
+    log 'Selenium started'
 
 task 'se', 'start selenium', Selenium
 task 'Se', 'start Selenium', Selenium

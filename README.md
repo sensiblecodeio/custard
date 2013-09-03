@@ -88,37 +88,34 @@ so you should be able to visit `localhost:3001` in a web browser.
 
 ## Tests
 
-We love them. First download Selenium:
+We love them.
 
-    # Linux:
-    wget http://selenium.googlecode.com/files/selenium-server-standalone-2.29.0.jar
-    wget http://chromedriver.googlecode.com/files/chromedriver_linux64_26.0.1383.0.zip
-    unzip chromedriver<TAB>
+First, download and unzip Selenium Server and Chromedriver, and put them in your custard directory or the next level up:
 
-    # Mac:
-    curl -O http://selenium.googlecode.com/files/selenium-server-standalone-2.29.0.jar
-    curl -O https://chromedriver.googlecode.com/files/chromedriver_mac_26.0.1383.0.zip
-    unzip chromedriver<TAB>
+- https://code.google.com/p/selenium/downloads/list
+- https://code.google.com/p/chromedriver/downloads/list
 
-Then start a Selenium server:
+If you're wondering about versions, right now we're having luck with:
+
+- [Selenium Server Standalone 2.35.0](https://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar)
+- [Chromedriver Mac32 2.2](https://chromedriver.googlecode.com/files/chromedriver_mac32_2.2.zip)
+- [Chromedriver Linux64 2.2](https://chromedriver.googlecode.com/files/chromedriver_linux64_2.2.zip)
+
+Then start the Selenium server using `cake se`:
 
     . activate && cake se
 
-(this is a shortcut for running `java -jar selenium-server-standalone-2.29.0.jar -Dwebdriver.chrome.driver=chromedriver`)
+(this is a shortcut for running `java -jar selenium-server-standalone-2.*.0.jar -Dwebdriver.chrome.driver=chromedriver`)
 
 To run the tests:
 
-    . activate && cake dev       # see above
+    . activate && cake dev       # runs a local webserver, as above
     mocha
 
-or one of these:
+Or one of these:
 
     mocha test/unit
     mocha test/integration
-
-or even ehg's special:
-
-    mocha test
     
 ## Optional: disabling startup services
 

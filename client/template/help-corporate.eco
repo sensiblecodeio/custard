@@ -37,8 +37,8 @@ This is because data tools need to be <b>easy</b> for anyone to use in most case
 </p>
 
 <p>ScraperWiki is deployed in a Public Cloud model. It is hosted on <abbr title="Infrastructure as a Service">IaaS</abbr>
-servers at cloud provider <a href="http://www.linode.com/">Linode</a>, at its
-London datacentre. We meet the tiering standards that Linode meet.
+servers at <a href="https://aws.amazon.com/">Amazon Web Services</a> in the US.
+We meet Amazon's tiering standards.
 </p>
 
 <p>We currently scale by provisioning as required, as we are a platform for
@@ -82,14 +82,12 @@ visualisations.
 
 <h2 id="backups">Backups / disaster recovery</h2>
 
-<p>All dataset files and data are stored on a distributed GlusterFS filesystem,
-mirrored with two copies. Metadata is stored in a MongoDB cluster on MongoHQ’s
-cloud service.
+<p>All dataset files and data are stored on Amazon Elastic Block Store (EBS)
+volumes. Metadata is stored in a MongoDB cluster on MongoHQ’s cloud service.
 </p>
 
-<p>Our backup strategy is based on two tiers of backups, one on Linode, and the
-other redundantly on Amazon S3. These are five sequentially worse disaster
-situations, with recovery times indicated.</p>
+<p>These are five sequentially worse disaster situations, with recovery
+times indicated.</p>
 
 <style type="text/css">
 .disasters td {
@@ -120,26 +118,34 @@ td.disaster-description {
 
 <table class="table table-bordered disasters">
   <tr>
+    <td class="disaster-summary">Storage hardware failure</td>
+    <td class="disaster-description">
+      We store all important data on EBS, which is highly reliable. Volumes are
+      automatically replicated so they are not vulnerable to failure of any single
+      hardware component.
+    </td>
+    <td class="disaster-estimate">No time</td>
+  </tr>
+  <tr class="troublesome">
     <td class="disaster-summary">Single machine failure</td>
     <td class="disaster-description">We can automatically rebuild individual machines in about <b>20 minutes</b>, and the whole cluster in under <b>2 hours</b>.
-      Machines containing persistent filesystems can be recovered from daily images within about <b>1 hour</b>.
+      We mount the EBS image from the failed machine on the new machine, so no data is lost. 
       MongoDB is backed up to Amazon S3, where we can restore in under <b>1 hour</b>.</td>
     <td class="disaster-estimate">~1&nbsp;hour</td>
   </tr>
-  <tr class="troublesome">
-    <td class="disaster-summary">Filesystem failure</td>
-    <td class="disaster-description">Should multiple GlusterFS servers fail, or a software bug damages the GlusterFS filesystem, we have daily rotating differential encrypted backups of the GlusterFS filesystem using Duplicity, with weekly full backups. These are stored in Amazon S3. We can restore the whole filesystem in under <b>1 day</b>, and corporate plan customers in under <b>2 hours</b>.</td>
+  <tr class="bad">
+    <td class="disaster-summary">Filesystem or EBS failure</td>
+    <td class="disaster-description">
+      Should an EBS volume fail or if the files on it accidentally damaged, we
+      will recover it from daily, rotating snapshots.  These are kept in two separate
+      Amazon regions. We can restore the whole filesystem in under <b>1
+      day</b>, and corporate plan customers in under <b>2 hours</b>.</td>
     <td class="disaster-estimate">&lt;2&nbsp;hours</td>
   </tr>
-  <tr class="bad">
-    <td class="disaster-summary">Datacentre failure</td>
-    <td class="disaster-description">Should Linode’s London data centre fail, they have additional data centres in the US and Japan which we can restore to in under <b>1 day</b> for all user, <b>under 2 hours</b> for corporate customers.</td>
-    <td class="disaster-estimate">&lt;1&nbsp;day</td>
-  </tr>
   <tr class="terrible">
-    <td class="disaster-summary">Linode failure</td>
-    <td class="disaster-description">If the whole of Linode fails, then we will recover to a new cluster on Amazon EC2. This will currently require updating of some systems administration scripts, so will take <b>2 days</b>.</td>
-    <td class="disaster-estimate">2&nbsp;days</td>
+    <td class="disaster-summary">Datacentre failure</td>
+    <td class="disaster-description">Should the Amazon US data centre we use fail, they have additional data centres which we can restore to in under <b>1 day</b> for all users, <b>under 2 hours</b> for corporate customers.</td>
+    <td class="disaster-estimate">&lt;1&nbsp;day</td>
   </tr>
 </table>
 

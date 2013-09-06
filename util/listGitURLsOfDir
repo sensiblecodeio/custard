@@ -1,0 +1,41 @@
+#!/usr/bin/env coffee
+fs = require 'fs'
+
+mongoose = require 'mongoose'
+async = require 'async'
+
+{Dataset} = require 'model/dataset'
+{Tool} = require 'model/tool'
+
+mongoose.connect process.env.CU_DB
+
+
+datasets = {}
+tools = {}
+boxes = {}
+
+Tool.dbClass.find {}, (err, tools_) ->
+  for tool in tools_
+    tools[tool.name] = tool
+ 
+  Dataset.dbClass.find {}, (err, datasets_) ->
+    for dataset in datasets_
+      datasets[dataset.box] = dataset
+    
+      for view in dataset.views
+        datasets[view.box] = view
+    
+    for boxname, box of datasets
+      if box.tool? and tools[box.tool]?
+        tool = tools[box.tool]
+        boxes[boxname] = [tool.gitUrl, box.tool]
+
+    files = fs.readdirSync process.argv[2]
+    
+    for dir in files
+    
+      if boxes[dir]?
+        box = boxes[dir]
+        console.log "#{dir} #{box[0]} #{box[1]}"
+ 
+    process.exit 0

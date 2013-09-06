@@ -1,0 +1,28 @@
+#!/usr/bin/env coffee
+mongoose = require 'mongoose'
+async = require 'async'
+
+{User} = require 'model/user'
+{Box} = require 'model/box'
+plans = require 'plans.json'
+
+mongoose.connect process.env.CU_DB
+
+addBoxServer = (box, callback) ->
+  console.log box
+  User.findByShortName box.users[0], (err, user) ->
+    if err?
+      console.log err
+      return callback err
+    else
+      server = plans[user.accountLevel]?.boxServer
+      if server?
+        box.server = server
+        box.save callback
+      else
+        console.log "NO SERVER for #{user.shortName}"
+        return callback 'NO SERVER'
+
+Box.dbClass.find {server: null}, (err, boxen) ->
+  async.eachSeries boxen, addBoxServer, (err) ->
+    console.log err if err?

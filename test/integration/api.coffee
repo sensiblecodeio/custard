@@ -47,11 +47,12 @@ describe 'API', ->
               email: 'stevejobs@sharklasers.com'
               description: 'Need data for thermonuclear war against android. Pls help. Kthxbai.'
           , (err, res, body) =>
-            @body = body
+            @body = JSON.parse(body)
             done()
 
         it 'returns a valid ticket ID', ->
-          JSON.parse(@body).id.should.be.above 1999
+          @body.should.have.property 'id'
+          1999.should.be.below @body.id
 
     describe 'Data request form (invalid request)', ->
       context 'POST /api/data-request', ->

@@ -24,6 +24,8 @@ class exports.DataRequest
     , (err, resp, body) =>
       if err
         cb err
+      else if resp.statusCode != 200
+        cb "Box response: #{resp.statusCode} #{body}"
       else if parseInt(body) is NaN
         cb "Returned ticket ID is not a number: #{body}"
       else

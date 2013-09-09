@@ -110,7 +110,7 @@ exports.users = [
   apikey: 'testsersonsdf',
   sshKeys: [],
   isStaff: false,
-  accountLevel: "large",
+  accountLevel: "large-ec2",
   canBeReally: ['tinat'],
   recurlyAccount: "testersonltd-2319852"
 },

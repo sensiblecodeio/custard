@@ -20,7 +20,7 @@ closest () {
 
 possibly_quoted=$(
   cd $(closest charm-secrets)
-  sed -n '/CU_DB/s/.* \(.*\)/\1/p' config/live/cobalt.yaml)
+  sed -n '/CU_DB/s/.* \(.*\)/\1/p' config/live/custard.yaml)
 
 eval url=$possibly_quoted
 cd $(closest custard)

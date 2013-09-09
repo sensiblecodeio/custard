@@ -15,7 +15,7 @@ describe 'Client model: Dataset', ->
     helper.evalConcatenatedFile 'client/code/model/view.coffee'
   unless Cu.Model.Dataset?
     helper.evalConcatenatedFile 'client/code/model/dataset.coffee'
-  helper.evalConcatenatedFile 'shared/vendor/js/prettydate.js'
+  helper.evalConcatenatedFile 'shared/vendor/js/humane.js'
 
   describe 'URL', ->
     beforeEach ->

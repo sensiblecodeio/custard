@@ -253,7 +253,7 @@ describe 'Server model: Dataset', ->
       it 'saves the status', ->
         @saveSpy.calledOnce.should.be.true
 
-  context "when statusUpdatedHuman() is called", ->
+  context "when dateset.statusUpdatedHuman is called", ->
     before ->
       @dataset = new Cu.Model.Dataset
         name: 'updateHumanTest'
@@ -266,12 +266,21 @@ describe 'Server model: Dataset', ->
           # status.updated is sufficiently old to test for
           # https://github.com/scraperwiki/custard/issues/364
           updated: "2013-04-12T11:00:57.847Z"
+      @never = new Cu.Model.Dataset
+        name: 'neverTest'
+        box: 'box24243'
+        tool: 'tool'
+        displayName: 'Never Test'
 
     it "returns a human readable date", ->
       humanDate = @dataset.statusUpdatedHuman()
       should.equal typeof humanDate, 'string'
       humanDate.should.not.be.empty
       humanDate.should.include "ago"
+
+    it """returns "Never" when there is no status""", ->
+      humanDate = @never.statusUpdatedHuman()
+      should.equal humanDate, "Never"
 
   context 'when dataset.findToBeDeleted is called', ->
     it 'returns datasets with toBeDeleted in the past', (done) ->

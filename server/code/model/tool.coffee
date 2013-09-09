@@ -34,7 +34,10 @@ class exports.Tool extends ModelBase
   @dbClass: zDbTool
 
   rsync: (boxServer, callback) =>
-    child_process.exec "run-this-one rsync --delete -avz -e 'ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -i /etc/custard/tools_rsa' /opt/tools/ tools@#{boxServer}:", callback
+    if 'testing' == process.env.NODE_ENV
+      callback()
+    else
+      child_process.exec "run-this-one rsync --delete -avz -e 'ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -i /etc/custard/tools_rsa' /opt/tools/ tools@#{boxServer}:", callback
 
   gitCloneOrPull: (options, callback) ->
     {Box} = require 'model/box'

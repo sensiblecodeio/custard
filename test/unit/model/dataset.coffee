@@ -15,6 +15,7 @@ describe 'Client model: Dataset', ->
     helper.evalConcatenatedFile 'client/code/model/view.coffee'
   unless Cu.Model.Dataset?
     helper.evalConcatenatedFile 'client/code/model/dataset.coffee'
+  helper.evalConcatenatedFile 'shared/vendor/js/prettydate.js'
 
   describe 'URL', ->
     beforeEach ->
@@ -86,6 +87,8 @@ describe 'Client model: Dataset', ->
 
     it "model.state is set to null", ->
       should.not.exist @save.firstCall.args[0].state
+
+
 
 describe 'Server model: Dataset', ->
 
@@ -249,6 +252,26 @@ describe 'Server model: Dataset', ->
 
       it 'saves the status', ->
         @saveSpy.calledOnce.should.be.true
+
+  context "when statusUpdatedHuman() is called", ->
+    before ->
+      @dataset = new Cu.Model.Dataset
+        name: 'updateHumanTest'
+        box: 'box24423'
+        tool: 'tool'
+        displayName: 'Update Human Test'
+        status:
+          type: 'ok'
+          message: 'just testing'
+          # status.updated is sufficiently old to test for
+          # https://github.com/scraperwiki/custard/issues/364
+          updated: "2013-04-12T11:00:57.847Z"
+
+    it "returns a human readable date", ->
+      humanDate = @dataset.statusUpdatedHuman()
+      should.equal typeof humanDate, 'string'
+      humanDate.should.not.be.empty
+      humanDate.should.include "ago"
 
   context 'when dataset.findToBeDeleted is called', ->
     it 'returns datasets with toBeDeleted in the past', (done) ->

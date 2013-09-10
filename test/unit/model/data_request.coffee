@@ -43,7 +43,7 @@ describe 'Data request (server)', ->
     @dsEmailStub = sinon.stub email, 'dataRequestEmail'
     @customerEmailStub = sinon.stub email, 'dataRequestConfirmation'
     @requestStub = sinon.stub request, 'post', (options, cb) ->
-      cb null, 'fake request', 9999
+      cb null, {statusCode: 200}, 9999
     @dataRequest = new DataRequest
       name: 'Steve Jobs'
       email: 'stevejobs@sharklasers.com'

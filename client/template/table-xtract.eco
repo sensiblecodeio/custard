@@ -43,6 +43,16 @@ h2 {
   text-align: center;
 }
 
+#description {
+  overflow: auto;
+  margin: 50px 0 30px;
+}
+
+#description img {
+  width: 25%;
+  margin-right: 5%;
+}
+
 .benefit {
   margin: 20px 0;
 }
@@ -174,6 +184,10 @@ h2 {
     padding: 14px 24px;
   }
 
+  #description img {
+    width: 15%;
+  }
+
   .benefit {
     margin-bottom: 40px;
   }
@@ -188,7 +202,11 @@ h2 {
   <a class="btn btn-large btn-primary" href="#try-it-out" data-nonpushstate>Try Table Xtract <span class="muted">&ndash;&nbsp;Its Free!</span></a>
 </div>
 
-<p class="lead">Table Xtract from ScraperWiki is a data scraper that removes the need for laborious and error prone copying and pasting of data from PDFs, excel files and web pages. Unlike other data scrapers Table Xtract is very accurate and doesn&rsquo;t need a software download or lengthy configurations.  Just give us the URL, answer a few questions and Table Xtract accurately acquires, cleans and formats the data for you.</p>
+<div id="description">
+  <img src="/image/table-xtract-placeholder.jpg" class="pull-left" width="470" alt="">
+  <p class="lead">Table Xtract from ScraperWiki is a data scraper that removes the need for laborious and error prone copying and pasting of data from PDFs, excel files and web pages.</p>
+  <p class="lead">Unlike other data scrapers Table Xtract is very accurate and doesn&rsquo;t need a software download or lengthy configurations. Just give us the URL, answer a few questions and Table Xtract accurately acquires, cleans and formats the data for you.</p>
+</div>
 
 <div id="benefits">
   <div class="benefit first">

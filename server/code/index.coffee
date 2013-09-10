@@ -499,8 +499,11 @@ app.get '/about/?*', (req, resp) ->
 app.get '/professional/?', (req, resp) ->
   renderServerAndClientSide {page: "professional", subnav: 'professionalnav' }, req, resp
 
+app.get '/tools/table-xtract/?', (req, resp) ->
+  renderServerAndClientSide {page: "table-xtract", subnav: 'table-xtract-nav' }, req, resp
+
 app.get '/', (req, resp) ->
-  renderServerAndClientSide { page: "home", subnav: null }, req, resp
+  renderServerAndClientSide {page: "home", subnav: null}, req, resp
 
 # Switch is protected by a specific function.
 app.get '/switch/:username/?', checkSwitchUserRights, switchUser

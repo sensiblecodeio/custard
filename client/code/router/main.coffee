@@ -31,9 +31,10 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('(?:docs|help)/([^/]+)/?'), 'help'
     @route RegExp('pricing/?'), 'pricing'
     @route RegExp('pricing/([^/]+)/?'), 'pricing'
-    @route RegExp('tools/?'), 'toolShop'
+    @route RegExp('^tools/?$'), 'toolShop'
     @route RegExp('chooser/?'), 'toolChooser'
     @route RegExp('tools/people-pack/?'), 'peoplePack'
+    @route RegExp('tools/table-xtract/?'), 'tableXtract'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
     @route RegExp('dataset/([^/]+)/settings/?'), 'datasetSettings'
     @route RegExp('dataset/([^/]+)/chooser/?'), 'datasetToolChooser'
@@ -177,11 +178,17 @@ class Cu.Router.Main extends Backbone.Router
           @subnavView.showView subnavView
 
   toolShop: ->
-    app.navigate '/tools/people-pack/', true
+    app.navigate '/tools/table-xtract/', true
 
   peoplePack: ->
     subnavView = new Cu.View.ToolShopNav {name: 'People Pack', url: '/tools/people-pack'}
     contentView = new Cu.View.PeoplePack()
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  tableXtract: ->
+    subnavView = new Cu.View.TableXtractNav()
+    contentView = new Cu.View.TableXtract()
     @appView.showView contentView
     @subnavView.showView subnavView
 

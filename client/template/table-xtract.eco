@@ -1,0 +1,216 @@
+<style>
+
+.hero-unit {
+  text-align: center;
+  background-color: #ffc;
+  padding: 20px;
+  -moz-transition: padding 0.5s;
+  -webkit-transition: padding 0.5s;
+  -o-transition: padding 0.5s;
+  transition: padding 0.5s;
+}
+
+.hero-unit h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  line-height: 1.1;
+}
+
+.hero-unit .lead {
+  font-size: 18px;
+  line-height: 24px;
+  margin: 10px 0 15px 0;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.btn-primary .muted {
+  color: inherit;
+  opacity: 0.7;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+  font-weight: 200;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+}
+
+.case-study {
+  margin: 20px 0;
+}
+
+.case-study .media-body h4 {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0;
+}
+
+.case-study .media-body p {
+  font-size: 14px;
+  line-height: 16px;
+  margin-bottom: 0;
+}
+
+.case-study strong {
+  font-weight: normal;
+  background-color: #ffc;
+  background-color: rgba(255,255,0,0.2);
+  padding: 1px 4px;
+}
+
+
+@media only screen and (min-width: 620px) {
+
+  .hero-unit {
+    /*padding: 30px;*/
+  }
+
+  .hero-unit h1 {
+    font-size: 42px;
+  }
+
+  .hero-unit .lead {
+    font-size: 21px;
+    line-height: 26px;
+  }
+
+  h2 {
+    font-size: 28px;
+    line-height: 32px;
+    text-align: left;
+  }
+
+}
+
+
+@media only screen and (min-width: 920px) {
+
+  .hero-unit {
+    /*padding: 50px;*/
+  }
+
+  .hero-unit h1 {
+    font-size: 60px;
+  }
+
+  .hero-unit .lead {
+    font-size: 28px;
+    line-height: 32px;
+    margin: 20px 0 30px 0;
+  }
+
+  h2 {
+    font-size: 31.5px;
+    line-height: 40px;
+  }
+
+  .case-study {
+    float: left;
+    width: 30%;
+    margin-right: 5%;
+    margin-bottom: 30px;
+  }
+
+  .case-study.last {
+    margin-right: 0;
+  }
+
+}
+
+
+@media only screen and (min-width: 1220px) {
+
+  .hero-unit {
+    /*padding: 60px;*/
+  }
+
+  .hero-unit h1 {
+    font-size: 70px;
+  }
+
+  .hero-unit .lead {
+    font-size: 32px;
+    line-height: 36px;
+    margin: 20px 0 30px 0;
+  }
+
+  .hero-unit .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+
+  .case-study {
+    margin-bottom: 40px;
+  }
+
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+</style>
+
+<div class="hero-unit">
+  <h1>Automatically Extract tables<br/>from websites and PDFs</h1>
+  <p class="lead">No more time consuming and error prone copying and pasting.</p>
+  <button class="btn btn-large btn-primary">Try Table Xtract <span class="muted">&ndash;&nbsp;Its Free!</span></button>
+</div>
+
+<h4>Table Xtract from ScraperWiki is a data scraper that removes the need for laborious and error prone copying and pasting of data from PDFs and web pages.  No need for software downloads or lengthy configurations, just give us the URL and Table Xtract acquires, cleans and formats the data for you.</h4>
+
+<div class="case-study first">
+  <h4 class="media-heading">PDFs and Excel Files as well</h4>
+  <blockquote>
+    <p>There is a huge amount of useful information trapped in PDF and Excel files as well as websites, Table Xtract can cope with these three data sources with ease.</p>
+  </blockquote>
+</div>
+
+<div class="case-study">
+  <h4 class="media-heading">Cleans and Formats</h4>
+  <blockquote>
+    <p>As well as Extracting your data, we also save you time by making sure things like dates and decimal points are formatted appropriately and consistently.</p>
+  <blockquote>
+</div>
+
+<div class="case-study last">
+  <h4 class="media-heading">Works with other ScraperWiki Tools</h4>
+  <blockquote>
+    <p>Once you have Extracted your tables, use the other ScraperWiki tools to further analyse, visualise and export your data.</p>
+  </blockquote>
+</div>
+
+<span class="clearfix"></span>
+
+<h2>How does it work?</h2>
+<div class="video-container">
+  <iframe width="500" height="281" src="http://www.youtube.com/embed/Qt1_atU_Qsg?feature=oembed" frameborder="0" allowfullscreen=""></iframe>
+</div>
+
+<h2>Table Xtract is free to try during beta - let us know what you think!</h2>
+
+<div class="hero-unit" style="margin: 20px 0 40px 0">
+  <button class="btn btn-large btn-primary">Try Table Xtract <span class="muted">&ndash;&nbsp;Free during beta</span></button>
+</div>

@@ -57,7 +57,7 @@ h2 {
   margin: 20px 0;
 }
 
-.cast-study p {
+.benefit p {
   margin-bottom: 10px; /* slightly tighter para spacing, because it's very busy round there */
 }
 
@@ -66,6 +66,11 @@ h2 {
   background-color: #ffc;
   background-color: rgba(255,255,0,0.2);
   padding: 1px 4px;
+}
+
+.benefit img.pull-left {
+  margin-right: 20px;
+  width: 50px;
 }
 
 #try-it-out {
@@ -210,22 +215,37 @@ h2 {
 
 <div id="benefits">
   <div class="benefit first">
-    <h4>Highly Accurate</h4>
-    <p>Our aim is for Table Xtract to be able to extract your data with no errors.</p>
-    <p>No errors means you can be confident that the data is accurate and can get to the insights it contains more quickly.</p>
-    <p>We think we are 95% of the way there so register now and help us make it to 100%!</p>
+    <div class="media">
+      <img class="pull-left" src="/image/table-xtract-accurate.gif" width="64" height="64" alt="">
+      <div class="media-body">
+        <h4 class="media-heading">Highly Accurate</h4>
+        <p>Our aim is for Table Xtract to be able to extract your data with no errors.</p>
+        <p>No errors means you can be confident that the data is accurate and can get to the insights it contains more quickly.</p>
+        <p>We think we are 95% of the way there so register now and help us make it to 100%!</p>
+      </div>
+    </div>
   </div>
 
   <div class="benefit">
-    <h4>Always Up To Date</h4>
-    <p>There is nothing worse than wasting time acting on conclusions based on out of date data.</p>
-    <p>Table Xtract checks to see if your data has changed so you can always be confident that you are working with the most up to date version.</p>
+    <div class="media">
+      <img class="pull-left" src="/image/table-xtract-schedule.gif" width="64" height="64" alt="">
+      <div class="media-body">
+        <h4 class="media-heading">Always Up To Date</h4>
+        <p>There is nothing worse than wasting time acting on conclusions based on out of date data.</p>
+        <p>Table Xtract checks to see if your data has changed so you can always be confident that you are working with the most up to date version.</p>
+      </div>
+    </div>
   </div>
 
   <div class="benefit last">
-    <h4>No Coding</h4>
-    <p>Like many of the other ScraperWiki tools, Table Xtract is designed for non technical people so you can scrape the data you are interested in without the need to code.</p>
-    <p>This allows you to make use of the data without having to pay or wait for a developer to extract the data for you.</p>
+    <div class="media">
+      <img class="pull-left" src="/image/table-xtract-nocode.gif" width="64" height="64" alt="">
+      <div class="media-body">
+        <h4 class="media-heading">No Coding</h4>
+        <p>Like many of the other ScraperWiki tools, Table Xtract is designed for non technical people so you can scrape the data you are interested in without the need to code.</p>
+        <p>This allows you to make use of the data without having to pay or wait for a developer to extract the data for you.</p>
+      </div>
+    </div>
   </div>
 
   <span class="clearfix"></span>

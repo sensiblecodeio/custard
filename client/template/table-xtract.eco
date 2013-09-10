@@ -43,34 +43,61 @@ h2 {
   text-align: center;
 }
 
-.case-study {
+.benefit {
   margin: 20px 0;
 }
 
-.case-study .media-body h4 {
-  font-size: 16px;
-  line-height: 22px;
-  margin: 0;
+.cast-study p {
+  margin-bottom: 10px; /* slightly tighter para spacing, because it's very busy round there */
 }
 
-.case-study .media-body p {
-  font-size: 14px;
-  line-height: 16px;
-  margin-bottom: 0;
-}
-
-.case-study strong {
+.benefit strong {
   font-weight: normal;
   background-color: #ffc;
   background-color: rgba(255,255,0,0.2);
   padding: 1px 4px;
 }
 
+#try-it-out {
+  text-align: left;
+}
+
+#try-it-out form {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+#try-it-out input {
+  padding: 11px 15px;
+  font-size: 18px;
+  line-height: 24px;
+  height: 21px;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 
 @media only screen and (min-width: 620px) {
 
   .hero-unit {
-    /*padding: 30px;*/
+    padding: 30px;
   }
 
   .hero-unit h1 {
@@ -94,7 +121,7 @@ h2 {
 @media only screen and (min-width: 920px) {
 
   .hero-unit {
-    /*padding: 50px;*/
+    padding: 50px;
   }
 
   .hero-unit h1 {
@@ -112,14 +139,14 @@ h2 {
     line-height: 40px;
   }
 
-  .case-study {
+  .benefit {
     float: left;
     width: 30%;
     margin-right: 5%;
     margin-bottom: 30px;
   }
 
-  .case-study.last {
+  .benefit.last {
     margin-right: 0;
   }
 
@@ -129,7 +156,7 @@ h2 {
 @media only screen and (min-width: 1220px) {
 
   .hero-unit {
-    /*padding: 60px;*/
+    padding: 60px;
   }
 
   .hero-unit h1 {
@@ -142,75 +169,64 @@ h2 {
     margin: 20px 0 30px 0;
   }
 
-  .hero-unit .btn {
+  #hero .btn {
     font-size: 21px;
     padding: 14px 24px;
   }
 
-  .case-study {
+  .benefit {
     margin-bottom: 40px;
   }
 
 }
 
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  padding-top: 30px;
-  height: 0;
-  overflow: hidden;
-}
-
-.video-container iframe,
-.video-container object,
-.video-container embed {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
 </style>
 
-<div class="hero-unit">
-  <h1>Automatically Extract tables<br/>from websites and PDFs</h1>
+<div id="hero" class="hero-unit">
+  <h1>Automatically and accurately extract tables from PDFs</h1>
   <p class="lead">No more time consuming and error prone copying and pasting.</p>
   <button class="btn btn-large btn-primary">Try Table Xtract <span class="muted">&ndash;&nbsp;Its Free!</span></button>
 </div>
 
-<h4>Table Xtract from ScraperWiki is a data scraper that removes the need for laborious and error prone copying and pasting of data from PDFs and web pages.  No need for software downloads or lengthy configurations, just give us the URL and Table Xtract acquires, cleans and formats the data for you.</h4>
+<p class="lead">Table Xtract from ScraperWiki is a data scraper that removes the need for laborious and error prone copying and pasting of data from PDFs, excel files and web pages. Unlike other data scrapers Table Xtract is very accurate and doesn&rsquo;t need a software download or lengthy configurations.  Just give us the URL, answer a few questions and Table Xtract accurately acquires, cleans and formats the data for you.</p>
 
-<div class="case-study first">
-  <h4 class="media-heading">PDFs and Excel Files as well</h4>
-  <blockquote>
-    <p>There is a huge amount of useful information trapped in PDF and Excel files as well as websites, Table Xtract can cope with these three data sources with ease.</p>
-  </blockquote>
+<div id="benefits">
+  <div class="benefit first">
+    <h4>Highly Accurate</h4>
+    <p>Our aim is for Table Xtract to be able to extract your data with no errors.</p>
+    <p>No errors means you can be confident that the data is accurate and can get to the insights it contains more quickly.</p>
+    <p>We think we are 95% of the way there so register now and help us make it to 100%!</p>
+  </div>
+
+  <div class="benefit">
+    <h4>Always Up To Date</h4>
+    <p>There is nothing worse than wasting time acting on conclusions based on out of date data.</p>
+    <p>Table Xtract checks to see if your data has changed so you can always be confident that you are working with the most up to date version.</p>
+  </div>
+
+  <div class="benefit last">
+    <h4>No Coding</h4>
+    <p>Like many of the other ScraperWiki tools, Table Xtract is designed for non technical people so you can scrape the data you are interested in without the need to code.</p>
+    <p>This allows you to make use of the data without having to pay or wait for a developer to extract the data for you.</p>
+  </div>
+
+  <span class="clearfix"></span>
+
 </div>
 
-<div class="case-study">
-  <h4 class="media-heading">Cleans and Formats</h4>
-  <blockquote>
-    <p>As well as Extracting your data, we also save you time by making sure things like dates and decimal points are formatted appropriately and consistently.</p>
-  <blockquote>
+
+<div id="how-it-works">
+  <h2>How does it work?</h2>
+  <div class="video-container">
+    <iframe width="500" height="281" src="http://www.youtube.com/embed/Qt1_atU_Qsg?feature=oembed" frameborder="0" allowfullscreen=""></iframe>
+  </div>
 </div>
 
-<div class="case-study last">
-  <h4 class="media-heading">Works with other ScraperWiki Tools</h4>
-  <blockquote>
-    <p>Once you have Extracted your tables, use the other ScraperWiki tools to further analyse, visualise and export your data.</p>
-  </blockquote>
-</div>
-
-<span class="clearfix"></span>
-
-<h2>How does it work?</h2>
-<div class="video-container">
-  <iframe width="500" height="281" src="http://www.youtube.com/embed/Qt1_atU_Qsg?feature=oembed" frameborder="0" allowfullscreen=""></iframe>
-</div>
-
-<h2>Table Xtract is free to try during beta - let us know what you think!</h2>
-
-<div class="hero-unit" style="margin: 20px 0 40px 0">
-  <button class="btn btn-large btn-primary">Try Table Xtract <span class="muted">&ndash;&nbsp;Free during beta</span></button>
+<div id="try-it-out" class="hero-unit">
+  <h2>Try it out</h2>
+  <p>We&rsquo;re in the final stages of testing Table Xtract. Register here and we&rsquo;ll give you early access when we launch it.</p>
+  <form class="input-append">
+    <input type="email" placeholder="me@example.com">
+    <button class="btn btn-large btn-primary" type="button">Try it out <i class="icon-chevron-right icon-white"></i></button>
+  </form>
 </div>

@@ -72,25 +72,62 @@ body.fullscreen .container {
   margin-left: 20px;
 }
 
-#header #beta {
+#header nav {
+  display: block;
   position: absolute;
   top: 0;
-  right: 100%;
-  z-index: 100;
-  display: block;
-  height: 50px;
-  padding: 0 10px;
-  text-align: right;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: 200;
-  color: #999;
-  text-shadow: 0 1px 0 #fff;
-  white-space: nowrap;
+  right: 0;
+  -moz-transition: right 0.5s;
+  -webkit-transition: right 0.5s;
+  -o-transition: right 0.5s;
+  transition: right 0.5s;
+}
+
+.fullscreen #header nav {
+  right: 20px;
 }
 
 #header nav {
-  display: none; /* :TODO: work out how to display nav for small devices */
+  margin: 0;
+}
+
+#header nav li {
+  float: left;
+  list-style: none;
+  display: none; /* hide non-essential nav links on small screens */
+}
+
+#header nav li.logout,
+#header nav li.login {
+  display: block;
+}
+
+#header nav li + li {
+  margin-left: 25px;
+}
+
+#header nav li a {
+  display: block;
+  color: #666;
+  line-height: 50px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 0 white;
+}
+
+#header nav li a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+#header nav li.logout a {
+  color: #933;
+}
+
+#header nav li.logout a:hover {
+  color: #b00;
 }
 
 #header + .alert {
@@ -1783,6 +1820,10 @@ div.about p.logos {
     width: 580px;
   }
 
+  #header nav li {
+    display: block;
+  }
+
   #subnav {
     text-align: left;
   }
@@ -1819,63 +1860,6 @@ div.about p.logos {
 
   .fullscreen #subnav-path > .btn-group > a img {
     margin-right: 2px;
-  }
-
-  #header nav {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    -moz-transition: right 0.5s;
-    -webkit-transition: right 0.5s;
-    -o-transition: right 0.5s;
-    transition: right 0.5s;
-  }
-
-  .fullscreen #header nav {
-    right: 20px;
-  }
-
-  #header nav li {
-    float: left;
-    list-style: none;
-  }
-
-  #header nav li + li {
-    margin-left: 30px;
-  }
-
-  #header nav li a {
-    display: block;
-    color: #666;
-    line-height: 50px;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 0 1px 0 white;
-  }
-
-  #header nav li a:hover {
-    color: #333;
-    text-decoration: none;
-  }
-
-  #header nav li img {
-    margin-left: 5px;
-    vertical-align: -5px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    -webkit-box-shadow: 0 1px 0 #fff;
-    box-shadow: 0 1px 0 #fff;
-  }
-
-  #header nav li.logout a {
-    color: #933;
-  }
-
-  #header nav li.logout a:hover {
-    color: #b00;
   }
 
   #fullscreen {

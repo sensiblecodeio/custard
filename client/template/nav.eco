@@ -1,7 +1,5 @@
 <ul>
-<% if window?.user.effective?.isStaff: %>
-<li><a href="/tools/people-pack">Tool Packs</a></li>
-<% end %>
+<li><a href="/tools/table-xtract">Table Xtract</a></li>
 <li><a href="/professional">Professional Services</a></li>
 <li><a href="/help">Help</a></li>
 <li><a href="http://blog.scraperwiki.com">Blog</a></li>

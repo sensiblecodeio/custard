@@ -225,8 +225,8 @@ h2 {
 <div id="try-it-out" class="hero-unit">
   <h2>Try it out</h2>
   <p>We&rsquo;re in the final stages of testing Table Xtract. Register here and we&rsquo;ll give you early access when we launch it.</p>
-  <form class="input-append">
-    <input type="email" placeholder="me@example.com">
-    <button class="btn btn-large btn-primary" type="button">Try it out <i class="icon-chevron-right icon-white"></i></button>
+  <form class="input-append" action="http://scraperwiki.us4.list-manage.com/subscribe/post?u=2ec791ff600b8a6b868bfbc38&amp;id=d3fec9e5c8" method="post" target="_blank" novalidate>
+    <input type="email" name="EMAIL" required placeholder="me@example.com">
+    <button class="btn btn-large btn-primary" type="submit">Try it out <i class="icon-chevron-right icon-white"></i></button>
   </form>
 </div>

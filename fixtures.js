@@ -36,7 +36,7 @@ exports.users = [
   apikey: process.env.COTEST_STAFF_API_KEY,
   isStaff: true,
   sshKeys: [],
-  accountLevel: "grandfather",
+  accountLevel: "grandfather-ec2",
   recurlyAccount: "ehg-2423432",
   acceptedTerms: 1,
   canBeReally: ['ehg', 'test'],
@@ -75,7 +75,7 @@ exports.users = [
   apikey: 'zarino',
   sshKeys: ['d', 'e', 'f'],
   isStaff: false,
-  accountLevel: "grandfather",
+  accountLevel: "grandfather-ec2",
   recurlyAccount: "zarino-2423348",
   acceptedTerms: 1
 },
@@ -110,7 +110,7 @@ exports.users = [
   apikey: 'testsersonsdf',
   sshKeys: [],
   isStaff: false,
-  accountLevel: "large",
+  accountLevel: "large-ec2",
   canBeReally: ['tinat'],
   recurlyAccount: "testersonltd-2319852"
 },

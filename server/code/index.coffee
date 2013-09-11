@@ -195,7 +195,7 @@ app.configure ->
 
   # Add Connect Assets
   app.use assets({src: 'client'})
-  if not process.env.NODE_ENV
+  if not /staging|production/.test process.env.NODE_ENV
     # Set the public folder as static assets
     app.use express.static(process.cwd() + '/shared')
   if process.env.NODETIME_KEY

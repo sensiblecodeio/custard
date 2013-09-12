@@ -319,7 +319,8 @@ h2 {
 <div id="how-it-works">
   <h2>How does it work?</h2>
   <div class="video-container">
-    <iframe width="640" height="480" src="http://www.youtube.com/embed/ErcKL_lfrpE?feature=oembed" frameborder="0" allowfullscreen=""></iframe>
+    <div id="youtube-video"></div>
+    <!-- <iframe id="youtube-video" width="640" height="390" src="https://www.youtube.com/embed/ErcKL_lfrpE?feature=oembed" frameborder="0" allowfullscreen=""></iframe> -->
   </div>
 </div>
 

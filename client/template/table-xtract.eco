@@ -30,13 +30,6 @@
   transition: all 0.5s;
 }
 
-.btn-primary .muted {
-  color: inherit;
-  opacity: 0.7;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
-  font-weight: 200;
-}
-
 h2 {
   font-size: 24px;
   line-height: 28px;
@@ -73,13 +66,13 @@ h2 {
   width: 50px;
 }
 
-#try-it-out {
-  text-align: left;
+#try-it-out h2 {
+  text-align: center;
 }
 
 #try-it-out form {
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }
 
 #try-it-out input {
@@ -87,6 +80,11 @@ h2 {
   font-size: 18px;
   line-height: 24px;
   height: 21px;
+  width: 150px;
+}
+
+#try-it-out button span {
+  display: none;
 }
 
 .video-container {
@@ -130,6 +128,14 @@ h2 {
     text-align: left;
   }
 
+  #try-it-out input {
+    width: 250px;
+  }
+
+  #try-it-out button span {
+    display: inline;
+  }
+
 }
 
 
@@ -163,6 +169,10 @@ h2 {
 
   .benefit.last {
     margin-right: 0;
+  }
+
+  #try-it-out input {
+    width: 300px;
   }
 
 }
@@ -202,9 +212,9 @@ h2 {
 </style>
 
 <div id="hero" class="hero-unit">
-  <h1>Automatically and accurately extract tables from PDFs</h1>
+  <h1>Automatically and accurately<br/>extract tables from PDFs</h1>
   <p class="lead">No more time consuming and error prone copying and pasting.</p>
-  <a class="btn btn-large btn-primary" href="#try-it-out" data-nonpushstate>Try Table Xtract <span class="muted">&ndash;&nbsp;Its Free!</span></a>
+  <a class="btn btn-large btn-primary" href="#try-it-out" data-nonpushstate>Be the first to try Table Xtract</a>
 </div>
 
 <div id="description">
@@ -256,15 +266,17 @@ h2 {
 <div id="how-it-works">
   <h2>How does it work?</h2>
   <div class="video-container">
-    <iframe width="640" height="480" src="http://www.youtube.com/embed/zh0_MtiTJnA?feature=oembed" frameborder="0" allowfullscreen=""></iframe>
+    <iframe width="640" height="480" src="http://www.youtube.com/embed/ErcKL_lfrpE?feature=oembed" frameborder="0" allowfullscreen=""></iframe>
   </div>
 </div>
 
 <div id="try-it-out" class="hero-unit">
-  <h2>Try it out</h2>
-  <p>We&rsquo;re in the final stages of testing Table Xtract. Register here and we&rsquo;ll give you early access when we launch it.</p>
+  <h2>Be the first to try it out</h2>
+  <p>We&rsquo;re in the final stages of testing Table Xtract.</p>
+  <p>Register here and we&rsquo;ll give you early access when we launch it.</p>
   <form class="input-append" action="http://scraperwiki.us4.list-manage.com/subscribe/post?u=2ec791ff600b8a6b868bfbc38&amp;id=d3fec9e5c8" method="post" target="_blank" novalidate>
     <input type="email" name="EMAIL" placeholder="me@example.com">
-    <button class="btn btn-large btn-primary" type="submit">Try it out <i class="icon-chevron-right icon-white"></i></button>
+    <button class="btn btn-large btn-primary" type="submit"><span>Try it out </span><i class="icon-chevron-right icon-white"></i></button>
   </form>
+  <p>Or email us with your questions: <a href="mailto:tablextract@scraperwiki.com">tablextract@scraperwiki.com</a></p>
 </div>

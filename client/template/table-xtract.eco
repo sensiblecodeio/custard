@@ -30,6 +30,39 @@
   transition: all 0.5s;
 }
 
+.hero-unit h3 {
+  margin: -20px;
+  margin-bottom: 15px;
+  padding: 5px 0;
+  font-weight: normal;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+  color: #fff;
+  background-color: #4d93d9;
+  border-bottom: 1px solid #F1E9BA;
+  font-size: 16px;
+  -webkit-border-top-left-radius: 6px;
+  -webkit-border-top-right-radius: 6px;
+  -moz-border-radius-topleft: 6px;
+  -moz-border-radius-topright: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.hero-unit h3 .muted {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.btn-huge {
+  padding: 12px 20px;
+  font-size: 21px;
+  line-height: 22px;
+}
+
 h2 {
   font-size: 24px;
   line-height: 28px;
@@ -117,6 +150,13 @@ h2 {
     font-size: 42px;
   }
 
+  .hero-unit h3 {
+    margin: -30px;
+    margin-bottom: 20px;
+    padding: 8px 0;
+    font-size: 20px;
+  }
+
   .hero-unit .lead {
     font-size: 21px;
     line-height: 26px;
@@ -147,6 +187,13 @@ h2 {
 
   .hero-unit h1 {
     font-size: 60px;
+  }
+
+  .hero-unit h3 {
+    margin: -50px;
+    margin-bottom: 35px;
+    padding: 10px 0;
+    font-size: 25px;
   }
 
   .hero-unit .lead {
@@ -188,6 +235,11 @@ h2 {
     font-size: 70px;
   }
 
+  .hero-unit h3 {
+    margin: -60px;
+    margin-bottom: 40px;
+  }
+
   .hero-unit .lead {
     font-size: 32px;
     line-height: 36px;
@@ -212,9 +264,10 @@ h2 {
 </style>
 
 <div id="hero" class="hero-unit">
-  <h1>Automatically and accurately<br/>extract tables from PDFs</h1>
-  <p class="lead">No more time consuming and error prone copying and pasting.</p>
-  <a class="btn btn-large btn-primary" href="#try-it-out" data-nonpushstate>Be the first to try Table Xtract</a>
+  <h3>Table Xtract <span class="muted">from&nbsp;ScraperWiki</span></h3>
+  <h1>Automatically and accurately<br/>extract tables from&nbsp;PDFs</h1>
+  <p class="lead">No more time consuming and error prone copying and&nbsp;pasting.</p>
+  <a class="btn btn-huge btn-primary" href="#try-it-out" data-nonpushstate>Be the first to try Table Xtract</a>
 </div>
 
 <div id="description">

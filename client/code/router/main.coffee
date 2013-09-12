@@ -187,10 +187,9 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.showView subnavView
 
   tableXtract: ->
-    subnavView = new Cu.View.TableXtractNav()
     contentView = new Cu.View.TableXtract()
     @appView.showView contentView
-    @subnavView.showView subnavView
+    @subnavView.hideView()
 
   createProfile: ->
     subnavView = new Cu.View.Subnav {text: 'Create Profile'}

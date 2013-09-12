@@ -389,24 +389,3 @@ class Cu.View.ProfessionalNav extends Backbone.View
       .find(".nav a[href='#{window.location.pathname}']")
       .parent().addClass('active')
     this
-
-
-class Cu.View.TableXtractNav extends Backbone.View
-  className: 'subnav-wrapper table-xtract'
-
-  events:
-      'click .nav-pills a': 'navClick'
-
-  navClick: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
-    if $(e.target.hash).length > 0
-      $('html, body').animate
-        scrollTop: $(e.target.hash).offset().top - 40
-      , 250
-
-  render: ->
-    @$el.html(JST['table-xtract-nav'])
-      .find(".nav a[href='#{window.location.pathname}']")
-      .parent().addClass('active')
-    @

@@ -499,7 +499,7 @@ app.get '/about/?*', (req, resp) ->
 app.get '/professional/?', (req, resp) ->
   renderServerAndClientSide {page: "professional", subnav: 'professionalnav' }, req, resp
 
-app.get '/tools/table-xtract/?', (req, resp) ->
+app.get '/tools/tablextract/?', (req, resp) ->
   renderServerAndClientSide page: 'table-xtract', req, resp
 
 app.get '/', (req, resp) ->

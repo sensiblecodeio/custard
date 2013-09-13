@@ -19,12 +19,6 @@ class Cu.View.TableXtract extends Backbone.View
     @
 
   setUpYouTube: ->
-    tag = document.createElement('script')
-
-    tag.src = "https://www.youtube.com/iframe_api"
-    firstScriptTag = document.getElementsByTagName('script')[0]
-    firstScriptTag.parentNode.insertBefore tag, firstScriptTag
-
     window.onYouTubeIframeAPIReady = ->
       window.player = new YT.Player 'youtube-video',
         height: '390'
@@ -40,3 +34,14 @@ class Cu.View.TableXtract extends Backbone.View
         _gaq.push ['_trackEvent', 'table-xtract', 'video-pause']
       else if event.data is YT.PlayerState.ENDED
         _gaq.push ['_trackEvent', 'table-xtract', 'video-finished']
+
+    if YT?
+      # YouTube plugin has already been loaded on a previous page load,
+      # but we inexplicably need to wait a bit before using it
+      setTimeout window.onYouTubeIframeAPIReady, 1000
+    else
+      # No YouTube plugin yet, so insert it into the head
+      tag = document.createElement('script')
+      tag.src = "https://www.youtube.com/iframe_api"
+      firstScriptTag = document.getElementsByTagName('script')[0]
+      firstScriptTag.parentNode.insertBefore tag, firstScriptTag

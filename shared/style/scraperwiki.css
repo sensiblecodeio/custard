@@ -185,6 +185,12 @@ input[type="search"].loading,
   margin-top: 8px;
 }
 
+/* Buttons inside .alert bars should be white */
+
+.alert .btn {
+  color: white;
+}
+
 /* Icons inside of coloured buttons should be white by default */
 
 .btn-primary [class^="icon-"],
@@ -192,7 +198,9 @@ input[type="search"].loading,
 .btn-success [class^="icon-"],
 .btn-success [class*=" icon-"],
 .btn-danger [class^="icon-"],
-.btn-danger [class*=" icon-"] {
+.btn-danger [class*=" icon-"],
+.btn-warning [class^="icon-"],
+.btn-warning [class*=" icon-"] {
   background-image: url("../vendor/image/glyphicons-halflings-white.png");
 }
 
@@ -677,8 +685,8 @@ input[type="color"],
 .popover-content > :last-child,
 .modal-content > :last-child {
   margin-bottom: 0; /* avoids extra space at bottom of popovers/modals */
-} 
- 
+}
+
 
 /* Responsive sizing for .containers */
 

@@ -192,8 +192,12 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.hideView()
 
   createProfile: ->
-    subnavView = new Cu.View.Subnav {text: 'Create Profile'}
-    contentView = new Cu.View.CreateProfile()
+    if window.user.real.isStaff
+      subnavView = new Cu.View.Subnav {text: 'Create Profile'}
+      contentView = new Cu.View.CreateProfile()
+    else
+      subnavView = new Cu.View.Subnav {text: '404: Not Found'}
+      contentView = new Cu.View.FourOhFour()
     @appView.showView contentView
     @subnavView.showView subnavView
 

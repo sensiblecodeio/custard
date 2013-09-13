@@ -272,7 +272,7 @@ h2 {
 
 <div id="description">
   <img src="/image/table-xtract-placeholder.jpg" class="pull-left" width="470" alt="">
-  <p class="lead">Table Xtract from ScraperWiki is a data scraper that removes the need for laborious and error prone copying and pasting of data from PDFs, excel files and web pages.</p>
+  <p class="lead">Table Xtract from ScraperWiki is a data scraper that removes the need for laborious and error prone copying and pasting of tabular data from PDFs, excel files and web pages.</p>
   <p class="lead">Unlike other data scrapers Table Xtract is very accurate and doesn&rsquo;t need a software download or lengthy configurations. Just give us the URL, answer a few questions and Table Xtract accurately acquires, cleans and formats the data for you.</p>
 </div>
 

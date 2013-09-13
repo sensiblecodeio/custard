@@ -502,6 +502,10 @@ app.get '/professional/?', (req, resp) ->
 app.get '/tools/tablextract/?', (req, resp) ->
   renderServerAndClientSide page: 'table-xtract', req, resp
 
+app.get '/journalists/?', (req, resp) ->
+  renderServerAndClientSide page: 'journalists', req, resp
+
+
 app.get '/', (req, resp) ->
   renderServerAndClientSide {page: "home", subnav: null}, req, resp
 

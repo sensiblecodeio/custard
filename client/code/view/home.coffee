@@ -8,5 +8,16 @@ class Cu.View.Home extends Backbone.View
 
   render: ->
     @el.innerHTML = JST['home']()
+    @tableXtractFlash()
     @
-    
+
+  tableXtractFlash: ->
+    html = """<p class="container">
+      <strong>Automatically and accurately extract tables from PDFs</strong>
+      with our new Table Xtract tool
+      <a class="btn btn-warning btn-small pull-right" href="/tools/table-xtract">Learn more <i class="icon-chevron-right"></i></a>
+    </p>"""
+    $('<div>').attr('id', 'table-xtract-flash').addClass('alert alert-warning').hide().html(html).insertAfter('body > header').slideDown()
+
+  close: ->
+    $('#table-xtract-flash').hide()

@@ -1,0 +1,17 @@
+<p class="lead">Since ScraperWiki opened in 2010 we have supported journalists and data driven journalism.</p>
+
+<p><img src="/image/journalists.jpg" width="800" height="262" alt="Journalists at a ScraperWiki Hack Day" style="-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;"></p>
+
+<p>In the latest iteration of ScraperWiki we&rsquo;ve kept the <a href="/help/code-in-your-browser">&ldquo;code in your browser&rdquo; facility</a> for people who want to code or learn to code.  However we&rsquo;ve also identified that many journalists don&rsquo;t want to code, and we are therefore making end user tools that make it easier for them to get data without coding.</p>
+
+<p><strong>If you&rsquo;re a Journalist and an existing ScraperWiki account holder</strong> please email <a href="mailto:hello@scraperwiki.com">hello@scraperwiki.com</a> with the subject <code>journalist <% if user?: %><%= user.effective.displayName %><% else: %>[your full name]<% end %></code> and ask us to upgrade you.</p>
+
+<p><strong>If you are new to ScraperWiki,</strong> please <a href="/pricing">set up a free Community account here</a> then email us to request an upgrade.</p>
+
+<p>In the short term we are not asking people to confirm that they are affiliated to any official press organisations &ndash; this may change.</p>
+
+<p class="lead">Remember: Please cite us</p>
+
+<p>If you use ScraperWiki to get data for a story we just ask that you cite us as the data collection source.</p>
+
+<p>Thank you for supporting us.</p>

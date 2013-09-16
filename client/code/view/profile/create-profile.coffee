@@ -45,7 +45,9 @@ class Cu.View.CreateProfile extends Backbone.View
         dataType: 'json'
         success: (newProfile) =>
           url = "#{location.protocol}//#{location.host}/set-password/#{newProfile.token}"
-          @$el.children('form').html "<div class=\"alert alert-success\"><strong>New profile &ldquo;#{newProfile.shortName}&rdquo; created.</strong><br/>They can set their password <a href=\"#{url}\" title=\"#{url}\">here</a>.</div>"
+          @$el.children('form').html("""<h4>New profile &ldquo;#{newProfile.shortName}&rdquo; created.</h4>
+          <p>They can set their password here:</p>
+          <p><input type="text" class="input-xxlarge" value="#{url}" /></div>""")
         error: (jqxhr, textStatus, errorThrown) ->
           if errorThrown == 'Forbidden'
             alert("Hmmm... computer says no. Is your API key a valid staff key?")

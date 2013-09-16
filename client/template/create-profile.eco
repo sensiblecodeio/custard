@@ -3,10 +3,16 @@
         <p>
             <label for="accountlevel">Account level:</label>
             <select name="accountlevel" id="accountlevel">
-              <option value="dataservices-ec2" selected>Data Services Customer</option>
-              <option value="large">Large ($29)</option>
-              <option value="medium">Medium ($9)</option>
-              <option value="free">Community (Free)</option>
+              <optgroup label="Paid accounts">
+                <option value="dataservices-ec2" selected>Data Services Customer</option>
+                <option value="large">Data Scientist</option>
+                <option value="medium">Explorer</option>
+              </optgroup>
+              <optgroup label="Free accounts">
+                <option value="journalist">Journalist</option>
+                <option value="opendata">Open Data</option>
+                <option value="free">Community</option>
+              </optgroup>
             </select>
         </p>
         <p>

@@ -47,6 +47,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
     @route RegExp('contact/?'), 'contact'
     @route RegExp('about/?'), 'about'
+    @route RegExp('journalists/?'), 'journalists'
 
   main: ->
     if window.user.effective?
@@ -74,6 +75,12 @@ class Cu.Router.Main extends Backbone.Router
   professional: ->
     subnavView = new Cu.View.ProfessionalNav
     contentView = new Cu.View.Professional
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  journalists: ->
+    subnavView = new Cu.View.Subnav SubNav.journalists
+    contentView = new Cu.View.Journalists
     @appView.showView contentView
     @subnavView.showView subnavView
 
@@ -192,8 +199,12 @@ class Cu.Router.Main extends Backbone.Router
     @subnavView.hideView()
 
   createProfile: ->
-    subnavView = new Cu.View.Subnav {text: 'Create Profile'}
-    contentView = new Cu.View.CreateProfile()
+    if window.user.real.isStaff
+      subnavView = new Cu.View.Subnav {text: 'Create Profile'}
+      contentView = new Cu.View.CreateProfile()
+    else
+      subnavView = new Cu.View.Subnav {text: '404: Not Found'}
+      contentView = new Cu.View.FourOhFour()
     @appView.showView contentView
     @subnavView.showView subnavView
 

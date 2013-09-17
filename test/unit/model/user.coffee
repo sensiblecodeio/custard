@@ -276,6 +276,29 @@ describe 'User (server)', ->
         @apiStub.listSubscribe.calledOnce.should.be.true
         @apiStub.listSubscribe.calledWithMatch({ email_address: 'emailme@example.org' }).should.be.true
 
+    context 'when add is called (with newsletter opt-out)', ->
+      before (done) ->
+        @apiStub = listSubscribe: sinon.stub()
+        @mailChimpStub = sinon.stub mailchimp, 'MailChimpAPI', =>
+          return @apiStub
+        User.add
+          newUser:
+            shortName: 'testerson-hates-email'
+            displayName: 'Test Testerson Hates Email'
+            email: ['emailme@example.org']
+            acceptedTerms: 1
+            emailMarketing: false
+        , (err, user) =>
+          @user = user
+          done err
+
+      after ->
+        mailchimp.MailChimpAPI.restore()
+
+      it 'has added them to our MailChimp list', ->
+        @apiStub.listSubscribe.calledOnce.should.be.false
+        @apiStub.listSubscribe.calledWithMatch({ email_address: 'emailme@example.org' }).should.be.false
+
     context 'when add is called (with newsletter preference undefined)', ->
       before (done) ->
         @apiStub = listSubscribe: sinon.stub()

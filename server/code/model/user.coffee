@@ -188,7 +188,7 @@ class exports.User extends ModelBase
     if opts.newUser.logoUrl?
       newUser.logoUrl = opts.newUser.logoUrl
 
-    if opts.newUser.emailMarketing?
+    if opts.newUser?.emailMarketing
       try
         api = new mailchimp.MailChimpAPI process.env.CU_MAILCHIMP_API_KEY,
           version: '1.3'

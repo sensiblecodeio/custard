@@ -63,7 +63,6 @@ describe 'Client model: Dataset', ->
     it "model.toBeDeleted is set to 5 mins in future", ->
       @save.firstCall.args[0].toBeDeleted.should.be.instanceOf Date
 
-      console.log new Date().getTime()
       (@save.firstCall.args[0].toBeDeleted - new Date().getTime()).should.equal 5 * 60000
 
     it "model.state is set to 'deleted'", ->

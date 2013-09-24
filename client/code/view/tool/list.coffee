@@ -7,6 +7,12 @@ class Cu.View.ToolList extends Backbone.View
 
   initialize: ->
     app.tools().on 'fetched', @addTools, @
+
+    Backbone.on 'error', =>
+      # close chooser on errors,
+      # so user can see red alert bar behind
+      @closeChooser()
+
     $(window).on 'keyup', (e) =>
       if e.which == 27
         @closeChooser()

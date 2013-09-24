@@ -61,13 +61,17 @@ scraperwiki.url = (arg) ->
 scraperwiki.dataset.name = (arg) ->
   ###
   [arg] should either be a string (to set the dataset's name),
-  a function (to get the dataset's current name, and pass it 
+  a function (to get the dataset's current name, and pass it
   to the callback function),
   or undefined, in which case we get the dataset's current name
   and pass it to a jQuery deferred object.
   ###
   if typeof(arg) is 'string'
-    parent.scraperwiki.xdm.rename(scraperwiki.box, arg)
+    if scraperwiki.readSettings().target?
+      # Uh-oh, we're in a "view", which we can't rename
+      console.log('Unable to rename tool. Currently only datasets can be renamed.')
+    else
+      parent.scraperwiki.xdm.rename(scraperwiki.box, arg)
   else
     dfd = new jQuery.Deferred()
     if typeof(arg) is 'function'
@@ -130,7 +134,7 @@ scraperwiki.dataset.installTool = (query, toolName) ->
 scraperwiki.tool.name = (arg) ->
   ###
   [arg] should either be a string (to set the tool's name),
-  a function (to get the tool's current name, and pass it 
+  a function (to get the tool's current name, and pass it
   to the callback function),
   or undefined, in which case we get the tool's current name
   and pass it to a jQuery deferred object.

@@ -65,12 +65,11 @@ describe 'Subscription Workflow', ->
       setTimeout done, 5000
 
     it 'subscribes me to the plan', (done) ->
-      wd40.getText 'body > .alert', (err, text) ->
+      wd40.getText 'body', (err, text) ->
         text.should.include "You've been subscribed to the Explorer plan!"
         done()
 
     it 'tells me to check my email', (done) ->
-      wd40.getText 'body > .alert', (err, text) ->
-        text.should.include "email"
-        text.should.include "activation"
+      wd40.getText 'body', (err, text) ->
+        text.should.include "Please check your email for an activation link."
         done()

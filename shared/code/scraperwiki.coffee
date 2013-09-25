@@ -79,10 +79,13 @@ scraperwiki.dataset.name = (arg) ->
       parent.scraperwiki.xdm.rename(scraperwiki.box, arg)
   else
     dfd = new jQuery.Deferred()
-    if typeof(arg) is 'function'
-      arg null, scraperwiki.readSettings().target.displayName
-    else
-      dfd.resolve scraperwiki.readSettings().target.displayName
+    parent.scraperwiki.xdm.getName scraperwiki.readSettings().source.box, (err, name) ->
+      if typeof(arg) is 'function'
+        arg err, name
+      else if err?
+        dfd.reject err
+      else
+        dfd.resolve name
     return dfd.promise()
 
 

@@ -38,6 +38,10 @@ class Cu.View.ToolContent extends Backbone.View
       container: document.getElementById('fullscreen')
     ,
       local:
+        ### 
+        Note: If you ever add a function here, you also need to list it in
+        cobalt in container.html.
+        ###
         redirect: (url) ->
           isExternal = new RegExp('https?://')
           if isExternal.test url
@@ -55,6 +59,13 @@ class Cu.View.ToolContent extends Backbone.View
                   model.set 'displayName', name
                   model.save()
                   _gaq.push ['_trackEvent', 'datasets', 'rename-xdm', name]
+        getName: (box, cb) ->
+          app.tools().fetch
+            success: ->
+              mod = Cu.Model.Dataset.findOrCreate box: box
+              mod.fetch
+                success: (model, resp, options) ->
+                  cb null, model.get 'displayName'
         pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly
           window.app.pushSqlQuery = query
@@ -137,6 +148,7 @@ class Cu.View.AppContent extends Cu.View.ToolContent
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null
 
+    displayName = @model.get('displayName')
     callback
       source:
         apikey: window.user.effective.apiKey
@@ -144,6 +156,7 @@ class Cu.View.AppContent extends Cu.View.ToolContent
         publishToken: datasetToken
         box: datasetBox
         sqlQuery: query
+        displayName: displayName
 
 
 class Cu.View.PluginContent extends Cu.View.ToolContent
@@ -169,8 +182,8 @@ class Cu.View.PluginContent extends Cu.View.ToolContent
         publishToken: viewToken
         box: viewBox
         sqlQuery: query
+        displayName: displayName
       target:
         url: "#{datasetEndpoint}/#{datasetBox}/#{datasetToken}"
         publishToken: datasetToken
         box: datasetBox
-        displayName: displayName

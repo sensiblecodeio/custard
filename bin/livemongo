@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# A utility script for querying the live custard database.
+# Usage:
+# $ livemongo [optional-js-script-to-run]
+# Eg:
+# $ livemongo          # will open up a repl
+# $ livemongo test.js  # will run test.js on the database
+
 closest () {
   # Searches parent directories to find the first one that contains
   # "$1" then prints the full path, including the appended "$1".
@@ -24,4 +31,4 @@ possibly_quoted=$(
 
 eval url=$possibly_quoted
 cd $(closest custard)
-bin/mongurl $url
+bin/mongurl $url $1

@@ -36,4 +36,4 @@ then
   exit 0
 fi
 
-mongo $(out "$1" | split)
+mongo $(out "$1" | split) $2

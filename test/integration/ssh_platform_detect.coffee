@@ -15,6 +15,9 @@ describe 'Platform-specific SSH instructions', ->
 
   context 'when I use a Windows PC to view SSH instructions', ->
     before (done) ->
+      setTimeout done, 500
+
+    before (done) ->
       browser.refresh ->
         browser.eval "window.navigator = {platform: 'Win32'}", done
 
@@ -36,6 +39,9 @@ describe 'Platform-specific SSH instructions', ->
 
   context 'when I use a Mac to view SSH instructions', ->
     before (done) ->
+      setTimeout done, 500
+
+    before (done) ->
       browser.refresh ->
         browser.eval "window.navigator = {platform: 'MacIntel'}", done
 
@@ -56,6 +62,9 @@ describe 'Platform-specific SSH instructions', ->
       @modalTextContent.should.include 'pbcopy < ~/.ssh/id_rsa.pub'
 
   context 'when I use a Linux computer to view SSH instructions', ->
+    before (done) ->
+      setTimeout done, 500
+
     before (done) ->
       browser.refresh ->
         browser.eval "window.navigator = {platform: 'Linux i686'}", done

@@ -133,7 +133,7 @@ describe 'Dataset', ->
 
     it 'shows an undo button', (done) ->
       @dataset.text (err, text) ->
-        text.should.include 'Undo' 
+        text.should.include 'Undo'
         done()
 
     context "When I click the undo button", ->
@@ -143,12 +143,12 @@ describe 'Dataset', ->
 
       it 'no longer shows an undo button', (done) ->
         @dataset.text (err, text) ->
-          text.should.not.include 'Undo' 
+          text.should.not.include 'Undo'
           done()
 
       it "shows the dataset title", (done) ->
         @dataset.text (err, text) ->
-          text.should.include 'Prune' 
+          text.should.include 'Prune'
           done()
 
   context "When I click on the Prune dataset", ->
@@ -160,7 +160,7 @@ describe 'Dataset', ->
         , 500
 
     context "When I delete the dataset using the toolbar menu", ->
-      before (done) ->    
+      before (done) ->
         wd40.click '#dataset-meta .dropdown-toggle', ->
           wd40.click '#dataset-meta .hide-dataset', done
 

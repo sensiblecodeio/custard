@@ -121,15 +121,18 @@ code {
 
 /* Better link colours in alerts */
 
-.alert a {
+.alert a,
+.alert a.btn {
   color: #7E6500;
 }
 
-.alert-info a {
+.alert-info a,
+.alert-info a.btn {
   color: #006186;
 }
 
-.alert-error a {
+.alert-error a,
+.alert-error a.btn {
   color: #8A0000;
 }
 

@@ -186,17 +186,20 @@ describe 'Dataset', ->
 
         it 'no longer shows an undo button', (done) ->
           @dataset.text (err, text) ->
-            text.should.not.include 'Undo' 
+            text.should.not.include 'Undo'
             done()
 
         it "shows the dataset title", (done) ->
           @dataset.text (err, text) ->
-            text.should.include 'Prune' 
+            text.should.include 'Prune'
             done()
 
   context "When I go to a dataset URL that does not exist", ->
     before (done) ->
       browser.get "#{home_url}/dataset/doesnotexist", done
+
+    before (done) ->
+      setTimeout done, 1000
 
     it 'shows a not found error', (done) ->
       wd40.getText '#error-alert', (err, text) ->

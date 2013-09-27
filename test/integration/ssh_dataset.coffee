@@ -21,6 +21,9 @@ describe 'Dataset SSH Details', ->
       , 500
 
     context 'when I click on the importer tool\'s SSH in button', (done) ->
+      before (done) ->
+        setTimeout done, 500
+
       before clickSSHButton
 
       it 'a modal window appears', (done) =>

@@ -80,6 +80,7 @@ scraperwiki.dataset.name = (arg) ->
   else
     dfd = new jQuery.Deferred()
     parent.scraperwiki.xdm.getName scraperwiki.readSettings().source.box, (err, name) ->
+      console.log('scraperwiki.xdm.getName returned', err, name)
       if typeof(arg) is 'function'
         arg err, name
       else if err?

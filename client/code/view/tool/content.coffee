@@ -70,6 +70,8 @@ class Cu.View.ToolContent extends Backbone.View
                   console.log('XDM getName() -> model fetched')
                   console.log('displayName', model.get 'displayName')
                   cb null, model.get 'displayName'
+              return undefined # required to make xdm wait for callbacks
+          return undefined # required to make xdm wait for callbacks
         pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly
           window.app.pushSqlQuery = query

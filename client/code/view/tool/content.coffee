@@ -38,7 +38,7 @@ class Cu.View.ToolContent extends Backbone.View
       container: document.getElementById('fullscreen')
     ,
       local:
-        ### 
+        ###
         Note: If you ever add a function here, you also need to list it in
         cobalt in container.html.
         ###
@@ -60,11 +60,15 @@ class Cu.View.ToolContent extends Backbone.View
                   model.save()
                   _gaq.push ['_trackEvent', 'datasets', 'rename-xdm', name]
         getName: (box, cb) ->
+          console.log('XDM getName() called')
           app.tools().fetch
             success: ->
+              console.log('XDM getName() -> app.tools() fetched')
               mod = Cu.Model.Dataset.findOrCreate box: box
               mod.fetch
                 success: (model, resp, options) ->
+                  console.log('XDM getName() -> model fetched')
+                  console.log('displayName', model.get 'displayName')
                   cb null, model.get 'displayName'
         pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly

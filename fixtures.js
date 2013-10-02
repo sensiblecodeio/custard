@@ -150,6 +150,18 @@ exports.users = [
   accountLevel: "large-ec2",
   recurlyAccount: "largelucy-583734",
   acceptedTerms: 1
+},
+{
+  shortName: 'recentlyUpgraded',
+  email: ['recentlyupgraded@example.com'],
+  displayName: 'R. Upgraded',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: 'recentlyUpgraded',
+  sshKeys: [],
+  isStaff: false,
+  accountLevel: "medium-ec2",
+  recurlyAccount: "recentlyUpgraded-937492",
+  acceptedTerms: 1
 }
 ];
 
@@ -201,7 +213,8 @@ exports.datasets = [
 { "box" : "4057690376", "tool": "test-app", "boxServer": "localhost", "displayName" : "Deleted and cleaned", "user" : "mrgreedy", "views" : [] , "toBeDeleted": null, "state": "deleted" },
 { "box" : "4057690377", "tool": "test-app", "boxServer": "localhost", "displayName" : "Deleted not cleaned 1", "user" : "mrgreedy", "views" : [] , "toBeDeleted": new Date(1978, 3, 16), "state": "deleted" },
 { "box" : "4057690378", "tool": "test-app", "boxServer": "localhost", "displayName" : "Deleted not cleaned 2", "user" : "mrgreedy", "views" : [] , "toBeDeleted": new Date(1978, 3, 16), "state": "deleted" },
-{ "box" : "4057690379", "tool": "test-app", "boxServer": "localhost", "displayName" : "Deleted in future", "user" : "mrgreedy", "views" : [] , "toBeDeleted": new Date(3000, 3, 16), "state": "deleted" }
+{ "box" : "4057690379", "tool": "test-app", "boxServer": "localhost", "displayName" : "Deleted in future", "user" : "mrgreedy", "views" : [] , "toBeDeleted": new Date(3000, 3, 16), "state": "deleted" },
+{ "box" : "3006375746", "tool": "newdataset", "displayName" : "Old Dataset", "createdDate": "2013-07-29T10:00:00.000Z", "user" : "recentlyUpgraded", "creatorShortName" : "recentlyUpgraded", "creatorDisplayName": "R. Upgraded","boxServer": "free-server",  "views" : [ { "name": "newview", "displayName": "New View", "box": "7462840283", "boxServer": "medium-server", "tool": "newview" } ] }
 ]
 
 exports.boxes = [

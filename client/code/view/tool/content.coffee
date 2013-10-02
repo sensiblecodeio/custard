@@ -75,36 +75,51 @@ class Cu.View.ToolContent extends Backbone.View
                   delete dataset.new
                   window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
 
+
 class Cu.View.AppContent extends Cu.View.ToolContent
   settings: (callback) ->
+    dataset = @model
+    datasetEndpoint = dataset.endpoint()
+    datasetBox = dataset.get 'box'
+    datasetToken = dataset.get('boxJSON')?.publish_token
+
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null
-    publishToken = @model.get('boxJSON')?.publish_token
+
     callback
       source:
         apikey: window.user.effective.apiKey
-        url: "#{@boxUrl}/#{@model.get 'box'}/#{publishToken}"
-        publishToken: publishToken
-        box: @model.get 'box'
+        url: "#{datasetEndpoint}/#{datasetBox}/#{datasetToken}"
+        publishToken: datasetToken
+        box: datasetBox
         sqlQuery: query
+
 
 class Cu.View.PluginContent extends Cu.View.ToolContent
   settings: (callback) ->
+    view = @model
+    viewEndpoint = view.endpoint()
+    viewBox = view.get 'box'
+    viewToken = view.get('boxJSON')?.publish_token
+
+    dataset = @model.get 'plugsInTo'
+    datasetEndpoint = dataset.endpoint()
+    datasetBox = dataset.get 'box'
+    datasetToken = dataset.get('boxJSON')?.publish_token
+
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null
-    dataset = @model.get 'plugsInTo'
-    viewToken = @model.get('boxJSON')?.publish_token
-    datasetToken = dataset.get('boxJSON')?.publish_token
+
     displayName = dataset.get('displayName')
     callback
       source:
         apikey: window.user.effective.apiKey
-        url: "#{@boxUrl}/#{@model.get 'box'}/#{viewToken}"
+        url: "#{viewEndpoint}/#{viewBox}/#{viewToken}"
         publishToken: viewToken
-        box: @model.get 'box'
+        box: viewBox
         sqlQuery: query
       target:
-        url: "#{@boxUrl}/#{dataset.get 'box'}/#{datasetToken}"
+        url: "#{datasetEndpoint}/#{datasetBox}/#{datasetToken}"
         publishToken: datasetToken
-        box: dataset.get 'box'
+        box: datasetBox
         displayName: displayName

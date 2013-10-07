@@ -465,6 +465,7 @@ renderServerAndClientSide = (options, req, resp) ->
               recurlyDomain: process.env.RECURLY_DOMAIN
               flash: req.flash()
               environment: process.env.NODE_ENV
+              loggedIn: 'real' of usersObj
 
 # Allow set-password, signup, docs, etc, to be visited by anons
 # Note: these are NOT regular expressions!!

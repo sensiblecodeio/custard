@@ -63,7 +63,7 @@
 <body>
   <header id="header">
     <div class="container">
-      <a id="logo" href="/">ScraperWiki</a>
+      <a id="logo" href="/<% if(loggedIn){ %>datasets<% } %>">ScraperWiki</a>
       <nav>
         <%- nav %>
       </nav>

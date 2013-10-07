@@ -15,7 +15,7 @@ describe 'Home page (not logged in)', ->
       @bodyText = text
       done()
 
-  it 'gives me a link to sign up for an account', (done) ->
+  xit 'gives me a link to sign up for an account', (done) ->
     browser.elementByPartialLinkText 'Sign up', (err, link) ->
       should.exist link
       link.getAttribute 'href', (err, href) ->

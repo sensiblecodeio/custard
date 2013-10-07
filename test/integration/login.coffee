@@ -71,9 +71,9 @@ describe 'Successful login', ->
         before (done) ->
           wd40.click '#header .logout a', done
 
-        it 'redirects me to the home page', (done) ->
+        it 'redirects me to the (logged out) home page', (done) ->
           wd40.trueURL (err, url) ->
-            url.should.equal base_url + "/"
+            url.should.equal "#{base_url}/"
             done()
 
 
@@ -171,7 +171,7 @@ describe 'Password', ->
       it 'redirected to home page', (done) ->
         wd40.waitForText "data hub", ->
           wd40.trueURL (err, url) ->
-            url.should.equal "#{base_url}/"
+            url.should.equal home_url
             done()
 
 
@@ -201,7 +201,7 @@ describe 'Switch', ->
 
     it 'redirected to home page', (done) ->
       wd40.trueURL (err, url) ->
-        url.should.equal "#{base_url}/"
+        url.should.equal home_url
         done()
 
     it 'shows me datasets of the profile into which I have switched', (done) ->

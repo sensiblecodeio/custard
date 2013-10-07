@@ -310,7 +310,7 @@ switchUser = (req, resp) ->
   req.user.effective = getSessionUser switchingTo
   req.session.save()
   resp.writeHead 302,
-    location: "/"   # How to give full URL here?
+    location: "/datasets"   # How to give full URL here?
   resp.end()
 
 login = (req, resp) ->

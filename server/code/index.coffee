@@ -315,7 +315,7 @@ switchUser = (req, resp) ->
 
 login = (req, resp) ->
   passport.authenticate("local",
-    successRedirect: "/"
+    successRedirect: "/datasets"
     failureRedirect: "/login"
     failureFlash: true
   )(req,resp)

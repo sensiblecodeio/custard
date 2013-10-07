@@ -25,7 +25,8 @@ class Cu.Router.Main extends Backbone.Router
     # Backbone seems to reverse route order
     # TODO: revert to standard routes?
     @route RegExp('.*'), 'fourOhFour'
-    @route RegExp('^/?$'), 'main'
+    @route RegExp('^/?$'), 'homeAnonymous'
+    @route RegExp('^datasets?/?$'), 'homeLoggedIn'
     @route RegExp('professional/?'), 'professional'
     @route RegExp('(?:docs|help)/?'), 'help'
     @route RegExp('(?:docs|help)/([^/]+)/?'), 'help'
@@ -48,12 +49,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('contact/?'), 'contact'
     @route RegExp('about/?'), 'about'
     @route RegExp('journalists/?'), 'journalists'
-
-  main: ->
-    if window.user.effective?
-      @homeLoggedIn()
-    else
-      @homeAnonymous()
 
   trackPageView: (e) ->
     path = Backbone.history.getFragment()

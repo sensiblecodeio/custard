@@ -1,11 +1,11 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Professional Services', ->
   prepIntegration()
 
   before (done) ->
-    browser.get "#{home_url}/professional/", ->
+    browser.get "#{base_url}/professional/", ->
       browser.waitForElementByCss '#request form', 4000, done
 
   context 'when I enter my contact details', ->

@@ -11,25 +11,25 @@ describe 'Upgrade from free account to paid', ->
 
   context 'when I go to the pricing page', ->
     before (done) ->
-      browser.get "#{home_url}/pricing/", done
-      
+      browser.get "#{base_url}/pricing/", done
+
     it 'it shows I am on the free community plan', (done) ->
       wd40.elementByCss '.account-free .currentPlan', (err, span) ->
         should.exist span
         done()
-      
+
     it 'it shows I can upgrade to the medium plan', (done) ->
       wd40.elementByCss '.account-medium .cta', (err, span) ->
         span.text (err, text) ->
           text.should.include 'Upgrade'
           done()
-      
+
     it 'it shows I can upgrade to the large plan', (done) ->
       wd40.elementByCss '.account-large .cta', (err, span) ->
         span.text (err, text) ->
           text.should.include 'Upgrade'
           done()
-      
+
     context 'when I click on the medium upgrade button', ->
       before (done) ->
         wd40.click '.account-medium a', done
@@ -52,19 +52,19 @@ describe 'Upgrade from medium account to large account', ->
 
   context 'when I go to the pricing page', ->
     before (done) ->
-      browser.get "#{home_url}/pricing/", done
-      
+      browser.get "#{base_url}/pricing/", done
+
     it 'it shows I am on the medium plan', (done) ->
       wd40.elementByCss '.account-medium .currentPlan', (err, span) ->
         should.exist span
         done()
-      
+
     it 'it shows I can upgrade to the large plan', (done) ->
       wd40.elementByCss '.account-large .cta', (err, span) ->
         span.text (err, text) ->
           text.should.include 'Upgrade'
           done()
-      
+
     context 'when I click on the large upgrade button', ->
       before (done) ->
         wd40.click '.account-large a', done

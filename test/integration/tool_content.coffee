@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 # Imagine the scene: a free user with a single dataset has recently upgraded.
 # She creates a new view on that dataset. Her dataset box is on the free server,

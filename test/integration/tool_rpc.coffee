@@ -1,7 +1,7 @@
 # See custard/README.md for Selenium setup instructions
 
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Tool RPC', ->
   prepIntegration()
@@ -35,7 +35,7 @@ describe 'Tool RPC', ->
 
       it 'redirects the host to the specified URL', (done) ->
         wd40.trueURL (err, url) ->
-          url.should.equal "#{home_url}/"
+          url.should.equal "#{base_url}/"
           done()
 
     context 'when the redirect external button is pressed', ->

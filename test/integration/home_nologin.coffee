@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Home page (not logged in)', ->
   prepIntegration()
@@ -8,7 +8,7 @@ describe 'Home page (not logged in)', ->
     browser.deleteAllCookies done
 
   before (done) ->
-    browser.get home_url, done
+    browser.get base_url, done
 
   before (done) =>
     wd40.getText 'body', (err, text) =>

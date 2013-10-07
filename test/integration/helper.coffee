@@ -4,8 +4,8 @@
 cleaner = require '../cleaner'
 request = require 'request'
 
-home_url = 'http://localhost:3001'
-login_url = "#{home_url}/login"
+base_url = 'http://localhost:3001'
+login_url = "#{base_url}/login"
 
 prepIntegration = ->
   before (done) ->
@@ -35,7 +35,8 @@ mediumizeMary = (done) ->
 
 exports.wd40 = wd40
 exports.browser = browser
+exports.base_url = base_url
 exports.login_url = login_url
-exports.home_url = home_url
+exports.home_url = "#{base_url}/datasets"
 exports.prepIntegration = prepIntegration
 exports.mediumizeMary = mediumizeMary

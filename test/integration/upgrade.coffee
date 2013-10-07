@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration, mediumizeMary} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration, mediumizeMary} = require './helper'
 
 describe 'Upgrade from free account to paid', ->
   prepIntegration()

@@ -67,7 +67,19 @@ describe 'Successful login', ->
           text.should.include 'Ickle Test'
           done()
 
+      context 'when I revisit the login page', ->
+        before (done) ->
+          browser.get login_url, done
+
+        it 'redirects me to my (logged in) home page', (done) ->
+          wd40.trueURL (err, url) ->
+            url.should.equal home_url
+            done()
+
       context 'when I logout', ->
+        before (done) ->
+          browser.get home_url, done
+
         before (done) ->
           wd40.click '#header .logout a', done
 

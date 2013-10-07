@@ -412,6 +412,8 @@ postStatus = (req, resp) ->
 
 # Render login page
 app.get '/login/?', (req, resp) ->
+  if req.user?.real
+    resp.redirect '/datasets'
   resp.render 'login',
     errors: req.flash('error')
 

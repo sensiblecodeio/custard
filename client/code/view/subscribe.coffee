@@ -38,7 +38,7 @@ class Cu.View.Subscribe extends Backbone.View
       data:
         recurly_token: token
       success: (result) =>
-        window.location = '/datasets'
+        window.location = '/'
       error: (err) =>
         alert err
 

@@ -8,9 +8,13 @@ describe 'View', ->
 
   before (done) ->
     wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', -> wd40.click '#login', done
+      wd40.fill '#password', 'testing', ->
+        wd40.click '#login', done
 
-  context 'when I click on an Prune dataset then the graph of prunes view', ->
+  before (done) ->
+    browser.waitForElementByCss '.dataset-list', 4000, done
+
+  context 'when I click on a Prune dataset then the graph of prunes view', ->
     before (done) ->
       browser.elementByPartialLinkText 'Prune', (err, link) ->
         link.click done

@@ -6,7 +6,12 @@ describe 'Errors', ->
 
   context 'when jQuery receives a 502 error from an AJAX call', ->
     before (done) ->
-      browser.get home_url, done
+      wd40.fill '#username', 'ehg', ->
+        wd40.fill '#password', 'testing', ->
+          wd40.click '#login', done
+
+    before (done) ->
+      browser.waitForElementByCss '.dataset-list', 4000, done
 
     before (done) ->
       browser.eval "jQuery.ajax({url: 'http://httpbin.org/status/502'});", done

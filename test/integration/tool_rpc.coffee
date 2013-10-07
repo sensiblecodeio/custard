@@ -123,14 +123,15 @@ describe 'Tool RPC', ->
       it 'should display the correct sql query', (done) ->
         wd40.waitForText "SELECT 1", done
 
-    context 'when I click on "More tools" in the "Tools" dropdown', ->
+    context 'when I click on "More tools" in the toolbar', ->
       before (done) ->
         browser.get @toolURL, ->
           wd40.switchToTopFrame ->
-            # we have to scroll the toolbar left, so that we see the "More tools" link
-            browser.eval 'document.getElementById("dataset-tools").scrollLeft = 999999', (err, result) ->
-              wd40.click '.new-view', (err) ->
-                browser.waitForElementByCss '#chooser .tool', 4000, done
+            browser.waitForElementByCss '#dataset-tools .new-view', 4000, ->
+              # we have to scroll the toolbar left, so that we see the "More tools" link
+              browser.eval 'document.getElementById("dataset-tools").scrollLeft = 999999', (err, result) ->
+                wd40.click '.new-view', (err) ->
+                  browser.waitForElementByCss '#chooser .tool', 4000, done
 
       context 'when I click on the "Test plugin" tool', ->
         before (done) ->

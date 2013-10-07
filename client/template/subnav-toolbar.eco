@@ -4,7 +4,7 @@
   <li><a class="hide-tool"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</a></li>
 </ul>
 <div id="dataset-meta" <% if @color: %>style="background-color: <%= @color %>"<% end %>>
-  <a href="/"><i class="icon-home icon-white"></i></a>
+  <a href="/datasets"><i class="icon-home icon-white"></i></a>
   <div>
     <h3><%= @displayName %></h3>
     <% if @creatorDisplayName: %>

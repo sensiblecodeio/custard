@@ -88,9 +88,9 @@ describe 'Dataset', ->
           browser.elementByCss '#logo', (err, link) ->
             link.click done
 
-        it 'should display the home page', (done) ->
+        it 'should display my home page', (done) ->
           browser.url (err, url) ->
-            url.should.match /\/$/
+            url.should.match /[/]datasets[/]?$/
             done()
 
         it 'should show the new dataset new name', (done) ->

@@ -2,7 +2,7 @@
 <li><a href="/tools/tablextract" data-nonpushstate>Table Xtract</a></li>
 <li><a href="/professional" data-nonpushstate>Professional Services</a></li>
 <li><a href="/help">Help</a></li>
-<li><a href="http://blog.scraperwiki.com">Blog</a></li>
+<li><a href="https://blog.scraperwiki.com/blog">Blog</a></li>
 <% if @displayName: %>
 <li class="logout"><a href="/logout" data-nonpushstate>Log out</a></li>
 <% else: %>

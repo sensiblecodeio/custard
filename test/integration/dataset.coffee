@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Dataset', ->
   prepIntegration()
@@ -88,9 +88,9 @@ describe 'Dataset', ->
           browser.elementByCss '#logo', (err, link) ->
             link.click done
 
-        it 'should display the home page', (done) ->
+        it 'should display my home page', (done) ->
           browser.url (err, url) ->
-            url.should.match /\/$/
+            url.should.match /[/]datasets[/]?$/
             done()
 
         it 'should show the new dataset new name', (done) ->
@@ -196,7 +196,7 @@ describe 'Dataset', ->
 
   context "When I go to a dataset URL that does not exist", ->
     before (done) ->
-      browser.get "#{home_url}/dataset/doesnotexist", done
+      browser.get "#{base_url}/dataset/doesnotexist", done
 
     before (done) ->
       setTimeout done, 1000

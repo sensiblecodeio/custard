@@ -266,6 +266,7 @@ renderClientApp = (req, resp) ->
       recurlyDomain: process.env.RECURLY_DOMAIN
       flash: req.flash()
       environment: process.env.NODE_ENV
+      loggedIn: 'real' of usersObj
 
 # (internal) Add a view to a dataset
 _addView = (user, dataset, attributes, callback) ->
@@ -309,12 +310,12 @@ switchUser = (req, resp) ->
   req.user.effective = getSessionUser switchingTo
   req.session.save()
   resp.writeHead 302,
-    location: "/"   # How to give full URL here?
+    location: "/datasets"   # How to give full URL here?
   resp.end()
 
 login = (req, resp) ->
   passport.authenticate("local",
-    successRedirect: "/"
+    successRedirect: "/datasets"
     failureRedirect: "/login"
     failureFlash: true
   )(req,resp)
@@ -411,6 +412,8 @@ postStatus = (req, resp) ->
 
 # Render login page
 app.get '/login/?', (req, resp) ->
+  if req.user?.real
+    resp.redirect '/datasets'
   resp.render 'login',
     errors: req.flash('error')
 
@@ -465,7 +468,8 @@ renderServerAndClientSide = (options, req, resp) ->
               recurlyDomain: process.env.RECURLY_DOMAIN
               flash: req.flash()
               environment: process.env.NODE_ENV
-#
+              loggedIn: 'real' of usersObj
+
 # Allow set-password, signup, docs, etc, to be visited by anons
 # Note: these are NOT regular expressions!!
 app.get '/set-password/:token/?', renderClientApp
@@ -490,22 +494,27 @@ app.get '/terms/enterprise-agreement/?', (req, resp) ->
 app.get '/terms/?', (req, resp) ->
   renderServerAndClientSide page: 'terms', req, resp
 
+# :TODO: migrate to Wordpress
 app.get '/contact/?*', (req, resp) ->
   renderServerAndClientSide {page: "contact", subnav: 'aboutnav'}, req, resp
 
+# :TODO: migrate to Wordpress
 app.get '/about/?*', (req, resp) ->
   renderServerAndClientSide {page: "about", subnav: 'aboutnav'}, req, resp
 
+# :TODO: migrate to Wordpress
 app.get '/professional/?', (req, resp) ->
   renderServerAndClientSide {page: "professional", subnav: 'professionalnav' }, req, resp
 
+# :TODO: migrate to Wordpress
 app.get '/tools/tablextract/?', (req, resp) ->
   renderServerAndClientSide page: 'table-xtract', req, resp
 
+# :TODO: migrate to Wordpress
 app.get '/journalists/?', (req, resp) ->
   renderServerAndClientSide page: 'journalists', req, resp
 
-
+# Anonymous (ie: logged-out) homepage
 app.get '/', (req, resp) ->
   renderServerAndClientSide {page: "home", subnav: null}, req, resp
 
@@ -797,6 +806,7 @@ app.get '/api/:user/sshkeys/?', listSSHKeys
 app.put '/api/:user/subscription/change/:plan/?', changePlan
 
 # Catch all other routes, send to client app
+# eg: /datasets, /dataset/abc1234, /signup/free
 app.get '*', renderClientApp
 
 port = process.env.CU_PORT or 3001

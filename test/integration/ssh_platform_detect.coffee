@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 clickSSHButton = (done) ->
   wd40.click '#toolbar a[href$="/settings"] .dropdown-toggle', (err) ->
@@ -11,7 +11,7 @@ describe 'Platform-specific SSH instructions', ->
   before (done) ->
     wd40.fill '#username', 'ehg', ->
       wd40.fill '#password', 'testing', -> wd40.click '#login', ->
-        browser.get "#{home_url}/dataset/3006375731", done
+        browser.get "#{base_url}/dataset/3006375731", done
 
   context 'when I use a Windows PC to view SSH instructions', ->
     before (done) ->

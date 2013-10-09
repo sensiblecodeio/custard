@@ -1,7 +1,7 @@
 # See custard/README.md for Selenium setup instructions
 
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Tool RPC', ->
   prepIntegration()
@@ -35,7 +35,7 @@ describe 'Tool RPC', ->
 
       it 'redirects the host to the specified URL', (done) ->
         wd40.trueURL (err, url) ->
-          url.should.equal "#{home_url}/"
+          url.should.equal "#{base_url}/"
           done()
 
     context 'when the redirect external button is pressed', ->
@@ -123,14 +123,15 @@ describe 'Tool RPC', ->
       it 'should display the correct sql query', (done) ->
         wd40.waitForText "SELECT 1", done
 
-    context 'when I click on "More tools" in the "Tools" dropdown', ->
+    context 'when I click on "More tools" in the toolbar', ->
       before (done) ->
         browser.get @toolURL, ->
           wd40.switchToTopFrame ->
-            # we have to scroll the toolbar left, so that we see the "More tools" link
-            browser.eval 'document.getElementById("dataset-tools").scrollLeft = 999999', (err, result) ->
-              wd40.click '.new-view', (err) ->
-                browser.waitForElementByCss '#chooser .tool', 4000, done
+            browser.waitForElementByCss '#dataset-tools .new-view', 4000, ->
+              # we have to scroll the toolbar left, so that we see the "More tools" link
+              browser.eval 'document.getElementById("dataset-tools").scrollLeft = 999999', (err, result) ->
+                wd40.click '.new-view', (err) ->
+                  browser.waitForElementByCss '#chooser .tool', 4000, done
 
       context 'when I click on the "Test plugin" tool', ->
         before (done) ->

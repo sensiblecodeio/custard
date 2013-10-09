@@ -32,8 +32,10 @@ describe 'Server-side rendering', ->
         @body = body
         done()
 
-    it 'I see homepage HTML content', ->
+    it 'I see About Page HTML content', ->
       @body.should.match /<div class="hero-unit">/gi
+      @body.should.match /<h2>our team/gi
+      @body.should.match /company history/gi
 
   context "When I scrape the Professional Services page with javascript off", ->
     before (done) ->
@@ -43,7 +45,7 @@ describe 'Server-side rendering', ->
         @body = body
         done()
 
-    it 'I see homepage HTML content', ->
+    it 'I see Professional Services HTML content', ->
       @body.should.match /ScraperWiki is a place where data professionals/gi
 
     it 'I see case studies', ->
@@ -52,4 +54,3 @@ describe 'Server-side rendering', ->
       @body.should.match /NewsReader/gi
       @body.should.match /GCloud/gi
       @body.should.match /FP7/gi
-      

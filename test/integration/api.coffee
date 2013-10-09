@@ -468,7 +468,7 @@ describe 'API', ->
             done()
           socket.on 'error', (err) =>
             if /REFUS/.test err.code # ECONNREFUSED
-              console.warn "You are not running an identd locally, so this test won't work"
+              console.warn "          You are not running an identd locally, so this test won't work"
               @skip = true
             else
               throw err

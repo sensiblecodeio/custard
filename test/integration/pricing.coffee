@@ -1,12 +1,12 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Pricing', ->
   prepIntegration()
 
   context 'When I visit the pricing page (as a non-customer)', ->
     before (done) ->
-      browser.get home_url + '/pricing', done
+      browser.get base_url + '/pricing', done
 
     before (done) =>
       wd40.getText 'body', (err, text) =>
@@ -43,7 +43,7 @@ describe 'Pricing', ->
             wd40.click '#login', done
 
     before (done) ->
-      browser.get home_url + '/pricing', done
+      browser.get base_url + '/pricing', done
 
     it 'it shows my current pricing plan', (done) ->
       wd40.elementByPartialLinkText 'Current Plan', (err, link) ->

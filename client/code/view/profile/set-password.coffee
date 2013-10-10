@@ -25,7 +25,7 @@ class Cu.View.SetPassword extends Backbone.View
         type: 'POST'
         dataType: 'json'
         success: (profile) =>
-          window.location = '/'
+          window.location = '/datasets'
         error: (jqxhr, textStatus, errorThrown) =>
           @$el.children('form').prepend """<div class="alert"><strong>Oh no! Something went wrong.</strong> Are you sure you clicked the right link?</div>"""
           $button.attr('disabled', false).removeClass('loading').html('<i class="icon-ok space"></i> Try Again')

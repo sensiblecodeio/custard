@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'New view tool', ->
   prepIntegration()
@@ -37,7 +37,7 @@ describe 'New view tool', ->
           setTimeout done, 2000
 
         it 'takes me to the view page', (done) ->
-          wd40.waitForMatchingURL new RegExp("#{home_url}/dataset/[^/]+/view/[^/]+"), done
+          wd40.waitForMatchingURL new RegExp("#{base_url}/dataset/[^/]+/view/[^/]+"), done
 
     context 'when I click on "More tools" in the toolbar (again)', ->
       before (done) ->
@@ -54,7 +54,7 @@ describe 'New view tool', ->
             , 4000
 
         it 'takes me to the view page', (done) ->
-          wd40.waitForMatchingURL new RegExp("#{home_url}/dataset/[^/]+/view/[^/]+"), done
+          wd40.waitForMatchingURL new RegExp("#{base_url}/dataset/[^/]+/view/[^/]+"), done
 
         it 'does not show two new view tools', (done) ->
           browser.elementsByCssSelector '[data-toolname=newview]', (err, tools) ->

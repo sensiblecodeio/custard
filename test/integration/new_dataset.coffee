@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'New dataset tool', ->
   prepIntegration()
@@ -31,7 +31,7 @@ describe 'New dataset tool', ->
         setTimeout done, 1000
 
       it 'takes me to the dataset settings page', ->
-        @currentUrl.should.match new RegExp("#{home_url}/dataset/[^/]+/settings")
+        @currentUrl.should.match new RegExp("#{base_url}/dataset/[^/]+/settings")
 
       it 'and shows that the "Code a dataset" tool is active', (done) ->
         wd40.elementByCss '#toolbar .active', (err, link) ->

@@ -260,7 +260,7 @@ class Cu.View.Toolbar extends Backbone.View
   hideDataset: ->
     @model.destroy
       success: (model, response, options) =>
-        window.app.navigate "/", {trigger: true}
+        window.app.navigate "/datasets", {trigger: true}
         setTimeout ->
           view = new Cu.View.DatasetTile {model: model}
           $('.new-dataset-tile').after view.render().el

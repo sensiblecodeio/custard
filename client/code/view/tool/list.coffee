@@ -47,7 +47,7 @@ class Cu.View.ToolList extends Backbone.View
       # TODO: we want to go back to the last page, but
       # on our site only window.history.back() will screw up stuff
       if @options.type is 'importers'
-        if navigate then app.navigate '/', trigger: Backbone.history.routeCount < 2
+        if navigate then app.navigate '/datasets', trigger: Backbone.history.routeCount < 2
       else
         if navigate then app.navigate "/dataset/#{@options.dataset.get 'box'}", trigger: Backbone.history.routeCount < 2
     $(window).off('keyup')

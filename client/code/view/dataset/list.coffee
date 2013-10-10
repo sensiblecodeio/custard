@@ -1,3 +1,5 @@
+# The logged-in homepage, showing a user's datasets
+
 class Cu.View.DatasetList extends Backbone.View
   className: 'dataset-list row'
 

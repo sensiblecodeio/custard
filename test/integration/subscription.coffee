@@ -1,11 +1,11 @@
 should = require 'should'
-{wd40, browser, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Subscription Workflow', ->
   prepIntegration()
 
   before (done) ->
-    browser.get home_url + '/pricing', done
+    browser.get base_url + '/pricing', done
 
   before (done) =>
     wd40.getText 'body', (err, text) =>

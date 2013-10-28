@@ -46,7 +46,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('terms/?'), 'terms'
     @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
     @route RegExp('contact/?'), 'contact'
-    @route RegExp('about/?'), 'about'
     @route RegExp('journalists/?'), 'journalists'
 
   trackPageView: (e) ->
@@ -242,8 +241,3 @@ class Cu.Router.Main extends Backbone.Router
     @appView.showView contentView
     @subnavView.showView subnavView
 
-  about: ->
-    subnavView = new Cu.View.AboutNav SubNav.about
-    contentView = new Cu.View.About()
-    @appView.showView contentView
-    @subnavView.showView subnavView

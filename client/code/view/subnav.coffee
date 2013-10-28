@@ -342,13 +342,6 @@ class Cu.View.HelpNav extends Backbone.View
     this
 
 
-class Cu.View.AboutNav extends Backbone.View
-  className: 'subnav-wrapper'
-
-  render: ->
-    @$el.html(JST['aboutnav'] @options).find(".nav a[href='#{window.location.pathname}']").parent().addClass('active')
-    this
-
 
 class Cu.View.ToolShopNav extends Backbone.View
   className: 'subnav-wrapper'

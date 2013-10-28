@@ -1263,101 +1263,6 @@ div.hero-classic p:last-child {
 }
 
 
-/* About page */
-
-div.about .hero-unit {
-  position: relative;
-  background-color: #FFEDA8;
-  color: #000;
-}
-
-div.about .hero-unit p.last {
-  margin-bottom: 0;
-}
-
-div.about .hero-unit p a {
-  color: #000;
-  border-bottom: 1px solid;
-  text-decoration: none;
-}
-
-div.about .hero-unit p a:hover {
-  color: #B86700;
-}
-
-div.about .hero-unit p a:active {
-  position: relative;
-  top: 1px;
-}
-
-div.about .hero-unit img {
-  position: absolute;
-  bottom: -30px;
-  right: -10px;
-  width: 100px;
-  height: 100px;
-}
-
-div.about h2 {
-  font-size: 26px;
-  line-height: 30px;
-  margin: 40px 0 20px;
-}
-
-div.about .people {
-  margin-bottom: 10px;
-}
-
-div.about .people h3 {
-  margin: 0 0 5px 0;
-  font-size: 18px;
-  line-height: 18px;
-}
-
-div.about .people h3 small {
-  font-weight: inherit;
-}
-
-div.about .people h3 a {
-  color: #000;
-}
-
-div.about .people img {
-  width: 60px;
-  border: 1px solid #fff;
-  -webkit-box-shadow: 0 1px 2px #ccc;
-  -moz-box-shadow: 0 1px 2px #ccc;
-  box-shadow: 0 1px 2px #ccc;
-}
-
-div.about .people p {
-  color: #888;
-  font-size: 14px;
-  line-height: 18px;
-}
-
-div.about .people p a {
-  color: #444;
-}
-
-div.about .people .showMore i {
-  color: #39c;
-  font-style: normal;
-  font-size: 14px;
-  line-height: 14px;
-  margin-left: 3px;
-  cursor: pointer;
-}
-
-div.about .people .showMore i:hover {
-  text-decoration: underline;
-}
-
-div.about p.logos {
-  margin: 20px 0;
-}
-
-
 /* Login page */
 
 .login-page {
@@ -1407,12 +1312,6 @@ div.about p.logos {
   #footer li, #footer li + li {
     margin: 0 5px;
     float: none;
-  }
-
-  div.about .row-fluid .span6 {
-    float: none;
-    width: 100%;
-    margin-left: 0;
   }
 
 }
@@ -1587,51 +1486,6 @@ div.about p.logos {
   }
 
 
-  /* About page */
-
-  div.about .hero-unit h1 {
-    max-width: 700px;
-  }
-
-  div.about .hero-unit img {
-    bottom: -20px;
-    right: 20px;
-    width: 150px;
-    height: 150px;
-  }
-
-  div.about .hero-unit p.last {
-    margin-right: 140px;
-  }
-
-  div.about .people p {
-    font-size: 16px;
-    line-height: 22px;
-  }
-
-  #history_and_funding, #thanks {
-    overflow: auto;
-  }
-
-  div.about p.left {
-    float: left;
-    width: 48%;
-  }
-
-  div.about p.right {
-    float: right;
-    width: 48%;
-  }
-
-  div.about p.logos {
-    margin: 10px 0;
-  }
-
-  #history_and_funding + h2 {
-    margin-top: 30px;
-  }
-
-
   /* Login page */
 
   .login-page {
@@ -1649,13 +1503,6 @@ div.about p.logos {
 
   div.help .case-study {
     margin-bottom: 40px;
-  }
-
-
-  /* About page */
-
-  div.about .hero-unit img {
-    right: 30px;
   }
 
 

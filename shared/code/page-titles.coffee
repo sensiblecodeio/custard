@@ -29,8 +29,6 @@ SubNav =
     text: 'Sign up'
   'contact':
     text: 'Contact Us'
-  'about':
-    text: 'About ScraperWiki'
   'journalists':
     text: 'ScraperWiki ♥ Journalists'
   'index':

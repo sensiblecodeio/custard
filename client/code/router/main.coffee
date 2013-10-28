@@ -31,7 +31,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('(?:docs|help)/([^/]+)/?'), 'help'
     @route RegExp('pricing/?'), 'pricing'
     @route RegExp('pricing/([^/]+)/?'), 'pricing'
-    @route RegExp('^tools/?$'), 'toolShop'
     @route RegExp('chooser/?'), 'toolChooser'
     @route RegExp('tools/people-pack/?'), 'peoplePack'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
@@ -169,9 +168,6 @@ class Cu.Router.Main extends Backbone.Router
         unless @subnavView.currentView instanceof Cu.View.Toolbar
           subnavView = new Cu.View.Toolbar model: dataset, view: v
           @subnavView.showView subnavView
-
-  toolShop: ->
-    app.navigate '/tools/tablextract/', true
 
   peoplePack: ->
     subnavView = new Cu.View.ToolShopNav {name: 'People Pack', url: '/tools/people-pack'}

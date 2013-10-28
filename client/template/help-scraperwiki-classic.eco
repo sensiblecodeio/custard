@@ -13,45 +13,45 @@
 </nav>
 
 <div class="wrapper">
-  
+
   <div class="hero-classic">
     <img src="/image/classic-test-card.png" width="140" height="90" alt="">
     <h1>Confused about Classic and the new ScraperWiki?</h1>
     <p class="lead">We want to help everyone make the most of their data. And that includes ScraperWiki Classic users. How&nbsp;can&nbsp;we&nbsp;help?</p>
   </div>
-  
+
   <h2 id="why">Why are you changing?</h2>
-  
+
   <p>We&rsquo;ve changed in order to make ScraperWiki both simpler and more powerful.</p>
-  
+
   <p><strong>Simpler</strong> for end-users through a <a href="http://blog.scraperwiki.com/2013/07/03/announcing-the-new-scraperwiki-com/">whole ecosystem of tools</a> that let them get, clean and analyse data without needing a single line of code. And <strong>more powerful</strong> for programmers through an <a href="http://blog.scraperwiki.com/2013/05/30/10-technical-things-you-didnt-know-about-the-new-scraperwiki/">industry-standard development environment</a> that works with all your usual software practices like Git, SSH and Cron.</p>
-  
+
   <p>You can still <a href="https://scraperwiki.com/help/code-in-your-browser/">write web scrapers in your browser</a> and <a href="http://groups.google.com/group/ScraperWiki">our mailing list</a> is still a great place to get help with your programming roadbumps. But tools on the new ScraperWiki can go much further than that, and we look forward to releasing more and more as time goes on.</p>
-  
+
   <hr/>
-  
+
   <h2 id="login">How do I log in?</h2>
-  
+
   <p>The new ScraperWiki and ScraperWiki Classic are two entirely separate products. Their login systems are separate too.</p>
 
   <p><strong>If you had a Premium Account on Classic,</strong> you should already have been migrated to the new platform. <a href="/contact/" data-nonpushstate>Contact us</a> if you&rsquo;ve mislaid your login details.</p>
 
   <p><strong>If you had a free account on Classic,</strong> you will need to <a href="/pricing/">sign up for an account on the new ScraperWiki</a>, and then log into that.</p>
-  
+
   <p>You can log into your ScraperWiki Classic account at <a href="https://classic.scraperwiki.com">classic.scraperwiki.com</a>.</p>
-  
+
   <hr/>
-  
+
   <h2 id="where-is-my-stuff">Where are all my scrapers?</h2>
-  
+
   <p>Your old scrapers are still safe and sound on <a href="https://classic.scraperwiki.com">classic.scraperwiki.com</a>. They’re running and gathering data as usual.</p>
-  
+
   <p>If you want to continue working on these scrapers in the future (and get the advantage of running all our awesome tools on your data) you should migrate your Classic scrapers to the new ScraperWiki, using the instructions below.</p>
-  
+
   <hr/>
-  
+
   <h2 id="migration">How do I migrate my Classic account?</h2>
-  
+
   <p>You should first <a href="https://scraperwiki.com/pricing">sign up to the new ScraperWiki</a> (you will <em>not</em> simply be able to log in with your Classic details – the two products are entirely separate, and you'll need a new account on the new site).</p>
 
   <p>Once you&rsquo;ve verified your account, click <strong>Create a new dataset</strong> on the homepage, and then pick the <strong>Code in your browser</strong> tool. You'll be taken to an editor window you might recognise from ScraperWiki Classic!</p>
@@ -61,59 +61,59 @@
   <p>If you <em>do want</em> to migrate all your old data along with the code from Classic, we suggest you try a migration script like <a href="http://rdjcode.wordpress.com/2013/07/03/moving-from-scraperwiki-classic-to-scraperwiki-awesome/">the one Ross Jones voluntarily wrote</a>.</p>
 
   <p>If you encounter any bugs with the new platform, <a href="https://github.com/scraperwiki/custard/issues">file them here</a>. We've worked hard on the new ScraperWiki, and we really value your input on how to make it even more awesome.</p>
-  
+
   <hr/>
-  
+
   <h2 id="how-about-no">What if I don&rsquo;t want to migrate my account?</h2>
-  
+
   <p>You are welcome to continue using ScraperWiki Classic until it is retired in September. But you should probably copy your code and data elsewhere if you want to continue working on it after that.</p>
-  
+
   <p>The code for every public scraper can be downloaded by visiting a URL like this:</p>
-  
+
   <pre>https://classic.scraperwiki.com/editor/raw/<strong>your_scraper_name_here</strong></pre>
-  
+
   <p>Likewise, you can download a scraper&rsquo;s SQLite database using a URL like this:</p>
-  
+
   <pre>https://classic.scraperwiki.com/scrapers/export_sqlite/<strong>your_scraper_name_here</strong></pre>
-  
+
   <p>There&rsquo;s also <a href="http://rdjcode.wordpress.com/2013/07/03/backing-up-all-your-scraperwiki-data/">a handy script</a> that will automate the backup process for you.</p>
-  
+
   <p>Remember, even after September, we&rsquo;ll <em>still</em> be making all this code and data available, for free, in a read-only archive on the web (see below).</p>
-  
+
   <hr/>
-  
+
   <h2 id="pricing">What happened to your unlimited free account?</h2>
-  
+
   <p>We knew from the outset that ScraperWiki Classic&rsquo;s pricing model wouldn&rsquo;t work for our new platform, especially since you now get many of the &lsquo;premium&rsquo; features from Classic, like hourly scheduling and private code, for free.</p>
-  
+
   <p>Yet we didn&rsquo;t want to go paid-only, since that would make it difficult for people to try us out, or to use ScraperWiki for their own small-scale personal projects.</p>
 
   <p>The 3 dataset limit was based on people&rsquo;s predominant usage of ScraperWiki Classic &ndash; it should give you plenty of room to try ScraperWiki out before you upgrade to one of our paid accounts. If you need more than that, and you&rsquo;re working on a serious open data project, <a href="/contact" data-nonpushstate>contact us</a>, and we&rsquo;ll upgrade you for free. We&rsquo;re currently evaluating a similar programme for journalists.</p>
 
   <p>Our pricing plan is a work in progress, and we&rsquo;re responsive to change. For instance, we hope to substantially increase the storage limits, especially for the paid accounts, in the very near future. If you have any other feedback about our price points, let us know.</p>
-  
+
   <hr/>
-  
+
   <h2 id="open-data">How do I open up my code and data?</h2>
-  
+
   <p>Unlike Classic, the new ScraperWiki is not aiming to be a place where people publically share code and data. The new ScraperWiki is, at its heart, a more private, personal service.</p>
-  
+
   <p>That said, you&rsquo;re able to share and export your data <i>via tools</i> on the new platform. For example, we&rsquo;ll soon be releasing an <strong>Open your data</strong> tool that publishes your ScraperWiki datasets to public open data catalogues like <a href="http://datahub.io">datahub.io</a>.</p>
-  
+
   <p>You can share your code by pushing it into a version control service like <a href="http://github.com">Github</a>, <a href="http://bitbucket.org">BitBucket</a> or <a href="http://gitorious.org">Gitorious</a> via SSH.</p>
-  
+
   <p>Individual tools like the <strong>Plot a graph</strong> tool, and the <strong>Make a map</strong> tool, will eventually have options to save snapshots of the visualisations you make, so you can share your findings with others.</p>
-  
+
   <hr/>
-  
+
   <h2 id="classic-shutdown">What happens after ScraperWiki Classic shuts down* in September?</h2>
-  
+
   <p>In September, we&rsquo;ll be removing all non-essential functionality from ScraperWiki Classic, so that we can focus our development and engineering efforts on making the new platform as awesome as you&rsquo;d expect.</p>
-  
+
   <p>As part of that process, we&rsquo;ll move <strong>all public scrapers</strong> into a publically-accessible archive, probably stored on Github, so you and future generations can access the wealth of code and data accumulated by ScraperWiki Classic over its lifetime.</p>
-  
+
   <p>You don&rsquo;t need to do anything to have your scrapers included in this archive. It&rsquo;ll happen automatically, and we&rsquo;ll publish more information about it closer to the time.</p>
-  
+
   <p class="muted">* <small>We prefer to call it retirement :-)</small></p>
-  
+
 </div>

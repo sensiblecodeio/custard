@@ -27,10 +27,6 @@ SubNav =
     text: 'Pricing'
   'sign-up':
     text: 'Sign up'
-  'contact':
-    text: 'Contact Us'
-  'journalists':
-    text: 'ScraperWiki ♥ Journalists'
   'index':
     text: ''
 

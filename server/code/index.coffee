@@ -494,14 +494,6 @@ app.get '/terms/enterprise-agreement/?', (req, resp) ->
 app.get '/terms/?', (req, resp) ->
   renderServerAndClientSide page: 'terms', req, resp
 
-# :TODO: migrate to Wordpress
-app.get '/contact/?*', (req, resp) ->
-  renderServerAndClientSide {page: "contact", subnav: 'aboutnav'}, req, resp
-
-# :TODO: migrate to Wordpress
-app.get '/journalists/?', (req, resp) ->
-  renderServerAndClientSide page: 'journalists', req, resp
-
 # Anonymous (ie: logged-out) homepage
 app.get '/', (req, resp) ->
   renderServerAndClientSide {page: "home", subnav: null}, req, resp

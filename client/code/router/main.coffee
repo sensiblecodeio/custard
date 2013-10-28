@@ -43,8 +43,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('subscribe/([^/]+)/?'), 'subscribe'
     @route RegExp('terms/?'), 'terms'
     @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
-    @route RegExp('contact/?'), 'contact'
-    @route RegExp('journalists/?'), 'journalists'
 
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
@@ -62,12 +60,6 @@ class Cu.Router.Main extends Backbone.Router
       subnavView = new Cu.View.DataHubNav
       @appView.showView contentView
       @subnavView.showView subnavView
-
-  journalists: ->
-    subnavView = new Cu.View.Subnav SubNav.journalists
-    contentView = new Cu.View.Journalists
-    @appView.showView contentView
-    @subnavView.showView subnavView
 
   pricing: (upgrade) ->
     subnavView = new Cu.View.Subnav SubNav.pricing
@@ -222,12 +214,6 @@ class Cu.Router.Main extends Backbone.Router
   termsEnterpriseAgreement: ->
     subnavView = new Cu.View.Subnav SubNav['terms-enterprise-agreement']
     contentView = new Cu.View.TermsEnterpriseAgreement()
-    @appView.showView contentView
-    @subnavView.showView subnavView
-
-  contact: ->
-    subnavView = new Cu.View.AboutNav SubNav.contact
-    contentView = new Cu.View.Contact()
     @appView.showView contentView
     @subnavView.showView subnavView
 

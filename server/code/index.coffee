@@ -503,10 +503,6 @@ app.get '/about/?*', (req, resp) ->
   renderServerAndClientSide {page: "about", subnav: 'aboutnav'}, req, resp
 
 # :TODO: migrate to Wordpress
-app.get '/professional/?', (req, resp) ->
-  renderServerAndClientSide {page: "professional", subnav: 'professionalnav' }, req, resp
-
-# :TODO: migrate to Wordpress
 app.get '/tools/tablextract/?', (req, resp) ->
   renderServerAndClientSide page: 'table-xtract', req, resp
 

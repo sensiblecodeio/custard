@@ -27,7 +27,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'homeAnonymous'
     @route RegExp('^datasets?/?$'), 'homeLoggedIn'
-    @route RegExp('professional/?'), 'professional'
     @route RegExp('(?:docs|help)/?'), 'help'
     @route RegExp('(?:docs|help)/([^/]+)/?'), 'help'
     @route RegExp('pricing/?'), 'pricing'
@@ -66,12 +65,6 @@ class Cu.Router.Main extends Backbone.Router
       subnavView = new Cu.View.DataHubNav
       @appView.showView contentView
       @subnavView.showView subnavView
-
-  professional: ->
-    subnavView = new Cu.View.ProfessionalNav
-    contentView = new Cu.View.Professional
-    @appView.showView contentView
-    @subnavView.showView subnavView
 
   journalists: ->
     subnavView = new Cu.View.Subnav SubNav.journalists

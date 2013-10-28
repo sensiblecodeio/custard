@@ -2,7 +2,7 @@
 
 <div class="row">
 
-  <a class="swcol help-tile" href="/contact/" style="background: #F10F0F">
+  <a class="swcol help-tile" href="/contact/" data-nonpushstate style="background: #F10F0F">
     <h3>Help! How do I contact&nbsp;you?</h3>
   </a>
 

@@ -30,7 +30,7 @@ class Cu.View.Pricing extends Backbone.View
           success: (data) ->
             window.location.reload()
           error: (jqXHR, textStatus, errorThrown) ->
-            modalWindow.find('.modal-body').html('Sorry, an error occurred.<br><a href="/contact/">Contact us for help</a>.')
+            modalWindow.find('.modal-body').html('Sorry, an error occurred.<br><a href="/contact/" data-nonpushstate>Contact us for help</a>.')
             modalWindow.find('.btn-primary')
               .removeClass('btn-primary loading')
               .addClass('btn-danger')

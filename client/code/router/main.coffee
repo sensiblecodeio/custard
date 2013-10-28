@@ -34,7 +34,6 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('^tools/?$'), 'toolShop'
     @route RegExp('chooser/?'), 'toolChooser'
     @route RegExp('tools/people-pack/?'), 'peoplePack'
-    @route RegExp('tools/tablextract/?'), 'tableXtract'
     @route RegExp('dataset/([^/]+)/?'), 'dataset'
     @route RegExp('dataset/([^/]+)/settings/?'), 'datasetSettings'
     @route RegExp('dataset/([^/]+)/chooser/?'), 'datasetToolChooser'
@@ -179,11 +178,6 @@ class Cu.Router.Main extends Backbone.Router
     contentView = new Cu.View.PeoplePack()
     @appView.showView contentView
     @subnavView.showView subnavView
-
-  tableXtract: ->
-    contentView = new Cu.View.TableXtract()
-    @appView.showView contentView
-    @subnavView.hideView()
 
   createProfile: ->
     if window.user.real.isStaff

@@ -1,0 +1,32 @@
+#!/usr/bin/env coffee
+mongoose = require 'mongoose'
+async = require 'async'
+
+{Box} = require 'model/box'
+{User} = require 'model/user'
+{Dataset} = require 'model/dataset'
+plans = require 'plans.json'
+
+mongoose.connect process.env.CU_DB
+
+Box.dbClass.find {}, (err, boxen) ->
+  console.warn "got boxes"
+  boxByName = {}
+  for box in boxen
+    boxByName[box.name] = box
+    process.stderr.write '\rbox ' + box.name + '                      '
+  Dataset.dbClass.find {state: { $ne: 'deleted' }}, (err, dataseten) ->
+    console.warn "\ngot datasets"
+    for dataset in dataseten
+      box = boxByName[dataset.box]
+      process.stderr.write '\rdataset ' + dataset.box + '             '
+      if not box?
+        console.log "\nNo box for dataset #{dataset.box}"
+        continue
+      # A box I deliberately made inconsistent, in order
+      # to test this script.
+      if dataset.box == "a5pbt3i"
+        console.log "\n" + dataset.boxServer, box.server
+      if dataset.boxServer != box.server
+        console.log "\n" + dataset.box, dataset.boxServer, box.server
+    process.exit()

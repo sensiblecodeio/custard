@@ -75,6 +75,18 @@ describe 'Tool RPC', ->
       it 'renames the dataset', (done) ->
         wd40.waitForText 'Test Dataset (renamed)', done
 
+    context 'when the user details button is pressed', ->
+      before (done) ->
+        browser.get @toolURL, ->
+          wd40.switchToBottomFrame ->
+            wd40.click '#alert', done
+
+      it 'it shows ehg\'s username', (done) ->
+        wd40.waitForText 'ehg', done
+
+      it 'it shows ehg\'s real name', (done) ->
+        wd40.waitForText 'Chris Blower', done
+
     context 'when the alert button is pressed', ->
       before (done) ->
         browser.get @toolURL, ->

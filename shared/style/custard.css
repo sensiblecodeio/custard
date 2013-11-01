@@ -402,11 +402,13 @@ a.new-dataset-tile:hover {
 }
 
 a.tile h3 {
-  margin: 0;
-  padding: 10px 10px 5px 10px;
+  margin: 9px 10px 0px 10px;
+  padding: 0 0 5px 0;
   font-weight: normal;
   font-size: 21px;
   line-height: 22px;
+  max-height: 92px; /* the inside height of the dataset box */
+  overflow: hidden; /* stop ultra long titles appearing outside the bounding box */
 }
 
 a.view.tile h3 {

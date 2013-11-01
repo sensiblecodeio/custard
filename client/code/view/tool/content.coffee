@@ -74,6 +74,10 @@ class Cu.View.ToolContent extends Backbone.View
                 success: ->
                   delete dataset.new
                   window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
+        getUserDetails: (cb) ->
+          cb
+            shortName: window.user.effective.shortName
+            displayName: window.user.effective.displayName
 
 
 class Cu.View.AppContent extends Cu.View.ToolContent

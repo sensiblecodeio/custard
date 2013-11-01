@@ -10,6 +10,7 @@ jQuery is required.
 scraperwiki = sw =
   dataset: {}
   tool: {}
+  user: {}
 
 
 scraperwiki.box = window.location.pathname.split('/')[1]
@@ -229,6 +230,22 @@ scraperwiki.shellEscape = (command) ->
   Useful for making variables "safe" for inclusion in exec commands.
   ###
   "'#{command.replace(/'/g,"'\"'\"'")}'"
+
+
+scraperwiki.user.profile = (success) ->
+  ###
+  Get the current user's shortName and displayName.
+  An object containing the details will be passed to
+  the optional [success] callback function. This function
+  also returns a jQuery deferred object on which you can
+  chain a .done() handler which is given the user details too.
+  ###
+  dfd = new jQuery.Deferred()
+  parent.scraperwiki.xdm.getUserDetails (userDetails) ->
+    if typeof(success) is 'function'
+      success userDetails
+    dfd.resolve userDetails
+  return dfd.promise()
 
 
 # HERE BE DEPRECATED FUNCTIONS:

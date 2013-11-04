@@ -11,6 +11,7 @@
         <li><a data-nonpushstate href="#js-readsettings">Read settings</a></li>
         <li><a data-nonpushstate href="#js-boxname">Read box name</a></li>
         <li><a data-nonpushstate href="#js-geturl">Read browser URL</a></li>
+        <li><a data-nonpushstate href="#js-user">Get user details</a></li>
         <li><a data-nonpushstate href="#js-redirect">Redirect browser</a></li>
         <li><a data-nonpushstate href="#js-rename">Rename a dataset</a></li>
         <li><a data-nonpushstate href="#js-alert">Display alerts</a></li>
@@ -210,6 +211,18 @@ scraperwiki.readSettings().target.url + "/sqlite"
 <pre class="prettyprint linenums">scraperwiki.tool.getURL(function(url) {
   console.log(url)
 })</pre>
+
+<h3 id="js-user">Get user details</h3>
+
+<p>You can get information about the person using your tool with:</p>
+
+<pre class="prettyprint">
+scraperwiki.user.profile(function(userDetails){
+  console.log('your full name is', userDetails.real.displayName)
+  console.log('your username is', userDetails.real.shortName)
+  console.log('you are in the', userDetails.effective.displayName, 'data hub which has the short name', userDetails.effective.shortName)
+})
+</pre>
 
 <h3 id="js-redirect">Redirect the browser</h3>
 

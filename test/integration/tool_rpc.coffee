@@ -82,7 +82,7 @@ describe 'Tool RPC', ->
       before (done) ->
         browser.get @toolURL, ->
           wd40.switchToBottomFrame ->
-            wd40.click '#alert', done
+            wd40.click '#getuserdetails', done
 
       it 'it shows real username', (done) ->
         wd40.waitForText 'real: teststaff', done

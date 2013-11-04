@@ -76,8 +76,12 @@ class Cu.View.ToolContent extends Backbone.View
                   window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
         getUserDetails: (cb) ->
           cb
-            shortName: window.user.effective.shortName
-            displayName: window.user.effective.displayName
+            real:
+              shortName: window.user.real.shortName
+              displayName: window.user.real.displayName
+            effective:
+              shortName: window.user.effective.shortName
+              displayName: window.user.effective.displayName
 
 
 class Cu.View.AppContent extends Cu.View.ToolContent

@@ -8,9 +8,12 @@ describe 'Tool RPC', ->
 
   before (done) ->
     browser.get login_url, ->
-      wd40.fill '#username', 'ehg', ->
-        wd40.fill '#password', 'testing', ->
+      wd40.fill '#username', 'teststaff', ->
+        wd40.fill '#password', process.env.CU_TEST_STAFF_PASSWORD, ->
           wd40.click '#login', done
+
+  before (done) ->
+    browser.get "#{base_url}/switch/ehg", done
 
   context "with a freshly created test app dataset", ->
     before (done) ->
@@ -74,6 +77,24 @@ describe 'Tool RPC', ->
 
       it 'renames the dataset', (done) ->
         wd40.waitForText 'Test Dataset (renamed)', done
+
+    context 'when the user details button is pressed', ->
+      before (done) ->
+        browser.get @toolURL, ->
+          wd40.switchToBottomFrame ->
+            wd40.click '#getuserdetails', done
+
+      it 'it shows real username', (done) ->
+        wd40.waitForText 'real: teststaff', done
+
+      it 'it shows effective username', (done) ->
+        wd40.waitForText 'effective: ehg', done
+
+      it 'it shows real display name', (done) ->
+        wd40.waitForText 'General Test Testington', done
+
+      it 'it shows effecive display name', (done) ->
+        wd40.waitForText 'Chris Blower', done
 
     context 'when the alert button is pressed', ->
       before (done) ->

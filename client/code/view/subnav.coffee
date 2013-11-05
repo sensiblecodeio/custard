@@ -198,7 +198,7 @@ class Cu.View.DataHubNav extends Backbone.View
       t = $input.val()
       if t != ''
         $('.dataset.tile').each ->
-          if $(this).children('h3').text().toUpperCase().indexOf(t.toUpperCase()) >= 0
+          if $(this).children('h3, h4').text().toUpperCase().indexOf(t.toUpperCase()) >= 0
             $(this).show()
           else
             $(this).hide()

@@ -36,44 +36,6 @@ describe 'API', ->
     @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
   context "When I'm not logged in", ->
 
-    describe 'Data request form', ->
-      context 'POST /api/data-request', ->
-        before (done) ->
-          request.post
-            uri: "#{serverURL}/api/data-request/"
-            form:
-              name: 'Steve Jobs'
-              phone: '1-800-MY-APPLE'
-              email: 'stevejobs@sharklasers.com'
-              description: 'Need data for thermonuclear war against android. Pls help. Kthxbai.'
-          , (err, res, body) =>
-            @body = JSON.parse(body)
-            done()
-
-        it 'returns a valid ticket ID', ->
-          @body.should.have.property 'id'
-          1999.should.be.below @body.id
-
-    describe 'Data request form (invalid request)', ->
-      context 'POST /api/data-request', ->
-        before (done) ->
-          request.post
-            uri: "#{serverURL}/api/data-request/"
-            form:
-              name: 'Steve Jobs'
-              email: 'steve'
-              description: 'Need data for thermonuclear war against android. Pls help. Kthxbai.'
-          , (err, res, body) =>
-            @body = body
-            @res = res
-            done()
-
-        it 'response has a 500 status', ->
-          @res.should.have.status 500
-
-        it 'response should include an error message', ->
-          @body.should.include "Please tell us your email address"
-
     describe 'Sign up', ->
       context 'POST /api/<username>', ->
         before (done) ->

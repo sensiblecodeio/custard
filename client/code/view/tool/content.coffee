@@ -79,9 +79,11 @@ class Cu.View.ToolContent extends Backbone.View
             real:
               shortName: window.user.real.shortName
               displayName: window.user.real.displayName
+              email: window.user.real.email[0]
             effective:
               shortName: window.user.effective.shortName
               displayName: window.user.effective.displayName
+              email: window.user.effective.email[0]
 
 
 class Cu.View.AppContent extends Cu.View.ToolContent

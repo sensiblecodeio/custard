@@ -275,6 +275,8 @@ class exports.User extends ModelBase
             callback "Can't find user", null
 
   @findCanBeReally: (shortName, callback) ->
+    # find and return all user objects where
+    # the canBeReally list includes [shortName]
     @find canBeReally: shortName, callback
 
 exports.dbInject = (dbObj) ->

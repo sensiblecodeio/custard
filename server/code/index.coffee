@@ -149,13 +149,17 @@ getSessionUsersFromDB = (reqUser, cb) ->
           effective: getSessionUser effectiveUser
 
 getEffectiveUser = (user, callback) ->
+  # Find all users with user.shortName in their canBeReally list
   User.findCanBeReally user.shortName, (err, canBeReally) ->
     if canBeReally.length == 0
+      # User cannot switch into anyone else's context.
       return callback user
     else
       if user.defaultContext in _.pluck(canBeReally, 'shortName')
+        # User has a defaultContext, and it is one of the contexts they can switch to.
         effectiveUser = _.findWhere canBeReally, shortName: user.defaultContext
       else
+        # User doesn't have a default context, just just pick any old one.
         effectiveUser = canBeReally[0]
       return callback effectiveUser
 
@@ -166,6 +170,9 @@ verify = (username, password, callback) ->
     if err
       return callback null, false, { message: err.error }
     if user
+      # User logged in successfully!
+      # Now we need to work out which 'effective'
+      # profile they should be logged into...
       getEffectiveUser user, (effectiveUser) ->
         sessionUser =
           real: getSessionUser user
@@ -314,7 +321,7 @@ switchUser = (req, resp) ->
   resp.end()
 
 login = (req, resp) ->
-  passport.authenticate("local",
+  passport.authenticate("local", # see the 'verify' function, above
     successRedirect: "/datasets"
     failureRedirect: "/login"
     failureFlash: true
@@ -334,6 +341,8 @@ setPassword = (req, resp) ->
       User.findByShortName token.shortName, (err, user) ->
         if user?
           user.setPassword req.body.password, ->
+            # Password successfully set!
+            # Set up a new login session for the user
             sessionUser =
               real: getSessionUser user
               effective: getSessionUser user

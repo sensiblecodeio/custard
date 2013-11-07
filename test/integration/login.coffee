@@ -160,10 +160,25 @@ describe 'Password', ->
         wd40.fill '#password', 'testtest', ->
           wd40.click '#content .btn-primary', done
 
-      it 'redirected to home page', (done) ->
-        wd40.waitForText "Ickle Test’s data hub", ->
-          wd40.trueURL (err, url) ->
-            url.should.equal home_url
+      it 'I am shown my datasets', (done) ->
+        browser.waitForElementByCss '.dataset-list', 4000, ->
+          wd40.getText '#subnav-path .btn', (err, text) ->
+            text.should.include 'Ickle Test’s data hub'
+            done()
+
+  context 'when I use the password reset link (as a corporate datahub user)', ->
+    before (done) ->
+      browser.get "#{base_url}/set-password/102937462019837", done
+
+    context 'when I fill in my new password', ->
+      before (done) ->
+        wd40.fill '#password', 'testtest', ->
+          wd40.click '#content .btn-primary', done
+
+      it 'I am shown my company\'s datasets', (done) ->
+        browser.waitForElementByCss '.dataset-list', 4000, ->
+          wd40.getText '#subnav-path .btn', (err, text) ->
+            text.should.include 'Testerson & Sons Ltd’s data hub'
             done()
 
 

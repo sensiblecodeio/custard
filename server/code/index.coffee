@@ -343,13 +343,15 @@ setPassword = (req, resp) ->
           user.setPassword req.body.password, ->
             # Password successfully set!
             # Set up a new login session for the user
-            sessionUser =
-              real: getSessionUser user
-              effective: getSessionUser user
-            req.user = sessionUser
-            req.session.save()
-            req.login sessionUser, ->
-              return resp.send 200, user
+            # (into the right context!)
+            getEffectiveUser user, (effectiveUser) ->
+              sessionUser =
+                real: getSessionUser user
+                effective: getSessionUser effectiveUser
+              req.user = sessionUser
+              req.session.save()
+              req.login sessionUser, ->
+                return resp.send 200, user
         else
           console.warn "no User with shortname #{token.shortname} for Token #{token.token}"
           return resp.send 500

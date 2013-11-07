@@ -27,32 +27,35 @@ class Cu.View.CreateProfile extends Backbone.View
 
   createProfile: (e) ->
     e.preventDefault()
-    accountLevel = $('#accountlevel').val()
-    displayName = $('#displayname').val()
-    shortName = $('#shortname').val()
-    email = $('#email').val()
     $button = $(e.target)
-    if shortName!=''
-      $button.attr('disabled', true).addClass('loading').html('Creating Profile&hellip;')
-      $.ajax
-        url: "#{location.protocol}//#{location.host}/api/user/"
-        data:
-          accountLevel: accountLevel
-          shortName: shortName
-          displayName: displayName
-          email: email
-        type: 'POST'
-        dataType: 'json'
-        success: (newProfile) =>
-          url = "#{location.protocol}//#{location.host}/set-password/#{newProfile.token}"
-          @$el.children('form').html("""<h4>New profile &ldquo;#{newProfile.shortName}&rdquo; created.</h4>
-          <p>They can set their password here:</p>
-          <p><input type="text" class="input-xxlarge" value="#{url}" /></div>""")
-        error: (jqxhr, textStatus, errorThrown) ->
-          if errorThrown == 'Forbidden'
-            alert("Hmmm... computer says no. Is your API key a valid staff key?")
-          else
-            alert("#{textStatus}: #{errorThrown}")
-          $button.attr('disabled', false).removeClass('loading').html('<i class="icon-ok space"></i> Try Again')
-    else
-      alert('Sorry. You must supply a staff API key and a shortName.')
+
+    if $.trim($('#shortname').val()) == ''
+      alert('Sorry. You must supply a shortName.')
+      return
+
+    $button.attr('disabled', true).addClass('loading').html('Creating Profile&hellip;')
+
+    data =
+      accountLevel: $.trim($('#accountlevel').val())
+      displayName: $.trim($('#displayname').val())
+      shortName: $.trim($('#shortname').val())
+      email: $.trim($('#email').val())
+    if $.trim($('#defaultcontext').val()) != ''
+      data.defaultContext = $.trim($('#defaultcontext').val())
+
+    $.ajax
+      url: "#{location.protocol}//#{location.host}/api/user/"
+      data: data
+      type: 'POST'
+      dataType: 'json'
+      success: (newProfile) =>
+        url = "#{location.protocol}//#{location.host}/set-password/#{newProfile.token}"
+        @$el.children('form').html("""<h4>New profile &ldquo;#{newProfile.shortName}&rdquo; created.</h4>
+        <p>They can set their password here:</p>
+        <p><input type="text" id="password-reset-link" class="input-xxlarge" value="#{url}" /></div>""")
+      error: (jqxhr, textStatus, errorThrown) ->
+        if errorThrown == 'Forbidden'
+          alert("Hmmm... computer says no. Is your API key a valid staff key?")
+        else
+          alert("#{textStatus}: #{errorThrown}")
+        $button.attr('disabled', false).removeClass('loading').html('<i class="icon-ok space"></i> Try Again')

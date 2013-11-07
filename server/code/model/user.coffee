@@ -214,37 +214,69 @@ class exports.User extends ModelBase
         else
           console.log 'MailChimpAPI.listSubscribe() returned false while adding user, but there was no error (!?)', newUser
 
-    new User(newUser).save (err) ->
-      if err?
-        err.action = 'save'
-        callback err, null
+    checkDefaultContextExists = (defaultContext, user, callback) ->
+      # [defaultContext] should be either a string or undefined
+      # [user] should be a user object the defaultContext will be added to
+      # [callback] will be passed an error object and a copy of the [user] object
+      if defaultContext
+        User.findByShortName defaultContext, (err, context) ->
+          if context
+            user.defaultContext = defaultContext
+            callback null, user
+          else
+            callback "Can't find specified default context", null
+      else
+        callback null, user
 
-      User.findByShortName newUser.shortName, (err, user) ->
-        if user?
-          token = String(Math.random()).replace('0.', '')
-          new Token({token: token, shortName: user.shortName}).save (err) ->
-            # 201 Created, RFC2616
-            userobj = user.objectify()
-            # TODO: sort out email templates so we can enable this
-            # Don't email if staff are creating at the moment
-            if opts.requestingUser?.isStaff is true
-              userobj.token = token
-              if err?
-                err.action = 'token'
-                callback err, null
-              else
-                callback null, userobj
-            else
-              signUpEmail user, token, (err) ->
+    checkDefaultContextExists opts.newUser.defaultContext, newUser, (err, newUser) ->
+      if err
+        # there was a problem looking up the defaultContext
+        callback err, null
+        return
+
+      # newUser settings are ready: save them into a new model
+      new User(newUser).save (err) ->
+        if err?
+          err.action = 'save'
+          callback err, null
+
+        User.findByShortName newUser.shortName, (err, user) ->
+          if user?
+            if user.defaultContext
+              User.findByShortName user.defaultContext, (err, context) ->
+                context.canBeReally.push(newUser.shortName)
+                # TODO: Maybe we should handle the unlikely case that
+                # this context can't be saved, and we're left with a
+                # user with a defaultContext that isn't reflected in
+                # the target context's canBeReally field.
+                context.save()
+
+            token = String(Math.random()).replace('0.', '')
+            new Token({token: token, shortName: user.shortName}).save (err) ->
+              # 201 Created, RFC2616
+              userobj = user.objectify()
+              # TODO: sort out email templates so we can enable this
+              # Don't email if staff are creating at the moment
+              if opts.requestingUser?.isStaff is true
+                userobj.token = token
                 if err?
-                  err.action = "email"
+                  err.action = 'token'
                   callback err, null
                 else
                   callback null, userobj
-        else
-          callback "Can't find user", null
+              else
+                signUpEmail user, token, (err) ->
+                  if err?
+                    err.action = "email"
+                    callback err, null
+                  else
+                    callback null, userobj
+          else
+            callback "Can't find user", null
 
   @findCanBeReally: (shortName, callback) ->
+    # find and return all user objects where
+    # the canBeReally list includes [shortName]
     @find canBeReally: shortName, callback
 
 exports.dbInject = (dbObj) ->

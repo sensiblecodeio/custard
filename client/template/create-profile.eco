@@ -28,6 +28,10 @@
             <input type="text" name="email" id="email" placeholder="ceo@acme.com">
         </p>
         <p>
+            <label for="defaultcontext">Force user into data hub: <span class="muted">(optional)</span></label>
+            <input type="text" name="defaultcontext" id="defaultcontext" placeholder="megacorp">
+        </p>
+        <p>
             <button type="submit" class="btn btn-primary" id="create-profile"><i class="icon-ok space"></i> Create Profile</button>
         </p>
     </fieldset>

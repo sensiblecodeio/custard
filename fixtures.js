@@ -167,8 +167,12 @@ exports.users = [
 
 exports.tokens = [
 {
-  token: "339231725782156",
-  shortName: "ickletest"
+  token: '339231725782156',
+  shortName: 'ickletest'
+},
+{
+  token: '102937462019837',
+  shortName: 'tinat'
 }
 ]
 

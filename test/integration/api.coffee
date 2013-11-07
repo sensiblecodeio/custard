@@ -48,11 +48,14 @@ describe 'API', ->
               inviteCode: process.env.CU_INVITE_CODE
               acceptedTerms: 1
           , (err, res, body) =>
-            @body = body
+            @body = JSON.parse body
             done()
 
-        it 'returns ok', ->
-          @body.should.include 'tabbytest'
+        it 'returns a JSON string containing the new user\'s details', ->
+          @body.should.not.have.property 'error'
+          @body.should.include
+            shortName: 'tabbytest'
+            displayName: 'Tabatha Testerson'
 
   context "When I have set my password", ->
     before (done) ->

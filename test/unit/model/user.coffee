@@ -236,14 +236,17 @@ describe 'User (server)', ->
       after ->
         mailchimp.MailChimpAPI.restore()
 
-      it 'has a recurlyAccount', ->
+      it 'the new user has a recurlyAccount', ->
         should.exist @user.recurlyAccount
 
-      it 'has agreed to a version of the terms and conditions', ->
+      it 'the new user has agreed to a version of the terms and conditions', ->
         should.exist @user.acceptedTerms
         @user.acceptedTerms.should.be.above 0
 
-      it 'has not contacted the MailChimp API', ->
+      it 'the new user does not have a defaultContext', ->
+        @user.should.not.have.property 'defaultContext'
+
+      it 'it has not contacted the MailChimp API', ->
         @apiStub.listSubscribe.calledOnce.should.be.false
 
       # TODO: stub database
@@ -272,7 +275,7 @@ describe 'User (server)', ->
       after ->
         mailchimp.MailChimpAPI.restore()
 
-      it 'has added them to our MailChimp list', ->
+      it 'it has added them to our MailChimp list', ->
         @apiStub.listSubscribe.calledOnce.should.be.true
         @apiStub.listSubscribe.calledWithMatch({ email_address: 'emailme@example.org' }).should.be.true
 
@@ -294,8 +297,31 @@ describe 'User (server)', ->
       after ->
         mailchimp.MailChimpAPI.restore()
 
-      it 'has not contacted the MailChimp API', ->
+      it 'it has not contacted the MailChimp API', ->
         @apiStub.listSubscribe.calledOnce.should.be.false
+
+    context 'when add is called (with a default context)', ->
+      before (done) ->
+        User.add
+          newUser:
+            shortName: 'testerson-loves-work'
+            displayName: 'Test Testerson Esq.'
+            email: ['test@example.org']
+            acceptedTerms: 1
+            emailMarketing: false
+            defaultContext: 'testersonltd'
+        , (err, user) =>
+          @user = user
+          done err
+
+      it 'the new user has a defaultContext', ->
+        @user.should.have.property 'defaultContext'
+        @user.defaultContext.should.equal 'testersonltd'
+
+      it 'the new user has been added to the other context\'s canBeReally list', (done) ->
+        User.findByShortName 'testersonltd', (err, context) ->
+          context.canBeReally.should.include 'testerson-loves-work'
+          done()
 
 
   describe 'Disk quota', ->

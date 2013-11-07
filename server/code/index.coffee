@@ -362,6 +362,7 @@ addUser = (req, resp) ->
       accountLevel: req.body.accountLevel
       acceptedTerms: req.body.acceptedTerms
       emailMarketing: req.body.emailMarketing
+      defaultContext: req.body.defaultContext
     requestingUser: req.user?.real
   , (err, user) ->
     if err?

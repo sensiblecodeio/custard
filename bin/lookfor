@@ -1,0 +1,116 @@
+#!/usr/bin/env coffee
+
+info = """
+  Gets information about a given box or user from MongoDB.
+  Call this script from the command line with a single argument, such as:
+  - a seven-character boxName
+  - a dataset's displayName
+  - a user's shortName
+  - a user's displayName
+  - a user's email
+  - an email string like "A. Person <person@example.com>"
+"""
+
+fs = require 'fs'
+{MongoClient} = require('mongodb')
+async = require 'async'
+
+rmQuote = (s) ->
+  if not /^['"]/.test s
+    return s
+  t = s.replace /[^\\]|\\./g, (x) ->
+    # Strip all quotes (which should be only leading and trailing)
+    if /['"]/.test x
+      return ''
+    # Escape
+    if x[0] == '\\'
+      return x[1]
+    return x
+  return t
+
+dir = '../charm-secrets'
+file = "#{dir}/config/live/custard.yaml"
+yamltext = fs.readFileSync file, 'utf-8'
+m = yamltext.match /CU_DB:\s*(.+?)\s*($|\n)/
+dbURL = rmQuote m[1]
+
+
+if process.argv.length != 3
+  console.log info
+  process.exit()
+
+
+MongoClient.connect dbURL, (err, db) ->
+  if err
+    throw err
+
+  argument = process.argv[2]
+
+  findBoxes db, argument, ->
+    findUsers db, argument, ->
+      process.exit()
+
+
+findBoxes = (db, argument, next) ->
+  condition =
+    $or: [
+      { box: new RegExp argument, 'i' }
+      { displayName: new RegExp argument, 'i' }
+      { 'views.box': new RegExp argument, 'i' }
+    ]
+  exclude =
+    __v: 0
+    _id: 0
+    'views._id': 0
+    'views.__v': 0
+
+  datasets = db.collection 'datasets'
+  datasets.find(condition, exclude).toArray (err, datasets) ->
+    for dataset in datasets
+      print dataset, argument
+    next()
+
+
+findUsers = (db, argument, next) ->
+  if /.+\s<.+@.+>/.test argument
+    matches = argument.match /(.+)\s<((.+)@.+)>/
+    condition =
+      $or: [
+        { email: new RegExp matches[2] }
+        { email: new RegExp matches[3] }
+        { displayName: new RegExp matches[1] }
+        { shortName: new RegExp matches[1] }
+        { displayName: new RegExp matches[3] }
+        { shortName: new RegExp matches[3] }
+      ]
+  else if /@/.test argument
+    condition =
+      email: argument
+  else
+    condition =
+      $or: [
+        { shortName: new RegExp argument, 'i' }
+        { displayName: new RegExp argument, 'i' }
+        { email: new RegExp argument, 'i'}
+      ]
+  exclude =
+    _id: 0
+    __v: 0
+    trialStarted: 0
+    acceptedTerms: 0
+    sshKeys: 0
+    password: 0
+    recurlyAccount: 0
+
+  users = db.collection 'users'
+  users.find(condition, exclude).toArray (err, users) ->
+    for user in users
+      print user, argument
+    next()
+
+
+print = (document, argument) ->
+  json = JSON.stringify document, null, 2
+  output = json.replace new RegExp(argument, 'ig'), "\u001b[30;43m$&\u001b[0m"
+  console.log output
+

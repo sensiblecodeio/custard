@@ -332,6 +332,21 @@ describe 'API', ->
               it 'has an associated boxServer...', ->
                 should.exist @view.boxServer
 
+          context 'when I attempt to create a view on a bogus dataset', ->
+            context 'POST /api/:user/datasets/bogus/views', ->
+              it 'returns 404', (done) ->
+                request.post
+                  uri: "#{serverURL}/api/#{@user}/datasets/bogus/views"
+                  form:
+                    name: 'carrottop'
+                    displayName: 'Carrot Top'
+                    tool: 'test-plugin'
+                , (err, res, body) =>
+                  @response = res
+                  should.exist @response
+                  @response.should.have.status 404
+                  done()
+
 
         context 'PUT /api/:user/datasets/:id', ->
           it 'changes the display name of a single dataset', (done) ->

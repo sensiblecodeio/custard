@@ -265,13 +265,13 @@ describe 'API', ->
           it 'dataset has a creator short name', (done)  ->
             request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
               newDataset = JSON.parse res.body
-              newDataset.creatorShortName.should.equal 'ickletest'
+              'ickletest'.should.equal newDataset.creatorShortName
               done()
 
           it 'dataset has a creator display name', (done)  ->
             request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
               newDataset = JSON.parse res.body
-              newDataset.creatorDisplayName.should.equal 'Ickle Test'
+              'Ickle Test'.should.equal newDataset.creatorDisplayName
               done()
 
           it "404 errors if the dataset doesn't exist", (done) ->
@@ -318,7 +318,9 @@ describe 'API', ->
                   tool: 'test-plugin'
               , (err, res, body) =>
                 @response = res
-                @view = JSON.parse res.body
+                @view = null
+                if res
+                  @view = JSON.parse res.body
                 done()
 
             context 'POST /api/:user/datasets/<dataset>/views', ->
@@ -332,6 +334,21 @@ describe 'API', ->
               it 'has an associated boxServer...', ->
                 should.exist @view.boxServer
 
+          context 'when I attempt to create a view on a bogus dataset', ->
+            context 'POST /api/:user/datasets/bogus/views', ->
+              it 'returns 404', (done) ->
+                request.post
+                  uri: "#{serverURL}/api/#{@user}/datasets/bogus/views"
+                  form:
+                    name: 'carrottop'
+                    displayName: 'Carrot Top'
+                    tool: 'test-plugin'
+                , (err, res, body) =>
+                  @response = res
+                  should.exist @response
+                  @response.should.have.status 404
+                  done()
+
 
         context 'PUT /api/:user/datasets/:id', ->
           it 'changes the display name of a single dataset', (done) ->
@@ -343,7 +360,7 @@ describe 'API', ->
               res.should.have.status 200
               request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) =>
                 @dataset = JSON.parse res.body
-                @dataset.displayName.should.equal 'Cheese'
+                'Cheese'.should.equal @dataset.displayName
                 done(err)
 
           it 'changes the owner of a single dataset', (done) ->

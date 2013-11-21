@@ -104,9 +104,19 @@ findUsers = (db, argument, next) ->
 
   users = db.collection 'users'
   users.find(condition, exclude).toArray (err, users) ->
-    for user in users
-      print user, argument
-    next()
+    async.eachSeries users, (user, done) ->
+      addTokensToUser db, user, (user) ->
+        print user, argument
+        done()
+    , next
+
+
+addTokensToUser = (db, user, next) ->
+  tokens = db.collection 'tokens'
+  tokens.find({ shortName: new RegExp user.shortName }).toArray (err, tokens) ->
+    if tokens.length
+      user.passwordReset = "https://scraperwiki.com/set-password/#{tokens[0]['token']}"
+    next(user)
 
 
 print = (document, argument) ->

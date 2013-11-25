@@ -51,16 +51,28 @@ class Cu.Router.Main extends Backbone.Router
       if window.intercomSettings?
         window.Intercom 'update', window.intercomSettings
       else
-        window.Intercom 'boot',
+        @getIntercomSettings (intercomSettings) ->
+            window.Intercom 'boot', intercomSettings
+
+  getIntercomSettings: (cb) ->
+    # :TODO: It feels wrong fetching the user models *again* here
+    users = Cu.CollectionManager.get Cu.Collection.User
+    users.fetch
+      success: (model, response, options) =>
+        real = model.findWhere
+          shortName: window.user.real.shortName
+        effective = model.findWhere
+          shortName: window.user.effective.shortName
+        intercomSettings =
           app_id: "63b0c6d4bb5f0867b6e93b0be9b569fb3a7ab1e3"
-          user_id: window.user.real.shortName
-          name: window.user.real.displayName
-          email: window.user.real.email[0]
-          # :TODO: add a "created_at" key here, with the
-          # real user's "created" attribute as a unix timestamp
-          accountLevel: window.user.real.accountLevel
-          datahub_id: window.user.effective.shortName
-          datahub_name: window.user.effective.displayName
+          user_id: real.get('shortName')
+          name: real.get('displayName')
+          email: real.get('email')[0]
+          created_at: Date.parse(real.get('created')) / 1000
+          accountLevel: real.get('accountLevel')
+          datahub_id: effective.get('shortName')
+          datahub_name: effective.get('displayName')
+        cb intercomSettings
 
   homeAnonymous: ->
     contentView = new Cu.View.Home

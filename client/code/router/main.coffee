@@ -52,7 +52,8 @@ class Cu.Router.Main extends Backbone.Router
         window.Intercom 'update', window.intercomSettings
       else
         @getIntercomSettings (intercomSettings) ->
-            window.Intercom 'boot', intercomSettings
+          console.log 'intercomSettings', intercomSettings
+          window.Intercom 'boot', intercomSettings
 
   getIntercomSettings: (cb) ->
     # :TODO: It feels wrong fetching the user models *again* here
@@ -63,16 +64,20 @@ class Cu.Router.Main extends Backbone.Router
           shortName: window.user.real.shortName
         effective = model.findWhere
           shortName: window.user.effective.shortName
-        intercomSettings =
-          app_id: "63b0c6d4bb5f0867b6e93b0be9b569fb3a7ab1e3"
-          user_id: real.get('shortName')
-          name: real.get('displayName')
-          email: real.get('email')[0]
-          created_at: Date.parse(real.get('created')) / 1000
-          accountLevel: real.get('accountLevel')
-          datahub_id: effective.get('shortName')
-          datahub_name: effective.get('displayName')
-        cb intercomSettings
+        datasets = Cu.CollectionManager.get Cu.Collection.Datasets
+        datasets.fetch
+          success: (model, response, options) =>
+            intercomSettings =
+              app_id: "63b0c6d4bb5f0867b6e93b0be9b569fb3a7ab1e3"
+              user_id: real.get('shortName')
+              name: real.get('displayName')
+              email: real.get('email')[0]
+              created_at: Date.parse(real.get('created')) / 1000
+              accountLevel: real.get('accountLevel')
+              datahub_id: effective.get('shortName')
+              datahub_name: effective.get('displayName')
+              datasets: datasets.length
+            cb intercomSettings
 
   homeAnonymous: ->
     contentView = new Cu.View.Home

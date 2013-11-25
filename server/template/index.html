@@ -40,6 +40,7 @@
   <script src="/vendor/js/chroma.pack.min.js"></script>
   <script src="/vendor/js/ZeroClipboard.js"></script>
   <script src="/vendor/js/easyXDM.min.js"></script>
+  <script src="/vendor/js/intercom.v1.js"></script>
   <script src="/js/custard.js"></script>
   <script>
     window.user = <%- user %>
@@ -55,6 +56,8 @@
       })()
     } else {
       console.log('Google Analytics disabled in development environment')
+      //console.log('Intercom.io disabled in development environment')
+      //window.Intercom = function(){}
     }
   </script>
   <%- templates %>

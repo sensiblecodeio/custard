@@ -47,6 +47,20 @@ class Cu.Router.Main extends Backbone.Router
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
     _gaq.push ['_trackPageview', "/#{path}"]
+    if 'real' of window.user
+      if window.intercomSettings?
+        window.Intercom 'update', window.intercomSettings
+      else
+        window.Intercom 'boot',
+          app_id: "63b0c6d4bb5f0867b6e93b0be9b569fb3a7ab1e3"
+          user_id: window.user.real.shortName
+          name: window.user.real.displayName
+          email: window.user.real.email[0]
+          # :TODO: add a "created_at" key here, with the
+          # real user's "created" attribute as a unix timestamp
+          accountLevel: window.user.real.accountLevel
+          datahub_id: window.user.effective.shortName
+          datahub_name: window.user.effective.displayName
 
   homeAnonymous: ->
     contentView = new Cu.View.Home

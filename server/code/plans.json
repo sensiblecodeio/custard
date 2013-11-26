@@ -13,6 +13,13 @@
         "maxNumDatasets": 3,
         "$": false
     },
+    "free-z": {
+        "boxServer": "free-ec2-z.scraperwiki.com",
+        "maxDiskSpaceMB": 8,
+        "maxHourCPUPerDay": 0.5,
+        "maxNumDatasets": 3,
+        "$": false
+    },
     "grandfather-ec2": {
         "boxServer": "premium.scraperwiki.com",
         "maxDiskSpaceMB": 8000,

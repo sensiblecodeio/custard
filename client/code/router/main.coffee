@@ -69,7 +69,7 @@ class Cu.Router.Main extends Backbone.Router
           success: (model, response, options) =>
             datasets = model.toJSON()
 
-            intercomSettings =
+            settings =
               app_id: "63b0c6d4bb5f0867b6e93b0be9b569fb3a7ab1e3"
               user_id: real.get('shortName')
               name: real.get('displayName')
@@ -83,19 +83,22 @@ class Cu.Router.Main extends Backbone.Router
               table_xtract_downloads: 0
               twitter_search_datasets: 0
               code_in_browser_datasets: 0
+              most_recent_dataset_created_at: null
 
             _.each datasets, (dataset) ->
+              date = Date.parse(dataset.createdDate) / 1000
+              settings.most_recent_dataset_created_at = Math.max date, settings.most_recent_dataset_created_at
               if dataset.tool == 'table-xtract'
-                intercomSettings.table_xtract_datasets += 1
+                settings.table_xtract_datasets += 1
                 _.each dataset.views, (view) ->
                   if view.tool == 'spreadsheet-download'
-                    intercomSettings.table_xtract_downloads += 1
+                    settings.table_xtract_downloads += 1
               else if dataset.tool == 'twitter-search'
-                intercomSettings.twitter_search_datasets += 1
+                settings.twitter_search_datasets += 1
               else if dataset.tool == 'code-scraper-in-browser'
-                intercomSettings.code_in_browser_datasets += 1
+                settings.code_in_browser_datasets += 1
 
-            cb intercomSettings
+            cb settings
 
   homeAnonymous: ->
     contentView = new Cu.View.Home

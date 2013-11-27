@@ -56,9 +56,8 @@
         s.parentNode.insertBefore(g, s)
       })()
     } else {
-      console.log('Google Analytics disabled in development environment')
-      //console.log('Intercom.io disabled in development environment')
-      //window.Intercom = function(){}
+      console.log('Google Analytics and Intercom.io disabled in development environment')
+      window.Intercom = function(){ console.log('window.Intercom', arguments) }
     }
   </script>
   <%- templates %>

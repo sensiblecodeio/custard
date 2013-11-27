@@ -48,12 +48,8 @@ class Cu.Router.Main extends Backbone.Router
     path = Backbone.history.getFragment()
     _gaq.push ['_trackPageview', "/#{path}"]
     if 'real' of window.user and window.intercomUserHash != ''
-      if window.intercomSettings?
-        window.Intercom 'update', window.intercomSettings
-      else
-        @getIntercomSettings (intercomSettings) ->
-          console.log 'intercomSettings', intercomSettings
-          window.Intercom 'boot', intercomSettings
+      @getIntercomSettings (intercomSettings) ->
+        window.Intercom 'boot', intercomSettings
 
   getIntercomSettings: (cb) ->
     # :TODO: It feels wrong fetching the user models *again* here

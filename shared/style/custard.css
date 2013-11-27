@@ -106,6 +106,10 @@ body.fullscreen .container {
   margin-left: 25px;
 }
 
+#header nav li.help {
+  margin-left: 20px; /* compensate for visual weight of Intercom.io button */
+}
+
 #header nav li a {
   display: block;
   color: #666;
@@ -128,6 +132,16 @@ body.fullscreen .container {
 
 #header nav li.logout a:hover {
   color: #b00;
+}
+
+#header nav #intercomButton {
+  color: #fff;
+  text-shadow: none;
+  padding: 0 15px;
+  border-top: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
 }
 
 #header + .alert {

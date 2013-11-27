@@ -21,6 +21,13 @@ class Cu.View.ToolMenuItem extends Backbone.View
         right: right - 35
         left: 'auto'
       ).show()
+
+      toolName = @model.get('tool').get('name')
+      if toolName == 'table-xtract'
+        $('#tool-options-menu .git-ssh').hide()
+      else
+        $('#tool-options-menu .git-ssh').show()
+
       $('#dropdown-menu-closer').show()
       $('body').on 'click.showOptionsDropdown', ->
         $('#tool-options-menu, #dropdown-menu-closer').hide()

@@ -125,6 +125,7 @@ getSessionUser = (user) ->
     boxEndpoint: Box.endpoint plan.boxServer, ''
     boxServer: plan.boxServer
     acceptedTerms: user.acceptedTerms
+    created: user.created
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")
@@ -260,7 +261,8 @@ checkSwitchUserRights = (req, res, next) ->
     # and the shortName is not in canBeReally, which means they can't switch.
     return res.send 403, { error: "#{req.user.real.shortName} cannot switch to #{switchingTo}"}
 
-# Render the main client side app
+# Render the HTML container into which Backbone
+# and the client-side Custard views are written
 renderClientApp = (req, resp) ->
   getSessionUsersFromDB req.user, (usersObj) ->
     resp.render 'index',
@@ -274,6 +276,40 @@ renderClientApp = (req, resp) ->
       flash: req.flash()
       environment: process.env.NODE_ENV
       loggedIn: 'real' of usersObj
+      intercomUserHash: getIntercomUserHash req.user?.real.shortName
+
+# Bypass Backbone by parsing and rendering the given
+# client-side page to HTML (useful for SEO on docs pages etc)
+renderServerAndClientSide = (options, req, resp) ->
+  fs.readFile "client/template/#{options.page}.eco", (err, contentTemplate) ->
+    if err?
+      console.warn "Template #{options.page} not found when rendering server side"
+      return resp.send 500, {error: "Template not found: #{err}"}
+    _.extend options, pageTitles.SubNav[options.page]
+    options.subnav ?= 'subnav'
+    fs.readFile "client/template/#{options.subnav}.eco", (err, subnavTemplate) ->
+      fs.readFile "client/template/nav.eco", (err, navTemplate) ->
+        getSessionUsersFromDB req.user, (usersObj) ->
+          resp.render 'index',
+              nav: eco.render navTemplate.toString()
+              subnav: """<div class="subnav-wrapper">#{eco.render subnavTemplate.toString(), options}</div>"""
+              content: """<div class="#{options.page}">#{eco.render contentTemplate.toString(), {} }</div>"""
+              scripts: js 'app'
+              templates: js 'template/index'
+              user: JSON.stringify usersObj
+              recurlyDomain: process.env.RECURLY_DOMAIN
+              flash: req.flash()
+              environment: process.env.NODE_ENV
+              loggedIn: 'real' of usersObj
+              intercomUserHash: getIntercomUserHash req.user?.real.shortName
+
+# (internal) Get the HMAC hash for the specified user
+getIntercomUserHash = (shortName) ->
+  hash = null
+  if shortName and process.env.INTERCOM_SECRET_KEY
+    key = process.env.INTERCOM_SECRET_KEY
+    hash = crypto.createHmac('sha256', key).update(shortName).digest('hex')
+  return hash
 
 # (internal) Add a view to a dataset
 _addView = (user, dataset, attributes, callback) ->
@@ -459,28 +495,6 @@ verifyRecurly = (req, resp) ->
         req.flash 'info', msg
         req.session.save()
         resp.send 201, success: "Verified and upgraded"
-
-renderServerAndClientSide = (options, req, resp) ->
-  fs.readFile "client/template/#{options.page}.eco", (err, contentTemplate) ->
-    if err?
-      console.warn "Template #{options.page} not found when rendering server side"
-      return resp.send 500, {error: "Template not found: #{err}"}
-    _.extend options, pageTitles.SubNav[options.page]
-    options.subnav ?= 'subnav'
-    fs.readFile "client/template/#{options.subnav}.eco", (err, subnavTemplate) ->
-      fs.readFile "client/template/nav.eco", (err, navTemplate) ->
-        getSessionUsersFromDB req.user, (usersObj) ->
-          resp.render 'index',
-              nav: eco.render navTemplate.toString()
-              subnav: """<div class="subnav-wrapper">#{eco.render subnavTemplate.toString(), options}</div>"""
-              content: """<div class="#{options.page}">#{eco.render contentTemplate.toString(), {} }</div>"""
-              scripts: js 'app'
-              templates: js 'template/index'
-              user: JSON.stringify usersObj
-              recurlyDomain: process.env.RECURLY_DOMAIN
-              flash: req.flash()
-              environment: process.env.NODE_ENV
-              loggedIn: 'real' of usersObj
 
 # Allow set-password, signup, docs, etc, to be visited by anons
 # Note: these are NOT regular expressions!!

@@ -40,7 +40,8 @@ exports.users = [
   recurlyAccount: "ehg-2423432",
   acceptedTerms: 1,
   canBeReally: ['ehg', 'test'],
-  defaultContext: "ehg"
+  defaultContext: "ehg",
+  created: new Date(2012, 0, 1) // Wow! A zero-indexed month!
 },
 {
   shortName: 'ickletest',

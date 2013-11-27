@@ -1,6 +1,6 @@
 SubNav =
   'help-home':
-    text: "Help"
+    text: "Docs"
   'help-corporate':
     text: 'Corporate FAQs'
   'help-whats-new':

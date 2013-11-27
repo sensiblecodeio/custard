@@ -47,6 +47,61 @@ class Cu.Router.Main extends Backbone.Router
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
     _gaq.push ['_trackPageview', "/#{path}"]
+    if 'real' of window.user and window.intercomUserHash != ''
+      @getIntercomSettings (intercomSettings) ->
+        if window.intercomBooted?
+          window.Intercom 'update', intercomSettings
+        else
+          window.Intercom 'boot', intercomSettings
+          window.intercomBooted = true
+
+  getIntercomSettings: (cb) ->
+    # :TODO: It feels wrong fetching the user models *again* here
+    users = Cu.CollectionManager.get Cu.Collection.User
+    users.fetch
+      success: (model, response, options) =>
+        real = model.findWhere
+          shortName: window.user.real.shortName
+        effective = model.findWhere
+          shortName: window.user.effective.shortName
+        datasets = Cu.CollectionManager.get Cu.Collection.Datasets
+        datasets.fetch
+          success: (model, response, options) =>
+            datasets = model.toJSON()
+
+            settings =
+              app_id: "63b0c6d4bb5f0867b6e93b0be9b569fb3a7ab1e3"
+              user_hash: window.intercomUserHash
+              widget:
+                activator: "#intercomButton"
+              user_id: real.get('shortName')
+              name: real.get('displayName')
+              email: real.get('email')[0]
+              created_at: Date.parse(real.get('created')) / 1000
+              accountLevel: real.get('accountLevel')
+              datahub_id: effective.get('shortName')
+              datahub_name: effective.get('displayName')
+              datasets: datasets.length
+              table_xtract_datasets: 0
+              table_xtract_downloads: 0
+              twitter_search_datasets: 0
+              code_in_browser_datasets: 0
+              most_recent_dataset_created_at: null
+
+            _.each datasets, (dataset) ->
+              date = Date.parse(dataset.createdDate) / 1000
+              settings.most_recent_dataset_created_at = Math.max date, settings.most_recent_dataset_created_at
+              if dataset.tool == 'table-xtract'
+                settings.table_xtract_datasets += 1
+                _.each dataset.views, (view) ->
+                  if view.tool == 'spreadsheet-download'
+                    settings.table_xtract_downloads += 1
+              else if dataset.tool == 'twitter-search'
+                settings.twitter_search_datasets += 1
+              else if dataset.tool == 'code-scraper-in-browser'
+                settings.code_in_browser_datasets += 1
+
+            cb settings
 
   homeAnonymous: ->
     contentView = new Cu.View.Home

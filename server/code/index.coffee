@@ -276,7 +276,7 @@ renderClientApp = (req, resp) ->
       flash: req.flash()
       environment: process.env.NODE_ENV
       loggedIn: 'real' of usersObj
-      intercomSettings: null
+      intercomUserHash: getIntercomUserHash req.user?.real.shortName
 
 # Bypass Backbone by parsing and rendering the given
 # client-side page to HTML (useful for SEO on docs pages etc)
@@ -301,7 +301,15 @@ renderServerAndClientSide = (options, req, resp) ->
               flash: req.flash()
               environment: process.env.NODE_ENV
               loggedIn: 'real' of usersObj
-              intercomSettings: null
+              intercomUserHash: getIntercomUserHash req.user?.real.shortName
+
+# (internal) Get the HMAC hash for the specified user
+getIntercomUserHash = (shortName) ->
+  hash = null
+  if shortName and process.env.INTERCOM_SECRET_KEY
+    key = process.env.INTERCOM_SECRET_KEY
+    hash = crypto.createHmac('sha256', key).update(shortName).digest('hex')
+  return hash
 
 # (internal) Add a view to a dataset
 _addView = (user, dataset, attributes, callback) ->

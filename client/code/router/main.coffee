@@ -47,7 +47,7 @@ class Cu.Router.Main extends Backbone.Router
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
     _gaq.push ['_trackPageview', "/#{path}"]
-    if 'real' of window.user
+    if 'real' of window.user and window.intercomUserHash != ''
       if window.intercomSettings?
         window.Intercom 'update', window.intercomSettings
       else
@@ -71,6 +71,7 @@ class Cu.Router.Main extends Backbone.Router
 
             settings =
               app_id: "63b0c6d4bb5f0867b6e93b0be9b569fb3a7ab1e3"
+              user_hash: window.intercomUserHash
               user_id: real.get('shortName')
               name: real.get('displayName')
               email: real.get('email')[0]

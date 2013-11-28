@@ -144,6 +144,17 @@ body.fullscreen .container {
   border-radius: 0;
 }
 
+#IModal #IntercomNewMessageContainer h1:after {
+  content: "Report a bug or ask for help. Be as detailed as possible.";
+  color: #888;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+#IModal #IntercomNewMessageContainer h1 {
+  top: 20px;
+}
+
 #header + .alert {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;

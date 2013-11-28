@@ -1,8 +1,11 @@
-<p>
-  This is a placeholder for the internal home page for the ScraperWiki platform. 
-</p>
+<div style="text-align: center; margin-top: 40px;">
 
-<p>
-  On live sites, this URL is a page in WordPress. If you can see this page,
-  something has probably gone wrong, or you're a developer.
-</p>
+  <img src="/image/tractor-500x320.png" width="500" height="320" alt="You found us!" style="width: 300px; margin-bottom: 40px;">
+
+  <p>This is a placeholder for the internal home page of the ScraperWiki platform.</p>
+
+  <p>On live sites, this URL displays a proxied homepage from WordPress.</p>
+
+  <p>If you can see this page, something has probably gone wrong, or you&rsquo;re a developer.</p>
+
+</div>

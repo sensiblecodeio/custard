@@ -2,7 +2,7 @@
 <% if @displayName: %>
 <li class="logout"><a href="/logout" data-nonpushstate>Log out</a></li>
 <li class="docs"><a href="/help">Docs</a></li>
-<li class="help"><a id="intercomButton" class="btn btn-danger">Help</a></li>
+<li class="help"><a href="/help" id="intercomButton" class="btn btn-danger">Help</a></li>
 <% else: %>
 <li class="login"><a href="/login" data-nonpushstate>Log in</a></li>
 <li class="pricing"><a href="/pricing">Sign up</a></li>

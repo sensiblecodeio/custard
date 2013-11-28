@@ -145,6 +145,7 @@ body.fullscreen .container {
 }
 
 #IModal #IntercomNewMessageContainer h1:after {
+  display: block;
   content: "Report a bug or ask for help. Be as detailed as possible.";
   color: #888;
   font-size: 12px;

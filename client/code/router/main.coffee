@@ -75,24 +75,26 @@ class Cu.Router.Main extends Backbone.Router
           datahub_id: effective.shortName
           datahub_name: effective.displayName
           datasets: datasets.length
-          table_xtract_datasets: 0
-          table_xtract_downloads: 0
-          twitter_search_datasets: 0
-          code_in_browser_datasets: 0
-          most_recent_dataset_created_at: null
+          dataset_created_at: null
+          tx_datasets: 0
+          tx_downloads: 0
+          tx_created_at: null
+          ts_datasets: 0
+          cb_datasets: 0
 
         _.each datasets, (dataset) ->
           date = Date.parse(dataset.createdDate) / 1000
-          settings.most_recent_dataset_created_at = Math.max date, settings.most_recent_dataset_created_at
+          settings.dataset_created_at = Math.max date, settings.dataset_created_at
           if dataset.tool == 'table-xtract'
-            settings.table_xtract_datasets += 1
+            settings.tx_created_at = Math.max date, settings.tx_created_at
+            settings.tx_datasets += 1
             _.each dataset.views, (view) ->
               if view.tool == 'spreadsheet-download'
-                settings.table_xtract_downloads += 1
+                settings.tx_downloads += 1
           else if dataset.tool == 'twitter-search'
-            settings.twitter_search_datasets += 1
+            settings.ts_datasets += 1
           else if dataset.tool == 'code-scraper-in-browser'
-            settings.code_in_browser_datasets += 1
+            settings.cb_datasets += 1
 
         cb settings
 

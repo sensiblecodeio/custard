@@ -70,16 +70,22 @@ class Cu.View.DataHubNav extends Backbone.View
     @
 
   showListView: ->
-    # :TODO: Save new datasetDisplay preference to user model
-    window.user.effective.datasetDisplay = 'list'
-    window.app.appView.currentView.renderAsList()
-    @$el.find('#list-view').addClass('active').siblings().removeClass('active')
+    @_updateUser {datasetDisplay: 'list'}, =>
+      window.user.effective.datasetDisplay = 'list'
+      window.app.appView.currentView.renderAsList()
+      @$el.find('#list-view').addClass('active').siblings().removeClass('active')
 
   showTileView: ->
-    # :TODO: Save new datasetDisplay preference to user model
-    window.user.effective.datasetDisplay = 'tiles'
-    window.app.appView.currentView.renderAsTiles()
-    @$el.find('#tile-view').addClass('active').siblings().removeClass('active')
+    @_updateUser {datasetDisplay: 'tiles'}, =>
+      window.user.effective.datasetDisplay = 'tiles'
+      window.app.appView.currentView.renderAsTiles()
+      @$el.find('#tile-view').addClass('active').siblings().removeClass('active')
+
+  _updateUser: (attributes, callback) ->
+    user = new Cu.Model.User window.user.effective
+    user.save attributes,
+      type: 'put' # force backbone to issue a PUT, even though it thinks this is a new model
+      success: callback
 
   displayContexts: ->
     $userContexts = $('#user-contexts').empty()

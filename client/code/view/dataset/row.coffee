@@ -15,7 +15,7 @@ class Cu.View.DatasetRow extends Backbone.View
   render: ->
     if @model.get('state') is 'deleted'
       @$el.addClass 'deleted'
-      @$el.html JST['dataset-tile-deleted']
+      @$el.html JST['dataset-row-deleted']
     else
       toolManifest = @model.get('tool')?.get('manifest')
       @$el.removeClass 'deleted'

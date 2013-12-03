@@ -31,6 +31,7 @@ class Cu.View.DatasetList extends Backbone.View
           <th class="updated">Last run</th>
           <th class="creator">Created by</th>
           <th class="created">Created</th>
+          <th class="hide"></th>
         </tr>
       </thead>
       <tbody>

@@ -30,3 +30,4 @@
 <% else: %>
   <%= @datasetCreatedHuman %>
 <% end %></td>
+<td class="hide" title="Hide this dataset"><span></span></td>

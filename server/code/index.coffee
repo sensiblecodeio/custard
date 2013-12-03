@@ -126,6 +126,7 @@ getSessionUser = (user) ->
     boxServer: plan.boxServer
     acceptedTerms: user.acceptedTerms
     created: user.created
+    datasetDisplay: user.datasetDisplay
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")

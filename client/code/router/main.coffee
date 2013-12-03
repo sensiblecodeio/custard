@@ -112,7 +112,7 @@ class Cu.Router.Main extends Backbone.Router
       @subnavView.showView subnavView
 
   pricing: (upgrade) ->
-    subnavView = new Cu.View.Subnav SubNav.pricing
+    subnavView = new Cu.View.Subnav PageTitles.pricing
     contentView = new Cu.View.Pricing upgrade: upgrade
     @appView.showView contentView
     @subnavView.showView subnavView
@@ -188,7 +188,7 @@ class Cu.Router.Main extends Backbone.Router
       error: (x,y,z) ->
         # TODO: factor into function
         contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"
-        subnavView = new Cu.View.Subnav text: "Dataset not found"
+        subnavView = new Cu.View.Subnav PageTitles['404']
         @appView.showView contentView
         @subnavView.showView subnavView
 
@@ -219,10 +219,10 @@ class Cu.Router.Main extends Backbone.Router
 
   createProfile: ->
     if window.user.real.isStaff
-      subnavView = new Cu.View.Subnav {text: 'Create Profile'}
+      subnavView = new Cu.View.Subnav PageTitles['create-profile']
       contentView = new Cu.View.CreateProfile()
     else
-      subnavView = new Cu.View.Subnav {text: '404: Not Found'}
+      subnavView = new Cu.View.Subnav PageTitles['404']
       contentView = new Cu.View.FourOhFour()
     @appView.showView contentView
     @subnavView.showView subnavView
@@ -237,32 +237,32 @@ class Cu.Router.Main extends Backbone.Router
         else
           Backbone.trigger 'error', null, {responseText: "no shortName!"}
       complete: =>
-        subnavView = new Cu.View.Subnav {text: 'Set your password'}
+        subnavView = new Cu.View.Subnav PageTitles['set-password']
         contentView = new Cu.View.SetPassword {shortName: @shortName}
         @appView.showView contentView
         @subnavView.showView subnavView
 
   fourOhFour: ->
-    subnavView = new Cu.View.Subnav {text: '404: Not Found'}
+    subnavView = new Cu.View.Subnav PageTitles['404']
     contentView = new Cu.View.FourOhFour()
     @appView.showView contentView
     @subnavView.showView subnavView
 
   help: (section) ->
     section ?= 'home'
-    subnavView = new Cu.View.HelpNav SubNav["help-#{section}"]
+    subnavView = new Cu.View.HelpNav PageTitles["help-#{section}"]
     contentView = new Cu.View.Help {template: "help-#{section}"}
     @appView.showView contentView
     @subnavView.showView subnavView
 
   terms: ->
-    subnavView = new Cu.View.Subnav SubNav.terms
+    subnavView = new Cu.View.Subnav PageTitles['terms']
     contentView = new Cu.View.Terms()
     @appView.showView contentView
     @subnavView.showView subnavView
 
   termsEnterpriseAgreement: ->
-    subnavView = new Cu.View.Subnav SubNav['terms-enterprise-agreement']
+    subnavView = new Cu.View.Subnav PageTitles['terms-enterprise-agreement']
     contentView = new Cu.View.TermsEnterpriseAgreement()
     @appView.showView contentView
     @subnavView.showView subnavView

@@ -1,36 +1,60 @@
-SubNav =
+PageTitles =
   'help-home':
-    text: "Docs"
+    heading: "Docs"
+    title: "Help | ScraperWiki"
   'help-corporate':
-    text: 'Corporate FAQs'
+    heading: 'Corporate FAQs'
+    title: "Corporate FAQs | Help | ScraperWiki"
   'help-whats-new':
-    text: "What's new?"
+    heading: "What's new?"
+    title: "What's new? | Help | ScraperWiki"
   'help-developer':
-    text: "Developer FAQs"
+    heading: "Developer FAQs"
+    title: "Developer FAQs | Help | ScraperWiki"
   'help-zig':
-    text: "ZIG"
+    heading: "ZIG"
+    title: "Zarino Interface Guidelines | Help | ScraperWiki"
   'help-twitter-search':
-    text: "Scrape Tweets and download as a spreadsheet"
+    heading: "Scrape Tweets and download as a spreadsheet"
+    title: "Scrape Tweets | Help | ScraperWiki"
   'help-upload-and-summarise':
-    text: 'Upload and summarise a spreadsheet of data'
+    heading: 'Upload and summarise a spreadsheet of data'
+    title: "Upload and Summarise | Help | ScraperWiki"
   'help-code-in-your-browser':
-    text: 'Code a scraper in your browser'
+    heading: 'Code a scraper in your browser'
+    title: "Code a Scraper | Help | ScraperWiki"
   'help-make-your-own-tool':
-    text: 'Make your own tool with HTML, JavaScript & Python'
+    heading: 'Make your own tool with HTML, JavaScript & Python'
+    title: "Make your own tool | Help | ScraperWiki"
   'help-scraperwiki-classic':
-    text: 'One-stop ScraperWiki Classic user guide'
+    heading: 'One-stop ScraperWiki Classic user guide'
+    title: "ScraperWiki Classic | Help | ScraperWiki"
   'terms':
-    text: 'Terms & Conditions'
+    heading: 'Terms & Conditions'
+    title: "Terms & Conditions | ScraperWiki"
   'terms-enterprise-agreement':
-    text: 'ScraperWiki Enterprise Agreement'
+    heading: 'ScraperWiki Enterprise Agreement'
+    title: "Enterprise Agreement | ScraperWiki"
   'pricing':
-    text: 'Pricing'
+    heading: 'Pricing'
+    title: "Pricing | ScraperWiki"
   'sign-up':
-    text: 'Sign up'
+    heading: 'Sign up'
+    title: "Sign up | ScraperWiki"
+  'set-password':
+    heading: 'Set your password'
+    title: 'Set password | ScraperWiki'
+  'create-profile':
+    heading: 'Create Profile'
+    title: 'Create Profile | ScraperWiki'
+  '404':
+    heading: '404: Not Found'
+    title: "404 | ScraperWiki"
   'index':
-    text: ''
+    heading: ''
+    title: "ScraperWiki"
 
 if exports?
-  exports.SubNav = SubNav
+  exports.PageTitles = PageTitles
 else
-  window.SubNav = SubNav
+  window.PageTitles = PageTitles

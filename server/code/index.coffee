@@ -266,6 +266,7 @@ checkSwitchUserRights = (req, res, next) ->
 renderClientApp = (req, resp) ->
   getSessionUsersFromDB req.user, (usersObj) ->
     resp.render 'index',
+      title: 'ScraperWiki'
       nav: ''
       subnav: ''
       content: ''
@@ -285,12 +286,13 @@ renderServerAndClientSide = (options, req, resp) ->
     if err?
       console.warn "Template #{options.page} not found when rendering server side"
       return resp.send 500, {error: "Template not found: #{err}"}
-    _.extend options, pageTitles.SubNav[options.page]
+    _.extend options, pageTitles.PageTitles[options.page]
     options.subnav ?= 'subnav'
     fs.readFile "client/template/#{options.subnav}.eco", (err, subnavTemplate) ->
       fs.readFile "client/template/nav.eco", (err, navTemplate) ->
         getSessionUsersFromDB req.user, (usersObj) ->
           resp.render 'index',
+              title: options.title or 'ScraperWiki'
               nav: eco.render navTemplate.toString()
               subnav: """<div class="subnav-wrapper">#{eco.render subnavTemplate.toString(), options}</div>"""
               content: """<div class="#{options.page}">#{eco.render contentTemplate.toString(), {} }</div>"""

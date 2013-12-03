@@ -1,6 +1,6 @@
 <div class="btn-toolbar" id="subnav-path">
   <h1 class="btn-group">
-    <a class="btn btn-link" href="<%= @url or window?.location.href %>"><%= @text %></a>
+    <a class="btn btn-link" href="<%= @url or window?.location.href %>"><%= @heading %></a>
   </h1>
 </div>
 <hr>

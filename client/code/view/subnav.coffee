@@ -1,20 +1,17 @@
+setDocumentTitle = (text) ->
+  if typeof text is 'string'
+    window.document.title = text
+  else
+    window.document.title = 'ScraperWiki'
+
+
 class Cu.View.Subnav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
+    setDocumentTitle @options.title or 'ScraperWiki'
     @$el.html JST['subnav'] @options
     @
-
-  # THIS IS NOT USED
-  # TODO: actually inherit >:/
-  setDocumentTitle: (model) =>
-    if model?
-      t = "#{model.get 'displayName'} | "
-    else if @options.text
-      t = "#{@options.text} | "
-    else
-      t = ''
-    window.document.title = """#{t}ScraperWiki"""
 
 
 class Cu.View.DataHubNav extends Backbone.View
@@ -29,9 +26,11 @@ class Cu.View.DataHubNav extends Backbone.View
     'keyup #subnav-options .search-query': 'keyupPageSearch'
 
   render: ->
+    name = window.user.effective.displayName or window.user.effective.shortName
+    setDocumentTitle "#{name}’s data hub | ScraperWiki"
     h1 = """<h1 class="btn-group context-switch">
         <a class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-          <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{window.user.effective.displayName or window.user.effective.shortName}&rsquo;s data hub<span class="caret"></span>
+          <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{name}&rsquo;s data hub<span class="caret"></span>
         </a>
         <ul id="user-contexts" class="dropdown-menu">
         </ul>
@@ -223,6 +222,7 @@ class Cu.View.Toolbar extends Backbone.View
     'keyup #editable-input input': 'keypressOnEditableName'
 
   initialize: ->
+    setDocumentTitle "#{@model.get 'displayName'} | ScraperWiki"
     @toolsView = new Cu.View.DatasetTools
       model: @model
       view: @options.view
@@ -251,8 +251,10 @@ class Cu.View.Toolbar extends Backbone.View
       window.app.subnavView.currentView.toolsView.showOrHideScroller()
 
   renderName: ->
-    @$el.find('#dataset-meta h3').text @model.get 'displayName'
-    @$el.find('#dataset-meta input').val @model.get 'displayName'
+    name = @model.get 'displayName'
+    setDocumentTitle "#{name} | ScraperWiki"
+    @$el.find('#dataset-meta h3').text name
+    @$el.find('#dataset-meta input').val name
 
   showChooser: ->
     app.navigate "/dataset/#{@model.get 'box'}/chooser", trigger: true
@@ -331,6 +333,7 @@ class Cu.View.SignUpNav extends Backbone.View
     plan = @options.plan
     plan = plan.toUpperCase()[0] + plan.toLowerCase()[1..]
     @$el.html JST['signupnav'] plan: plan
+    setDocumentTitle @options.title
     this
 
 
@@ -338,6 +341,7 @@ class Cu.View.HelpNav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
+    setDocumentTitle @options.title
     @$el.html JST['helpnav'] @options
     this
 
@@ -347,6 +351,7 @@ class Cu.View.ToolShopNav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
+    setDocumentTitle "#{@options.name} | ScraperWiki"
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
         <h1 class="btn-group">

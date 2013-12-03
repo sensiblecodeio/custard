@@ -27,6 +27,8 @@ class Cu.View.DataHubNav extends Backbone.View
     'keyup .context-switch input': 'keyupContextSearch'
     'mouseenter .context-search-result': 'hoverContextSearchResult'
     'keyup #subnav-options .search-query': 'keyupPageSearch'
+    'click #tile-view': 'showTileView'
+    'click #list-view': 'showListView'
 
   render: ->
     h1 = """<h1 class="btn-group context-switch">
@@ -66,6 +68,18 @@ class Cu.View.DataHubNav extends Backbone.View
         $(this).remove()
       $(window).off('keyup')
     @
+
+  showListView: ->
+    # :TODO: Save new datasetDisplay preference to user model
+    window.user.effective.datasetDisplay = 'list'
+    window.app.appView.currentView.renderAsList()
+    @$el.find('#list-view').addClass('active').siblings().removeClass('active')
+
+  showTileView: ->
+    # :TODO: Save new datasetDisplay preference to user model
+    window.user.effective.datasetDisplay = 'tiles'
+    window.app.appView.currentView.renderAsTiles()
+    @$el.find('#tile-view').addClass('active').siblings().removeClass('active')
 
   displayContexts: ->
     $userContexts = $('#user-contexts').empty()

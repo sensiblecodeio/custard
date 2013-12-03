@@ -58,27 +58,27 @@ describe 'Home page (logged in)', ->
       wd40.click '#list-view', done
 
     it 'it shows my datasets in a list', (done) ->
-      wd40.elementByCss 'table.dataset-list', (err, element) ->
+      wd40.elementByCss '.dataset-list > table', (err, element) ->
         should.exist element
-        browser.elementsByCss 'table.dataset-list tbody tr', (err, elements) ->
+        browser.elementsByCss '.dataset-list > table tbody tr', (err, elements) ->
           elements.length.should.equal 2
           done()
 
     it 'each dataset has an icon, a name, owner, date created and a status', (done) ->
-      browser.elementsByCss 'table.dataset-list td.icon', (err, elements) ->
+      browser.elementsByCss '.dataset-list > table td.icon', (err, elements) ->
         elements.length.should.equal 2
-        browser.elementsByCss 'table.dataset-list td.name', (err, elements) ->
+        browser.elementsByCss '.dataset-list > table td.name', (err, elements) ->
           elements.length.should.equal 2
-          browser.elementsByCss 'table.dataset-list td.owner', (err, elements) ->
+          browser.elementsByCss '.dataset-list > table td.creator', (err, elements) ->
             elements.length.should.equal 2
-            browser.elementsByCss 'table.dataset-list td.created', (err, elements) ->
+            browser.elementsByCss '.dataset-list > table td.created', (err, elements) ->
               elements.length.should.equal 2
-              browser.elementsByCss 'table.dataset-list td.status', (err, elements) ->
+              browser.elementsByCss '.dataset-list > table td.status', (err, elements) ->
                 elements.length.should.equal 2
                 done()
 
     it 'the list is ordered by date created, newest at the top', (done) ->
-      wd40.getText 'table.dataset-list', (err, text) ->
+      wd40.getText '.dataset-list > table', (err, text) ->
         text.split('Prune')[1].should.include('Apricot')
         done()
 
@@ -88,7 +88,7 @@ describe 'Home page (logged in)', ->
       browser.refresh(done)
 
     it 'it still shows my datasets in a list', (done) ->
-      wd40.elementByCss 'table.dataset-list', (err, element) ->
+      wd40.elementByCss '.dataset-list > table', (err, element) ->
         should.exist element
         done()
 

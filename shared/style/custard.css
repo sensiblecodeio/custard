@@ -518,6 +518,30 @@ a.tile p.error {
   color: #fff;
 }
 
+.dataset-list > table th {
+  text-align: left;
+}
+
+.dataset-list > table td {
+  cursor: pointer;
+}
+
+.dataset-list > table td.icon {
+  width: 16px;
+  max-width: 16px;
+}
+
+.dataset-list > table td.icon > span {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: -2px;
+  background-color: #15af90;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
 
 
 /* Toolbar on dataset pages (containing dataset name and installed tools) */

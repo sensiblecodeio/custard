@@ -33,7 +33,6 @@ class Cu.View.DatasetList extends Backbone.View
         </tr>
       </thead>
       <tbody>
-
       </tbody>
     </table>"""
     @addDatasets()

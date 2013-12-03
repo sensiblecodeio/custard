@@ -1,0 +1,32 @@
+<td class="icon"><% if @swatchColor: %>
+  <span style="background-color: <%= @swatchColor %>"></span>
+<% else: %>
+  <span></span>
+<% end %></td>
+<td class="name"><%= @dataset.displayName %></td>
+<td class="status"><% if @dataset.status?.type is 'error': %>
+  <% if @dataset.status?.message: %>
+    <i class="icon-exclamation-sign icon-white"></i> <%= @dataset.status.message %>
+  <% else: %>
+    <i class="icon-exclamation-sign icon-white"></i> Error <%= @statusUpdatedHuman %></p>
+  <% end %>
+<% else if @dataset.status?.type is 'ok': %>
+  <% if @dataset.status?.message: %>
+    <i class="icon-ok"></i> <%= @dataset.status.message %>
+  <% else: %>
+    <i class="icon-ok"></i> Refreshed <%= @statusUpdatedHuman %>
+  <% end %>
+<% else: %>
+  <span class="muted">Unknown</span>
+<% end %></td>
+<td class="updated"><% if @statusUpdatedHuman == 'Never': %>
+  <span class="muted">Never</span>
+<% else: %>
+  <%= @statusUpdatedHuman %>
+<% end %></td>
+<td class="creator"><%- @dataset?.creatorDisplayName or '<span class="muted">Unkown</span>' %></td>
+<td class="created"><% if @datasetCreatedHuman == 'Never': %>
+  <span class="muted">Never</span>
+<% else: %>
+  <%= @datasetCreatedHuman %>
+<% end %></td>

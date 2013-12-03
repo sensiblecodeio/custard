@@ -28,6 +28,7 @@ class Cu.View.DatasetList extends Backbone.View
           <th class="icon"></th>
           <th class="name">Name</th>
           <th class="status">Status</th>
+          <th class="updated">Last run</th>
           <th class="creator">Created by</th>
           <th class="created">Created</th>
         </tr>
@@ -55,13 +56,8 @@ class Cu.View.DatasetList extends Backbone.View
 
     if not alreadyThere and dataset.get('state') isnt 'deleted'
       if window.user.effective.datasetDisplay == 'list'
-        @$el.find('tbody').append """<tr>
-          <td class="icon"><span></span></td>
-          <td class="name">#{dataset.get 'displayName'}</td>
-          <td class="status">#{dataset.get 'status'}</td>
-          <td class="creator">#{dataset.get 'creatorDisplayName'}</td>
-          <td class="created">#{dataset.get 'createdDate'}</td>
-        </tr>"""
+        view = new Cu.View.DatasetRow model: dataset
+        @$el.find('tbody').append view.render().el
       else
         view = new Cu.View.DatasetTile model: dataset
         @$el.append view.render().el

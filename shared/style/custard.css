@@ -518,8 +518,11 @@ a.tile p.error {
   color: #fff;
 }
 
-.dataset-list > table th {
+.dataset-list > table th,
+.dataset-list > table td {
   text-align: left;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .dataset-list > table td {
@@ -529,17 +532,38 @@ a.tile p.error {
 .dataset-list > table td.icon {
   width: 16px;
   max-width: 16px;
+  padding-left: 12px;
+  padding-right: 4px;
 }
 
 .dataset-list > table td.icon > span {
   display: inline-block;
   width: 16px;
   height: 16px;
-  vertical-align: -2px;
+  vertical-align: -3px;
   background-color: #15af90;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+}
+
+.dataset-list table tr.error > td {
+  background-color: #e11b2c;
+  color: #fff;
+}
+
+.dataset-list table tr.error .muted {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.dataset-list table tr.error:hover > td {
+  background-color: #CC0A1B;
+}
+
+.dataset-list td.status i[class*=" icon-"],
+.dataset-list td.status i[class^="icon-"] {
+  margin-right: 3px;
 }
 
 

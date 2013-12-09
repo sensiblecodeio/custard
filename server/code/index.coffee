@@ -126,6 +126,7 @@ getSessionUser = (user) ->
     boxServer: plan.boxServer
     acceptedTerms: user.acceptedTerms
     created: user.created
+    datasetDisplay: user.datasetDisplay
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")
@@ -607,7 +608,7 @@ updateUser = (req, resp) ->
   User.findByShortName req.user.real.shortName, (err, user) ->
     console.log "updateUser body is", req.body
     # The attributes that we can set via this API.
-    canSet = ['acceptedTerms', 'canBeReally']
+    canSet = ['acceptedTerms', 'canBeReally', 'datasetDisplay']
     _.extend user, _.pick req.body, canSet
     user.save (err, newUser) ->
       if err?

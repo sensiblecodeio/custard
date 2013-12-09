@@ -33,6 +33,7 @@ userSchema = new mongoose.Schema
   # List of users that can switch into this profile.
   canBeReally: [String]
   defaultContext: String
+  datasetDisplay: String
 
 zDbUser = mongoose.model 'User', userSchema
 

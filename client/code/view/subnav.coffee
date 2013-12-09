@@ -17,6 +17,8 @@ class Cu.View.DataHubNav extends Backbone.View
     'keyup .context-switch input': 'keyupContextSearch'
     'mouseenter .context-search-result': 'hoverContextSearchResult'
     'keyup #subnav-options .search-query': 'keyupPageSearch'
+    'click #tile-view': 'showTileView'
+    'click #list-view': 'showListView'
 
   render: ->
     name = window.user.effective.displayName or window.user.effective.shortName
@@ -36,9 +38,18 @@ class Cu.View.DataHubNav extends Backbone.View
           <a class="btn new-dataset"><i class="icon-plus"></i> New Dataset</a>
         </div>
         <div class="btn-group">
+          <a class="btn" id="tile-view" title="View datasets as a grid"><i class="icon-th-large"></i></a>
+          <a class="btn" id="list-view" title="View datasets as a list"><i class="icon-th-list"></i></a>
+        </div>
+        <div class="btn-group">
           <input type="text" class="input-medium search-query">
         </div>
       </div>""")
+
+    if window.user.effective.datasetDisplay == 'list'
+      @$el.find('#list-view').addClass('active')
+    else
+      @$el.find('#tile-view').addClass('active')
 
     @displayContexts()
 
@@ -49,6 +60,24 @@ class Cu.View.DataHubNav extends Backbone.View
         $(this).remove()
       $(window).off('keyup')
     @
+
+  showListView: ->
+    @_updateUser {datasetDisplay: 'list'}, =>
+      window.user.effective.datasetDisplay = 'list'
+      window.app.appView.currentView.renderAsList()
+      @$el.find('#list-view').addClass('active').siblings().removeClass('active')
+
+  showTileView: ->
+    @_updateUser {datasetDisplay: 'tiles'}, =>
+      window.user.effective.datasetDisplay = 'tiles'
+      window.app.appView.currentView.renderAsTiles()
+      @$el.find('#tile-view').addClass('active').siblings().removeClass('active')
+
+  _updateUser: (attributes, callback) ->
+    user = new Cu.Model.User window.user.effective
+    user.save attributes,
+      type: 'put' # force backbone to issue a PUT, even though it thinks this is a new model
+      success: callback
 
   displayContexts: ->
     $userContexts = $('#user-contexts').empty()

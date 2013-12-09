@@ -518,6 +518,104 @@ a.tile p.error {
   color: #fff;
 }
 
+.dataset-list > table th,
+.dataset-list > table td {
+  text-align: left;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.dataset-list > table td {
+  cursor: pointer;
+}
+
+.dataset-list > table td.icon,
+.dataset-list > table td.hide {
+  width: 16px;
+  max-width: 16px;
+  padding-left: 12px;
+  padding-right: 4px;
+}
+
+.dataset-list > table td.hide {
+  display: table-cell;
+  padding: 8px 12px 0 4px;
+}
+
+.dataset-list > table td.icon > span {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+  background-color: #15af90;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.dataset-list > table td.hide > span {
+  display: none;
+  width: 20px;
+  height: 20px;
+  background: transparent url(../vendor/image/glyphicons-halflings.png) no-repeat -309px 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.dataset-list > table tr:hover td.hide > span {
+  display: inline-block;
+}
+
+.dataset-list > table td.hide:hover > span {
+  background-color: #e11b2c;
+}
+
+.dataset-list > table td.hide:hover > span,
+.dataset-list > table tr.error td.hide > span {
+  background-image: url(../vendor/image/glyphicons-halflings-white.png);
+}
+
+.dataset-list > table tr.error td.hide:hover > span {
+  background-image: url(../vendor/image/glyphicons-halflings.png);
+  background-color: #fff;
+}
+
+.dataset-list table tr.error > td {
+  background-color: #e11b2c;
+  color: #fff;
+}
+
+.dataset-list table tr.error .muted {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.dataset-list table tr.error:hover > td {
+  background-color: #CC0A1B;
+}
+
+.dataset-list td.status i[class*=" icon-"],
+.dataset-list td.status i[class^="icon-"] {
+  margin-right: 3px;
+}
+
+.dataset-list tr.deleted td {
+  padding: 6px 8px;
+  vertical-align: middle;
+  text-align: center;
+  color: #aaa;
+  background-color: #f9f9f9;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.dataset-list tr.deleted td .btn {
+  vertical-align: 1px;
+  margin-left: 5px;
+}
+
+
+
 
 
 /* Toolbar on dataset pages (containing dataset name and installed tools) */

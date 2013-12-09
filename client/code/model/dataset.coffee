@@ -70,6 +70,10 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
     updated = @get('status')?.updated
     humaneDate(updated)?.toLowerCase() or 'Never'
 
+  datasetCreatedHuman: ->
+    created = @get('createdDate')
+    humaneDate(created)?.toLowerCase() or 'Never'
+
   isVisible: ->
     @get('state') isnt 'deleted'
 

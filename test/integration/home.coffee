@@ -17,6 +17,11 @@ describe 'Home page (logged in)', ->
       h.should.equal 'ScraperWiki'
       done()
 
+  it 'says my name in the page title', (done) ->
+    browser.title (err, title) ->
+      title.should.match /Chris Blower/g
+      done()
+
   it 'contains a list of my datasets', (done) ->
     browser.waitForVisibleByCss '.dataset', 4000, ->
       browser.elementsByCss '.dataset', (err, datasets) ->

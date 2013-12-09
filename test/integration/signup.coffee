@@ -11,6 +11,12 @@ describe 'Sign up', ->
     before (done) ->
       wd40.click '.plan.community a', done
 
+    it 'has "Community" and "Sign Up" in the page title', (done) ->
+      browser.title (err, title) ->
+        title.should.match /Community/g
+        title.should.match /Sign Up/g
+        done()
+
     context 'when I enter my details and click go', ->
       before (done) ->
         wd40.fill '#displayName', 'Tabatha Testington', ->

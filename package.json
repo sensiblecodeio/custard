@@ -11,7 +11,7 @@
   "dependencies": {
     "express": "3.x",
     "coffee-script": "~1.4",
-    "connect-assets": "~2.4.3",
+    "connect-assets": "~2.4.4",
     "bcrypt": "~0.7.3",
     "nibbler": "git+https://github.com/mattrobenolt/node_nibbler.git",
     "passport": "~0.1.15",

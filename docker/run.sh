@@ -1,3 +1,9 @@
+#! /bin/bash
+
+# TODO(pwaller): Working directory = dir of script
+
+docker build -t custard .
+
 source ../../swops-secret/keys.sh
 
 ENVS="$(env | grep CU_ | sed 's/^/-e /')"

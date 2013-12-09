@@ -22,6 +22,11 @@ describe 'Dataset', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
+    it 'with "Apricot" in the page title', (done) ->
+      browser.title (err, title) ->
+        title.should.match /Apricot/g
+        done()
+
     it 'has not shown the input box', (done) ->
       wd40.elementByCss '#editable-input', (err, input) ->
         browser.isVisible input, (err, visible) ->

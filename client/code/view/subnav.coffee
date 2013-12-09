@@ -329,11 +329,10 @@ class Cu.View.SignUpNav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
-    # Assumes @options.plan is set
-    plan = @options.plan
+    plan = @options.plan # this should be passed in by router/main.coffee
     plan = plan.toUpperCase()[0] + plan.toLowerCase()[1..]
     @$el.html JST['signupnav'] plan: plan
-    setDocumentTitle @options.title
+    setDocumentTitle "#{plan} | Sign Up | ScraperWiki"
     this
 
 

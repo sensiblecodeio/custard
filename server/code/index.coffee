@@ -44,6 +44,10 @@ recurlySign = require 'lib/sign'
 throttle = require 'throttler-express'
 pageTitles = require '../../shared/code/page-titles'
 
+if not process.env.CU_DB
+  console.warn "CU_DB not set. Exiting."
+  process.exit 1
+
 # Set up database connection
 mongoose.connect process.env.CU_DB,
   server:

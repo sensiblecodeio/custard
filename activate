@@ -68,17 +68,8 @@ mocha () {
     fi
 }
 
-turn_off_uglify_mangling() {
-  sed  -i '/^    ast = pro.ast_mangle(ast);/s/^/\/\//' node_modules/connect-assets/node_modules/snockets/lib/snockets.js
-}
-
 s=../swops-secret/keys.sh
 test -e "$s" && . "$s" && echo yummm, keys.sh
-
-if [ "$NODE_ENV" = "production" ]
-then
-  turn_off_uglify_mangling
-fi
 
 export ACK_OPTIONS="--type-add coffee=.coffee${ACK_OPTIONS+ $ACK_OPTIONS}"
 alias ack=ack-grep

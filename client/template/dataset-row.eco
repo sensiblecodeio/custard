@@ -8,7 +8,7 @@
   <% if @dataset.status?.message: %>
     <i class="icon-exclamation-sign icon-white"></i> <%= @dataset.status.message %>
   <% else: %>
-    <i class="icon-exclamation-sign icon-white"></i> Error <%= @statusUpdatedHuman %></p>
+    <i class="icon-exclamation-sign icon-white"></i> Error <%= @statusUpdatedHuman %>
   <% end %>
 <% else if @dataset.status?.type is 'ok': %>
   <% if @dataset.status?.message: %>

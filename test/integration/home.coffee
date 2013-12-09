@@ -24,6 +24,11 @@ describe 'Home page (logged in)', ->
         datasets.length.should.be.above 0
         done()
 
+  it 'says my name in the page title', (done) ->
+    browser.title (err, title) ->
+      title.should.match /Chris Blower/g
+      done()
+
   it 'each dataset has a visible status', (done) ->
     browser.elementsByCss '.dataset .status', (err, elements) ->
       should.exist elements

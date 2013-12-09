@@ -13,6 +13,11 @@ describe 'Pricing', ->
         @bodyText = text
         done()
 
+    it 'has "Pricing" in the page title', (done) ->
+      browser.title (err, title) ->
+        title.should.match /Pricing/g
+        done()
+
     it 'shows me a free "community" plan', =>
       @bodyText.toLowerCase().should.include 'community'
 

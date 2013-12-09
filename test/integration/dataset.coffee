@@ -22,6 +22,11 @@ describe 'Dataset', ->
         result.should.match /\/dataset\/(\w+)/
         done()
 
+    it 'with "Apricot" in the page title', (done) ->
+      browser.title (err, title) ->
+        title.should.match /Apricot/g
+        done()
+
     it 'has not shown the input box', (done) ->
       wd40.elementByCss '#editable-input', (err, input) ->
         browser.isVisible input, (err, visible) ->
@@ -78,9 +83,14 @@ describe 'Dataset', ->
               inputVisible.should.be.false
               done()
 
-        it 'has updated the title', (done) ->
+        it 'has updated the dataset title', (done) ->
           wd40.getText '#dataset-meta h3', (err, text) ->
             text.should.equal randomname
+            done()
+
+        it 'has updated the page title', (done) ->
+          browser.title (err, title) ->
+            title.should.match new RegExp(randomname, 'g')
             done()
 
       context 'when I go back home', ->

@@ -213,18 +213,18 @@ class Cu.View.DataHubNav extends Backbone.View
   keyupPageSearch: (e) ->
     $input = $(e.target)
     if e.keyCode is 27
-      $('.dataset.tile').show()
+      $('.dataset-list .dataset').show()
       $input.val('').blur()
     else
       t = $input.val()
       if t != ''
-        $('.dataset.tile').each ->
-          if $(this).children('h3, h4').text().toUpperCase().indexOf(t.toUpperCase()) >= 0
+        $('.dataset-list .dataset').each ->
+          if $(this).children('h3, h4, td').text().toUpperCase().indexOf(t.toUpperCase()) >= 0
             $(this).show()
           else
             $(this).hide()
       else if t == ''
-        $('.dataset.tile').show()
+        $('.dataset-list .dataset').show()
 
 
 # Toolbar contains a dataset's name, and all the tools acting on it

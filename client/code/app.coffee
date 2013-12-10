@@ -22,7 +22,7 @@ Cu.Util.patchErrors()
 
 $ ->
   window.app = new Cu.Router.Main()
-  Backbone.history.start {pushState: on}
+  Backbone.history.start {pushState: on, hashChange: false}
 
   # set a flag whenever the whole page is about to reload or close
   # so that we can differentiate aborted ajax requests from failed ones

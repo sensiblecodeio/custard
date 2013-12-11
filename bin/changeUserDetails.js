@@ -1,19 +1,18 @@
 // execute this by running:
 // livemongo bin/changeUserDetails.js
 
-db = connect("localhost/cu-test")
+// db = connect("localhost/cu-test")
 
 // TIP: only specify a shortName here
 var original = {
-  shortName: 'ehg'
+  shortName: 'insert-shortname-here'
 }
 
 // TIP: only specify fields that need to change
 // Pick from: shortName displayName email accountLevel acceptedTerms datasetDisplay isStaff
 var replacement = {
-  shortName: 'zarinoo',
-  displayName: 'Zarinoooo',
-  email: ['zarinooo@scraperwiki.com']
+  shortName: 'insert-replacement-here',
+  displayName: 'insert-replacement-here'
 }
 
 if(db.users.find({ shortName: original.shortName }).length() != 1){
@@ -32,11 +31,7 @@ if(db.users.find({ shortName: original.shortName }).length() != 1){
   db.users.update({
     shortName: original.shortName
   }, {
-    $set: {
-      shortName: replacement.shortName,
-      displayName: replacement.displayName,
-      email: replacement.email
-    }
+    $set: replacement
   })
 
   // This updates other relational references to

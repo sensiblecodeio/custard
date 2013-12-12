@@ -7,6 +7,9 @@ https://beta.scraperwiki.com/help
 jQuery is required.
 ###
 
+window.console = window.console or
+  log: ->
+
 scraperwiki = sw =
   dataset: {}
   tool: {}

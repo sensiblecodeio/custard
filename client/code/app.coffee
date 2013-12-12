@@ -22,13 +22,12 @@ Cu.Util.patchErrors()
 
 $ ->
   window.app = new Cu.Router.Main()
-  Backbone.history.start {pushState: on}
+  Backbone.history.start {pushState: on, hashChange: false}
 
   # set a flag whenever the whole page is about to reload or close
   # so that we can differentiate aborted ajax requests from failed ones
   window.aboutToClose = false
   $(window).on 'unload', ->
-    console.log '$(window).on unload'
     window.aboutToClose = true
 
   if Backbone.history and Backbone.history._hasPushState
@@ -78,7 +77,6 @@ class Cu.CollectionManager
   @get: (klass) ->
     name = klass.prototype.name
     if not @collections[name]
-      console.log "No #{name} in @collections"
       collection = new klass()
       collection.fetch
         success: ->

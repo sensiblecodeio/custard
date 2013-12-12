@@ -80,6 +80,7 @@ class Cu.Router.Main extends Backbone.Router
           tx_downloads: 0
           tx_created_at: null
           ts_datasets: 0
+          tf_datasets: 0
           cb_datasets: 0
 
         _.each datasets, (dataset) ->
@@ -93,6 +94,8 @@ class Cu.Router.Main extends Backbone.Router
                 settings.tx_downloads += 1
           else if dataset.tool == 'twitter-search'
             settings.ts_datasets += 1
+          else if dataset.tool == 'twitter-follows'
+            settings.tf_datasets += 1
           else if dataset.tool == 'code-scraper-in-browser'
             settings.cb_datasets += 1
 

@@ -7,7 +7,7 @@ https://beta.scraperwiki.com/help
 jQuery is required.
 ###
 
-console = console or
+window.console = window.console or
   log: ->
 
 scraperwiki = sw =

@@ -13,6 +13,7 @@ class Cu.Router.Main extends Backbone.Router
     @errorView ?= new Cu.View.ErrorAlert el: '#error-alert'
     @on 'route', @errorView.hide
     @on 'route', @trackPageView
+    @on 'route', @trackIntercom
 
     # TODO: this isn't a great place for this constant
     window.latestTerms = 1
@@ -47,13 +48,21 @@ class Cu.Router.Main extends Backbone.Router
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
     _gaq.push ['_trackPageview', "/#{path}"]
+
+  trackIntercom: ->
     if 'real' of window.user and window.intercomUserHash != ''
       @getIntercomSettings (intercomSettings) ->
         if window.intercomBooted?
+          # tell Intercom we're still here
           window.Intercom 'update', intercomSettings
         else
+          # start Intercom, and tell it we're here
           window.Intercom 'boot', intercomSettings
           window.intercomBooted = true
+          # check for new Intercom messages/notifications every 10 seconds
+          setInterval ->
+            window.Intercom 'update'
+          , 10000
 
   getIntercomSettings: (cb) ->
     real = window.user.real

@@ -17,6 +17,7 @@ class Cu.Model.Dataset extends Backbone.RelationalModel
       key: 'tool'
       relatedModel: Cu.Model.Tool
       includeInJSON: 'name'
+      autoFetch: true
     }
   ]
 

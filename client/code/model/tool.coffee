@@ -10,16 +10,6 @@ class Cu.Model.Tool extends Backbone.RelationalModel
   isImporter: ->
     return @get('type') is 'importer'
 
-  # :TODO: Horrible kludge to avoid tool manifest changes right now
-  initialize: ->
-    @on 'add change', =>
-      manifest = @get('manifest')
-      n = manifest.displayName.toLowerCase()
-      if n.indexOf('test') == 0
-        manifest.icon = 'https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-test.png'
-        manifest.color = '#b0df18'
-      @set 'manifest', manifest
-
 Cu.Model.Tool.setup()
 
 class Cu.Collection.Tools extends Backbone.Collection

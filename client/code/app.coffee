@@ -28,7 +28,6 @@ $ ->
   # so that we can differentiate aborted ajax requests from failed ones
   window.aboutToClose = false
   $(window).on 'unload', ->
-    console.log '$(window).on unload'
     window.aboutToClose = true
 
   if Backbone.history and Backbone.history._hasPushState
@@ -78,7 +77,6 @@ class Cu.CollectionManager
   @get: (klass) ->
     name = klass.prototype.name
     if not @collections[name]
-      console.log "No #{name} in @collections"
       collection = new klass()
       collection.fetch
         success: ->

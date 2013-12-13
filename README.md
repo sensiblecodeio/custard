@@ -116,6 +116,23 @@ Or one of these:
 
     mocha test/unit
     mocha test/integration
+
+## Optional: running Selenium on a Windows machine
+
+### On the Windows machine
+
+- Make sure Java is installed
+- Download the selenium-server jar file (from http://www.seleniumhq.org/download/)
+- Download, unpack and add to your path the IE driver (avaiable on the same download page)
+- Run Selenium Server using the command `java -jar selenium-server-standalone-2.*.0.jar`
+- Run ipconfig in a cmd window to find out the IP address (e.g. 192.168.1.100)
+
+### On your local machine
+
+- `export SELENIUM_HOST=192.168.1.100`
+- `export SELENIUM_PORT=4444`
+- `export BROWSER=iexplorer`
+- run mocha as above and it will use the Windows machine to run the tests
     
 ## Optional: disabling startup services
 

@@ -4,7 +4,8 @@
 cleaner = require '../cleaner'
 request = require 'request'
 
-base_url = 'http://localhost:3001'
+test_server = process.env.CU_TEST_SERVER ? 'localhost'
+base_url = "http://#{test_server}:3001"
 login_url = "#{base_url}/login"
 
 prepIntegration = ->

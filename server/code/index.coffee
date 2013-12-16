@@ -190,7 +190,7 @@ app.configure ->
   app.use express.cookieParser( process.env.CU_SESSION_SECRET )
   app.use express.session
     cookie:
-      maxAge: 60000 * 60 * 24 * 365
+      maxAge: 60000 * 60 * 24 * 30
     secret: process.env.CU_SESSION_SECRET
     store: new mongoStore({url: process.env.CU_DB, auto_reconnect: true})
 

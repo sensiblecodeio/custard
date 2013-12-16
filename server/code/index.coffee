@@ -282,6 +282,7 @@ renderClientApp = (req, resp) ->
       flash: req.flash()
       environment: process.env.NODE_ENV
       loggedIn: 'real' of usersObj
+      intercomAppId: process.env.INTERCOM_APP_ID
       intercomUserHash: getIntercomUserHash req.user?.real.shortName
 
 # Bypass Backbone by parsing and rendering the given
@@ -308,6 +309,7 @@ renderServerAndClientSide = (options, req, resp) ->
               flash: req.flash()
               environment: process.env.NODE_ENV
               loggedIn: 'real' of usersObj
+              intercomAppId: process.env.INTERCOM_APP_ID
               intercomUserHash: getIntercomUserHash req.user?.real.shortName
 
 # (internal) Get the HMAC hash for the specified user
@@ -795,6 +797,28 @@ changePlan = (req, resp) ->
             return resp.send 500, error: "Subscription changed, but user model could not be saved"
           return resp.send 200, user
 
+sendIntercomMessage = (req, resp) ->
+  messageObject =
+    user_id: req.user.real.shortName
+    url: req.body.url
+    body: req.body.message
+
+  request.post
+    url: 'https://api.intercom.io/v1/users/message_threads'
+    headers:
+      'Content-Type': 'application/json'
+    auth:
+      user: process.env.INTERCOM_APP_ID
+      pass: process.env.INTERCOM_API_KEY
+    body: JSON.stringify messageObject
+  , (err, intercomResp, body) ->
+    console.log err, intercomResp, body
+    if err or intercomResp.statusCode not in [200, 201]
+      resp.send 500, error: 'Message could not be sent'
+    else
+      resp.send 200, success: 'OK'
+
+
 app.all '*', ensureAuthenticated
 
 app.get '/logout', logout
@@ -819,6 +843,8 @@ app.post '/api/:user/sshkeys/?', addSSHKey
 app.get '/api/:user/sshkeys/?', listSSHKeys
 
 app.put '/api/:user/subscription/change/:plan/?', changePlan
+
+app.post '/api/reporting/message/?', sendIntercomMessage
 
 # Catch all other routes, send to client app
 # eg: /datasets, /dataset/abc1234, /signup/free

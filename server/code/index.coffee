@@ -282,6 +282,7 @@ renderClientApp = (req, resp) ->
       flash: req.flash()
       environment: process.env.NODE_ENV
       loggedIn: 'real' of usersObj
+      intercomAppId: process.env.INTERCOM_APP_ID
       intercomUserHash: getIntercomUserHash req.user?.real.shortName
 
 # Bypass Backbone by parsing and rendering the given
@@ -308,6 +309,7 @@ renderServerAndClientSide = (options, req, resp) ->
               flash: req.flash()
               environment: process.env.NODE_ENV
               loggedIn: 'real' of usersObj
+              intercomAppId: process.env.INTERCOM_APP_ID
               intercomUserHash: getIntercomUserHash req.user?.real.shortName
 
 # (internal) Get the HMAC hash for the specified user

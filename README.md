@@ -132,6 +132,7 @@ Or one of these:
 - `export SELENIUM_HOST=192.168.1.100`
 - `export SELENIUM_PORT=4444`
 - `export BROWSER=iexplorer`
+- `export CU_TEST_SERVER=<local ip address>`
 - run mocha as above and it will use the Windows machine to run the tests
     
 ## Optional: disabling startup services

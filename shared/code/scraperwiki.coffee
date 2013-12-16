@@ -256,7 +256,12 @@ scraperwiki.reporting.message = (message, success, error) ->
   ###
   Send a message from the current user to Intercom, our reporting package
   ###
-  return parent.scraperwiki.xdm.reportingMessage message, success, error
+  dfd = new jQuery.Deferred()
+  dfd.done(success)
+  dfd.fail(error)
+
+  parent.scraperwiki.xdm.reportingMessage message, dfd.resolve, dfd.reject
+  return dfd.promise()
 
 
 # HERE BE DEPRECATED FUNCTIONS:

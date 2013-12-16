@@ -85,22 +85,14 @@ class Cu.View.ToolContent extends Backbone.View
               displayName: window.user.effective.displayName
               email: window.user.effective.email[0]
         reportingMessage: (message, success, error) ->
-          dfd = new jQuery.Deferred()
           $.ajax
             type: 'POST'
             url: '/api/reporting/message/'
             data:
               url: window.location.href
               message: message
-            success: ->
-              if typeof(success) is 'function'
-                success()
-              dfd.resolve()
-            error: ->
-              if typeof(error) is 'function'
-                error()
-              dfd.reject()
-          return dfd.promise()
+            success: success
+            error: error
 
 
 class Cu.View.AppContent extends Cu.View.ToolContent

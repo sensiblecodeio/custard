@@ -91,8 +91,12 @@ class Cu.View.ToolContent extends Backbone.View
             data:
               url: window.location.href
               message: message
-            success: success
-            error: error
+            success: ->
+              if typeof success is 'function'
+                success()
+            error: ->
+              if typeof error is 'function'
+                error()
 
 
 class Cu.View.AppContent extends Cu.View.ToolContent

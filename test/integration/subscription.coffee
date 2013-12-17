@@ -64,6 +64,13 @@ describe 'Subscription Workflow', ->
     before (done) ->
       setTimeout done, 5000
 
+
+    # :TODO: I'm not sure, since our Wordpress migration, that
+    # this actually works on the live site (since the homepage is
+    # now a proxy of the Wordpress homepage, which obviously won't
+    # show the "you've been subscribed" message to the user.)
+    # We should investigate. ~ Zarino
+
     it 'subscribes me to the plan', (done) ->
       wd40.getText 'body', (err, text) ->
         text.should.include "You've been subscribed to the Data Scientist plan!"

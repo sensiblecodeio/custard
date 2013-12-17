@@ -34,6 +34,14 @@ login = (done) ->
         @loginResponse = res
         done(err)
 
+parseJSON = (string) ->
+  object = undefined
+  try
+    object = JSON.parse string
+  catch error
+    throw new Error "Invalid JSON: #{string}"
+  return object
+
 describe 'API', ->
   before ->
     @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
@@ -51,7 +59,7 @@ describe 'API', ->
               inviteCode: process.env.CU_INVITE_CODE
               acceptedTerms: 1
           , (err, res, body) =>
-            @body = JSON.parse body
+            @body = parseJSON body
             done()
 
         it 'returns a JSON string containing the new user\'s details', ->
@@ -86,7 +94,7 @@ describe 'API', ->
                 gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
             , (err, res, body) =>
               @response = res
-              @tool = JSON.parse res.body
+              @tool = parseJSON res.body
               done()
 
           it 'creates a new tool', ->
@@ -123,7 +131,7 @@ describe 'API', ->
                   gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
               , (err, res) =>
                 @response = res
-                @tool = JSON.parse res.body
+                @tool = parseJSON res.body
                 done()
 
             it 'updates the tool', ->
@@ -153,7 +161,7 @@ describe 'API', ->
                 public: false
             , (err, res, body) =>
               @response = res
-              @tool = JSON.parse res.body
+              @tool = parseJSON res.body
               done()
 
           it 'creates a new tool', ->
@@ -173,7 +181,7 @@ describe 'API', ->
                 public: true
             , (err, res, body) =>
               @response = res
-              @tool = JSON.parse res.body
+              @tool = parseJSON res.body
               done()
 
           it 'creates a new tool', ->
@@ -186,7 +194,7 @@ describe 'API', ->
         before (done) ->
           request.get "#{serverURL}/api/tools", (err, res) =>
             @body = res.body
-            @tools = JSON.parse @body
+            @tools = parseJSON @body
             done()
 
         it 'returns a list of tools', ->
@@ -238,7 +246,7 @@ describe 'API', ->
             user: @user
           , (err, res, body) =>
             @response = res
-            @dataset = JSON.parse res.body
+            @dataset = parseJSON res.body
             done()
 
         context 'POST /api/:user/datasets', ->
@@ -255,25 +263,25 @@ describe 'API', ->
         context 'GET /api/:user/datasets/:id', ->
           it 'returns a single dataset', (done)  ->
             request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
-              newDataset = JSON.parse res.body
+              newDataset = parseJSON res.body
               should.exist newDataset.box
               done()
 
           it 'dataset has a created date', (done)  ->
             request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
-              newDataset = JSON.parse res.body
+              newDataset = parseJSON res.body
               Date.parse(newDataset.createdDate).should.be.above(0)
               done()
 
           it 'dataset has a creator short name', (done)  ->
             request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
-              newDataset = JSON.parse res.body
+              newDataset = parseJSON res.body
               'ickletest'.should.equal newDataset.creatorShortName
               done()
 
           it 'dataset has a creator display name', (done)  ->
             request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
-              newDataset = JSON.parse res.body
+              newDataset = parseJSON res.body
               'Ickle Test'.should.equal newDataset.creatorDisplayName
               done()
 
@@ -323,7 +331,7 @@ describe 'API', ->
                 @response = res
                 @view = null
                 if res
-                  @view = JSON.parse res.body
+                  @view = parseJSON res.body
                 done()
 
             context 'POST /api/:user/datasets/<dataset>/views', ->
@@ -362,7 +370,7 @@ describe 'API', ->
             , (err, res) =>
               res.should.have.status 200
               request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) =>
-                @dataset = JSON.parse res.body
+                @dataset = parseJSON res.body
                 'Cheese'.should.equal @dataset.displayName
                 done(err)
 
@@ -389,7 +397,7 @@ describe 'API', ->
       context 'GET: /api/:user/datasets', ->
         it 'returns a list of datasets', (done) ->
           request.get "#{serverURL}/api/#{@user}/datasets", (err, res) ->
-            datasets = JSON.parse res.body
+            datasets = parseJSON res.body
             datasets.length.should.be.above 0
             done err
 
@@ -408,7 +416,7 @@ describe 'API', ->
           request.get
             uri: "#{serverURL}/api/#{@user}/sshkeys"
           , (err, res) ->
-            keys = JSON.parse res.body
+            keys = parseJSON res.body
             keys.should.include 'ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local'
             done err
 
@@ -420,7 +428,7 @@ describe 'API', ->
               acceptedTerms: 7
           , (err, res, body) =>
             res.should.have.status 200
-            obj = JSON.parse body
+            obj = parseJSON body
             obj.acceptedTerms.should.equal 7
             done err
 
@@ -430,7 +438,7 @@ describe 'API', ->
             form:
               shortName: 'zebadee'
           , (err, res) =>
-            obj = JSON.parse res.body
+            obj = parseJSON res.body
             obj.shortName.should.not.equal 'zebadee'
             done err
 
@@ -441,7 +449,7 @@ describe 'API', ->
               canBeReally: ["test", "teststaff"]
             , (err, res) ->
               res.should.have.status 200
-              obj = JSON.parse res.body
+              obj = parseJSON res.body
               obj.canBeReally.should.eql ['test', 'teststaff']
               done err
 
@@ -479,7 +487,7 @@ describe 'API', ->
             # the same name as your userid. Add one to
             # fixtures.js if there isn't one already.
             res.should.have.status 200
-            obj = JSON.parse body
+            obj = parseJSON body
             cb err
 
         it 'lets me POST to the status API endpoint (and is debounced)', (done) ->
@@ -618,7 +626,7 @@ describe 'API', ->
       before (done) ->
         request.get "#{serverURL}/api/tools", (err, res) =>
           @body = res.body
-          @tools = JSON.parse @body
+          @tools = parseJSON @body
           done()
 
       it "does not see ickletest's first tool in tool list", ->
@@ -640,7 +648,7 @@ describe 'API', ->
             email: 'random@example.org'
             displayName: 'Ran Dom Test'
         , (err, resp, body) =>
-          obj = JSON.parse body
+          obj = parseJSON body
           @token = obj.token
           resp.should.have.status 201
           done(err)
@@ -667,7 +675,7 @@ describe 'API', ->
             allowedUsers: ['test', 'ickletest']
         , (err, res, body) =>
           @response = res
-          @tool = JSON.parse res.body
+          @tool = parseJSON res.body
           done()
 
       it 'is shared with some users', ->
@@ -684,7 +692,7 @@ describe 'API', ->
         request.get
           uri: @toolsURL,
         , (err, res, body) =>
-          @tools = JSON.parse body
+          @tools = parseJSON body
           done()
 
       it "includes the private tool", ->

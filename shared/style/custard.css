@@ -1107,6 +1107,10 @@ div.pricing .plan {
   transition: box-shadow 0.1s linear, top 0.1s linear;
 }
 
+div.pricing .plan.datascientist {
+  background-color: #FDECA8;
+}
+
 div.pricing .plan.glowing {
   margin: -6px -1px 14px 19px;
   padding: 6px 0 26px 0;

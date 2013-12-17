@@ -5,8 +5,8 @@
             <select name="accountlevel" id="accountlevel">
               <optgroup label="Paid accounts">
                 <option value="dataservices-ec2" selected>Data Services Customer</option>
+                <option value="xlarge-ec2">Enterprise</option>
                 <option value="large-ec2">Data Scientist</option>
-                <option value="medium-ec2">Explorer</option>
               </optgroup>
               <optgroup label="Free accounts">
                 <option value="journalist">Journalist</option>

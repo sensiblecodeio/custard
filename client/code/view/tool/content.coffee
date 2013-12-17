@@ -98,6 +98,29 @@ class Cu.View.ToolContent extends Backbone.View
               if typeof error is 'function'
                 error()
           undefined # required to stop easyXDM calling the success callback
+        reportingUser: (payload, success, error) ->
+          $.ajax
+            type: 'POST'
+            url: '/api/reporting/user/'
+            data: payload
+            success: ->
+              if typeof success is 'function'
+                success()
+            error: ->
+              if typeof error is 'function'
+                error()
+        reportingTag: (tagname, success, error) ->
+          $.ajax
+            type: 'POST'
+            url: '/api/reporting/tag/'
+            data:
+              name: tagname
+            success: ->
+              if typeof success is 'function'
+                success()
+            error: ->
+              if typeof error is 'function'
+                error()
 
 
 class Cu.View.AppContent extends Cu.View.ToolContent

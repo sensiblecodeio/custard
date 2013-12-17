@@ -795,27 +795,49 @@ changePlan = (req, resp) ->
             return resp.send 500, error: "Subscription changed, but user model could not be saved"
           return resp.send 200, user
 
+# Make a callable to respond to `resp` when intercom replies to us.
+intercomResponseHandler = (resp, reason) ->
+  (err, intercomResp, body) ->
+    # console.log err, intercomResp, body
+    if err or intercomResp.statusCode not in [200, 201]
+      resp.send 500, error: 'Intercom communication error: ' + reason
+    else
+      resp.send 200, success: 'OK'
+
+buildIntercomRequestBody = (endpoint, messageObject) ->
+  url: 'https://api.intercom.io/v1/' + endpoint
+  headers:
+    'Content-Type': 'application/json'
+  auth:
+    user: process.env.INTERCOM_APP_ID
+    pass: process.env.INTERCOM_API_KEY
+  body: JSON.stringify messageObject
+
 sendIntercomMessage = (req, resp) ->
   messageObject =
     user_id: req.user.real.shortName
     url: req.body.url
     body: req.body.message
 
-  request.post
-    url: 'https://api.intercom.io/v1/users/message_threads'
-    headers:
-      'Content-Type': 'application/json'
-    auth:
-      user: process.env.INTERCOM_APP_ID
-      pass: process.env.INTERCOM_API_KEY
-    body: JSON.stringify messageObject
-  , (err, intercomResp, body) ->
-    console.log err, intercomResp, body
-    if err or intercomResp.statusCode not in [200, 201]
-      resp.send 500, error: 'Message could not be sent'
-    else
-      resp.send 200, success: 'OK'
+  body = buildIntercomRequestBody 'users/message_threads', messageObject
+  request.post body, intercomResponseHandler(resp, 'sendIntercomMessage')
 
+sendIntercomUserData = (req, resp) ->
+  messageObject =
+    user_id: req.user.real.shortName
+    custom_data: req.body
+
+  body = buildIntercomRequestBody 'users', messageObject
+  request.put body, intercomResponseHandler(resp, 'sendIntercomUserData')
+
+sendIntercomTag = (req, resp) ->
+  messageObject =
+    user_ids: [req.user.real.shortName]
+    name: req.body.name
+    tag_or_untag: "tag"
+
+  body = buildIntercomRequestBody 'users', messageObject
+  request.post body, intercomResponseHandler(resp, 'sendIntercomTag')
 
 app.all '*', ensureAuthenticated
 
@@ -843,6 +865,8 @@ app.get '/api/:user/sshkeys/?', listSSHKeys
 app.put '/api/:user/subscription/change/:plan/?', changePlan
 
 app.post '/api/reporting/message/?', sendIntercomMessage
+app.post '/api/reporting/user/?', sendIntercomUserData
+app.post '/api/reporting/tag/?', sendIntercomTag
 
 # Catch all other routes, send to client app
 # eg: /datasets, /dataset/abc1234, /signup/free

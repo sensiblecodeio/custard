@@ -3,11 +3,30 @@ class Cu.View.Pricing extends Backbone.View
 
   events:
     'click .upgrade': 'upgradeClick'
+    'click .downgrade': 'downgradeClick'
 
   render: ->
-    @el.innerHTML = JST['pricing'] upgrade: @options.upgrade
-    if @options.upgrade and window.user.effective?.accountLevel
-      @$el.find(".account-#{window.user.effective.accountLevel}").prev().addClass('glowing')
+    options =
+      upgrade: @options.upgrade
+      free: 'signup'
+      large: 'signup'
+    plan = window.user?.effective?.accountLevel or ''
+    if plan == 'free'
+      options.free = 'current'
+      options.large = 'upgrade'
+    else if plan.match /medium/i
+      options.free = 'downgrade'
+      options.large = 'upgrade'
+    else if plan.match /journalist/i
+      options.free = 'downgrade'
+      options.large = 'upgrade'
+    else if plan.match /large/i
+      options.free = 'downgrade'
+      options.large = 'current'
+    else if plan.match(/dataservices/i) or plan.match(/grandfather/i)
+      options.free = 'downgrade'
+      options.large = 'downgrade'
+    @$el.html JST['pricing'] options
     @
 
   upgradeClick: (e) ->
@@ -37,3 +56,7 @@ class Cu.View.Pricing extends Backbone.View
               .html('Aww shucks!')
       modalWindow.on 'click', '.btn-danger', (e) ->
         modalWindow.modal 'hide'
+
+  downgradeClick: (e) ->
+    e.preventDefault()
+    $('#intercomButton').trigger('click')

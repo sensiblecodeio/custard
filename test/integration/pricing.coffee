@@ -21,22 +21,16 @@ describe 'Pricing', ->
     it 'shows me a free "community" plan', =>
       @bodyText.toLowerCase().should.include 'community'
 
-    it 'shows me a cheap "explorer" plan', =>
-      @bodyText.toLowerCase().should.include 'explorer'
-
     it 'shows me an expensive "data scientist" plan', =>
       @bodyText.toLowerCase().should.include 'data scientist'
 
-    it 'mentions our special corporate plans', =>
-      @bodyText.toLowerCase().should.include 'corporate plans'
-
-    context 'when I click the "explorer" plan', ->
+    context 'when I click the "datascientist" plan', ->
       before (done) ->
-        wd40.click '.plan.explorer a', done
+        wd40.click '.plan.datascientist a', done
 
       it 'takes me to the sign up page', (done) ->
         wd40.trueURL (err, url) ->
-          url.should.include '/signup/explorer'
+          url.should.include '/signup/datascientist'
           done()
 
   context 'When I visit the pricing page (as an existing customer)', ->

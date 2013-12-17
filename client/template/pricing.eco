@@ -3,58 +3,32 @@
   <strong>Please upgrade your account</strong> to create more datasets.
 </div>
 <% end %>
-<div class="plan datascientist account-large swcol">
+
+<div class="plan datascientist account-large swcol<% if @upgrade is 'upgrade': %>glowing<% end %>">
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
   <p>Unlimited datasets</p>
-  <p class="muted">256MB storage per dataset<br/>30 CPU minutes per process</p>
-  <% if window?.user.effective?.accountLevel.match /large/: %>
+  <% if @large is 'current': %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
-  <% else if window?.user.effective?: %>
+  <% else if @large is 'upgrade': %>
   <a class="cta upgrade" data-plan="datascientist">Upgrade</a>
+  <% else if @large is 'downgrade': %>
+  <a class="cta downgrade">Contact to downgrade</a>
   <% else: %>
   <a class="cta" href="/signup/datascientist">Sign Up</a>
   <% end %>
-</div>
-
-<div class="plan explorer account-medium swcol">
-  <h2>Explorer</h2>
-  <p class="cost">$9<small>/mth</small></p>
-  <p>10 datasets</p>
-  <p class="muted">64MB storage per dataset<br/>30 CPU minutes per process</p>
-  <% if window?.user.effective?.accountLevel.match /medium/: %>
-  <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
-  <% else if window?.user.effective?: %>
-  <a class="cta upgrade" data-plan="explorer">Upgrade</a>
-  <% else: %>
-  <a class="cta" href="/signup/explorer">Sign Up</a>
-  <% end %>
-
 </div>
 
 <div class="plan community account-free swcol">
   <h2>Community</h2>
   <p class="cost">Free</p>
   <p>3 datasets</p>
-  <p class="muted">8MB storage per dataset<br/>30 CPU minutes per process</p>
-  <% if window?.user.effective?.accountLevel.match /free/: %>
+  <% if @free is 'current': %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
+  <% else if @free is 'downgrade': %>
+  <a class="cta downgrade">Contact to downgrade</a>
   <% else: %>
   <a class="cta" href="/signup/community">Sign Up</a>
   <% end %>
-
 </div>
 
-<div class="plan corporate swcol">
-  <small>We also have</small>
-  <h2>Corporate plans</h2>
-  <p>Including sub-accounts,<br/>SLA, dedicated hardware,<br/>and hourly backups.</p>
-  <a class="cta" href="https://scraperwiki.com/professional">Contact Us</a>
-</div>
-
-<div class="mini-plan journalists swcol">
-  <h2>Are you a journalist?</h2>
-  <p>ScraperWiki has been proudly supporting journalists since it was born.</p>
-  <p>If you&rsquo;re a journalist and need a free 20&#8209;dataset plan, let us know.</p>
-  <p><a class="btn btn-small" href="https://scraperwiki.com/journalists">Find out how to apply <i class="icon-chevron-right"></i></a></p>
-</div>

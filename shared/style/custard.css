@@ -1126,10 +1126,6 @@ div.pricing .plan.glowing:after {
   opacity: 0.8;
 }
 
-div.pricing .plan.explorer {
-  background-color: #FDECA8;
-}
-
 div.pricing .plan.community {
   background-color: #FFFAE7;
   border: 2px dashed rgb(255, 223, 94);
@@ -1142,17 +1138,15 @@ div.pricing .plan.community {
   height: 221px;
 }
 
-div.pricing .plan.corporate {
-  background-color: #eee;
-}
-
 div.pricing .plan h2 {
   margin: 15px 10px 5px 10px;
 }
 
 div.pricing .plan .cost {
-  font-size: 21px;
-  line-height: 24px;
+  font-size: 48px;
+  line-height: 64px;
+  font-weight: 200;
+  margin-bottom: 5px;
 }
 
 div.pricing .plan .cost small {
@@ -1161,7 +1155,7 @@ div.pricing .plan .cost small {
 }
 
 div.pricing .plan p {
-  margin: 0 20px 10px 20px;
+  margin: 5px 20px 15px 20px;
 }
 
 div.pricing .plan p.muted {
@@ -1192,45 +1186,6 @@ div.pricing .cta:hover {
   background: #E6A809;
   color: #fff;
   text-shadow: 0 1px 0 rgba(0,0,0,0.7);
-}
-
-div.pricing .plan.corporate h2 {
-  margin-top: 0;
-}
-
-div.pricing .plan.corporate small {
-  display: block;
-  margin-top: 15px;
-  color: #999;
-}
-
-div.pricing .plan.corporate p {
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
-
-div.pricing .mini-plan {
-  padding: 10px;
-  width: 260px;
-  font-size: 14px;
-  line-height: 21px;
-}
-
-div.pricing .mini-plan p {
-  margin-bottom: 10px;
-  color: #777;
-}
-
-div.pricing .mini-plan h2 {
-  font-size: 18px;
-  line-height: 22px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 10px;
-}
-
-div.pricing .mini-plan .btn {
-  margin-top: 5px;
 }
 
 div.help {

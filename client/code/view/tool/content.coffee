@@ -97,6 +97,7 @@ class Cu.View.ToolContent extends Backbone.View
             error: ->
               if typeof error is 'function'
                 error()
+          undefined # required to stop easyXDM calling the success callback
 
 
 class Cu.View.AppContent extends Cu.View.ToolContent

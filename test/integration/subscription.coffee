@@ -12,21 +12,21 @@ describe 'Subscription Workflow', ->
       @bodyText = text
       done()
 
-  context 'when I click the "explorer" plan', ->
+  context 'when I click the "Data Scientist" plan', ->
     before (done) ->
-      browser.elementByCssIfExists '.plan.explorer a', (err, free) ->
+      browser.elementByCssIfExists '.plan.datascientist a', (err, free) ->
         free.click done
 
     it 'takes me to the sign up page', (done) ->
       wd40.trueURL (err, url) ->
-        url.should.include '/signup/explorer'
+        url.should.include '/signup/datascientist'
         done()
 
   context 'when I enter my details and click go', ->
     before (done) ->
       wd40.fill '#displayName', 'Tabatha Testington', ->
-        # we clear the short name, which has been prefilled with a made up one for us
-        # XXX test the text of the prefilled one is good
+        # we clear the short name, which has been
+        # prefilled with a made up one for us
         wd40.clear '#shortName', ->
           wd40.fill '#shortName', 'tabbytest', ->
             wd40.fill '#email', 'tabby@example.org', ->
@@ -66,7 +66,7 @@ describe 'Subscription Workflow', ->
 
     it 'subscribes me to the plan', (done) ->
       wd40.getText 'body', (err, text) ->
-        text.should.include "You've been subscribed to the Explorer plan!"
+        text.should.include "You've been subscribed to the Data Scientist plan!"
         done()
 
     it 'tells me to check my email', (done) ->

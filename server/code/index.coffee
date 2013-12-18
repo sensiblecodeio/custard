@@ -798,9 +798,8 @@ changePlan = (req, resp) ->
 # Make a callable to respond to `resp` when intercom replies to us.
 intercomResponseHandler = (resp, reason) ->
   (err, intercomResp, body) ->
-    # console.log err, intercomResp, body
     if err or intercomResp.statusCode not in [200, 201]
-      resp.send 500, error: 'Intercom communication error: ' + reason
+      resp.send 500, error: 'Intercom communication error: ' + reason + " " + intercomResp.statusCode + " " + intercomResp.body
     else
       resp.send 200, success: 'OK'
 
@@ -822,10 +821,17 @@ sendIntercomMessage = (req, resp) ->
   body = buildIntercomRequestBody 'users/message_threads', messageObject
   request.post body, intercomResponseHandler(resp, 'sendIntercomMessage')
 
+# recursively convert any numeric strings to numbers
+numberify = (obj) ->
+  if typeof obj == 'object'
+    obj[key] = numberify val for key, val of obj
+  else if not isNaN parseFloat obj
+    obj = parseFloat obj
+  return obj
+
 sendIntercomUserData = (req, resp) ->
-  messageObject =
-    user_id: req.user.real.shortName
-    custom_data: req.body
+  messageObject = numberify req.body
+  messageObject.user_id = req.user.real.shortName
 
   body = buildIntercomRequestBody 'users', messageObject
   request.put body, intercomResponseHandler(resp, 'sendIntercomUserData')

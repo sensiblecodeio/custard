@@ -109,6 +109,7 @@ class Cu.View.ToolContent extends Backbone.View
             error: ->
               if typeof error is 'function'
                 error()
+          undefined # required to stop easyXDM calling the success callback
         reportingTag: (tagname, success, error) ->
           $.ajax
             type: 'POST'
@@ -121,6 +122,7 @@ class Cu.View.ToolContent extends Backbone.View
             error: ->
               if typeof error is 'function'
                 error()
+          undefined # required to stop easyXDM calling the success callback
 
 
 class Cu.View.AppContent extends Cu.View.ToolContent

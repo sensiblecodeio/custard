@@ -836,7 +836,7 @@ sendIntercomTag = (req, resp) ->
     name: req.body.name
     tag_or_untag: "tag"
 
-  body = buildIntercomRequestBody 'users', messageObject
+  body = buildIntercomRequestBody 'tags', messageObject
   request.post body, intercomResponseHandler(resp, 'sendIntercomTag')
 
 app.all '*', ensureAuthenticated

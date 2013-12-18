@@ -43,12 +43,19 @@ $ ->
   window.app.planConvert =
     explorer: 'medium-ec2'
     datascientist: 'large-ec2'
+    enterprise: 'xlarge-ec2'
 
   # Translate from user-visible plan to
   # the shortname used for the plan on the subscribe page.
   # Only returns a non-null string for paid plans.
   window.app.truePlan = (plan) ->
     window.app.planConvert[plan]
+
+  # Translate from a plan shortname (like "medium-ec2")
+  # to a lower-case human readable name.
+  # Only returns a non-null string for paid plans.
+  window.app.humanPlan = (plan) ->
+    _.invert(window.app.planConvert)[plan]
 
   # Return the user-visible name of the plan, but only when that
   # is a paid plan.

@@ -42,6 +42,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
     @route RegExp('signup/([^/]+)/?'), 'signUp'
     @route RegExp('subscribe/([^/]+)/?'), 'subscribe'
+    @route RegExp('thankyou/?'), 'thankyou'
     @route RegExp('terms/?'), 'terms'
     @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
 
@@ -137,6 +138,11 @@ class Cu.Router.Main extends Backbone.Router
     @appView.showView contentView
     @subnavView.showView subnavView
 
+  thankyou: ->
+    contentView = new Cu.View.Thankyou
+    @appView.showView contentView
+    @subnavView.hideView()
+
   toolChooser: ->
     chooserView = new Cu.View.ToolList {type: 'importers'}
     @overlayView.showView chooserView
@@ -150,16 +156,18 @@ class Cu.Router.Main extends Backbone.Router
           dataset: model
         @overlayView.showView chooserView
 
-  subscribe: (plan) ->
+  subscribe: (truePlan) ->
     # TODO: make this a backbone model
     # TODO: handle unknown plan in sign api?
     shortName = window.user.effective.shortName
+    humanPlan = window.app.humanPlan truePlan
+    capitalisedPlan = humanPlan.toUpperCase()[0] + humanPlan.toLowerCase()[1..]
     $.ajax
       type: 'GET'
-      url: "/api/#{shortName}/subscription/#{plan}/sign"
+      url: "/api/#{shortName}/subscription/#{truePlan}/sign"
       success: (signature) =>
-        contentView = new Cu.View.Subscribe {plan: plan, signature: signature}
-        subnavView = new Cu.View.SignUpNav {plan: plan}
+        contentView = new Cu.View.Subscribe {plan: truePlan, signature: signature}
+        subnavView = new Cu.View.SignUpNav {plan: capitalisedPlan}
         @appView.showView contentView
         @subnavView.showView subnavView
 

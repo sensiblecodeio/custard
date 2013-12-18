@@ -497,12 +497,8 @@ verifyRecurly = (req, resp) ->
       plan = result.subscription.plan
       console.log 'Subscribed to', plan.plan_code
       user.setAccountLevel plan.plan_code, (err) ->
-        msg = "You've been subscribed to the #{plan.name} plan!"
         if req.user?.effective
           req.user.effective = getSessionUser user
-        else
-          msg = "#{msg} Please check your email for an activation link."
-        req.flash 'info', msg
         req.session.save()
         resp.send 201, success: "Verified and upgraded"
 
@@ -510,6 +506,7 @@ verifyRecurly = (req, resp) ->
 # Note: these are NOT regular expressions!!
 app.get '/set-password/:token/?', renderClientApp
 app.get '/subscribe/?*', renderClientApp
+app.get '/thankyou/?*', renderClientApp
 
 app.get '/pricing/?*', (req, resp) ->
   renderServerAndClientSide page: 'pricing', req, resp

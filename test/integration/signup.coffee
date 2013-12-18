@@ -17,6 +17,14 @@ describe 'Sign up', ->
         title.should.match /Sign Up/g
         done()
 
+    it 'the newsletter checkbox is ticked by default', (done) ->
+      wd40.elementByCss '#emailMarketing', (err, element) ->
+        should.exist element
+        element.getAttribute 'checked', (err, checked) ->
+          should.exist checked
+          checked.should.be.ok # asserts truthfulness
+          done()
+
     context 'when I enter my details and click go', ->
       before (done) ->
         wd40.fill '#displayName', 'Tabatha Testington', ->
@@ -28,5 +36,12 @@ describe 'Sign up', ->
                 wd40.click '#acceptedTerms', ->
                   wd40.click '#go', done
 
-      it 'says thanks', (done) ->
-        browser.waitForVisibleByCss '#thanks', 8000, done
+      it 'it takes me to the /thankyou page', (done) ->
+        wd40.waitForMatchingURL /[/]thankyou/, done
+
+      it 'it says thanks', (done) ->
+        wd40.waitForText 'Thankyou for signing up', done
+
+      it 'it tells me to check my emails', (done) ->
+        wd40.waitForText 'check your email', done
+

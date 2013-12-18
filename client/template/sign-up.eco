@@ -14,7 +14,7 @@
   <div class="control-group" style="margin-bottom: 5px;">
     <div class="controls">
       <label class="checkbox" for="emailMarketing">
-        <input type="checkbox" id="emailMarketing" />
+        <input type="checkbox" id="emailMarketing" checked="checked" />
         I&rsquo;d like to subscribe to your email newsletter
       </label>
     </div>

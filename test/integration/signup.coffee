@@ -36,5 +36,12 @@ describe 'Sign up', ->
                 wd40.click '#acceptedTerms', ->
                   wd40.click '#go', done
 
-      it 'says thanks', (done) ->
-        browser.waitForVisibleByCss '#thanks', 8000, done
+      it 'it takes me to the /thankyou page', (done) ->
+        wd40.waitForMatchingURL /[/]thankyou/, done
+
+      it 'it says thanks', (done) ->
+        wd40.waitForText 'Thankyou for signing up', done
+
+      it 'it tells me to check my emails', (done) ->
+        wd40.waitForText 'check your email', done
+

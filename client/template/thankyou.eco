@@ -1,0 +1,13 @@
+<div style="text-align: center; margin-top: 40px;">
+
+  <img src="/image/tractor-500x320.png" width="500" height="320" alt="The ScraperWiki tractor says Hi" style="width: 300px; margin-bottom: 40px;">
+
+  <p>Thankyou for signing up to ScraperWiki!</p>
+
+<% if @hasAccount: %>
+  <p style="margin-top: 20px"><a href="/datasets" class="btn btn-large">Go to your datasets <i class="icon-chevron-right"></i></a></p>
+<% else: %>
+  <p>Please <strong>check your email inbox</strong> for an activation link.</p>
+<% end %>
+
+</div>

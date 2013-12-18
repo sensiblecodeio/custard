@@ -60,23 +60,11 @@ describe 'Subscription Workflow', ->
     before (done) ->
       wd40.click '.submit', done
 
-    #TODO: wait properly
-    before (done) ->
-      setTimeout done, 5000
+    it 'it takes me to the /thankyou page', (done) ->
+      wd40.waitForMatchingURL /[/]thankyou/, done
 
+    it 'it says thanks', (done) ->
+      wd40.waitForText 'Thankyou for signing up', done
 
-    # :TODO: I'm not sure, since our Wordpress migration, that
-    # this actually works on the live site (since the homepage is
-    # now a proxy of the Wordpress homepage, which obviously won't
-    # show the "you've been subscribed" message to the user.)
-    # We should investigate. ~ Zarino
-
-    it 'subscribes me to the plan', (done) ->
-      wd40.getText 'body', (err, text) ->
-        text.should.include "You've been subscribed to the Data Scientist plan!"
-        done()
-
-    it 'tells me to check my email', (done) ->
-      wd40.getText 'body', (err, text) ->
-        text.should.include "Please check your email for an activation link."
-        done()
+    it 'it tells me to check my emails', (done) ->
+      wd40.waitForText 'check your email', done

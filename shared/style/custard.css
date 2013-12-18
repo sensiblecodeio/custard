@@ -1088,6 +1088,9 @@ a.tool canvas {
     font-size: 20px;
 }
 
+
+/* Pricing */
+
 div.pricing {
   margin-left: -20px;
 }
@@ -1191,6 +1194,18 @@ div.pricing .cta:hover {
   color: #fff;
   text-shadow: 0 1px 0 rgba(0,0,0,0.7);
 }
+
+
+/* Subscription page */
+
+#recurly-subscribe .recurly .plan .recurring_cost .cost,
+#recurly-subscribe .recurly .plan .name {
+  line-height: 36px;
+}
+
+
+
+/* Help page */
 
 div.help {
   line-height: 24px; /* the default 21px is a bit tight for so much text */

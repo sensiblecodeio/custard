@@ -34,8 +34,7 @@ class Cu.View.SignUp extends Backbone.View
           window.user = effective: model.toJSON()
           app.navigate "/subscribe/#{plan}", trigger: true
         else
-          $('form').hide()
-          $('#thanks').show()
+          app.navigate "/thankyou", trigger: true
       error: (model, response, options) =>
         $('#go', @$el).removeClass('loading').html('Go!')
 

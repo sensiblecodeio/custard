@@ -42,6 +42,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
     @route RegExp('signup/([^/]+)/?'), 'signUp'
     @route RegExp('subscribe/([^/]+)/?'), 'subscribe'
+    @route RegExp('thankyou/?'), 'thankyou'
     @route RegExp('terms/?'), 'terms'
     @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
 
@@ -136,6 +137,11 @@ class Cu.Router.Main extends Backbone.Router
     subnavView = new Cu.View.SignUpNav {plan: plan}
     @appView.showView contentView
     @subnavView.showView subnavView
+
+  thankyou: ->
+    contentView = new Cu.View.Thankyou
+    @appView.showView contentView
+    @subnavView.hideView()
 
   toolChooser: ->
     chooserView = new Cu.View.ToolList {type: 'importers'}

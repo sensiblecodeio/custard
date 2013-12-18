@@ -266,6 +266,34 @@ scraperwiki.reporting.message = (message, success, error) ->
   return dfd.promise()
 
 
+scraperwiki.reporting.user = (payload, success, error) ->
+  ###
+  Communicate user payload data to the /user/ intercom endpoint
+  ###
+  dfd = new jQuery.Deferred()
+  if typeof success is 'function'
+    dfd.done(success)
+  if typeof error is 'function'
+    dfd.fail(error)
+
+  parent.scraperwiki.xdm.reportingUser payload, dfd.resolve, dfd.reject
+  return dfd.promise()
+
+
+scraperwiki.reporting.tag = (tagname, success, error) ->
+  ###
+  Tag the user with `tagname`
+  ###
+  dfd = new jQuery.Deferred()
+  if typeof success is 'function'
+    dfd.done(success)
+  if typeof error is 'function'
+    dfd.fail(error)
+
+  parent.scraperwiki.xdm.reportingTag tagname, dfd.resolve, dfd.reject
+  return dfd.promise()
+
+
 # HERE BE DEPRECATED FUNCTIONS:
 
 scraperwiki.tool.pushSql = scraperwiki.tool.pushSQL = scraperwiki.dataset.installTool

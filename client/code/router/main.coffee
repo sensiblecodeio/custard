@@ -75,7 +75,7 @@ class Cu.Router.Main extends Backbone.Router
           success: (model) =>
             datasets = model.toJSON()
             settings =
-              app_id: "63b0c6d4bb5f0867b6e93b0be9b569fb3a7ab1e3"
+              app_id: window.intercomAppId
               user_hash: window.intercomUserHash
               widget:
                 activator: "#intercomButton"

@@ -22,7 +22,7 @@ And fix the node version by adding these lines to your `.profile`:
 
     . ~/.nvm/nvm.sh
     nvm use 0.10
-    
+
 start a new bash terminal (in order to get nvm which is a shell function)
 
    nvm install 0.10
@@ -40,12 +40,23 @@ Then on all platforms:
     npm install pow-mongodb-fixtures -g
     mongod --dbpath=mongo # might be running already
     # redis-server # probably don't need this, as it's already running
-    
+
 Alongside custard, you will need to git clone swops-secret
 
     git clone blah blah blah
 
-Optionally, OSX users might want to install the mongodb and redis System Preference Panes, which make it dead easy to turn both servers on and off whenever required:
+## Mac foibles
+
+The maxfiles ulimit on Mac OSX is ludicrously low. This can cause problems (eg: `username-duplicate` errors from the users POST endpoint) when `mongod` attempts to create the number of connections specified in `server/index.coffee`.
+
+To increase your maxfiles limit on Mac OSX, create a file at `/etc/launchd.conf` and paste this into it:
+
+    limit maxproc 512 1024
+    limit maxfiles 1024 2048
+
+You should then restart mongod if it's already running.
+
+OSX users might also want to install the mongodb and redis System Preference Panes, which make it dead easy to turn both servers on and off whenever required:
 
 - https://github.com/remysaissy/mongodb-macosx-prefspane
 - https://github.com/dquimper/Redis.prefPane
@@ -82,7 +93,7 @@ when you enter the directory. Briefly:
     # Start a web server (best done in a new window)
     . activate # don't need to do this again if you've already done it in this terminal
     cake dev
-    
+
 The `cake dev` above starts custard the web server. It's listening on a local port (usually 3001),
 so you should be able to visit `localhost:3001` in a web browser.
 
@@ -134,7 +145,7 @@ Or one of these:
 - `export BROWSER=iexplorer`
 - `export CU_TEST_SERVER=<local ip address>`
 - run mocha as above and it will use the Windows machine to run the tests
-    
+
 ## Optional: disabling startup services
 
 You may wish to disable redis-server and mongodb services from autostarting on boot when not developing custard.
@@ -148,11 +159,11 @@ Disable mongo service:
 Enable mongo service:
 
     sudo rm /etc/init/mongodb.override
-    
+
 Disable redis-server service:
 
     sudo update-rc.d redis-server disable
-    
+
 Enable redis-server service:
 
     sudo update-rc.d redis-server enable

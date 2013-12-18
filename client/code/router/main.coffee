@@ -150,16 +150,18 @@ class Cu.Router.Main extends Backbone.Router
           dataset: model
         @overlayView.showView chooserView
 
-  subscribe: (plan) ->
+  subscribe: (truePlan) ->
     # TODO: make this a backbone model
     # TODO: handle unknown plan in sign api?
     shortName = window.user.effective.shortName
+    humanPlan = window.app.humanPlan truePlan
+    capitalisedPlan = humanPlan.toUpperCase()[0] + humanPlan.toLowerCase()[1..]
     $.ajax
       type: 'GET'
-      url: "/api/#{shortName}/subscription/#{plan}/sign"
+      url: "/api/#{shortName}/subscription/#{truePlan}/sign"
       success: (signature) =>
-        contentView = new Cu.View.Subscribe {plan: plan, signature: signature}
-        subnavView = new Cu.View.SignUpNav {plan: plan}
+        contentView = new Cu.View.Subscribe {plan: truePlan, signature: signature}
+        subnavView = new Cu.View.SignUpNav {plan: capitalisedPlan}
         @appView.showView contentView
         @subnavView.showView subnavView
 

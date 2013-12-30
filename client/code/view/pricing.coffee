@@ -15,26 +15,32 @@ class Cu.View.Pricing extends Backbone.View
     plan = window.user?.effective?.accountLevel or ''
     if plan == 'free'
       options.free = 'current'
+      options.medium = 'upgrade'
       options.large = 'upgrade'
       options.enterprise = 'upgrade'
     else if plan.match /medium/i
       options.free = 'downgrade'
+      options.medium = 'current'
       options.large = 'upgrade'
       options.enterprise = 'upgrade'
     else if plan.match /journalist/i
       options.free = 'downgrade'
+      options.medium = 'downgrade'
       options.large = 'upgrade'
       options.enterprise = 'upgrade'
     else if plan.match /^large/i
       options.free = 'downgrade'
+      options.medium = 'downgrade-now'
       options.large = 'current'
       options.enterprise = 'upgrade'
     else if plan.match /xlarge/i
       options.free = 'downgrade'
+      options.medium = 'downgrade-now'
       options.large = 'downgrade-now'
       options.enterprise = 'current'
     else if plan.match(/dataservices/i) or plan.match(/grandfather/i)
       options.free = 'downgrade'
+      options.medium = 'downgrade'
       options.large = 'downgrade'
       options.enterprise = 'upgrade'
     @$el.html JST['pricing'] options

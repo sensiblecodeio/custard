@@ -4,7 +4,7 @@
 </div>
 <% end %>
 
-<div class="plan enterprise account-large swcol">
+<!-- <div class="plan enterprise account-large swcol">
   <h2>Enterprise</h2>
   <p class="cost">$199<small>/mth</small></p>
   <p>Unlimited datasets</p>
@@ -17,7 +17,7 @@
   <% else: %>
   <a class="cta" href="/signup/enterprise">Sign Up</a>
   <% end %>
-</div>
+</div> -->
 
 <div class="plan datascientist account-large swcol<% if @upgrade is 'upgrade': %>glowing<% end %>">
   <h2>Data Scientist</h2>
@@ -33,6 +33,23 @@
   <a class="cta downgrade">Contact to downgrade</a>
   <% else: %>
   <a class="cta" href="/signup/datascientist">Sign Up</a>
+  <% end %>
+</div>
+
+<div class="plan explorer account-medium swcol<% if @upgrade is 'upgrade': %>glowing<% end %>">
+  <h2>Explorer</h2>
+  <p class="cost">$9<small>/mth</small></p>
+  <p>10 datasets</p>
+  <% if @medium is 'current': %>
+  <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
+  <% else if @medium is 'upgrade': %>
+  <a class="cta upgrade" data-plan="explorer">Upgrade</a>
+  <% else if @medium is 'downgrade-now': %>
+  <a class="cta downgrade-now" data-plan="explorer">Downgrade</a>
+  <% else if @medium is 'downgrade': %>
+  <a class="cta downgrade">Contact to downgrade</a>
+  <% else: %>
+  <a class="cta" href="/signup/explorer">Sign Up</a>
   <% end %>
 </div>
 

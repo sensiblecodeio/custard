@@ -1110,7 +1110,7 @@ div.pricing .plan {
   transition: box-shadow 0.1s linear, top 0.1s linear;
 }
 
-div.pricing .plan.datascientist {
+div.pricing .plan.explorer {
   background-color: #FDECA8;
 }
 

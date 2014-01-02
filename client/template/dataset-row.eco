@@ -3,29 +3,29 @@
 <% else: %>
   <span></span>
 <% end %></td>
-<td class="name"><%= @dataset.displayName %></td>
-<td class="status"><% if @dataset.status?.type is 'error': %>
+<td class="name" data-sortable-value="<%= @dataset.displayName %>"><%= @dataset.displayName %></td>
+<td class="status" data-sortable-value="<%= @dataset.status?.type %>"><% if @dataset.status?.type is 'error': %>
   <% if @dataset.status?.message: %>
     <i class="icon-exclamation-sign icon-white"></i> <%= @dataset.status.message %>
   <% else: %>
-    <i class="icon-exclamation-sign icon-white"></i> Error <%= @statusUpdatedHuman %></p>
+    <i class="icon-exclamation-sign icon-white"></i> Error
   <% end %>
 <% else if @dataset.status?.type is 'ok': %>
   <% if @dataset.status?.message: %>
     <i class="icon-ok"></i> <%= @dataset.status.message %>
   <% else: %>
-    <i class="icon-ok"></i> Refreshed <%= @statusUpdatedHuman %>
+    <i class="icon-ok"></i> Refreshed
   <% end %>
 <% else: %>
   <span class="muted">Unknown</span>
 <% end %></td>
-<td class="updated"><% if @statusUpdatedHuman == 'Never': %>
+<td class="updated" data-sortable-value="<%= @dataset.status?.updated %>"><% if @statusUpdatedHuman == 'Never': %>
   <span class="muted">Never</span>
 <% else: %>
   <%= @statusUpdatedHuman %>
 <% end %></td>
-<td class="creator"><%- @dataset?.creatorDisplayName or '<span class="muted">Unkown</span>' %></td>
-<td class="created"><% if @datasetCreatedHuman == 'Never': %>
+<td class="creator" data-sortable-value="<%= @dataset.creatorDisplayName %>"><%- @dataset?.creatorDisplayName or '<span class="muted">Unkown</span>' %></td>
+<td class="created" data-sortable-value="<%= @dataset.createdDate %>"><% if @datasetCreatedHuman == 'Never': %>
   <span class="muted">Never</span>
 <% else: %>
   <%= @datasetCreatedHuman %>

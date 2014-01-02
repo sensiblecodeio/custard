@@ -1,5 +1,6 @@
 class Cu.View.DatasetRow extends Backbone.View
   tagName: 'tr'
+  className: 'dataset'
   attributes: ->
     'data-box': @model.get 'box'
 

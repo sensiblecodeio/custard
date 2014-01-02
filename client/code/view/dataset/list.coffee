@@ -11,9 +11,9 @@ class Cu.View.DatasetList extends Backbone.View
   events:
     'click .new-dataset-tile': ->
       $('#subnav .new-dataset').trigger('click') # :TODO: this is nasty and hacky
+    'click th.sortable': 'sortTable'
 
   render: ->
-    console.log 'render'
     if window.user.effective.datasetDisplay == 'list'
       @renderAsList()
     else
@@ -21,16 +21,17 @@ class Cu.View.DatasetList extends Backbone.View
     @
 
   renderAsList: =>
+    arrows = '<i class="icon-chevron-up"></i><i class="icon-chevron-down"></i>'
     @$el.removeClass('row').addClass('row-fluid')
     @$el.html """<table class="table table-hover">
       <thead>
         <tr>
           <th class="icon"></th>
-          <th class="name">Name</th>
-          <th class="status">Status</th>
-          <th class="updated">Last run</th>
-          <th class="creator">Created by</th>
-          <th class="created">Created</th>
+          <th class="name sortable">Name #{arrows}</th>
+          <th class="status sortable">Status #{arrows}</th>
+          <th class="updated sortable">Last run #{arrows}</th>
+          <th class="creator sortable">Created by #{arrows}</th>
+          <th class="created sortable">Created #{arrows}</th>
           <th class="hide"></th>
         </tr>
       </thead>
@@ -62,3 +63,19 @@ class Cu.View.DatasetList extends Backbone.View
       else
         view = new Cu.View.DatasetTile model: dataset
         @$el.append view.render().el
+
+  sortTable: (e) ->
+    $th = $(e.currentTarget)
+    columnNumber = $th.prevAll().length
+    if $th.is '.sorted-asc'
+      sortOrder = 'desc'
+      $th.removeClass('sorted-asc').addClass 'sorted-desc'
+    else
+      sortOrder = 'asc'
+      $th.removeClass('sorted-desc').addClass 'sorted-asc'
+
+    $th.siblings().removeClass 'sorted-asc sorted-desc'
+
+    $('tbody>tr', @$el).tsort 'td:eq(' + columnNumber + ')'
+      order: sortOrder
+      attr: 'data-sortable-value'

@@ -614,6 +614,22 @@ a.tile p.error {
   margin-left: 5px;
 }
 
+.dataset-list th.sortable {
+  cursor: pointer;
+}
+
+.dataset-list th.sortable [class^=icon-] {
+  display: none;
+  margin-top: 2px;
+  margin-left: 3px;
+  margin-right: -17px;
+}
+
+.dataset-list th.sorted-asc .icon-chevron-up,
+.dataset-list th.sorted-desc .icon-chevron-down {
+  display: inline-block;
+}
+
 
 
 

@@ -19,7 +19,7 @@
   <% end %>
 </div> -->
 
-<div class="plan datascientist account-large swcol<% if @upgrade is 'upgrade': %>glowing<% end %>">
+<div class="plan datascientist account-large swcol<% if @upgrade is 'upgrade': %> glowing<% end %>">
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
   <p>100 datasets</p>
@@ -36,7 +36,7 @@
   <% end %>
 </div>
 
-<div class="plan explorer account-medium swcol<% if @upgrade is 'upgrade': %>glowing<% end %>">
+<div class="plan explorer account-medium swcol">
   <h2>Explorer</h2>
   <p class="cost">$9<small>/mth</small></p>
   <p>10 datasets</p>

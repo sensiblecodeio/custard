@@ -80,10 +80,12 @@ class Cu.View.ToolContent extends Backbone.View
               shortName: window.user.real.shortName
               displayName: window.user.real.displayName
               email: window.user.real.email[0]
+              accountLevel: window.user.real.accountLevel
             effective:
               shortName: window.user.effective.shortName
               displayName: window.user.effective.displayName
               email: window.user.effective.email[0]
+              accountLevel: window.user.effective.accountLevel
         reportingMessage: (message, success, error) ->
           $.ajax
             type: 'POST'

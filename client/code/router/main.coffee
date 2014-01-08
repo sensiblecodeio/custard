@@ -14,6 +14,7 @@ class Cu.Router.Main extends Backbone.Router
     @on 'route', @errorView.hide
     @on 'route', @trackPageView
     @on 'route', @trackIntercom
+    @on 'route', @trackOptimizely
 
     # TODO: this isn't a great place for this constant
     window.latestTerms = 1
@@ -49,6 +50,12 @@ class Cu.Router.Main extends Backbone.Router
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
     _gaq.push ['_trackPageview', "/#{path}"]
+
+  trackOptimizely: (e) ->
+    window.optimizely = window.optimizely or []
+    # 'activate' seems to send the current URL to Optimizely
+    # which is exactly what we want when pushState routing happens.
+    window.optimizely.push ['activate']
 
   trackIntercom: ->
     if 'real' of window.user and window.intercomUserHash != ''

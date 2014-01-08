@@ -459,7 +459,7 @@ getStatuses = (req, resp) ->
       console.warn error
       return resp.send 404, error: error
     else
-        return resp.send 200, status: 'ok', datasets: datasets
+        return resp.send 200, { status: 'ok', datasets: datasets }
 
 postStatus = (req, resp) ->
   console.log "POST /api/status/ from ident #{req.ident}"

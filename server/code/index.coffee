@@ -448,6 +448,19 @@ dataRequest = (req, resp) ->
     else
       return resp.send 201, dataRequest
 
+getStatuses = (req, resp) ->
+  console.log "GET /api/status/"
+  Dataset.find {user: req.user.effective}, (err, dataset) ->
+    if err?
+      console.warn err
+      return resp.send 500, error: 'Error trying to find dataset'
+    else if not dataset
+      error = "No datasets found"
+      console.warn error
+      return resp.send 404, error: error
+    else
+        return resp.send 200, status: 'ok', datasets: datasets
+
 postStatus = (req, resp) ->
   console.log "POST /api/status/ from ident #{req.ident}"
   Dataset.findOneById req.ident, (err, dataset) ->
@@ -548,6 +561,7 @@ app.post '/api/data-request/?', dataRequest
 # can post to anyone's status).
 # throttleRoute = throttle.throttle (req) -> req.ident
 
+app.get '/api/status/', checkIdent, getStatuses
 app.post '/api/status/?', checkIdent, postStatus
 
 app.get '/api/:user/subscription/:plan/sign/?', signPlan

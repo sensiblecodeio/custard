@@ -36,6 +36,7 @@
     <li><a data-nonpushstate href="#boxes-reference">Box API reference</a>
       <ul class="nav nav-list">
         <li><a data-nonpushstate href="#boxes-http">HTTP fileserver</a></li>
+        <li><a data-nonpushstate href="#boxes-cgi">CGI endpoint</a></li>
         <li><a data-nonpushstate href="#boxes-sql">SQL API</a></li>
         <li><a data-nonpushstate href="#boxes-sqlmeta">SQL Metadata API</a></li>
         <li><a data-nonpushstate href="#boxes-exec">Exec API</a></li>
@@ -695,6 +696,18 @@ remove people.</p>
 <p>The file&rsquo;s MIME type is worked out from its extension, using <a
 href="https://github.com/git-mirror/nginx/blob/master/conf/mime.types">a standard set of rules</a>
 supplied with nginx.</p>
+
+<h3 id="boxes-cgi">CGI endpoint</h3>
+
+<p>All boxes have a CGI endpoint. Any file that is executable and is in the <code>/home/cgi-bin</code> directory will be made available to execute as a CGI script (usually these will be Python CGI scripts or similar, but you can write them in whatever language you like, and they can be compiled executables).</p>
+
+<p>The URL will be <code><%= @user?.boxEndpoint or 'https://free.scraperwiki.com/'%><em class="muted">&lt;box_name&gt;</em>/<em class="muted">&lt;publish_token&gt;</em>/cgi-bin/your-executable</code>.</p>
+
+<p>Just like any other CGI provider, you can pass query parameters (after the <code>?</code> in the URL). The CGI script will be executed with the full privileges of the box shell account, and can do anything you could do by SSH'ing into the box.</p>
+
+<p>Symbolic links will be followed, meaning that you can have a python script called <code>query.py</code> and a symlink to it called <code>query</code> which will lead to slightly nicer URLs.</p>
+
+<p>CGI requests will be limited in the same way that requests to the exec endpoint are: Only a few in-flight requests are allowed.</p>
 
 <h3 id="boxes-sql">SQL API</h3>
 

@@ -53,7 +53,9 @@ class Cu.Router.Main extends Backbone.Router
 
   trackOptimizely: (e) ->
     window.optimizely = window.optimizely or []
-    window.optimizely.push ['trackEvent', 'helloOptimizely']
+    # 'activate' seems to send the current URL to Optimizely
+    # which is exactly what we want when pushState routing happens.
+    window.optimizely.push ['activate']
 
   trackIntercom: ->
     if 'real' of window.user and window.intercomUserHash != ''

@@ -5,7 +5,8 @@ class Cu.View.DatasetTools extends Backbone.View
     'click .scroll-right': 'scrollRight'
     'click .scroll-left': 'scrollLeft'
 
-  initialize: ->
+  initialize: (options) ->
+    @options = options || {};
     if @options.view?
       @selectedTool = @options.view
     else

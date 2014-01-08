@@ -63,7 +63,8 @@ class Cu.View.ToolMenuItem extends Backbone.View
 class Cu.View.ArchetypeMenuItem extends Backbone.View
   tagName: 'li'
 
-  initialize: ->
+  initialize: (options) ->
+    @options = options || {};
     @options.archetype.on 'change', @render, this
 
   events:

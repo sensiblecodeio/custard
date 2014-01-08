@@ -6,6 +6,9 @@ class Cu.View.ToolListHeader extends Backbone.View
       e.stopPropagation()
     'keyup .search-query': 'keyupPageSearch'
 
+  initialize: (options) ->
+    @options = options || {};
+  
   render: ->
     if @options.type == 'importers'
       @$el.append('<h2>Create a new dataset&hellip;</h2>')

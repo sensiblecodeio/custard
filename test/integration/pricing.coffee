@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration, mediumizeMary, enlargeLucy} = require './helper'
 
 describe 'Pricing', ->
   prepIntegration()
@@ -25,15 +25,15 @@ describe 'Pricing', ->
           text.should.match /sign up/i
           done()
 
-    it 'it lets me sign up to a $29 "Data Scientist" plan', (done) ->
-      wd40.elementByCss '.plan.datascientist .cta', (err, element) ->
+    it 'it lets me sign up to a $9 "Explorer" plan', (done) ->
+      wd40.elementByCss '.plan.explorer .cta', (err, element) ->
         should.exist element
         element.text (err, text) ->
           text.should.match /sign up/i
           done()
 
-    it 'it lets me sign up to a $199 "Enterprise" plan', (done) ->
-      wd40.elementByCss '.plan.enterprise .cta', (err, element) ->
+    it 'it lets me sign up to a $29 "Data Scientist" plan', (done) ->
+      wd40.elementByCss '.plan.datascientist .cta', (err, element) ->
         should.exist element
         element.text (err, text) ->
           text.should.match /sign up/i
@@ -65,6 +65,13 @@ describe 'Pricing', ->
           text.should.match /current plan/i
           done()
 
+    it 'it lets me upgrade to the $9 plan', (done) ->
+      wd40.elementByCss '.plan.explorer .upgrade', (err, element) ->
+        should.exist element
+        element.text (err, text) ->
+          text.should.match /upgrade/i
+          done()
+
     it 'it lets me upgrade to the $29 plan', (done) ->
       wd40.elementByCss '.plan.datascientist .upgrade', (err, element) ->
         should.exist element
@@ -72,33 +79,39 @@ describe 'Pricing', ->
           text.should.match /upgrade/i
           done()
 
-    it 'it lets me upgrade to the $199 plan', (done) ->
-      wd40.elementByCss '.plan.enterprise .upgrade', (err, element) ->
-        should.exist element
-        element.text (err, text) ->
-          text.should.match /upgrade/i
+    context 'when I click the $9 upgrade button', (done) ->
+      before (done) ->
+        browser.get base_url + '/pricing', ->
+          wd40.click '.plan.explorer .upgrade', done
+
+      it 'takes me to the explorer billing details page', (done) ->
+        wd40.trueURL (err, url) ->
+          url.should.include '/subscribe/medium-ec2'
           done()
+
+      it 'it lets me subscribe without creating a new account', (done) ->
+        wd40.elementByCss '#recurly-subscribe', (err, div) ->
+          should.exist div
+          done()
+
+      # TODO: we should test recurly integration here
 
     context 'when I click the $29 upgrade button', (done) ->
       before (done) ->
-        wd40.click '.plan.datascientist .upgrade', done
+        browser.get base_url + '/pricing', ->
+          wd40.click '.plan.datascientist .upgrade', done
 
       it 'takes me to the data scientist billing details page', (done) ->
         wd40.trueURL (err, url) ->
           url.should.include '/subscribe/large-ec2'
           done()
 
-    context 'when I click the $199 upgrade button', (done) ->
-      before (done) ->
-        browser.get base_url + '/pricing', done
-
-      before (done) ->
-        wd40.click '.plan.enterprise .upgrade', done
-
-      it 'takes me to the enterprise billing details page', (done) ->
-        wd40.trueURL (err, url) ->
-          url.should.include '/subscribe/xlarge-ec2'
+      it 'it lets me subscribe without creating a new account', (done) ->
+        wd40.elementByCss '#recurly-subscribe', (err, div) ->
+          should.exist div
           done()
+
+      # TODO: we should test recurly integration here
 
     after (done) ->
       browser.get "#{base_url}/logout", done
@@ -120,21 +133,24 @@ describe 'Pricing', ->
           text.should.match /current plan/i
           done()
 
-    it 'it tells me to contact ScraperWiki for a downgrade', (done) ->
+    it 'it tells me to contact ScraperWiki for a downgrade to community', (done) ->
       wd40.getText '.plan.community', (err, text) ->
         text.should.match /contact to downgrade/i
         done()
 
-    it 'it lets me upgrade to the $199 plan', (done) ->
-      wd40.elementByCss '.plan.enterprise .upgrade', (err, element) ->
+    it 'it lets me downgrade to the $9 explorer plan', (done) ->
+      wd40.elementByCss '.plan.explorer .downgrade-now', (err, element) ->
         should.exist element
         element.text (err, text) ->
-          text.should.match /upgrade/i
+          text.should.match /downgrade/i
           done()
 
-    context 'when I click the $199 upgrade button', (done) ->
+    context 'when I click the $9 downgrade button', (done) ->
       before (done) ->
-        wd40.click '.plan.enterprise .upgrade', done
+        enlargeLucy done
+
+      before (done) ->
+        wd40.click '.plan.explorer .downgrade-now', done
 
       it 'it opens a modal window checking I\'m sure', (done) ->
         wd40.elementByCss '.modal', (err, modal) ->
@@ -152,46 +168,12 @@ describe 'Pricing', ->
         it 'it closes the modal window', (done) ->
           wd40.waitForInvisibleByCss '.modal', done
 
-        it 'it shows I am on the $199 plan', (done) ->
-          wd40.elementByCss '.plan.enterprise .currentPlan', (err, element) ->
+        it 'it shows I am on the $9 plan', (done) ->
+          wd40.elementByCss '.plan.explorer .currentPlan', (err, element) ->
             should.exist element
             element.text (err, text) ->
               text.should.match /current plan/i
               done()
-
-        it 'it lets me downgrade to the $29 plan', (done) ->
-          wd40.elementByCss '.plan.datascientist .downgrade-now', (err, element) ->
-            should.exist element
-            element.text (err, text) ->
-              text.should.match /downgrade/i
-              done()
-
-        context 'when I click the $29 downgrade button', (done) ->
-          before (done) ->
-            wd40.click '.plan.datascientist .downgrade-now', done
-
-          it 'it opens a modal window checking I\'m sure', (done) ->
-            wd40.elementByCss '.modal', (err, modal) ->
-              should.exist modal
-              done()
-
-          context 'when I click the only button on the modal', ->
-            # wait a little while for the modal fade effect to finish
-            before (done) ->
-              setTimeout done, 500
-
-            before (done) ->
-              wd40.click '.modal .btn', done
-
-            it 'it closes the modal window', (done) ->
-              wd40.waitForInvisibleByCss '.modal', done
-
-            it 'it shows I am on the $29 plan', (done) ->
-              wd40.elementByCss '.plan.datascientist .currentPlan', (err, element) ->
-                should.exist element
-                element.text (err, text) ->
-                  text.should.match /current plan/i
-                  done()
 
     after (done) ->
       browser.get "#{base_url}/logout", done
@@ -209,10 +191,12 @@ describe 'Pricing', ->
     before (done) ->
       browser.waitForElementByCss '.plan', 4000, done
 
-    it 'none of the plans are shown to be my current plan', (done) ->
-      browser.elementByCss '.currentPlan', (err, element) ->
-        should.not.exist element
-        done()
+    it 'it shows that the explorer plan is my current plan', (done) ->
+      wd40.elementByCss '.plan.explorer .currentPlan', (err, element) ->
+        should.exist element
+        element.text (err, text) ->
+          text.should.match /current plan/i
+          done()
 
     it 'it lets me upgrade to the $29 plan', (done) ->
       wd40.elementByCss '.plan.datascientist .upgrade', (err, element) ->
@@ -221,12 +205,35 @@ describe 'Pricing', ->
           text.should.match /upgrade/i
           done()
 
-    it 'it lets me upgrade to the $199 plan', (done) ->
-      wd40.elementByCss '.plan.enterprise .upgrade', (err, element) ->
-        should.exist element
-        element.text (err, text) ->
-          text.should.match /upgrade/i
+    context 'when I click the $29 upgrade button', (done) ->
+      before (done) ->
+        mediumizeMary done
+
+      before (done) ->
+        wd40.click '.plan.datascientist .upgrade', done
+
+      it 'it opens a modal window checking I\'m sure', (done) ->
+        wd40.elementByCss '.modal', (err, modal) ->
+          should.exist modal
           done()
+
+      context 'when I click the only button on the modal', ->
+        # wait a little while for the modal fade effect to finish
+        before (done) ->
+          setTimeout done, 500
+
+        before (done) ->
+          wd40.click '.modal .btn', done
+
+        it 'it closes the modal window', (done) ->
+          wd40.waitForInvisibleByCss '.modal', done
+
+        it 'it shows I am on the $29 plan', (done) ->
+          wd40.elementByCss '.plan.datascientist .currentPlan', (err, element) ->
+            should.exist element
+            element.text (err, text) ->
+              text.should.match /current plan/i
+              done()
 
     it 'it tells me to contact ScraperWiki for a downgrade', (done) ->
       wd40.getText '.plan.community', (err, text) ->

@@ -166,7 +166,9 @@ describe 'Pricing', ->
           wd40.click '.modal .btn', done
 
         it 'it closes the modal window', (done) ->
-          wd40.waitForInvisibleByCss '.modal', done
+          setTimeout ->
+            wd40.waitForInvisibleByCss '.modal', done
+          , 2000
 
         it 'it shows I am on the $9 plan', (done) ->
           wd40.elementByCss '.plan.explorer .currentPlan', (err, element) ->
@@ -226,7 +228,9 @@ describe 'Pricing', ->
           wd40.click '.modal .btn', done
 
         it 'it closes the modal window', (done) ->
-          wd40.waitForInvisibleByCss '.modal', done
+          setTimeout ->
+            wd40.waitForInvisibleByCss '.modal', done
+          , 2000
 
         it 'it shows I am on the $29 plan', (done) ->
           wd40.elementByCss '.plan.datascientist .currentPlan', (err, element) ->

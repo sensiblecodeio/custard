@@ -34,6 +34,20 @@ mediumizeMary = (done) ->
     body: '<subscription><plan_code>medium-ec2</plan_code></subscription>'
   , done
 
+enlargeLucy = (done) ->
+  # Ensures large-lucy starts on the right plan
+
+  sub_uuid = '2131e1fac6fc3d58299a94414bba462e' # large-lucy's subscription
+  domain = process.env.RECURLY_DOMAIN
+  pub_key = process.env.RECURLY_API_KEY
+
+  request.put "https://#{domain}.recurly.com/v2/subscriptions/#{sub_uuid}",
+    auth:
+      user: pub_key
+      pass: ''
+    body: '<subscription><plan_code>large-ec2</plan_code></subscription>'
+  , done
+
 exports.wd40 = wd40
 exports.browser = browser
 exports.base_url = base_url
@@ -41,3 +55,4 @@ exports.login_url = login_url
 exports.home_url = "#{base_url}/datasets"
 exports.prepIntegration = prepIntegration
 exports.mediumizeMary = mediumizeMary
+exports.enlargeLucy = enlargeLucy

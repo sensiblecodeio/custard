@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration, mediumizeMary, enlargeLucy} = require './helper'
 
 describe 'Pricing', ->
   prepIntegration()
@@ -89,6 +89,13 @@ describe 'Pricing', ->
           url.should.include '/subscribe/medium-ec2'
           done()
 
+      it 'it lets me subscribe without creating a new account', (done) ->
+        wd40.elementByCss '#recurly-subscribe', (err, div) ->
+          should.exist div
+          done()
+
+      # TODO: we should test recurly integration here
+
     context 'when I click the $29 upgrade button', (done) ->
       before (done) ->
         browser.get base_url + '/pricing', ->
@@ -98,6 +105,13 @@ describe 'Pricing', ->
         wd40.trueURL (err, url) ->
           url.should.include '/subscribe/large-ec2'
           done()
+
+      it 'it lets me subscribe without creating a new account', (done) ->
+        wd40.elementByCss '#recurly-subscribe', (err, div) ->
+          should.exist div
+          done()
+
+      # TODO: we should test recurly integration here
 
     after (done) ->
       browser.get "#{base_url}/logout", done
@@ -132,6 +146,9 @@ describe 'Pricing', ->
           done()
 
     context 'when I click the $9 downgrade button', (done) ->
+      before (done) ->
+        enlargeLucy done
+
       before (done) ->
         wd40.click '.plan.explorer .downgrade-now', done
 
@@ -189,6 +206,9 @@ describe 'Pricing', ->
           done()
 
     context 'when I click the $29 upgrade button', (done) ->
+      before (done) ->
+        mediumizeMary done
+
       before (done) ->
         wd40.click '.plan.datascientist .upgrade', done
 

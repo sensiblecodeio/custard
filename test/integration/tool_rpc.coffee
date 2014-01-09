@@ -46,7 +46,8 @@ describe 'Tool RPC', ->
         browser.get @toolURL, ->
           wd40.switchToBottomFrame ->
             wd40.click '#redirectExternal', (err, btn) ->
-              wd40.switchToTopFrame done
+              wd40.switchToTopFrame ->
+                setTimeout done, 500
 
       it 'redirects the host to the specified URL', (done) ->
         wd40.trueURL (err, url) ->

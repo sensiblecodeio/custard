@@ -62,6 +62,7 @@ class Cu.Router.Main extends Backbone.Router
   trackIntercom: ->
     if 'real' of window.user and window.intercomUserHash != ''
       @getIntercomSettings (intercomSettings) ->
+        console.log intercomSettings
         if window.intercomBooted?
           # tell Intercom we're still here
           window.Intercom 'update', intercomSettings
@@ -91,7 +92,7 @@ class Cu.Router.Main extends Backbone.Router
               user_id: real.shortName
               name: real.displayName
               email: real.email[0]
-              created_at: Date.parse(real.created) / 1000
+              created_at: moment(real.created, 'YYYY-MM-DD HH:mm:ssZ').unix()
               accountLevel: real.accountLevel
               datahub_id: effective.shortName
               datahub_name: effective.displayName
@@ -105,7 +106,7 @@ class Cu.Router.Main extends Backbone.Router
               cb_datasets: 0
 
             _.each datasets, (dataset) ->
-              date = Date.parse(dataset.createdDate) / 1000
+              date = moment(dataset.createdDate, 'YYYY-MM-DD HH:mm:ssZ').unix()
               settings.dataset_created_at = Math.max date, settings.dataset_created_at
               if dataset.tool == 'table-xtract'
                 settings.tx_created_at = Math.max date, settings.tx_created_at

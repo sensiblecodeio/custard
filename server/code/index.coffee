@@ -50,7 +50,7 @@ if not process.env.CU_DB
 # Set up database connection
 mongoose.connect process.env.CU_DB,
   server:
-    poolSize: 200
+    poolSize: 20
     auto_reconnect: true
     socketOptions:
       keepAlive: 1

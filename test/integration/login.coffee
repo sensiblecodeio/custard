@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, logout_url, home_url, prepIntegration} = require './helper'
 
 request = require 'request'
 
@@ -229,6 +229,9 @@ describe 'Switch', ->
 
     it 'shows the context search box', (done) ->
       browser.waitForVisibleByCss '.context-switch', 4000, done
+
+    after (done) ->
+      browser.get logout_url, done
 
   context 'when a non-staff member attempts to switch context', ->
     before (done) ->

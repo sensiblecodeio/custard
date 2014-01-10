@@ -111,7 +111,7 @@ describe 'Failed login', ->
             wd40.click '#login', ->
               setTimeout ->
                 done()
-              , 500
+              , 2000
 
       it 'it tells me the user does not exist', (done) ->
         wd40.getText '#error', (err, text) ->

@@ -185,7 +185,7 @@ describe 'Server model: Dataset', ->
       after ->
         Dataset.dbClass.prototype.save.restore()
         RedisClient.debouncedPublish.restore()
-        RedisClient.client.end()
+        RedisClient.client?.end?()
 
       before (done) ->
         @dataset = new Dataset

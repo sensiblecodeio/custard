@@ -20,6 +20,10 @@ Backbone.history.on 'route', ->
 
 Cu.Util.patchErrors()
 
+if /Trident|MSIE/.test window.navigator.userAgent
+  $.ajaxSetup
+    cache: false
+
 $ ->
   window.app = new Cu.Router.Main()
   Backbone.history.start {pushState: on, hashChange: false}

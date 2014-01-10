@@ -110,11 +110,15 @@ describe 'Dataset', ->
 
         context 'when I click the "hide" button on the dataset', ->
           before (done) ->
+            # If this fails in IE try moving the mouse cursor outside of
+            # the browser window while the test is running.
+            # http://jimevansmusic.blogspot.co.uk/2013/01/revisiting-native-events-in-ie-driver.html
             browser.elementByPartialLinkText randomname, (err, dataset) =>
               @dataset = dataset
               browser.moveTo @dataset, =>
                 @dataset.elementByCss '.hide', (err, hide) ->
-                  hide.click done
+                  wd40.waitForVisible hide, (err) ->
+                    hide.click done
 
           it 'the dataset is replaced by an undo button', (done) ->
             @dataset.text (err, text) ->
@@ -138,7 +142,8 @@ describe 'Dataset', ->
             @dataset = dataset
             browser.moveTo @dataset, =>
               @dataset.elementByCss '.hide', (err, hide) ->
-                hide.click done
+                wd40.waitForVisible hide, (err) ->
+                  hide.click done
         , 500
 
     it 'shows an undo button', (done) ->

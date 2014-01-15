@@ -22,7 +22,7 @@
 <div class="plan datascientist account-large swcol<% if @upgrade is 'upgrade': %> glowing<% end %>">
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
-  <p>100 datasets</p>
+  <p>Unlimited datasets</p>
   <% if @large is 'current': %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else if @large is 'upgrade': %>

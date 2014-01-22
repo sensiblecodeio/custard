@@ -707,6 +707,37 @@ supplied with nginx.</p>
 
 <p>Symbolic links will be followed, meaning that you can have a python script called <code>query.py</code> and a symlink to it called <code>query</code> which will lead to slightly nicer URLs.</p>
 
+<p>CGI-bin responses default to a HTTP 200 status. If you want to return a different status, you can print your own `Status:` header. The <a href="http://docs.python.org/3/library/cgi">Python `cgi` module documentation</a> will prove useful if you&rsquo;re writing a Python CGI script. In general, your scripts will look like:</p>
+
+<pre class="prettyprint">
+#!/usr/bin/env python
+
+import cgitb
+import cgi
+
+# Optional:
+# enable printing of tracebacks
+# when something goes wrong
+cgitb.enable()
+
+# Optional:
+# Set a non 200 HTTP status code
+print "Status: 418 I'm a teapot"
+
+# Required:
+# Print an empty new line,
+# to tell the browser that headers
+# have ended, and body is beginning
+print
+
+print "Hello world"
+
+# Optional:
+# Get parameters from query string
+data = cgi.FieldStorage()
+print data['some_key'].value
+</pre>
+
 <p>CGI requests will be limited in the same way that requests to the exec endpoint are: Only a few in-flight requests are allowed.</p>
 
 <h3 id="boxes-sql">SQL API</h3>

@@ -81,6 +81,7 @@ class Dataset extends ModelBase
         message: @status.message
       env = process.env.NODE_ENV
       channel = "#{env}.cobalt.dataset.#{@box}.update"
+      console.log "Publishing: " + message
       RedisClient.debouncedPublish @box, channel, message
       callback err
 

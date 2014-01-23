@@ -232,6 +232,7 @@ describe 'Server model: Dataset', ->
             creatorShortName: @dataset.creatorShortName
             creatorDisplayName: @dataset.creatorDisplayName
 
+        console.log "Expecting: " + message
         published = @publishStub.calledWith @dataset.box, channel, message
         published.should.be.true
 

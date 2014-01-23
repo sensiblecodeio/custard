@@ -197,6 +197,13 @@ describe 'Server model: Dataset', ->
             {box: 'foo'}
             {box: 'bar'}
           ]
+          boxServer: "anExample-boxServer"
+          user: "anExample-user"
+          status: "anExample-status"
+          boxJSON: "anExample-boxJSON"
+          creatorShortName: "anExample-creatorShortName"
+          creatorDisplayName: "anExample-creatorDisplayName"
+
         @dataset.updateStatus
           type: 'ok'
           message: 'I scrapped some page :D'
@@ -215,13 +222,30 @@ describe 'Server model: Dataset', ->
 
       it 'publishes the update to redis', ->
         channel = "#{process.env.NODE_ENV}.cobalt.dataset.box.update"
-        message = JSON.stringify
+        expectedMessage =
           boxes: ['foo', 'bar']
           type: 'ok'
           message: 'I scrapped some page :D'
+          origin:
+            box: @dataset.box
+            boxServer: @dataset.boxServer
+            user: @dataset.user
+            tool: @dataset.tool
+            displayName: @dataset.displayName
+            views: @dataset.views
+            boxJSON: @dataset.boxJSON
+            createdDate: @dataset.createdDate
+            creatorShortName: @dataset.creatorShortName
+            creatorDisplayName: @dataset.creatorDisplayName
 
-        published = @publishStub.calledWith @dataset.box, channel, message
-        published.should.be.true
+        # Get the last call
+        call = @publishStub.getCall @publishStub.callCount - 1
+
+        expected = [@dataset.box, channel, expectedMessage]
+        got = [call.args[0], call.args[1], JSON.parse(call.args[2])]
+
+        correct = _.isEqual got, expected
+        correct.should.be.true
 
     context 'with an unknown type', ->
       before ->

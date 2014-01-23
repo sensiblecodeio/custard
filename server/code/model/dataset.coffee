@@ -64,6 +64,18 @@ class Dataset extends ModelBase
     @save (err) =>
       boxes = _.map @views, (v) -> v.box
       message = JSON.stringify
+        origin:
+          box: @box
+          boxServer: @boxServer
+          user: @user
+          tool: @tool
+          displayName: @displayName
+          status: @status
+          views: @views
+          boxJSON: @boxJSON
+          createdDate: @createdDate
+          creatorShortName: @creatorShortName
+          creatorDisplayName: @creatorDisplayName
         boxes: boxes
         type: @status.type
         message: @status.message

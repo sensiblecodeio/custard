@@ -219,6 +219,18 @@ describe 'Server model: Dataset', ->
           boxes: ['foo', 'bar']
           type: 'ok'
           message: 'I scrapped some page :D'
+          origin:
+            box: @dataset.box
+            boxServer: @dataset.boxServer
+            user: @dataset.user
+            tool: @dataset.tool
+            displayName: @dataset.displayName
+            status: @dataset.status
+            views: @dataset.views
+            boxJSON: @dataset.boxJSON
+            createdDate: @dataset.createdDate
+            creatorShortName: @dataset.creatorShortName
+            creatorDisplayName: @dataset.creatorDisplayName
 
         published = @publishStub.calledWith @dataset.box, channel, message
         published.should.be.true

@@ -16,7 +16,9 @@ redis-server &
 
 echo Starting mongo.
 mkdir -p /data/db
-mongod &
+# Disable the journal, preallocation and syncing,
+# since the whole database is discardable.
+mongod --quiet --noprealloc --nojournal --syncdelay=0 &
 
 waitfor() {
 	while ! nc -z localhost $1;

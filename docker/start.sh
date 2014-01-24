@@ -39,6 +39,8 @@ waitfor 27017 mongod
 # echo FILES = $(lsof | wc -l)
 
 echo "Starting mocha..."
+# don't bother running cleaner since we have a clean db.
+export CU_TEST_NOCLEAN=1
 mocha test/unit
 export S=$?
 

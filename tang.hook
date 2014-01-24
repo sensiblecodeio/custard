@@ -4,4 +4,5 @@ echo "Hello, world"
 
 cd docker
 
-./run.sh
+time ./run.sh
+

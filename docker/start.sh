@@ -16,7 +16,9 @@ redis-server &
 
 echo Starting mongo.
 mkdir -p /data/db
-mongod &
+# Disable the journal, preallocation and syncing,
+# since the whole database is discardable.
+mongod --quiet --noprealloc --nojournal --syncdelay=0 &
 
 waitfor() {
 	while ! nc -z localhost $1;
@@ -37,6 +39,8 @@ waitfor 27017 mongod
 # echo FILES = $(lsof | wc -l)
 
 echo "Starting mocha..."
+# don't bother running cleaner since we have a clean db.
+export CU_TEST_NOCLEAN=1
 mocha test/unit
 export S=$?
 

@@ -39,7 +39,7 @@ fi
 
 NAME=tang-run-${TANG_SHA}
 
-time docker -D run $ENVS \
+time docker -D run -t $ENVS \
     -name $NAME \
     -w /opt/custard \
     -volumes-from custard-data \

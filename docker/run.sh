@@ -18,24 +18,31 @@ export CU_SENDGRID_PASS=foo@example.com
 export CU_MAILCHIMP_API_KEY=foo
 export CU_MAILCHIMP_LIST_ID=foo
 
+# When using this variable, don't write "$ENVS", write $ENVS.
+# Word splitting is intentional.
 ENVS="$(env | grep CU_ | sed 's/^/-e /')"
-
-# Don't quote $ENVS.
-cd ..
 
 if ! docker inspect custard-data &> /dev/null
 then
+
   echo "custard-data doesn't exist, populating it"
+
+  cp ../package.json ./custard-data-image/package.json
+  sed -i '/cake build/d' ./custard-data-image/package.json
+
+  docker build -t custard-data-image custard-data-image
+
   docker run \
       -name custard-data \
       -w /data \
-      -v /opt/sw$PWD:/data/custard \
       -v /data/node_modules \
-      custard \
-      /data/custard/docker/populate-node-modules.sh
+      custard-data-image \
+      npm install --unsafe-perm
 else
   echo "Reusing existing custard-data"
 fi
+
+cd ..
 
 NAME=tang-run-${TANG_SHA}
 

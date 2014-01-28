@@ -44,6 +44,14 @@ fi
 
 cd ..
 
+echo LS:
+ls -l /tang/repo/
+echo PWD:
+pwd
+echo LS PWD:
+ls -l $PWD
+
+
 NAME=tang-run-${TANG_SHA}
 
 time docker -D run -t $ENVS \

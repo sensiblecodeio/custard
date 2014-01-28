@@ -54,11 +54,13 @@ ls -l $PWD
 
 NAME=tang-run-${TANG_SHA}
 
+# Note: This will all change when we do DIND
+# (docker in docker). Note that the volume mounts only work for DOD.
 time docker -D run -t $ENVS \
     -name $NAME \
     -w /opt/custard \
     -volumes-from custard-data \
-    -v /opt/sw$PWD:/opt/custard \
+    -v /var/lib$PWD:/opt/custard \
     custard \
     docker/start.sh
 

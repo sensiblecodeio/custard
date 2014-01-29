@@ -172,6 +172,7 @@ class exports.User extends ModelBase
 
   # Add and email the user
   @add: (opts, callback) ->
+    console.log "User.add"
     recurlyRand = String(Math.random()).replace('0.', '')
     newUser =
       shortName: opts.newUser.shortName

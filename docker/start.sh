@@ -5,7 +5,7 @@ set -e
 cd /opt/custard
 
 date "+%H:%M:%S.%N"
-cp -R /data/custard/node_modules .
+cp -R /data/node_modules .
 date "+%H:%M:%S.%N"
 
 npm install --unsafe-perm
@@ -15,10 +15,9 @@ echo Starting redis.
 redis-server &
 
 echo Starting mongo.
-mkdir -p /data/db
 # Disable the journal, preallocation and syncing,
 # since the whole database is discardable.
-mongod --quiet --noprealloc --nojournal --syncdelay=0 &
+mongod --dbpath /db --quiet --noprealloc --nojournal --syncdelay=0 &
 
 waitfor() {
 	while ! nc -z localhost $1;

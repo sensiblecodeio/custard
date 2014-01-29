@@ -51,7 +51,6 @@ pwd
 echo LS PWD:
 ls -l $PWD
 
-
 NAME=tang-run-${TANG_SHA}
 
 # Note: This will all change when we do DIND
@@ -61,6 +60,7 @@ time docker -D run -t $ENVS \
     -w /opt/custard \
     -volumes-from custard-data \
     -v /var/lib$PWD:/opt/custard \
+    -v /db:/db \
     custard \
     docker/start.sh
 

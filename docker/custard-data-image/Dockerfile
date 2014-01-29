@@ -1,5 +1,5 @@
-from custard
+FROM custard
 
-add package.json /data/package.json
+ADD package.json /data/package.json
 
-volume "/data/node_modules"
+VOLUME /data/node_modules

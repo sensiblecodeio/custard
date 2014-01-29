@@ -191,6 +191,7 @@ class exports.User extends ModelBase
 
     if opts.newUser?.emailMarketing
       try
+        console.log "mailchimp.MailChimpAPI =", mailchimp.MailChimpAPI
         api = new mailchimp.MailChimpAPI process.env.CU_MAILCHIMP_API_KEY,
           version: '1.3'
           secure: false

@@ -14,7 +14,7 @@ ModelBase = require 'model/base'
 {Plan} = require 'model/plan'
 {Subscription} = require 'model/subscription'
 
-{signUpEmail} = require 'lib/email'
+email = require 'lib/email'
 
 userSchema = new mongoose.Schema
   shortName: {type: String, unique: true}
@@ -268,7 +268,7 @@ class exports.User extends ModelBase
                 else
                   callback null, userobj
               else
-                signUpEmail user, token, (err) ->
+                email.signUpEmail user, token, (err) ->
                   if err?
                     err.action = "email"
                     callback err, null

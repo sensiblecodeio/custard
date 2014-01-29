@@ -37,13 +37,18 @@ waitfor 27017 mongod
 # sleep 20
 # echo FILES = $(lsof | wc -l)
 
+
 echo "Starting mocha..."
-# don't bother running cleaner since we have a clean db.
-export CU_TEST_NOCLEAN=1
+set +e
 mocha test/unit
-export S=$?
+S=$?
+set -e
 
 # TODO(pwaller/drj): Integration tests.
+
+# Kill mongo and redis
+kill $(jobs -p)
+wait
 
 echo mocha exit status: $S
 exit $S

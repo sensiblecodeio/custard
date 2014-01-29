@@ -9,7 +9,7 @@ set -u
 docker build -t custard .
 
 # source ../../swops-secret/keys.sh
-export CU_DB=mongodb://localhost:27017/testdb
+export CU_DB=mongodb://localhost:27017/cu-test
 export CU_SESSION_SECRET=foo
 export CU_TOOLS_DIR=/var/tmp/tools
 # export CU_BOX_SERVER= # defaults to value from DB.

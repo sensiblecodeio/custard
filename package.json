@@ -43,7 +43,7 @@
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",
     "start": ". ./activate && cake dev",
-    "test": "bash -c '. ./activate && mocha test/unit'"
+    "test": "bash -c '. ./activate && { redis-server ; mocha test/unit ; }'"
   },
   "devDependencies": {
     "mocha": "1.9.0",

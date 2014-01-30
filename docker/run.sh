@@ -9,7 +9,8 @@ set -u
 docker build -t custard .
 
 # source ../../swops-secret/keys.sh
-export CU_DB=mongodb://localhost:27017/testdb
+export CU_DB=mongodb://localhost:27017/cu-test
+export CU_BOX_SERVER=scraperiwiki.example.com
 export CU_SESSION_SECRET=foo
 export CU_TOOLS_DIR=/var/tmp/tools
 # export CU_BOX_SERVER= # defaults to value from DB.
@@ -18,32 +19,49 @@ export CU_SENDGRID_PASS=foo@example.com
 export CU_MAILCHIMP_API_KEY=foo
 export CU_MAILCHIMP_LIST_ID=foo
 
+# When using this variable, don't write "$ENVS", write $ENVS.
+# Word splitting is intentional.
 ENVS="$(env | grep CU_ | sed 's/^/-e /')"
-
-# Don't quote $ENVS.
-cd ..
 
 if ! docker inspect custard-data &> /dev/null
 then
+
   echo "custard-data doesn't exist, populating it"
+
+  cp ../package.json ./custard-data-image/package.json
+  sed -i '/cake build/d' ./custard-data-image/package.json
+
+  docker build -t custard-data-image custard-data-image
+
   docker run \
       -name custard-data \
       -w /data \
-      -v /opt/sw$PWD:/data/custard \
       -v /data/node_modules \
-      custard \
-      /data/custard/docker/populate-node-modules.sh
+      custard-data-image \
+      npm install --unsafe-perm
 else
   echo "Reusing existing custard-data"
 fi
 
+cd ..
+
+echo LS:
+ls -l /tang/repo/
+echo PWD:
+pwd
+echo LS PWD:
+ls -l $PWD
+
 NAME=tang-run-${TANG_SHA}
 
+# Note: This will all change when we do DIND
+# (docker in docker). Note that the volume mounts only work for DOD.
 time docker -D run -t $ENVS \
     -name $NAME \
     -w /opt/custard \
     -volumes-from custard-data \
-    -v /opt/sw$PWD:/opt/custard \
+    -v /var/lib$PWD:/opt/custard \
+    -v /db:/db \
     custard \
     docker/start.sh
 

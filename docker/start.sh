@@ -5,7 +5,7 @@ set -e
 cd /opt/custard
 
 date "+%H:%M:%S.%N"
-cp -R /data/custard/node_modules .
+cp -R /data/node_modules .
 date "+%H:%M:%S.%N"
 
 npm install --unsafe-perm
@@ -15,10 +15,9 @@ echo Starting redis.
 redis-server &
 
 echo Starting mongo.
-mkdir -p /data/db
 # Disable the journal, preallocation and syncing,
 # since the whole database is discardable.
-mongod --quiet --noprealloc --nojournal --syncdelay=0 &
+mongod --dbpath /db --quiet --noprealloc --nojournal --syncdelay=0 &
 
 waitfor() {
 	while ! nc -z localhost $1;
@@ -38,13 +37,18 @@ waitfor 27017 mongod
 # sleep 20
 # echo FILES = $(lsof | wc -l)
 
+
 echo "Starting mocha..."
-# don't bother running cleaner since we have a clean db.
-export CU_TEST_NOCLEAN=1
+set +e
 mocha test/unit
-export S=$?
+S=$?
+set -e
 
 # TODO(pwaller/drj): Integration tests.
+
+# Kill mongo and redis
+kill $(jobs -p)
+wait
 
 echo mocha exit status: $S
 exit $S

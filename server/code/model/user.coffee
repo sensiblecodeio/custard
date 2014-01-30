@@ -14,7 +14,7 @@ ModelBase = require 'model/base'
 {Plan} = require 'model/plan'
 {Subscription} = require 'model/subscription'
 
-{signUpEmail} = require 'lib/email'
+email = require 'lib/email'
 
 userSchema = new mongoose.Schema
   shortName: {type: String, unique: true}
@@ -172,6 +172,7 @@ class exports.User extends ModelBase
 
   # Add and email the user
   @add: (opts, callback) ->
+    console.log "User.add"
     recurlyRand = String(Math.random()).replace('0.', '')
     newUser =
       shortName: opts.newUser.shortName
@@ -191,6 +192,7 @@ class exports.User extends ModelBase
 
     if opts.newUser?.emailMarketing
       try
+        console.log "mailchimp.MailChimpAPI =", mailchimp.MailChimpAPI
         api = new mailchimp.MailChimpAPI process.env.CU_MAILCHIMP_API_KEY,
           version: '1.3'
           secure: false
@@ -266,7 +268,7 @@ class exports.User extends ModelBase
                 else
                   callback null, userobj
               else
-                signUpEmail user, token, (err) ->
+                email.signUpEmail user, token, (err) ->
                   if err?
                     err.action = "email"
                     callback err, null

@@ -12,6 +12,3 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y netcat lsof
 
 RUN mkdir /opt/custard
-RUN mkdir -p /data/custard/node_modules
-
-VOLUME ["/data/custard"]

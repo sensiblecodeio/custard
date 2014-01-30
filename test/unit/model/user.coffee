@@ -10,6 +10,8 @@ mailchimp = require 'mailchimp'
 {Box} = require 'model/box'
 {Plan} = require 'model/plan'
 
+email = require 'lib/email'
+
 describe 'User (client)', ->
   helper = require '../helper'
   helper.evalConcatenatedFile 'client/code/model/user.coffee'
@@ -222,6 +224,10 @@ describe 'User (server)', ->
         @apiStub = listSubscribe: sinon.stub()
         @mailChimpStub = sinon.stub mailchimp, 'MailChimpAPI', =>
           return @apiStub
+
+        @emailStub = sinon.stub email, 'signUpEmail'
+        @emailStub.callsArg 2
+
         User.add
           newUser:
             shortName: 'testerson'
@@ -252,8 +258,7 @@ describe 'User (server)', ->
       # TODO: stub database
       xit 'saves the user to the database'
 
-      # TODO: stub nodemailer
-      xit 'emails the user', ->
+      it 'emails the user', ->
         @emailStub.calledOnce.should.be.true
 
     context 'when add is called (with newsletter opt-in)', ->

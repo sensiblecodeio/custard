@@ -6,6 +6,19 @@ OLD_PS1=$PS1
 OLD_NODE_PATH=$NODE_PATH
 PATH=$(pwd)/node_modules/.bin:$(pwd)/bin:$PATH
 
+# The default values for these environment variables below are:
+#   a) not secret; and,
+#   b) supposed to work with local demons (mongo and redis)
+# source ../../swops-secret/keys.sh
+export CU_DB=mongodb://localhost:27017/cu-test
+export CU_BOX_SERVER=scraperwiki.example.com
+export CU_SESSION_SECRET=foo
+export CU_TOOLS_DIR=/var/tmp/tools
+export CU_SENDGRID_USER=foo@example.com
+export CU_SENDGRID_PASS=foo@example.com
+export CU_MAILCHIMP_API_KEY=foo
+export CU_MAILCHIMP_LIST_ID=foo
+
 # Fiddling with NODE_PATH appears not to be necessary.  (node
 # picks up modules from ./node_modules, but maybe that's only
 # because i'm using nvm)

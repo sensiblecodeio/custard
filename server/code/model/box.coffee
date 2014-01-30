@@ -89,6 +89,7 @@ class Box extends ModelBase
     unless @uid?
       @uid = Box.generateUid()
     super (err) =>
+      console.log "err: ", @uid, err?.code, err
       if err? and err.code is 11000
         if @duplicateErrorCount <3
           @uid = Box.generateUid()

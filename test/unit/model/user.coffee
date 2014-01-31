@@ -106,7 +106,36 @@ describe 'User (server)', ->
         @err.should.include {statusCode: 403}
         @err.should.include {error: "User has no password"}
 
-    context "when trying to set a password", ->
+    context "when requesting a password reset email (with correct shortName)", ->
+      before (done) ->
+        @emailStub = sinon.stub email, 'passwordResetEmail'
+        @emailStub.callsArg 2
+
+        User.sendPasswordReset 'ickletest', (err) =>
+          @err = err
+          done()
+
+      it 'no errors are returned', ->
+        should.not.exist @err
+
+      it 'it emails the user', ->
+        @emailStub.callCount.should.equal 1
+
+    context "when requesting a password reset email (with incorrect shortName)", ->
+      before (done) =>
+        User.sendPasswordReset 'i-do-not-exist', (err) =>
+          @err = err
+          done()
+
+      it 'an error with a 404 statusCode is returned', ->
+        should.exist @err
+        @err.statusCode.should.equal 404
+
+      it 'it does not email the user', ->
+        # callCount should still be 1 (no second email has been sent)
+        @emailStub.callCount.should.equal 1
+
+    context "when trying to save a new password", ->
       before (done) ->
         @newPassword = String(Math.random()*Math.pow(2,32))
         User.findByShortName 'ickletest', (err, user) =>

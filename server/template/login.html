@@ -28,7 +28,7 @@
             <input type="text" id="username" name="username"/>
           </p>
           <p>
-            <label for="password">Password: <span class="pull-right muted" id="forgotten-password">Forgotten?</span></label>
+            <label for="password">Password: <a class="pull-right muted" id="forgotten-password" href="/set-password/">Forgotten?</a></label>
             <input type="password" id="password" name="password"/>
           </p>
           <p>
@@ -57,15 +57,6 @@
       $('#content form').on('submit', function(){
           $('#login').addClass('loading').html('Logging In&hellip;')
       })
-      $('#forgotten-password').popover({
-        title: "No problem!",
-        content: 'Email us for a reset link: <a href="mailto:feedback@scraperwiki.com">feedback@scraperwiki.com</a>',
-        html: true,
-        placement: 'bottom'
-      }).on('click', function(e){
-        e.preventDefault()
-        e.stopPropagation()
-      }).css('cursor', 'pointer')
     </script>
 
 <% include base_footer.html %>

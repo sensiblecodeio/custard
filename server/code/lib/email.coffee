@@ -35,3 +35,22 @@ exports.signUpEmail = (user, token, callback) ->
     """
 
   sendGridEmail mailOptions, callback
+
+
+exports.passwordResetEmail = (user, token, callback) ->
+  mailOptions =
+    from: 'hello@scraperwiki.com'
+    to: user.email[0]
+    subject: "Reset your ScraperWiki password"
+    text: """
+    Hi #{user.displayName},
+
+    To reset your ScraperWiki password, please go to:
+      https://scraperwiki.com/set-password/#{token}
+
+    Thanks,
+
+    ScraperWiki
+    """
+
+  sendGridEmail mailOptions, callback

@@ -44,6 +44,9 @@ PageTitles =
   'set-password':
     heading: 'Set your password'
     title: 'Set password | ScraperWiki'
+  'reset-password':
+    heading: 'Request a password reset link'
+    title: 'Reset password | ScraperWiki'
   'create-profile':
     heading: 'Create Profile'
     title: 'Create Profile | ScraperWiki'

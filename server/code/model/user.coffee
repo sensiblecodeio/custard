@@ -170,6 +170,30 @@ class exports.User extends ModelBase
       else
         callback null, null
 
+  @sendPasswordReset: (shortName, callback) ->
+    console.log 'find user by shortname'
+    User.findByShortName shortName, (err, user) ->
+      if not user?
+        console.log 'no user found:', shortName
+        callback statusCode: 404
+      else
+        console.log 'user found:', shortName
+        console.log 'find token by shortName', user.shortName
+        Token.findByShortName user.shortName, (err, token) ->
+          if err?
+            console.log 'error finding token'
+            callback statusCode: 500
+          else
+            console.log 'token found:', token
+            console.log 'send password reset email'
+            email.passwordResetEmail user, token, (err) ->
+              if err?
+                console.log 'password reset email failed'
+                callback statusCode: 500
+              else
+                console.log 'password reset email sent'
+                callback()
+
   # Add and email the user
   @add: (opts, callback) ->
     console.log "User.add"

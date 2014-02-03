@@ -21,14 +21,6 @@ describe 'Password reset', ->
       it 'it gives me a link to click if I have forgotten my username', (done) ->
         browser.waitForElementByCss '#forgotten-shortname', 4000, done
 
-      context 'when I enter an incorrect username', ->
-        before (done) ->
-          wd40.fill '#shortname', 'i-do-not-exist', ->
-            wd40.click '#go', done
-
-        it 'it shows me that the username was wrong', (done) ->
-          wd40.waitForText 'That username could not be found', done
-
       context 'when I enter a correct username', ->
         before (done) ->
           browser.get "#{base_url}/set-password/", ->
@@ -40,6 +32,38 @@ describe 'Password reset', ->
 
         it 'it tells me to check my emails', (done) ->
           wd40.waitForText 'check your email', done
+
+      context 'when I enter a correct email address', ->
+        before (done) ->
+          browser.get "#{base_url}/set-password/", ->
+            browser.waitForElementByCss '#shortname', 4000, done
+
+        before (done) ->
+          wd40.fill '#shortname', 'testersonltd@example.com', ->
+            wd40.click '#go', done
+
+        it 'it tells me to check my emails', (done) ->
+          wd40.waitForText 'check your email', done
+
+      context 'when I enter an email address associated with two accounts', ->
+        before (done) ->
+          browser.get "#{base_url}/set-password/", ->
+            browser.waitForElementByCss '#shortname', 4000, done
+
+        before (done) ->
+          wd40.fill '#shortname', 'test@example.com', ->
+            wd40.click '#go', done
+
+        it 'it tells me to check my emails', (done) ->
+          wd40.waitForText 'check your email', done
+
+      context 'when I enter an incorrect username', ->
+        before (done) ->
+          wd40.fill '#shortname', 'i-do-not-exist', ->
+            wd40.click '#go', done
+
+        it 'it shows me that the username was wrong', (done) ->
+          wd40.waitForText 'That username could not be found', done
 
       context 'when I cause some sort of weird error', ->
         before (done) ->

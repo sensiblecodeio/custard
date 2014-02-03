@@ -380,13 +380,24 @@ getToken = (req, resp) ->
       return resp.send 404, { error: 'Specified token could not be found' }
 
 sendPasswordReset = (req, resp) ->
-  User.sendPasswordReset { shortName: req.body.shortName }, (err) ->
+  # Decide if the query is an email address or a shortName
+  console.log "sendPasswordReset", req
+  console.log "sendPasswordReset", req.body
+  query = req.body.query
+  if query and '@' in query
+    criteria =
+      email: query
+  else
+    criteria =
+      shortName: query
+  console.log "API criteria", criteria
+  User.sendPasswordReset criteria, (err) ->
     if err == 'user not found'
       return resp.send 404, error: 'That username could not be found'
     else if err?
       return resp.send 500, error: "Something went wrong: #{err}"
     else
-      return resp.send 200, success: "A password reset link has been emailed to #{req.body.shortName}"
+      return resp.send 200, success: "A password reset link has been emailed to #{query}"
 
 setPassword = (req, resp) ->
   Token.find req.params.token, (err, token) ->

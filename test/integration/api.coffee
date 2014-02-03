@@ -69,14 +69,15 @@ describe 'API', ->
             displayName: 'Tabatha Testerson'
 
     describe 'I can request a password reset email', ->
-      context 'POST /api/user/set-password/', ->
+      context 'POST /api/user/reset-password/', ->
         before (done) ->
           request.post
             uri: "#{serverURL}/api/user/reset-password"
             form:
-              shortName: 'ickletest'
+              query: 'ickletest'
           , (err, res, body) =>
             @response = res
+            console.log "reset-password", body
             @body = parseJSON body
             done()
 
@@ -94,7 +95,7 @@ describe 'API', ->
           request.post
             uri: "#{serverURL}/api/user/reset-password"
             form:
-              shortName: 'i-do-not-exist'
+              query: 'i-do-not-exist'
           , (err, res, body) =>
             @response = res
             @body = parseJSON body

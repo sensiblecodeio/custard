@@ -39,25 +39,51 @@ exports.signUpEmail = (user, token, callback) ->
   sendGridEmail mailOptions, callback
 
 
-exports.passwordResetEmail = (user, token, callback) ->
-  # `user` should be a user object
-  # `token` should be a string
-  mailOptions =
-    from: 'hello@scraperwiki.com'
-    to: user.email[0]
-    subject: "Reset your ScraperWiki password"
-    text: """
-    Hi #{user.displayName},
+exports.passwordResetEmail = (userList, callback) ->
+  # `userList` should be a list of user objects, with a .token property added.
+  if userList.length == 1
+    mailOptions =
+      from: 'hello@scraperwiki.com'
+      to: userList[0].email[0]
+      subject: "Reset your ScraperWiki password"
+      text: """
+      Hi #{userList[0].displayName},
 
-    Someone has requested a password reset for
-    your ScraperWiki account.
+      Someone has requested a password reset for
+      your ScraperWiki account.
 
-    If this was you, please reset your password here:
-      https://scraperwiki.com/set-password/#{token}
+      If this was you, please reset your password here:
+        https://scraperwiki.com/set-password/#{userList[0].token}
 
-    Thanks,
+      Thanks,
 
-    ScraperWiki
-    """
+      ScraperWiki
+      """
+  else
+    urlList = []
+    for user in userList
+      urlList.push("""
+                   Username: #{user.shortName}
+                   Reset link: https://scraperwiki.com/set-password/#{user.token}
+                   """)
+    urlList = urlList.join "\n"
+    mailOptions =
+      from: 'hello@scraperwiki.com'
+      to: userList[0].email[0]
+      subject: "Reset your ScraperWiki password"
+      text: """
+      Hi #{userList[0].displayName},
+
+      Someone has requested a password reset for
+      your ScraperWiki accounts.
+
+      If this was you, please reset your password here:
+
+      #{urlList}
+
+      Thanks,
+
+      ScraperWiki
+      """
 
   sendGridEmail mailOptions, callback

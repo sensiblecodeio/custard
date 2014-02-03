@@ -109,17 +109,19 @@ describe 'User (server)', ->
     context "when requesting a password reset email (with correct shortName)", ->
       before (done) ->
         @emailStub = sinon.stub email, 'passwordResetEmail'
-        @emailStub.callsArg 2
+        @emailStub.callsArg 1
 
         User.sendPasswordReset { shortName: 'ickletest' }, (err) =>
           @err = err
           done()
 
       it 'email.passwordResetEmail is called with a user object and a token string', ->
-        @emailStub.lastCall.args[0].should.have.properties
+        arg = @emailStub.lastCall.args[0]
+        arg.should.have.length 1
+        arg[0].should.have.properties
           shortName: 'ickletest'
           displayName: 'Ickle Test'
-        @emailStub.lastCall.args[1].should.equal '339231725782156'
+          token: '339231725782156'
 
       it 'no errors are returned', ->
         should.not.exist @err

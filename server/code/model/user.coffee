@@ -173,16 +173,41 @@ class exports.User extends ModelBase
   @sendPasswordReset: (criteria, callback) ->
     # `criteria` should be an object with either a `shortName` or `email` key.
     # `callback` is called when the mail has been sent: It will be
-    # passed a single `err` argument if something goes wrong
-    User.findByShortName criteria.shortName, (err, user) ->
-      if not user?
+    # passed a single `err` argument if something goes wrong.
+
+    # Decide if we are fishing by shortName or fishing by email.
+    # In either case fishForUser will pass an error and a list to its
+    # callback.
+    if criteria.shortName
+      fishForUser = (cb) ->
+        User.findByShortName criteria.shortName, (err, user) ->
+          console.log "findByShortName", err, user
+          if user
+            cb err, [user]
+          else
+            cb err, []
+    else
+      fishForUser = (cb) ->
+        User.findByEmail criteria.email, cb
+        
+    # Add a .token property to each user object.
+    getToken = (user, cb) ->
+      Token.findByShortName user.shortName, (err, token) ->
+        # TODO(drj,zarino) should we just create a token here?
+        if not err
+          user.token = token.token
+        cb null, user
+
+    fishForUser (err, userList) ->
+      if userList.length == 0
         callback 'user not found'
       else
-        Token.findByShortName user.shortName, (err, token) ->
-          if err?
+        async.map userList, getToken, (err, augmentedUserList) ->
+          filteredUserList = _.filter augmentedUserList, (it) -> 'token' of it
+          if filteredUserList.length == 0
             callback 'token not found'
           else
-            email.passwordResetEmail user, token.token, (err) ->
+            email.passwordResetEmail filteredUserList, (err) ->
               if err?
                 callback 'email not sent'
               else

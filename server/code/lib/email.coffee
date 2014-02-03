@@ -45,7 +45,10 @@ exports.passwordResetEmail = (user, token, callback) ->
     text: """
     Hi #{user.displayName},
 
-    To reset your ScraperWiki password, please go to:
+    Someone has requested a password reset for
+    your ScraperWiki account.
+
+    If this was you, please reset your password here:
       https://scraperwiki.com/set-password/#{token}
 
     Thanks,

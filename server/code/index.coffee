@@ -380,7 +380,7 @@ getToken = (req, resp) ->
       return resp.send 404, { error: 'Specified token could not be found' }
 
 sendPasswordReset = (req, resp) ->
-  User.sendPasswordReset req.params.user, (err) ->
+  User.sendPasswordReset req.body.shortName, (err) ->
     if err == 'user not found'
       return resp.send 404, error: 'That username could not be found'
     else if err?
@@ -536,8 +536,7 @@ app.post "/login", login
 app.get '/api/token/:token/?', getToken
 app.post '/api/token/:token/?', setPassword
 
-app.post '/api/:user/reset-password/?', sendPasswordReset
-
+app.post '/api/user/reset-password/?', sendPasswordReset
 app.post '/api/user/?', addUser
 
 # :todo: Add IP address check (at the moment, anyone running an identd

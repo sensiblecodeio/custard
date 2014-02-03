@@ -27,8 +27,10 @@ class Cu.View.ResetPassword extends Backbone.View
     else
       $('#go').attr('disabled', true).addClass('loading')
       $.ajax
-        url: "#{location.protocol}//#{location.host}/api/#{shortName}/reset-password/"
+        url: "#{location.protocol}//#{location.host}/api/user/reset-password/"
         type: 'POST'
+        data:
+          shortName: shortName
         dataType: 'json'
         success: (data) =>
           $('form', @$el).prepend """<div class="alert alert-success"><strong>Password reset link sent.</strong> Please check your emails.</a></div>"""

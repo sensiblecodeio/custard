@@ -170,6 +170,18 @@ class exports.User extends ModelBase
       else
         callback null, null
 
+  @findByEmail: (email, callback) ->
+    # Beware: Unlike shortNames, email addresses are not unique in ScraperWiki.
+    # Therefore, this function returns a list of matching user objects.
+    @dbClass.find {email: email}, (err, users) =>
+      if err?
+        console.warn err
+        callback err, null
+      if users?
+        callback null, (@makeModelFromMongo user for user in users)
+      else
+        callback null, null
+
   @sendPasswordReset: (criteria, callback) ->
     # `criteria` should be an object with either a `shortName` or `email` key.
     # `callback` is called when the mail has been sent: It will be
@@ -181,7 +193,6 @@ class exports.User extends ModelBase
     if criteria.shortName
       fishForUser = (cb) ->
         User.findByShortName criteria.shortName, (err, user) ->
-          console.log "findByShortName", err, user
           if user
             cb err, [user]
           else
@@ -189,7 +200,7 @@ class exports.User extends ModelBase
     else
       fishForUser = (cb) ->
         User.findByEmail criteria.email, cb
-        
+
     # Add a .token property to each user object.
     getToken = (user, cb) ->
       Token.findByShortName user.shortName, (err, token) ->

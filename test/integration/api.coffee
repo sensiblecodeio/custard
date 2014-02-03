@@ -115,7 +115,7 @@ describe 'API', ->
           request.post
             uri: "#{serverURL}/api/user/reset-password"
             form:
-              shortName: 'ehg'
+              query: 'ehg'
           , (err, res, body) =>
             @response = res
             @body = parseJSON body

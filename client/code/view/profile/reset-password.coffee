@@ -19,10 +19,10 @@ class Cu.View.ResetPassword extends Backbone.View
 
   sendResetEmail: (e) ->
     e.preventDefault()
-    shortName = $('#shortname').val()
+    query = $('#query').val()
     @$el.find('.alert').remove()
     @$el.find('.control-group').removeClass('error')
-    if shortName == ''
+    if query == ''
       @$el.find('.control-group').addClass('error').children('label').text('You must supply a username:').next().focus()
     else
       $('#go').attr('disabled', true).addClass('loading')
@@ -30,7 +30,7 @@ class Cu.View.ResetPassword extends Backbone.View
         url: "#{location.protocol}//#{location.host}/api/user/reset-password/"
         type: 'POST'
         data:
-          shortName: shortName
+          query: query
         dataType: 'json'
         success: (data) =>
           $('form', @$el).prepend """<div class="alert alert-success"><strong>Password reset link sent.</strong> Please check your emails.</a></div>"""

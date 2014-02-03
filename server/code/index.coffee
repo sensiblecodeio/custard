@@ -381,7 +381,6 @@ getToken = (req, resp) ->
 
 sendPasswordReset = (req, resp) ->
   # Decide if the query is an email address or a shortName
-  console.log "sendPasswordReset", req
   console.log "sendPasswordReset", req.body
   query = req.body.query
   if query and '@' in query

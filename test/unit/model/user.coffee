@@ -143,6 +143,18 @@ describe 'User (server)', ->
         # callCount should still be 1 (no second email has been sent)
         @emailStub.callCount.should.equal 1
 
+    context "when requesting a password reset email (with an email address shared by two profiles)", ->
+      before (done) ->
+        User.sendPasswordReset { email: 'ickletest@example.org' }, (err) =>
+          @err = err
+          done()
+
+      it 'no errors are returned', ->
+        should.not.exist @err
+
+      it 'it emails the user', ->
+        @emailStub.callCount.should.equal 2
+
     context "when trying to save a new password", ->
       before (done) ->
         @newPassword = String(Math.random()*Math.pow(2,32))
@@ -157,14 +169,21 @@ describe 'User (server)', ->
             done()
 
   describe 'Finding', ->
-    it 'can find one by its shortname', (done) ->
-      # TODO: Stub actual DB calls?
+    it 'I can find one user by its shortname', (done) ->
       User.findByShortName 'ickletest', (err, user) ->
         should.exist user
         user.displayName.should.equal 'Ickle Test'
         done()
 
-    it "returns null when the user doesn't exist", (done) ->
+    it 'I can find mulitple users by their shared email address', (done) ->
+      User.findByEmail 'ickletest@example.org', (err, users) ->
+        should.exist users
+        users.should.have.a.length 2
+        users[0].should.have.a.property 'shortName'
+        users[1].should.have.a.property 'shortName'
+        done()
+
+    it "it returns null when the user doesn't exist", (done) ->
       User.findByShortName 'NONEXIST', (err, user) ->
         should.not.exist err
         should.not.exist user

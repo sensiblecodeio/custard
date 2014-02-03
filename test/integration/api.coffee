@@ -47,7 +47,7 @@ describe 'API', ->
     @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
   context "When I'm not logged in", ->
 
-    describe 'Sign up', ->
+    describe 'I can sign up', ->
       context 'POST /api/<username>', ->
         before (done) ->
           request.post
@@ -67,6 +67,61 @@ describe 'API', ->
           @body.should.include
             shortName: 'tabbytest'
             displayName: 'Tabatha Testerson'
+
+    describe 'I can request a password reset email', ->
+      context 'POST /api/<shortname>/set-password/', ->
+        before (done) ->
+          request.post
+            uri: "#{serverURL}/api/ickletest/reset-password"
+          , (err, res, body) =>
+            @response = res
+            @body = parseJSON body
+            done()
+
+        it 'returns a HTTP 200 status', ->
+          @response.statusCode.should.equal 200
+
+        it 'returns a JSON string with a success message', ->
+          @body.should.not.have.property 'error'
+          @body.should.have.property 'success'
+          @body.success.should.equal 'A password reset link has been emailed to ickletest'
+
+    describe 'I can’t request a password reset email for a user that doesn’t exist', ->
+      context 'POST /api/i-do-not-exist/set-password/', ->
+        before (done) ->
+          request.post
+            uri: "#{serverURL}/api/i-do-not-exist/reset-password"
+          , (err, res, body) =>
+            @response = res
+            @body = parseJSON body
+            done()
+
+        it 'returns a HTTP 404 status', ->
+          @response.statusCode.should.equal 404
+
+        it 'returns a JSON string with an error message', ->
+          @body.should.not.have.property 'success'
+          @body.should.have.property 'error'
+          @body.error.should.equal 'That username could not be found'
+
+    describe 'I get a sensible error message when a user doesn’t have a password token', ->
+      context 'POST /api/ehg/set-password/', ->
+        before (done) ->
+          request.post
+            uri: "#{serverURL}/api/ehg/reset-password"
+          , (err, res, body) =>
+            @response = res
+            @body = parseJSON body
+            done()
+
+        it 'returns a HTTP 500 status', ->
+          @response.statusCode.should.equal 500
+
+        it 'returns a JSON string with an error message', ->
+          @body.should.not.have.property 'success'
+          @body.should.have.property 'error'
+          @body.error.should.equal 'Something went wrong: token not found'
+
 
   context "When I have set my password", ->
     before (done) ->

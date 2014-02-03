@@ -122,14 +122,14 @@ describe 'User (server)', ->
         @emailStub.callCount.should.equal 1
 
     context "when requesting a password reset email (with incorrect shortName)", ->
-      before (done) =>
+      before (done) ->
         User.sendPasswordReset 'i-do-not-exist', (err) =>
           @err = err
           done()
 
-      it 'an error with a 404 statusCode is returned', ->
+      it 'an error is returned', ->
         should.exist @err
-        @err.statusCode.should.equal 404
+        @err.should.equal 'user not found'
 
       it 'it does not email the user', ->
         # callCount should still be 1 (no second email has been sent)

@@ -381,10 +381,10 @@ getToken = (req, resp) ->
 
 sendPasswordReset = (req, resp) ->
   User.sendPasswordReset req.params.user, (err) ->
-    if err?.statusCode == 404
+    if err == 'user not found'
       return resp.send 404, error: 'That username could not be found'
-    else if err?.statusCode == 500
-      return resp.send 500, error: 'Something went wrong'
+    else if err?
+      return resp.send 500, error: "Something went wrong: #{err}"
     else
       return resp.send 200, success: "A password reset link has been emailed to #{req.params.user}"
 

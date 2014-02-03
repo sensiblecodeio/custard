@@ -182,7 +182,7 @@ class exports.User extends ModelBase
           if err?
             callback 'token not found'
           else
-            email.passwordResetEmail user, token, (err) ->
+            email.passwordResetEmail user, token.token, (err) ->
               if err?
                 callback 'email not sent'
               else

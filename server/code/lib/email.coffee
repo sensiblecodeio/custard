@@ -19,6 +19,8 @@ sendGridEmail = (mailOptions, callback) ->
 
 
 exports.signUpEmail = (user, token, callback) ->
+  # `user` should be a user object
+  # `token` should be a string
   mailOptions =
     from: 'hello@scraperwiki.com'
     to: user.email[0]
@@ -38,6 +40,8 @@ exports.signUpEmail = (user, token, callback) ->
 
 
 exports.passwordResetEmail = (user, token, callback) ->
+  # `user` should be a user object
+  # `token` should be a string
   mailOptions =
     from: 'hello@scraperwiki.com'
     to: user.email[0]

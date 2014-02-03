@@ -115,6 +115,12 @@ describe 'User (server)', ->
           @err = err
           done()
 
+      it 'email.passwordResetEmail is called with a user object and a token string', ->
+        @emailStub.lastCall.args[0].should.have.properties
+          shortName: 'ickletest'
+          displayName: 'Ickle Test'
+        @emailStub.lastCall.args[1].should.equal '339231725782156'
+
       it 'no errors are returned', ->
         should.not.exist @err
 

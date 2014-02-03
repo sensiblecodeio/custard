@@ -24,3 +24,14 @@ class exports.Token extends ModelBase
         _.extend newToken, token.toObject()
         callback null, newToken
 
+
+  @findByShortName: (shortName, callback) ->
+    @dbClass.findOne {shortName: shortName}, (err, token) ->
+      if err?
+        callback err, null
+      else if not token?
+        callback 'Not found', null
+      else
+        newToken = new Token
+        _.extend newToken, token.toObject()
+        callback null, newToken

@@ -40,6 +40,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('dataset/([^/]+)/chooser/?'), 'datasetToolChooser'
     @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
     @route RegExp('create-profile/?'), 'createProfile'
+    @route RegExp('set-password/?'), 'resetPassword'
     @route RegExp('set-password/([^/]+)/?'), 'setPassword'
     @route RegExp('signup/([^/]+)/?'), 'signUp'
     @route RegExp('subscribe/([^/]+)/?'), 'subscribe'
@@ -256,6 +257,12 @@ class Cu.Router.Main extends Backbone.Router
     else
       subnavView = new Cu.View.Subnav PageTitles['404']
       contentView = new Cu.View.FourOhFour()
+    @appView.showView contentView
+    @subnavView.showView subnavView
+
+  resetPassword: ->
+    subnavView = new Cu.View.Subnav PageTitles['reset-password']
+    contentView = new Cu.View.ResetPassword()
     @appView.showView contentView
     @subnavView.showView subnavView
 

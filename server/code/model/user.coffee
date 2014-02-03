@@ -170,9 +170,26 @@ class exports.User extends ModelBase
       else
         callback null, null
 
+  @sendPasswordReset: (shortName, callback) ->
+    # takes a `shortName` to look up with, and
+    # a `callback` which is passed a single `err`
+    # argument if something goes wrong
+    User.findByShortName shortName, (err, user) ->
+      if not user?
+        callback 'user not found'
+      else
+        Token.findByShortName user.shortName, (err, token) ->
+          if err?
+            callback 'token not found'
+          else
+            email.passwordResetEmail user, token, (err) ->
+              if err?
+                callback 'email not sent'
+              else
+                callback null
+
   # Add and email the user
   @add: (opts, callback) ->
-    console.log "User.add"
     recurlyRand = String(Math.random()).replace('0.', '')
     newUser =
       shortName: opts.newUser.shortName
@@ -192,7 +209,6 @@ class exports.User extends ModelBase
 
     if opts.newUser?.emailMarketing
       try
-        console.log "mailchimp.MailChimpAPI =", mailchimp.MailChimpAPI
         api = new mailchimp.MailChimpAPI process.env.CU_MAILCHIMP_API_KEY,
           version: '1.3'
           secure: false

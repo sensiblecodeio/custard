@@ -379,6 +379,15 @@ getToken = (req, resp) ->
     else
       return resp.send 404, { error: 'Specified token could not be found' }
 
+sendPasswordReset = (req, resp) ->
+  User.sendPasswordReset req.params.user, (err) ->
+    if err == 'user not found'
+      return resp.send 404, error: 'That username could not be found'
+    else if err?
+      return resp.send 500, error: "Something went wrong: #{err}"
+    else
+      return resp.send 200, success: "A password reset link has been emailed to #{req.params.user}"
+
 setPassword = (req, resp) ->
   Token.find req.params.token, (err, token) ->
     if token?.shortName and req.body.password?
@@ -489,6 +498,7 @@ verifyRecurly = (req, resp) ->
 
 # Allow set-password, signup, docs, etc, to be visited by anons
 # Note: these are NOT regular expressions!!
+app.get '/set-password/?', renderClientApp
 app.get '/set-password/:token/?', renderClientApp
 app.get '/subscribe/?*', renderClientApp
 app.get '/thankyou/?*', renderClientApp
@@ -525,6 +535,8 @@ app.post "/login", login
 # TODO: :token should be in POST body
 app.get '/api/token/:token/?', getToken
 app.post '/api/token/:token/?', setPassword
+
+app.post '/api/:user/reset-password/?', sendPasswordReset
 
 app.post '/api/user/?', addUser
 

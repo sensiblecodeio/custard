@@ -32,8 +32,23 @@ describe 'Password reset', ->
             browser.waitForElementByCss '#shortname', 4000, done
 
         before (done) ->
-          wd40.fill '#shortname', 'ehg', ->
+          wd40.fill '#shortname', 'ickletest', ->
             wd40.click '#go', done
 
         it 'it tells me to check my emails', (done) ->
           wd40.waitForText 'check your email', done
+
+      context 'when I cause some sort of weird error', ->
+        before (done) ->
+          browser.get "#{base_url}/set-password/", ->
+            browser.waitForElementByCss '#shortname', 4000, done
+
+        before (done) ->
+          wd40.fill '#shortname', 'ehg', ->
+            wd40.click '#go', done
+
+        it 'it tells me something unexpected went wrong', (done) ->
+          wd40.waitForText 'Something went wrong', done
+
+        it 'it tells me to email hello@scraperwiki.com', (done) ->
+          wd40.waitForText 'hello@scraperwiki.com', done

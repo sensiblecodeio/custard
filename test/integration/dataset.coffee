@@ -213,6 +213,6 @@ describe 'Dataset', ->
 
     it 'shows a not found error', (done) ->
       wd40.getText '#error-alert', (err, text) ->
-        text.should.be.a 'string'
+        text.should.be.a.String
         text.should.not.be.empty
         done err

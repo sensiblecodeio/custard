@@ -170,11 +170,11 @@ class exports.User extends ModelBase
       else
         callback null, null
 
-  @sendPasswordReset: (shortName, callback) ->
-    # takes a `shortName` to look up with, and
-    # a `callback` which is passed a single `err`
-    # argument if something goes wrong
-    User.findByShortName shortName, (err, user) ->
+  @sendPasswordReset: (criteria, callback) ->
+    # `criteria` should be an object with either a `shortName` or `email` key.
+    # `callback` is called when the mail has been sent: It will be
+    # passed a single `err` argument if something goes wrong
+    User.findByShortName criteria.shortName, (err, user) ->
       if not user?
         callback 'user not found'
       else

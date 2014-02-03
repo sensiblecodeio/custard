@@ -380,13 +380,13 @@ getToken = (req, resp) ->
       return resp.send 404, { error: 'Specified token could not be found' }
 
 sendPasswordReset = (req, resp) ->
-  User.sendPasswordReset req.body.shortName, (err) ->
+  User.sendPasswordReset { shortName: req.body.shortName }, (err) ->
     if err == 'user not found'
       return resp.send 404, error: 'That username could not be found'
     else if err?
       return resp.send 500, error: "Something went wrong: #{err}"
     else
-      return resp.send 200, success: "A password reset link has been emailed to #{req.params.user}"
+      return resp.send 200, success: "A password reset link has been emailed to #{req.body.shortName}"
 
 setPassword = (req, resp) ->
   Token.find req.params.token, (err, token) ->

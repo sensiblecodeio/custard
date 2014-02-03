@@ -111,7 +111,7 @@ describe 'User (server)', ->
         @emailStub = sinon.stub email, 'passwordResetEmail'
         @emailStub.callsArg 2
 
-        User.sendPasswordReset 'ickletest', (err) =>
+        User.sendPasswordReset { shortName: 'ickletest' }, (err) =>
           @err = err
           done()
 
@@ -129,7 +129,7 @@ describe 'User (server)', ->
 
     context "when requesting a password reset email (with incorrect shortName)", ->
       before (done) ->
-        User.sendPasswordReset 'i-do-not-exist', (err) =>
+        User.sendPasswordReset { shortName: 'i-do-not-exist' }, (err) =>
           @err = err
           done()
 

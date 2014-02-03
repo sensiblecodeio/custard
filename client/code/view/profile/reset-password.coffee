@@ -6,6 +6,15 @@ class Cu.View.ResetPassword extends Backbone.View
 
   render: ->
     @el.innerHTML = JST['reset-password']()
+    $('#forgotten-shortname', @$el).popover(
+      title: "No problem!"
+      content: 'Email us for a reset link: <a href="mailto:hello@scraperwiki.com">hello@scraperwiki.com</a>'
+      html: true
+      placement: 'right'
+    ).on('click', (e) ->
+      e.preventDefault()
+      e.stopPropagation()
+    ).css('cursor', 'pointer')
     @
 
   sendResetEmail: (e) ->

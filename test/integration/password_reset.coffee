@@ -18,6 +18,9 @@ describe 'Password reset', ->
       it 'it takes me to the /set-password page', (done) ->
         wd40.waitForMatchingURL /[/]set-password/, done
 
+      it 'it gives me a link to click if I have forgotten my username', (done) ->
+        browser.waitForElementByCss '#forgotten-shortname', 4000, done
+
       context 'when I enter an incorrect username', ->
         before (done) ->
           wd40.fill '#shortname', 'i-do-not-exist', ->

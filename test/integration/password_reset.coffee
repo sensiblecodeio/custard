@@ -23,7 +23,7 @@ describe 'Password reset', ->
           wd40.fill '#shortname', 'i-do-not-exist', ->
             wd40.click '#go', done
 
-        it 'it shows me that the username was wrong', ->
+        it 'it shows me that the username was wrong', (done) ->
           wd40.waitForText 'That username could not be found', done
 
       context 'when I enter a correct username', ->

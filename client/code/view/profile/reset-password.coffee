@@ -13,7 +13,7 @@ class Cu.View.ResetPassword extends Backbone.View
     shortName = $('#shortname').val()
     @$el.find('.alert').remove()
     @$el.find('.control-group').removeClass('error')
-    if shortName === ''
+    if shortName == ''
       @$el.find('.control-group').addClass('error').children('label').text('You must supply a username:').next().focus()
     else
       $('#go').attr('disabled', true).addClass('loading')

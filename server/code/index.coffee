@@ -380,13 +380,23 @@ getToken = (req, resp) ->
       return resp.send 404, { error: 'Specified token could not be found' }
 
 sendPasswordReset = (req, resp) ->
-  User.sendPasswordReset req.params.user, (err) ->
+  # Decide if the query is an email address or a shortName
+  console.log "sendPasswordReset", req.body
+  query = req.body.query
+  if query and '@' in query
+    criteria =
+      email: query
+  else
+    criteria =
+      shortName: query
+  console.log "API criteria", criteria
+  User.sendPasswordReset criteria, (err) ->
     if err == 'user not found'
       return resp.send 404, error: 'That username could not be found'
     else if err?
       return resp.send 500, error: "Something went wrong: #{err}"
     else
-      return resp.send 200, success: "A password reset link has been emailed to #{req.params.user}"
+      return resp.send 200, success: "A password reset link has been emailed to #{query}"
 
 setPassword = (req, resp) ->
   Token.find req.params.token, (err, token) ->
@@ -536,8 +546,7 @@ app.post "/login", login
 app.get '/api/token/:token/?', getToken
 app.post '/api/token/:token/?', setPassword
 
-app.post '/api/:user/reset-password/?', sendPasswordReset
-
+app.post '/api/user/reset-password/?', sendPasswordReset
 app.post '/api/user/?', addUser
 
 # :todo: Add IP address check (at the moment, anyone running an identd

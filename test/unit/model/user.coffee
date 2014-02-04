@@ -109,17 +109,19 @@ describe 'User (server)', ->
     context "when requesting a password reset email (with correct shortName)", ->
       before (done) ->
         @emailStub = sinon.stub email, 'passwordResetEmail'
-        @emailStub.callsArg 2
+        @emailStub.callsArg 1
 
-        User.sendPasswordReset 'ickletest', (err) =>
+        User.sendPasswordReset { shortName: 'ickletest' }, (err) =>
           @err = err
           done()
 
       it 'email.passwordResetEmail is called with a user object and a token string', ->
-        @emailStub.lastCall.args[0].should.have.properties
+        arg = @emailStub.lastCall.args[0]
+        arg.should.have.length 1
+        arg[0].should.have.properties
           shortName: 'ickletest'
           displayName: 'Ickle Test'
-        @emailStub.lastCall.args[1].should.equal '339231725782156'
+          token: '339231725782156'
 
       it 'no errors are returned', ->
         should.not.exist @err
@@ -129,7 +131,7 @@ describe 'User (server)', ->
 
     context "when requesting a password reset email (with incorrect shortName)", ->
       before (done) ->
-        User.sendPasswordReset 'i-do-not-exist', (err) =>
+        User.sendPasswordReset { shortName: 'i-do-not-exist' }, (err) =>
           @err = err
           done()
 
@@ -140,6 +142,18 @@ describe 'User (server)', ->
       it 'it does not email the user', ->
         # callCount should still be 1 (no second email has been sent)
         @emailStub.callCount.should.equal 1
+
+    context "when requesting a password reset email (with an email address shared by two profiles)", ->
+      before (done) ->
+        User.sendPasswordReset { email: 'ickletest@example.org' }, (err) =>
+          @err = err
+          done()
+
+      it 'no errors are returned', ->
+        should.not.exist @err
+
+      it 'it emails the user', ->
+        @emailStub.callCount.should.equal 2
 
     context "when trying to save a new password", ->
       before (done) ->
@@ -155,14 +169,21 @@ describe 'User (server)', ->
             done()
 
   describe 'Finding', ->
-    it 'can find one by its shortname', (done) ->
-      # TODO: Stub actual DB calls?
+    it 'I can find one user by its shortname', (done) ->
       User.findByShortName 'ickletest', (err, user) ->
         should.exist user
         user.displayName.should.equal 'Ickle Test'
         done()
 
-    it "returns null when the user doesn't exist", (done) ->
+    it 'I can find mulitple users by their shared email address', (done) ->
+      User.findByEmail 'ickletest@example.org', (err, users) ->
+        should.exist users
+        users.should.have.a.length 2
+        users[0].should.have.a.property 'shortName'
+        users[1].should.have.a.property 'shortName'
+        done()
+
+    it "it returns null when the user doesn't exist", (done) ->
       User.findByShortName 'NONEXIST', (err, user) ->
         should.not.exist err
         should.not.exist user

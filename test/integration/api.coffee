@@ -69,12 +69,15 @@ describe 'API', ->
             displayName: 'Tabatha Testerson'
 
     describe 'I can request a password reset email', ->
-      context 'POST /api/<shortname>/set-password/', ->
+      context 'POST /api/user/reset-password/', ->
         before (done) ->
           request.post
-            uri: "#{serverURL}/api/ickletest/reset-password"
+            uri: "#{serverURL}/api/user/reset-password"
+            form:
+              query: 'ickletest'
           , (err, res, body) =>
             @response = res
+            console.log "reset-password", body
             @body = parseJSON body
             done()
 
@@ -87,10 +90,12 @@ describe 'API', ->
           @body.success.should.equal 'A password reset link has been emailed to ickletest'
 
     describe 'I can’t request a password reset email for a user that doesn’t exist', ->
-      context 'POST /api/i-do-not-exist/set-password/', ->
+      context 'POST /api/user/set-password/', ->
         before (done) ->
           request.post
-            uri: "#{serverURL}/api/i-do-not-exist/reset-password"
+            uri: "#{serverURL}/api/user/reset-password"
+            form:
+              query: 'i-do-not-exist'
           , (err, res, body) =>
             @response = res
             @body = parseJSON body
@@ -105,10 +110,12 @@ describe 'API', ->
           @body.error.should.equal 'That username could not be found'
 
     describe 'I get a sensible error message when a user doesn’t have a password token', ->
-      context 'POST /api/ehg/set-password/', ->
+      context 'POST /api/user/set-password/', ->
         before (done) ->
           request.post
-            uri: "#{serverURL}/api/ehg/reset-password"
+            uri: "#{serverURL}/api/user/reset-password"
+            form:
+              query: 'ehg'
           , (err, res, body) =>
             @response = res
             @body = parseJSON body

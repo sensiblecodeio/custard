@@ -66,7 +66,7 @@ exports.passwordResetEmail = (userList, callback) ->
                    Username: #{user.shortName}
                    Reset link: https://scraperwiki.com/set-password/#{user.token}
                    """)
-    urlList = urlList.join "\n"
+    urlList = urlList.join "\n\n"
     mailOptions =
       from: 'hello@scraperwiki.com'
       to: userList[0].email[0]

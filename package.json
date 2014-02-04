@@ -31,7 +31,6 @@
     "nodemailer": "~0.3.43",
     "qs": "~0.5.5",
     "xml2js": "~0.2.6",
-    "nodetime": "~0.8.13",
     "mailchimp": "~1.1.0",
     "exceptional-node": "~0.1.1",
     "nodealytics": "0.0.5",

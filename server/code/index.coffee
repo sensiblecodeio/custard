@@ -1,12 +1,5 @@
 process.title = 'custard ' + process.argv[2..].join ' '
 
-nodetime = require 'nodetime'
-
-if process.env.NODETIME_KEY
-  nodetime.profile
-    accountKey: process.env.NODETIME_KEY
-    appName: process.env.CU_NODETIME_APP
-
 net = require 'net'
 fs = require 'fs'
 path = require 'path'
@@ -65,18 +58,32 @@ else
     trackEvent: -> return true
 
 # TODO: move into npm module
-nodetimeLog = (req, res, next) ->
+requestStream = null
+tmpRequestStream = fs.createWriteStream "request.csv"
+tmpRequestStream.on 'open', () ->
+  requestStream = tmpRequestStream
+requestLog = (req, res, next) ->
+  requestStart = new Date()
+  unique = Math.random() * Math.pow(2, 32)
   matched = _.find app.routes[req.method.toLowerCase()], (route) ->
     if route.regexp.test req.url
       if route.path isnt '*'
         return true
   if matched?
     name = "#{req.method} #{matched.path}"
-    res.nodetimePromise = nodetime.time 'Custard request ', name, req.url
+    # Rewrites the send method of the response res so that we
+    # can time how long it takes between request and response.
     oldSend = res.send
     res.send = (args... ) ->
-      res.nodetimePromise.end()
-      oldSend.apply res, args
+      duration = new Date() - requestStart
+      # CSV file is:
+      # app,unique-request-id,route,URL,milliseconds
+      line = "custard,#{unique},#{name},#{req.url},#{duration}\n"
+      if requestStream
+        requestStream.write line, () ->
+          oldSend.apply res, args
+      else
+        oldSend.apply res, args
   return next()
 
 assets.jsCompilers.eco =
@@ -225,6 +232,8 @@ app.configure ->
   app.use express.static(process.cwd() + '/shared')
   if process.env.NODETIME_KEY
     app.use nodetimeLog
+  if true or process.env.CU_REQUEST_LOG
+    app.use requestLog
 
 passport.use 'local', new LocalStrategy(verify)
 

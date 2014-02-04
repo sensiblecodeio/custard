@@ -1,0 +1,32 @@
+#!/bin/sh
+# A Munin plugin.
+# See http://munin.readthedocs.org/en/latest/plugin/writing.html
+# This is just a placeholder right now.
+
+usage () {
+  echo 'collect-munin [config]'
+}
+
+data () {
+  echo minute.value $(date +%M)
+}
+
+metadata () {
+  echo graph_title Current minute
+  echo minute.label M
+}
+
+if [ $# = 0 ]
+then
+  data
+  exit
+fi
+
+if [ $# = 1 ] && [ "$1" = config ]
+then
+  metadata
+  exit
+fi
+
+usage >&2
+exit 99

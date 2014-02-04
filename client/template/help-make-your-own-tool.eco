@@ -26,25 +26,28 @@
   <div class="step">
     <img class="thumbnail" src="/image/screenshots/importer-chooser.png" width="615" height="194" alt="Importer Chooser">
     <p>You&rsquo;ll be shown all the tools you can use to populate your new dataset.</p>
-    <p>We&rsquo;re going to <strong>&ldquo;Code a Dataset&rdquo;</strong> from scratch. Click it.</p>
+    <p>We&rsquo;re going to <strong>&ldquo;Code a dataset&rdquo;</strong> from scratch. Click it.</p>
   </div>
 
   <div class="step">
-    <img class="thumbnail" src="/image/screenshots/rename-wikipedia-tool.png" width="387" height="57" alt="Rename Wikipedia Tool">
-    <p>Before we start, let&rsquo;s give this dataset a more memorable name so we can find it later.</p>
+    <img class="thumbnail" src="/image/screenshots/code-your-own-tool-rename.png" width="331" height="198" alt="Rename your dataset">
+    <p>Before we start, let&rsquo;s give this dataset a more memorable name so we can find it later. Use the dropdown dataset menu to rename it to something like &ldquo;Search Wikipedia&rdquo;.</p>
   </div>
 
   <h2 id="step2">2. SSH into the box</h2>
 
   <div class="step">
-    <img class="thumbnail" src="/image/screenshots/ssh-in-to-dataset.png" width="371" height="241" alt="SSH in to dataset">
-    <p>Hover over your new tool&rsquo;s icon in the top right corner of the screen, to show the tools menu.</p>
-    <p>Click the &ldquo;SSH IN&rdquo; link, and follow the instructions to set up your SSH keys.</p>
-    <p>If you&rsquo;re on Windows, you&rsquo;ll want to install and run <a href="https://openhatch.org/missions/windows-setup/install-git-bash" target="_blank">Git Bash</a>.</p>
+    <p>Each ScraperWiki dataset (and each of the tools attached to it, like the table view, and the spreadsheet downloader) are stored in what we call separate &ldquo;boxes&rdquo;.</p>
+    <p style="float: right; width: 40%; font-style: italic; color: #999">You can find out more about boxes, tools and datasets in <a href="/help/developer">our developer documentation</a>.</p>
+    <p style="clear: left">A box is a shell account on the web. You can access it via SSH or SFTP, and you can use special API endpoints to communicate with the rest of ScraperWiki.</p>
   </div>
 
-  <div class="step full-width">
-    <p class="well well-small"><span class="label label-info">Top tip!</span> This guide assumes you&rsquo;re happy editing files on a remote server using a command-line editor like Vim, Emacs, Nano or Joe. <strong>If you&rsquo;d prefer to edit locally</strong>, using your normal text editor, check out <a href="/help/developer/#tools-develop-locally">swbox</a>.</p>
+  <div class="step">
+    <img class="thumbnail" src="/image/screenshots/code-your-own-tool-ssh.png" width="303" height="165" alt="SSH into the tool">
+    <p>Click the dropdown menu next to the dark grey <strong>&ldquo;Code your own tool&rdquo;</strong> icon.</p>
+    <p>Select &ldquo;SSH in&rdquo; from the menu, and follow the instructions to set up your SSH keys.</p>
+    <p>If you&rsquo;re on Windows, you&rsquo;ll want to install and run <a href="https://openhatch.org/missions/windows-setup/install-git-bash" target="_blank">Git Bash</a>.</p>
+    <p class="well well-small" style="margin-top: 20px;"><span class="label label-info">Top tip!</span> This guide assumes you&rsquo;re happy editing files on a remote server using a command-line editor like Vim, Emacs, Nano or Joe. <strong>If you&rsquo;d prefer to edit locally</strong>, using your normal text editor, check out <a href="/help/developer/#tools-develop-locally">swbox</a>.</p>
   </div>
 
   <h2 id="step3">3. Make a user interface</h2>
@@ -131,7 +134,7 @@ scraperwiki.sqlite.save(['name'], images, 'images')</pre>
   <h2 id="step5">5. Test it out</h2>
 
   <div class="step">
-    <img src="/image/screenshots/finished-wikipedia-tool.png" width="891" height="655" alt="Finished Wikipedia Tool">
+    <img src="/image/screenshots/code-your-own-tool-finished.png" width="767" height="584" alt="Completed Wikipedia tool">
     <p>Reload your web browser to see your tool&rsquo;s new look!</p>
     <p>Type in a search term and see whether it works.</p>
     <p>Once the <code>search.py</code> script has finished running, the JavaScript <code>execSuccess</code> callback function automatically redirects you to a table view of your data. Pretty!</p>

@@ -79,6 +79,11 @@ requestLog = (req, res, next) ->
       # CSV file is:
       # app,unique-request-id,route,URL,milliseconds
       line = "custard,#{unique},#{name},#{req.url},#{duration}\n"
+
+      # The first time .send() is called we write a line to the
+      # log. Possibly it would be better to use the last time
+      # .send() is called, but this is way simpler.
+      res.send = oldSend
       if requestStream
         requestStream.write line, () ->
           oldSend.apply res, args

@@ -21,7 +21,7 @@
     <img class="thumbnail" src="/image/screenshots/create-new-dataset.png" width="292" height="153" alt="Create New Dataset" />
     <p>After registering and logging in, click the <strong>&ldquo;Create a new dataset&rdquo;</strong> button on your homepage.</p>
   </div>
-  
+
   <div class="step">
     <img class="thumbnail" src="/image/screenshots/importer-chooser.png" width="615" height="194" alt="Importer Chooser">
     <p>You&rsquo;ll be shown all the tools you can use to populate your new dataset.</p>
@@ -31,20 +31,17 @@
   <h2 id="step2">2. Pick a language</h2>
 
   <div class="step">
-    <img class="thumbnail" src="/image/screenshots/code-in-browser-language.png" width="381" height="524" alt="Pick a language">
+    <img class="thumbnail" src="/image/screenshots/code-in-browser-language.png" width="411" height="255" alt="Pick a language">
     <p>ScraperWiki supports dozens of languages. But for this tutorial, we&rsquo;re going to use Python.</p>
+    <p>Although PHP is a popular choice for web development, Python has much better libraries for scraping the web and dealing with data.</p>
   </div>
 
   <h2 id="step3">3. Name your dataset</h2>
 
   <div class="step">
-    <img src="/image/screenshots/untitled-dataset.png" width="283" height="52" alt="Untitled Dataset">
+    <img class="thumbnail" src="/image/screenshots/code-in-browser-rename.png" width="325" height="195" alt="Rename your dataset">
     <p>We&rsquo;re going to scrape the <a href="http://blog.ups.com/" target="_blank">UPS corporate blog</a>. Although with small changes this should work for any WordPress blog.</p>
-  </div>
-  
-  <div class="step">
-    <img src="/image/screenshots/ups-blog-posts.png" width="367" height="56" alt="Ups Blog Posts">
-    <p>Click the pencil next to <strong>&ldquo;Untitled dataset&rdquo;</strong> to rename your dataset to something like &ldquo;UPS blog posts&rdquo;.</p>
+    <p>Use the dropdown dataset menu to <strong>&ldquo;Untitled dataset&rdquo;</strong> to rename your dataset to something like &ldquo;UPS blog posts&rdquo;.</p>
   </div>
 
   <h2 id="step4">4. Scrape the data</h2>
@@ -65,8 +62,7 @@ for entry in dom.cssselect('.theentry'):
         'title': entry.cssselect('.entry-title')[0].text_content(),
         'author': entry.cssselect('.the-meta a')[0].text_content(),
         'url': entry.cssselect('a')[0].get('href'),
-        'comments': int( entry.cssselect('.comment-number')[0].text_content() ),
-        'category': entry.cssselect('table a')[0].text_content()
+        'comments': int( entry.cssselect('.comment-number')[0].text_content() )
     }
     print post
     </pre>
@@ -84,12 +80,10 @@ for entry in dom.cssselect('.theentry'):
   <h2 id="step6">6. Use your data</h2>
 
   <div class="step">
-    <img class="thumbnail" src="/image/screenshots/dataset-tools-menu-2.png" width="361" height="400" alt="Dataset tools menu">
-    <p>You can now see your data using the <strong>&ldquo;View in a table&rdquo;</strong> tool in the top right corner.</p>
-  </div>
-  
-  <div class="step">
-    <img class="thumbnail" src="/image/screenshots/tool-chooser.png" width="835" height="186" alt="Tool chooser">
-    <p>There are more tools you can use on your data. Choose <strong>More tools&hellip;</strong> and then select one.</p>
+    <div style="background: transparent url(/image/screenshots/code-in-browser-toolbar.png) -218px 0 no-repeat; width: 100%; height: 74px; margin-bottom: 20px;"></div>
+    <p>ScraperWiki is built out of lots of tools that let you do stuff with your data. The tools always appear in the grey toolbar next to your dataset&rsquo;s name.</p>
+    <p style="clear: both">Click the orange <strong>&ldquo;View in a table&rdquo;</strong> icon to see your data in a flexible table view.</p>
+    <p style="clear: both">Or click <strong>More tools&hellip;</strong> to do other things like <a href="https://blog.scraperwiki.com/2013/07/what-does-it-all-mean-summarise-this-data/">automatically summarising your data</a> or <a href="https://blog.scraperwiki.com/2013/07/open-your-data-with-scraperwiki/">publishing it to a CKAN datahub</a>.</p>
   </div>
 
+</div>

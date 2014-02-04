@@ -1,10 +1,18 @@
+<style type="text/css">
+#faq + .step p + h4 {
+  margin-top: 25px;
+}
+</style>
+
 <nav class="well optional">
   <ul class="nav nav-list">
     <li class="nav-header">This quick start guide:</li>
     <li><a data-nonpushstate href="#step1">1. Create a new dataset</a></li>
     <li><a data-nonpushstate href="#step2">2. Enter search term</a></li>
-    <li><a data-nonpushstate href="#step3">3. View your data</a></li>
-    <li><a data-nonpushstate href="#step4">4. Download as spreadsheet</a></li>
+    <li><a data-nonpushstate href="#step3">3. Authorise with Twitter</a></li>
+    <li><a data-nonpushstate href="#step4">4. Keep your results up to date</a></li>
+    <li><a data-nonpushstate href="#step5">5. View &amp; download your data</a></li>
+    <li><a data-nonpushstate href="#faq">FAQs</a></li>
     <li class="nav-header">Related guides:</li>
     <li><a href="/help/code-in-your-browser">Code a scraper in your browser</a></li>
   </ul>
@@ -28,30 +36,60 @@
   <h2 id="step2">2. Enter search term</h2>
 
   <div class="step">
-    <img class="thumbnail" src="/image/screenshots/twitter-search-term.png" width="308" height="84" alt="Twitter Search Term">
-    <p>Type in whatever you want to search for.</p>
-    <p>The Twitter tool will guide you through the process of authorising with your Twitter account.</p>
+    <img class="thumbnail" src="/image/screenshots/twitter-search-term.png" width="608" height="246" alt="Twitter Search Term">
+    <p>Type your search terms into the input field and click search.</p>
+    <p>For more advanced search queries you can use <a href="https://support.twitter.com/articles/71577-how-to-use-advanced-twitter-search">search operators</a> in your search query.</p>
   </div>
 
-  <h2 id="step3">3. View your data</h2>
+  <h2 id="step3">3. Authorise ScraperWiki to use your Twitter account details</h2>
 
   <div class="step">
-    <img class="thumbnail" src="/image/screenshots/table-of-tweets.png" width="664" height="320" alt="Table of Tweets">
-    <p>You can see the first few Tweets have already appeared.</p>
-  </div>
-  
-  <div class="step">
-    <img class="thumbnail" src="/image/screenshots/view-in-table-icon.png" width="208" height="53" alt="View in a Table tool">
-    <p>Above the table, in the top right, you&rsquo;ll notice you&rsquo;re looking at the data with the <strong>&ldquo;View in a Table&rdquo;</strong> tool.</p>
+    <img class="thumbnail" src="/image/screenshots/twitter-auth.png" width="728" height="447" alt="Twitter Auth">
+    <p>ScraperWiki uses your Twitter account details to run the search on your behalf. You will need to authorise ScraperWiki to use your account by clicking on the &ldquo;Authorize App&rdquo; button.</p>
   </div>
 
-  <h2 id="step4">4. Download a spreadsheet</h2>
+  <h2 id="step4">4. Keep your search results up to date</h2>
 
   <div class="step">
-    <img class="thumbnail" src="/image/screenshots/dataset-tools-menu.png" width="367" height="417" alt="Dataset tools menu">
-    <p>ScraperWiki has lots of tools you can use on any dataset. Hover over the <strong>&ldquo;View in a Table&rdquo;</strong> tool to see more tools you can use.</p>
-    <p>Click on the <strong>&ldquo;Download as spreadsheet&rdquo;</strong> tool.</p>
-    <p>Once they're generated, you can download your data as CSV or Excel files.</p>
+    <img class="thumbnail" src="/image/screenshots/twitter-schedule.png" width="568" height="262" alt="Twitter Schedule">
+    <p>By default, the <strong>&ldquo;Search for Tweets&rdquo;</strong> tool will simply search the previous week&rsquo;s Twitter data (or less, if the search term returns lots of hits). However, you can add future tweets that match your search term to a dataset by clicking on the &ldquo;Also monitor for all future tweets&rdquo; checkbox.</p>
+  </div>
+
+  <h2 id="step5">5. View and download your data</h2>
+
+  <div class="step">
+    <div style="background: transparent url(/image/screenshots/twitter-toolbar.png) -335px 0 no-repeat; width: 100%; height: 74px; margin-bottom: 20px;"></div>
+    <p>ScraperWiki is built out of lots of tools that let you do stuff with your data. The tools always appear in the grey toolbar next to your dataset&rsquo;s name.</p>
+  </div>
+
+  <div class="step">
+    <img class="thumbnail" src="/image/screenshots/twitter-table-view.png" width="902" height="571" alt="Twitter Table View">
+    <p>Click the orange <strong>&ldquo;View in a table&rdquo;</strong> icon to see your data in a table view.</p>
+    <p>You can sort on any column by clicking the column header, and you can use the search box in the top right to find particular rows of interest.</p>
+  </div>
+
+  <div class="step">
+    <img class="thumbnail" src="/image/screenshots/twitter-download.png" width="428" height="188" alt="Twitter Download">
+    <p>Click the green <strong>&ldquo;Download as spreadsheet&rdquo;</strong> icon get export your Twitter data for further analysis.</p>
+    <p>Once they&rsquo;re generated, you can download your data as CSV or XLS files. Both will open fine in Excel.</p>
+  </div>
+
+  <h2 id="faq">FAQs</h2>
+
+  <div class="step full-width">
+    <div style="width: 47%; float: left">
+      <h4>How do I search for historical data?</h4>
+      <p>Unfortunately Twitter only allows its API to reach roughly a week into the past. If you need data further back than that, you&rsquo;ll have to use someone like Datasift or Gnip, who re-sell access to the Twitter firehose.</p>
+
+      <h4>How often is the Twitter data updated?</h4>
+      <p>Assuming you have the &ldquo;Monitor future Tweets&rdquo; checkbox selected, about once an hour.</p>
+      <p>In this mode, the <strong>&ldquo;Search for tweets&rdquo;</strong> tool will request tweets newer than the last tweet ID it stored in its previous run (so there is no overlap, and no wasted API calls).</p>
+    </div>
+    <div style="width: 47%; float: right">
+      <h4>I am seeing a &ldquo;Twitter is rate limiting you&rdquo; error &ndash; what is the problem?</h4>
+      <p>Twitter allows us to request 18000 tweets in total, on a user&rsquo;s behalf, in any given 15 minute period. This limit is shared across all ScraperWiki twitter tools you might have running at the same time.</p>
+      <p>The rate limit is <i>also</i> shared with any other apps that are calling Twitter using your Twitter login details. You can <a href="https://twitter.com/settings/applications">see all the apps that are accessing your account here</a>.</p>
+    </div>
   </div>
 
 </div>

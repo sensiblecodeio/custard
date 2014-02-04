@@ -65,6 +65,18 @@ describe 'Password reset', ->
         it 'it shows me that the username was wrong', (done) ->
           wd40.waitForText 'That username could not be found', done
 
+      context 'when I enter an incorrect email address', ->
+        before (done) ->
+          browser.get "#{base_url}/set-password/", ->
+            browser.waitForElementByCss '#query', 4000, done
+
+        before (done) ->
+          wd40.fill '#query', 'bademail@example.com', ->
+            wd40.click '#go', done
+
+        it 'it shows me that the username was wrong', (done) ->
+          wd40.waitForText 'That username could not be found', done
+
       context 'when I cause some sort of weird error', ->
         before (done) ->
           browser.get "#{base_url}/set-password/", ->

@@ -91,18 +91,18 @@ body.fullscreen .container {
   margin: 0;
 }
 
-#header nav li {
+#header nav > ul > li {
   float: left;
   list-style: none;
   display: none; /* hide non-essential nav links on small screens */
 }
 
-#header nav li.logout,
-#header nav li.login {
-  display: block;
+#header nav > ul > li.user,
+#header nav > ul > li.login {
+  display: block; /* show essential nav links on small screens */
 }
 
-#header nav li + li {
+#header nav > ul > li + li {
   margin-left: 25px;
 }
 
@@ -110,7 +110,7 @@ body.fullscreen .container {
   margin-left: 20px; /* compensate for visual weight of Intercom.io button */
 }
 
-#header nav li a {
+#header nav > ul > li > a {
   display: block;
   color: #666;
   line-height: 50px;
@@ -121,17 +121,48 @@ body.fullscreen .container {
   text-shadow: 0 1px 0 white;
 }
 
-#header nav li a:hover {
+#header nav > ul > li > a:hover {
   color: #333;
   text-decoration: none;
 }
 
-#header nav li.logout a {
-  color: #933;
+#header nav a.dropdown-toggle {
+  cursor: pointer;
 }
 
-#header nav li.logout a:hover {
-  color: #b00;
+#header .dropdown-toggle .caret {
+  margin-top: 22px;
+  border-top-color: #999;
+}
+
+#header .dropdown-menu {
+  top: 40px;
+  right: -15px;
+  left: auto;
+  font-size: 14px;
+}
+
+#header .dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  right: 11px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+#header .dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  border-left: 6px solid transparent;
+  content: '';
 }
 
 #header nav #intercomButton {
@@ -1450,7 +1481,7 @@ div.hero-classic p:last-child {
     width: 580px;
   }
 
-  #header nav li {
+  #header nav > ul > li {
     display: block;
   }
 

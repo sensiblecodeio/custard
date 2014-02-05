@@ -19,11 +19,15 @@ class Cu.View.Dashboard extends Backbone.View
     # `user` should be a backbone user model.
 
     $header = $ """
-                <a href="/switch/#{user.get 'shortName'}" data-nonpushstate class="btn btn-link pull-right">Go to #{user.get 'displayName' or user.get 'shortName'}&rsquo;s data hub</a>
-                <h1>
-                  <img src="#{user.get('logoUrl') or user.get('avatarUrl')}" alt="#{user.get 'shortName'}" />
-                  #{user.get 'displayName' or user.get 'shortName'}
-                </h1>
+                <div class="dashboard-subheader">
+                  <a href="/switch/#{user.get 'shortName'}" data-nonpushstate>
+                    <h1>
+                      <img src="#{user.get('logoUrl') or user.get('avatarUrl')}" alt="#{user.get 'shortName'}" />
+                      #{user.get 'displayName' or user.get 'shortName'}
+                      <small>Switch into data hub &raquo;</small>
+                    </h1>
+                  </a>
+                </div>
                 """
 
     arrows = '<i class="icon-chevron-up"></i><i class="icon-chevron-down"></i>'

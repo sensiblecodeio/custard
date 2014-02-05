@@ -229,18 +229,21 @@ body.fullscreen .container {
   border-top-color: #eee; /* slightly lighter than normal bootstrap hr's */
 }
 
-#subnav-path {
+#subnav-path,
+.dashboard-subheader {
   line-height: 32px;
   text-rendering: optimizelegibility;
 }
 
-#subnav h1 {
+#subnav h1,
+.dashboard-subheader h1 {
   margin: 0;
   font-weight: normal;
   line-height: 32px;
 }
 
-#subnav-path > .btn-group > .btn {
+#subnav-path > .btn-group > .btn,
+.dashboard-subheader h1 {
   color: #333;
   font-size: 24px;
   line-height: 32px;
@@ -282,7 +285,8 @@ body.fullscreen .container {
   margin-top: -1px;
 }
 
-#subnav-path > .btn-group > a img {
+#subnav-path > .btn-group > a img,
+.dashboard-subheader h1 img {
   vertical-align: top;
   margin-right: 9px;
   -webkit-border-radius: 2px;
@@ -519,7 +523,9 @@ a.tile p.error {
 }
 
 .dataset-list > table th,
-.dataset-list > table td {
+.dataset-list > table td,
+.dashboard > table th,
+.dashboard > table td {
   text-align: left;
   font-size: 14px;
   line-height: 18px;
@@ -530,19 +536,23 @@ a.tile p.error {
 }
 
 .dataset-list > table td.icon,
-.dataset-list > table td.hide {
+.dataset-list > table td.hide,
+.dashboard > table td.icon,
+.dashboard > table td.hide {
   width: 16px;
   max-width: 16px;
   padding-left: 12px;
   padding-right: 4px;
 }
 
-.dataset-list > table td.hide {
+.dataset-list > table td.hide,
+.dashboard > table td.hide {
   display: table-cell;
   padding: 8px 12px 0 4px;
 }
 
-.dataset-list > table td.icon > span {
+.dataset-list > table td.icon > span,
+.dashboard > table td.icon > span {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -553,7 +563,8 @@ a.tile p.error {
   border-radius: 3px;
 }
 
-.dataset-list > table td.hide > span {
+.dataset-list > table td.hide > span,
+.dashboard > table td.hide > span {
   display: none;
   width: 20px;
   height: 20px;
@@ -581,22 +592,27 @@ a.tile p.error {
   background-color: #fff;
 }
 
-.dataset-list table tr.error > td {
+.dataset-list table tr.error > td,
+.dashboard table tr.error > td {
   background-color: #e11b2c;
   color: #fff;
 }
 
-.dataset-list table tr.error .muted {
+.dataset-list table tr.error .muted,
+.dashboard table tr.error .muted {
   color: inherit;
   opacity: 0.7;
 }
 
-.dataset-list table tr.error:hover > td {
+.dataset-list table tr.error:hover > td,
+.dashboard table tr.error:hover > td {
   background-color: #CC0A1B;
 }
 
 .dataset-list td.status i[class*=" icon-"],
-.dataset-list td.status i[class^="icon-"] {
+.dataset-list td.status i[class^="icon-"],
+.dashboard td.status i[class*=" icon-"],
+.dashboard td.status i[class^="icon-"] {
   margin-right: 3px;
 }
 
@@ -614,11 +630,13 @@ a.tile p.error {
   margin-left: 5px;
 }
 
-.dataset-list th.sortable {
+.dataset-list th.sortable,
+.dashboard th.sortable {
   cursor: pointer;
 }
 
-.dataset-list th.sortable [class^=icon-] {
+.dataset-list th.sortable [class^=icon-],
+.dashboard th.sortable [class^=icon-] {
   display: none;
   margin-top: 2px;
   margin-left: 3px;
@@ -626,10 +644,39 @@ a.tile p.error {
 }
 
 .dataset-list th.sorted-asc .icon-chevron-up,
-.dataset-list th.sorted-desc .icon-chevron-down {
+.dataset-list th.sorted-desc .icon-chevron-down,
+.dashboard th.sorted-asc .icon-chevron-up,
+.dashboard th.sorted-desc .icon-chevron-down {
   display: inline-block;
 }
 
+
+
+
+/* Dashboard page */
+
+div.dashboard table {
+  margin: 20px 0 60px 0;
+}
+
+.dashboard-subheader small {
+  color: #999;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.dashboard-subheader a:hover {
+  text-decoration: none;
+}
+
+.dashboard-subheader a:hover small {
+  color: #39c;
+  text-decoration: underline;
+}
+
+.dashboard-subheader a:hover h1 {
+  color: #069;
+}
 
 
 

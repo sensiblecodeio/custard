@@ -61,10 +61,14 @@ describe 'Successful login', ->
             wd40.click '#login', ->
               setTimeout done, 500
 
-      it 'shows my name', (done) ->
-        # change "does not show my name" below as well if you change this
+      it 'shows my name on the homepage', (done) ->
         wd40.getText '#subnav-path .btn', (err, text) ->
           text.should.include 'Ickle Test'
+          done()
+
+      it 'shows my name in the nav bar', (done) ->
+        wd40.getText '#header .user > a', (err, text) ->
+          text.should.match /Ickle Test/i
           done()
 
       context 'when I revisit the login page', ->
@@ -81,7 +85,8 @@ describe 'Successful login', ->
           browser.get home_url, done
 
         before (done) ->
-          wd40.click '#header .logout a', done
+          wd40.click '#header .user a.dropdown-toggle', ->
+            wd40.click '#header .user .logout a', done
 
         it 'redirects me to the (logged out) home page', (done) ->
           wd40.trueURL (err, url) ->

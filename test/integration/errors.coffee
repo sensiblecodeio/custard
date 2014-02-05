@@ -17,7 +17,7 @@ describe 'Errors', ->
       browser.eval "jQuery.ajax({url: 'http://httpbin.org/status/502'});", done
 
     it 'shows the error bar', (done) ->
-      browser.waitForVisibleByCssSelector '#error-alert', 4000, done
+      browser.waitForVisibleByCssSelector '#error-alert', 10000, done
 
     it 'displays a connection error', (done) ->
       wd40.getText '#error-alert', (err, text) ->

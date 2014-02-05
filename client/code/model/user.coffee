@@ -47,5 +47,4 @@ class Cu.Collection.User extends Backbone.Collection
   name: 'User'
 
   comparator: (model) ->
-    console.log 'compare', model.get 'displayName'
     model.get('displayName') or model.get('shortName')

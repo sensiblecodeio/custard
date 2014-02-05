@@ -714,6 +714,24 @@ div.dashboard table th {
   padding: 6px;
 }
 
+div.dashboard tr.loading td,
+div.dashboard tr.ajax-error td {
+  text-align: center;
+  padding: 10px 0;
+  line-height: 16px;
+  color: #999;
+}
+
+div.dashboard tr.ajax-error td {
+  color: #a00;
+}
+
+div.dashboard tr.loading td img,
+div.dashboard tr.ajax-error td img {
+  vertical-align: 2px;
+  margin-right: 5px;
+}
+
 .dashboard-subheader small {
   color: #999;
   font-size: 16px;

@@ -46,6 +46,9 @@ class Cu.View.Dashboard extends Backbone.View
                           </tr>
                         </thead>
                         <tbody>
+                          <tr class="loading">
+                            <td colspan="7"><img src="/image/loader-input-search.gif" width="16" height="16" /> Loading datasets&hellip;</td>
+                          </tr>
                         </tbody>
                       </table>
                       """
@@ -64,7 +67,14 @@ class Cu.View.Dashboard extends Backbone.View
             view = new Cu.View.DatasetRow
               model: dataset
               clickable: false
+            $('tr.loading', $section).remove()
             $('tbody', $section).append view.render().el
+      error: () =>
+        $('tbody', $section).html """
+                                  <tr class="ajax-error">
+                                    <td colspan="7"><img src="/image/exclamation-red.png" width="16" height="16" /> Could not load datasets</td>
+                                  </tr>
+                                  """
 
   sortTable: (e) ->
     $th = $(e.currentTarget)

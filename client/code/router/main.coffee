@@ -29,6 +29,7 @@ class Cu.Router.Main extends Backbone.Router
     @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'homeAnonymous'
     @route RegExp('^datasets?/?$'), 'homeLoggedIn'
+    @route RegExp('^dashboard/?$'), 'dashboard'
     @route RegExp('(?:docs|help)/?'), 'help'
     @route RegExp('(?:docs|help)/([^/]+)/?'), 'help'
     @route RegExp('pricing/?'), 'pricing'
@@ -136,6 +137,12 @@ class Cu.Router.Main extends Backbone.Router
       subnavView = new Cu.View.DataHubNav
       @appView.showView contentView
       @subnavView.showView subnavView
+
+  dashboard: ->
+    contentView = new Cu.View.Dashboard
+    window.document.title = 'Your dashboard | ScraperWiki'
+    @appView.showView contentView
+    @subnavView.hideView()
 
   pricing: (upgrade) ->
     subnavView = new Cu.View.Subnav PageTitles.pricing

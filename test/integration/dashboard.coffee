@@ -27,7 +27,14 @@ describe 'Dashboard', ->
         elements.length.should.equal 3
         done()
 
-    it 'the datasets are shown in a two separate lists', (done) ->
+    it 'there are links to switch into each of those data hubs', (done) ->
+      wd40.elementByCss 'a[href="/switch/ehg"]', (err, a) ->
+        should.exist a
+        wd40.elementByCss 'a[href="/switch/ickletest"]', (err, a) ->
+          should.exist a
+          done()
+
+    it 'the datasets are shown in two separate lists', (done) ->
       browser.elementsByCss '.dashboard > table', (err, elements) ->
         elements.length.should.equal 2
         done()
@@ -44,3 +51,12 @@ describe 'Dashboard', ->
               browser.elementsByCss 'tr.dataset td.status', (err, elements) ->
                 elements.length.should.equal 3
                 done()
+
+    it 'clicking the datasets does nothing', (done) ->
+      wd40.elementByCss 'tr[data-box="3006375815"] td.name', (err, td) ->
+        td.click ->
+          setTimeout ->
+            browser.url (err, url) ->
+              url.should.match /[/]dashboard[/]?$/
+            done()
+          , 500

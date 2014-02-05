@@ -6,6 +6,10 @@
     <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
+    <li class="profile">
+      <p><img src="<%= @logoUrl or @avatarUrl %>"></p>
+      <p><strong><%= @displayName %></strong><br/><%= @shortName %></p>
+    </li>
     <li class="set-password"><a href="/set-password" data-nonpushstate>Change password</a></li>
     <li class="logout"><a href="/logout" data-nonpushstate>Log out</a></li>
   </ul>

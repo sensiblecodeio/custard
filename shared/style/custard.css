@@ -165,6 +165,26 @@ body.fullscreen .container {
   content: '';
 }
 
+#header .dropdown-menu .profile {
+  padding: 10px 20px;
+  line-height: 18px;
+  white-space: nowrap;
+  display: table;
+}
+
+#header .dropdown-menu .profile > * {
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0;
+}
+
+#header .dropdown-menu .profile img {
+  height: 40px;
+  width: auto;
+  max-width: none;
+  margin-right: 10px;
+}
+
 #header nav #intercomButton {
   color: #fff;
   text-shadow: none;

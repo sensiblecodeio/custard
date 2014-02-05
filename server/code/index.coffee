@@ -879,8 +879,12 @@ app.post '/api/reporting/message/?', sendIntercomMessage
 app.post '/api/reporting/user/?', sendIntercomUserData
 app.post '/api/reporting/tag/?', sendIntercomTag
 
-# Catch all other routes, send to client app
-# eg: /datasets, /dataset/abc1234, /signup/free
+# Send all other requests to the client app, eg:
+# /datasets
+# /dataset/abc1234
+# /signup/free
+# /dashboard
+# /create-profile
 app.get '*', renderClientApp
 
 port = process.env.CU_PORT or 3001

@@ -12,7 +12,7 @@ describe 'Dashboard', ->
   context 'when I visit the dashboard page', ->
     before (done) ->
       browser.get "#{base_url}/dashboard", =>
-        browser.waitForElementByCss '.dashboard > h1', 4000, =>
+        browser.waitForElementByCss '.dashboard h1', 4000, =>
           wd40.getText 'body', (err, text) =>
             @bodyText = text
             done()
@@ -34,8 +34,16 @@ describe 'Dashboard', ->
           should.exist a
           done()
 
+    it 'the data hubs are ordered alphabetically by name', (done) ->
+      browser.elementsByCss '.dashboard h1', (err, h1s) ->
+        h1s[0].text (err, text) ->
+          text.should.include 'Chris Blower'
+          h1s[1].text (err, text) ->
+            text.should.include 'Ickle Test'
+            done()
+
     it 'the datasets are shown in two separate lists', (done) ->
-      browser.elementsByCss '.dashboard > table', (err, elements) ->
+      browser.elementsByCss '.dashboard table', (err, elements) ->
         elements.length.should.equal 2
         done()
 

@@ -59,7 +59,7 @@ else
 
 # TODO: move into npm module
 requestStream = null
-tmpRequestStream = fs.createWriteStream "request.csv"
+tmpRequestStream = fs.createWriteStream "request.csv", flags: 'a'
 tmpRequestStream.on 'open', () ->
   requestStream = tmpRequestStream
 requestLog = (req, res, next) ->

@@ -1,14 +1,18 @@
 #!/bin/sh
-# A Munin plugin.
+# A Munin plugin for custard.
 # See http://munin.readthedocs.org/en/latest/plugin/writing.html
-# This is just a placeholder right now.
+#
+# In addition to the usual munin plugin protocol (call with no
+# arguments and call with a single "config" argument), if called
+# with a single "install" argument, will attempt to install itself
+# into /etc/munin/plugins and /etc/munin/plugin-config.d
 
 # Look for request.csv either in . or in /opt/custard
 File=request.csv
 test -r "$File" || cd /opt/custard
 
 usage () {
-  echo 'collect-munin [config]'
+  echo 'collect-munin [config|install]'
 }
 
 data () {
@@ -26,6 +30,14 @@ metadata () {
   echo response_time.label Data from $(env pwd)
 }
 
+install () {
+  set -e
+  cp bin/custard-munin /etc/munin/plugins/
+  printf '[custard-munin]
+user custard
+' > /etc/munin/plugin-conf.d/custard-munin
+}
+
 if [ $# = 0 ]
 then
   data
@@ -35,6 +47,12 @@ fi
 if [ $# = 1 ] && [ "$1" = config ]
 then
   metadata
+  exit
+fi
+
+if [ $# = 1 ] && [ "$1" = install ]
+then
+  install
   exit
 fi
 

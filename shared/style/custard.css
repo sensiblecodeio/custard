@@ -524,8 +524,8 @@ a.tile p.error {
 
 .dataset-list > table th,
 .dataset-list > table td,
-.dashboard > table th,
-.dashboard > table td {
+.dashboard table th,
+.dashboard table td {
   text-align: left;
   font-size: 14px;
   line-height: 18px;
@@ -537,8 +537,8 @@ a.tile p.error {
 
 .dataset-list > table td.icon,
 .dataset-list > table td.hide,
-.dashboard > table td.icon,
-.dashboard > table td.hide {
+.dashboard table td.icon,
+.dashboard table td.hide {
   width: 16px;
   max-width: 16px;
   padding-left: 12px;
@@ -546,13 +546,13 @@ a.tile p.error {
 }
 
 .dataset-list > table td.hide,
-.dashboard > table td.hide {
+.dashboard table td.hide {
   display: table-cell;
   padding: 8px 12px 0 4px;
 }
 
 .dataset-list > table td.icon > span,
-.dashboard > table td.icon > span {
+.dashboard table td.icon > span {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -564,7 +564,7 @@ a.tile p.error {
 }
 
 .dataset-list > table td.hide > span,
-.dashboard > table td.hide > span {
+.dashboard table td.hide > span {
   display: none;
   width: 20px;
   height: 20px;
@@ -656,11 +656,11 @@ a.tile p.error {
 
 div.dashboard table {
   margin: 20px 0 60px 0;
-  font-size: 14px;
 }
 
-div.dashboard table td {
-  padding: 5px;
+div.dashboard table td,
+div.dashboard table th {
+  padding: 6px;
 }
 
 .dashboard-subheader small {

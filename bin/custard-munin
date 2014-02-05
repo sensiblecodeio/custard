@@ -1,18 +1,29 @@
 #!/bin/sh
 # A Munin plugin.
 # See http://munin.readthedocs.org/en/latest/plugin/writing.html
+# This is just a placeholder right now.
+
+# Look for request.csv either in . or in /opt/custard
+File=request.csv
+test -r "$File" || cd /opt/custard
 
 usage () {
   echo 'collect-munin [config]'
 }
 
 data () {
-  echo minute.value $(date +%M)
+  # Collect the data and truncate the file.
+  # We don't do this atomically, so we risk losing some data.
+  # Alternatives are too horrible to contemplate.
+  echo response_time.value $(
+    awk -F, '{ total += $5 }; END { print total/NR }' "$File"
+  )
+  > "$File"
 }
 
 metadata () {
-  echo graph_title Current minute
-  echo minute.label M
+  echo graph_title Response time
+  echo response_time.label Data from $(env pwd)
 }
 
 if [ $# = 0 ]

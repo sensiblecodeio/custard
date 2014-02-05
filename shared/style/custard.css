@@ -656,6 +656,11 @@ a.tile p.error {
 
 div.dashboard table {
   margin: 20px 0 60px 0;
+  font-size: 14px;
+}
+
+div.dashboard table td {
+  padding: 5px;
 }
 
 .dashboard-subheader small {

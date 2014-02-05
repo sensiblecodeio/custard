@@ -24,7 +24,7 @@
 <% else: %>
   <%= @statusUpdatedHuman %>
 <% end %></td>
-<td class="creator" data-sortable-value="<%= @dataset.creatorDisplayName %>"><%- @dataset?.creatorDisplayName or '<span class="muted">Unkown</span>' %></td>
+<td class="creator" data-sortable-value="<%= @dataset.creatorDisplayName %>"><%- @dataset?.creatorDisplayName or '<span class="muted">Unknown</span>' %></td>
 <td class="created" data-sortable-value="<%= @dataset.createdDate %>"><% if @datasetCreatedHuman == 'Never': %>
   <span class="muted">Never</span>
 <% else: %>

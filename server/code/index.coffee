@@ -230,11 +230,7 @@ checkThisIsMyDataHub = (req, resp, next) ->
 
   User.findByShortName req.params.user, (err, switchingTo) ->
     if switchingTo?.canBeReally and req.user.real.shortName in switchingTo.canBeReally
-      req.user.effective = getSessionUser switchingTo
-      req.session.save()
-      resp.writeHead 302,
-        location: req.url
-      resp.end()
+      next()
     else
       return resp.send 403, error: "Unauthorised"
 
@@ -626,7 +622,7 @@ updateUser = (req, resp) ->
         resp.send 200, newUser
 
 listDatasets = (req, resp) ->
-  Dataset.findAllByUserShortName req.user.effective.shortName, (err, datasets) ->
+  Dataset.findAllByUserShortName req.params.user, (err, datasets) ->
     if err?
       console.warn err
       return resp.send 500, error: 'Error trying to find datasets'

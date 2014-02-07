@@ -7,6 +7,7 @@ request = require 'request'
 test_server = process.env.CU_TEST_SERVER ? 'localhost'
 base_url = "http://#{test_server}:3001"
 login_url = "#{base_url}/login"
+logout_url = "#{base_url}/logout"
 
 prepIntegration = ->
   before (done) ->
@@ -52,6 +53,7 @@ exports.wd40 = wd40
 exports.browser = browser
 exports.base_url = base_url
 exports.login_url = login_url
+exports.logout_url = logout_url
 exports.home_url = "#{base_url}/datasets"
 exports.prepIntegration = prepIntegration
 exports.mediumizeMary = mediumizeMary

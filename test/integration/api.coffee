@@ -662,22 +662,6 @@ describe 'API', ->
           res.should.have.status 200
           done err
 
-  describe "Automatic context switching", ->
-    context "when I'm logged in as test", ->
-      before (done) ->
-        @user = 'test'
-        @password = 'testing'
-        login.call @, done
-
-      context "when I visit ickletest's dataset", ->
-        before (done) ->
-          request.get "#{serverURL}/api/ickletest/datasets/3006375730", (err, res) =>
-            @res = res
-            done()
-
-        it "I become ickletest and can look at ickletest's dataset", ->
-          @res.should.have.status 200
-
   describe 'Logging in as a different user', ->
     context "When I'm a staff member", ->
       before (done) ->

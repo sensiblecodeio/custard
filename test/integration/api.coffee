@@ -601,7 +601,7 @@ describe 'API', ->
           @res.should.have.status 404
 
   describe 'Switching', ->
-    context 'POST /switch/ickletest', ->
+    context 'GET /switch/ickletest', ->
       context "When ickletest has approved", ->
         before (done) ->
           # logout

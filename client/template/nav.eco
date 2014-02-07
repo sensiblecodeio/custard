@@ -1,16 +1,21 @@
 <ul>
-<% if @displayName: %>
+<% if @effectiveUser?.displayName: %>
 <li class="user dropdown">
   <a class="dropdown-toggle" data-toggle="dropdown">
-    <%= @displayName %>
+    <%= @effectiveUser?.displayName %>
     <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
     <li class="profile">
-      <p><img src="<%= @logoUrl or @avatarUrl %>"></p>
-      <p><strong><%= @displayName %></strong><br/><%= @shortName %></p>
+      <p><img src="<%= @effectiveUser?.logoUrl or @effectiveUser?.avatarUrl %>"></p>
+      <p><strong><%= @effectiveUser?.displayName %></strong><br/><%= @effectiveUser?.shortName %></p>
     </li>
-    <li class="set-password"><a href="/set-password" data-nonpushstate><i class="icon-wrench space"></i> Change password</a></li>
+    <% if @allUsers.length > 1: %>
+    <li class="divider"></li>
+    <li class="dashboard"><a href="/dashboard"><i class="icon-tasks space"></i> Dashboard</a></li>
+    <% end %>
+    <li class="divider"></li>
+    <li class="set-password"><a href="/set-password"><i class="icon-wrench space"></i> Change password</a></li>
     <li class="logout"><a href="/logout" data-nonpushstate><i class="icon-off space"></i> Log out</a></li>
   </ul>
 </li>

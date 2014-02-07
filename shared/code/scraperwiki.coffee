@@ -34,13 +34,15 @@ scraperwiki.readSettings = ->
   ###
   Returns dataset and tool settings from the current tool's URL hash
   ###
-  return null if window.location.hash is ''
-  hash = window.location.hash.substr(1)
   try
-    settings = JSON.parse decodeURIComponent(hash)
+    # Try the hash from the current window
+    return JSON.parse(decodeURIComponent(window.location.hash.substr(1)))
   catch e
-    return null
-  return settings
+    try
+      # Try the hash from the container, if it has one?
+      return JSON.parse(decodeURIComponent(parent.location.hash.substr(1)))
+    catch e
+  return null
 
 
 scraperwiki.url = (arg) ->

@@ -37,9 +37,8 @@ describe 'Tool RPC', ->
             wd40.switchToTopFrame done
 
       it 'redirects the host to the specified URL', (done) ->
-        wd40.trueURL (err, url) ->
-          url.should.equal "#{base_url}/"
-          done()
+        regex = new RegExp "^#{base_url}/$"
+        wd40.waitForMatchingURL regex, done
 
     context 'when the redirect external button is pressed', ->
       before (done) ->
@@ -50,9 +49,7 @@ describe 'Tool RPC', ->
                 setTimeout done, 500
 
       it 'redirects the host to the specified URL', (done) ->
-        wd40.trueURL (err, url) ->
-          url.should.equal 'http://www.google.com/robots.txt'
-          done()
+        wd40.waitForMatchingURL /^http:\/\/www.google.com\/robots.txt$/, done
 
     context 'when the showURL button is pressed', ->
       before (done) ->

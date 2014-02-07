@@ -90,17 +90,21 @@ class Cu.View.Dashboard extends Backbone.View
                                   """
 
   sortTable: (e) ->
+    # work out which header to sort on
     $th = $(e.currentTarget)
     columnNumber = $th.prevAll().length
+    $ths = $("thead>tr>th:nth-child(#{columnNumber+1})", @$el)
     if $th.is '.sorted-asc'
       sortOrder = 'desc'
-      $th.removeClass('sorted-asc').addClass 'sorted-desc'
+      $ths.removeClass('sorted-asc').addClass 'sorted-desc'
     else
       sortOrder = 'asc'
-      $th.removeClass('sorted-desc').addClass 'sorted-asc'
+      $ths.removeClass('sorted-desc').addClass 'sorted-asc'
 
-    $th.siblings().removeClass 'sorted-asc sorted-desc'
+    # remove sort classes for the other headers
+    $ths.siblings().removeClass 'sorted-asc sorted-desc'
 
-    $('tbody>tr', @$el).tsort 'td:eq(' + columnNumber + ')'
+    # sort the table bodies
+    $('tbody>tr', @$el).tsort "td:eq(#{columnNumber})",
       order: sortOrder
       attr: 'data-sortable-value'

@@ -29,6 +29,7 @@ describe 'Context switch', ->
       browser.get home_url, ->
         wd40.elementByPartialLinkText 'Cheese', (err, element) ->
           should.exist element
-          wd40.elementByPartialLinkText 'Prune', (err, element) ->
-            should.not.exist err
+          wd40.getText '#content', (err, text) ->
+            text.should.not.include 'Prune'
+            text.should.not.include 'Apricot'
             done()

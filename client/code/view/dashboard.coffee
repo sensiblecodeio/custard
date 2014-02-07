@@ -74,14 +74,17 @@ class Cu.View.Dashboard extends Backbone.View
       url: "/api/#{user.get 'shortName'}/datasets"
       dataType: 'json'
       success: (datasets) =>
-        collection = new Cu.Collection.Datasets datasets
-        collection.forEach (dataset) ->
-          if dataset.get('state') isnt 'deleted'
-            view = new Cu.View.DatasetRow
-              model: dataset
-              clickable: false
-            $('tr.loading', $section).remove()
-            $('tbody', $section).append view.render().el
+        if datasets.length
+          collection = new Cu.Collection.Datasets datasets
+          collection.forEach (dataset) ->
+            if dataset.get('state') isnt 'deleted'
+              view = new Cu.View.DatasetRow
+                model: dataset
+                clickable: false
+              $('tr.loading', $section).remove()
+              $('tbody', $section).append view.render().el
+        else
+          $('tr.loading', $section).remove()
       error: () =>
         $('tbody', $section).html """
                                   <tr class="ajax-error">

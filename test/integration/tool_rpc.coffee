@@ -28,13 +28,49 @@ describe 'Tool RPC', ->
         browser.waitForElementByCss 'iframe', 7000, =>
           wd40.trueURL (err, url) =>
             @toolURL = url
+            @boxID = url.match(/dataset[/]([^/]+)[/]settings/)[1]
             done()
+
+    context 'when the readsettings button is pressed', ->
+      before (done) ->
+        wd40.switchToBottomFrame ->
+          wd40.click '#readsettings', done
+
+      it 'prints the settings', (done) ->
+        wd40.getText '#settings', (err, text) =>
+          text.should.not.be.empty
+          obj = JSON.parse text
+          obj.source.apikey.should.be.a.String.and.not.be.empty
+          obj.source.url.should.be.a.String.and.match new RegExp @boxID
+          obj.source.publishToken.should.be.a.String.and.not.be.empty
+          obj.source.box.should.be.a.String.and.equal @boxID
+          done()
+
+    context 'when the settings hash is cleared and the readsettings button is pressed again', ->
+      before (done) ->
+        wd40.click '#clearhash', ->
+          wd40.waitForText 'Settings will appear here', done
+
+      before (done) ->
+        wd40.switchToBottomFrame ->
+          wd40.click '#readsettings', done
+
+      it 'prints the settings', (done) ->
+        wd40.getText '#settings', (err, text) =>
+          text.should.not.be.empty
+          obj = JSON.parse text
+          obj.source.apikey.should.be.a.String.and.not.be.empty
+          obj.source.url.should.be.a.String.and.match new RegExp @boxID
+          obj.source.publishToken.should.be.a.String.and.not.be.empty
+          obj.source.box.should.be.a.String.and.equal @boxID
+          done()
 
     context 'when the redirect internal button is pressed', ->
       before (done) ->
-        wd40.switchToBottomFrame ->
-          wd40.click '#redirectInternal', (err, btn) ->
-            wd40.switchToTopFrame done
+        browser.get @toolURL, ->
+          wd40.switchToBottomFrame ->
+            wd40.click '#redirectInternal', (err, btn) ->
+              wd40.switchToTopFrame done
 
       it 'redirects the host to the specified URL', (done) ->
         regex = new RegExp "^#{base_url}/$"

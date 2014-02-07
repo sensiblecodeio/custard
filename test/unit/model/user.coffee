@@ -234,7 +234,7 @@ describe 'User (server)', ->
           done err
 
       after ->
-        mailchimp.MailChimpAPI.restore()
+        @mailChimpStub.restore()
 
       it 'the new user has a recurlyAccount', ->
         should.exist @user.recurlyAccount
@@ -273,7 +273,7 @@ describe 'User (server)', ->
           done err
 
       after ->
-        mailchimp.MailChimpAPI.restore()
+        @mailChimpStub.restore()
 
       it 'it has added them to our MailChimp list', ->
         @apiStub.listSubscribe.calledOnce.should.be.true
@@ -295,7 +295,7 @@ describe 'User (server)', ->
           done err
 
       after ->
-        mailchimp.MailChimpAPI.restore()
+        @mailChimpStub.restore()
 
       it 'it has not contacted the MailChimp API', ->
         @apiStub.listSubscribe.calledOnce.should.be.false

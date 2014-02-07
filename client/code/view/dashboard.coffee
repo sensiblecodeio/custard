@@ -3,8 +3,13 @@ class Cu.View.Dashboard extends Backbone.View
 
   events:
     'click th.sortable': 'sortTable'
+    'click #show-only-errors': 'toggleErrors'
 
   render: ->
+    @$el.html """
+              <label id="show-only-errors"><input type="checkbox"> Show only failing datasets</label>
+              """
+
     # Make sure we have the latest list of contexts
     # the current user can access.
     users = Cu.CollectionManager.get Cu.Collection.User
@@ -12,6 +17,14 @@ class Cu.View.Dashboard extends Backbone.View
       success: =>
         users.forEach @appendUserDatasets
     @
+
+  toggleErrors: (e) ->
+    $nonErrorRows= @$el.find('tbody tr').not('.error')
+    $input = $(e.currentTarget).children 'input'
+    if $input.is ':checked'
+      $nonErrorRows.hide()
+    else
+      $nonErrorRows.show()
 
   appendUserDatasets: (user) =>
     # Gets all datasets owned by the given `user`

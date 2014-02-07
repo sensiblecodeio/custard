@@ -68,3 +68,16 @@ describe 'Dashboard', ->
               url.should.match /[/]dashboard[/]?$/
             done()
           , 500
+
+    it 'there is a checkbox to show only failing datasets', (done) ->
+      browser.elementByCss 'label#show-only-errors input', done
+
+    it 'clicking the checkbox hides all non-failing datasets', (done) ->
+      wd40.click 'label#show-only-errors input', ->
+        wd40.waitForInvisibleByCss 'tr[data-box="3006375815"]', (err) ->
+          wd40.waitForInvisibleByCss 'tr[data-box="3006375731"]', (err) ->
+            browser.elementByCss 'tr[data-box="3006375730"]', (err, tr) ->
+              tr.isVisible (err, visible) ->
+                visible.should.be.true
+                done()
+

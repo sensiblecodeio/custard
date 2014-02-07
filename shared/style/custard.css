@@ -705,6 +705,10 @@ a.tile p.error {
 
 /* Dashboard page */
 
+#content > div.dashboard {
+  position: relative; /* for positioning the #show-only-errors button */
+}
+
 div.dashboard table {
   margin: 20px 0 60px 0;
 }
@@ -730,6 +734,18 @@ div.dashboard tr.loading td img,
 div.dashboard tr.ajax-error td img {
   vertical-align: 2px;
   margin-right: 5px;
+}
+
+div.dashboard #show-only-errors {
+  position: absolute;
+  right: 0;
+  padding: 5px 0;
+  margin: 0;
+}
+
+div.dashboard #show-only-errors input {
+  vertical-align: 1px;
+  margin-right: 4px;
 }
 
 .dashboard-subheader small {

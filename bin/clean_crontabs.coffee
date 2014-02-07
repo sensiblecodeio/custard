@@ -1,7 +1,5 @@
 #!/usr/bin/env coffee
 
-process.env.NODE_ENV = 'cron'
-
 mongoose = require 'mongoose'
 async = require 'async'
 mongoose.connect process.env.CU_DB
@@ -22,6 +20,7 @@ main = (TheDataset) ->
 
 if require.main == module
   CLI = true
+  process.env.NODE_ENV = 'cron'
   main(Dataset)
 
 exports.main = main

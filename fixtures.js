@@ -314,21 +314,21 @@ exports.datasets = [{
   "tool": "just-testing-identd",
   "displayName": "drj",
   "user": "drj",
-  boxServer: "localhost",
+  "boxServer": "localhost",
   "views": []
 }, {
   "box": "bfs",
   "tool": "just-testing-identd",
   "displayName": "bfs",
   "user": "bfs",
-  boxServer: "localhost",
+  "boxServer": "localhost",
   "views": []
 }, {
   "box": "chris",
   "tool": "just-testing-identd",
   "displayName": "chris",
   "user": "chris",
-  boxServer: "localhost",
+  "boxServer": "localhost",
   "views": []
 }, {
   "box": "3006375730",
@@ -336,7 +336,12 @@ exports.datasets = [{
   "displayName": "Cheese",
   "user": "ickletest",
   "boxServer": "localhost",
-  "views": []
+  "views": [],
+  "status": {
+    "updated": "2014-01-10T07:20:00.000Z",
+    "message": "There was no cheese",
+    "type": "error"
+  }
 }, {
   "box": "3006375731",
   "tool": "test-app",

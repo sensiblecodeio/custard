@@ -687,7 +687,7 @@ a.tile p.error {
 
 .dataset-list th.sortable [class^=icon-],
 .dashboard th.sortable [class^=icon-] {
-  display: none;
+  display: none; /* hide arrows by default */
   margin-top: 2px;
   margin-left: 3px;
   margin-right: -17px;
@@ -698,12 +698,28 @@ a.tile p.error {
 .dashboard th.sorted-asc .icon-chevron-up,
 .dashboard th.sorted-desc .icon-chevron-down {
   display: inline-block;
+  opacity: 1 !important; /* !important saves us duplicating all those selectors again later */
+}
+
+.dataset-list th.sortable:hover .icon-chevron-up,
+.dashboard th.sortable:hover .icon-chevron-up {
+  display: inline-block; /* show ghostly up arrow when no sorting has been defined */
+  opacity: 0.5;
+}
+
+.dataset-list th.sorted-desc:hover .icon-chevron-up,
+.dashboard th.sorted-desc:hover .icon-chevron-up {
+  display: none; /* do not show the ghostly up arrow if descending sort has already been defined */
 }
 
 
 
 
 /* Dashboard page */
+
+#content > div.dashboard {
+  position: relative; /* for positioning the #show-only-errors button */
+}
 
 div.dashboard table {
   margin: 20px 0 60px 0;
@@ -730,6 +746,18 @@ div.dashboard tr.loading td img,
 div.dashboard tr.ajax-error td img {
   vertical-align: 2px;
   margin-right: 5px;
+}
+
+div.dashboard #show-only-errors {
+  position: absolute;
+  right: 0;
+  padding: 5px 0;
+  margin: 0;
+}
+
+div.dashboard #show-only-errors input {
+  vertical-align: 1px;
+  margin-right: 4px;
 }
 
 .dashboard-subheader small {

@@ -46,7 +46,7 @@ class Cu.View.Dashboard extends Backbone.View
 
     arrows = '<i class="icon-chevron-up"></i><i class="icon-chevron-down"></i>'
     $section.append $ """
-                      <table class="table">
+                      <table class="table table-hover">
                         <thead>
                           <tr>
                             <th class="icon"></th>
@@ -80,7 +80,7 @@ class Cu.View.Dashboard extends Backbone.View
             if dataset.get('state') isnt 'deleted'
               view = new Cu.View.DatasetRow
                 model: dataset
-                clickable: false
+                clickable: true
               $('tr.loading', $section).remove()
               $('tbody', $section).append view.render().el
         else

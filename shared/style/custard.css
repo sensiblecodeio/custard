@@ -582,7 +582,8 @@ a.tile p.error {
   line-height: 18px;
 }
 
-.dataset-list > table td {
+.dataset-list > table td,
+.dashboard table td  {
   cursor: pointer;
 }
 
@@ -655,7 +656,8 @@ a.tile p.error {
   opacity: 0.7;
 }
 
-.dataset-list table tr.error:hover > td {
+.dataset-list table tr.error:hover > td,
+.dashboard table tr.error:hover > td {
   background-color: #CC0A1B;
 }
 

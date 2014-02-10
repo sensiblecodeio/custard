@@ -846,6 +846,35 @@ sendIntercomTag = (req, resp) ->
   body = buildIntercomRequestBody 'tags', messageObject
   request.post body, intercomResponseHandler(resp, 'sendIntercomTag')
 
+# This does automatic switching if you try to
+# access a dataset not in your current data hub
+switchContextIfRequiredAndAllowed = (req, resp, next) ->
+  datasetID = req.params[0]
+  Dataset.findOneById datasetID, (err, dataset) ->
+    if dataset
+      if dataset.user == req.user.real.shortName
+        return next()
+      else
+        User.findByShortName dataset.user, (err, switchingTo) ->
+          if switchingTo
+            if switchingTo?.canBeReally and req.user.real.shortName in switchingTo.canBeReally
+              req.user.effective = getSessionUser switchingTo
+              req.session.save()
+              return next()
+            else if req.user.real.isStaff
+              req.user.effective = getSessionUser switchingTo
+              req.session.save()
+              return next()
+            else
+              resp.status 404
+              return resp.render 'not_found'
+          else
+            resp.status 404
+            return resp.render 'not_found'
+    else
+      resp.status 404
+      return resp.render 'not_found'
+
 app.all '*', ensureAuthenticated
 
 app.get '/logout', logout
@@ -875,9 +904,10 @@ app.post '/api/reporting/message/?', sendIntercomMessage
 app.post '/api/reporting/user/?', sendIntercomUserData
 app.post '/api/reporting/tag/?', sendIntercomTag
 
+app.get /^[/]dataset[/]([a-zA-Z0-9]+)/, switchContextIfRequiredAndAllowed, renderClientApp
+
 # Send all other requests to the client app, eg:
 # /datasets
-# /dataset/abc1234
 # /signup/free
 # /dashboard
 # /create-profile

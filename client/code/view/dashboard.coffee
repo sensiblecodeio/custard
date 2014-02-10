@@ -22,9 +22,15 @@ class Cu.View.Dashboard extends Backbone.View
     $nonErrorRows= @$el.find('tbody tr').not('.error')
     $input = $(e.currentTarget).children 'input'
     if $input.is ':checked'
-      $nonErrorRows.hide()
+      $('section', @$el).each ->
+        $allRows = $(this).find 'tbody tr'
+        $nonErrorRows = $(this).find('tbody tr').not '.error'
+        if $nonErrorRows.length == $allRows.length
+          $(this).addClass 'empty'
+        else
+          $nonErrorRows.hide()
     else
-      $nonErrorRows.show()
+      $('section', @$el).removeClass('empty').find('tr:hidden').show()
 
   appendUserDatasets: (user) =>
     # Gets all datasets owned by the given `user`
@@ -46,7 +52,7 @@ class Cu.View.Dashboard extends Backbone.View
 
     arrows = '<i class="icon-chevron-up"></i><i class="icon-chevron-down"></i>'
     $section.append $ """
-                      <table class="table">
+                      <table class="table table-hover">
                         <thead>
                           <tr>
                             <th class="icon"></th>
@@ -74,14 +80,17 @@ class Cu.View.Dashboard extends Backbone.View
       url: "/api/#{user.get 'shortName'}/datasets"
       dataType: 'json'
       success: (datasets) =>
-        collection = new Cu.Collection.Datasets datasets
-        collection.forEach (dataset) ->
-          if dataset.get('state') isnt 'deleted'
-            view = new Cu.View.DatasetRow
-              model: dataset
-              clickable: false
-            $('tr.loading', $section).remove()
-            $('tbody', $section).append view.render().el
+        if datasets.length
+          collection = new Cu.Collection.Datasets datasets
+          collection.forEach (dataset) ->
+            if dataset.get('state') isnt 'deleted'
+              view = new Cu.View.DatasetRow
+                model: dataset
+                clickable: true
+              $('tr.loading', $section).remove()
+              $('tbody', $section).append view.render().el
+        else
+          $('tr.loading', $section).remove()
       error: () =>
         $('tbody', $section).html """
                                   <tr class="ajax-error">

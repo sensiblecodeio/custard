@@ -60,15 +60,6 @@ describe 'Dashboard', ->
                 elements.length.should.equal 3
                 done()
 
-    it 'clicking the datasets does nothing', (done) ->
-      wd40.elementByCss 'tr[data-box="3006375815"] td.name', (err, td) ->
-        td.click ->
-          setTimeout ->
-            browser.url (err, url) ->
-              url.should.match /[/]dashboard[/]?$/
-            done()
-          , 500
-
     it 'there is a checkbox to show only failing datasets', (done) ->
       browser.elementByCss 'label#show-only-errors input', done
 
@@ -80,4 +71,13 @@ describe 'Dashboard', ->
               tr.isVisible (err, visible) ->
                 visible.should.be.true
                 done()
+
+    it 'clicking the checkbox again shows all datasets', (done) ->
+      wd40.click 'label#show-only-errors input', ->
+        wd40.waitForVisibleByCss 'tr[data-box="3006375815"]', done
+
+    it 'clicking a dataset in someone else’s hub takes me to it (automatic context switch FTW)', (done) ->
+      wd40.click 'tr[data-box="3006375730"] td.name', ->
+        browser.waitForElementByCss '#toolbar', 4000, ->
+          browser.waitForElementByCss 'iframe', 2000, done
 

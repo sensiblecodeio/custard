@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, logout_url, home_url, prepIntegration} = require './helper'
 
 describe 'Dataset', ->
   prepIntegration()
@@ -8,7 +8,9 @@ describe 'Dataset', ->
 
   before (done) ->
     wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', -> wd40.click '#login', done
+      wd40.fill '#password', 'testing', ->
+        wd40.click '#login', done
+
   context 'when I click on an Apricot dataset', ->
     before (done) ->
       # wait for tiles to fade in
@@ -213,11 +215,25 @@ describe 'Dataset', ->
     before (done) ->
       browser.get "#{base_url}/dataset/doesnotexist", done
 
+    it 'shows a not found error', (done) ->
+      wd40.getText 'body', (err, text) ->
+        text.should.include 'Not found'
+        done()
+
+  context "When I go to a dataset in somebody else’s data hub, and I’m not staff", ->
     before (done) ->
-      setTimeout done, 1000
+      browser.get logout_url, done
+
+    before (done) ->
+      browser.get login_url, ->
+        wd40.fill '#username', 'test', ->
+          wd40.fill '#password', 'testing', ->
+            wd40.click '#login', done
+
+    before (done) ->
+      browser.get "#{base_url}/dataset/1057304856", done
 
     it 'shows a not found error', (done) ->
-      wd40.getText '#error-alert', (err, text) ->
-        text.should.be.a.String
-        text.should.not.be.empty
-        done err
+      wd40.getText 'body', (err, text) ->
+        text.should.include 'Not found'
+        done()

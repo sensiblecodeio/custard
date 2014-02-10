@@ -190,10 +190,17 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
 
   dataset: (box) ->
-
     model = Cu.Model.Dataset.findOrCreate box: box, merge: true
     toolsDone = app.tools().fetch()
     modelDone = model.fetch()
+
+    modelDone.fail (jqXHR, textStatus, errorThrown) =>
+      # 404? Reload the page directly from the server, so it can either render
+      # a nice 404 page, or automatically switch the user into the right context.
+      if jqXHR.status == 404
+        window.aboutToClose = true
+        window.location.reload()
+
     $.when.apply( null, [modelDone, toolsDone] ).done =>
       views = model.get 'views'
       unless @subnavView.currentView instanceof Cu.View.Toolbar
@@ -225,12 +232,12 @@ class Cu.Router.Main extends Backbone.Router
         contentView = new Cu.View.AppContent model: model
         @appView.showView contentView
         contentView.showContent()
-      error: (x,y,z) ->
-        # TODO: factor into function
-        contentView = new Cu.View.Error title: "Sorry, we couldn't find that dataset.", message: "Are you sure you're logged into the right account?"
-        subnavView = new Cu.View.Subnav PageTitles['404']
-        @appView.showView contentView
-        @subnavView.showView subnavView
+      error: (_model, jqXHR) ->
+        # 404? Reload the page directly from the server, so it can either render
+        # a nice 404 page, or automatically switch the user into the right context.
+        if jqXHR.status == 404
+          window.aboutToClose = true
+          window.location.reload()
 
   view: (datasetID, viewID) ->
     dataset = Cu.Model.Dataset.findOrCreate
@@ -250,6 +257,12 @@ class Cu.Router.Main extends Backbone.Router
         unless @subnavView.currentView instanceof Cu.View.Toolbar
           subnavView = new Cu.View.Toolbar model: dataset, view: v
           @subnavView.showView subnavView
+      error: (_model, jqXHR) ->
+        # 404? Reload the page directly from the server, so it can either render
+        # a nice 404 page, or automatically switch the user into the right context.
+        if jqXHR.status == 404
+          window.aboutToClose = true
+          window.location.reload()
 
   peoplePack: ->
     subnavView = new Cu.View.ToolShopNav {name: 'People Pack', url: '/tools/people-pack'}

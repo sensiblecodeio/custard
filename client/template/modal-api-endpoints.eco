@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3>This tool&rsquo;s API endpoints:</h3>
+</div>
+<div class="modal-body">
+  <label for="sql-endpoint">SQL endpoint</label>
+  <p class="input-append">
+    <input type="text" id="sql-endpoint" class="span6" value="https://<%= @boxServer %>/<%= @box %>/<%= @boxJSON?.publish_token or '<publish_token>' %>/sql">
+    <button class="btn zeroclipboard" type="button" data-clipboard-target="sql-endpoint">Copy</button>
+  </p>
+  <label for="http-endpoint">HTTP endpoint</label>
+  <p class="input-append">
+    <input type="text" id="http-endpoint" class="span6" value="https://<%= @boxServer %>/<%= @box %>/<%= @boxJSON?.publish_token or '<publish_token>' %>/http">
+    <button class="btn zeroclipboard" type="button" data-clipboard-target="http-endpoint">Copy</button>
+  </p>
+</div>

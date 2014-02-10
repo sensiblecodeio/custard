@@ -1,6 +1,7 @@
 <div id="dropdown-menu-closer"></div>
 <ul id="tool-options-menu" class="dropdown-menu">
   <li><a class="git-ssh"><img src="/image/icon-terminal.png" width="16" height="16" /> SSH into tool</a></li>
+  <li><a class="api-endpoints"><img src="/image/icon-cloud.png" width="16" height="16" /> API Endpoints</a></li>
   <li><a class="hide-tool"><img src="/image/icon-cross.png" width="16" height="16" /> Delete tool</a></li>
 </ul>
 <div id="dataset-meta" <% if @color: %>style="background-color: <%= @color %>"<% end %>>

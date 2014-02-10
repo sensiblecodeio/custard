@@ -238,6 +238,7 @@ class Cu.View.Toolbar extends Backbone.View
     'click .rename-dataset': 'renameDataset'
     'click .hide-tool': 'hideTool'
     'click .git-ssh': 'gitSshTool'
+    'click .api-endpoints': 'showApiEndpoints'
     'click .dropdown-toggle': 'showDropdownMenuCloser'
     'click #dropdown-menu-closer': 'hideDropdownMenuCloser'
     'blur #editable-input input': 'editableNameBlurred'
@@ -306,7 +307,12 @@ class Cu.View.Toolbar extends Backbone.View
 
   gitSshTool: (e) ->
       e.stopPropagation()
-      showOrAddSSH window.selectedTool, 'tool'
+      showSSHModal window.selectedTool, 'tool'
+
+  showApiEndpoints: (e) ->
+      e.stopPropagation()
+      showAPIModal window.selectedTool
+
 
   showDropdownMenuCloser: ->
     # Clicks on tool iframes can't close open dropdowns inside of #toolbar.

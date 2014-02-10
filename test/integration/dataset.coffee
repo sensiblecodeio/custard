@@ -57,6 +57,31 @@ describe 'Dataset', ->
     it '...and a button to pick more tools', ->
       @toolbarText.toLowerCase().should.include 'more tools'
 
+    context 'when I click the tool options icon', ->
+      before (done) ->
+        wd40.click '#toolbar a[href$="/settings"] .dropdown-toggle', done
+
+      it 'there is an API endpoints link', (done) ->
+        wd40.elementByCss '#tool-options-menu .api-endpoints', (err, el) ->
+          done(err)
+
+    context 'when I click the API endpoints link', (done) ->
+      before (done) ->
+        wd40.click '#tool-options-menu .api-endpoints', done
+
+      it 'I see the box’s SQL and HTTP API endpoints', (done) ->
+        wd40.elementByCss '#sql-endpoint', (err, el) ->
+          el.getValue (err, val) ->
+            val.should.equal 'https://localhost/3006375731/6cd21c903b864fe/sql'
+            wd40.elementByCss '#http-endpoint', (err, el) ->
+              el.getValue (err, val) ->
+                val.should.equal 'https://localhost/3006375731/6cd21c903b864fe/http'
+                done()
+
+      after (done) ->
+        wd40.click 'button[data-dismiss="modal"]', (err) ->
+          wd40.waitForInvisibleByCss '.modal-backdrop', done
+
     context 'when I click the title', ->
       before (done) ->
         browser.elementByCssIfExists '#editable-input', (err, wrapper) =>

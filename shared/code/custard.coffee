@@ -2,7 +2,7 @@
 # the Custard frontend
 
 
-showOrAddSSH = (model, type) =>
+showSSHModal = (model, type) =>
 
   initZeroClipboard = ->
     clip = new ZeroClipboard $('.zeroclipboard')[0], { moviePath: "/vendor/js/ZeroClipboard.swf" }
@@ -48,6 +48,31 @@ showOrAddSSH = (model, type) =>
   $(document).on 'click', '.modal #add-ssh-key', addSSHKey
   $(document).on 'click', '.modal #add-another-ssh-key', ->
     makeModal JST['modal-add-ssh']()
+
+
+showAPIModal = (model) =>
+
+  copyCompleted = ->
+    $(this).html('<i class="icon-ok space"></i> Copied!').prev().css('width', 410).focus()
+
+  initZeroClipboard = ->
+    $('.zeroclipboard').each ->
+      clip = new ZeroClipboard this, { moviePath: "/vendor/js/ZeroClipboard.swf" }
+      clip.on "complete", copyCompleted
+
+  makeModal = (html) ->
+    # html should be the HTML *content* of a modal, as a string,
+    # without the surrounding <div class="modal">...</div>
+    if $('.modal').length
+      $('.modal').html html
+      initZeroClipboard()
+    else
+      modalWindow = $("""<div class="modal hide fade">#{html}</div>""")
+      modalWindow.modal()
+      modalWindow.on 'hidden', -> modalWindow.remove()
+      modalWindow.on 'shown', initZeroClipboard
+
+  makeModal JST['modal-api-endpoints'] model.toJSON()
 
 
 String::twoLineWrap = ->

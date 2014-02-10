@@ -351,6 +351,10 @@ exports.datasets = [{
   "creatorShortName": "ehg",
   "creatorDisplayName": "Chris Blower",
   "boxServer": "localhost",
+  "boxJSON": {
+    "publish_token": "6cd21c903b864fe",
+    "database": "scraperwiki.sqlite"
+  },
   "status": {
     "updated": "2014-01-10T07:20:00.000Z",
     "message": "Fully up to date",

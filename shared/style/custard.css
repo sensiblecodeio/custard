@@ -993,6 +993,7 @@ div.dashboard #show-only-errors + section .dashboard-subheader {
   list-style: none;
   margin: 0;
   display: inline-block; /* stop toolbar item groups wrapping onto separate lines */
+  vertical-align: top; /* avoids weird vertical alignment issues introduced by default inline-block behaviour */
 }
 
 #dataset-tools > ul.tools {
@@ -1000,7 +1001,7 @@ div.dashboard #show-only-errors + section .dashboard-subheader {
 }
 
 #dataset-tools > ul > li {
-  float: left;
+  display: inline-block; /* line list items up horizontally - won't work in IE7 */
 }
 
 #dataset-tools a.tool {

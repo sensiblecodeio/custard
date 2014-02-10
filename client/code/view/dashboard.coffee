@@ -22,9 +22,15 @@ class Cu.View.Dashboard extends Backbone.View
     $nonErrorRows= @$el.find('tbody tr').not('.error')
     $input = $(e.currentTarget).children 'input'
     if $input.is ':checked'
-      $nonErrorRows.hide()
+      $('section', @$el).each ->
+        $allRows = $(this).find 'tbody tr'
+        $nonErrorRows = $(this).find('tbody tr').not '.error'
+        if $nonErrorRows.length == $allRows.length
+          $(this).addClass 'empty'
+        else
+          $nonErrorRows.hide()
     else
-      $nonErrorRows.show()
+      $('section', @$el).removeClass('empty').find('tr:hidden').show()
 
   appendUserDatasets: (user) =>
     # Gets all datasets owned by the given `user`

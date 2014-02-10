@@ -121,7 +121,6 @@ class exports.User extends ModelBase
           return item.plan.plan_code is @accountLevel and item.state is 'active'
 
         if not currentSubscription
-          console.log 'kitten'
           return callback null, null
 
         return callback null, new Subscription currentSubscription

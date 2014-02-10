@@ -190,9 +190,7 @@ class Cu.Router.Main extends Backbone.Router
         @subnavView.showView subnavView
 
   dataset: (box) ->
-    console.log 'kitten'
     model = Cu.Model.Dataset.findOrCreate box: box, merge: true
-    console.log 'puppy'
     toolsDone = app.tools().fetch()
     modelDone = model.fetch()
 

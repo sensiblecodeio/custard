@@ -62,7 +62,7 @@ describe 'Successful login', ->
               setTimeout done, 500
 
       it 'shows my name on the homepage', (done) ->
-        wd40.getText '#subnav-path .btn', (err, text) ->
+        wd40.getText '#subnav-path h1', (err, text) ->
           text.should.include 'Ickle Test'
           done()
 
@@ -167,7 +167,7 @@ describe 'Password', ->
 
       it 'I am shown my datasets', (done) ->
         browser.waitForElementByCss '.dataset-list', 4000, ->
-          wd40.getText '#subnav-path .btn', (err, text) ->
+          wd40.getText '#subnav-path', (err, text) ->
             text.should.include 'Ickle Test’s data hub'
             done()
 
@@ -182,7 +182,7 @@ describe 'Password', ->
 
       it 'I am shown my company\'s datasets', (done) ->
         browser.waitForElementByCss '.dataset-list', 4000, ->
-          wd40.getText '#subnav-path .btn', (err, text) ->
+          wd40.getText '#subnav-path', (err, text) ->
             text.should.include 'Testerson & Sons Ltd’s data hub'
             done()
 

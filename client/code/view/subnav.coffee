@@ -19,24 +19,9 @@ class Cu.View.DataHubNav extends Backbone.View
   render: ->
     name = window.user.effective.displayName or window.user.effective.shortName
     window.document.title = "#{name}’s data hub | ScraperWiki"
-    h1 = """<h1>
-        <img src="#{window.user.effective.logoUrl or window.user.effective.avatarUrl}" />#{name}&rsquo;s data hub
-      </h1>"""
-
-    @$el.html("""
-      <div class="btn-toolbar" id="subnav-path">#{h1}</div>
-      <div class="btn-toolbar" id="subnav-options">
-        <div class="btn-group">
-          <a class="btn new-dataset"><i class="icon-plus"></i> New Dataset</a>
-        </div>
-        <div class="btn-group">
-          <a class="btn" id="tile-view" title="View datasets as a grid"><i class="icon-th-large"></i></a>
-          <a class="btn" id="list-view" title="View datasets as a list"><i class="icon-th-list"></i></a>
-        </div>
-        <div class="btn-group">
-          <input type="text" class="input-medium search-query">
-        </div>
-      </div>""")
+    @$el.html JST['subnav-home']
+      avatar: window.user.effective.logoUrl or window.user.effective.avatarUrl
+      name: name
 
     if window.user.effective.datasetDisplay == 'list'
       @$el.find('#list-view').addClass('active')

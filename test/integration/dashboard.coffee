@@ -61,16 +61,24 @@ describe 'Dashboard', ->
                 done()
 
     it 'there is a checkbox to show only failing datasets', (done) ->
-      browser.elementByCss 'label#show-only-errors input', done
+      browser.elementByCss 'label#show-only-errors input', ->
+        setTimeout done, 1000
 
     it 'clicking the checkbox hides all non-failing datasets', (done) ->
       wd40.click 'label#show-only-errors input', ->
-        wd40.waitForInvisibleByCss 'tr[data-box="3006375815"]', (err) ->
-          wd40.waitForInvisibleByCss 'tr[data-box="3006375731"]', (err) ->
-            browser.elementByCss 'tr[data-box="3006375730"]', (err, tr) ->
-              tr.isVisible (err, visible) ->
-                visible.should.be.true
-                done()
+        browser.elementByCss 'tr[data-box="3006375815"] td.name', (err, el) ->
+          el.isDisplayed (err, displayed) ->
+            should.not.exist err
+            displayed.should.be.false
+            browser.elementByCss 'tr[data-box="3006375731"] td.name', (err, el) ->
+              el.isDisplayed (err, displayed) ->
+                should.not.exist err
+                displayed.should.be.false
+                browser.elementByCss 'tr[data-box="3006375730"] td.name', (err, el) ->
+                  el.isDisplayed (err, displayed) ->
+                    should.not.exist err
+                    displayed.should.be.true
+                    done()
 
     it 'clicking the checkbox again shows all datasets', (done) ->
       wd40.click 'label#show-only-errors input', ->

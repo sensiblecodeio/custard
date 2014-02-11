@@ -8,18 +8,20 @@
   <ul class="dropdown-menu">
     <% if @allUsers.length > 1: %>
     <li class="contexts-header">Use ScraperWiki as:</li>
-      <% for user in @allUsers: %>
-      <li class="context">
-        <a href="/switch/<%= user.shortName %>">
+    <% for user in @allUsers: %>
+    <li class="context">
+      <a href="/switch/<%= user.shortName %>" data-nonpushstate title="<%= user.shortName %>">
+        <span style="display: inline-block; width: 24px; height: 24px">
           <img src="<%= user.logoUrl or user.avatarUrl %>">
-          <strong><%= user.displayName %></strong>
-          <% if user.shortName == @effectiveUser?.shortName: %>
-          <i class="icon-ok"></i>
-        </a>
+        </span>
+        <strong><%= user.displayName %></strong>
+        <% if user.shortName == @effectiveUser?.shortName: %>
+        <i class="icon-ok"></i>
         <% end %>
-      </li>
-      <% end %>
-    <li class="divider"></li>
+      </a>
+    </li>
+    <% end %>
+    <li class="divider" style="margin-top: 10px;"></li>
     <li class="dashboard"><a href="/dashboard"><i class="icon-tasks space"></i> Dashboard</a></li>
     <% end %>
     <li class="divider"></li>

@@ -293,7 +293,7 @@ body.fullscreen .container {
   line-height: 32px;
 }
 
-#subnav-path > .btn-group > .btn,
+#subnav-path h1,
 .dashboard-subheader h1 {
   color: #333;
   font-size: 24px;
@@ -301,42 +301,7 @@ body.fullscreen .container {
   padding: 0 4px;
 }
 
-#subnav-path > .btn-group:first-child > .btn:first-child {
-  margin-left: -4px;
-}
-
-#subnav-path > .context-switch > a {
-  position: relative;
-  margin-left: -4px;
-  text-decoration: none;
-  /* We'll override these next settings for large-screened devices later */
-  width: 260px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  text-align: left;
-}
-
-#subnav-path > .context-switch > .btn {
-  padding-right: 20px;
-}
-
-#subnav-path > .context-switch > a.dropdown-toggle:hover,
-#subnav-path > .context-switch.open > a.dropdown-toggle {
-  border-color: #ccc;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin-top: -4px;
-  margin-bottom: -4px;
-}
-
-#subnav-path > .context-switch > a .caret {
-  position: absolute;
-  top: 50%;
-  right: 6px;
-  margin-top: -1px;
-}
-
-#subnav-path > .btn-group > a img,
+#subnav-path h1 img,
 .dashboard-subheader h1 img {
   vertical-align: top;
   margin-right: 9px;
@@ -354,43 +319,6 @@ body.fullscreen .container {
   display: inline-block;
   padding: 1px;
   vertical-align: middle;
-}
-
-.context-switch .dropdown-menu {
-  width: 100%;
-  left: -3px;
-}
-
-.context-switch .dropdown-menu .search {
-  text-align: center;
-  padding: 7px 0 10px 0
-}
-
-.context-switch .dropdown-menu .search input {
-  margin-bottom: 0;
-  width: 75%;
-}
-
-.context-switch .dropdown-menu > .context-search-result > a {
-  line-height: 24px;
-  height: 24px;
-}
-
-.context-switch .context-search-result.selected {
-  background-color: #bdf;
-}
-
-.context-switch .context-search-result img {
-  margin-right: 5px;
-  height: 24px;
-  min-width: 24px;
-  vertical-align: -7px;
-}
-
-.context-switch .no-matches {
-  text-align: center;
-  padding-bottom: 5px;
-  color: #999;
 }
 
 #subnav-options .btn-group + .btn-group {

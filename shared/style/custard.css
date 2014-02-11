@@ -293,7 +293,8 @@ body.fullscreen .container {
   line-height: 32px;
 }
 
-#subnav-path h1,
+#subnav-path > .btn-group > .btn,
+#subnav-path.home h1,
 .dashboard-subheader h1 {
   color: #333;
   font-size: 24px;
@@ -311,6 +312,10 @@ body.fullscreen .container {
   box-shadow: 0 0 1px #666;
   height: 32px;
   min-width: 32px;
+}
+
+#subnav-path > .btn-group:first-child > .btn:first-child {
+  margin-left: -4px;
 }
 
 #subnav-path .slash {

@@ -1,4 +1,4 @@
-<div class="btn-toolbar" id="subnav-path">
+<div class="btn-toolbar home" id="subnav-path">
   <h1>
     <img src="<%= @avatar %>" /><%= @name %>&rsquo;s data hub
   </h1>

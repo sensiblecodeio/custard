@@ -14,11 +14,23 @@ class Cu.View.Nav extends Backbone.View
     users = Cu.CollectionManager.get Cu.Collection.User
     users.fetch
       success: =>
-        console.log users
+        real = window.user.real
+        effective = window.user.effective
+        allUsers = users.toJSON()
+
+        staff = real?.isStaff
+        switched = real.shortName != effective.shortName
+        conventionalSwitch = effective.shortName in _.pluck(allUsers, 'shortName')
+
+        if staff and switched and not conventionalSwitch
+          # this is a staff member who has switched into an
+          # account they shouldn't normally be able to access
+          allUsers.push window.user.effective
+
         @el.innerHTML = JST.nav
-          realUser: window.user.real
-          effectiveUser: window.user.effective
-          allUsers: users.toJSON()
+          realUser: real
+          effectiveUser: effective
+          allUsers: allUsers
 
   loggedOutNav: ->
     @el.innerHTML = JST.nav()

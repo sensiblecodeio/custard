@@ -11,9 +11,9 @@ describe 'Context switch (non-staff)', ->
       wd40.fill '#password', 'testing', ->
         wd40.click '#login', done
 
-  context 'when I click the context switcher', ->
+  context 'when I click the user menu', ->
     before (done) ->
-      wd40.click '.context-switch', done
+      wd40.click '#header .dropdown-toggle', done
 
     it 'shows that I can switch into Ickle Test’s account', (done) ->
       wd40.waitForText "Ickle Test", done

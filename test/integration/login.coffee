@@ -232,8 +232,12 @@ describe 'Switch', ->
           value.should.include 'gravatar'
           done()
 
-    it 'shows the context search box', (done) ->
-      browser.waitForVisibleByCss '.context-switch', 4000, done
+    it 'shows the context switching menu', (done) ->
+      browser.elementsByCss '#header .user li', (err, els) ->
+        els.should.have.length 8
+        browser.elementsByCss '#header .user .context', (err, els) ->
+          els.should.have.length 2
+          done()
 
     after (done) ->
       browser.get logout_url, done
@@ -268,11 +272,10 @@ describe 'Switch', ->
         text.should.include dataset_name
         done()
 
-    it "it doesn't show the context switching popup", (done) ->
-      browser.elementByCss '.context-switch', (err, element) ->
-        browser.isVisible element, (err, visible) ->
-          visible.should.be.true
-          done()
+    it "it doesn't show the context switching menu", (done) ->
+      browser.elementsByCss '#header .user li', (err, els) ->
+        els.should.have.length 2 # settings and log out links
+        done()
 
 
 describe 'Unsuccessful switch', ->

@@ -165,24 +165,24 @@ body.fullscreen .container {
   content: '';
 }
 
-#header .dropdown-menu .profile {
-  padding: 10px 20px;
-  line-height: 18px;
-  white-space: nowrap;
-  display: table;
+#header .contexts-header {
+  padding: 10px 20px 5px 20px;
+  font-size: 12px;
+  line-height: 12px;
+  color: #999;
 }
 
-#header .dropdown-menu .profile > * {
-  display: table-cell;
+#header .context i.icon-ok,
+#header .context strong {
+  margin-left: 5px;
   vertical-align: middle;
-  margin: 0;
+  margin-top: 0;
+  font-weight: normal;
 }
 
-#header .dropdown-menu .profile img {
-  height: 40px;
+#header .context img {
+  height: 24px;
   width: auto;
-  max-width: none;
-  margin-right: 10px;
 }
 
 #header nav #intercomButton {

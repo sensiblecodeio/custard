@@ -6,11 +6,19 @@
     <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
-    <li class="profile">
-      <p><img src="<%= @effectiveUser?.logoUrl or @effectiveUser?.avatarUrl %>"></p>
-      <p><strong><%= @effectiveUser?.displayName %></strong><br/><%= @effectiveUser?.shortName %></p>
-    </li>
     <% if @allUsers.length > 1: %>
+    <li class="contexts-header">Use ScraperWiki as:</li>
+      <% for user in @allUsers: %>
+      <li class="context">
+        <a href="/switch/<%= user.shortName %>">
+          <img src="<%= user.logoUrl or user.avatarUrl %>">
+          <strong><%= user.displayName %></strong>
+          <% if user.shortName == @effectiveUser?.shortName: %>
+          <i class="icon-ok"></i>
+        </a>
+        <% end %>
+      </li>
+      <% end %>
     <li class="divider"></li>
     <li class="dashboard"><a href="/dashboard"><i class="icon-tasks space"></i> Dashboard</a></li>
     <% end %>

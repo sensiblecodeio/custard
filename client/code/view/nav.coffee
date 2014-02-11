@@ -14,10 +14,11 @@ class Cu.View.Nav extends Backbone.View
     users = Cu.CollectionManager.get Cu.Collection.User
     users.fetch
       success: =>
+        console.log users
         @el.innerHTML = JST.nav
           realUser: window.user.real
           effectiveUser: window.user.effective
-          allUsers: users
+          allUsers: users.toJSON()
 
   loggedOutNav: ->
     @el.innerHTML = JST.nav()

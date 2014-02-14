@@ -1,0 +1,17 @@
+<div class="btn-toolbar home" id="subnav-path">
+  <h1>
+    <img src="<%= @avatar %>" /><%= @name %>&rsquo;s data hub
+  </h1>
+</div>
+<div class="btn-toolbar" id="subnav-options">
+  <div class="btn-group">
+    <a class="btn new-dataset"><i class="icon-plus"></i> New Dataset</a>
+  </div>
+  <div class="btn-group">
+    <a class="btn" id="tile-view" title="View datasets as a grid"><i class="icon-th-large"></i></a>
+    <a class="btn" id="list-view" title="View datasets as a list"><i class="icon-th-list"></i></a>
+  </div>
+  <div class="btn-group">
+    <input type="text" class="input-medium search-query">
+  </div>
+</div>

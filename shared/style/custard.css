@@ -180,11 +180,6 @@ body.fullscreen .container {
   font-weight: normal;
 }
 
-#header .context img {
-  height: 24px;
-  width: auto;
-}
-
 #header nav #intercomButton {
   color: #fff;
   text-shadow: none;

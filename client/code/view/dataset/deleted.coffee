@@ -8,14 +8,10 @@ class Cu.View.DeletedDataset extends Backbone.View
     console.log @model
     @el.innerHTML = """
                     <h2>That dataset has been deleted.</h2>
-                    <a class="btn btn-large" id="recover">Click here to recover the dataset</a>
+                    <a class="btn btn-large" id="recover">Contact us for recovery</a>
                     """
     @
 
   recover: =>
-    @$el.find('#recover').addClass('loading').html('Recoving dataset&hellip;')
-    @model.recover()
-    setTimeout ->
-      window.location.reload()
-    , 1500
+    window.Intercom('show')
 

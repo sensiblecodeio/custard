@@ -189,6 +189,15 @@ class Cu.Router.Main extends Backbone.Router
         @appView.showView contentView
         @subnavView.showView subnavView
 
+  _ifDatasetIsNotDeleted: (model, callback) ->
+    if model.get('state') == 'deleted'
+      contentView = new Cu.View.DeletedDataset { model: model }
+      @appView.showView contentView
+      @subnavView.hideView()
+    else
+      callback()
+
+
   dataset: (box) ->
     model = Cu.Model.Dataset.findOrCreate box: box, merge: true
     toolsDone = app.tools().fetch()
@@ -202,36 +211,38 @@ class Cu.Router.Main extends Backbone.Router
         window.location.reload()
 
     $.when.apply( null, [modelDone, toolsDone] ).done =>
-      views = model.get 'views'
-      unless @subnavView.currentView instanceof Cu.View.Toolbar
-        subnavView = new Cu.View.Toolbar {model: model}
-        @subnavView.showView subnavView
-        window.selectedTool = model
+      @_ifDatasetIsNotDeleted model, =>
+        views = model.get 'views'
+        unless @subnavView.currentView instanceof Cu.View.Toolbar
+          subnavView = new Cu.View.Toolbar {model: model}
+          @subnavView.showView subnavView
+          window.selectedTool = model
 
-      setTimeout =>
-        views.findByToolName 'datatables-view-tool', (dataTablesView) =>
-          if dataTablesView?
-            window.selectedTool = dataTablesView
-            subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
-            @subnavView.showView subnavView
-            contentView = new Cu.View.PluginContent {model: dataTablesView}
-            @appView.showView contentView
-            contentView.showContent()
-          else
-            app.navigate "/dataset/#{model.id}/settings", trigger: true
-      , 0
+        setTimeout =>
+          views.findByToolName 'datatables-view-tool', (dataTablesView) =>
+            if dataTablesView?
+              window.selectedTool = dataTablesView
+              subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
+              @subnavView.showView subnavView
+              contentView = new Cu.View.PluginContent {model: dataTablesView}
+              @appView.showView contentView
+              contentView.showContent()
+            else
+              app.navigate "/dataset/#{model.id}/settings", trigger: true
+        , 0
 
   datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
-        window.selectedTool = model
-        unless @subnavView.currentView instanceof Cu.View.Toolbar
-          subnavView = new Cu.View.Toolbar model: model
-          @subnavView.showView subnavView
-        contentView = new Cu.View.AppContent model: model
-        @appView.showView contentView
-        contentView.showContent()
+        @_ifDatasetIsNotDeleted model, =>
+          window.selectedTool = model
+          unless @subnavView.currentView instanceof Cu.View.Toolbar
+            subnavView = new Cu.View.Toolbar model: model
+            @subnavView.showView subnavView
+          contentView = new Cu.View.AppContent model: model
+          @appView.showView contentView
+          contentView.showContent()
       error: (_model, jqXHR) ->
         # 404? Reload the page directly from the server, so it can either render
         # a nice 404 page, or automatically switch the user into the right context.
@@ -246,17 +257,18 @@ class Cu.Router.Main extends Backbone.Router
 
     dataset.fetch
       success: (dataset, resp, options) =>
-        v = dataset.get('views').findById(viewID)
-        if not v?
-          Backbone.trigger 'error', null, {responseText: "View not found"}
-          return
-        window.selectedTool = v
-        contentView = new Cu.View.PluginContent model: v
-        @appView.showView contentView
-        contentView.showContent()
-        unless @subnavView.currentView instanceof Cu.View.Toolbar
-          subnavView = new Cu.View.Toolbar model: dataset, view: v
-          @subnavView.showView subnavView
+        @_ifDatasetIsNotDeleted dataset, =>
+          v = dataset.get('views').findById(viewID)
+          if not v?
+            Backbone.trigger 'error', null, {responseText: "View not found"}
+            return
+          window.selectedTool = v
+          contentView = new Cu.View.PluginContent model: v
+          @appView.showView contentView
+          contentView.showContent()
+          unless @subnavView.currentView instanceof Cu.View.Toolbar
+            subnavView = new Cu.View.Toolbar model: dataset, view: v
+            @subnavView.showView subnavView
       error: (_model, jqXHR) ->
         # 404? Reload the page directly from the server, so it can either render
         # a nice 404 page, or automatically switch the user into the right context.

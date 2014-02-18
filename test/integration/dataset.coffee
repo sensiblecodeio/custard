@@ -236,6 +236,22 @@ describe 'Dataset', ->
             text.should.include 'Prune'
             done()
 
+  context "When I go to a dataset that was previously deleted", ->
+    before (done) ->
+      browser.get "#{base_url}/dataset/4443057115", done
+
+    it 'shows a "dataset deleted" message', (done) ->
+      wd40.getText 'body', (err, text) ->
+        text.toLowerCase().should.include 'deleted'
+        done()
+
+    context 'When I click the "recover" button', (done) ->
+      before (done) ->
+        wd40.click '#recover', done
+
+      it 'it eventually shows me my dataset', (done) ->
+        browser.waitForElementByCss '#dataset-meta h3', 4000, done
+
   context "When I go to a dataset URL that does not exist", ->
     before (done) ->
       browser.get "#{base_url}/dataset/doesnotexist", done

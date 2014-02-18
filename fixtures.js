@@ -393,6 +393,18 @@ exports.datasets = [{
     "tool": "newview"
   }]
 }, {
+  "box": "4443057115",
+  "tool": "test-app",
+  "displayName": "Moldy Peach",
+  "createdDate": "2013-07-11T09:23:36.113Z",
+  "user": "ehg",
+  "creatorShortName": "ehg",
+  "creatorDisplayName": "Chris Blower",
+  "boxServer": "localhost",
+  "views": [],
+  "state": "deleted",
+  "toBeDeleted": "2013-07-16T12:20:16.000Z"
+}, {
   "box": "3006375816",
   "boxServer": "localhost",
   "tool": "test-app",

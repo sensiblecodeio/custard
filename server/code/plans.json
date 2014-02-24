@@ -54,5 +54,13 @@
         "maxHourCPUPerDay": 0.5,
         "maxNumDatasets": 20,
         "$": false
-    }
+    },
+    "cobalt-a-dev": {
+        "comment": "This plan is here for development purposes",
+        "boxServer": "cobalt-a.eu.scraperwiki.com",
+        "maxDiskSpaceMB": 4000,
+        "maxHourCPUPerDay": 2.0,
+        "maxNumDatasets": 100,
+        "$": true
+    },
 }

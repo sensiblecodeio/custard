@@ -62,5 +62,5 @@
         "maxHourCPUPerDay": 2.0,
         "maxNumDatasets": 100,
         "$": true
-    },
+    }
 }

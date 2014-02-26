@@ -57,7 +57,7 @@
     },
     "cobalt-a-dev": {
         "comment": "This plan is here for development purposes",
-        "boxServer": "cobalt-b.scraperwiki.com",
+        "boxServer": "cobalt-d.scraperwiki.com",
         "maxDiskSpaceMB": 4000,
         "maxHourCPUPerDay": 2.0,
         "maxNumDatasets": 100,

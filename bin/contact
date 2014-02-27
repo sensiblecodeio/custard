@@ -1,0 +1,63 @@
+#!/usr/bin/env coffee
+
+info = """
+  Get contact details for all users with the specified plan, eg:
+    $ bin/contact journalist
+  Try redirecting the script’s output to a file, to get a CSV:
+    $ bin/contact journalist > journalists.csv
+"""
+
+fs = require 'fs'
+{MongoClient} = require('mongodb')
+async = require 'async'
+
+rmQuote = (s) ->
+  if not /^['"]/.test s
+    return s
+  t = s.replace /[^\\]|\\./g, (x) ->
+    # Strip all quotes (which should be only leading and trailing)
+    if /['"]/.test x
+      return ''
+    # Escape
+    if x[0] == '\\'
+      return x[1]
+    return x
+  return t
+
+dir = '../charm-secrets'
+file = "#{dir}/config/live/custard.yaml"
+yamltext = fs.readFileSync file, 'utf-8'
+m = yamltext.match /CU_DB:\s*(.+?)\s*($|\n)/
+dbURL = rmQuote m[1]
+
+
+if process.argv.length != 3
+  console.log info
+  process.exit()
+
+plan = process.argv[2]
+
+MongoClient.connect dbURL, (err, db) ->
+  if err
+    throw err
+
+  users = db.collection 'users'
+  users.find({ accountLevel: plan }).toArray (err, users) ->
+    if users.length
+      printAsCSV
+        shortName: "shortName"
+        displayName: "displayName"
+        email: ["email"]
+        accountLevel: "accountLevel"
+      async.eachSeries users, (user, done) ->
+          printAsCSV user
+          done()
+      , process.exit
+    else
+      console.log "No users found with the account level “#{plan}”"
+      process.exit()
+
+printAsCSV = (user) ->
+  console.log """
+  "#{user.shortName}","#{user.displayName.replace '"', '""'}","#{user.email[0]}","#{user.accountLevel}"
+  """

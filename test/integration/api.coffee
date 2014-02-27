@@ -736,14 +736,14 @@ describe 'API', ->
             type: 'view'
             gitUrl: 'git://github.com/scraperwiki/test-plugin-tool.git'
             public: false
-            allowedPlans: ['medium-ec2']
+            allowedPlans: ['free']
         , (err, res, body) =>
           @response = res
           @tool = parseJSON res.body
           done()
 
       it 'is shared with users on some plans', ->
-        @tool.allowedPlans.should.eql ['medium-ec2']
+        @tool.allowedPlans.should.eql ['free']
 
     context 'When I log in as test', ->
       before (done) ->
@@ -759,8 +759,45 @@ describe 'API', ->
           @tools = parseJSON body
           done()
 
-      it "includes the private tool", ->
+      it "includes the private tool we shared with test and ickletest", ->
         should.exist(_.find @tools, (x) => x.name == "shared-private")
+
+    context 'When I log in as test (a free user)', ->
+      before (done) ->
+       @user = "test"
+       @password = "testing"
+       login.call @, done
+
+      before (done) ->
+        @toolsURL = "#{serverURL}/api/tools"
+        request.get
+          uri: @toolsURL,
+        , (err, res, body) =>
+          @tools = parseJSON body
+          done()
+
+      it "includes the tool we shared with all free users", ->
+        should.exist(_.find @tools, (x) => x.name == "shared-less-private")
+
+    context 'When I log in as ehg (a grandfather user)', ->
+      before (done) ->
+       @user = "ehg"
+       @password = "testing"
+       login.call @, done
+
+      before (done) ->
+        @toolsURL = "#{serverURL}/api/tools"
+        request.get
+          uri: @toolsURL,
+        , (err, res, body) =>
+          @tools = parseJSON body
+          done()
+
+      it "does not include the tool we shared with free users", ->
+        should.not.exist(_.find @tools, (x) => x.name == "shared-less-private")
+
+      it "does not include the private tool we shared with test and ickletest", ->
+        should.not.exist(_.find @tools, (x) => x.name == "shared-private")
 
   describe 'Upgrading my account', ->
     context "When I'm upgrading from medium to large", ->

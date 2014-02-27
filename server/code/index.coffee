@@ -577,6 +577,7 @@ postTool = (req, resp) ->
         type: body.type
         gitUrl: body.gitUrl
         allowedUsers: body.allowedUsers
+        allowedPlans: body.allowedPlans
         public: publicBool
     else
       _.extend tool, body

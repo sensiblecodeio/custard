@@ -22,6 +22,7 @@ toolSchema = new Schema
   gitUrl: String
   public: {type: Boolean, default: false}
   allowedUsers: [String]
+  allowedPlans: [String]
   manifest: Schema.Types.Mixed
   created:
     type: Date

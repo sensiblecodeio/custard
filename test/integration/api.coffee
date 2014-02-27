@@ -727,6 +727,24 @@ describe 'API', ->
       it 'is shared with some users', ->
         @tool.allowedUsers.should.eql ['test', 'ickletest']
 
+    context 'When I add allowedPlans', ->
+      before (done) ->
+        request.post
+          uri: "#{serverURL}/api/tools"
+          form:
+            name: "shared-less-private"
+            type: 'view'
+            gitUrl: 'git://github.com/scraperwiki/test-plugin-tool.git'
+            public: false
+            allowedPlans: ['medium-ec2']
+        , (err, res, body) =>
+          @response = res
+          @tool = parseJSON res.body
+          done()
+
+      it 'is shared with users on some plans', ->
+        @tool.allowedPlans.should.eql ['medium-ec2']
+
     context 'When I log in as test', ->
       before (done) ->
        @user = "test"

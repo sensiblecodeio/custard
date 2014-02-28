@@ -754,14 +754,11 @@ addSSHKey = (req, resp) ->
     if not req.body.key?
       return resp.send 400, error: 'Specify key'
     user.sshKeys.push req.body.key.trim()
-    console.log "**** sshKeys are", user.sshKeys
     user.save (err) ->
-      User.distributeUserKeys user.shortName, (err) ->
-        if err?
-          console.warn "SSHKEY ERROR: #{err}"
-          resp.send 500, error: err
-        else
-          resp.send 200, success: 'ok'
+      if err?
+        resp.send 500, error: err
+      else
+        resp.send 200, success: 'ok'
 
 listSSHKeys = (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->

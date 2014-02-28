@@ -133,7 +133,6 @@ class exports.User extends ModelBase
         statusCode: 404
         error: "Plan not found"
 
-    console.log user
     Dataset.countVisibleDatasets user.shortName, (err, count) ->
       if count >= plan.maxNumDatasets
         callback
@@ -141,23 +140,6 @@ class exports.User extends ModelBase
           error: "You must upgrade your plan to create another dataset"
       else
         callback null, true
-
-  # Sends a list of box sshkeys to cobalt for each box a user
-  # can access, so cobalt can overwite the authorized_keys for a box
-  @distributeUserKeys: (shortName, callback) ->
-    Box.findAllByUser shortName, (err, boxes) ->
-      async.forEach boxes, (box, boxCb) ->
-        # call cobalt with list of sshkeys of box
-        # sshkeys <--> user <--> box
-        box = Box.makeModelFromMongo box
-        box.distributeSSHKeys (err, res, body) ->
-          try
-            obj = JSON.parse body
-          catch e
-            return boxCb e
-          return boxCb obj?.error if obj?.error?
-          return boxCb err
-      , callback
 
   @findByShortName: (shortName, callback) ->
     @dbClass.findOne {shortName: shortName}, (err, user) =>

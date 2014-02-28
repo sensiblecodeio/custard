@@ -463,8 +463,8 @@ describe 'API', ->
             datasets.length.should.be.above 0
             done err
 
-      context 'POST: /api/:user/sshkeys', ->
-        it 'returns ok', (done) ->
+      context '/api/:user/sshkeys', ->
+        it 'POST: returns ok', (done) ->
           request.post
             uri: "#{serverURL}/api/#{@user}/sshkeys"
             form:
@@ -473,8 +473,7 @@ describe 'API', ->
             res.body.should.include 'ok'
             done err
 
-      context 'GET: /api/:user/sshkeys', ->
-        it 'returns the key with whitespace trim', (done) ->
+        it 'GET: returns the key with whitespace trim', (done) ->
           request.get
             uri: "#{serverURL}/api/#{@user}/sshkeys"
           , (err, res) ->

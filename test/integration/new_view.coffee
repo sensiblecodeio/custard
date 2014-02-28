@@ -21,6 +21,9 @@ describe 'New view tool', ->
 
     context 'when I click on "More tools" in the toolbar', ->
       before (done) ->
+        setTimeout done, 500 # wait for window to get big enough!
+
+      before (done) ->
         wd40.click '#toolbar .new-view', ->
           browser.waitForElementByCss '#chooser .tool', 4000, done
 

@@ -22,6 +22,7 @@ toolSchema = new Schema
   gitUrl: String
   public: {type: Boolean, default: false}
   allowedUsers: [String]
+  allowedPlans: [String]
   manifest: Schema.Types.Mixed
   created:
     type: Date
@@ -109,7 +110,8 @@ class exports.Tool extends ModelBase
       $or: [
         {user: args.user.shortName}
         {public: true}
-        allowedUsers: { $in:  [args.user.shortName] }
+        {allowedUsers: { $in: [args.user.shortName] }}
+        {allowedPlans: { $in: [args.user.accountLevel] }}
       ]
     , (err, doc) =>
       if doc is null
@@ -118,12 +120,24 @@ class exports.Tool extends ModelBase
         callback null, @makeModelFromMongo doc
 
   @findForUser: (shortName, cb) ->
-    @dbClass.find $or: [{user: shortName}, {public: true}, {allowedUsers: { $in:  [shortName]}}], (err, docs) =>
-      if docs is null
+    {User} = require 'model/user'
+    User.findByShortName shortName, (err, userModel) =>
+      if err
         cb err, null
       else
-        result = (@makeModelFromMongo(doc) for doc in docs)
-        cb null, result
+        @dbClass.find
+          $or: [
+            {user: shortName}
+            {public: true}
+            {allowedUsers: { $in: [shortName] }}
+            {allowedPlans: { $in: [userModel.accountLevel] }}
+          ]
+        , (err, docs) =>
+          if docs is null
+            cb err, null
+          else
+            result = (@makeModelFromMongo(doc) for doc in docs)
+            cb null, result
 
 exports.dbInject = (dbObj) ->
   Tool.dbClass = zDbBox = dbObj

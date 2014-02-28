@@ -37,7 +37,7 @@ describe 'Server model: Tool', ->
       our_tool.should.be.an.instanceOf Tool
       our_tool.name.should.equal 'dataset-tool'
 
-  context 'when saving a tool', ->
+  context 'when saving a tool with allowedUsers', ->
     before (done) ->
       @tool = new Tool { name: 'newTool', allowedUsers: ['user1', 'user2'] }
       @tool.save done
@@ -45,10 +45,22 @@ describe 'Server model: Tool', ->
       Tool.findOneByName "newTool", (error, tool) =>
         @foundTool = tool
         done()
-    it 'should have saved the allowed users field', ->
+    it 'should have saved the allowedUsers field', ->
       @foundTool.should.have.property "allowedUsers"
       @foundTool.allowedUsers.should.eql ['user1', 'user2']
-  
+
+  context 'when saving a tool with allowedPlans', ->
+    before (done) ->
+      @tool = new Tool { name: 'newerTool', allowedPlans: ['medium-ec2'] }
+      @tool.save done
+    before (done) ->
+      Tool.findOneByName "newerTool", (error, tool) =>
+        @foundTool = tool
+        done()
+    it 'should have saved the allowedPlans field', ->
+      @foundTool.should.have.property "allowedPlans"
+      @foundTool.allowedPlans.should.eql ['medium-ec2']
+
   context 'when loading from git', ->
     before ->
       @exec = sinon.stub child_process, 'exec', (child, cb) -> cb()
@@ -116,7 +128,7 @@ describe 'Server model: Tool', ->
         @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*premium/).should.be.true
         @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*free-ec2/).should.be.true
         @exec.calledWithMatch(/^run-this-one rsync .* \/opt\/tools\/ .*ds-ec2/).should.be.true
-   
+
       it 'should fetch the contents of the repository from upstream and check it out', ->
         @exec.calledWithMatch(/git fetch .*; git checkout FETCH_HEAD/).should.be.true
 

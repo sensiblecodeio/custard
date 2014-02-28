@@ -189,36 +189,6 @@ describe 'User (server)', ->
         should.not.exist user
         done()
 
-  describe 'SSH keys', ->
-    before ->
-      @pigBox = new Box
-        users: ['ickletest']
-        name: 'pigbox'
-      @luxuryPigBox = new Box
-        users: ['zarino', 'ickletest']
-        name: 'luxurypigbox'
-      @request = sinon.stub request, 'post', (opt, cb) ->
-        cb null, null, null
-
-    before (done) ->
-      @pigBox.save (err) =>
-        @luxuryPigBox.save (err) ->
-          done null
-
-    after ->
-      request.post.restore()
-
-    context 'when distributing the keys of ickletest', ->
-      before (done) ->
-        User.distributeUserKeys 'ickletest', done
-
-      it "posts to pigbox with ickletest's ssh keys", ->
-        correctArgs = @request.calledWithMatch
-          uri: "http://#{process.env.CU_BOX_SERVER}/pigbox/sshkeys"
-          form:
-            keys: '["a","b","c"]'
-        correctArgs.should.be.true
-
   describe 'Validation', ->
     beforeEach ->
       @user = new User

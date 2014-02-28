@@ -269,13 +269,26 @@ exports.tools = [{
     icon: "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-spreadsheet-upload.png"
   }
 }, {
-  name: "view-source-pro",
-  public: true,
-  type: "view",
-  gitUrl: "git://github.com/zarino/view-source-tool.git",
+  name: "free-plan-tool",
+  public: false,
+  allowedPlans: ["free"],
+  type: "importer",
+  gitUrl: "git://github.com/scraperwiki/spreadsheet-upload-tool.git",
   manifest: {
-    description: "Browse the filesystem behind ScraperWiki a dataset and see how it ticks.",
-    displayName: "View source: Pro"
+    description: "A tool only published for users on the free plan",
+    displayName: "Special free user tool",
+    color: "#5B8CC8"
+  }
+}, {
+  name: "ickletests-private-tool",
+  public: false,
+  allowedUsers: ["ickletest"],
+  type: "importer",
+  gitUrl: "git://github.com/scraperwiki/spreadsheet-upload-tool.git",
+  manifest: {
+    description: "Mine. All mine.",
+    displayName: "Ickletest's private tool",
+    color: "#5BC88C"
   }
 }, {
   name: "datatables-view-tool",

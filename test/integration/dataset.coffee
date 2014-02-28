@@ -245,12 +245,10 @@ describe 'Dataset', ->
         text.toLowerCase().should.include 'deleted'
         done()
 
-    context 'When I click the "recover" button', (done) ->
-      before (done) ->
-        wd40.click '#recover', done
-
-      it 'it eventually shows me my dataset', (done) ->
-        browser.waitForElementByCss '#dataset-meta h3', 4000, done
+    it 'tells me to "contact us for recovery"', (done) ->
+      wd40.getText 'body', (err, text) ->
+        text.toLowerCase().should.include 'contact us for recovery'
+        done()
 
   context "When I go to a dataset URL that does not exist", ->
     before (done) ->

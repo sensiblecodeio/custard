@@ -463,8 +463,8 @@ describe 'API', ->
             datasets.length.should.be.above 0
             done err
 
-      context 'POST: /api/:user/sshkeys', ->
-        it 'returns ok', (done) ->
+      context '/api/:user/sshkeys', ->
+        it 'POST: returns ok', (done) ->
           request.post
             uri: "#{serverURL}/api/#{@user}/sshkeys"
             form:
@@ -473,8 +473,7 @@ describe 'API', ->
             res.body.should.include 'ok'
             done err
 
-      context 'GET: /api/:user/sshkeys', ->
-        it 'returns the key with whitespace trim', (done) ->
+        it 'GET: returns the key with whitespace trim', (done) ->
           request.get
             uri: "#{serverURL}/api/#{@user}/sshkeys"
           , (err, res) ->
@@ -727,6 +726,24 @@ describe 'API', ->
       it 'is shared with some users', ->
         @tool.allowedUsers.should.eql ['test', 'ickletest']
 
+    context 'When I add allowedPlans', ->
+      before (done) ->
+        request.post
+          uri: "#{serverURL}/api/tools"
+          form:
+            name: "shared-less-private"
+            type: 'view'
+            gitUrl: 'git://github.com/scraperwiki/test-plugin-tool.git'
+            public: false
+            allowedPlans: ['free']
+        , (err, res, body) =>
+          @response = res
+          @tool = parseJSON res.body
+          done()
+
+      it 'is shared with users on some plans', ->
+        @tool.allowedPlans.should.eql ['free']
+
     context 'When I log in as test', ->
       before (done) ->
        @user = "test"
@@ -741,8 +758,45 @@ describe 'API', ->
           @tools = parseJSON body
           done()
 
-      it "includes the private tool", ->
+      it "includes the private tool we shared with test and ickletest", ->
         should.exist(_.find @tools, (x) => x.name == "shared-private")
+
+    context 'When I log in as test (a free user)', ->
+      before (done) ->
+       @user = "test"
+       @password = "testing"
+       login.call @, done
+
+      before (done) ->
+        @toolsURL = "#{serverURL}/api/tools"
+        request.get
+          uri: @toolsURL,
+        , (err, res, body) =>
+          @tools = parseJSON body
+          done()
+
+      it "includes the tool we shared with all free users", ->
+        should.exist(_.find @tools, (x) => x.name == "shared-less-private")
+
+    context 'When I log in as ehg (a grandfather user)', ->
+      before (done) ->
+       @user = "ehg"
+       @password = "testing"
+       login.call @, done
+
+      before (done) ->
+        @toolsURL = "#{serverURL}/api/tools"
+        request.get
+          uri: @toolsURL,
+        , (err, res, body) =>
+          @tools = parseJSON body
+          done()
+
+      it "does not include the tool we shared with free users", ->
+        should.not.exist(_.find @tools, (x) => x.name == "shared-less-private")
+
+      it "does not include the private tool we shared with test and ickletest", ->
+        should.not.exist(_.find @tools, (x) => x.name == "shared-private")
 
   describe 'Upgrading my account', ->
     context "When I'm upgrading from medium to large", ->

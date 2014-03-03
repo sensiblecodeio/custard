@@ -29,7 +29,6 @@ flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
 request = require 'request'
-{Exceptional} = require 'exceptional-node'
 
 {User} = require 'model/user'
 {Dataset} = require 'model/dataset'
@@ -57,8 +56,6 @@ mongoose.connect process.env.CU_DB,
 # Doesn't seem to do much.
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
-
-Exceptional.API_KEY = process.env.EXCEPTIONAL_KEY
 
 if /production/.test process.env.NODE_ENV
   na.initialize 'UA-21451224-7', 'scraperwiki.com'
@@ -938,7 +935,6 @@ process.on 'SIGTERM', ->
 if /staging|production/.test process.env.NODE_ENV
   process.on 'uncaughtException', (err) ->
     console.warn err
-    Exceptional.handle err
     setTimeout ->
       process.kill process.pid, 'SIGTERM'
     , 500

@@ -45,6 +45,21 @@ parseJSON = (string) ->
 describe 'API', ->
   before ->
     @toolName = "int-test-#{String(Math.random()*Math.pow(2,32))[0..6]}"
+
+  before (done) ->
+    request.get
+      uri: "#{serverURL}/api/"
+    , (err, res, body) =>
+      @response = res
+      @err = err
+      done()
+
+  before (done) ->
+    # If this fails the server isn't running and you should run "cake dev".
+    @err?.should.equal null
+    @response.statusCode.should.equal 200
+    done()
+
   context "When I'm not logged in", ->
 
     describe 'I can sign up', ->

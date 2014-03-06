@@ -57,7 +57,7 @@
     "jquery": "~1.7.3",
     "pow-mongodb-fixtures": "*",
     "backbone-relational": "~0.7.0",
-    "jsdom": "~0.3.4",
+    "jsdom": "~0.10.1",
     "wd": "~0.1.1",
     "wd40": "*",
     "mongodb": "~1.2.12",

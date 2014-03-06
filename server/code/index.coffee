@@ -335,11 +335,6 @@ _addView = (user, dataset, attributes, callback) ->
         if err?
           console.warn err
           return callback {statusCode: 400, error: "Error saving view: #{err}"}, null
-        # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
-        box.distributeSSHKeys (err) ->
-          if err?
-            console.warn "SSH key distribution error for #{box.name}"
-            err = null
         box.installTool {user: user, toolName: attributes.tool}, (err) ->
           if err?
             console.warn err
@@ -704,12 +699,9 @@ addDataset = (req, resp) ->
           if err?
             console.warn err
             return resp.send 400, error: "Error saving dataset: #{err}"
-          # Update ssh keys. :todo: Doing _all_ the boxes seems like overkill.
-          box.distributeSSHKeys (err) ->
-            if err?
-              console.warn "SSH key distribution error"
-              err = null
+
           console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
+          
           Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
             console.warn err if err?
             resp.send 200, dataset

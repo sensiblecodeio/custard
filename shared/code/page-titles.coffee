@@ -27,7 +27,7 @@ PageTitles =
     heading: 'Make your own tool with HTML, JavaScript & Python'
     title: "Make your own tool | Help | ScraperWiki"
   'help-scraperwiki-classic':
-    heading: 'One-stop ScraperWiki Classic user guide'
+    heading: 'ScraperWiki Classic retirement guide'
     title: "ScraperWiki Classic | Help | ScraperWiki"
   'terms':
     heading: 'Terms & Conditions'

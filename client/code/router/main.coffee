@@ -64,7 +64,6 @@ class Cu.Router.Main extends Backbone.Router
   trackIntercom: ->
     if 'real' of window.user and window.intercomUserHash != ''
       @getIntercomSettings (intercomSettings) ->
-        console.log intercomSettings
         if window.intercomBooted?
           # tell Intercom we're still here
           window.Intercom 'update', intercomSettings
@@ -72,10 +71,10 @@ class Cu.Router.Main extends Backbone.Router
           # start Intercom, and tell it we're here
           window.Intercom 'boot', intercomSettings
           window.intercomBooted = true
-          # check for new Intercom messages/notifications every 10 seconds
+          # check for new Intercom messages/notifications every 30 seconds
           setInterval ->
             window.Intercom 'update'
-          , 10000
+          , 30000
 
   getIntercomSettings: (cb) ->
     real = window.user.real

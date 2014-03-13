@@ -361,12 +361,12 @@ describe 'User (server)', ->
         @user = user
         done err
 
-    it 'We can find the user’s recurly account admin URL', (done) ->
+    it 'We can find the user’s hosted recurly admin URL', (done) ->
       @user.getSubscriptionAdminURL (err, url) ->
         should.not.exist err
         should.exist url
         url.should.be.a.string
-        url.should.match new RegExp("recurly.com/v2/accounts/#{@user.recurlyAccount}/")
+        url.should.match new RegExp("^https://[^.]+[.]recurly[.]com/account/[a-z0-9]+$")
         done()
 
 

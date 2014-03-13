@@ -125,6 +125,11 @@ class exports.User extends ModelBase
 
         return callback null, new Subscription currentSubscription
 
+  getSubscriptionAdminURL: (callback) ->
+    # This function will call the Recurly REST API to find the user's admin token
+    # then concatenate it into a URL with our recurly subdomain, and return it.
+    callback "Not implemented", null
+
   @canCreateDataset: (user, callback) ->
     {Dataset} = require 'model/dataset'
     [err_,plan] = Plan.getPlan user.accountLevel

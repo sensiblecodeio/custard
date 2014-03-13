@@ -813,6 +813,41 @@ describe 'API', ->
       it "does not include the private tool we shared with test and ickletest", ->
         should.not.exist(_.find @tools, (x) => x.name == "shared-private")
 
+  describe 'Editing my Recurly billing details', ->
+    context 'GET /api/mediummary/subscription/billing', ->
+      before (done) ->
+       @user = 'mediummary'
+       @password = 'testing'
+       login.call @, done
+
+      it "redirects to a Recurly hosted admin page", (done) ->
+        request.get
+          uri: "#{serverURL}/api/mediummary/subscription/billing",
+          followRedirect: false
+        , (err, res, body) ->
+          should.not.exist err
+          res.statusCode.should.equal 302
+          res.headers.location.should.match new RegExp("^https://[^.]+[.]recurly[.]com/account/[a-z0-9]+$")
+          done()
+
+    context 'GET /api/test/subscription/billing', ->
+      before (done) ->
+       @user = 'test'
+       @password = 'testing'
+       login.call @, done
+
+      it "returns an error because ‘test’ has no Recurly account", (done) ->
+        request.get
+          uri: "#{serverURL}/api/test/subscription/billing",
+          followRedirect: false
+        , (err, res, body) ->
+          should.not.exist err
+          res.statusCode.should.equal 404
+          bodyObj = JSON.parse body
+          should.exist bodyObj.error
+          bodyObj.error.should.match /You have no Recurly account/
+          done()
+
   describe 'Upgrading my account', ->
     context "When I'm upgrading from medium to large", ->
 

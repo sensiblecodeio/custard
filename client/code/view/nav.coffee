@@ -27,10 +27,15 @@ class Cu.View.Nav extends Backbone.View
           # account they shouldn't normally be able to access
           allUsers.push window.user.effective
 
+        recurlyAdminUrl = undefined
+        if window.app.cashPlan window.app.humanPlan real.accountLevel
+          recurlyAdminUrl = "/api/#{real.shortName}/subscription/billing"
+
         @el.innerHTML = JST.nav
           realUser: real
           effectiveUser: effective
           allUsers: allUsers
+          recurlyAdminUrl: recurlyAdminUrl
 
   loggedOutNav: ->
     @el.innerHTML = JST.nav()

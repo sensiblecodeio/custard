@@ -137,6 +137,7 @@ class Box extends ModelBase
           apikey: user.apiKey
           uid: box.uid
       , (err, res, body) ->
+        console.log "Response from #{uri} err=#{err} body=#{body}"
         jsonResponse = JSON.parse body
         if 'error' of jsonResponse
           return callback jsonResponse.error, null

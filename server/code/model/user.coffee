@@ -112,7 +112,7 @@ class exports.User extends ModelBase
     @save callback
 
   getCurrentSubscription: (callback) ->
-    requestRecurlyAPI "/v2/accounts/#{@recurlyAccount}/subscriptions", (err, obj) ->
+    requestRecurlyAPI "/v2/accounts/#{@recurlyAccount}/subscriptions", (err, obj) =>
       if err
         return callback err, null
 

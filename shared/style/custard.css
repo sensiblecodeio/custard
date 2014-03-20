@@ -1495,28 +1495,8 @@ div.hero-classic p:last-child {
 /* Login page */
 
 .login-page {
-  padding: 0 30px;
-  -moz-transition: padding 0.5s;
-  -webkit-transition: padding 0.5s;
-  -o-transition: padding 0.5s;
-  transition: padding 0.5s;
-}
-
-.login-page label {
-  width: 220px;
-}
-
-.login-page .alert {
-  padding: 8px 14px;
-  width: 190px;
-}
-
-.login-page .popover {
-  width: 15em;
-}
-
-.login-page .popover.bottom .arrow:after {
-  border-bottom-color: #f7f7f7;
+  width: 280px;
+  margin: 40px auto;
 }
 
 .login-page h2 {
@@ -1524,10 +1504,14 @@ div.hero-classic p:last-child {
   line-height: 28px;
 }
 
-.classic-login {
-  margin-top: 40px;
+.login-page .alert {
+  padding: 8px 14px;
+  width: 250px;
 }
 
+.login-page input {
+  width: 266px;
+}
 
 
 
@@ -1632,25 +1616,6 @@ div.hero-classic p:last-child {
     right: 20px;
   }
 
-
-  /* Login page */
-
-  .login-page {
-    padding: 0;
-  }
-
-  .login-page .new-login {
-    width: 275px;
-    float: left;
-    border-right: 1px solid #ddd;
-  }
-
-  .login-page .classic-login {
-    width: 250px;
-    float: right;
-    margin-top: 0;
-  }
-
 }
 
 
@@ -1714,13 +1679,6 @@ div.hero-classic p:last-child {
     line-height: 30px;
   }
 
-
-  /* Login page */
-
-  .login-page {
-    padding: 20px 150px;
-  }
-
 }
 
 @media only screen and (min-width: 1220px) {
@@ -1732,13 +1690,6 @@ div.hero-classic p:last-child {
 
   div.help .case-study {
     margin-bottom: 40px;
-  }
-
-
-  /* Login page */
-
-  .login-page {
-    padding: 20px 300px;
   }
 
 }

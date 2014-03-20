@@ -1,19 +1,9 @@
 <% include base_header.html %>
-    <div id="subnav" class="container">
-      <div class="subnav-wrapper">
-        <div class="btn-toolbar" id="subnav-path">
-          <h1 class="btn-group">
-            <a class="btn btn-link" href="/login">Log in</a>
-          </h1>
-        </div>
-      </div>
-    </div>
 
-    <div id="content" class="container">
-      <div class="login-page">
+    <div id="content" class="login-page">
 
-        <form action="/login" method="post" class="new-login">
-          <h2>New ScraperWiki</h2>
+        <form action="/login" method="post">
+          <h2>Log into ScraperWiki</h2>
           <% if (errors.length) { %>
           <div id="error" class="alert alert-error">
             <% if (errors[0] == 'No such user') { %>
@@ -31,7 +21,7 @@
             <label for="password">Password: <a class="pull-right muted" id="forgotten-password" href="/set-password/">Forgotten?</a></label>
             <input type="password" id="password" name="password" tabindex="2" />
           </p>
-          <p>
+          <p class="last">
             <button type="submit" id="login" class="btn btn-primary">
               <i class="icon-ok space"></i> Log In
             </button>
@@ -40,16 +30,6 @@
             <img src="/image/loader-btn-primary.gif" width="16" height="16" style="position: absolute; left: -4000px;">
           </p>
         </form>
-
-        <div class="classic-login">
-          <h2>ScraperWiki Classic</h2>
-          <p>If you don&rsquo;t yet have an account on the new ScraperWiki, click here to access all your old scrapers on ScraperWiki Classic.</p>
-          <a class="btn" href="https://classic.scraperwiki.com">Log into Classic <i class="icon-arrow-right"></i></a>
-        </div>
-
-      </div>
-
-      <span class="clear"></span>
 
     </div>
     <script>

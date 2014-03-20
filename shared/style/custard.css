@@ -58,10 +58,6 @@ body.fullscreen .container {
   text-indent: -9000px;
   outline: none;
   background: transparent url(../image/header-logo.png) 0 11px no-repeat;
-  -moz-transition: margin-left 0.5s;
-  -webkit-transition: margin-left 0.5s;
-  -o-transition: margin-left 0.5s;
-  transition: margin-left 0.5s;
 }
 
 #logo:active {
@@ -77,10 +73,6 @@ body.fullscreen .container {
   position: absolute;
   top: 0;
   right: 0;
-  -moz-transition: right 0.5s;
-  -webkit-transition: right 0.5s;
-  -o-transition: right 0.5s;
-  transition: right 0.5s;
 }
 
 .fullscreen #header nav {

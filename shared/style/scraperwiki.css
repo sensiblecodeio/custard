@@ -707,10 +707,6 @@ input[type="color"],
 
 .container {
     width: 280px;
-    -moz-transition: width 0.5s;
-    -webkit-transition: width 0.5s;
-    -o-transition: width 0.5s;
-    transition: width 0.5s;
 }
 
 .navbar .container {

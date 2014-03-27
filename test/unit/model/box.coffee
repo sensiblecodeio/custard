@@ -78,4 +78,4 @@ describe 'Box (server)', ->
       @servers.should.include 'ds-ec2.scraperwiki.com'
 
     it 'gives me three servers (because that is how many there currently are)', ->
-      @servers.length.should.equal 3
+      @servers.length.should.equal 4

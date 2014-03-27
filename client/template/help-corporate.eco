@@ -37,7 +37,7 @@ This is because data tools need to be <b>easy</b> for anyone to use in most case
 </p>
 
 <p>ScraperWiki is deployed in a Public Cloud model. It is hosted on <abbr title="Infrastructure as a Service">IaaS</abbr>
-servers at <a href="https://aws.amazon.com/">Amazon Web Services</a> in the US.
+servers at <a href="https://aws.amazon.com/">Amazon Web Services</a> in Ireland.
 We meet Amazon's tiering standards.
 </p>
 
@@ -144,7 +144,7 @@ td.disaster-description {
   </tr>
   <tr class="terrible">
     <td class="disaster-summary">Datacentre failure</td>
-    <td class="disaster-description">Should the Amazon US data centre we use fail, they have additional data centres which we can restore to in under <b>1 day</b> for all users, <b>under 2 hours</b> for corporate customers.</td>
+    <td class="disaster-description">Should the Amazon Ireland data centre we use fail, they have additional data centres which we can restore to in under <b>1 day</b> for all users, <b>under 2 hours</b> for corporate customers.</td>
     <td class="disaster-estimate">&lt;1&nbsp;day</td>
   </tr>
 </table>

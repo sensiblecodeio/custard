@@ -83,7 +83,7 @@ visualisations.
 <h2 id="backups">Backups / disaster recovery</h2>
 
 <p>All dataset files and data are stored on Amazon Elastic Block Store (EBS)
-volumes. Metadata is stored in a MongoDB cluster on MongoHQ’s cloud service.
+volumes. Metadata is stored in a MongoDB server on MongoHQ’s cloud service.
 </p>
 
 <p>These are five sequentially worse disaster situations, with recovery

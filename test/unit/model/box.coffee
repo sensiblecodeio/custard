@@ -77,5 +77,5 @@ describe 'Box (server)', ->
       @servers.should.include 'free-ec2.scraperwiki.com'
       @servers.should.include 'ds-ec2.scraperwiki.com'
 
-    it 'gives me three servers (because that is how many there currently are)', ->
+    it 'gives me four servers (because that is how many there currently are)', ->
       @servers.length.should.equal 4

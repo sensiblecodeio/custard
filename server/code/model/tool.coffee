@@ -46,11 +46,14 @@ class exports.Tool extends ModelBase
     # :todo: whitelist @directory
     fs.exists @directory, (exists) =>
       if not exists
-        cmd = "mkdir #{@directory}; cd #{@directory}; git init; git fetch #{@gitUrl}; git checkout FETCH_HEAD"
+        cmd = "mkdir #{@directory} && cd #{@directory} && git init && git fetch #{@gitUrl} && git checkout FETCH_HEAD"
       else
-        cmd = "cd #{@directory}; git fetch #{@gitUrl}; git checkout FETCH_HEAD"
-      child_process.exec cmd, =>
-        async.each Box.listServers(), @rsync, callback
+        cmd = "cd #{@directory} && git fetch #{@gitUrl} && git checkout FETCH_HEAD"
+      child_process.exec cmd, (error, stdout, stderr) =>
+        if error
+          callback error, stdout, stderr
+        else
+          async.each Box.listServers(), @rsync, callback
 
 
   # TODO: DRY

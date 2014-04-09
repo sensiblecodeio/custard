@@ -235,12 +235,18 @@ scraperwiki.tool.redirect(datasetUrl)</pre>
 
 <p>It&rsquo;s also useful for redirecting to OAuth endpoints.</p>
 
-<h3 id="js-rename">Rename your tool or its parent dataset</h3>
+<h3 id="js-rename">Get or set your dataset&rsquo;s name</h3>
 
-<p>By default, datasets or views created by a tool adopt the name of the tool itself. You can change the name of datasets, or of views made using the "Code a view" tool, by calling <code>scraperwiki.tool.rename()</code>. It takes one argument: a string to which the dataset or view should be renamed. For example:</p>
+<p>By default, datasets adopt the name of the tool that created them. You can get your dataset&rsquo;s name using <code>scraperwiki.dataset.name()</code>, passing it a callback function which will be given the dataset name:</p>
+
+<pre class="prettyprint linenums">scraperwiki.dataset.name(function(err, name){
+  console.log(name)
+})</pre>
+
+Likewise, you can rename the dataset by passing <code>scraperwiki.dataset.name()</code> a string:</p>
 
 <pre class="prettyprint linenums">var username = "@scraperwiki"
-scraperwiki.tool.rename(username + "'s twitter followers")</pre>
+scraperwiki.dataset.name(username + "'s twitter followers")</pre>
 
 <h3 id="js-alert">Display alerts</h3>
 

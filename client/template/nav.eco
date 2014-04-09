@@ -1,14 +1,16 @@
 <ul>
 <% if @effectiveUser?.displayName: %>
 <% if @isTrial: %>
-<li class="plan">
-  <a href="/pricing">
+<li class="trial">
+  <a href="/pricing" class="<% if 10 >= @trialDaysLeft: %>
+        urgent
+    <% end %>">
     <% if @trialDaysLeft == 0: %>
-    Your free trial has expired!
+      Your free trial has expired!
     <% else if @trialDaysLeft == 1: %>
-    <%= @trialDaysLeft %> day free trial left!
+      <%= @trialDaysLeft %> day free trial left!
     <% else: %>
-    <%= @trialDaysLeft %> days free trial left!
+      <%= @trialDaysLeft %> days free trial left!
     <% end %>
   </a>
 </li>

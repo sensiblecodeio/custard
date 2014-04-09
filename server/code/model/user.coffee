@@ -37,6 +37,33 @@ userSchema = new mongoose.Schema
 
 zDbUser = mongoose.model 'User', userSchema
 
+# Calls the specified recurly endpoint path (HTTP GET) and
+# turns the response into either an error or a javascript object,
+# both of which are passed to the specified callback.
+requestRecurlyAPI = (path, callback) ->
+  request.get
+    uri: "https://#{process.env.RECURLY_API_KEY}:@#{process.env.RECURLY_DOMAIN}.recurly.com#{path}"
+    strictSSL: true
+    headers:
+      'Accept': 'application/xml'
+      'Content-Type': 'application/xml; charset=utf-8'
+  , (err, recurlyResp, body) =>
+    if err?
+      return callback err, null
+    else if recurlyResp.statusCode is 404
+      return callback { error: "You have no Recurly account. Sign up for a paid plan at http://scraperwiki.com/pricing" }, null
+    else if recurlyResp.statusCode isnt 200
+      return callback { statusCode: recurlyResp.statusCode, error: recurlyResp.body }, null
+
+    parser = new xml2js.Parser
+      ignoreAttrs: true
+      explicitArray: false
+    parser.parseString body, (err, obj) =>
+      if err?
+        console.warn err
+        return callback { error: "Can't parse Recurly XML" }, null
+      return callback null, obj
+
 class exports.User extends ModelBase
   @dbClass: zDbUser
 
@@ -85,45 +112,35 @@ class exports.User extends ModelBase
     @save callback
 
   getCurrentSubscription: (callback) ->
-    # find the subscription with that plan name
-    request.get
-      uri: "https://#{process.env.RECURLY_API_KEY}:@#{process.env.RECURLY_DOMAIN}.recurly.com/v2/accounts/#{@recurlyAccount}/subscriptions"
-      strictSSL: true
-      headers:
-        'Accept': 'application/xml'
-        'Content-Type': 'application/xml; charset=utf-8'
-    , (err, recurlyResp, body) =>
-      if err?
+    requestRecurlyAPI "/v2/accounts/#{@recurlyAccount}/subscriptions", (err, obj) =>
+      if err
         return callback err, null
-      else if recurlyResp.statusCode is 404
-        return callback { error: "You have no Recurly account. Sign up for a paid plan at http://scraperwiki.com/pricing" }, null
-      else if recurlyResp.statusCode isnt 200
-        return callback { statusCode: recurlyResp.statusCode, error: recurlyResp.body }, null
 
-      parser = new xml2js.Parser
-        ignoreAttrs: true
-        explicitArray: false
-      parser.parseString body, (err, obj) =>
-        if err?
-          console.warn err
-          return callback { error: "Can't parse Recurly XML" }, null
+      if not obj.subscriptions
+        return callback { error: "You do not have a paid subscription. Sign up at http://scraperwiki.com/pricing" }, null
 
-        if not obj.subscriptions
-          return callback { error: "You do not have a paid subscription. Sign up at http://scraperwiki.com/pricing" }, null
+      # xml2js converts multiple entities within entities as an array,
+      # but a single one is a single object. So we wrap into a list where necessary.
+      if not obj.subscriptions.subscription[0]
+        obj.subscriptions.subscription = [ obj.subscriptions.subscription ]
 
-        # xml2js converts multiple entities within entities as an array,
-        # but a single one is a single object. So we wrap into a list where necessary.
-        if not obj.subscriptions.subscription[0]
-          obj.subscriptions.subscription = [ obj.subscriptions.subscription ]
+      currentSubscription = _.find obj.subscriptions.subscription, (item) =>
+        return item.plan.plan_code is @accountLevel and item.state is 'active'
 
-        currentSubscription = _.find obj.subscriptions.subscription, (item) =>
-          console.log "recurly", item.plan.plan_code, "user", @accountLevel, item.state
-          return item.plan.plan_code is @accountLevel and item.state is 'active'
+      if not currentSubscription
+        return callback null, null
 
-        if not currentSubscription
-          return callback null, null
+      return callback null, new Subscription currentSubscription
 
-        return callback null, new Subscription currentSubscription
+  getSubscriptionAdminURL: (callback) ->
+    requestRecurlyAPI "/v2/accounts/#{@recurlyAccount}", (err, obj) ->
+      if err
+        return callback err, null
+
+      if not obj.account?.hosted_login_token
+        return callback { error: "You do not have a recurly hosted_login_token. Contact hello@scraperwiki.com for help." }, null
+
+      callback null, "https://#{process.env.RECURLY_DOMAIN}.recurly.com/account/#{obj.account.hosted_login_token}"
 
   @canCreateDataset: (user, callback) ->
     {Dataset} = require 'model/dataset'

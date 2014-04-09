@@ -355,6 +355,21 @@ describe 'User (server)', ->
           done()
 
 
+  describe 'Billing details', ->
+    before (done) ->
+      User.findByShortName 'mediummary', (err, user) =>
+        @user = user
+        done err
+
+    it 'We can find the user’s hosted recurly admin URL', (done) ->
+      @user.getSubscriptionAdminURL (err, url) ->
+        should.not.exist err
+        should.exist url
+        url.should.be.a.string
+        url.should.match new RegExp("^https://[^.]+[.]recurly[.]com/account/[a-z0-9]+$")
+        done()
+
+
   describe 'Disk quota', ->
 
     context 'when updating the quotas for a user', ->

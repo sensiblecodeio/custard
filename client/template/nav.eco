@@ -26,6 +26,9 @@
     <li class="divider"></li>
     <% end %>
     <li class="set-password"><a href="/set-password"><i class="icon-wrench space"></i> Change password</a></li>
+    <% if @recurlyAdminUrl: %>
+    <li class="billing"><a href="<%= @recurlyAdminUrl %>" data-nonpushstate><i class="icon-user space"></i> Edit billing details</a></li>
+    <% end %>
     <li class="logout"><a href="/logout" data-nonpushstate><i class="icon-off space"></i> Log out</a></li>
   </ul>
 </li>

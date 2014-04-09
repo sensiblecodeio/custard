@@ -68,3 +68,28 @@ describe 'Subscription Workflow', ->
 
     it 'it tells me to check my emails', (done) ->
       wd40.waitForText 'check your email', done
+
+
+describe 'Editing my subscription', ->
+  prepIntegration()
+
+  context 'When I log in as a paying user', ->
+    before (done) ->
+      browser.get login_url, ->
+        wd40.fill '#username', 'mediummary', ->
+          wd40.fill '#password', 'testing', ->
+            wd40.click '#login', done
+
+    context 'when I click the user menu', ->
+      before (done) ->
+        wd40.click '#header .dropdown-toggle', done
+
+      it 'there is a link to edit my billing details', (done) ->
+        wd40.waitForText "Edit billing details", done
+
+    context 'when I click the billing details link', ->
+      before (done) ->
+        wd40.click '#header li.billing a', done
+
+      it 'I am redirected to a Recurly account admin page', (done) ->
+        wd40.waitForMatchingURL new RegExp("^https://[^.]+[.]recurly[.]com/account"), done

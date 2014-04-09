@@ -701,7 +701,7 @@ addDataset = (req, resp) ->
             return resp.send 400, error: "Error saving dataset: #{err}"
 
           console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
-          
+
           Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
             console.warn err if err?
             resp.send 200, dataset
@@ -782,6 +782,21 @@ changePlan = (req, resp) ->
             console.warn "could not save user model!", err
             return resp.send 500, error: "Subscription changed, but user model could not be saved"
           return resp.send 200, user
+
+redirectToRecurlyAdmin = (req, resp) ->
+  User.findByShortName req.user.real.shortName, (err, user) ->
+    if err?
+      return resp.send 500, error: "Couldn't find your user object"
+    if not user
+      return resp.send 500, error: "No users with the specified shortName"
+    user.getSubscriptionAdminURL (err, recurlyAdminUrl) ->
+      if err?
+        return resp.send 404, error: err.error
+      if not recurlyAdminUrl
+        return resp.send 404, error: "You do not have a recurly hosted_login_token. Contact hello@scraperwiki.com for help."
+      resp.writeHead 302,
+        location: recurlyAdminUrl
+      resp.end()
 
 # Make a callable to respond to `resp` when intercom replies to us.
 intercomResponseHandler = (resp, reason) ->
@@ -873,7 +888,6 @@ app.post '/api/tools/?', googleAnalytics, postTool
 app.put '/api/user/?', updateUser
 
 app.get '/api/:user/datasets/?', checkThisIsMyDataHub, listDatasets
-# :todo: should :user be part of the dataset URL?
 app.get '/api/:user/datasets/:id/?', checkThisIsMyDataHub, getDataset
 app.get '/api/:user/datasets/:id/views/?', checkThisIsMyDataHub, listViews
 app.put '/api/:user/datasets/:id/?', checkThisIsMyDataHub, updateDataset
@@ -886,6 +900,7 @@ app.post '/api/:user/sshkeys/?', addSSHKey
 app.get '/api/:user/sshkeys/?', listSSHKeys
 
 app.put '/api/:user/subscription/change/:plan/?', changePlan
+app.get '/api/:user/subscription/billing', redirectToRecurlyAdmin
 
 app.post '/api/reporting/message/?', sendIntercomMessage
 app.post '/api/reporting/user/?', sendIntercomUserData

@@ -8,7 +8,7 @@ AGPL Licenced (see LICENCE file).
 
 ## Initial setup (mongo, redis, nvm)
 
-On Debian or Ubuntu:
+### On Debian or Ubuntu:
 
     sudo apt-get install -y mongodb
     sudo apt-get install -y redis-server
@@ -27,14 +27,21 @@ start a new bash terminal (in order to get nvm which is a shell function)
 
    nvm install 0.10
 
-On Mac OSX:
+### On Mac OSX:
+
+Install Node via nvm:
+
+    curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+    nvm install 0.10
+
+Install Mongo and Redis via Homebrew:
 
     brew install mongodb
     brew install redis
 
-Clone this repo (inside `~/sw` preferable) and from within the `custard` directory:
+### Then on all platforms:
 
-Then on all platforms:
+Clone this repo (inside `~/sw` preferable) and from within the `custard` directory:
 
     mkdir mongo
     npm install pow-mongodb-fixtures -g

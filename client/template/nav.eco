@@ -1,5 +1,10 @@
 <ul>
 <% if @effectiveUser?.displayName: %>
+<li class="plan">
+  <a href="/pricing">
+    <%= @planDisplayName %>
+  </a>
+</li>
 <li class="user dropdown">
   <a class="dropdown-toggle" data-toggle="dropdown">
     <%= @effectiveUser?.displayName %>

@@ -30,12 +30,14 @@ class Cu.View.Nav extends Backbone.View
         recurlyAdminUrl = undefined
         if window.app.cashPlan window.app.humanPlan real.accountLevel
           recurlyAdminUrl = "/api/#{real.shortName}/subscription/billing"
+        planDisplayName = effective.accountLevel
 
         @el.innerHTML = JST.nav
           realUser: real
           effectiveUser: effective
           allUsers: allUsers
           recurlyAdminUrl: recurlyAdminUrl
+          planDisplayName: planDisplayName
 
   loggedOutNav: ->
     @el.innerHTML = JST.nav()

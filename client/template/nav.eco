@@ -1,10 +1,18 @@
 <ul>
 <% if @effectiveUser?.displayName: %>
+<% if @isTrial: %>
 <li class="plan">
   <a href="/pricing">
-    <%= @planDisplayName %>
+    <% if @trialDaysLeft == 0: %>
+    Your free trial has expired!
+    <% else if @trialDaysLeft == 1: %>
+    <%= @trialDaysLeft %> day free trial left!
+    <% else: %>
+    <%= @trialDaysLeft %> days free trial left!
+    <% end %>
   </a>
 </li>
+<% end %>
 <li class="user dropdown">
   <a class="dropdown-toggle" data-toggle="dropdown">
     <%= @effectiveUser?.displayName %>

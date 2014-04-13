@@ -54,6 +54,9 @@ Alongside custard, you will need to git clone swops-secret
 
 ## Mac foibles
 
+WARNING: I did this mac files change, and it made my whole computer unstable
+(OSX 10.9.2), so only do this if you find you need to...
+
 The maxfiles ulimit on Mac OSX is ludicrously low. This can cause problems (eg: `username-duplicate` errors from the users POST endpoint) when `mongod` attempts to create the number of connections specified in `server/index.coffee`.
 
 To increase your maxfiles limit on Mac OSX, create a file at `/etc/launchd.conf` and paste this into it:

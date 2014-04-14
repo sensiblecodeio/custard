@@ -83,7 +83,9 @@ mocha () {
     fi
 }
 
-s=../swops-secret/keys.sh
+# Ignore errors, as this script is also run in production, where the
+# environment variables are just set in the background
+s=../swops/archive/swops-secret/keys.sh
 test -e "$s" && . "$s" && echo yummm, keys.sh
 
 export ACK_OPTIONS="--type-add coffee=.coffee${ACK_OPTIONS+ $ACK_OPTIONS}"

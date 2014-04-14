@@ -24,6 +24,7 @@ userSchema = new mongoose.Schema
   apikey: {type: String, unique: true}
   isStaff: Boolean
   accountLevel: String
+  planExpires: Date
   recurlyAccount: {type: String, unique: true}
   trialStarted: {type: Date, default: Date.now}
   acceptedTerms: Number # a value of 0 or null means you need to accept terms on next login
@@ -110,6 +111,12 @@ class exports.User extends ModelBase
   setAccountLevel: (plan, callback) ->
     @accountLevel = plan
     @save callback
+
+  getPlanDaysLeft: ->
+      daysLeft = moment(@planExpires).subtract(moment()).days()
+      if daysLeft < 0
+        daysLeft = 0
+      return daysLeft
 
   getCurrentSubscription: (callback) ->
     requestRecurlyAPI "/v2/accounts/#{@recurlyAccount}/subscriptions", (err, obj) =>
@@ -230,13 +237,19 @@ class exports.User extends ModelBase
       displayName: opts.newUser.displayName
       email: opts.newUser.email
       apikey: uuid.v4()
-      accountLevel: 'free'
+      accountLevel: 'free-trial'
+      planExpires: undefined
       recurlyAccount: "#{opts.newUser.shortName}.#{recurlyRand}"
       acceptedTerms: opts.newUser.acceptedTerms
 
     if opts.requestingUser?.isStaff
-      newUser.accountLevel = opts.newUser.accountLevel or 'free'
+      newUser.accountLevel = opts.newUser.accountLevel or 'free-trial'
       newUser.acceptedTerms = 0
+
+    if newUser.accountLevel == 'free-trial'
+      expirationDate = new Date()
+      expirationDate.setDate(expirationDate.getDate() + 30)
+      newUser.planExpires = expirationDate
 
     if opts.newUser.logoUrl?
       newUser.logoUrl = opts.newUser.logoUrl

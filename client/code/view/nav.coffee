@@ -30,9 +30,8 @@ class Cu.View.Nav extends Backbone.View
         recurlyAdminUrl = undefined
         if window.app.cashPlan window.app.humanPlan real.accountLevel
           recurlyAdminUrl = "/api/#{real.shortName}/subscription/billing"
-        # TODO should test if trial using a function in the user model
-        isTrial = effective.accountLevel == 'free'
-        trialDaysLeft = 30
+        isTrial = effective.accountLevel == 'free-trial'
+        trialDaysLeft = effective.getPlanDaysLeft()
 
         @el.innerHTML = JST.nav
           realUser: real

@@ -92,7 +92,8 @@ so you should be able to visit `localhost:3001` in a web browser.
 
 We love them.
 
-First, download and unzip Selenium Server and Chromedriver, and put them in your custard directory or the next level up:
+First, download Selenium Server and download and unzip Chromedriver, and put
+them in your custard directory or the next level up:
 
 - https://code.google.com/p/selenium/downloads/list
 - https://code.google.com/p/chromedriver/downloads/list

@@ -175,7 +175,7 @@ describe 'User (server)', ->
         user.displayName.should.equal 'Ickle Test'
         done()
 
-    it 'I can find mulitple users by their shared email address', (done) ->
+    it 'I can find multiple users by their shared email address', (done) ->
       User.findByEmail 'ickletest@example.org', (err, users) ->
         should.exist users
         users.should.have.a.length 2

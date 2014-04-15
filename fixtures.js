@@ -43,6 +43,23 @@ exports.users = [{
   created: new Date(2012, 0, 1) // Wow! A zero-indexed month!
 },
 {
+  shortName: 'free-trial-user',
+  email: ['free-trail-user@scraperwiki.com'],
+  displayName: 'Free Trialler',
+  password: '$2a$10$EWqKC.kk2vYtmkW4fdCk7OxcnvZbd5SXwszHK6LQRlh59PYQK1hBm',
+  apikey: "don't care",
+  isStaff: false,
+  sshKeys: [],
+  accountLevel: "free-trial",
+  // 14 * 86400 * 1000 is 14 days later.
+  planExpires: new Date(+new Date() + 14 * 86400 * 1000),
+  recurlyAccount: "ehg-2234432",
+  acceptedTerms: 1,
+  canBeReally: ['ehg', 'test'],
+  defaultContext: "ehg",
+  created: new Date()
+},
+{
   shortName: 'ickletest',
   email: ['ickletest@example.org'],
   displayName: 'Ickle Test',

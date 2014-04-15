@@ -31,7 +31,7 @@ class Cu.View.Nav extends Backbone.View
         if window.app.cashPlan window.app.humanPlan real.accountLevel
           recurlyAdminUrl = "/api/#{real.shortName}/subscription/billing"
         isTrial = effective.accountLevel == 'free-trial'
-        trialDaysLeft = effective.getPlanDaysLeft()
+        trialDaysLeft = effective.daysLeft
 
         @el.innerHTML = JST.nav
           realUser: real

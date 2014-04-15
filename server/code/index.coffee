@@ -128,6 +128,7 @@ getSessionUser = (user) ->
     isStaff: user.isStaff
     avatarUrl: "/image/avatar.png"
     accountLevel: user.accountLevel
+    daysLeft: user.getPlanDaysLeft()
     recurlyAccount: user.recurlyAccount
     boxEndpoint: Box.endpoint plan.boxServer, ''
     boxServer: plan.boxServer

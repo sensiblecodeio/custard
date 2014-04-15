@@ -112,8 +112,14 @@ getSessionUser = (user) ->
   # changed (which can only be done by an admin using the database
   # panel).
   if not user
+    console.warn "MYSTERIOUS: user is not in the database"
     return {}
-  [err_, plan] = Plan.getPlan user.accountLevel
+  [err, plan] = Plan.getPlan user.accountLevel
+  if err
+    # We get here if there is no plan for the user's accountLevel.
+    # This "Can't Happen".
+    console.warn "MYSTERIOUS: user #{user.shortName} has no plan for their accountLevel #{user.accountLevel}"
+    return {}
   session =
     shortName: user.shortName
     displayName: user.displayName

@@ -294,8 +294,31 @@ describe 'User (server)', ->
         @user.getPlanDaysLeft().should.equal 30
 
       context '...waiting a day brings expiration nearer', ->
-        xit "how are we going to test this"
-        # Are we going to mock the Date() object?
+        before ->
+          # Do not use the default argument to .useFakeTimers(): it doesn't work.
+          @clock = sinon.useFakeTimers(+(new Date()))
+          # 100e6 milliseconds is a bit more than 1 day.
+          @clock.tick(100e6)
+
+        it "the new user's plan expires in 29 days", ->
+          @user.getPlanDaysLeft().should.equal 29
+
+        after ->
+          @clock.restore()
+
+      context '...waiting a month expires the plan', ->
+        before ->
+          # See above notes about bug in useFakeTimers().
+          @clock = sinon.useFakeTimers(+new Date())
+          # 100e6 milliseconds is a bit more than 1 day.
+          @clock.tick(30 * 100e6)
+
+        it "the new user's plan has expired", ->
+          @user.getPlanDaysLeft().should.equal 0
+
+        after ->
+          @clock.restore()
+
 
     context 'when add is called (with newsletter opt-in)', ->
       before (done) ->

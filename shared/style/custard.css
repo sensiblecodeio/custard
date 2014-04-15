@@ -1249,7 +1249,7 @@ div.pricing .plan.glowing:after {
   opacity: 0.8;
 }
 
-div.pricing .plan.community {
+div.pricing .plan.freetrial {
   background-color: #FFFAE7;
   border: 2px dashed rgb(255, 223, 94);
   -webkit-border-radius: 5px;

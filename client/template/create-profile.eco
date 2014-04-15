@@ -11,7 +11,7 @@
               <optgroup label="Free accounts">
                 <option value="journalist">Journalist</option>
                 <option value="opendata">Open Data</option>
-                <option value="free">Community</option>
+                <option value="free-trial">Free Trial</option>
               </optgroup>
             </select>
         </p>

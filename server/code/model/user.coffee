@@ -1,4 +1,5 @@
 bcrypt = require 'bcrypt'
+moment = require 'moment'
 mongoose = require 'mongoose'
 async = require 'async'
 request = require 'request'
@@ -113,7 +114,9 @@ class exports.User extends ModelBase
     @save callback
 
   getPlanDaysLeft: ->
-      daysLeft = moment(@planExpires).subtract(moment()).days()
+      now = moment()
+      expires = moment(@planExpires)
+      daysLeft = Math.ceil(moment.duration(expires-now).asDays())
       if daysLeft < 0
         daysLeft = 0
       return daysLeft

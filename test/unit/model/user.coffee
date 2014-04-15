@@ -287,6 +287,16 @@ describe 'User (server)', ->
       it 'emails the user', ->
         @emailStub.calledOnce.should.be.true
 
+      it 'the new user is on "free-trial" plan', ->
+        @user.accountLevel.should.equal "free-trial"
+
+      it "the new user's plan expires in 30 days", ->
+        @user.getPlanDaysLeft().should.equal 30
+
+      context '...waiting a day brings expiration nearer', ->
+        xit "how are we going to test this"
+        # Are we going to mock the Date() object?
+
     context 'when add is called (with newsletter opt-in)', ->
       before (done) ->
         @apiStub = listSubscribe: sinon.stub()

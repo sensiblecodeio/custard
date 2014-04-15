@@ -11,9 +11,9 @@ describe 'Sign up', ->
     before (done) ->
       wd40.click '.plan.freetrial a', done
 
-    it 'has "Freetrial" and "Sign Up" in the page title', (done) ->
+    it 'has "Free Trial" and "Sign Up" in the page title', (done) ->
       browser.title (err, title) ->
-        title.should.match /Freetrial/g
+        title.should.match /Free Trial/g
         title.should.match /Sign Up/g
         done()
 

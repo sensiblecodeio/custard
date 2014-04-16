@@ -64,33 +64,11 @@ describe 'Express Routes', ->
       .expect(/ScraperWiki Enterprise Agreement/)
       .end(done)
 
-  it '/contact/', (done) ->
-    request(app)
-      .get('/contact/')
-      .expect(200)
-      .expect(/Contact Us/)
-      .end(done)
-
-  it '/about/', (done) ->
-    request(app)
-      .get('/about/')
-      .expect(200)
-      .expect(/About ScraperWiki/)
-      .end(done)
-
-  it '/professional/', (done) ->
-    request(app)
-      .get('/professional/')
-      .expect(200)
-      .expect(/Professional Services/)
-      .expect(/Get in touch/)
-      .end(done)
-
   it '/', (done) ->
     request(app)
       .get('/')
       .expect(200)
-      .expect(/Liberate your data/)
+      .expect(/placeholder for the internal home page/)
       .end(done)
 
   it '/login/', (done) ->
@@ -106,6 +84,7 @@ describe 'Error Handling', ->
   xit 'Should display a 404 error', (done) ->
     request(app)
       .get('/xxsdsdsdsd')
+      .expect(404)
       .expect(/Not Found/)
       .end(done)
 
@@ -117,3 +96,5 @@ describe "Status End Point", ->
       .end (err, res) ->
         (spy.calledWith process.env['USER']).should.be.true
         done()
+
+

@@ -9,11 +9,11 @@ describe 'Sign up', ->
     before (done) ->
       browser.get "#{base_url}/pricing/", done
     before (done) ->
-      wd40.click '.plan.community a', done
+      wd40.click '.plan.freetrial a', done
 
-    it 'has "Community" and "Sign Up" in the page title', (done) ->
+    it 'has "Free Trial" and "Sign Up" in the page title', (done) ->
       browser.title (err, title) ->
-        title.should.match /Community/g
+        title.should.match /Free Trial/g
         title.should.match /Sign Up/g
         done()
 

@@ -13,7 +13,7 @@ class Cu.View.Pricing extends Backbone.View
       large: 'signup'
       enterprise: 'signup'
     plan = window.user?.effective?.accountLevel or ''
-    if plan == 'free'
+    if plan == 'free' or plan == 'free-trial'
       options.free = 'current'
       options.medium = 'upgrade'
       options.large = 'upgrade'
@@ -50,7 +50,7 @@ class Cu.View.Pricing extends Backbone.View
     e.preventDefault()
     humanPlan = $(e.target).attr('data-plan')
     truePlan = app.truePlan humanPlan
-    if window.user.effective?.accountLevel is 'free'
+    if window.user.effective?.accountLevel in ['free', 'free-trial']
       # upgrade modal won't work: they need to enter payment details
       window.app.navigate "/subscribe/#{truePlan}", {trigger: true}
     else

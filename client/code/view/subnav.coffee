@@ -204,8 +204,12 @@ class Cu.View.SignUpNav extends Backbone.View
   className: 'subnav-wrapper'
 
   render: ->
-    humanPlan = @options.plan # eg: "community"/"datascientist", passed in by router/main.coffee
+    humanPlan = @options.plan # eg: "freetrial"/"datascientist", passed in by router/main.coffee
     capitalisedPlan = humanPlan.toUpperCase()[0] + humanPlan.toLowerCase()[1..]
+    if capitalisedPlan == 'Freetrial'
+      capitalisedPlan = 'Free Trial'
+    if capitalisedPlan == 'Datascientist'
+      capitalisedPlan = 'Data Scientist'
     @$el.html JST['signupnav'] plan: capitalisedPlan
     window.document.title = "#{capitalisedPlan } | Sign Up | ScraperWiki"
     this

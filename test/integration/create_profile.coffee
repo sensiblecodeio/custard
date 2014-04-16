@@ -35,7 +35,7 @@ describe 'Create a normal user', ->
 
   context 'When I enter new user details', ->
     before (done) ->
-      wd40.click 'option[value="free"]', ->
+      wd40.click 'option[value="free-trial"]', ->
         wd40.fill '#displayname', 'John Smith', ->
           wd40.fill '#email', 'john@example.com', done
 
@@ -72,7 +72,7 @@ describe 'Create a user in a corporate datahub', ->
 
   context 'When I enter new user details, and select a default data hub', ->
     before (done) ->
-      wd40.click 'option[value="free"]', ->
+      wd40.click 'option[value="free-trial"]', ->
         wd40.fill '#displayname', 'John Smith', ->
           wd40.fill '#email', 'john@example.com', ->
             wd40.fill '#defaultcontext', 'testersonltd', ->

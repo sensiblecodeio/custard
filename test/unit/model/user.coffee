@@ -287,6 +287,39 @@ describe 'User (server)', ->
       it 'emails the user', ->
         @emailStub.calledOnce.should.be.true
 
+      it 'the new user is on "free-trial" plan', ->
+        @user.accountLevel.should.equal "free-trial"
+
+      it "the new user's plan expires in 30 days", ->
+        @user.getPlanDaysLeft().should.equal 30
+
+      context '...waiting a day brings expiration nearer', ->
+        before ->
+          # Do not use the default argument to .useFakeTimers(): it doesn't work.
+          @clock = sinon.useFakeTimers(+(new Date()))
+          # 100e6 milliseconds is a bit more than 1 day.
+          @clock.tick(100e6)
+
+        it "the new user's plan expires in 29 days", ->
+          @user.getPlanDaysLeft().should.equal 29
+
+        after ->
+          @clock.restore()
+
+      context '...waiting a month expires the plan', ->
+        before ->
+          # See above notes about bug in useFakeTimers().
+          @clock = sinon.useFakeTimers(+new Date())
+          # 100e6 milliseconds is a bit more than 1 day.
+          @clock.tick(30 * 100e6)
+
+        it "the new user's plan has expired", ->
+          @user.getPlanDaysLeft().should.equal 0
+
+        after ->
+          @clock.restore()
+
+
     context 'when add is called (with newsletter opt-in)', ->
       before (done) ->
         @apiStub = listSubscribe: sinon.stub()

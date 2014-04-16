@@ -112,8 +112,14 @@ getSessionUser = (user) ->
   # changed (which can only be done by an admin using the database
   # panel).
   if not user
+    console.warn "MYSTERIOUS: user is not in the database"
     return {}
-  [err_, plan] = Plan.getPlan user.accountLevel
+  [err, plan] = Plan.getPlan user.accountLevel
+  if err
+    # We get here if there is no plan for the user's accountLevel.
+    # This "Can't Happen".
+    console.warn "MYSTERIOUS: user #{user.shortName} has no plan for their accountLevel #{user.accountLevel}"
+    return {}
   session =
     shortName: user.shortName
     displayName: user.displayName
@@ -122,6 +128,7 @@ getSessionUser = (user) ->
     isStaff: user.isStaff
     avatarUrl: "/image/avatar.png"
     accountLevel: user.accountLevel
+    daysLeft: user.getPlanDaysLeft()
     recurlyAccount: user.recurlyAccount
     boxEndpoint: Box.endpoint plan.boxServer, ''
     boxServer: plan.boxServer
@@ -503,6 +510,9 @@ app.get '/thankyou/?*', renderClientApp
 
 app.get '/pricing/?*', (req, resp) ->
   renderServerAndClientSide page: 'pricing', req, resp
+
+app.get '/signup/community', (req, resp) ->
+  resp.redirect '/signup/freetrial'
 
 app.get '/signup/?*', (req, resp) ->
   renderServerAndClientSide {page: "sign-up", subnav: 'signupnav'}, req, resp

@@ -18,8 +18,8 @@ describe 'Pricing', ->
         title.should.match /Pricing/g
         done()
 
-    it 'it lets me sign up to a free "Community" plan', (done) ->
-      wd40.elementByCss '.plan.community .cta', (err, element) ->
+    it 'it lets me sign up to a "Free Trial" plan', (done) ->
+      wd40.elementByCss '.plan.freetrial .cta', (err, element) ->
         should.exist element
         element.text (err, text) ->
           text.should.match /sign up/i
@@ -58,8 +58,8 @@ describe 'Pricing', ->
     before (done) ->
       browser.get base_url + '/pricing', done
 
-    it 'it shows that the community plan is my current plan', (done) ->
-      wd40.elementByCss '.plan.community .currentPlan', (err, element) ->
+    it 'it shows that the free trial plan is my current plan', (done) ->
+      wd40.elementByCss '.plan.freetrial .currentPlan', (err, element) ->
         should.exist element
         element.text (err, text) ->
           text.should.match /current plan/i
@@ -133,8 +133,8 @@ describe 'Pricing', ->
           text.should.match /current plan/i
           done()
 
-    it 'it tells me to contact ScraperWiki for a downgrade to community', (done) ->
-      wd40.getText '.plan.community', (err, text) ->
+    it 'it tells me to contact ScraperWiki for a downgrade to free trial', (done) ->
+      wd40.getText '.plan.freetrial', (err, text) ->
         text.should.match /contact to downgrade/i
         done()
 
@@ -240,6 +240,6 @@ describe 'Pricing', ->
               done()
 
     it 'it tells me to contact ScraperWiki for a downgrade', (done) ->
-      wd40.getText '.plan.community', (err, text) ->
+      wd40.getText '.plan.freetrial', (err, text) ->
         text.should.match /contact to downgrade/i
         done()

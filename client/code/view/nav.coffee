@@ -30,12 +30,16 @@ class Cu.View.Nav extends Backbone.View
         recurlyAdminUrl = undefined
         if window.app.cashPlan window.app.humanPlan real.accountLevel
           recurlyAdminUrl = "/api/#{real.shortName}/subscription/billing"
+        isTrial = effective.accountLevel == 'free-trial'
+        trialDaysLeft = effective.daysLeft
 
         @el.innerHTML = JST.nav
           realUser: real
           effectiveUser: effective
           allUsers: allUsers
           recurlyAdminUrl: recurlyAdminUrl
+          isTrial: isTrial
+          trialDaysLeft: trialDaysLeft
 
   loggedOutNav: ->
     @el.innerHTML = JST.nav()

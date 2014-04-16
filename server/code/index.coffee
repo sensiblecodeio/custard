@@ -624,13 +624,20 @@ listDatasets = (req, resp) ->
 
 getDataset = (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}"
-  Dataset.findOneById req.params.id, req.user.effective.shortName, (err, dataset) ->
+  Dataset.find OneById req.params.id, req.user.effective.shortName, (err, dataset) ->
     if err?
       console.warn err
       return resp.send 500, error: 'Error trying to find datasets'
     else if not dataset
-      console.warn "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
-      return resp.send 404, error: "We can't find this dataset, or you don't have permission to access it."
+      Dataset.find OneById req.params.id, req.user.real.shortName, (err, dataset) ->
+        if err?
+          console.warn err
+          return resp.send 500, error: 'Error trying to find datasets'
+        else if not dataset
+          console.warn "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
+          return resp.send 404, error: "We can't find this dataset, or you don't have permission to access it."
+        else
+          return resp.send 200, dataset
     else
       return resp.send 200, dataset
 

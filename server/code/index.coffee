@@ -854,7 +854,7 @@ switchContextIfRequiredAndAllowed = (req, resp, next) ->
   datasetID = req.params[0]
   Dataset.findOneById datasetID, (err, dataset) ->
     if dataset
-      if dataset.user == req.user.real.shortName
+      if dataset.user == req.user.effective.shortName
         return next()
       else
         User.findByShortName dataset.user, (err, switchingTo) ->

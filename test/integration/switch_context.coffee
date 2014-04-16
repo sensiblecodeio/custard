@@ -43,8 +43,8 @@ describe 'Context switch (staff)', ->
 
   context 'When I log in as a staff member', ->
     before (done) ->
-      wd40.fill '#username', 'teststaff', ->
-        wd40.fill '#password', process.env.CU_TEST_STAFF_PASSWORD, ->
+      wd40.fill '#username', 'ehg', ->
+        wd40.fill '#password', 'testing', ->
           wd40.click '#login', done
 
     context 'And I try to access a normal user’s dataset directly', ->
@@ -58,6 +58,25 @@ describe 'Context switch (staff)', ->
       it 'I have been automatically switched into the user’s account', (done) ->
         browser.get home_url, ->
           wd40.getText '#subnav-path', (err, text) ->
-            text.should.not.include 'General Test Testington’s data hub'
+            text.should.not.include 'Chris Blower’s data hub'
             text.should.include 'Mr F Greedy’s data hub'
             done()
+
+    context 'And I go back to my own', ->
+      before (done) ->
+        browser.get "#{base_url}/dataset/3006375815/settings", done
+
+      it 'I see the dataset contents', (done) ->
+        browser.waitForElementByCss '#toolbar', 4000, ->
+          browser.waitForElementByCss 'iframe', 2000, done
+
+      it 'I have been automatically switched back to my account', (done) ->
+        browser.get home_url, ->
+          wd40.getText '#subnav-path', (err, text) ->
+            text.should.include 'Chris Blower’s data hub'
+            text.should.not.include 'Mr F Greedy’s data hub'
+            done()
+
+
+
+

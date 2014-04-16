@@ -511,6 +511,9 @@ app.get '/thankyou/?*', renderClientApp
 app.get '/pricing/?*', (req, resp) ->
   renderServerAndClientSide page: 'pricing', req, resp
 
+app.get '/signup/community', (req, resp) ->
+  resp.redirect '/signup/freetrial'
+
 app.get '/signup/?*', (req, resp) ->
   renderServerAndClientSide {page: "sign-up", subnav: 'signupnav'}, req, resp
 

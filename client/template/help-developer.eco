@@ -618,9 +618,7 @@ running <code>git pull</code> in their <code>tool</code> directory.</p>
 
 <p>A box is a Unix user account on ScraperWiki&rsquo;s server cluster. The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy. Your home directory is always <code>/home/</code>. </p>
 
-<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem (it uses <a href="http://www.gluster.org/">GlusterFS</a>), with a storage limit according to your <a href="/pricing/" data-nonpushstate>payment plan</a>.</p>
-
-<p>A handful of internal box settings are stored in a JSON file at <code>~/box.json</code>. This is deprecated and will probably disappear soon. Just move along :-)</p>
+<p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem.</p>
 
 <p>
 At any one time your box is allocated to one particular server, but that

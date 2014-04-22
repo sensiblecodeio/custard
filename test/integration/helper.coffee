@@ -8,6 +8,7 @@ test_server = process.env.CU_TEST_SERVER ? 'localhost'
 base_url = "http://#{test_server}:3001"
 login_url = "#{base_url}/login"
 logout_url = "#{base_url}/logout"
+pricing_trial_url = "#{base_url}/login"
 
 prepIntegration = ->
   before (done) ->

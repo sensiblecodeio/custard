@@ -18,6 +18,21 @@ describe 'Free Trial', ->
         text.toLowerCase().should.include '14 days left'
         done()
 
+
+describe 'Expired Free Trial', ->
+  prepIntegration()
+
+  context 'when I log in as an expired free trial user', ->
+    before (done) ->
+      wd40.fill '#username', 'expired-user', ->
+        wd40.fill '#password', 'testing', ->
+          wd40.click '#login', done
+
+    it 'I am redirected to the pricing page', ->
+      wd40.trueURL (err, url) ->
+        url.should.equal "#{base_url}/pricing/expired"
+
+
 describe 'Paid user', ->
   prepIntegration()
 

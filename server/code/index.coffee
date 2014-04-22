@@ -99,6 +99,13 @@ ensureAuthenticated = (req, res, next) ->
   return next() if req.isAuthenticated()
   res.redirect '/login'
 
+enforceFreeTrial = (req, res, next) ->
+  if req.user?.effective
+    if req.user.effective.accountLevel == 'free-trial'
+      if req.user.effective.daysLeft <= 0
+        return res.redirect '/pricing/expired'
+  return next()
+
 passport.serializeUser (user, done) ->
   done null, user
 
@@ -917,6 +924,8 @@ app.post '/api/reporting/message/?', sendIntercomMessage
 app.post '/api/reporting/user/?', sendIntercomUserData
 app.post '/api/reporting/tag/?', sendIntercomTag
 
+# Magic redirects
+app.all '*', enforceFreeTrial
 app.get /^[/]dataset[/]([a-zA-Z0-9]+)/, switchContextIfRequiredAndAllowed, renderClientApp
 
 # Send all other requests to the client app, eg:

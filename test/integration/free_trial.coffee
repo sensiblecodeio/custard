@@ -49,8 +49,11 @@ describe 'Expired Free Trial', ->
       wd40.trueURL (err, url) ->
         url.should.equal "#{base_url}/pricing/expired"
 
-    it 'should link to pricing expired page', (done) ->
-      wd40.click '.trial a', (err, text) ->
+    context 'when I click on the "Free Trial" message', ->
+      before (done) ->
+        wd40.click '.trial a', done
+
+      it 'should be on the pricing expired page', (done) ->
         wd40.trueURL (err, url) ->
           url.should.equal "#{base_url}/pricing/expired"
           done()

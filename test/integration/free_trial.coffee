@@ -18,6 +18,13 @@ describe 'Free Trial', ->
         text.toLowerCase().should.include '14 days left'
         done()
 
+    it 'should link to normal pricing page', (done) ->
+      wd40.click '.trial a', (err, text) ->
+        wd40.trueURL (err, url) ->
+          url.should.equal "#{base_url}/pricing"
+          done()
+
+
 
 describe 'Expired Free Trial', ->
   prepIntegration()
@@ -31,6 +38,13 @@ describe 'Expired Free Trial', ->
     it 'I am redirected to the pricing page', ->
       wd40.trueURL (err, url) ->
         url.should.equal "#{base_url}/pricing/expired"
+
+    it 'should link to pricing expired page', (done) ->
+      wd40.click '.trial a', (err, text) ->
+        wd40.trueURL (err, url) ->
+          url.should.equal "#{base_url}/pricing/expired"
+          done()
+
 
 
 describe 'Paid user', ->
@@ -49,3 +63,4 @@ describe 'Paid user', ->
       wd40.getText 'body', (err, text) ->
         (/Free trial/i.test text).should.be.false
         done()
+

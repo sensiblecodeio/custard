@@ -2,7 +2,7 @@
 <% if @effectiveUser?.displayName: %>
 <% if @isTrial: %>
 <li class="trial">
-  <a href="/pricing" class="<% if 10 >= @trialDaysLeft: %>
+  <a href="/pricing<% if @trialDaysLeft == 0: %>/expired<% end %>" class="<% if 10 >= @trialDaysLeft: %>
         urgent
     <% end %>">
     Free trial:

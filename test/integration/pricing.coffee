@@ -8,11 +8,6 @@ describe 'Pricing', ->
     before (done) ->
       browser.get base_url + '/pricing', done
 
-    before (done) =>
-      wd40.getText 'body', (err, text) =>
-        @bodyText = text
-        done()
-
     it 'has "Pricing" in the page title', (done) ->
       browser.title (err, title) ->
         title.should.match /Pricing/g

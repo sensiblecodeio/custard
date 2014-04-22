@@ -4,6 +4,12 @@
 </div>
 <% end %>
 
+<% if @upgrade is 'expired': %>
+<div class="alert alert-info" style="margin-left: 20px; margin-bottom: 45px;">
+  <strong>Please upgrade your account</strong>, your free trial has ended.
+</div>
+<% end %>
+
 <!-- <div class="plan enterprise account-large swcol">
   <h2>Enterprise</h2>
   <p class="cost">$199<small>/mth</small></p>

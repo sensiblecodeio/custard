@@ -251,3 +251,14 @@ describe 'Pricing', ->
           text.should.match /to create more datasets/i
           done()
 
+  context 'When I visit the pricing expired page', ->
+    before (done) ->
+      browser.get base_url + '/pricing/expired', done
+
+    it 'it implores me to upgrade since my trial has ended', (done) ->
+      wd40.elementByCss '.pricing .alert', (err, element) ->
+        should.exist element
+        element.text (err, text) ->
+          text.should.match /Please upgrade your account/i
+          text.should.match /your free trial has ended/i
+          done()

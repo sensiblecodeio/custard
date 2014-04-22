@@ -123,11 +123,6 @@ describe 'Failed login', ->
           text.should.include 'user does not exist'
           done()
 
-      it 'it suggests I try logging into ScraperWiki Classic', (done) ->
-        wd40.elementByCss '#error a[href="https://classic.scraperwiki.com"]', (err, link) ->
-          should.exist link
-          done()
-
     context 'when I try to login with the wrong password', ->
       before (done) ->
         wd40.fill '#username', 'ickletest', ->

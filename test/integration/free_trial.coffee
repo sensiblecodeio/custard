@@ -27,7 +27,14 @@ describe 'Free Trial', ->
           url.should.equal "#{base_url}/pricing"
           done()
 
+    context 'when I click the super duper ScraperWiki digger', ->
+      before (done) ->
+        wd40.click '#logo', done
 
+      it 'should be on the datasets page', (done) ->
+        wd40.trueURL (err, url) ->
+          url.should.equal "#{base_url}/datasets"
+          done()
 
 describe 'Expired Free Trial', ->
   prepIntegration()

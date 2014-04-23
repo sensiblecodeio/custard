@@ -13,7 +13,7 @@ AGPL Licenced (see LICENCE file).
     sudo apt-get install -y mongodb
     sudo apt-get install -y redis-server
 
-You'll need a bunch of node stuff:
+You'll need a bunch of node stuff which we get using `nvm`:
 
     curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 

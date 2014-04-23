@@ -61,10 +61,12 @@ deactivate () {
 }
 
 mocha () {
-    # Clean DB out and load fixtures
-    # if [ "${CU_TEST_NOCLEAN-CLEAN}" == "CLEAN" ]; then
-    test -f test/cleaner.coffee && coffee test/cleaner.coffee
-    # fi
+    # Clean DB out and load fixtures (set CU_TEST_CLEAN=false to
+    # avoid cleaning).
+    if "${CU_TEST_CLEAN-true}"
+    then
+      test/cleaner.coffee
+    fi
 
     # Consider pushing to external program.
     eval last=\${$#}

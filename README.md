@@ -18,12 +18,11 @@ You'll need a bunch of node stuff:
     sudo apt-get install -y npm
     curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 
-And fix the node version by adding these lines to your `.profile`:
+`nvm` must be runnable, so add this line to your `.profile`:
 
     . ~/.nvm/nvm.sh
-    nvm use 0.10
 
-start a new bash terminal (in order to get nvm which is a shell function)
+start a new bash terminal (in order to get `nvm` which is a shell function)
 
    nvm install 0.10
 

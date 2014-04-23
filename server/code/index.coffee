@@ -212,9 +212,10 @@ app.configure ->
 
   # Add Connect Assets
   app.use assets({src: 'client'})
-  if not /staging|production/.test process.env.NODE_ENV
-    # Set the public folder as static assets
-    app.use express.static(process.cwd() + '/shared')
+  # Set the public folder as static assets. In production this route
+  # is served statically by nginx, so this has no effect. It's
+  # used in dev, and not harmful in production.
+  app.use express.static(process.cwd() + '/shared')
   if process.env.NODETIME_KEY
     app.use nodetimeLog
 

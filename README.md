@@ -15,7 +15,6 @@ AGPL Licenced (see LICENCE file).
 
 You'll need a bunch of node stuff:
 
-    sudo apt-get install -y npm
     curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 
 `nvm` must be runnable, so add this line to your `.profile`:

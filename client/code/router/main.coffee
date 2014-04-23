@@ -15,6 +15,7 @@ class Cu.Router.Main extends Backbone.Router
     @on 'route', @trackPageView
     @on 'route', @trackIntercom
     @on 'route', @trackOptimizely
+    @on 'route', @checkDaysLeft
 
     # TODO: this isn't a great place for this constant
     window.latestTerms = 1
@@ -75,6 +76,18 @@ class Cu.Router.Main extends Backbone.Router
           setInterval ->
             window.Intercom 'update'
           , 30000
+
+  checkDaysLeft: (route) ->
+    # If we're already going to the pricing page, do not
+    # try and navigate to the pricing page.
+    if route == 'pricing'
+      return
+    # If a free-trial has expired, navigate to the pricing page.
+    user = window.user.effective
+    if user.accountLevel == 'free-trial' and user.daysLeft <= 0
+      # This doesn't work, but setting location.href does.
+      # app.navigate "/pricing/expired", trigger: true
+      window.location.href = "/pricing/expired"
 
   getIntercomSettings: (cb) ->
     real = window.user.real

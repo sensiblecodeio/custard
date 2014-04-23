@@ -36,6 +36,22 @@ describe 'Free Trial', ->
           url.should.equal "#{base_url}/datasets"
           done()
 
+    context 'when I click the $9 upgrade button', (done) ->
+      before (done) ->
+        browser.get base_url + '/pricing/expired', ->
+          wd40.click '.plan.explorer .upgrade', done
+
+      it 'takes me to the explorer billing details page', (done) ->
+        wd40.trueURL (err, url) ->
+          url.should.include '/subscribe/medium-ec2'
+          done()
+
+      it 'it lets me subscribe without creating a new account', (done) ->
+        wd40.elementByCss '#recurly-subscribe', (err, div) ->
+          should.exist div
+          done()
+
+
 describe 'Expired Free Trial', ->
   prepIntegration()
 
@@ -66,6 +82,22 @@ describe 'Expired Free Trial', ->
         wd40.trueURL (err, url) ->
           url.should.equal "#{base_url}/pricing/expired"
           done()
+
+    context 'when I click the $9 upgrade button', (done) ->
+      before (done) ->
+        wd40.click '.plan.explorer .upgrade', done
+
+      it 'takes me to the explorer billing details page', (done) ->
+        wd40.trueURL (err, url) ->
+          url.should.include '/subscribe/medium-ec2'
+          done()
+
+      it 'it lets me subscribe without creating a new account', (done) ->
+        wd40.elementByCss '#recurly-subscribe', (err, div) ->
+          should.exist div
+          done()
+
+
 
 
 describe 'Paid user', ->

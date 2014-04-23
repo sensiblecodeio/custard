@@ -90,4 +90,6 @@ test -e "$s" && . "$s" && echo yummm, keys.sh
 
 export ACK_OPTIONS="--type-add coffee=.coffee${ACK_OPTIONS+ $ACK_OPTIONS}"
 alias ack=ack-grep
+# Both mac-users and linux-users love nvm
+nvm use 0.10
 true

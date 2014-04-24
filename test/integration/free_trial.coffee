@@ -74,11 +74,20 @@ describe 'Expired Free Trial', ->
           url.should.equal "#{base_url}/pricing/expired"
           done()
 
+    context 'when I click the docs button', (done) ->
+      before (done) ->
+        wd40.click '.docs a', done
+
+      it 'should be seeing the documentation', (done) ->
+        wd40.trueURL (err, url) ->
+          url.should.equal "#{base_url}/help"
+          done()
+
     context 'when I click the super duper ScraperWiki digger', ->
       before (done) ->
         wd40.click '#logo', done
 
-      it 'should still be on the pricing expired page', (done) ->
+      it 'should again be on the pricing expired page', (done) ->
         wd40.trueURL (err, url) ->
           url.should.equal "#{base_url}/pricing/expired"
           done()

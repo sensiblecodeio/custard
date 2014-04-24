@@ -78,14 +78,32 @@ class Cu.Router.Main extends Backbone.Router
           , 30000
 
   checkDaysLeft: (route) ->
-    # If we're already going to the pricing page, do not
-    # try and navigate to the pricing page.
-    if route == 'pricing'
-      return
-    # If a free-trial has expired, navigate to the pricing page.
+    # Here we enforce the policy that expired free-trial users
+    # cannot use their datahub. A selected number of URLs are
+    # blocked here if the user has an expired free-trial. These
+    # URLs are identified by the names of routes (the 2nd
+    # argument to @route, see many calls above).
+
     user = window.user.effective
-    if user.accountLevel == 'free-trial' and user.daysLeft <= 0
-      # This doesn't work, but setting location.href does.
+    # Early exit if not on free-trial...
+    if user.accountLevel != 'free-trial'
+      return
+    # or if we have some days left.
+    if user.daysLeft > 0
+      return
+
+    blocked = route in [
+      'homeLoggedIn'
+      'dashboard'
+      'toolChooser'
+      'dataset'
+      'datasetSettings'
+      'datasetToolChooser'
+      'view'
+    ]
+    if blocked
+      # Navigate to the pricing page.
+      # app.navigate doesn't work, but setting location.href does.
       # app.navigate "/pricing/expired", trigger: true
       window.location.href = "/pricing/expired"
 

@@ -1,16 +1,11 @@
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration, cancelTrialler} = require './helper'
 
-describe 'Subscription Workflow', ->
+describe 'Subscription workflow for new user paying straight away', ->
   prepIntegration()
 
   before (done) ->
     browser.get base_url + '/pricing', done
-
-  before (done) =>
-    wd40.getText 'body', (err, text) =>
-      @bodyText = text
-      done()
 
   context 'when I click the "Data Scientist" plan', ->
     before (done) ->
@@ -68,6 +63,65 @@ describe 'Subscription Workflow', ->
 
     it 'it tells me to check my emails', (done) ->
       wd40.waitForText 'check your email', done
+
+
+describe 'Subscription workflow for free trial upgrading', ->
+  prepIntegration()
+
+  before (done) ->
+    cancelTrialler ->
+      wd40.fill '#username', 'expired-user', ->
+        wd40.fill '#password', 'testing', ->
+          wd40.click '#login', ->
+            wd40.trueURL (err, url) ->
+              url.should.include '/pricing/expired'
+              done()
+
+  context 'when I click the "Data Scientist" plan', ->
+    before (done) ->
+      browser.elementByCssIfExists '.plan.datascientist a', (err, free) ->
+        free.click done
+
+    it 'takes me to the subscription page', (done) ->
+      wd40.trueURL (err, url) ->
+        url.should.include '/subscribe/'
+        done()
+
+  context 'when I fill in valid details', ->
+    before (done) ->
+      wd40.fill '.billing_info .card_number input', '4111-1111-1111-1111', done
+    before (done) ->
+      wd40.fill '.billing_info .cvv input', '123', done
+    before (done) ->
+      wd40.fill '.billing_info .address1 input', 'ScraperWiki Ltd', done
+    before (done) ->
+      wd40.fill '.billing_info .address2 input', 'Brownlow Hill', done
+    before (done) ->
+      wd40.fill '.billing_info .city input', 'Liverpool', done
+    before (done) ->
+      wd40.fill '.billing_info .zip input', 'L3 5RF', done
+    before (done) ->
+      wd40.fill '.billing_info .state input', 'MERSEYSIDE', done
+
+    before (done) ->
+      wd40.click '.submit', done
+
+    it 'it takes me to the /thankyou page', (done) ->
+      wd40.waitForMatchingURL /[/]thankyou/, done
+
+    it 'it says thanks', (done) ->
+      wd40.waitForText 'Thankyou for signing up', done
+
+    it 'it does not say expired any more', (done) ->
+      wd40.waitForText 'Expired Trialler', =>
+        wd40.getText 'body', (err, text) =>
+          text.should.not.include 'Expired'
+          text.should.not.include 'days left'
+          done()
+
+    it 'it says go to your datasets', (done) ->
+      wd40.waitForText 'Go to your datasets', done
+
 
 
 describe 'Editing my subscription', ->

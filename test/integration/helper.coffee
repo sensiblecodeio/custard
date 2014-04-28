@@ -49,19 +49,6 @@ enlargeLucy = (done) ->
     body: '<subscription><plan_code>large-ec2</plan_code></subscription>'
   , done
 
-cancelTrialler = (done) ->
-  # Ensures expired-user starts with no plan
-
-  recurly_account = 'ehg-2334332' # expired-user's subscription
-  domain = process.env.RECURLY_DOMAIN
-  pub_key = process.env.RECURLY_API_KEY
-
-  request.del "https://#{domain}.recurly.com/v2/accounts/#{recurly_account}",
-    auth:
-      user: pub_key
-      pass: ''
-  , done
-
 exports.wd40 = wd40
 exports.browser = browser
 exports.base_url = base_url
@@ -71,4 +58,3 @@ exports.home_url = "#{base_url}/datasets"
 exports.prepIntegration = prepIntegration
 exports.mediumizeMary = mediumizeMary
 exports.enlargeLucy = enlargeLucy
-exports.cancelTrialler = cancelTrialler

@@ -1,5 +1,5 @@
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration, cancelTrialler} = require './helper'
+{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
 
 describe 'Subscription workflow for new user paying straight away', ->
   prepIntegration()
@@ -69,13 +69,12 @@ describe 'Subscription workflow for free trial upgrading', ->
   prepIntegration()
 
   before (done) ->
-    cancelTrialler ->
-      wd40.fill '#username', 'expired-user', ->
-        wd40.fill '#password', 'testing', ->
-          wd40.click '#login', ->
-            wd40.trueURL (err, url) ->
-              url.should.include '/pricing/expired'
-              done()
+    wd40.fill '#username', 'expired-user', ->
+      wd40.fill '#password', 'testing', ->
+        wd40.click '#login', ->
+          wd40.trueURL (err, url) ->
+            url.should.include '/pricing/expired'
+            done()
 
   context 'when I click the "Data Scientist" plan', ->
     before (done) ->

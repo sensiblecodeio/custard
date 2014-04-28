@@ -70,7 +70,7 @@ exports.users = [{
   accountLevel: "free-trial",
   // 2 * 86400 * 1000 is 2 days ago
   planExpires: new Date(+new Date() - 2 * 86400 * 1000),
-  recurlyAccount: "ehg-2334332",
+  recurlyAccount: String(Math.random()).replace('0.', ''), // new recurly account each time
   acceptedTerms: 1,
   canBeReally: ['ehg', 'test'],
   defaultContext: "ehg",

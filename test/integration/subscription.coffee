@@ -114,7 +114,8 @@ describe 'Subscription workflow for free trial upgrading', ->
     it 'it does not say expired any more', (done) ->
       wd40.waitForText 'Expired Trialler', =>
         wd40.getText 'body', (err, text) =>
-          text.should.not.include 'Expired'
+          text = text.toLowerCase()
+          text.should.not.include 'expired'
           text.should.not.include 'days left'
           done()
 

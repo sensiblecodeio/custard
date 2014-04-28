@@ -38,7 +38,10 @@ class Cu.View.Subscribe extends Backbone.View
       data:
         recurly_token: token
       success: (result) =>
-        app.navigate '/thankyou', trigger: true
+        # Do a window refresh here, and not a backbone navigate
+        # because we want to get a fresh user session that has
+        # a fresh accountLevel field (obtained from the server).
+        window.location.href = '/thankyou'
       error: (err) =>
         alert err
 

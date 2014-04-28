@@ -85,6 +85,9 @@ class Cu.Router.Main extends Backbone.Router
     # argument to @route, see many calls above).
 
     user = window.user.effective
+    # If we're not logged in, none of this applies.
+    if not user
+      return
     # Early exit if not on free-trial...
     if user.accountLevel != 'free-trial'
       return

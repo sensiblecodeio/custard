@@ -9,9 +9,9 @@ describe 'Home page (not logged in)', ->
 
   context 'when I visit scraperwiki.com/datasets without logging in', ->
 
-  before (done) ->
-    browser.get home_url, done
+    before (done) ->
+      browser.get home_url, done
 
-  it 'I am redirected to the login page', ->
-    wd40.trueURL (err, url) ->
-      url.should.equal login_url
+    it 'I am redirected to the login page', ->
+      wd40.trueURL (err, url) ->
+        url.should.equal login_url

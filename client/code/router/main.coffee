@@ -15,6 +15,7 @@ class Cu.Router.Main extends Backbone.Router
     @on 'route', @trackPageView
     @on 'route', @trackIntercom
     @on 'route', @trackOptimizely
+    @on 'route', @checkDaysLeft
 
     # TODO: this isn't a great place for this constant
     window.latestTerms = 1
@@ -75,6 +76,39 @@ class Cu.Router.Main extends Backbone.Router
           setInterval ->
             window.Intercom 'update'
           , 30000
+
+  checkDaysLeft: (route) ->
+    # Here we enforce the policy that expired free-trial users
+    # cannot use their datahub. A selected number of URLs are
+    # blocked here if the user has an expired free-trial. These
+    # URLs are identified by the names of routes (the 2nd
+    # argument to @route, see many calls above).
+
+    user = window.user.effective
+    # If we're not logged in, none of this applies.
+    if not user
+      return
+    # Early exit if not on free-trial...
+    if user.accountLevel != 'free-trial'
+      return
+    # or if we have some days left.
+    if user.daysLeft > 0
+      return
+
+    blocked = route in [
+      'homeLoggedIn'
+      'dashboard'
+      'toolChooser'
+      'dataset'
+      'datasetSettings'
+      'datasetToolChooser'
+      'view'
+    ]
+    if blocked
+      # Navigate to the pricing page.
+      # app.navigate doesn't work, but setting location.href does.
+      # app.navigate "/pricing/expired", trigger: true
+      window.location.href = "/pricing/expired"
 
   getIntercomSettings: (cb) ->
     real = window.user.real

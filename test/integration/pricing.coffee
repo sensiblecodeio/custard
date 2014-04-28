@@ -8,11 +8,6 @@ describe 'Pricing', ->
     before (done) ->
       browser.get base_url + '/pricing', done
 
-    before (done) =>
-      wd40.getText 'body', (err, text) =>
-        @bodyText = text
-        done()
-
     it 'has "Pricing" in the page title', (done) ->
       browser.title (err, title) ->
         title.should.match /Pricing/g
@@ -243,3 +238,27 @@ describe 'Pricing', ->
       wd40.getText '.plan.freetrial', (err, text) ->
         text.should.match /contact to downgrade/i
         done()
+
+  context 'When I visit the pricing upgrade page', ->
+    before (done) ->
+      browser.get base_url + '/pricing/upgrade', done
+
+    it 'it implores me to upgrade to create more datasets', (done) ->
+      wd40.elementByCss '.pricing .alert', (err, element) ->
+        should.exist element
+        element.text (err, text) ->
+          text.should.match /Please upgrade your account/i
+          text.should.match /to create more datasets/i
+          done()
+
+  context 'When I visit the pricing expired page', ->
+    before (done) ->
+      browser.get base_url + '/pricing/expired', done
+
+    it 'it implores me to upgrade since my trial has ended', (done) ->
+      wd40.elementByCss '.pricing .alert', (err, element) ->
+        should.exist element
+        element.text (err, text) ->
+          text.should.match /Please upgrade your account/i
+          text.should.match /your free trial has ended/i
+          done()

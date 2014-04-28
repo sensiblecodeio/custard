@@ -115,8 +115,8 @@ describe 'Subscription workflow for free trial upgrading', ->
       wd40.waitForText 'Expired Trialler', =>
         wd40.getText 'body', (err, text) =>
           text = text.toLowerCase()
-          text.should.not.include 'expired'
-          text.should.not.include 'days left'
+          text.should.not.match /free\s+trial:\s+expired/
+          text.should.not.match /days\s+left/
           done()
 
     it 'it says go to your datasets', (done) ->

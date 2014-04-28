@@ -60,6 +60,8 @@ describe 'Subscription Workflow', ->
     before (done) ->
       wd40.click '.submit', done
 
+    # NOTE: we should test recurly integration here (i.e. it actually upgrades there)
+
     it 'it takes me to the /thankyou page', (done) ->
       wd40.waitForMatchingURL /[/]thankyou/, done
 

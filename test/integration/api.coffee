@@ -7,17 +7,15 @@ should = require 'should'
 async = require 'async'
 redis = require 'redis'
 
-serverURL = helper.base_url
-
 # Timeout period in milliseconds for duplicate request
 # debouncing. (see underscore debounce and test that uses these)
 DEBOUNCE_PERIOD = 1000
 EPSILON = 100
 
 login = (done) ->
-  @loginURL = "#{serverURL}/login"
+  @loginURL = "#{helper.base_url}/login"
   request.get
-    uri: "#{serverURL}/logout"
+    uri: "#{helper.base_url}/logout"
     followRedirect: false
   , (err) =>
     request.get @loginURL, =>
@@ -44,7 +42,7 @@ describe 'API', ->
 
   before (done) ->
     request.get
-      uri: "#{serverURL}/api/"
+      uri: "#{helper.base_url}/api/"
     , (err, res, body) =>
       @response = res
       @err = err
@@ -62,7 +60,7 @@ describe 'API', ->
       context 'POST /api/<username>', ->
         before (done) ->
           request.post
-            uri: "#{serverURL}/api/user/"
+            uri: "#{helper.base_url}/api/user/"
             form:
               shortName: 'tabbytest'
               displayName: 'Tabatha Testerson'
@@ -83,7 +81,7 @@ describe 'API', ->
       context 'POST /api/user/reset-password/', ->
         before (done) ->
           request.post
-            uri: "#{serverURL}/api/user/reset-password"
+            uri: "#{helper.base_url}/api/user/reset-password"
             form:
               query: 'ickletest'
           , (err, res, body) =>
@@ -104,7 +102,7 @@ describe 'API', ->
       context 'POST /api/user/set-password/', ->
         before (done) ->
           request.post
-            uri: "#{serverURL}/api/user/reset-password"
+            uri: "#{helper.base_url}/api/user/reset-password"
             form:
               query: 'i-do-not-exist'
           , (err, res, body) =>
@@ -124,7 +122,7 @@ describe 'API', ->
       context 'POST /api/user/set-password/', ->
         before (done) ->
           request.post
-            uri: "#{serverURL}/api/user/reset-password"
+            uri: "#{helper.base_url}/api/user/reset-password"
             form:
               query: 'ehg'
           , (err, res, body) =>
@@ -150,7 +148,7 @@ describe 'API', ->
 
       # Set password & login
       request.post
-        uri: "#{serverURL}/api/token/#{@token}"
+        uri: "#{helper.base_url}/api/token/#{@token}"
         form:
           password: @password
       , done
@@ -160,7 +158,7 @@ describe 'API', ->
         context 'when I create a tool (without specifying privacy)', ->
           before (done) ->
             request.post
-              uri: "#{serverURL}/api/tools"
+              uri: "#{helper.base_url}/api/tools"
               form:
                 name: @toolName
                 type: 'view'
@@ -197,7 +195,7 @@ describe 'API', ->
 
             before (done) ->
               request.post
-                uri: "#{serverURL}/api/tools"
+                uri: "#{helper.base_url}/api/tools"
                 form:
                   name: @toolName
                   type: 'view'
@@ -226,7 +224,7 @@ describe 'API', ->
         context 'When I create a private tool', ->
           before (done) ->
             request.post
-              uri: "#{serverURL}/api/tools"
+              uri: "#{helper.base_url}/api/tools"
               form:
                 name: "#{@toolName}-private"
                 type: 'view'
@@ -246,7 +244,7 @@ describe 'API', ->
         context 'When I create a public tool', ->
           before (done) ->
             request.post
-              uri: "#{serverURL}/api/tools"
+              uri: "#{helper.base_url}/api/tools"
               form:
                 name: "#{@toolName}-public"
                 type: 'view'
@@ -265,7 +263,7 @@ describe 'API', ->
 
       context 'GET /api/tools', ->
         before (done) ->
-          request.get "#{serverURL}/api/tools", (err, res) =>
+          request.get "#{helper.base_url}/api/tools", (err, res) =>
             @body = res.body
             @tools = parseJSON @body
             done()
@@ -300,7 +298,7 @@ describe 'API', ->
             functionArr.push (cb) =>
               random = String(Math.random()*Math.pow(2,32))[0..4]
               request.post
-                uri: "#{serverURL}/api/#{opts.user or 'ickletest'}/datasets"
+                uri: "#{helper.base_url}/api/#{opts.user or 'ickletest'}/datasets"
                 form:
                   displayName: opts.displayName or "Dataset #{random}"
                   tool: opts.tool or 'test-app'
@@ -335,36 +333,36 @@ describe 'API', ->
 
         context 'GET /api/:user/datasets/:id', ->
           it 'returns a single dataset', (done)  ->
-            request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
+            request.get "#{helper.base_url}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
               newDataset = parseJSON res.body
               should.exist newDataset.box
               done()
 
           it 'dataset has a created date', (done)  ->
-            request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
+            request.get "#{helper.base_url}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
               newDataset = parseJSON res.body
               Date.parse(newDataset.createdDate).should.be.above(0)
               done()
 
           it 'dataset has a creator short name', (done)  ->
-            request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
+            request.get "#{helper.base_url}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
               newDataset = parseJSON res.body
               'ickletest'.should.equal newDataset.creatorShortName
               done()
 
           it 'dataset has a creator display name', (done)  ->
-            request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
+            request.get "#{helper.base_url}/api/#{@user}/datasets/#{@dataset.box}", (err, res) ->
               newDataset = parseJSON res.body
               'Ickle Test'.should.equal newDataset.creatorDisplayName
               done()
 
           it "404 errors if the dataset doesn't exist", (done) ->
-            request.get "#{serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
+            request.get "#{helper.base_url}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
               res.should.have.status 404
               done()
 
           it "403 errors if the user doesn't exist", (done) ->
-            request.get "#{serverURL}/api/MRINVISIBLE/datasets/#{@dataset.box}", (err, res) ->
+            request.get "#{helper.base_url}/api/MRINVISIBLE/datasets/#{@dataset.box}", (err, res) ->
               res.should.have.status 403
               done()
 
@@ -395,7 +393,7 @@ describe 'API', ->
           context 'when I create a view on a dataset', ->
             before (done) ->
               request.post
-                uri: "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}/views"
+                uri: "#{helper.base_url}/api/#{@user}/datasets/#{@dataset.box}/views"
                 form:
                   name: 'carrottop'
                   displayName: 'Carrot Top'
@@ -422,7 +420,7 @@ describe 'API', ->
             context 'POST /api/:user/datasets/bogus/views', ->
               it 'returns 404', (done) ->
                 request.post
-                  uri: "#{serverURL}/api/#{@user}/datasets/bogus/views"
+                  uri: "#{helper.base_url}/api/#{@user}/datasets/bogus/views"
                   form:
                     name: 'carrottop'
                     displayName: 'Carrot Top'
@@ -437,12 +435,12 @@ describe 'API', ->
         context 'PUT /api/:user/datasets/:id', ->
           it 'changes the display name of a single dataset', (done) ->
             request.put
-              uri: "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}"
+              uri: "#{helper.base_url}/api/#{@user}/datasets/#{@dataset.box}"
               form:
                 displayName: 'Cheese'
             , (err, res) =>
               res.should.have.status 200
-              request.get "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}", (err, res) =>
+              request.get "#{helper.base_url}/api/#{@user}/datasets/#{@dataset.box}", (err, res) =>
                 @dataset = parseJSON res.body
                 'Cheese'.should.equal @dataset.displayName
                 done(err)
@@ -450,7 +448,7 @@ describe 'API', ->
           it 'changes the owner of a single dataset', (done) ->
             @newowner = 'ehg'
             request.put
-              uri: "#{serverURL}/api/#{@user}/datasets/#{@dataset.box}"
+              uri: "#{helper.base_url}/api/#{@user}/datasets/#{@dataset.box}"
               form:
                 user: @newowner
             , (err, res) =>
@@ -458,18 +456,18 @@ describe 'API', ->
               done(err)
 
           it "that dataset doesn't appear in my list of datasets any more", (done) ->
-            request.get "#{serverURL}/api/#{@user}/datasets", (err, res) =>
+            request.get "#{helper.base_url}/api/#{@user}/datasets", (err, res) =>
               res.body.should.not.include "#{@dataset.box}"
               done()
 
           it "404 errors if the dataset doesn't exist", (done) ->
-            request.put "#{serverURL}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
+            request.put "#{helper.base_url}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
               res.should.have.status 404
               done()
 
       context 'GET: /api/:user/datasets', ->
         it 'returns a list of datasets', (done) ->
-          request.get "#{serverURL}/api/#{@user}/datasets", (err, res) ->
+          request.get "#{helper.base_url}/api/#{@user}/datasets", (err, res) ->
             datasets = parseJSON res.body
             datasets.length.should.be.above 0
             done err
@@ -477,7 +475,7 @@ describe 'API', ->
       context '/api/:user/sshkeys', ->
         it 'POST: returns ok', (done) ->
           request.post
-            uri: "#{serverURL}/api/#{@user}/sshkeys"
+            uri: "#{helper.base_url}/api/#{@user}/sshkeys"
             form:
               key: '  ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local\n\n'
           , (err, res) ->
@@ -486,7 +484,7 @@ describe 'API', ->
 
         it 'GET: returns the key with whitespace trim', (done) ->
           request.get
-            uri: "#{serverURL}/api/#{@user}/sshkeys"
+            uri: "#{helper.base_url}/api/#{@user}/sshkeys"
           , (err, res) ->
             keys = parseJSON res.body
             keys.should.include 'ssh-rsa AAAAB3NzaC1yc2EAAAAD...mRRu21YYMK7GSE7gZTtbI65WJfreqUY472s8HVIX foo@bar.local'
@@ -495,7 +493,7 @@ describe 'API', ->
       context 'PUT: /api/user', ->
         it 'lets me accept the terms and conditions', (done) ->
           request.put
-            uri: "#{serverURL}/api/user"
+            uri: "#{helper.base_url}/api/user"
             form:
               acceptedTerms: 7
           , (err, res, body) =>
@@ -506,7 +504,7 @@ describe 'API', ->
 
         it 'does not let me change my user name', (done) ->
           request.put
-            uri: "#{serverURL}/api/user"
+            uri: "#{helper.base_url}/api/user"
             form:
               shortName: 'zebadee'
           , (err, res) =>
@@ -516,7 +514,7 @@ describe 'API', ->
 
         it 'does let me change my canBeReally field', (done) ->
           request.put
-            uri: "#{serverURL}/api/user"
+            uri: "#{helper.base_url}/api/user"
             form:
               canBeReally: ["test", "teststaff"]
             , (err, res) ->
@@ -550,7 +548,7 @@ describe 'API', ->
 
         doRequest = (_, cb) ->
           request.post
-            uri: "#{serverURL}/api/status"
+            uri: "#{helper.base_url}/api/status"
             form:
               type: "ok"
               message: "just testing"
@@ -586,7 +584,7 @@ describe 'API', ->
       context 'GET /api/:user/subscription/medium/sign', ->
         before (done) ->
           request.get
-            uri: "#{serverURL}/api/#{@user}/subscription/medium/sign"
+            uri: "#{helper.base_url}/api/#{@user}/subscription/medium/sign"
           , (err, res, body) =>
             @body = body
             done err
@@ -600,7 +598,7 @@ describe 'API', ->
       context 'POST /api/:user/subscription/verify', ->
         before (done) ->
           request.post
-            uri: "#{serverURL}/api/#{@user}/subscription/verify"
+            uri: "#{helper.base_url}/api/#{@user}/subscription/verify"
             form:
               recurly_token: '34324sdfsdf'
           , (err, res, body) =>
@@ -615,9 +613,9 @@ describe 'API', ->
       context "When ickletest has approved", ->
         before (done) ->
           # logout
-          request.get "#{serverURL}/logout", done
+          request.get "#{helper.base_url}/logout", done
         before (done) ->
-          @loginURL = "#{serverURL}/login"
+          @loginURL = "#{helper.base_url}/login"
           @user = "test"
           @password = process.env.CU_TEST_PASSWORD
           request.get @loginURL, =>
@@ -632,7 +630,7 @@ describe 'API', ->
 
         it "can switch into ickletest's profile", (done) ->
           request.get
-            uri: "#{serverURL}/switch/ickletest"
+            uri: "#{helper.base_url}/switch/ickletest"
             followRedirect: false
           , (err, res) ->
             res.should.have.status 302
@@ -640,7 +638,7 @@ describe 'API', ->
 
     context 'GET /api/user', ->
       before (done) ->
-        request.get "#{serverURL}/api/user", (err, res, body) =>
+        request.get "#{helper.base_url}/api/user", (err, res, body) =>
           @body = body
           done()
 
@@ -657,7 +655,7 @@ describe 'API', ->
         login.call @, done
 
       it 'forces me into the testersonltd context', (done) ->
-        request.get "#{serverURL}/api/testersonltd/datasets", (err, res) ->
+        request.get "#{helper.base_url}/api/testersonltd/datasets", (err, res) ->
           res.should.have.status 200
           done err
 
@@ -668,7 +666,7 @@ describe 'API', ->
         login.call @, done
 
       it "doesn't force me into a different context", (done) ->
-        request.get "#{serverURL}/api/ehg/datasets", (err, res) ->
+        request.get "#{helper.base_url}/api/ehg/datasets", (err, res) ->
           res.should.have.status 200
           done err
 
@@ -680,7 +678,7 @@ describe 'API', ->
         login.call @, done
 
       before (done) ->
-        request.get "#{serverURL}/api/tools", (err, res) =>
+        request.get "#{helper.base_url}/api/tools", (err, res) =>
           @body = res.body
           @tools = parseJSON @body
           done()
@@ -698,7 +696,7 @@ describe 'API', ->
         @newUser = "new-#{String(Math.random()*Math.pow(2,32))[0..6]}"
         @newPassword = "newpass"
         request.post
-          uri: "#{serverURL}/api/user"
+          uri: "#{helper.base_url}/api/user"
           form:
             shortName: @newUser
             email: 'random@example.org'
@@ -711,7 +709,7 @@ describe 'API', ->
 
       it '... and I can set the password', (done) ->
         request.post
-          uri: "#{serverURL}/api/token/#{@token}"
+          uri: "#{helper.base_url}/api/token/#{@token}"
           form:
             password: @newPassword
         , (err, resp, body) ->
@@ -722,7 +720,7 @@ describe 'API', ->
     context 'When I add allowedUsers', ->
       before (done) ->
         request.post
-          uri: "#{serverURL}/api/tools"
+          uri: "#{helper.base_url}/api/tools"
           form:
             name: "shared-private"
             type: 'view'
@@ -740,7 +738,7 @@ describe 'API', ->
     context 'When I add allowedPlans', ->
       before (done) ->
         request.post
-          uri: "#{serverURL}/api/tools"
+          uri: "#{helper.base_url}/api/tools"
           form:
             name: "shared-less-private"
             type: 'view'
@@ -762,7 +760,7 @@ describe 'API', ->
        login.call @, done
 
       before (done) ->
-        @toolsURL = "#{serverURL}/api/tools"
+        @toolsURL = "#{helper.base_url}/api/tools"
         request.get
           uri: @toolsURL,
         , (err, res, body) =>
@@ -779,7 +777,7 @@ describe 'API', ->
        login.call @, done
 
       before (done) ->
-        @toolsURL = "#{serverURL}/api/tools"
+        @toolsURL = "#{helper.base_url}/api/tools"
         request.get
           uri: @toolsURL,
         , (err, res, body) =>
@@ -796,7 +794,7 @@ describe 'API', ->
        login.call @, done
 
       before (done) ->
-        @toolsURL = "#{serverURL}/api/tools"
+        @toolsURL = "#{helper.base_url}/api/tools"
         request.get
           uri: @toolsURL,
         , (err, res, body) =>
@@ -818,7 +816,7 @@ describe 'API', ->
 
       it "redirects to a Recurly hosted admin page", (done) ->
         request.get
-          uri: "#{serverURL}/api/mediummary/subscription/billing",
+          uri: "#{helper.base_url}/api/mediummary/subscription/billing",
           followRedirect: false
         , (err, res, body) ->
           should.not.exist err
@@ -834,7 +832,7 @@ describe 'API', ->
 
       it "returns an error because ‘test’ has no Recurly account", (done) ->
         request.get
-          uri: "#{serverURL}/api/test/subscription/billing",
+          uri: "#{helper.base_url}/api/test/subscription/billing",
           followRedirect: false
         , (err, res, body) ->
           should.not.exist err
@@ -858,7 +856,7 @@ describe 'API', ->
 
         before (done) ->
           request.put
-            uri: "#{serverURL}/api/#{@user}/subscription/change/large-ec2"
+            uri: "#{helper.base_url}/api/#{@user}/subscription/change/large-ec2"
           , (err, resp, body) =>
             @resp = resp
             done(err)
@@ -875,7 +873,7 @@ describe 'API', ->
 
         before (done) ->
           request.put
-            uri: "#{serverURL}/api/#{@user}/subscription/change/medium-ec2"
+            uri: "#{helper.base_url}/api/#{@user}/subscription/change/medium-ec2"
           , (err, resp, body) =>
             @resp = resp
             done(err)
@@ -892,7 +890,7 @@ describe 'API', ->
 
         before (done) ->
           request.put
-            uri: "#{serverURL}/api/#{@user}/subscription/change/large-ec2"
+            uri: "#{helper.base_url}/api/#{@user}/subscription/change/large-ec2"
           , (err, resp, body) =>
             @resp = resp
             done(err)

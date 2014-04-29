@@ -17,11 +17,11 @@ describe 'Express Routes', ->
       .expect(/Pricing/)
       .end(done)
 
-  it '/signup/community/', (done) ->
+  it '/signup/freetrial/', (done) ->
     request(app)
-      .get('/signup/community/')
+      .get('/signup/freetrial/')
       .expect(200)
-      #.expect(/Community/)
+      #.expect(/Free Trial/)
       .expect(/Create Account/)
       .end(done)
 

@@ -7,11 +7,7 @@ should = require 'should'
 async = require 'async'
 redis = require 'redis'
 
-settings = require '../settings.json'
-if process.env.CU_TEST_SERVER
-  serverURL = "http://#{process.env.CU_TEST_SERVER}:3001"
-else
-  serverURL = settings.serverURL
+serverURL = helper.base_url
 
 # Timeout period in milliseconds for duplicate request
 # debouncing. (see underscore debounce and test that uses these)

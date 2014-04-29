@@ -3,3 +3,5 @@ server/js/
 shared/js/
 chromedriver.log
 mongo
+chromedriver
+selenium-*.jar

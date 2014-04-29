@@ -4,8 +4,7 @@
 cleaner = require '../cleaner'
 request = require 'request'
 
-test_server = process.env.CU_TEST_SERVER ? 'localhost'
-base_url = "http://#{test_server}:3001"
+base_url = process.env.CU_TEST_URL ? 'http://localhost:3001'
 login_url = "#{base_url}/login"
 logout_url = "#{base_url}/logout"
 

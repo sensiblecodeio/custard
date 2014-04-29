@@ -235,8 +235,7 @@ app.configure ->
   # is served statically by nginx, so this has no effect. It's
   # used in dev, and not harmful in production.
   app.use express.static(process.cwd() + '/shared')
-  if process.env.NODETIME_KEY
-    app.use nodetimeLog
+
   if true or process.env.CU_REQUEST_LOG
     app.use requestLog
 

@@ -236,7 +236,7 @@ app.configure ->
   # used in dev, and not harmful in production.
   app.use express.static(process.cwd() + '/shared')
 
-  if true or process.env.CU_REQUEST_LOG
+  if process.env.CU_REQUEST_LOG
     app.use requestLog
 
 passport.use 'local', new LocalStrategy(verify)

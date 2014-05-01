@@ -81,7 +81,8 @@
       <h4>How do I search for historical data?</h4>
       <p>Unfortunately Twitter only allows its API to reach roughly a week into
 the past. If you need data further back than that, you&rsquo;ll have to use
-someone like Datasift or Gnip, who re-sell access to the Twitter firehose.</p>
+someone like Datasift or Gnip, who re-sell access to the Twitter firehose.
+It's quite expensive.</p>
 
       <h4>How often is the Twitter data updated?</h4>
       <p>Assuming you have the &ldquo;Monitor future Tweets&rdquo; checkbox selected, about once an hour.</p>
@@ -98,6 +99,9 @@ ScraperWiki twitter tools you might have running at the same time.</p>
 calling Twitter using your Twitter login details. You can <a
 href="https://twitter.com/settings/applications">see all the apps that are
 accessing your account here</a>.</p>
+      <p>Choose the <strong>&ldquo;Diagnostics&rdquo;</strong> link to get technical information
+      about the rate limits and status in your case.
+      </p>
     </div>
   </div>
 

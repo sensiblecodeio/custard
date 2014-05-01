@@ -79,16 +79,25 @@
   <div class="step full-width">
     <div style="width: 47%; float: left">
       <h4>How do I search for historical data?</h4>
-      <p>Unfortunately Twitter only allows its API to reach roughly a week into the past. If you need data further back than that, you&rsquo;ll have to use someone like Datasift or Gnip, who re-sell access to the Twitter firehose.</p>
+      <p>Unfortunately Twitter only allows its API to reach roughly a week into
+the past. If you need data further back than that, you&rsquo;ll have to use
+someone like Datasift or Gnip, who re-sell access to the Twitter firehose.</p>
 
       <h4>How often is the Twitter data updated?</h4>
       <p>Assuming you have the &ldquo;Monitor future Tweets&rdquo; checkbox selected, about once an hour.</p>
-      <p>In this mode, the <strong>&ldquo;Search for tweets&rdquo;</strong> tool will request tweets newer than the last tweet ID it stored in its previous run (so there is no overlap, and no wasted API calls).</p>
+      <p>In this mode, the <strong>&ldquo;Search for tweets&rdquo;</strong>
+tool will request tweets newer than the last tweet ID it stored in its previous
+run (so there is no overlap, and no wasted API calls).</p>
     </div>
     <div style="width: 47%; float: right">
       <h4>I am seeing a &ldquo;Twitter is rate limiting you&rdquo; error &ndash; what is the problem?</h4>
-      <p>Twitter allows us to request 18000 tweets in total, on a user&rsquo;s behalf, in any given 15 minute period. This limit is shared across all ScraperWiki twitter tools you might have running at the same time.</p>
-      <p>The rate limit is <i>also</i> shared with any other apps that are calling Twitter using your Twitter login details. You can <a href="https://twitter.com/settings/applications">see all the apps that are accessing your account here</a>.</p>
+      <p>Twitter allows us to request 18000 tweets in total, on a user&rsquo;s
+behalf, in any given 15 minute period. This limit is shared across all
+ScraperWiki twitter tools you might have running at the same time.</p>
+      <p>The rate limit is <i>also</i> shared with any other apps that are
+calling Twitter using your Twitter login details. You can <a
+href="https://twitter.com/settings/applications">see all the apps that are
+accessing your account here</a>.</p>
     </div>
   </div>
 

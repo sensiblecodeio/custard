@@ -140,6 +140,7 @@ class Cu.Router.Main extends Backbone.Router
               tf_datasets: 0
               cb_datasets: 0
               switch_url: "https://scraperwiki.com/switch/" + real.shortName
+              mongo_url: "https://app.mongohq.com/mongohq-scraperwiki-com/mongo/cu-live-eu/collections/users?query=%7B%22shortName%22%3A%22" + real.shortName + "%22%7D&fields=%7B%7D&sort=%7B%7D&limit=10"
 
             _.each datasets, (dataset) ->
               date = moment(dataset.createdDate, 'YYYY-MM-DD HH:mm:ssZ').unix()

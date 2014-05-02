@@ -139,6 +139,7 @@ class Cu.Router.Main extends Backbone.Router
               ts_datasets: 0
               tf_datasets: 0
               cb_datasets: 0
+              switch_url: "https://scraperwiki.com/switch/" + real.shortName
 
             _.each datasets, (dataset) ->
               date = moment(dataset.createdDate, 'YYYY-MM-DD HH:mm:ssZ').unix()

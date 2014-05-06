@@ -729,6 +729,7 @@ addDataset = (req, resp) ->
     if err?
       console.log "USER #{user} CANNOT CREATE DATASET"
       return resp.send err.statusCode, err.error
+
     Box.create user, (err, box) ->
       if err?
         console.warn "Box.create failed #{err}"
@@ -764,7 +765,6 @@ addDataset = (req, resp) ->
               console.warn err
               return resp.send 500, error: "Error saving dataset: #{err}"
 
-            resp.send 200, dataset
 
             _addView user, dataset,
               tool: 'datatables-view-tool'
@@ -772,6 +772,9 @@ addDataset = (req, resp) ->
             , (err, view) ->
               if err?
                 console.warn "Error creating DT view: #{err}"
+                return resp.send 500, error: "Error saving dataset: #{err}"
+
+              return resp.send 200, dataset
 
 # Add view to dataset and save
 addView = (req, resp) ->

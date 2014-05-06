@@ -27,6 +27,10 @@ class Cu.Router.Main extends Backbone.Router
 
     # Backbone seems to reverse route order
     # TODO: revert to standard routes?
+
+    # NOTE: IF YOU ADD A ROUTE HERE, YOU *MUST* ADD AN EQUIVALENT ONE OVER HERE:
+    # https://github.com/scraperwiki/custard/blob/4959558810292ab044ccff675102ecefcf40225f/server/code/index.coffee#L949
+
     @route RegExp('.*'), 'fourOhFour'
     @route RegExp('^/?$'), 'homeAnonymous'
     @route RegExp('^datasets?/?$'), 'homeLoggedIn'

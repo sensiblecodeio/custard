@@ -734,7 +734,10 @@ addDataset = (req, resp) ->
           console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
 
           Dataset.findOneById dataset.box, req.user.effective.shortName, (err, dataset) ->
-            console.warn err if err?
+            if err?
+              console.warn err
+              return resp.send 500, error: "Error saving dataset: #{err}"
+
             resp.send 200, dataset
             _addView user, dataset,
               tool: 'datatables-view-tool'

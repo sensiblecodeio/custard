@@ -959,37 +959,13 @@ app.post '/api/reporting/tag/?', sendIntercomTag
 app.all '*', enforceFreeTrial
 app.get /^[/]dataset[/]([a-zA-Z0-9]+)/, switchContextIfRequiredAndAllowed, renderClientApp
 
-# Send all other requests to the client app, eg:
-# /datasets
-# /signup/free
-# /dashboard
-# /create-profile
-
-# NOTE: IF YOU ADD A ROUTE HERE, YOU *MUST* ADD AN EQUIVALENT ONE OVER HERE:
-# https://github.com/scraperwiki/custard/blob/4959558810292ab044ccff675102ecefcf40225f/client/code/router/main.coffee#L30
-
-app.get RegExp('^/?$'), renderClientApp
-app.get RegExp('^datasets?/?$'), renderClientApp
-app.get RegExp('^dashboard/?$'), renderClientApp
-app.get RegExp('(?:docs|help)/?'), renderClientApp
-app.get RegExp('(?:docs|help)/([^/]+)/?'), renderClientApp
-app.get RegExp('pricing/?'), renderClientApp
-app.get RegExp('pricing/([^/]+)/?'), renderClientApp
-app.get RegExp('chooser/?'), renderClientApp
-app.get RegExp('tools/people-pack/?'), renderClientApp
-app.get RegExp('dataset/([^/]+)/?'), renderClientApp
-app.get RegExp('dataset/([^/]+)/settings/?'), renderClientApp
-app.get RegExp('dataset/([^/]+)/chooser/?'), renderClientApp
-app.get RegExp('dataset/([^/]+)/view/([^/]+)/?'), renderClientApp
-app.get RegExp('create-profile/?'), renderClientApp
-app.get RegExp('set-password/?'), renderClientApp
-app.get RegExp('set-password/([^/]+)/?'), renderClientApp
-app.get RegExp('signup/([^/]+)/?'), renderClientApp
-app.get RegExp('subscribe/([^/]+)/?'), renderClientApp
-app.get RegExp('thankyou/?'), renderClientApp
-app.get RegExp('terms/?'), renderClientApp
-app.get RegExp('terms/enterprise-agreement/?'), renderClientApp
-
+# Define the URLs which get rendered client side
+{ScraperwikiViews} = require '../../shared/code/views'
+for view in ScraperwikiViews
+  if view.name == "fourOhFour"
+    # Don't route fourOhFour
+    continue
+  app.get view.route, renderClientApp
 
 port = process.env.CU_PORT or 3001
 

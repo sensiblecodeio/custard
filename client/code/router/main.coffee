@@ -27,32 +27,8 @@ class Cu.Router.Main extends Backbone.Router
 
     # Backbone seems to reverse route order
     # TODO: revert to standard routes?
-
-    # NOTE: IF YOU ADD A ROUTE HERE, YOU *MUST* ADD AN EQUIVALENT ONE OVER HERE:
-    # https://github.com/scraperwiki/custard/blob/4959558810292ab044ccff675102ecefcf40225f/server/code/index.coffee#L949
-
-    @route RegExp('.*'), 'fourOhFour'
-    @route RegExp('^/?$'), 'homeAnonymous'
-    @route RegExp('^datasets?/?$'), 'homeLoggedIn'
-    @route RegExp('^dashboard/?$'), 'dashboard'
-    @route RegExp('(?:docs|help)/?'), 'help'
-    @route RegExp('(?:docs|help)/([^/]+)/?'), 'help'
-    @route RegExp('pricing/?'), 'pricing'
-    @route RegExp('pricing/([^/]+)/?'), 'pricing'
-    @route RegExp('chooser/?'), 'toolChooser'
-    @route RegExp('tools/people-pack/?'), 'peoplePack'
-    @route RegExp('dataset/([^/]+)/?'), 'dataset'
-    @route RegExp('dataset/([^/]+)/settings/?'), 'datasetSettings'
-    @route RegExp('dataset/([^/]+)/chooser/?'), 'datasetToolChooser'
-    @route RegExp('dataset/([^/]+)/view/([^/]+)/?'), 'view'
-    @route RegExp('create-profile/?'), 'createProfile'
-    @route RegExp('set-password/?'), 'resetPassword'
-    @route RegExp('set-password/([^/]+)/?'), 'setPassword'
-    @route RegExp('signup/([^/]+)/?'), 'signUp'
-    @route RegExp('subscribe/([^/]+)/?'), 'subscribe'
-    @route RegExp('thankyou/?'), 'thankyou'
-    @route RegExp('terms/?'), 'terms'
-    @route RegExp('terms/enterprise-agreement/?'), 'termsEnterpriseAgreement'
+    for view in ScraperwikiViews
+      @route view.route, view.name
 
   trackPageView: (e) ->
     path = Backbone.history.getFragment()

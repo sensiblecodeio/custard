@@ -362,7 +362,7 @@ _addView = (user, dataset, attributes, callback) ->
       dataset.save (err) ->
         if err?
           console.warn err
-          return callback {statusCode: 400, error: "Error saving view: #{err}"}, null
+          return callback {statusCode: 500, error: "Error saving view: #{err}"}, null
         box.installTool {user: user, toolName: attributes.tool}, (err) ->
           if err?
             console.warn err
@@ -729,7 +729,7 @@ addDataset = (req, resp) ->
         dataset.save (err) ->
           if err?
             console.warn err
-            return resp.send 400, error: "Error saving dataset: #{err}"
+            return resp.send 500, error: "Error saving dataset: #{err}"
 
           console.log "TOOL dataset.tool #{dataset.tool} body.tool #{body.tool}"
 

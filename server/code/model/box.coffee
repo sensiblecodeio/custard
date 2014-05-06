@@ -123,6 +123,8 @@ class Box extends ModelBase
       server: server
 
     box.save (err) ->
+      if err?
+        return callback err, null
       # The URI we need should have "box" between the server name and the
       # box name. Bit tricky to do. :todo: make better (by fixing cobalt?).
       uri = "#{Box.endpoint server, boxName}"
@@ -137,6 +139,8 @@ class Box extends ModelBase
           apikey: user.apiKey
           uid: box.uid
       , (err, res, body) ->
+        if err?
+          return callback err, null
         jsonResponse = JSON.parse body
         if 'error' of jsonResponse
           return callback jsonResponse.error, null

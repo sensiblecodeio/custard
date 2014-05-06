@@ -747,6 +747,8 @@ addDataset = (req, resp) ->
 addView = (req, resp) ->
   user = req.user.effective
   Dataset.findOneById req.params.dataset, (err, dataset) ->
+    if err?
+      resp.send 500, error: "Error creating view: #{err}"
     if not dataset
       return resp.send 404, error: "Error creating view: #{req.params.dataset} not found"
     body = req.body

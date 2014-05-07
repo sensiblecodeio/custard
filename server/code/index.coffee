@@ -967,6 +967,37 @@ for view in ScraperwikiViews
     continue
   app.get RegExp("^/" + view.route), renderClientApp
 
+# "app.router" positions our routes
+# above the middleware defined below,
+# this means that Express will attempt
+# to match & call routes _before_ continuing
+# on, at which point we assume it's a 404 because
+# no route has handled the request.
+app.use(app.router);
+
+# Since this is the last non-error-handling
+# middleware use()d, we assume 404, as nothing else
+# responded.
+
+# $ curl http://localhost:3000/notfound
+# $ curl http://localhost:3000/notfound -H "Accept: application/json"
+# $ curl http://localhost:3000/notfound -H "Accept: text/plain"
+app.use (req, res, next) ->
+  res.status(404);
+
+  # respond with html page
+  if req.accepts('html')
+    res.render 'not_found', url: req.url
+    return
+
+  # respond with json
+  if req.accepts('json')
+    res.send error: 'Not found'
+    return
+
+  # default to plain-text. send()
+  res.type('txt').send 'Not found'
+
 port = process.env.CU_PORT or 3001
 
 if existsSync(port)

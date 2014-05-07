@@ -11,6 +11,7 @@ require('http').globalAgent.maxSockets = 4096
 
 _ = require 'underscore'
 express = require 'express'
+connect = require 'connect'
 na = require 'nodealytics'
 assets = require 'connect-assets'
 ejs = require 'ejs'
@@ -209,7 +210,8 @@ verify = (username, password, callback) ->
         return callback null, sessionUser
 
 app.configure ->
-  app.use express.bodyParser()
+  app.use connect.urlencoded()
+  app.use connect.json()
   app.use express.cookieParser( process.env.CU_SESSION_SECRET )
   app.use express.session
     cookie:

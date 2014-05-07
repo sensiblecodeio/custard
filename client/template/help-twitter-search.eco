@@ -97,9 +97,9 @@ tool will request tweets newer than the last tweet ID it stored in its previous
 run (so there is no overlap, and no wasted API calls).</p>
     </div>
     <div style="width: 47%; float: right">
-      <h4>I am seeing a &ldquo;Twitter is rate limiting you&rdquo; error &ndash; what is the problem?</h4>
+      <h4>I am seeing a &ldquo;Twitter has asked us to slow down&rdquo; error &ndash; what is the problem?</h4>
       <p>Twitter allows us to request 18000 tweets in total, on a user&rsquo;s
-behalf, in any given 15 minute period.</p>
+behalf, in any given 15 minute period. This is called &ldquo;rate limiting&rdquo;.</p>
 
       <p>You don't need to worry too much if you're hitting the limit, the tools will
 carry on trying and get more data over time. If it is all going too slowly, there

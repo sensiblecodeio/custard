@@ -965,7 +965,7 @@ for view in ScraperwikiViews
   if view.name == "fourOhFour"
     # Don't route fourOhFour
     continue
-  app.get view.route, renderClientApp
+  app.get RegExp("^/" + view.route), renderClientApp
 
 port = process.env.CU_PORT or 3001
 

@@ -28,7 +28,7 @@ class Cu.Router.Main extends Backbone.Router
     # Backbone seems to reverse route order
     # TODO: revert to standard routes?
     for view in ScraperwikiViews
-      @route view.route, view.name
+      @route RegExp(view.route), view.name
 
   trackPageView: (e) ->
     path = Backbone.history.getFragment()

@@ -44,14 +44,10 @@ task 'test', 'Run unit tests', ->
   build -> test process.argv[3..]
 
 task 'dev', 'start dev env', ->
-  log 'Watching coffee files'
   process.env.NODE_ENV = 'testing'
-  supervisor = spawn 'node', ['./node_modules/supervisor/lib/cli-wrapper.js','-w','server/js,server/template,shared/js', '-e', 'js|html', 'server']
-  supervisor.stdout.pipe process.stdout
-  supervisor.stderr.pipe process.stderr
-  log 'Watching js files and running server'
-  build true, ->
-    # watch_js
+  nodemon = spawn 'nodemon', ['./server/code/index.coffee']
+  nodemon.stdout.pipe process.stdout
+  nodemon.stderr.pipe process.stderr
 
 Selenium = ->
   glob "selenium-server-standalone-2.*.jar", null, (err, files) ->

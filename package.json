@@ -38,7 +38,8 @@
     "hiredis": "~0.1.15",
     "glob": "~3.2.6",
     "throttler-express": "git+https://github.com/scraperwiki/throttler-express.git",
-    "moment": "~2.6.0"
+    "moment": "~2.6.0",
+    "nodemon": "~1.0.17"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",
@@ -49,7 +50,6 @@
     "mocha": "1.9.0",
     "mkdirp": "~0.3.4",
     "should": "~3.1.2",
-    "supervisor": "*",
     "sinon": "~1.9.1",
     "snockets": "~1.3.8",
     "backbone": "1.0.0",

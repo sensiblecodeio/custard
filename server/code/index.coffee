@@ -12,13 +12,17 @@ require('http').globalAgent.maxSockets = 4096
 _ = require 'underscore'
 express = require 'express'
 connect = require 'connect'
+session = require 'express-session'
+serveFavicon = require 'serve-favicon'
+cookieParser = require 'cookie-parser'
+connect = require 'connect'
 na = require 'nodealytics'
 assets = require 'connect-assets'
 ejs = require 'ejs'
 passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy
 mongoose = require 'mongoose'
-mongoStore = require('connect-mongo')(express)
+mongoStore = require('connect-mongo')(session)
 flash = require 'connect-flash'
 eco = require 'eco'
 checkIdent = require 'ident-express'
@@ -209,40 +213,39 @@ verify = (username, password, callback) ->
           effective: getSessionUser effectiveUser
         return callback null, sessionUser
 
-app.configure ->
-  app.use connect.urlencoded()
-  app.use connect.json()
-  app.use express.cookieParser( process.env.CU_SESSION_SECRET )
-  app.use express.session
-    cookie:
-      maxAge: 60000 * 60 * 24 * 30
-    secret: process.env.CU_SESSION_SECRET
-    store: new mongoStore({url: process.env.CU_DB, auto_reconnect: true})
+app.use connect.urlencoded()
+app.use connect.json()
+app.use cookieParser( process.env.CU_SESSION_SECRET )
+app.use session
+  cookie:
+    maxAge: 60000 * 60 * 24 * 30
+  secret: process.env.CU_SESSION_SECRET
+  store: new mongoStore({url: process.env.CU_DB, auto_reconnect: true})
 
-  app.use passport.initialize()
-  app.use passport.session()
+app.use passport.initialize()
+app.use passport.session()
 
-  app.use express.logger() if /staging|production/.test process.env.NODE_ENV
+app.use express.logger() if /staging|production/.test process.env.NODE_ENV
 
-  app.use flash()
-  app.use express.favicon(__dirname + '/../../shared/image/favicon.ico', { maxAge: 2592000000 })
+app.use flash()
+app.use serveFavicon(__dirname + '/../../shared/image/favicon.ico', { maxAge: 2592000000 })
 
-  # Trust X-Forwarded-* headers
-  app.enable 'trust proxy'
+# Trust X-Forwarded-* headers
+app.enable 'trust proxy'
 
-  # Add Connect Assets
-  # Grepability:
-  # js =
-  # "js" is defined in connect assets, and appears in our globals here.
-  app.use assets({src: 'client'})
+# Add Connect Assets
+# Grepability:
+# js =
+# "js" is defined in connect assets, and appears in our globals here.
+app.use assets({src: 'client'})
 
-  # Set the public folder as static assets. In production this route
-  # is served statically by nginx, so this has no effect. It's
-  # used in dev, and not harmful in production.
-  app.use express.static(process.cwd() + '/shared')
+# Set the public folder as static assets. In production this route
+# is served statically by nginx, so this has no effect. It's
+# used in dev, and not harmful in production.
+app.use express.static(process.cwd() + '/shared')
 
-  if process.env.CU_REQUEST_LOG
-    app.use requestLog
+if process.env.CU_REQUEST_LOG
+  app.use requestLog
 
 passport.use 'local', new LocalStrategy(verify)
 

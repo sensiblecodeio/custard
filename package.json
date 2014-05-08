@@ -11,7 +11,7 @@
   "dependencies": {
     "async": "~0.2.6",
     "bcrypt": "~0.7.3",
-    "coffee-script": "~1.4",
+    "coffee-script": "~1.7.0",
     "connect": "~2.15.0",
     "connect-assets": "~2.5.5",
     "connect-flash": "~0.1.0",

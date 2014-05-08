@@ -76,6 +76,6 @@ class Cu.View.DatasetList extends Backbone.View
 
     $th.siblings().removeClass 'sorted-asc sorted-desc'
 
-    $('tbody>tr', @$el).tsort 'td:eq(' + columnNumber + ')'
+    $('tbody>tr', @$el).tsort 'td:eq(' + columnNumber + ')',
       order: sortOrder
       attr: 'data-sortable-value'

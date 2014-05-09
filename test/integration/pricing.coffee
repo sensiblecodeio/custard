@@ -89,7 +89,6 @@ describe 'Pricing', ->
           should.exist div
           done()
 
-      # TODO: we should test recurly integration here
 
     context 'when I click the $29 upgrade button', (done) ->
       before (done) ->
@@ -106,7 +105,6 @@ describe 'Pricing', ->
           should.exist div
           done()
 
-      # TODO: we should test recurly integration here
 
     after (done) ->
       browser.get "#{base_url}/logout", done

@@ -121,6 +121,8 @@ class Box extends ModelBase
       users: [user.shortName]
       name: boxName
       server: server
+      boxJSON:
+        publish_token: randtoken.generate(15).toLowerCase()
 
     box.save (err) ->
       if err?
@@ -141,19 +143,11 @@ class Box extends ModelBase
       , (err, res, body) ->
         if err?
           return callback err, null
-        jsonResponse = JSON.parse body
-        if 'error' of jsonResponse
-          return callback jsonResponse.error, null
-        box.boxJSON = jsonResponse
-        box.save (err) ->
-          if err?
-            callback err, null
-          else if res.statusCode isnt 200
-            callback {statusCode: res.statusCode, body: body}, null
-          else
-            Plan.setDiskQuota box, user.accountLevel, (err) ->
-              console.warn "setDiskQuota on #{box.name} error: #{err}"
-            callback null, box
+        if res.statusCode != 200
+          return callback body, null
+        Plan.setDiskQuota box, user.accountLevel, (err) ->
+          console.warn "setDiskQuota on #{box.name} error: #{err}"
+        callback null, box
 
   @_generateBoxName: ->
     r = Math.random() * Math.pow(10,9)

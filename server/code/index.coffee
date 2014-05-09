@@ -501,6 +501,23 @@ postStatus = (req, resp) ->
           return resp.send 500, error: 'Error trying to update status'
         return resp.send 200, status: 'ok'
 
+deleteStatus = (req, resp) ->
+  console.log "DELETE /api/status/ from ident #{req.ident}"
+  Dataset.findOneById req.ident, (err, dataset) ->
+    if err?
+      console.warn err
+      return resp.send 500, error: 'Error trying to find dataset'
+    if not dataset
+      error = "Could not find a dataset with box: '#{req.ident}'"
+      console.warn error
+      return resp.send 404, error: error
+
+    dataset.deleteStatus (err) ->
+      if err?
+        console.warn err
+        return resp.send 500, error: 'Error trying to delete status'
+      return resp.send 200, status: 'ok'
+
 # Render login page
 app.get '/login/?', (req, resp) ->
   if req.user?.real
@@ -586,6 +603,8 @@ app.post '/api/user/?', addUser
 # throttleRoute = throttle.throttle (req) -> req.ident
 
 app.post '/api/status/?', checkIdent, postStatus
+app.delete '/api/status/?', checkIdent, deleteStatus
+
 
 app.get '/api/:user/subscription/:plan/sign/?', signPlan
 app.post '/api/:user/subscription/verify/?', verifyRecurly

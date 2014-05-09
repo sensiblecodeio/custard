@@ -79,7 +79,7 @@ scraperwiki.json</pre>
 
 <p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, checks the Git repository out into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe.</p>
 
-<p>This <code>index.html</code> file contains javascript that reads settings and generates a user interface for selecting a spreadsheet to upload. It uses the <a data-nonpushstate href="#js-introduction">scraperwiki.js library</a> to select data and run the server-side <code>extract.py</code> script.</p>
+<p>This <code>index.html</code> file contains JavaScript that reads settings and generates a user interface for selecting a spreadsheet to upload. It uses the <a data-nonpushstate href="#js-introduction">scraperwiki.js library</a> to select data and run the server-side <code>extract.py</code> script.</p>
 
 <p>The <code>scraperwiki.json</code> file contains the following settings describing the tool:</p>
 
@@ -116,7 +116,7 @@ scraperwiki.json</pre>
 
 <p>Your HTML markup should conform to the <a href="http://www.w3.org/TR/html5/tabular-data.html#the-table-element">HTML 5 spec</a>.</p>
 
-<p>To make your grids disoverable, create a <code>_grids</code> table in your SQLite database, eg:</p>
+<p>To make your grids discoverable, create a <code>_grids</code> table in your SQLite database, eg:</p>
 
 <pre class="prettyprint">
 CREATE TABLE "_grids" ("url" NOT NULL, "checksum" PRIMARY KEY, "title", "number" INT, "source_url", "source_name", "source_count")
@@ -521,7 +521,7 @@ to. Make sure you <code>export</code> the variable.
 
 <p>For less important code, just use version control locally inside
 the box. For more important code, add a remote and push/pull to it.
-Full instructions are in Github&rsquo;s help on
+Full instructions are in GitHub&rsquo;s help on
 <a href="https://help.github.com/articles/create-a-repo">Creating a repository</a>.
 In short, do this:
 </p>
@@ -529,7 +529,7 @@ In short, do this:
 <pre class="prettyprint">git remote add origin https://github.com/username/teach-example-tool.git
 git push origin master</pre>
 
-<p>You&rsquo;ll find you need to keep typing in your Github password, or set up
+<p>You&rsquo;ll find you need to keep typing in your GitHub password, or set up
 a new SSH private key for each box. Agent forward is a much better and
 easier solution. In short, set up a local SSH agent, and add this to <code>~/.ssh/config</code>:
 </a>
@@ -538,7 +538,7 @@ easier solution. In short, set up a local SSH agent, and add this to <code>~/.ss
     HostName <%= @user?.boxServer or 'free.scraperwiki.com'%>
     ForwardAgent yes</pre>
 
-<p>Full instructions are in Github&rsquo;s help on
+<p>Full instructions are in GitHub&rsquo;s help on
 <a href="https://help.github.com/articles/using-ssh-agent-forwarding">Using SSH agent forwarding</a>.
 </p>
 

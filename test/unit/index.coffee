@@ -81,11 +81,11 @@ describe 'Express Routes', ->
       .end(done)
 
 describe 'Error Handling', ->
-  xit 'Should display a 404 error', (done) ->
+  it 'Should display a 404 error', (done) ->
     request(app)
       .get('/xxsdsdsdsd')
       .expect(404)
-      .expect(/Not Found/)
+      .expect(/Not found/)
       .end(done)
 
 describe "Status End Point", ->

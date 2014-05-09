@@ -926,45 +926,65 @@ switchContextIfRequiredAndAllowed = (req, resp, next) ->
       resp.status 404
       return resp.render 'not_found'
 
-app.all '*', ensureAuthenticated
 
-app.get '/logout', logout
+api = express.Router()
+api.use ensureAuthenticated
+app.use "/api", api
+
 
 # API!
-app.get '/api/tools/?', listTools
-app.post '/api/tools/?', googleAnalytics, postTool
+api.get '/tools/?', listTools
+api.post '/tools/?', googleAnalytics, postTool
 
-app.put '/api/user/?', updateUser
+api.put '/user/?', updateUser
 
-app.get '/api/:user/datasets/?', checkThisIsMyDataHub, listDatasets
-app.get '/api/:user/datasets/:id/?', checkThisIsMyDataHub, getDataset
-app.get '/api/:user/datasets/:id/views/?', checkThisIsMyDataHub, listViews
-app.put '/api/:user/datasets/:id/?', checkThisIsMyDataHub, updateDataset
-app.post '/api/:user/datasets/?', checkThisIsMyDataHub, addDataset
-app.post '/api/:user/datasets/:dataset/views/?', checkThisIsMyDataHub, addView
+api.get '/:user/datasets/?', checkThisIsMyDataHub, listDatasets
+api.get '/:user/datasets/:id/?', checkThisIsMyDataHub, getDataset
+api.get '/:user/datasets/:id/views/?', checkThisIsMyDataHub, listViews
+api.put '/:user/datasets/:id/?', checkThisIsMyDataHub, updateDataset
+api.post '/:user/datasets/?', checkThisIsMyDataHub, addDataset
+api.post '/:user/datasets/:dataset/views/?', checkThisIsMyDataHub, addView
 
-app.get '/api/user/?', listUsers
+api.get '/user/?', listUsers
 
-app.post '/api/:user/sshkeys/?', addSSHKey
-app.get '/api/:user/sshkeys/?', listSSHKeys
+api.post '/:user/sshkeys/?', addSSHKey
+api.get '/:user/sshkeys/?', listSSHKeys
 
-app.put '/api/:user/subscription/change/:plan/?', changePlan
-app.get '/api/:user/subscription/billing', redirectToRecurlyAdmin
+api.put '/:user/subscription/change/:plan/?', changePlan
+api.get '/:user/subscription/billing', redirectToRecurlyAdmin
 
-app.post '/api/reporting/message/?', sendIntercomMessage
-app.post '/api/reporting/user/?', sendIntercomUserData
-app.post '/api/reporting/tag/?', sendIntercomTag
+api.post '/reporting/message/?', sendIntercomMessage
+api.post '/reporting/user/?', sendIntercomUserData
+api.post '/reporting/tag/?', sendIntercomTag
+
+app.get '/logout', ensureAuthenticated, logout
 
 # Magic redirects
-app.all '*', enforceFreeTrial
-app.get /^[/]dataset[/]([a-zA-Z0-9]+)/, switchContextIfRequiredAndAllowed, renderClientApp
+app.get /^[/]dataset[/]([a-zA-Z0-9]+)/, ensureAuthenticated, switchContextIfRequiredAndAllowed, renderClientApp
 
-# Send all other requests to the client app, eg:
-# /datasets
-# /signup/free
-# /dashboard
-# /create-profile
-app.get '*', renderClientApp
+# Define the URLs which get rendered client side
+{ScraperwikiViews} = require '../../shared/code/views'
+for view in ScraperwikiViews
+  if view.name == "fourOhFour"
+    # Don't route fourOhFour
+    continue
+  app.get RegExp("^/" + view.route), ensureAuthenticated, renderClientApp
+
+# $ curl http://localhost:3000/notfound
+# $ curl http://localhost:3000/notfound -H "Accept: application/json"
+# $ curl http://localhost:3000/notfound -H "Accept: text/plain"
+app.use (req, res, next) ->
+  res.status 404
+
+  if req.accepts('html')
+    res.render 'not_found', url: req.url
+    return
+
+  if req.accepts('json')
+    res.send error: 'Not found'
+    return
+
+  res.type('txt').send 'Not found'
 
 port = process.env.CU_PORT or 3001
 

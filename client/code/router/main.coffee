@@ -235,30 +235,47 @@ class Cu.Router.Main extends Backbone.Router
           window.selectedTool = model
 
         setTimeout =>
-          views.findByToolName 'datatables-view-tool', (dataTablesView) =>
-            if dataTablesView?
-              window.selectedTool = dataTablesView
-              subnavView = new Cu.View.Toolbar {model: model, view: dataTablesView}
-              @subnavView.showView subnavView
-              contentView = new Cu.View.PluginContent {model: dataTablesView}
-              @appView.showView contentView
-              contentView.showContent()
-            else
-              app.navigate "/dataset/#{model.id}/settings", trigger: true
+
+          # Has the status endpoint been set?
+          # If so, jump to the datatables-view-tool
+          if "status" of model.attributes
+            views.findByToolName 'datatables-view-tool', (dataTablesView) =>
+              if dataTablesView?
+                @switchToToolView model, dataTablesView
+              else
+                app.navigate "/dataset/#{model.id}/settings", trigger: true
+            return
+
+          # ... Otherwise, show to the dataset
+          @switchToDatasetView model
         , 0
+
+  # Update the current view to show the far left most thing in the tool ribbon,
+  # which is the "app" or "dataset"
+  switchToDatasetView: (datasetModel) ->
+    window.selectedTool = datasetModel
+    unless @subnavView.currentView instanceof Cu.View.Toolbar
+      subnavView = new Cu.View.Toolbar model: datasetModel
+      @subnavView.showView subnavView
+    contentView = new Cu.View.AppContent model: datasetModel
+    @appView.showView contentView
+    contentView.showContent()
+
+  # Update the current view to show the given tool
+  switchToToolView: (datasetModel, toolView) ->
+    window.selectedTool = toolView
+    subnavView = new Cu.View.Toolbar {model: datasetModel, view: toolView}
+    @subnavView.showView subnavView
+    contentView = new Cu.View.PluginContent {model: toolView}
+    @appView.showView contentView
+    contentView.showContent()
 
   datasetSettings: (box) ->
     mod = Cu.Model.Dataset.findOrCreate box: box
     mod.fetch
       success: (model) =>
         @_ifDatasetIsNotDeleted model, =>
-          window.selectedTool = model
-          unless @subnavView.currentView instanceof Cu.View.Toolbar
-            subnavView = new Cu.View.Toolbar model: model
-            @subnavView.showView subnavView
-          contentView = new Cu.View.AppContent model: model
-          @appView.showView contentView
-          contentView.showContent()
+          @switchToDatasetView model
       error: (_model, jqXHR) ->
         # 404? Reload the page directly from the server, so it can either render
         # a nice 404 page, or automatically switch the user into the right context.

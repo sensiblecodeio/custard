@@ -9,18 +9,15 @@ should = require 'should'
 
 describe 'Tool Content', ->
 
-  before (done) ->
+  it "goes to recentlyUpgraded's /datasets", (done) ->
     loginAndGo "recentlyUpgraded", "testing", "/datasets", done
 
   context "When a recently upgraded user visits an old dataset", ->
-    before (done) ->
-      # wait for tiles to fade in
-      setTimeout ->
-        wd40.elementByPartialLinkText 'Old Dataset', (err, link) ->
-          link.click done
-      , 500
+    it "clicks 'Old Dataset'", (done) ->
+      wd40.elementByPartialLinkText 'Old Dataset', (err, link) ->
+        link.click done
 
-    before (done) =>
+    it "obtains the settingsHash", (done) =>
       wd40.elementByCss 'iframe', (err, iframe) =>
          return done(err) if err?
          iframe.getAttribute 'src', (err, src) =>

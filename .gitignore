@@ -1,7 +1,8 @@
-node_modules/
-server/js/
-shared/js/
-chromedriver.log
-mongo
-chromedriver
-selenium-*.jar
+/node_modules/
+/server/js/
+/shared/js/
+/chromedriver.log
+/mongo
+/chromedriver
+/selenium-*.jar
+/request.csv

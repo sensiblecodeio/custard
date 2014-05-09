@@ -3,6 +3,7 @@ mongoose = require 'mongoose'
 async = require 'async'
 nibbler = require 'nibbler'
 request = require 'request'
+randtoken = require 'rand-token'
 
 Schema = mongoose.Schema
 

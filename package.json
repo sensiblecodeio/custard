@@ -40,7 +40,8 @@
     "throttler-express": "git+https://github.com/scraperwiki/throttler-express.git",
     "moment": "~2.6.0",
     "nodemon": "~1.0.17",
-    "connect": "~2.15.0"
+    "connect": "~2.15.0",
+    "rand-token": "~0.2.1"
   },
   "scripts": {
     "install": "node_modules/coffee-script/bin/cake build",

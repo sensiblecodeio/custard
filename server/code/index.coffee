@@ -230,9 +230,12 @@ app.configure ->
   # Trust X-Forwarded-* headers
   app.enable 'trust proxy'
 
-
   # Add Connect Assets
+  # Grepability:
+  # js =
+  # "js" is defined in connect assets, and appears in our globals here.
   app.use assets({src: 'client'})
+
   # Set the public folder as static assets. In production this route
   # is served statically by nginx, so this has no effect. It's
   # used in dev, and not harmful in production.
@@ -243,12 +246,15 @@ app.configure ->
 
 passport.use 'local', new LocalStrategy(verify)
 
-
 # Set View Engine
 app.set 'views', 'server/template'
 app.engine 'html', ejs.renderFile
 app.set 'view engine', 'html'
+
 js.root = 'code'
+
+js_app = js 'app'
+js_templates = js 'template/index'
 
 # Middleware (for checking users)
 checkThisIsMyDataHub = (req, resp, next) ->
@@ -298,8 +304,8 @@ renderClientApp = (req, resp) ->
       nav: ''
       subnav: ''
       content: ''
-      scripts: js 'app'
-      templates: js 'template/index'
+      scripts: js_app
+      templates: js_templates
       user: JSON.stringify usersObj
       recurlyDomain: process.env.RECURLY_DOMAIN
       flash: req.flash()
@@ -325,8 +331,8 @@ renderServerAndClientSide = (options, req, resp) ->
               nav: eco.render navTemplate.toString()
               subnav: """<div class="subnav-wrapper">#{eco.render subnavTemplate.toString(), options}</div>"""
               content: """<div class="#{options.page}">#{eco.render contentTemplate.toString(), {} }</div>"""
-              scripts: js 'app'
-              templates: js 'template/index'
+              scripts: js_app
+              templates: js_templates
               user: JSON.stringify usersObj
               recurlyDomain: process.env.RECURLY_DOMAIN
               flash: req.flash()

@@ -1,5 +1,5 @@
 --require should
 --ui bdd
---compilers coffee:coffee-script
+--compilers coffee:coffee-script/register
 --reporter spec
 --timeout 40000

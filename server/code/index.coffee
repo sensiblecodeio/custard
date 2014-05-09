@@ -53,7 +53,6 @@ mongoose.connect process.env.CU_DB,
     socketOptions:
       keepAlive: 1
 
-
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
 
@@ -140,12 +139,14 @@ getSessionUser = (user) ->
   if not user
     console.warn "MYSTERIOUS: user is not in the database"
     return {}
+    
   [err, plan] = Plan.getPlan user.accountLevel
   if err
     # We get here if there is no plan for the user's accountLevel.
     # This "Can't Happen".
     console.warn "MYSTERIOUS: user #{user.shortName} has no plan for their accountLevel #{user.accountLevel}"
     return {}
+
   session =
     shortName: user.shortName
     displayName: user.displayName
@@ -161,6 +162,7 @@ getSessionUser = (user) ->
     acceptedTerms: user.acceptedTerms
     created: user.created
     datasetDisplay: user.datasetDisplay
+
   if user.email.length
     email = user.email[0].toLowerCase().trim()
     emailHash = crypto.createHash('md5').update(email).digest("hex")
@@ -175,14 +177,19 @@ getSessionUser = (user) ->
 getSessionUsersFromDB = (reqUser, cb) ->
   if not reqUser
     cb {}
-  else
-    User.findByShortName reqUser.effective.shortName, (err, effectiveUser) ->
-      if err then console.warn err
-      User.findByShortName reqUser.real.shortName, (err, realUser) ->
-        if err then console.warn err
-        cb
-          real: getSessionUser realUser
-          effective: getSessionUser effectiveUser
+    return
+
+  User.findByShortName reqUser.effective.shortName, (err, effectiveUser) ->
+    if err?
+      console.warn err
+
+    User.findByShortName reqUser.real.shortName, (err, realUser) ->
+      if err?
+        console.warn err
+
+      cb
+        real: getSessionUser realUser
+        effective: getSessionUser effectiveUser
 
 getEffectiveUser = (user, callback) ->
   # Find all users with user.shortName in their canBeReally list
@@ -200,6 +207,7 @@ verify = (username, password, callback) ->
   user.checkPassword password, (err, user) ->
     if err
       return callback null, false, { message: err.error }
+
     if user
       # User logged in successfully!
       # Now we need to work out which 'effective'
@@ -283,6 +291,7 @@ checkSwitchUserRights = (req, res, next) ->
     if err?
       # findByShortName encountered an unexpected error
       return res.send 500, err
+
     if not user?
       # findByShortName couldn't find the specified shortName
       return res.send 404, { error: "The specified user does not exist"}
@@ -324,6 +333,7 @@ renderServerAndClientSide = (options, req, resp) ->
     if err?
       console.warn "Template #{options.page} not found when rendering server side"
       return resp.send 500, {error: "Template not found: #{err}"}
+
     _.extend options, pageTitles.PageTitles[options.page]
     options.subnav ?= 'subnav'
     fs.readFile "client/template/#{options.subnav}.eco", (err, subnavTemplate) ->
@@ -358,10 +368,12 @@ _addView = (user, dataset, attributes, callback) ->
     if err?
       console.warn err
       return callback {statusCode: err.statusCode, error: "Error finding dataset: #{err.body}"}
+
     Box.create user, (err, box) ->
       if err?
         console.warn err
         return callback {statusCode: err.statusCode, error: "Error creating box: #{err.body}"}
+
       view =
         box: box.name
         boxServer: box.server
@@ -369,15 +381,19 @@ _addView = (user, dataset, attributes, callback) ->
         displayName: attributes.displayName
         boxJSON: box.boxJSON
         state: 'installing'
+
       dataset.views.push view
+
       dataset.save (err) ->
         if err?
           console.warn err
           return callback {statusCode: 500, error: "Error saving view: #{err}"}, null
+
         box.installTool {user: user, toolName: attributes.tool}, (err) ->
           if err?
             console.warn err
             return callback {500, error: "Error installing tool: #{err}"}
+
           view = _.findWhere dataset.views, box: box.name
           view.state = 'installed'
           dataset.save (err) ->
@@ -420,10 +436,9 @@ sendPasswordReset = (req, resp) ->
   User.sendPasswordReset criteria, (err) ->
     if err == 'user not found'
       return resp.send 404, error: 'That username could not be found'
-    else if err?
+    if err?
       return resp.send 500, error: "Something went wrong: #{err}"
-    else
-      return resp.send 200, success: "A password reset link has been emailed to #{query}"
+    return resp.send 200, success: "A password reset link has been emailed to #{query}"
 
 setPassword = (req, resp) ->
   Token.find req.params.token, (err, token) ->
@@ -480,19 +495,21 @@ postStatus = (req, resp) ->
     if err?
       console.warn err
       return resp.send 500, error: 'Error trying to find dataset'
-    else if not dataset
+
+    if not dataset
       error = "Could not find a dataset with box: '#{req.ident}'"
       console.warn error
       return resp.send 404, error: error
-    else
-      dataset.updateStatus
-        type: req.body.type
-        message: req.body.message
-      , (err) ->
-        if err?
-          console.warn err
-          return resp.send 500, error: 'Error trying to update status'
-        return resp.send 200, status: 'ok'
+
+    dataset.updateStatus
+      type: req.body.type
+      message: req.body.message
+    , (err) ->
+      if err?
+        console.warn err
+        return resp.send 500, error: 'Error trying to update status'
+
+      return resp.send 200, status: 'ok'
 
 deleteStatus = (req, resp) ->
   console.log "DELETE /api/status/ from ident #{req.ident}"
@@ -532,11 +549,13 @@ verifyRecurly = (req, resp) ->
       statusCode = err.statusCode or 500
       error = err.error or err
       return resp.send statusCode, error
+
     User.findByShortName req.params.user, (err, user) ->
       if err?
         statusCode = err.statusCode or 500
         error = err.error or err
         return resp.send statusCode, error
+
       plan = result.subscription.plan
       console.log 'Subscribed to', plan.plan_code
       user.setAccountLevel plan.plan_code, (err) ->
@@ -629,34 +648,36 @@ postTool = (req, resp) ->
         public: publicBool
     else
       _.extend tool, body
+
     tool.gitCloneOrPull dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
       console.log "gitCloneOrPull", err, stdout, stderr
       if err?
         console.warn err
         return resp.send 500, error: "Error cloning/updating your tool's Git repo"
+
       tool.loadManifest (err) ->
         if err?
           console.warn err
           tool.deleteRepo ->
             return resp.send 500, error: "Error trying to load your tool's manifest"
-        else
-          tool.save (err) ->
-            console.warn err if err?
-            Tool.findOneById tool._id, (err, tool) ->
-              console.warn err if err?
-              if err?
-                console.warn err
-                return resp.send 500, error: 'Error trying to find tool'
-              else
-                code = if isNew then 201 else 200
-                if isNew
-                  code = 201
-                  action = 'create'
-                else
-                  code = 200
-                  action = 'update'
-                na.trackEvent 'tools', action, body.name
-                return resp.send code, tool
+          return
+
+        tool.save (err) ->
+          console.warn err if err?
+          Tool.findOneById tool._id, (err, tool) ->
+            if err?
+              console.warn err
+              return resp.send 500, error: 'Error trying to find tool'
+
+            code = if isNew then 201 else 200
+            if isNew
+              code = 201
+              action = 'create'
+            else
+              code = 200
+              action = 'update'
+            na.trackEvent 'tools', action, body.name
+            return resp.send code, tool
 
 updateUser = (req, resp) ->
   User.findByShortName req.user.real.shortName, (err, user) ->
@@ -667,16 +688,15 @@ updateUser = (req, resp) ->
     user.save (err, newUser) ->
       if err?
         resp.send 500, error: err
-      else
-        resp.send 200, newUser
+
+      resp.send 200, newUser
 
 listDatasets = (req, resp) ->
   Dataset.findAllByUserShortName req.params.user, (err, datasets) ->
     if err?
       console.warn err
       return resp.send 500, error: 'Error trying to find datasets'
-    else
-      return resp.send 200, datasets
+    return resp.send 200, datasets
 
 getDataset = (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}"
@@ -684,11 +704,11 @@ getDataset = (req, resp) ->
     if err?
       console.warn err
       return resp.send 500, error: 'Error trying to find datasets'
-    else if not dataset
+    if not dataset
       console.warn "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
       return resp.send 404, error: "We can't find this dataset, or you don't have permission to access it."
-    else
-      return resp.send 200, dataset
+
+    return resp.send 200, dataset
 
 listViews = (req, resp) ->
   console.log "GET /api/#{req.params.user}/datasets/#{req.params.id}/views"
@@ -696,13 +716,13 @@ listViews = (req, resp) ->
     if err?
       console.warn err
       return resp.send 500, error: 'Error trying to find dataset views'
-    else if not dataset
+    if not dataset
       console.warn "Could not find a dataset with {box: '#{req.params.id}', user: '#{req.user.effective.shortName}'}"
       return resp.send 404
-    else
-      dataset.views (err, views) ->
-        console.warn "Error fetching views #{err}" if err?
-        return resp.send 200, views
+
+    dataset.views (err, views) ->
+      console.warn "Error fetching views #{err}" if err?
+      return resp.send 200, views
 
 updateDataset = (req, resp) ->
   console.log "PUT /api/#{req.params.user}/datasets/#{req.params.id}"
@@ -724,22 +744,26 @@ addDataset = (req, resp) ->
   user = req.user.effective
   body = req.body
   console.log "POST dataset user", user
+
   User.canCreateDataset user, (err, can) ->
 
     if err?
       console.log "USER #{user} CANNOT CREATE DATASET"
       return resp.send err.statusCode, err.error
+
     Box.create user, (err, box) ->
       if err?
         console.warn "Box.create failed #{err}"
         return resp.send 500, error: "Error creating box: #{err.body}"
       console.log "POST dataset boxName=#{box.name}"
       console.log "POST dataset boxServer = #{box.server}"
+
       # TODO: a box will still be created here
       box.installTool {user: user, toolName: body.tool}, (err) ->
         if err?
           console.warn err
           return resp.send 500, error: "Error installing tool: #{err}"
+
         # Save dataset
         dataset = new Dataset
           box: box.name
@@ -781,6 +805,7 @@ addView = (req, resp) ->
       resp.send 500, error: "Error creating view: #{err}"
     if not dataset
       return resp.send 404, error: "Error creating view: #{req.params.dataset} not found"
+
     body = req.body
     _addView user, dataset,
       tool: body.tool
@@ -809,8 +834,9 @@ addSSHKey = (req, resp) ->
     user.save (err) ->
       if err?
         resp.send 500, error: err
-      else
-        resp.send 200, success: 'ok'
+        return
+
+      resp.send 200, success: 'ok'
 
 listSSHKeys = (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->
@@ -825,20 +851,24 @@ changePlan = (req, resp) ->
   [err, dummy] = Plan.getPlan req.params.plan
   if err
     return resp.send 500, error: "That plan does not exist!"
+
   User.findByShortName req.user.real.shortName, (err, user) ->
     if err?
       console.warn "error searching for user model!", err
       return resp.send 500, error: "Couldn't find your user object"
     if not user
       return resp.send 500, error: "No users with the specified shortName"
+
     user.getCurrentSubscription (err, currentSubscription) ->
       if err?
         return resp.send 404, error: "Couldn't find your subscription"
       if not currentSubscription
         return resp.send 404, error: "You do not have a recurly subscription. Please get one at https://scraperwiki.com/pricing"
+
       currentSubscription.upgrade req.params.plan, (err, recurlyResp) ->
         if err?
           return resp.send 500, error: "Couldn't change your subscription"
+
         user.accountLevel = req.params.plan
         user.save (err, user) ->
           if err?
@@ -850,11 +880,13 @@ redirectToRecurlyAdmin = (req, resp) ->
   User.findByShortName req.user.real.shortName, (err, user) ->
     if err?
       return resp.send 500, error: "Couldn't find your user object"
+
     if not user
       return resp.send 500, error: "No users with the specified shortName"
     user.getSubscriptionAdminURL (err, recurlyAdminUrl) ->
       if err?
         return resp.send 404, error: err.error
+
       if not recurlyAdminUrl
         return resp.send 404, error: "You do not have a recurly hosted_login_token. Contact hello@scraperwiki.com for help."
       resp.writeHead 302,

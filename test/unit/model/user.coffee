@@ -401,24 +401,3 @@ describe 'User (server)', ->
         url.should.be.a.string
         url.should.match new RegExp("^https://[^.]+[.]recurly[.]com/account/[a-z0-9]+$")
         done()
-
-
-  describe 'Disk quota', ->
-
-    context 'when updating the quotas for a user', ->
-      before (done) ->
-        @stub = sinon.stub Plan, 'setDiskQuota', (box, plan, cb) ->
-          cb null, true
-
-        User.findByShortName 'ehg', (err, user) =>
-          @user = user
-          user.setDiskQuotasForPlan done
-
-      after ->
-        Plan.setDiskQuota.restore()
-
-      it "should update the disk quota for each dataset", ->
-        correctArgs = @stub.calledWithMatch {name: '3006375731'}, 'grandfather-ec2'
-        correctArgs.should.be.true
-        correctArgs = @stub.calledWithMatch {name: '3006375815'}, 'grandfather-ec2'
-        correctArgs.should.be.true

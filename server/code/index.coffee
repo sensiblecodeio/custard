@@ -139,7 +139,7 @@ getSessionUser = (user) ->
   if not user
     console.warn "MYSTERIOUS: user is not in the database"
     return {}
-    
+
   [err, plan] = Plan.getPlan user.accountLevel
   if err
     # We get here if there is no plan for the user's accountLevel.
@@ -194,12 +194,14 @@ getSessionUsersFromDB = (reqUser, cb) ->
 getEffectiveUser = (user, callback) ->
   # Find all users with user.shortName in their canBeReally list
   User.findCanBeReally user.shortName, (err, canBeReally) ->
+    if err?
+      return callback err, null
     if user.defaultContext in _.pluck(canBeReally, 'shortName')
       # User has a defaultContext, and it is one of the contexts they can switch to.
       effectiveUser = _.findWhere canBeReally, shortName: user.defaultContext
     else
       effectiveUser = user
-    return callback effectiveUser
+    return callback null, effectiveUser
 
 # Verify callback for LocalStrategy
 verify = (username, password, callback) ->
@@ -212,7 +214,10 @@ verify = (username, password, callback) ->
       # User logged in successfully!
       # Now we need to work out which 'effective'
       # profile they should be logged into...
-      getEffectiveUser user, (effectiveUser) ->
+      getEffectiveUser user, (err, effectiveUser) ->
+        if err?
+          return callback null, false, { message: err }
+
         sessionUser =
           real: getSessionUser user
           effective: getSessionUser effectiveUser
@@ -442,6 +447,10 @@ sendPasswordReset = (req, resp) ->
 
 setPassword = (req, resp) ->
   Token.find req.params.token, (err, token) ->
+    if err?
+      console.warn "Token.find err -> #{err}"
+      return resp.send 500, error: 'Unknown error: #{err}'
+
     if token?.shortName and req.body.password?
       # TODO: token expiration
       User.findByShortName token.shortName, (err, user) ->
@@ -450,7 +459,11 @@ setPassword = (req, resp) ->
             # Password successfully set!
             # Set up a new login session for the user
             # (into the right context!)
-            getEffectiveUser user, (effectiveUser) ->
+            getEffectiveUser user, (err, effectiveUser) ->
+              if err?
+                console.warn "Token.find err -> #{err}"
+                return resp.send 500, error: 'Unknown error: #{err}'
+
               sessionUser =
                 real: getSessionUser user
                 effective: getSessionUser effectiveUser
@@ -664,6 +677,7 @@ postTool = (req, resp) ->
 
         tool.save (err) ->
           console.warn err if err?
+
           Tool.findOneById tool._id, (err, tool) ->
             if err?
               console.warn err
@@ -696,6 +710,7 @@ listDatasets = (req, resp) ->
     if err?
       console.warn err
       return resp.send 500, error: 'Error trying to find datasets'
+
     return resp.send 200, datasets
 
 getDataset = (req, resp) ->
@@ -883,6 +898,7 @@ redirectToRecurlyAdmin = (req, resp) ->
 
     if not user
       return resp.send 500, error: "No users with the specified shortName"
+
     user.getSubscriptionAdminURL (err, recurlyAdminUrl) ->
       if err?
         return resp.send 404, error: err.error

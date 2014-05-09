@@ -4,7 +4,7 @@
 OLD_PATH=$PATH
 OLD_PS1=$PS1
 OLD_NODE_PATH=$NODE_PATH
-PATH=$(pwd)/node_modules/.bin:$(pwd)/bin:$PATH
+PATH=$(pwd)/bin:$(pwd)/node_modules/.bin:$PATH
 
 # The default values for these environment variables below are:
 #   a) not secret; and,
@@ -58,30 +58,6 @@ deactivate () {
     NODE_PATH=$OLD_NODE_PATH
     unset -f deactivate
     unset -f mocha
-}
-
-mocha () {
-    # Clean DB out and load fixtures (set CU_TEST_CLEAN=false to
-    # avoid cleaning).
-    if "${CU_TEST_CLEAN-true}"
-    then
-      test/cleaner.coffee
-    fi
-
-    # Consider pushing to external program.
-    eval last=\${$#}
-
-    if [ "$#" = "0" ]
-    then
-        env mocha ${@:1:$#-1} $(find test -name '*.coffee' | sort)
-    else
-        if [ -d "$last" ]
-        then
-            env mocha ${@:1:$#-1} $(find "$last" -name '*.coffee' | sort)
-        else
-            env mocha $@
-        fi
-    fi
 }
 
 # Source script containing useful, but secret, environment variables.

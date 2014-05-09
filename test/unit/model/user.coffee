@@ -276,7 +276,7 @@ describe 'User (server)', ->
         @user.acceptedTerms.should.be.above 0
 
       it 'the new user does not have a defaultContext', ->
-        @user.should.not.have.property 'defaultContext'
+        should.not.exist @user.defaultContext
 
       it 'it has not contacted the MailChimp API', ->
         @apiStub.listSubscribe.calledOnce.should.be.false
@@ -379,7 +379,7 @@ describe 'User (server)', ->
           done err
 
       it 'the new user has a defaultContext', ->
-        @user.should.have.property 'defaultContext'
+        should.exist @user.defaultContext
         @user.defaultContext.should.equal 'testersonltd'
 
       it 'the new user has been added to the other context\'s canBeReally list', (done) ->

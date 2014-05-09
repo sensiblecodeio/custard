@@ -70,32 +70,20 @@ tmpRequestStream.on 'open', () ->
   requestStream = tmpRequestStream
 requestLog = (req, res, next) ->
   requestStart = new Date()
-  unique = Math.random() * Math.pow(2, 32)
-  matched = _.find app.routes[req.method.toLowerCase()], (route) ->
-    if route.regexp.test req.url
-      if route.path isnt '*'
-        return true
-  if matched?
-    name = "#{req.method} #{matched.path}"
-    # Rewrites the send method of the response res so that we
-    # can time how long it takes between request and response.
-    oldSend = res.send
-    res.send = (args... ) ->
-      duration = new Date() - requestStart
-      # CSV file is:
-      # app,unique-request-id,route,URL,milliseconds
-      line = "custard,#{unique},#{name},#{req.url},#{duration}\n"
 
-      # The first time .send() is called we write a line to the
-      # log. Possibly it would be better to use the last time
-      # .send() is called, but this is way simpler.
-      res.send = oldSend
-      if requestStream
-        requestStream.write line, () ->
-          oldSend.apply res, args
-      else
-        oldSend.apply res, args
-  return next()
+  next()
+
+  unique = Math.random() * Math.pow(2, 32)
+  name = "#{req.method} #{req.route.path}"
+
+  duration = new Date() - requestStart
+
+  # CSV file is:
+  # app,unique-request-id,route,URL,milliseconds
+  line = "custard,#{unique},#{name},#{req.url},#{duration}\n"
+
+  if requestStream
+    requestStream.write line
 
 assets.jsCompilers.eco =
   match: /\.eco$/

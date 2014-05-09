@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo "[Scraperwiki mocha wrapper]"
+echo "[ScraperWiki mocha wrapper]"
 
 THISDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Prevent recursion

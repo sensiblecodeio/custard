@@ -11,6 +11,7 @@ require('http').globalAgent.maxSockets = 4096
 
 _ = require 'underscore'
 express = require 'express'
+morgan  = require 'morgan'
 connect = require 'connect'
 session = require 'express-session'
 serveFavicon = require 'serve-favicon'
@@ -225,7 +226,8 @@ app.use session
 app.use passport.initialize()
 app.use passport.session()
 
-app.use express.logger() if /staging|production/.test process.env.NODE_ENV
+# 'morgan' is logging middleware
+app.use morgan() if /staging|production/.test process.env.NODE_ENV
 
 app.use flash()
 app.use serveFavicon(__dirname + '/../../shared/image/favicon.ico', { maxAge: 2592000000 })

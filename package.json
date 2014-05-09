@@ -28,6 +28,7 @@
     "mailchimp": "~1.1.0",
     "moment": "~2.6.0",
     "mongoose": "3.6.7",
+    "morgan": "^1.0.1",
     "nibbler": "git+https://github.com/mattrobenolt/node_nibbler.git",
     "nodealytics": "0.0.5",
     "nodemailer": "~0.3.43",

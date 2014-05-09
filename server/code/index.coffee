@@ -276,6 +276,9 @@ checkThisIsMyDataHub = (req, resp, next) ->
   return next() if req.user.effective.shortName == req.params.user
 
   User.findByShortName req.params.user, (err, switchingTo) ->
+    if err?
+      return resp.send 500, error: "Unknown error #{err}"
+
     if switchingTo?.canBeReally and req.user.real.shortName in switchingTo.canBeReally
       next()
     else
@@ -342,7 +345,15 @@ renderServerAndClientSide = (options, req, resp) ->
     _.extend options, pageTitles.PageTitles[options.page]
     options.subnav ?= 'subnav'
     fs.readFile "client/template/#{options.subnav}.eco", (err, subnavTemplate) ->
+      if err?
+        console.warn "Template #{options.page} not found when rendering server side"
+        return resp.send 500, {error: "Template not found: #{err}"}
+
       fs.readFile "client/template/nav.eco", (err, navTemplate) ->
+        if err?
+          console.warn "Template #{options.page} not found when rendering server side"
+          return resp.send 500, {error: "Template not found: #{err}"}
+
         getSessionUsersFromDB req.user, (usersObj) ->
           resp.render 'index',
               title: options.title or 'ScraperWiki'
@@ -402,6 +413,10 @@ _addView = (user, dataset, attributes, callback) ->
           view = _.findWhere dataset.views, box: box.name
           view.state = 'installed'
           dataset.save (err) ->
+            if err?
+              console.warn err
+              return callback {500, error: "Error installing tool: #{err}"}
+
             callback null, view
 
 switchUser = (req, resp) ->
@@ -422,6 +437,9 @@ login = (req, resp) ->
 
 getToken = (req, resp) ->
   Token.find req.params.token, (err, token) ->
+    if err?
+      return resp.send 500, { error: "Error #{err}" }
+
     if token?.shortName
       return resp.send 200, { token: token.token, shortName: token.shortName }
     else
@@ -454,6 +472,9 @@ setPassword = (req, resp) ->
     if token?.shortName and req.body.password?
       # TODO: token expiration
       User.findByShortName token.shortName, (err, user) ->
+        if err?
+          return resp.send 500, error: "Unknown error: #{err}"
+
         if user?
           user.setPassword req.body.password, ->
             # Password successfully set!
@@ -572,6 +593,10 @@ verifyRecurly = (req, resp) ->
       plan = result.subscription.plan
       console.log 'Subscribed to', plan.plan_code
       user.setAccountLevel plan.plan_code, (err) ->
+        if err?
+          resp.send 500, success: "Unknown error #{err}"
+          return
+
         if req.user?.effective
           req.user.effective = getSessionUser user
         req.session.save()
@@ -643,11 +668,19 @@ logout = (req, resp) ->
 listTools = (req, resp) ->
   #console.log "listTools real:", req.user.real.shortName, "effective:", req.user.effective.shortName
   Tool.findForUser req.user.effective.shortName, (err, tools) ->
+    if err?
+      resp.send 500, 'Unknown error #{err}'
+      return
+
     resp.send 200, tools
 
 postTool = (req, resp) ->
   body = req.body
   Tool.findOneByName body.name, (err, tool) ->
+    if err?
+      resp.send 500, 'Unknown error #{err}'
+      return
+
     isNew = not tool?
     if tool is null
       publicBool = (body.public is "true")
@@ -695,6 +728,10 @@ postTool = (req, resp) ->
 
 updateUser = (req, resp) ->
   User.findByShortName req.user.real.shortName, (err, user) ->
+    if err?
+      resp.send 500, error: err
+      return
+
     console.log "updateUser body is", req.body
     # The attributes that we can set via this API.
     canSet = ['acceptedTerms', 'canBeReally', 'datasetDisplay']
@@ -843,6 +880,10 @@ listUsers = (req, resp) ->
 
 addSSHKey = (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->
+    if err?
+      resp.send 500, error: err
+      return
+
     if not req.body.key?
       return resp.send 400, error: 'Specify key'
     user.sshKeys.push req.body.key.trim()
@@ -855,6 +896,10 @@ addSSHKey = (req, resp) ->
 
 listSSHKeys = (req, resp) ->
   User.findByShortName req.user.effective.shortName, (err, user) ->
+    if err?
+      resp.send 500, error: err
+      return
+
     resp.send 200, user.sshKeys
 
 googleAnalytics = (req, resp, next) ->
@@ -964,11 +1009,19 @@ sendIntercomTag = (req, resp) ->
 switchContextIfRequiredAndAllowed = (req, resp, next) ->
   datasetID = req.params[0]
   Dataset.findOneById datasetID, (err, dataset) ->
+    if err?
+      resp.status 500
+      return
+
     if dataset
       if dataset.user == req.user.effective.shortName
         return next()
       else
         User.findByShortName dataset.user, (err, switchingTo) ->
+          if err?
+            resp.status 500
+            return
+
           if switchingTo
             if switchingTo?.canBeReally and req.user.real.shortName in switchingTo.canBeReally
               req.user.effective = getSessionUser switchingTo

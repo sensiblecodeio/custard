@@ -3,6 +3,6 @@
 /shared/js/
 /chromedriver.log
 /mongo
-/chromedriver
+/chromedriver_*
 /selenium-*.jar
 /request.csv

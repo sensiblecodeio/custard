@@ -1,7 +1,6 @@
 _ = require 'underscore'
 mongoose = require 'mongoose'
 async = require 'async'
-nibbler = require 'nibbler'
 request = require 'request'
 randtoken = require 'rand-token'
 
@@ -151,8 +150,7 @@ class Box extends ModelBase
         callback null, box
 
   @_generateBoxName: ->
-    r = Math.random() * Math.pow(10,9)
-    return nibbler.b32encode(String.fromCharCode(r>>24,(r>>16)&0xff,(r>>8)&0xff,r&0xff)).replace(/[=]/g,'').toLowerCase()
+    return randtoken.generate(7).toLowerCase()
 
   @generateUid: ->
     max = 429496729

@@ -855,6 +855,7 @@ addView = (req, resp) ->
   Dataset.findOneById req.params.dataset, (err, dataset) ->
     if err?
       resp.send 500, error: "Error creating view: #{err}"
+      return
     if not dataset
       return resp.send 404, error: "Error creating view: #{req.params.dataset} not found"
 

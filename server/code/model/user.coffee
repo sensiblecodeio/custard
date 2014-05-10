@@ -280,23 +280,22 @@ class exports.User extends ModelBase
         User.findByShortName defaultContext, (err, context) ->
           if context
             user.defaultContext = defaultContext
-            callback null, user
+            return callback null, user
           else
-            callback "Can't find specified default context", null
+            return callback "Can't find specified default context", null
       else
-        callback null, user
+        return callback null, user
 
     checkDefaultContextExists opts.newUser.defaultContext, newUser, (err, newUser) ->
       if err
         # there was a problem looking up the defaultContext
-        callback err, null
-        return
+        return callback err, null
 
       # newUser settings are ready: save them into a new model
       new User(newUser).save (err) ->
         if err?
           err.action = 'save'
-          callback err, null
+          return callback err, null
 
         User.findByShortName newUser.shortName, (err, user) ->
           if user?
@@ -319,18 +318,18 @@ class exports.User extends ModelBase
                 userobj.token = token
                 if err?
                   err.action = 'token'
-                  callback err, null
+                  return callback err, null
                 else
-                  callback null, userobj
+                  return callback null, userobj
               else
                 email.signUpEmail user, token, (err) ->
                   if err?
                     err.action = "email"
-                    callback err, null
+                    return callback err, null
                   else
-                    callback null, userobj
+                    return callback null, userobj
           else
-            callback "Can't find user", null
+            return callback "Can't find user", null
 
   @findCanBeReally: (shortName, callback) ->
     # find and return all user objects where

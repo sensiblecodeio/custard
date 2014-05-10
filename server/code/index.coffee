@@ -469,15 +469,12 @@ addUser = (req, resp) ->
   , (err, user) ->
     if err?
       if err.action is 'save' and /duplicate key/.test err.err
-        err =
-          code: "username-duplicate"
-          error: "Username is already taken"
-      if not err.error
-        err.error = err.err
-      console.warn err
-      return resp.json 500, err
-    else
-      return resp.json 201, user
+        return resp.json 400, error: "Username is already taken"
+      else
+        error = err
+      return resp.json 500, error: error
+
+    return resp.json 201, user
 
 postStatus = (req, resp) ->
   console.log "POST /api/status/ from ident #{req.ident}"

@@ -169,7 +169,7 @@ describe 'API', ->
               done()
 
           it 'creates a new tool', ->
-            @response.should.have.status 201
+            @response.statusCode.should.equal 201
 
           it 'records a "created" timestamp', ->
             should.exist @tool.created
@@ -206,7 +206,7 @@ describe 'API', ->
                 done()
 
             it 'updates the tool', ->
-              @response.should.have.status 200
+              @response.statusCode.should.equal 200
 
             it 'is still private', ->
               @tool.public.should.be.false
@@ -236,7 +236,7 @@ describe 'API', ->
               done()
 
           it 'creates a new tool', ->
-            @response.should.have.status 201
+            @response.statusCode.should.equal 201
 
           it 'is private', ->
             @tool.public.should.be.false
@@ -256,7 +256,7 @@ describe 'API', ->
               done()
 
           it 'creates a new tool', ->
-            @response.should.have.status 201
+            @response.statusCode.should.equal 201
 
           it 'is public', ->
             @tool.public.should.be.true
@@ -322,7 +322,7 @@ describe 'API', ->
 
         context 'POST /api/:user/datasets', ->
           it 'creates a new dataset', ->
-            @response.should.have.status 200
+            @response.statusCode.should.equal 200
 
           it 'returns the newly created dataset', ->
             should.exist @dataset.box
@@ -358,12 +358,12 @@ describe 'API', ->
 
           it "404 errors if the dataset doesn't exist", (done) ->
             request.get "#{helper.base_url}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
-              res.should.have.status 404
+              res.statusCode.should.equal 404
               done()
 
           it "403 errors if the user doesn't exist", (done) ->
             request.get "#{helper.base_url}/api/MRINVISIBLE/datasets/#{@dataset.box}", (err, res) ->
-              res.should.have.status 403
+              res.statusCode.should.equal 403
               done()
 
           context 'I create some more', ->
@@ -373,7 +373,7 @@ describe 'API', ->
 
             it "doesn't let me create the 4th one", (done) ->
               createDatasets 1, (err, res, body) ->
-                res.should.have.status 402
+                res.statusCode.should.equal 402
                 done()
 
            context "I try to create a dataset with a tool I don't have access to", ->
@@ -387,7 +387,7 @@ describe 'API', ->
                  done()
 
              it "doesn't let me create the dataset", ->
-               @response.should.have.status 402
+               @response.statusCode.should.equal 402
 
         describe 'Views', ->
           context 'when I create a view on a dataset', ->
@@ -407,7 +407,7 @@ describe 'API', ->
 
             context 'POST /api/:user/datasets/<dataset>/views', ->
               it 'creates a new dataset', ->
-                @response.should.have.status 200
+                @response.statusCode.should.equal 200
 
               it 'returns the newly created view', ->
                 should.exist @view.box
@@ -428,7 +428,7 @@ describe 'API', ->
                 , (err, res, body) =>
                   @response = res
                   should.exist @response
-                  @response.should.have.status 404
+                  @response.statusCode.should.equal 404
                   done()
 
 
@@ -439,7 +439,7 @@ describe 'API', ->
               form:
                 displayName: 'Cheese'
             , (err, res) =>
-              res.should.have.status 200
+              res.statusCode.should.equal 200
               request.get "#{helper.base_url}/api/#{@user}/datasets/#{@dataset.box}", (err, res) =>
                 @dataset = parseJSON res.body
                 'Cheese'.should.equal @dataset.displayName
@@ -452,7 +452,7 @@ describe 'API', ->
               form:
                 user: @newowner
             , (err, res) =>
-              res.should.have.status 200
+              res.statusCode.should.equal 200
               done(err)
 
           it "that dataset doesn't appear in my list of datasets any more", (done) ->
@@ -462,7 +462,7 @@ describe 'API', ->
 
           it "404 errors if the dataset doesn't exist", (done) ->
             request.put "#{helper.base_url}/api/#{@user}/datasets/NOTEXIST", (err, res) ->
-              res.should.have.status 404
+              res.statusCode.should.equal 404
               done()
 
       context 'GET: /api/:user/datasets', ->
@@ -497,7 +497,7 @@ describe 'API', ->
             form:
               acceptedTerms: 7
           , (err, res, body) =>
-            res.should.have.status 200
+            res.statusCode.should.equal 200
             obj = parseJSON body
             obj.acceptedTerms.should.equal 7
             done err
@@ -518,7 +518,7 @@ describe 'API', ->
             form:
               canBeReally: ["test", "teststaff"]
             , (err, res) ->
-              res.should.have.status 200
+              res.statusCode.should.equal 200
               obj = parseJSON res.body
               obj.canBeReally.should.eql ['test', 'teststaff']
               done err
@@ -556,7 +556,7 @@ describe 'API', ->
             # This relies on the fact that there is a box with
             # the same name as your userid. Add one to
             # fixtures.js if there isn't one already.
-            res.should.have.status 200
+            res.statusCode.should.equal 200
             obj = parseJSON body
             cb err
 
@@ -606,7 +606,7 @@ describe 'API', ->
             done err
 
         it 'returns a 404 (the token is unknown)', ->
-          @res.should.have.status 404
+          @res.statusCode.should.equal 404
 
   describe 'Switching', ->
     context 'GET /switch/ickletest', ->
@@ -633,7 +633,7 @@ describe 'API', ->
             uri: "#{helper.base_url}/switch/ickletest"
             followRedirect: false
           , (err, res) ->
-            res.should.have.status 302
+            res.statusCode.should.equal 302
             done()
 
     context 'GET /api/user', ->
@@ -656,7 +656,7 @@ describe 'API', ->
 
       it 'forces me into the testersonltd context', (done) ->
         request.get "#{helper.base_url}/api/testersonltd/datasets", (err, res) ->
-          res.should.have.status 200
+          res.statusCode.should.equal 200
           done err
 
     context "When we login as ehg", ->
@@ -667,7 +667,7 @@ describe 'API', ->
 
       it "doesn't force me into a different context", (done) ->
         request.get "#{helper.base_url}/api/ehg/datasets", (err, res) ->
-          res.should.have.status 200
+          res.statusCode.should.equal 200
           done err
 
   describe 'Logging in as a different user', ->
@@ -704,7 +704,7 @@ describe 'API', ->
         , (err, resp, body) =>
           obj = parseJSON body
           @token = obj.token
-          resp.should.have.status 201
+          resp.statusCode.should.equal 201
           done(err)
 
       it '... and I can set the password', (done) ->
@@ -713,7 +713,7 @@ describe 'API', ->
           form:
             password: @newPassword
         , (err, resp, body) ->
-          resp.should.have.status 200
+          resp.statusCode.should.equal 200
           done(err)
 
   describe "Private tools", ->
@@ -862,7 +862,7 @@ describe 'API', ->
             done(err)
 
         it "returns a success", ->
-          @resp.should.have.status 200
+          @resp.statusCode.should.equal 200
 
     context "When I'm downgrading from large to medium", ->
       context 'PUT /api/:user/subscription/change/medium-ec2', ->
@@ -879,7 +879,7 @@ describe 'API', ->
             done(err)
 
         it "returns a success", ->
-          @resp.should.have.status 200
+          @resp.statusCode.should.equal 200
 
     context "When Recurly can't find my account", ->
       context 'PUT /api/:user/subscription/change/large-ec2', ->
@@ -896,4 +896,4 @@ describe 'API', ->
             done(err)
 
         it "returns a failure", ->
-          @resp.should.have.status 404
+          @resp.statusCode.should.equal 404

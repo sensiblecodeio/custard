@@ -12,7 +12,7 @@
 
 <% if @upgrade is 'largepdf': %>
 <div class="alert alert-info" style="margin-left: 20px; margin-bottom: 45px;">
-  <strong>Please upgrade your account</strong>, to be able to process large PDFs.
+  <strong>Please upgrade your account</strong> to be able to process large PDFs.
 </div>
 <% end %>
 

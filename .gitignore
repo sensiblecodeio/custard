@@ -4,5 +4,6 @@
 /chromedriver.log
 /mongo
 /chromedriver_*
+/chromedriver
 /selenium-*.jar
 /request.csv

@@ -46,6 +46,10 @@
   <% else: %>
   <a class="cta" href="/signup/datascientist">Sign Up</a>
   <% end %>
+  <ul>
+    <li>Handle large PDFs</li>
+    <li>Unlimited Twitter followers</li>
+  </ul>
 </div>
 
 <div class="plan explorer account-medium swcol">
@@ -63,6 +67,10 @@
   <% else: %>
   <a class="cta" href="/signup/explorer">Sign Up</a>
   <% end %>
+  <ul>
+    <li>Handle large PDFs</li>
+    <li>Up to 10k Twitter followers</li>
+  </ul>
 </div>
 
 <div class="plan freetrial account-free swcol">
@@ -76,5 +84,9 @@
   <% else: %>
   <a class="cta" href="/signup/freetrial">Sign Up</a>
   <% end %>
+  <ul>
+    <li>Small PDFs only</li>
+    <li>Up to 10k Twitter followers</li>
+  </ul>
 </div>
 

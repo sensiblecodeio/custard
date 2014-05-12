@@ -1213,7 +1213,7 @@ div.pricing {
 
 div.pricing .plan {
   position: relative;
-  height: 225px;
+  height: 280px;
   text-align: center;
   background-color: #ffdf5e;
   color: #330;
@@ -1258,7 +1258,7 @@ div.pricing .plan.freetrial {
   -webkit-box-shadow: none;
   box-shadow: none;
   width: 276px;
-  height: 221px;
+  height: 276px;
 }
 
 div.pricing .plan h2 {
@@ -1287,6 +1287,17 @@ div.pricing .plan p.muted {
   color: inherit;
   opacity: 0.5;
   margin-bottom: 15px;
+}
+
+div.pricing .plan ul {
+  margin: 20px 0 10px 0;
+}
+
+div.pricing .plan li {
+  list-style: none;
+  margin: 0px 20px 0px 20px;
+  font-size: 14px;
+  opacity: 0.5;
 }
 
 div.pricing .plan a {

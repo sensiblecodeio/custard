@@ -13,17 +13,4 @@ then
   test/cleaner.coffee
 fi
 
-# Consider pushing to external program.
-eval last=\${$#}
-
-if [ "$#" = "0" ]
-then
-    env mocha ${@:1:$#-1} $(find test -name '*.coffee' | sort)
-else
-    if [ -d "$last" ]
-    then
-        env mocha ${@:1:$#-1} $(find "$last" -name '*.coffee' | sort)
-    else
-        env mocha $@
-    fi
-fi
+env mocha "$@"

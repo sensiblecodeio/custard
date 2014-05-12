@@ -260,3 +260,17 @@ describe 'Pricing', ->
           text.should.match /Please upgrade your account/i
           text.should.match /your free trial has ended/i
           done()
+
+  context 'When I visit the pricing large PDFs page', ->
+    before (done) ->
+      browser.get base_url + '/pricing/largepdf', done
+
+    it 'it implores me to upgrade to process large PDFs', (done) ->
+      wd40.elementByCss '.pricing .alert', (err, element) ->
+        should.exist element
+        element.text (err, text) ->
+          text.should.match /Please upgrade your account/i
+          text.should.match /to be able to process large PDFs/i
+          done()
+
+

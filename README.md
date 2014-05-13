@@ -79,6 +79,14 @@ when you enter the directory. Briefly:
 
 ## Every time you need to develop custard
 
+If you have `foreman` installed (try `gem install foreman`)
+you can go:
+
+    foreman start
+
+If you don't have `foreman` installed you need to do a few things
+by hand:
+
     # Start a web server (best done in a new window)
     . activate # don't need to do this again if you've already done it in this terminal
     cake dev

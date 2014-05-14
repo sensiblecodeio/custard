@@ -91,7 +91,7 @@ class Box extends ModelBase
   @endpoint: (server, name) ->
     proto_server = "https://#{server}"
     if process.env.CU_BOX_SERVER
-      proto_server = "http://#{process.env.CU_BOX_SERVER}"
+      proto_server = "https://#{process.env.CU_BOX_SERVER}"
     return "#{proto_server}/#{name}"
 
   @findAllByUser: (shortName, callback) ->

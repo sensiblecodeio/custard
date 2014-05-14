@@ -305,10 +305,12 @@ describe 'API', ->
               , cb
 
           async.series functionArr, (err, res) ->
+            if err
+              callback err, res
             if res.length is 1
               callback err, res[0][0], res[0][1]
             else
-              callback res
+              callback err, res
 
         before (done) ->
           createDatasets 1,

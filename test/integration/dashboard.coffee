@@ -38,13 +38,13 @@ describe 'Dashboard', ->
       browser.elementsByCss '.dashboard h1', (err, h1s) ->
         h1s[0].text (err, text) ->
           text.should.include 'Chris Blower'
-          h1s[1].text (err, text) ->
+          h1s[3].text (err, text) ->
             text.should.include 'Ickle Test'
             done()
 
-    it 'the datasets are shown in two separate lists', (done) ->
+    it 'the datasets are shown in separate lists', (done) ->
       browser.elementsByCss '.dashboard table', (err, elements) ->
-        elements.length.should.equal 2
+        elements.length.should.equal 4
         done()
 
     it 'each dataset has an icon, name, owner, date created and status', (done) ->

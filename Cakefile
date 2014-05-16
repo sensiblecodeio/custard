@@ -45,7 +45,7 @@ task 'test', 'Run unit tests', ->
 
 task 'dev', 'start dev env', ->
   process.env.NODE_ENV = 'testing'
-  nodemon = spawn 'nodemon', ['./server/code/index.coffee']
+  nodemon = spawn 'nodemon', ['--ignore', './test', './server/code/index.coffee']
   nodemon.stdout.pipe process.stdout
   nodemon.stderr.pipe process.stderr
 

@@ -23,6 +23,8 @@ class exports.RedisClient
 
   unless /cron/.test process.env.NODE_ENV
     @client = redis.createClient 6379, process.env.REDIS_SERVER
+    @client.on "error", (err) ->
+        console.log "Redis error: '#{err}'"
 
   if /production|staging/.test process.env.NODE_ENV
     @client.auth process.env.REDIS_PASSWORD, (err) ->

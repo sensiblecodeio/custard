@@ -1,3 +1,4 @@
+require './setup_teardown'
 net = require 'net'
 helper = require './helper'
 

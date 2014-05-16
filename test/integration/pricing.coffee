@@ -1,3 +1,4 @@
+require './setup_teardown'
 should = require 'should'
 {wd40, browser, base_url, login_url, home_url, prepIntegration, mediumizeMary, enlargeLucy} = require './helper'
 

@@ -1,3 +1,4 @@
+require './setup_teardown'
 # Shared before/after functions for all integration tests
 
 {wd40, browser} = require 'wd40'

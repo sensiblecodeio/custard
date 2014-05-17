@@ -1,11 +1,14 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, login_url} = require './helper'
 
 describe 'Password reset', ->
-  prepIntegration()
 
   context 'when I forget my password on the Log In page', ->
+
+    before (done) ->
+      browser.deleteAllCookies done
+
     before (done) ->
       browser.get login_url, done
 

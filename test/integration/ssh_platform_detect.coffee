@@ -1,18 +1,15 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
 
 clickSSHButton = (done) ->
   wd40.click '#toolbar a[href$="/settings"] .dropdown-toggle', (err) ->
     wd40.click '#tool-options-menu .git-ssh', done
 
 describe 'Platform-specific SSH instructions', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', -> wd40.click '#login', ->
-        browser.get "#{base_url}/dataset/3006375731", done
+    loginAndGo "ehg", "testing", "/dataset/3006375731", done
 
   context 'when I use a Windows PC to view SSH instructions', ->
     before (done) ->

@@ -1,6 +1,6 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
 
 # Imagine the scene: a free user with a single dataset has recently upgraded.
 # She creates a new view on that dataset. Her dataset box is on the free server,
@@ -8,13 +8,9 @@ should = require 'should'
 # are passed the right boxServer values via the iframe settings hash.
 
 describe 'Tool Content', ->
-  prepIntegration()
 
   before (done) ->
-    browser.get login_url, ->
-      wd40.fill '#username', 'recentlyUpgraded', ->
-        wd40.fill '#password', 'testing', ->
-          wd40.click '#login', done
+    loginAndGo "recentlyUpgraded", "testing", "/datasets", done
 
   context "When a recently upgraded user visits an old dataset", ->
     before (done) ->

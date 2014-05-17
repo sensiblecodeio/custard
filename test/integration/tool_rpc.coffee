@@ -1,22 +1,13 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, base_url, browser, loginAndGo} = require './helper'
 
 describe 'Tool RPC', ->
-  prepIntegration()
 
   before (done) ->
-    browser.get login_url, ->
-      wd40.fill '#username', 'teststaff', ->
-        wd40.fill '#password', process.env.CU_TEST_STAFF_PASSWORD, ->
-          wd40.click '#login', done
-
-  before (done) ->
-    browser.get "#{base_url}/switch/ehg", done
+    loginAndGo 'teststaff', process.env.CU_TEST_STAFF_PASSWORD, "/switch/ehg", done
 
   context "with a freshly created test app dataset", ->
-    before (done) ->
-      browser.waitForElementByCss '.dataset-list', 4000, done
 
     before (done) ->
       wd40.click '.new-dataset', ->

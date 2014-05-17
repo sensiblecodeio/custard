@@ -1,11 +1,20 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration, mediumizeMary, enlargeLucy} = require './helper'
+{wd40, browser, base_url, mediumizeMary, enlargeLucy, loginAndGo} = require './helper'
+cleaner = require '../cleaner'
 
 describe 'Pricing', ->
-  prepIntegration()
+
+  before (done) ->
+    # TODO(pwaller): Not sure why this is needed, but it interacts with the API
+    #                tests otherwise
+    cleaner.clear_and_set_fixtures done
 
   context 'When I visit the pricing page (as a non-customer)', ->
+
+    before (done) ->
+      browser.deleteAllCookies done
+
     before (done) ->
       browser.get base_url + '/pricing', done
 
@@ -46,13 +55,7 @@ describe 'Pricing', ->
 
   context 'When I visit the pricing page (as a free user)', ->
     before (done) ->
-      browser.get login_url, ->
-        wd40.fill '#username', 'ickletest', ->
-          wd40.fill '#password', 'toottoot', ->
-            wd40.click '#login', done
-
-    before (done) ->
-      browser.get base_url + '/pricing', done
+      loginAndGo "ickletest", "toottoot", "/pricing", done
 
     it 'it shows that the free trial plan is my current plan', (done) ->
       wd40.elementByCss '.plan.freetrial .currentPlan', (err, element) ->
@@ -107,18 +110,10 @@ describe 'Pricing', ->
           done()
 
 
-    after (done) ->
-      browser.get "#{base_url}/logout", done
-
   context 'When I visit the pricing page (as a $29 user)', ->
-    before (done) ->
-      browser.get login_url, ->
-        wd40.fill '#username', 'largelucy', ->
-          wd40.fill '#password', 'testing', ->
-            wd40.click '#login', done
 
     before (done) ->
-      browser.get base_url + '/pricing', done
+      loginAndGo "largelucy", "testing", '/pricing', done
 
     it 'it shows that the data scientist plan is my current plan', (done) ->
       wd40.elementByCss '.plan.datascientist .currentPlan', (err, element) ->
@@ -171,21 +166,10 @@ describe 'Pricing', ->
               text.should.match /current plan/i
               done()
 
-    after (done) ->
-      browser.get "#{base_url}/logout", done
-
   context 'When I visit the pricing page (as a $9 user)', ->
     before (done) ->
-      browser.get login_url, ->
-        wd40.fill '#username', 'mediummary', ->
-          wd40.fill '#password', 'testing', ->
-            wd40.click '#login', done
+      loginAndGo "mediummary", "testing", '/pricing', done
 
-    before (done) ->
-      browser.get base_url + '/pricing', done
-
-    before (done) ->
-      browser.waitForElementByCss '.plan', 4000, done
 
     it 'it shows that the explorer plan is my current plan', (done) ->
       wd40.elementByCss '.plan.explorer .currentPlan', (err, element) ->

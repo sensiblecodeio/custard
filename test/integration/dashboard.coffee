@@ -1,22 +1,24 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
+cleaner = require '../cleaner'
 
 describe 'Dashboard', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', ->
-        wd40.click '#login', done
+    # TODO(pwaller): Not sure why this is needed, but it interacts with the API
+    #                tests otherwise
+    cleaner.clear_and_set_fixtures done
+
+  before (done) ->
+    loginAndGo "ehg", "testing", "/dashboard", done
 
   context 'when I visit the dashboard page', ->
     before (done) ->
-      browser.get "#{base_url}/dashboard", =>
-        browser.waitForElementByCss '.dashboard h1', 4000, =>
-          wd40.getText 'body', (err, text) =>
-            @bodyText = text
-            done()
+      browser.waitForElementByCss '.dashboard h1', 4000, 50, =>
+        wd40.getText 'body', (err, text) =>
+          @bodyText = text
+          done()
 
     it 'I see datasets from all the accounts I can switch into', (done) ->
       @bodyText.should.include 'Chris Blower'

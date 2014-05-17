@@ -1,14 +1,19 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, loginAndGo} = require './helper'
+cleaner = require '../cleaner'
 
 describe 'New view tool', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', ->
-        wd40.click '#login', done
+    # TODO(pwaller): Not sure why this is needed, but it interacts with the API
+    #                tests otherwise
+    # NOTE: It hangs trying to click "Apricot", possibly because it's in the non
+    # tial view. But I'm unsure.
+    cleaner.clear_and_set_fixtures done
+
+  before (done) ->
+    loginAndGo 'ehg', 'testing', "/datasets", done
 
   context 'when I click on an Apricot dataset', ->
     before (done) ->

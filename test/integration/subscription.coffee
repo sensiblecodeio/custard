@@ -1,9 +1,19 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, loginAndGo} = require './helper'
+cleaner = require '../cleaner'
 
 describe 'Subscription workflow for new user paying straight away', ->
-  prepIntegration()
+
+  before (done) ->
+    # TODO(pwaller): Not sure why this is needed, but it interacts with the API
+    #                tests otherwise
+    # NOTE: It hangs trying to click "Apricot", possibly because it's in the non
+    # tial view. But I'm unsure.
+    cleaner.clear_and_set_fixtures done
+
+  before (done) ->
+    browser.deleteAllCookies done
 
   before (done) ->
     browser.get base_url + '/pricing', done
@@ -69,15 +79,12 @@ describe 'Subscription workflow for new user paying straight away', ->
 
 
 describe 'Subscription workflow for free trial upgrading', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'expired-user', ->
-      wd40.fill '#password', 'testing', ->
-        wd40.click '#login', ->
-          wd40.trueURL (err, url) ->
-            url.should.include '/pricing/expired'
-            done()
+    loginAndGo "expired-user", "testing", "/datasets", ->
+      wd40.trueURL (err, url) ->
+        url.should.include '/pricing/expired'
+        done()
 
   context 'when I click the "Data Scientist" plan', ->
     before (done) ->
@@ -128,14 +135,10 @@ describe 'Subscription workflow for free trial upgrading', ->
 
 
 describe 'Editing my subscription', ->
-  prepIntegration()
 
   context 'When I log in as a paying user', ->
     before (done) ->
-      browser.get login_url, ->
-        wd40.fill '#username', 'mediummary', ->
-          wd40.fill '#password', 'testing', ->
-            wd40.click '#login', done
+      loginAndGo "mediummary", "testing", "/datasets", done
 
     context 'when I click the user menu', ->
       before (done) ->

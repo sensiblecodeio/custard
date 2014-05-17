@@ -1,6 +1,6 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
 
 mongoose = require 'mongoose'
 {User} = require 'model/user'
@@ -21,18 +21,9 @@ checkPasswordLink = (done) ->
         done()
 
 describe 'Create a normal user', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'teststaff', ->
-      wd40.fill '#password', process.env.CU_TEST_STAFF_PASSWORD, ->
-        wd40.click '#login', done
-
-  before (done) ->
-    browser.waitForElementByCss '.dataset-list', 4000, done
-
-  before (done) ->
-    browser.get "#{base_url}/create-profile", done
+    loginAndGo 'teststaff', process.env.CU_TEST_STAFF_PASSWORD, "/create-profile", done
 
   context 'When I enter new user details', ->
     before (done) ->
@@ -61,15 +52,9 @@ describe 'Create a normal user', ->
 
 
 describe 'Create a user in a corporate datahub', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'teststaff', ->
-      wd40.fill '#password', process.env.CU_TEST_STAFF_PASSWORD, ->
-        wd40.click '#login', done
-
-  before (done) ->
-    browser.get "#{base_url}/create-profile", done
+    loginAndGo 'teststaff', process.env.CU_TEST_STAFF_PASSWORD, "/create-profile", done
 
   context 'When I enter new user details, and select a default data hub', ->
     before (done) ->

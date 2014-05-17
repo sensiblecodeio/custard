@@ -1,16 +1,13 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, logout_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, home_url, loginAndGo} = require './helper'
 
 request = require 'request'
 
 describe 'Context switch (non-staff)', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'test', ->
-      wd40.fill '#password', 'testing', ->
-        wd40.click '#login', done
+    loginAndGo "test", "testing", "/datasets", done
 
   context 'when I click the user menu', ->
     before (done) ->
@@ -40,13 +37,10 @@ describe 'Context switch (non-staff)', ->
             done()
 
 describe 'Context switch (staff)', ->
-  prepIntegration()
 
   context 'When I log in as a staff member', ->
     before (done) ->
-      wd40.fill '#username', 'ehg', ->
-        wd40.fill '#password', 'testing', ->
-          wd40.click '#login', done
+      loginAndGo "ehg", "testing", "/datasets", done
 
     context 'And I try to access a normal user’s dataset directly', ->
       before (done) ->

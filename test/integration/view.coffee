@@ -1,19 +1,12 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
 
 describe 'View', ->
-  prepIntegration()
-
   randomname = "Prune graph number #{Math.random()}"
 
   before (done) ->
-    wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', ->
-        wd40.click '#login', done
-
-  before (done) ->
-    browser.waitForElementByCss '.dataset-list', 4000, done
+    loginAndGo "ehg", "testing", "/datasets", done
 
   context 'when I click on a Prune dataset then the graph of prunes view', ->
     before (done) ->

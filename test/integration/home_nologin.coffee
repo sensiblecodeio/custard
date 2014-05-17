@@ -1,9 +1,8 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, home_url, login_url} = require './helper'
 
 describe 'Home page (not logged in)', ->
-  prepIntegration()
 
   before (done) ->
     browser.deleteAllCookies done

@@ -11,15 +11,50 @@ logout_url = "#{base_url}/logout"
 
 prepIntegration = ->
   before (done) ->
-    cleaner.clear_and_set_fixtures ->
-      wd40.init ->
-        browser.get login_url, done
+    done(new Error("prepIntegration is deprecated."))
 
-  after (done) ->
-    unless process.env.BROWSER_KEEP?
-      browser.quit done
-    else
-      done()
+loginAndGo = (who, password, url, done) ->
+  # Login as `who` with `password` if we're not already `who`
+  # before navigating to `url`.
+
+  target_url = "#{base_url}#{url}"
+
+  browser.eval "window.user", (err, value) ->
+    return done(err) if err
+
+    doLogin = (cb) ->
+      browser.get login_url, ->
+        console.log "Logging in as #{who}"
+        wd40.fill '#username', who, ->
+          wd40.fill '#password', password, ->
+            wd40.click '#login', ->
+              console.log "Logged in as #{who}"
+              browser.get target_url, ->
+                console.log "I'm now at #{target_url}"
+                cb()
+
+    if value?.real?.shortName == who
+      # Already logged in as the right user, go straight there
+      # This is an optimization to avoid logging in unncessarily.
+      console.log "Already logged in"
+      browser.get target_url, ->
+        console.log "Navigated to #{target_url}"
+        browser.eval "window.location.href", (err, value) ->
+          return done(err) if err
+
+          if value != target_url
+            # We didn't make our way to the target.
+            # This could happen if the database is cleared.
+            console.log "Miss, wanted #{target_url} but got #{value}, logout/login"
+            return browser.get logout_url, -> doLogin(done)
+          done()
+      return
+
+    # console.log "Logging out because we're the wrong user"
+    # We're logged in, but the wrong user or not on the scraperwiki site.
+    # Go via the logout_url.
+    browser.get logout_url, -> doLogin(done)
+
 
 mediumizeMary = (done) ->
   # Ensures medium-mary starts on the right plan
@@ -58,3 +93,4 @@ exports.home_url = "#{base_url}/datasets"
 exports.prepIntegration = prepIntegration
 exports.mediumizeMary = mediumizeMary
 exports.enlargeLucy = enlargeLucy
+exports.loginAndGo = loginAndGo

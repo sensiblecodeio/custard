@@ -1,18 +1,12 @@
 require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, loginAndGo} = require './helper'
 
 describe 'Free Trial', ->
-  prepIntegration()
 
   context 'when I log in as a free trial user', ->
     before (done) ->
-      wd40.fill '#username', 'free-trial-user', ->
-        wd40.fill '#password', 'testing', ->
-          wd40.click '#login', done
-
-    before (done) ->
-      browser.waitForElementByCss '.dataset-list', 4000, done
+      loginAndGo 'free-trial-user', 'testing', "/datasets", done
 
     it 'should tell me "14 days left"', (done) ->
       wd40.getText '.trial a', (err, text) ->
@@ -54,13 +48,10 @@ describe 'Free Trial', ->
 
 
 describe 'Expired Free Trial', ->
-  prepIntegration()
 
   context 'when I log in as an expired free trial user', ->
     before (done) ->
-      wd40.fill '#username', 'expired-user', ->
-        wd40.fill '#password', 'testing', ->
-          wd40.click '#login', done
+      loginAndGo 'expired-user', 'testing', "/datasets", done
 
     it 'I am redirected to the pricing page', ->
       wd40.trueURL (err, url) ->
@@ -111,16 +102,10 @@ describe 'Expired Free Trial', ->
 
 
 describe 'Paid user', ->
-  prepIntegration()
 
   context 'when I log in as a paying user', ->
     before (done) ->
-      wd40.fill '#username', 'ehg', ->
-        wd40.fill '#password', 'testing', ->
-          wd40.click '#login', done
-
-    before (done) ->
-      browser.waitForElementByCss '.dataset-list', 4000, done
+      loginAndGo 'ehg', 'testing', "/datasets", done
 
     it 'should not tell me "Free trial"', (done) ->
       wd40.getText 'body', (err, text) ->

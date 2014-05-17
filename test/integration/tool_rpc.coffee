@@ -142,7 +142,7 @@ describe 'Tool RPC', ->
           text.should.not.be.empty
           done()
 
-      xit 'returns the correct tables', (done) ->
+      it 'returns the correct tables', (done) ->
         wd40.getText '#sqlMetaDataText', (err, text) =>
           obj = JSON.parse text
           should.exist obj?.table?.SurLeTable

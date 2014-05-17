@@ -15,7 +15,7 @@ describe 'Dashboard', ->
 
   context 'when I visit the dashboard page', ->
     before (done) ->
-      browser.waitForElementByCss '.dashboard h1', 4000, 50, =>
+      browser.waitForElementByCss '.dashboard h1', 4000, =>
         wd40.getText 'body', (err, text) =>
           @bodyText = text
           done()

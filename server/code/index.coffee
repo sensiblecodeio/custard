@@ -279,6 +279,8 @@ checkStaff = (req, resp, next) ->
 
 # :todo: more flexible implementation that checks group membership and stuff
 checkSwitchUserRights = (req, res, next) ->
+  if not req.user
+    return res.send 401, error: "Not logged in"
   switchingTo = req.params.username
   console.log "SWITCH #{req.user.effective.shortName} -> #{switchingTo}"
   User.findByShortName switchingTo, (err, user) ->

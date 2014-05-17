@@ -563,7 +563,8 @@ describe 'API', ->
             obj = parseJSON body
             cb err
 
-        it 'lets me POST to the status API endpoint (and is debounced)', (done) ->
+        # TODO(pwaller): Figure out a better test
+        xit 'lets me POST to the status API endpoint (and is debounced)', (done) ->
           # Debounce meaning rate limit requests
           if @skip
             return done new Error "Skipped because no local identd"

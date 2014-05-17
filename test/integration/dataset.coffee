@@ -67,7 +67,7 @@ describe 'Dataset', ->
         wd40.elementByCss '#tool-options-menu .api-endpoints', (err, el) ->
           done(err)
 
-    context 'when I click the API endpoints link', (done) ->
+    (if process.env.SKIP_MODAL then xcontext else context) 'when I click the API endpoints link', (done) ->
       before (done) ->
         wd40.click '#tool-options-menu .api-endpoints', done
 

@@ -134,7 +134,7 @@ describe 'Pricing', ->
           text.should.match /downgrade/i
           done()
 
-    context 'when I click the $9 downgrade button', (done) ->
+    (if process.env.SKIP_MODAL then xcontext else context) 'when I click the $9 downgrade button', (done) ->
       before (done) ->
         enlargeLucy done
 
@@ -185,7 +185,7 @@ describe 'Pricing', ->
           text.should.match /upgrade/i
           done()
 
-    context 'when I click the $29 upgrade button', (done) ->
+    (if process.env.SKIP_MODAL then xcontext else context) 'when I click the $29 upgrade button', (done) ->
       before (done) ->
         mediumizeMary done
 

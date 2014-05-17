@@ -6,7 +6,10 @@ clickSSHButton = (done) ->
   wd40.click '#toolbar a[href$="/settings"] .dropdown-toggle', (err) ->
     wd40.click '#tool-options-menu .git-ssh', done
 
-describe 'Platform-specific SSH instructions', ->
+
+# TODO(pwaller): Conditionally disable modal depending on whether we're in
+# an environment that supports it.
+(if process.env.SKIP_MODAL then xdescribe else describe) 'Platform-specific SSH instructions', ->
 
   before (done) ->
     loginAndGo "ehg", "testing", "/dataset/3006375731", done

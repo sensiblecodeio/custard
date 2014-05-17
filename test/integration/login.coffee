@@ -134,56 +134,6 @@ describe 'Failed login', ->
           text.should.include 'Incorrect password'
           done()
 
-# TODO(pwaller) This test interferes with the 'switch' test which relies
-# on the user having the same password. It can be moved below it, or they
-# should be arranged so that they don't interfere, e.g, by ensuring the
-# password is correct in the latter test.
-# TODO(pwaller): Belongs with password reset
-xdescribe 'Password', ->
-
-  before (done) ->
-    browser.deleteAllCookies done
-
-  context 'when I use the password reset link', ->
-    before (done) ->
-      browser.get "#{base_url}/set-password/339231725782156", done
-
-    it 'shows my username', (done) ->
-      wd40.getText '#content', (err, text) ->
-        text.should.include 'ickletest'
-        done()
-
-    it 'shows a page with a password field', (done) ->
-      browser.elementByCssIfExists '#password', (err, element) ->
-        should.exist element
-        done()
-
-    context 'when I fill in my new password', ->
-      before (done) ->
-        wd40.fill '#password', 'testtest', ->
-          wd40.click '#content .btn-primary', done
-
-      it 'I am shown my datasets', (done) ->
-        browser.waitForElementByCss '.dataset-list', 4000, ->
-          wd40.getText '#subnav-path', (err, text) ->
-            text.should.include 'Ickle Test’s data hub'
-            done()
-
-  context 'when I use the password reset link (as a corporate datahub user)', ->
-    before (done) ->
-      browser.get "#{base_url}/set-password/102937462019837", done
-
-    context 'when I fill in my new password', ->
-      before (done) ->
-        wd40.fill '#password', 'testtest', ->
-          wd40.click '#content .btn-primary', done
-
-      it 'I am shown my company\'s datasets', (done) ->
-        browser.waitForElementByCss '.dataset-list', 4000, ->
-          wd40.getText '#subnav-path', (err, text) ->
-            text.should.include 'Testerson & Sons Ltd’s data hub'
-            done()
-
 
 describe 'Switch', ->
 

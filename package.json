@@ -52,7 +52,7 @@
     "test": "bash -c '. ./activate && { redis-server & mocha test/unit ; }'"
   },
   "devDependencies": {
-    "mocha": "1.11.0",
+    "mocha": "~1.18.0",
     "mkdirp": "~0.3.4",
     "should": "~3.1.2",
     "sinon": "~1.9.1",

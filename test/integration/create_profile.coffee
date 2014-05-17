@@ -73,7 +73,7 @@ describe 'Create a user in a corporate datahub', ->
   context 'When I enter new user details, and select a default data hub', ->
     before (done) ->
       wd40.click 'option[value="free-trial"]', ->
-        wd40.fill '#displayname', 'John Smith', ->
+        wd40.fill '#displayname', 'John Smith the second', ->
           wd40.fill '#email', 'john@example.com', ->
             wd40.fill '#defaultcontext', 'testersonltd', ->
               wd40.click '#create-profile', ->
@@ -82,9 +82,9 @@ describe 'Create a user in a corporate datahub', ->
     it 'it gives me a link where the user can set their password', checkPasswordLink
 
     it 'it has saved the right user details to the database', (done) ->
-      User.findByShortName 'johnsmith', (err, user) =>
+      User.findByShortName 'johnsmiththesecond', (err, user) =>
         should.exist user
-        user.displayName.should.equal 'John Smith'
+        user.displayName.should.equal 'John Smith the second'
         user.email.should.eql ['john@example.com']
         user.should.have.property 'defaultContext'
         user.defaultContext.should.equal 'testersonltd'
@@ -93,5 +93,5 @@ describe 'Create a user in a corporate datahub', ->
 
     it 'it has put the new user into the corporate datahub', (done) ->
       User.findByShortName 'testersonltd', (err, company) =>
-        company.canBeReally.should.include 'johnsmith'
+        company.canBeReally.should.include 'johnsmiththesecond'
         done()

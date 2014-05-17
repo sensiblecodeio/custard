@@ -24,28 +24,22 @@ loginAndGo = (who, password, url, done) ->
 
     doLogin = (cb) ->
       browser.get login_url, ->
-        console.log "Logging in as #{who}"
         wd40.fill '#username', who, ->
           wd40.fill '#password', password, ->
             wd40.click '#login', ->
-              console.log "Logged in as #{who}"
               browser.get target_url, ->
-                console.log "I'm now at #{target_url}"
                 cb()
 
     if value?.real?.shortName == who
       # Already logged in as the right user, go straight there
       # This is an optimization to avoid logging in unncessarily.
-      console.log "Already logged in"
       browser.get target_url, ->
-        console.log "Navigated to #{target_url}"
         browser.eval "window.location.href", (err, value) ->
           return done(err) if err
 
           if value != target_url
             # We didn't make our way to the target.
             # This could happen if the database is cleared.
-            console.log "Miss, wanted #{target_url} but got #{value}, logout/login"
             return browser.get logout_url, -> doLogin(done)
           done()
       return

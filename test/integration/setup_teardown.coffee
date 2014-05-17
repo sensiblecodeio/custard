@@ -1,4 +1,5 @@
 require './setup_teardown'
+{parallel} = require 'async'
 cleaner = require '../cleaner'
 {wd40, browser} = require 'wd40'
 
@@ -8,12 +9,17 @@ logout_url = "#{base_url}/logout"
 
 before (done) ->
     console.log "[scraperwiki global before]"
-    cleaner.clear_and_set_fixtures ->
-      console.log "Cleared and set fixtures"
-      wd40.init ->
-        browser.get login_url, done
+
+    parallel [
+      (cb) ->
+        cleaner.clear_and_set_fixtures ->
+          cb()
+      (cb) ->
+        wd40.init ->
+          browser.get base_url, ->
+            cb()
+    ], done
 
 after (done) ->
     console.log "[scraperwiki global after]"
     browser.quit done
-    # done()

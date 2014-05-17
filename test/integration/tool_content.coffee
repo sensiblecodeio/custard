@@ -46,7 +46,7 @@ describe 'Tool Content', ->
       should.exist @settingsHash.source.url
 
     it 'the source box url is on the free server', =>
-      @settingsHash.source.url.should.match /^http:\/\/free-server/
+      @settingsHash.source.url.should.match /^https?:\/\/free-server/
 
   context "When the user visits a recently created view on a different server", ->
     before (done) ->
@@ -80,7 +80,7 @@ describe 'Tool Content', ->
       should.exist @settingsHash.target.url
 
     it 'the target box url is on the free server', =>
-      @settingsHash.target.url.should.match /^http:\/\/free-server/
+      @settingsHash.target.url.should.match /^https?:\/\/free-server/
 
     it 'iframe hash includes a source box name', =>
       should.exist @settingsHash.source.box
@@ -92,5 +92,5 @@ describe 'Tool Content', ->
       should.exist @settingsHash.source.url
 
     it 'the source box url is on the paid server', =>
-      @settingsHash.source.url.should.match /^http:\/\/medium-server/
+      @settingsHash.source.url.should.match /^https?:\/\/medium-server/
 

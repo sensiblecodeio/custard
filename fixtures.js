@@ -283,7 +283,7 @@ exports.tools = [{
     displayName: "View source"
   }
 }, {
-  // XXX This tool is now archived, we should change it to datatables-view-tool
+  // TODO(frabcus): This tool is now archived, we should change it to datatables-view-tool
   name: "view-data",
   public: true,
   type: "view",

@@ -98,17 +98,6 @@ class exports.User extends ModelBase
       @password = hash
       @save callback
 
-  setDiskQuotasForPlan: (callback) ->
-    # Find all their boxes
-    Box.findAllByUser @shortName, (err, boxes) =>
-      if err
-        return callback err, null
-      # set quota on each box. Parallel overwhelms gand.
-      async.eachSeries boxes, (box, next) =>
-        Plan.setDiskQuota box, @accountLevel, next
-      , ->
-        callback null, true
-
   setAccountLevel: (plan, callback) ->
     @accountLevel = plan
     @save callback

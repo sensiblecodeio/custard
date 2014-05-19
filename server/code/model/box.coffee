@@ -127,6 +127,7 @@ class Box extends ModelBase
     box.save (err) ->
       if err?
         return callback err, null
+        
       # The URI we need should have "box" between the server name and the
       # box name. Bit tricky to do. :todo: make better (by fixing cobalt?).
       uri = "#{Box.endpoint server, boxName}"
@@ -135,6 +136,7 @@ class Box extends ModelBase
       uri.splice 3, 0, 'box'
       uri = uri.join '/'
       console.log "BOX CREATE posting to #{uri}"
+
       request.post
         uri: uri
         form:
@@ -145,8 +147,6 @@ class Box extends ModelBase
           return callback err, null
         if res.statusCode != 200
           return callback body, null
-        Plan.setDiskQuota box, user.accountLevel, (err) ->
-          console.warn "setDiskQuota on #{box.name} error: #{err}"
         callback null, box
 
   @_generateBoxName: ->

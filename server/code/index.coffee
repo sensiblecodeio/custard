@@ -597,7 +597,6 @@ logout = (req, resp) ->
 listTools = (req, resp) ->
   #console.log "listTools real:", req.user.real.shortName, "effective:", req.user.effective.shortName
   Tool.findForUser req.user.effective.shortName, (err, tools) ->
-    console.log "API about to return"
     resp.send 200, tools
 
 postTool = (req, resp) ->

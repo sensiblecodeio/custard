@@ -1,4 +1,3 @@
-require './setup_teardown'
 {parallel} = require 'async'
 cleaner = require '../cleaner'
 {wd40, browser} = require 'wd40'

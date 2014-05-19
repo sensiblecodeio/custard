@@ -1,3 +1,5 @@
+require './setup_teardown'
+
 fakeWindow = ->
   {jsdom} = require 'jsdom'
 

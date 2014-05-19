@@ -101,8 +101,8 @@ We love them.
 First, download Selenium Server and download and unzip Chromedriver, and put
 them in your custard directory or the next level up:
 
-- https://code.google.com/p/selenium/downloads/list
-- https://code.google.com/p/chromedriver/downloads/list
+- http://selenium-release.storage.googleapis.com/index.html
+- http://chromedriver.storage.googleapis.com/index.html 
 
 If you're wondering about versions, right now we're having luck with:
 

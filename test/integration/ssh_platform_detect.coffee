@@ -1,17 +1,23 @@
+require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
+cleaner = require '../cleaner'
 
 clickSSHButton = (done) ->
   wd40.click '#toolbar a[href$="/settings"] .dropdown-toggle', (err) ->
     wd40.click '#tool-options-menu .git-ssh', done
 
-describe 'Platform-specific SSH instructions', ->
-  prepIntegration()
+
+# TODO(pwaller): Conditionally disable modal depending on whether we're in
+# an environment that supports it.
+(if process.env.SKIP_MODAL then xdescribe else describe) 'Platform-specific SSH instructions', ->
 
   before (done) ->
-    wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', -> wd40.click '#login', ->
-        browser.get "#{base_url}/dataset/3006375731", done
+    # Needed so that SSH keys are deleted
+    cleaner.clear_and_set_fixtures done
+
+  before (done) ->
+    loginAndGo "ehg", "testing", "/dataset/3006375731", done
 
   context 'when I use a Windows PC to view SSH instructions', ->
     before (done) ->
@@ -87,3 +93,4 @@ describe 'Platform-specific SSH instructions', ->
 
     it 'the modal window shows me the commands I should run', =>
       @modalTextContent.should.include 'xclip -sel clip < ~/.ssh/id_rsa.pub'
+

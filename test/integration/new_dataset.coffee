@@ -1,13 +1,11 @@
+require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, loginAndGo} = require './helper'
 
 describe 'New dataset tool', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', ->
-        wd40.click '#login', done
+    loginAndGo 'ehg', 'testing', "/datasets", done
 
   before (done) ->
     browser.waitForElementByCss '.dataset-list', 4000, done

@@ -13,7 +13,6 @@ fakeWindow = ->
   global.Backbone = window.Backbone = require 'backbone'
   global.BackboneRelational = window.BackboneRelational = require 'backbone-relational'
   global.Backbone.$ = global.$
-  global.Nibbler = require 'nibbler'
 
   # Disable BR warnings we don't care about if we're unit testing
   #global.Backbone.Relational.showWarnings = false

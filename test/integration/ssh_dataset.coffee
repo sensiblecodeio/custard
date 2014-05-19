@@ -1,16 +1,17 @@
+require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
 
 clickSSHButton = (done) ->
   wd40.click '#toolbar a[href$="/settings"] .dropdown-toggle', (err) ->
     wd40.click '#tool-options-menu .git-ssh', done
 
-describe 'Dataset SSH Details', ->
-  prepIntegration()
+# TODO(pwaller): Conditionally disable modal depending on whether we're in
+# an environment that supports it.
+(if process.env.SKIP_MODAL then xdescribe else describe) 'Dataset SSH Details', ->
 
   before (done) ->
-    wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', -> wd40.click '#login', done
+    loginAndGo "ehg", "testing", "/datasets", done
 
   context 'when I click on an Apricot dataset', ->
     before (done) ->

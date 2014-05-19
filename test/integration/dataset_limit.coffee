@@ -1,16 +1,11 @@
+require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
 
 describe '3 dataset limit for free users', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'mrgreedy', ->
-      wd40.fill '#password', 'testing', ->
-        wd40.click '#login', done
-
-  before (done) ->
-    browser.waitForElementByCss '.dataset-list', 4000, done
+    loginAndGo "mrgreedy", "testing", "/datasets", done
 
   context 'when I click the "new dataset" button', ->
     before (done) ->

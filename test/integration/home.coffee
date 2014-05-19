@@ -1,16 +1,17 @@
+require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
+cleaner = require '../cleaner'
 
 describe 'Home page (logged in)', ->
-  prepIntegration()
 
   before (done) ->
-    wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', ->
-        wd40.click '#login', done
+    # TODO(pwaller): Not sure why this is needed, but it interacts with the API
+    #                tests otherwise
+    cleaner.clear_and_set_fixtures done
 
   before (done) ->
-    browser.waitForElementByCss '.dataset-list', 4000, done
+    loginAndGo 'ehg', 'testing', "/datasets", done
 
   it 'contains the scraperwiki logo', (done) ->
     wd40.getText '#logo', (err, h) ->

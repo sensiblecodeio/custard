@@ -1,23 +1,25 @@
+require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, logout_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
+cleaner = require '../cleaner'
 
 describe 'Dataset', ->
-  prepIntegration()
-
   randomname = "New favourite number is #{Math.random()}"
 
   before (done) ->
-    wd40.fill '#username', 'ehg', ->
-      wd40.fill '#password', 'testing', ->
-        wd40.click '#login', done
+    # TODO(pwaller): Not sure why this is needed, but it interacts with the API
+    #                tests otherwise
+    cleaner.clear_and_set_fixtures done
 
   context 'when I click on an Apricot dataset', ->
     before (done) ->
+      loginAndGo "ehg", "testing", "/datasets", done
+
+    before (done) ->
       # wait for tiles to fade in
-      setTimeout ->
-        wd40.elementByPartialLinkText 'Apricot', (err, link) ->
-          link.click done
-      , 500
+      wd40.elementByPartialLinkText 'Apricot', (err, link) ->
+        return done(err) if err
+        link.click done
 
     it 'takes me to the Apricot dataset page', (done) ->
       wd40.trueURL (err, result) ->
@@ -65,7 +67,7 @@ describe 'Dataset', ->
         wd40.elementByCss '#tool-options-menu .api-endpoints', (err, el) ->
           done(err)
 
-    context 'when I click the API endpoints link', (done) ->
+    (if process.env.SKIP_MODAL then xcontext else context) 'when I click the API endpoints link', (done) ->
       before (done) ->
         wd40.click '#tool-options-menu .api-endpoints', done
 
@@ -163,15 +165,17 @@ describe 'Dataset', ->
 
   context "When I hide the Prune dataset", ->
     before (done) ->
-      browser.get home_url, =>
-        setTimeout =>
-          wd40.elementByPartialLinkText 'Prune', (err, dataset) =>
-            @dataset = dataset
-            browser.moveTo @dataset, =>
-              @dataset.elementByCss '.hide', (err, hide) ->
-                wd40.waitForVisible hide, (err) ->
-                  hide.click done
-        , 500
+      loginAndGo "ehg", "testing", "/datasets", done
+
+    before (done) ->
+      setTimeout =>
+        wd40.elementByPartialLinkText 'Prune', (err, dataset) =>
+          @dataset = dataset
+          browser.moveTo @dataset, =>
+            @dataset.elementByCss '.hide', (err, hide) ->
+              wd40.waitForVisible hide, (err) ->
+                hide.click done
+      , 500
 
     it 'shows an undo button', (done) ->
       @dataset.text (err, text) ->
@@ -195,7 +199,7 @@ describe 'Dataset', ->
 
   context "When I click on the Prune dataset", ->
     before (done) ->
-      browser.get home_url, =>
+      loginAndGo "ehg", "testing", "/datasets", ->
         setTimeout =>
           wd40.elementByPartialLinkText 'Prune', (err, dataset) =>
             dataset.click done
@@ -238,7 +242,7 @@ describe 'Dataset', ->
 
   context "When I go to a dataset that was previously deleted", ->
     before (done) ->
-      browser.get "#{base_url}/dataset/4443057115", done
+      loginAndGo "ehg", "testing", "/dataset/4443057115", done
 
     it 'shows a "dataset deleted" message', (done) ->
       wd40.getText 'body', (err, text) ->
@@ -252,7 +256,7 @@ describe 'Dataset', ->
 
   context "When I go to a dataset URL that does not exist", ->
     before (done) ->
-      browser.get "#{base_url}/dataset/doesnotexist", done
+      loginAndGo "ehg", "testing", "/dataset/doesnotexist", done
 
     it 'shows a not found error', (done) ->
       wd40.getText 'body', (err, text) ->
@@ -261,16 +265,7 @@ describe 'Dataset', ->
 
   context "When I go to a dataset in somebody else’s data hub, and I’m not staff", ->
     before (done) ->
-      browser.get logout_url, done
-
-    before (done) ->
-      browser.get login_url, ->
-        wd40.fill '#username', 'test', ->
-          wd40.fill '#password', 'testing', ->
-            wd40.click '#login', done
-
-    before (done) ->
-      browser.get "#{base_url}/dataset/1057304856", done
+      loginAndGo "test", "testing", "/dataset/1057304856", done
 
     it 'shows a not found error', (done) ->
       wd40.getText 'body', (err, text) ->

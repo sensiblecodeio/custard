@@ -1,5 +1,6 @@
+require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
 
 # Imagine the scene: a free user with a single dataset has recently upgraded.
 # She creates a new view on that dataset. Her dataset box is on the free server,
@@ -7,13 +8,9 @@ should = require 'should'
 # are passed the right boxServer values via the iframe settings hash.
 
 describe 'Tool Content', ->
-  prepIntegration()
 
   before (done) ->
-    browser.get login_url, ->
-      wd40.fill '#username', 'recentlyUpgraded', ->
-        wd40.fill '#password', 'testing', ->
-          wd40.click '#login', done
+    loginAndGo "recentlyUpgraded", "testing", "/datasets", done
 
   context "When a recently upgraded user visits an old dataset", ->
     before (done) ->
@@ -49,7 +46,7 @@ describe 'Tool Content', ->
       should.exist @settingsHash.source.url
 
     it 'the source box url is on the free server', =>
-      @settingsHash.source.url.should.match /^http:\/\/free-server/
+      @settingsHash.source.url.should.match /^https?:\/\/free-server/
 
   context "When the user visits a recently created view on a different server", ->
     before (done) ->
@@ -83,7 +80,7 @@ describe 'Tool Content', ->
       should.exist @settingsHash.target.url
 
     it 'the target box url is on the free server', =>
-      @settingsHash.target.url.should.match /^http:\/\/free-server/
+      @settingsHash.target.url.should.match /^https?:\/\/free-server/
 
     it 'iframe hash includes a source box name', =>
       should.exist @settingsHash.source.box
@@ -95,5 +92,5 @@ describe 'Tool Content', ->
       should.exist @settingsHash.source.url
 
     it 'the source box url is on the paid server', =>
-      @settingsHash.source.url.should.match /^http:\/\/medium-server/
+      @settingsHash.source.url.should.match /^https?:\/\/medium-server/
 

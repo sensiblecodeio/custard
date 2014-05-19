@@ -1,21 +1,18 @@
+require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, base_url, home_url, loginAndGo} = require './helper'
 
 request = require 'request'
 
 describe 'Login after introduction of Terms & Conditions', ->
-  prepIntegration()
 
   context 'when I log in after a long time away', ->
+
     before (done) ->
-      browser.get login_url, done
+      browser.deleteAllCookies done
+
     before (done) ->
-      wd40.fill '#username', 'mrlazy', ->
-        wd40.fill '#password', 'testing', ->
-          wd40.click '#login', ->
-            setTimeout ->
-              done()
-            , 500
+      loginAndGo "mrlazy", "testing", "/datasets", done
 
     it 'an alert bar asks me to agree to the new terms & conditions', (done) ->
       wd40.getText 'body', (err, text) ->

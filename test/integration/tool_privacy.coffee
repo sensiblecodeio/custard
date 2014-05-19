@@ -1,15 +1,12 @@
+require './setup_teardown'
 should = require 'should'
-{wd40, browser, base_url, login_url, logout_url, home_url, prepIntegration} = require './helper'
+{wd40, browser, loginAndGo} = require './helper'
 
 describe 'Tool Privacy', ->
-  prepIntegration()
 
   context 'When ickletest (a free user) wants to make a new dataset', ->
     before (done) ->
-      browser.get login_url, ->
-        wd40.fill '#username', 'ickletest', ->
-          wd40.fill '#password', 'toottoot', ->
-            wd40.click '#login', done
+      loginAndGo "ickletest", "toottoot", "/datasets", done
 
     before (done) ->
       wd40.click '.new-dataset', =>
@@ -28,13 +25,7 @@ describe 'Tool Privacy', ->
 
   context 'When ehg (a grandfather user) wants to make a new dataset', ->
     before (done) ->
-      browser.get logout_url, done
-
-    before (done) ->
-      browser.get login_url, ->
-        wd40.fill '#username', 'ehg', ->
-          wd40.fill '#password', 'testing', ->
-            wd40.click '#login', done
+      loginAndGo "ehg", "testing", "/datasets", done
 
     before (done) ->
       wd40.click '.new-dataset', =>

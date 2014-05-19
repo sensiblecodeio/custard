@@ -5,7 +5,7 @@
   <a href="/pricing<% if @trialDaysLeft == 0: %>/expired<% end %>" class="<% if 10 >= @trialDaysLeft: %>
         urgent
     <% end %>">
-    Free trial:
+    <span id="free-trial-part">Free trial:</span>
     <% if @trialDaysLeft == 0: %>
       Expired
     <% else if @trialDaysLeft == 1: %>

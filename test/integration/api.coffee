@@ -721,6 +721,11 @@ describe 'API', ->
           done(err)
 
   describe "Private tools", ->
+    before (done) ->
+      @user = 'teststaff'
+      @password = process.env.CU_TEST_STAFF_PASSWORD
+      login.call @, done
+
     context 'When I add allowedUsers', ->
       before (done) ->
         request.post

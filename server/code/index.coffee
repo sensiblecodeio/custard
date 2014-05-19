@@ -187,17 +187,12 @@ getSessionUsersFromDB = (reqUser, cb) ->
 getEffectiveUser = (user, callback) ->
   # Find all users with user.shortName in their canBeReally list
   User.findCanBeReally user.shortName, (err, canBeReally) ->
-    if canBeReally.length == 0
-      # User cannot switch into anyone else's context.
-      return callback user
+    if user.defaultContext in _.pluck(canBeReally, 'shortName')
+      # User has a defaultContext, and it is one of the contexts they can switch to.
+      effectiveUser = _.findWhere canBeReally, shortName: user.defaultContext
     else
-      if user.defaultContext in _.pluck(canBeReally, 'shortName')
-        # User has a defaultContext, and it is one of the contexts they can switch to.
-        effectiveUser = _.findWhere canBeReally, shortName: user.defaultContext
-      else
-        # User doesn't have a default context, just just pick any old one.
-        effectiveUser = canBeReally[0]
-      return callback effectiveUser
+      effectiveUser = user
+    return callback effectiveUser
 
 # Verify callback for LocalStrategy
 verify = (username, password, callback) ->
@@ -600,6 +595,7 @@ logout = (req, resp) ->
   resp.redirect '/'
 
 listTools = (req, resp) ->
+  #console.log "listTools real:", req.user.real.shortName, "effective:", req.user.effective.shortName
   Tool.findForUser req.user.effective.shortName, (err, tools) ->
     console.log "API about to return"
     resp.send 200, tools

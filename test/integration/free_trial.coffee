@@ -112,3 +112,8 @@ describe 'Paid user', ->
         (/Free trial/i.test text).should.be.false
         done()
 
+    it 'should not tell me "days left"', (done) ->
+      wd40.getText 'body', (err, text) ->
+        (/days left/i.test text).should.be.false
+        done()
+

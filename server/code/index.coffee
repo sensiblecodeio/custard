@@ -52,7 +52,8 @@ mongoose.connect process.env.CU_DB,
     auto_reconnect: true
     socketOptions:
       keepAlive: 1
-# Doesn't seem to do much.
+
+
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
 
@@ -715,13 +716,14 @@ addDataset = (req, resp) ->
   body = req.body
   console.log "POST dataset user", user
   User.canCreateDataset user, (err, can) ->
+
     if err?
       console.log "USER #{user} CANNOT CREATE DATASET"
       return resp.send err.statusCode, err.error
     Box.create user, (err, box) ->
       if err?
-        console.warn err
-        return resp.send err.statusCode, error: "Error creating box: #{err.body}"
+        console.warn "Box.create failed #{err}"
+        return resp.send 500, error: "Error creating box: #{err.body}"
       console.log "POST dataset boxName=#{box.name}"
       console.log "POST dataset boxServer = #{box.server}"
       # TODO: a box will still be created here
@@ -754,6 +756,7 @@ addDataset = (req, resp) ->
               return resp.send 500, error: "Error saving dataset: #{err}"
 
             resp.send 200, dataset
+
             _addView user, dataset,
               tool: 'datatables-view-tool'
               displayName: 'View in a table' # TODO: use tool object

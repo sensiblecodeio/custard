@@ -22,7 +22,7 @@ describe 'Free Trial', ->
           url.should.equal "#{base_url}/pricing"
           done()
 
-    context 'when I click the super duper ScraperWiki digger @notmac', ->
+    context 'when I click the super duper ScraperWiki digger', ->
       before (done) ->
         wd40.click '#logo', done
 
@@ -31,7 +31,7 @@ describe 'Free Trial', ->
           url.should.equal "#{base_url}/datasets"
           done()
 
-    context 'when I click the $9 upgrade button @notmac', (done) ->
+    context 'when I click the $9 upgrade button', (done) ->
       before (done) ->
         browser.get base_url + '/pricing/expired', ->
           wd40.click '.plan.explorer .upgrade', done
@@ -75,7 +75,7 @@ describe 'Expired Free Trial', ->
           url.should.equal "#{base_url}/help"
           done()
 
-    context 'when I click the super duper ScraperWiki digger @notmac', ->
+    context 'when I click the super duper ScraperWiki digger', ->
       before (done) ->
         wd40.click '#logo', done
 
@@ -84,7 +84,7 @@ describe 'Expired Free Trial', ->
           url.should.equal "#{base_url}/pricing/expired"
           done()
 
-    context 'when I click the $9 upgrade button @notmac', (done) ->
+    context 'when I click the $9 upgrade button', (done) ->
       before (done) ->
         wd40.click '.plan.explorer .upgrade', done
 

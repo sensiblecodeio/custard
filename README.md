@@ -104,11 +104,13 @@ them in your custard directory or the next level up:
 - http://selenium-release.storage.googleapis.com/index.html
 - http://chromedriver.storage.googleapis.com/index.html 
 
+You need to unzip chromedriver, but not selenium.
+
 If you're wondering about versions, right now we're having luck with:
 
-- [Selenium Server Standalone 2.35.0](https://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar)
-- [Chromedriver Mac32 2.2](https://chromedriver.googlecode.com/files/chromedriver_mac32_2.2.zip)
-- [Chromedriver Linux64 2.2](https://chromedriver.googlecode.com/files/chromedriver_linux64_2.2.zip)
+- [Selenium Server Standalone 2.41.0](http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar)
+- [Chromedriver Mac32 2.9](http://chromedriver.storage.googleapis.com/2.9/chromedriver_mac32.zip)
+- [Chromedriver Linux64 2.9](http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux32.zip)
 
 Then start the Selenium server using `cake se`:
 

@@ -159,7 +159,7 @@ class Box extends ModelBase
 
   @listServers: ->
     if /testing|staging/.test process.env.NODE_ENV
-      console.log process.env.CU_BOX_SERVER
+      console.log "process.env.CU_BOX_SERVER", process.env.CU_BOX_SERVER
       return [process.env.CU_BOX_SERVER]
     _.uniq (obj.boxServer for plan, obj of plans)
 

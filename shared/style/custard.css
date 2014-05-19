@@ -106,6 +106,12 @@ body.fullscreen .container {
   color: #B94A48;
 }
 
+@media only screen and (max-width: 919px) {
+  #header nav li.trial #free-trial-part {
+    display: none
+  }
+}
+
 #header nav > ul > li > a {
   display: block;
   color: #666;

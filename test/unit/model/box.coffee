@@ -1,3 +1,5 @@
+require '../setup_teardown'
+
 mongoose = require 'mongoose'
 sinon = require 'sinon'
 should = require 'should'

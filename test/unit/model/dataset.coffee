@@ -1,3 +1,5 @@
+require '../setup_teardown'
+
 mongoose = require 'mongoose'
 _ = require 'underscore'
 util = require 'util'

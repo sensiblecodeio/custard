@@ -1,3 +1,5 @@
+require '../setup_teardown'
+
 mongoose = require 'mongoose'
 child_process = require 'child_process'
 fs = require 'fs'

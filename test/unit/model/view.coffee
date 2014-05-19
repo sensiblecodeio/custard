@@ -1,3 +1,5 @@
+require '../setup_teardown'
+
 sinon = require 'sinon'
 should = require 'should'
 

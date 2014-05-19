@@ -43,7 +43,7 @@ describe "View: DatasetTile", ->
 
       @recover.calledOnce.should.be.true
 
-    xit "should clear the timeout", ->
+    it "should clear the timeout", ->
       @view.hideDataset(jQuery.Event())
       @view.unhideDataset(jQuery.Event())
 

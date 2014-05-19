@@ -597,7 +597,6 @@ logout = (req, resp) ->
 listTools = (req, resp) ->
   #console.log "listTools real:", req.user.real.shortName, "effective:", req.user.effective.shortName
   Tool.findForUser req.user.effective.shortName, (err, tools) ->
-    console.log "API about to return"
     resp.send 200, tools
 
 postTool = (req, resp) ->
@@ -617,7 +616,7 @@ postTool = (req, resp) ->
     else
       _.extend tool, body
     tool.gitCloneOrPull dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
-      console.log err, stdout, stderr
+      console.log "gitCloneOrPull", err, stdout, stderr
       if err?
         console.warn err
         return resp.send 500, error: "Error cloning/updating your tool's Git repo"
@@ -781,7 +780,7 @@ addView = (req, resp) ->
 listUsers = (req, resp) ->
   User.findCanBeReally req.user.real.shortName, (err, users) ->
     if err?
-      console.log err
+      console.log "User.findCanBeReally", err
       return resp.send 500, error: 'Error trying to find users'
     else
       result = for u in users when u.shortName

@@ -163,7 +163,7 @@ describe 'API', ->
               form:
                 name: @toolName
                 type: 'view'
-                gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
+                gitUrl: 'git://github.com/scraperwiki/datatables-view-tool.git'
             , (err, res, body) =>
               @response = res
               @tool = parseJSON res.body
@@ -188,6 +188,9 @@ describe 'API', ->
           it 'is private', ->
             @tool.public.should.be.false
 
+          it 'has a manifest', ->
+            @tool.manifest.displayName.should.equal 'View in a table'
+
           context 'when I update that tool', ->
             before (done) ->
               # short pause, to make sure the updated
@@ -200,7 +203,8 @@ describe 'API', ->
                 form:
                   name: @toolName
                   type: 'view'
-                  gitUrl: 'git://github.com/scraperwiki/spreadsheet-tool.git'
+                  # note this is a totally new URL for the code!
+                  gitUrl: 'https://github.com/scraperwiki/magic-summary-tool'
               , (err, res) =>
                 @response = res
                 @tool = parseJSON res.body
@@ -217,10 +221,8 @@ describe 'API', ->
               should.exist @tool.updated
               @tool.updated.should.be.above @tool.created
 
-            # We should check whether the manifest has been updated,
-            # but it's hard.
-            xit 'returns the updated tool', ->
-              @tool.manifest.displayName.should.equal 'View Data 2'
+            it 'has updated display name from the manifest', ->
+              @tool.manifest.displayName.should.equal 'Summarise this data'
 
         context 'When I create a private tool', ->
           before (done) ->

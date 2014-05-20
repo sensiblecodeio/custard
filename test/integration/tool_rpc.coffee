@@ -142,11 +142,11 @@ describe 'Tool RPC', ->
           text.should.not.be.empty
           done()
 
-      xit 'returns the correct tables', (done) ->
+      it 'returns the correct tables (i.e. none)', (done) ->
         wd40.getText '#sqlMetaDataText', (err, text) =>
           obj = JSON.parse text
-          should.exist obj?.table?.SurLeTable
-          should.exist obj?.table?.VoirLeLapin
+          # we've a non-existent SQLite database
+          obj.table.should.be.empty
           done()
 
     context 'when the tool sql push button is pressed', ->

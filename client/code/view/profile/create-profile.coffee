@@ -57,5 +57,5 @@ class Cu.View.CreateProfile extends Backbone.View
         if errorThrown == 'Forbidden'
           alert("Hmmm... computer says no. Is your API key a valid staff key?")
         else
-          alert("#{textStatus}: #{errorThrown}")
+          alert("#{textStatus}: #{errorThrown}: #{jqxhr.responseText}")
         $button.attr('disabled', false).removeClass('loading').html('<i class="icon-ok space"></i> Try Again')

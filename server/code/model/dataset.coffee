@@ -55,12 +55,19 @@ class Dataset extends ModelBase
       @toBeDeleted = new Date(@toBeDeleted)
     super callback
 
+  deleteStatus: (callback) ->
+    delete @status
+    @save (err) =>
+      callback err
+
   updateStatus: (status, callback) ->
     @status =
       type: status.type
       message: status.message
       updated: new Date()
+
     @status.type = 'ok' unless status.type in ['ok', 'error']
+
     @save (err) =>
       boxes = _.map @views, (v) -> v.box
       message = JSON.stringify

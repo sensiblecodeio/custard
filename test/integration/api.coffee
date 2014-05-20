@@ -20,10 +20,10 @@ login = (done) ->
     followRedirect: false
   , (err) =>
     if err
-      done(err)
+      return done err
     request.get @loginURL, (err) =>
       if err
-        done(err)
+        return done err
       request.post
         uri: @loginURL
         form:

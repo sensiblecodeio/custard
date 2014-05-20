@@ -93,6 +93,8 @@ class Dataset extends ModelBase
   cleanCrontab: (callback) ->
     {User} = require 'model/user'
     User.findByShortName @user, (err, user) =>
+      if err
+        return callback err
       _exec
         user: user
         boxName: @box

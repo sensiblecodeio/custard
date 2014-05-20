@@ -6,6 +6,9 @@
 class Cu.View.Home extends Backbone.View
   className: 'home'
 
+  initialize: (options) ->
+    @options = options || {}
+
   render: ->
     @el.innerHTML = JST['home']()
     @

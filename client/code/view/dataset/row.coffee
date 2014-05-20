@@ -9,7 +9,9 @@ class Cu.View.DatasetRow extends Backbone.View
     'click .unhide': 'unhideDataset'
     'click': 'visitDataset'
 
-  initialize: ->
+  initialize: (options) ->
+    @options = options || {}
+
     # Check whether a `clickable` option has been passed to
     # this view's constructor (eg: by Cu.View.Dashboard).
     if @options.clickable?

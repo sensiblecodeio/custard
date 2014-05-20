@@ -1,6 +1,9 @@
 class Cu.View.Help extends Backbone.View
   className: "help"
 
+  initialize: (options) ->
+    @options = options || {}
+
   events:
     'click nav a': 'navClick'
     'click a[href^="#"]': 'navClick'

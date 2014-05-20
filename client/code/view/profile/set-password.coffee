@@ -1,6 +1,9 @@
 class Cu.View.SetPassword extends Backbone.View
   className: "set-password"
 
+  initialize: (options) ->
+    @options = options || {}
+
   events:
     'click .btn-primary': 'setPassword'
 

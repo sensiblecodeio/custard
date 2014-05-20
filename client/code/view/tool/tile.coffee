@@ -70,6 +70,9 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
   events:
     'click' : 'clicked'
 
+  initialize: (options) ->
+    @options = options || {}
+
   install: (e) ->
     e.preventDefault()
     @active = true

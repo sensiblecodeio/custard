@@ -19,7 +19,11 @@ login = (done) ->
     uri: "#{helper.base_url}/logout"
     followRedirect: false
   , (err) =>
-    request.get @loginURL, =>
+    if err
+      done(err)
+    request.get @loginURL, (err) =>
+      if err
+        done(err)
       request.post
         uri: @loginURL
         form:

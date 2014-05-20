@@ -470,9 +470,7 @@ addUser = (req, resp) ->
     if err?
       if err.action is 'save' and /duplicate key/.test err.err
         return resp.json 400, error: "Username is already taken"
-      else
-        error = err
-      return resp.json 500, error: error
+      return resp.json 500, error: err
 
     return resp.json 201, user
 

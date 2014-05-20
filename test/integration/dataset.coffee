@@ -81,8 +81,9 @@ describe 'Dataset', ->
                 done()
 
       after (done) ->
-        wd40.click 'button[data-dismiss="modal"]', (err) ->
-          wd40.waitForInvisibleByCss '.modal-backdrop', done
+        wd40.waitForVisibleByCss 'button[data-dismiss="modal"]', (err) ->
+          wd40.click 'button[data-dismiss="modal"]', (err) ->
+            wd40.waitForInvisibleByCss '.modal-backdrop', done
 
     context 'when I click the title', ->
       before (done) ->

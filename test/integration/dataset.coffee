@@ -1,7 +1,58 @@
 require './setup_teardown'
+async = require 'async'
 should = require 'should'
 {wd40, browser, loginAndGo} = require './helper'
 cleaner = require '../cleaner'
+
+describe 'modal hammering', ->
+
+  before (done) ->
+    # TODO(pwaller): Not sure why this is needed, but it interacts with the API
+    #                tests otherwise
+    cleaner.clear_and_set_fixtures done
+
+  before (done) ->
+    loginAndGo "ehg", "testing", "/dataset/3006375731", done
+
+  it 'works if I open and close the modal dialog repeatedly', (done) ->
+    browser.clickWhenReady '#toolbar a[href$="/settings"] .dropdown-toggle', (err) ->
+      browser.clickWhenReady '#tool-options-menu .api-endpoints', (err) ->
+        
+        console.log "Clicked!"
+        process.exit 55
+
+  it 'exits', (done) ->
+    process.exit 55
+
+
+    # browser
+      # .safeExecute 'console.log("Hello world")'
+    # wd40.clickByExec 'foo', (err) ->
+    #   done()
+    # async.timesSeries 10, (_n, next) ->
+    #   console.log "Here A"
+    #   wd40.clickByExec '#toolbar a[href$="/settings"] .dropdown-toggle', (err) ->
+    #     console.log "Here B"
+    #     if err
+    #       return next "Line 97 #{err}"
+    #     setTimeout ->
+    #       console.log "Here C"
+    #       wd40.clickByExec '#tool-options-menu .api-endpoints', (err) ->
+    #         console.log "Here D"
+    #         if err
+    #           return next "Line 100 #{err}"
+    #         wd40.waitForVisibleByCss 'button[data-dismiss="modal"]', (err) ->
+    #           console.log "Here E"
+    #           if err
+    #             return next "Line 103 #{err}"
+    #           wd40.doAndWaitForGoneByCss (cb) ->
+    #             console.log "Here F"
+    #             wd40.clickByExec 'button[data-dismiss="modal"]', (err) ->
+    #               console.log "Here G"
+    #               cb err
+    #           , '.modal-backdrop', next
+    #     , 100
+    # , done
 
 describe 'Dataset', ->
   randomname = "New favourite number is #{Math.random()}"
@@ -15,10 +66,11 @@ describe 'Dataset', ->
     before (done) ->
       loginAndGo "ehg", "testing", "/datasets", done
 
-    before (done) ->
+    it 'clicks the Apricot dataset', (done) ->
       # wait for tiles to fade in
       wd40.elementByPartialLinkText 'Apricot', (err, link) ->
-        return done(err) if err
+        if err
+          return done err
         link.click done
 
     it 'takes me to the Apricot dataset page', (done) ->
@@ -68,7 +120,7 @@ describe 'Dataset', ->
           done(err)
 
     (if process.env.SKIP_MODAL then xcontext else context) 'when I click the API endpoints link', (done) ->
-      before (done) ->
+      it 'clicks the API endpoints button', (done) ->
         wd40.click '#tool-options-menu .api-endpoints', done
 
       it 'I see the box’s SQL and HTTP API endpoints', (done) ->
@@ -80,12 +132,26 @@ describe 'Dataset', ->
                 val.should.equal 'https://localhost/3006375731/6cd21c903b864fe/http'
                 done()
 
-      after (done) ->
-        wd40.click 'button[data-dismiss="modal"]', (err) ->
-          wd40.waitForInvisibleByCss '.modal-backdrop', done
+      # after (done) ->
+      #   wd40.click 'button[data-dismiss="modal"]', (err) ->
+      #     wd40.waitForInvisibleByCss '.modal-backdrop', done
+
+      it 'clicking dismiss closes the modal dialog', (done) ->
+        wd40.waitForVisibleByCss 'button[data-dismiss="modal"]', (err) ->
+          if err
+            return done err
+          wd40.doAndWaitForGoneByCss (cb) ->
+            wd40.click 'button[data-dismiss="modal"]', cb
+          , '.modal-backdrop', done
+
+      # it 'the modal dialog is gone', (done) ->
+      #   wd40.waitForGoneByCss '.modal-backdrop', done
 
     context 'when I click the title', ->
-      before (done) ->
+      it 'navigates to the Apricot dataset', (done) ->
+        loginAndGo "ehg", "testing", "/dataset/3006375731", done
+
+      it 'clicks the rename dataset button on the dropdown', (done) ->
         browser.elementByCssIfExists '#editable-input', (err, wrapper) =>
           @wrapper = wrapper
           browser.elementByCssIfExists '#editable-input input', (err, input) =>

@@ -9,8 +9,7 @@ request = require 'request'
 #
 # Switching logs in as user A, adds a dataset using the API.
 # Then we switch to a browser to switch the context.
-#
-# TODO: move Switching out into its own test file
+
 
 login  = (username, password, callback) ->
   request.get login_url, ->

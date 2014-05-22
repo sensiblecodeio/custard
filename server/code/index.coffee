@@ -1076,6 +1076,7 @@ api.post '/reporting/tag/?', sendIntercomTag
 app.get '/logout', ensureAuthenticated, logout
 
 app.get '/version', (req, res) ->
+  res.set 'Content-Type', 'text/plain'
   child_process.exec "git log -n1 2>&1", (err, stdout, _stderr) =>
     if err
       return res.send 500, stdout

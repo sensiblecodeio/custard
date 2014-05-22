@@ -1,6 +1,9 @@
 class Cu.View.Pricing extends Backbone.View
   className: 'pricing'
 
+  initialize: (options) ->
+    @options = options || {}
+
   events:
     'click .upgrade': 'upgradeClick'
     'click .downgrade': 'downgradeClick'

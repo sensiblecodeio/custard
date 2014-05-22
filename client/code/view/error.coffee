@@ -1,12 +1,18 @@
 class Cu.View.Error extends Backbone.View
   className: "error-page"
 
+  initialize: (options) ->
+    @options = options || {}
+
   render: ->
     @el.innerHTML = """<p class="alert alert-error"><strong>#{@options.title}</strong> #{@options?.message}</p>"""
     @
 
 class Cu.View.ErrorAlert extends Backbone.View
-  initialize: ->
+
+  initialize: (options) ->
+    @options = options || {}
+
     $(document).ajaxError @displayAJAXError
     Backbone.on 'error', @onError, this
 

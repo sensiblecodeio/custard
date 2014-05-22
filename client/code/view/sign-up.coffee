@@ -6,6 +6,9 @@ class Cu.View.SignUp extends Backbone.View
     'keyup #shortName': 'keyupShortName'
     'blur #shortName': 'keyupDisplayName'
 
+  initialize: (options) ->
+    @options = options || {}
+
   render: ->
     @el.innerHTML = JST['sign-up']()
 

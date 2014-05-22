@@ -1,6 +1,9 @@
 class Cu.View.Subscribe extends Backbone.View
   className: 'subscribe'
 
+  initialize: (options) ->
+    @options = options || {}
+
   render: ->
     @el.innerHTML = JST['subscribe'] @options
     $.getScript "/vendor/js/recurly.js", =>

@@ -1,6 +1,9 @@
 class Cu.View.Subnav extends Backbone.View
   className: 'subnav-wrapper'
 
+  initialize: (options) ->
+    @options = options || {};
+
   render: ->
     window.document.title = @options.title or 'ScraperWiki'
     @$el.html JST['subnav'] @options
@@ -15,6 +18,9 @@ class Cu.View.DataHubNav extends Backbone.View
     'keyup #subnav-options .search-query': 'keyupPageSearch'
     'click #tile-view': 'showTileView'
     'click #list-view': 'showListView'
+
+  initialize: (options) ->
+    @options = options || {};
 
   render: ->
     name = window.user.effective.displayName or window.user.effective.shortName
@@ -91,7 +97,8 @@ class Cu.View.Toolbar extends Backbone.View
     'blur #editable-input input': 'editableNameBlurred'
     'keyup #editable-input input': 'keypressOnEditableName'
 
-  initialize: ->
+  initialize: (options) ->
+    @options = options || {};
     window.document.title = "#{@model.get 'displayName'} | ScraperWiki"
     @toolsView = new Cu.View.DatasetTools
       model: @model
@@ -203,6 +210,9 @@ class Cu.View.Toolbar extends Backbone.View
 class Cu.View.SignUpNav extends Backbone.View
   className: 'subnav-wrapper'
 
+  initialize: (options) ->
+    @options = options || {};
+
   render: ->
     humanPlan = @options.plan # eg: "freetrial"/"datascientist", passed in by router/main.coffee
     capitalisedPlan = humanPlan.toUpperCase()[0] + humanPlan.toLowerCase()[1..]
@@ -218,6 +228,9 @@ class Cu.View.SignUpNav extends Backbone.View
 class Cu.View.HelpNav extends Backbone.View
   className: 'subnav-wrapper'
 
+  initialize: (options) ->
+    @options = options || {};
+
   render: ->
     window.document.title = @options.title or 'ScraperWiki'
     @$el.html JST['helpnav'] @options
@@ -228,6 +241,9 @@ class Cu.View.HelpNav extends Backbone.View
 class Cu.View.ToolShopNav extends Backbone.View
   className: 'subnav-wrapper'
 
+  initialize: (options) ->
+    @options = options || {};
+    
   render: ->
     window.document.title = "#{@options.name} | ScraperWiki"
     @$el.html("""

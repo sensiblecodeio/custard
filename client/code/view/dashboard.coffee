@@ -1,6 +1,9 @@
 class Cu.View.Dashboard extends Backbone.View
   className: 'dashboard row-fluid'
 
+  initialize: (options) ->
+    @options = options || {}
+
   events:
     'click th.sortable': 'sortTable'
     'click #show-only-errors': 'toggleErrors'

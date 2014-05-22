@@ -5,7 +5,9 @@ class Cu.View.ToolList extends Backbone.View
     'click .close': 'closeChooser'
     'click': 'closeChooser'
 
-  initialize: ->
+  initialize: (options) ->
+    @options = options || {};
+    
     app.tools().on 'fetched', @addTools, @
 
     Backbone.on 'error', =>

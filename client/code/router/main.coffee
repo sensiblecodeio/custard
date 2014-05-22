@@ -248,6 +248,7 @@ class Cu.Router.Main extends Backbone.Router
 
           # ... Otherwise, show to the dataset
           @switchToDatasetView model
+          app.navigate "/dataset/#{model.id}/settings", trigger: true
         , 0
 
   # Update the current view to show the far left most thing in the tool ribbon,

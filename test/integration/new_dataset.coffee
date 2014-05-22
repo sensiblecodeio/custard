@@ -4,27 +4,24 @@ should = require 'should'
 
 describe 'New dataset tool', ->
 
-  before (done) ->
+  it "goes to ehg's /datasets", (done) ->
     loginAndGo 'ehg', 'testing', "/datasets", done
-
-  before (done) ->
-    browser.waitForElementByCss '.dataset-list', 4000, done
 
   context 'when I click the "new dataset" button', ->
     iframeUrl = null
-    before (done) ->
+    it 'waits for the tool chooser', (done) ->
       wd40.click '.new-dataset', ->
         browser.waitForElementByCss '#chooser .tool', 4000, done
 
     context 'when I click on the newdataset tool', ->
-      before (done) ->
+      it "clicks the newdataset tool", (done) ->
         wd40.click '.newdataset.tool', =>
           browser.waitForElementByTagName 'iframe', 10000, =>
             browser.url (err, url) =>
               @currentUrl = url
               done err
 
-      before (done) ->
+      it 'waits for the tool menu toggle to load', (done) ->
         # wait for the tool menu toggle to load
         setTimeout done, 1000
 
@@ -44,11 +41,11 @@ describe 'New dataset tool', ->
             done()
 
     context 'when I wait a little while and then go back to the dataset page', ->
-      before (done) ->
+      it 'waits for the tool to be installed in the background', (done) ->
         # wait for the data tables tool to be installed in the background
         setTimeout done, 5000
 
-      before (done) ->
+      it 'goes to /settings', (done) ->
         browser.get @currentUrl.replace(/\/settings$/, ''), done
 
       it 'shows that the "View in a table" tool is active', (done) ->

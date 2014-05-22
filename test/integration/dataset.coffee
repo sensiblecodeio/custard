@@ -12,10 +12,10 @@ describe 'Dataset', ->
     cleaner.clear_and_set_fixtures done
 
   context 'when I click on an Apricot dataset', ->
-    before (done) ->
+    it "goes to ehg's /datasets", (done) ->
       loginAndGo "ehg", "testing", "/datasets", done
 
-    before (done) ->
+    it "clicks the Apricot dataset", (done) ->
       # wait for tiles to fade in
       wd40.elementByPartialLinkText 'Apricot', (err, link) ->
         return done(err) if err
@@ -60,7 +60,7 @@ describe 'Dataset', ->
       @toolbarText.toLowerCase().should.include 'more tools'
 
     context 'when I click the tool options icon', ->
-      before (done) ->
+      it "clicks the tool options icon", (done) ->
         wd40.click '#toolbar a[href$="/settings"] .dropdown-toggle', done
 
       it 'there is an API endpoints link', (done) ->
@@ -68,7 +68,7 @@ describe 'Dataset', ->
           done(err)
 
     (if process.env.SKIP_MODAL then xcontext else context) 'when I click the API endpoints link', (done) ->
-      before (done) ->
+      it "clicks the API endpoints button", (done) ->
         wd40.click '#tool-options-menu .api-endpoints', done
 
       it 'I see the box’s SQL and HTTP API endpoints', (done) ->
@@ -80,12 +80,12 @@ describe 'Dataset', ->
                 val.should.equal 'https://localhost/3006375731/6cd21c903b864fe/http'
                 done()
 
-      after (done) ->
+      it "dismisses the modal", (done) ->
         wd40.click 'button[data-dismiss="modal"]', (err) ->
           wd40.waitForInvisibleByCss '.modal-backdrop', done
 
     context 'when I click the title', ->
-      before (done) ->
+      it "clicks rename the dataset", (done) ->
         browser.elementByCssIfExists '#editable-input', (err, wrapper) =>
           @wrapper = wrapper
           browser.elementByCssIfExists '#editable-input input', (err, input) =>
@@ -101,7 +101,7 @@ describe 'Dataset', ->
           done()
 
       context 'when I fill in the input box and press enter', ->
-        before (done) ->
+        it "types randomly into the input", (done) ->
           @input.clear (err) =>
             browser.type @input, randomname + '\n', ->
               done()
@@ -123,7 +123,7 @@ describe 'Dataset', ->
             done()
 
       context 'when I go back home', ->
-        before (done) ->
+        it "clicks the ScraperWiki digger", (done) ->
           browser.elementByCss '#logo', (err, link) ->
             link.click done
 
@@ -138,7 +138,7 @@ describe 'Dataset', ->
             done()
 
         context 'when I click the "hide" button on the dataset', ->
-          before (done) ->
+          it "clicks hte hide button", (done) ->
             # If this fails in IE try moving the mouse cursor outside of
             # the browser window while the test is running.
             # http://jimevansmusic.blogspot.co.uk/2013/01/revisiting-native-events-in-ie-driver.html
@@ -155,7 +155,7 @@ describe 'Dataset', ->
               done()
 
           context 'when I revisit the homepage', ->
-            before (done) ->
+            it "refreshes the page", (done) ->
               browser.refresh done
 
             it 'the dataset stays hidden', (done) ->
@@ -164,10 +164,10 @@ describe 'Dataset', ->
                 done()
 
   context "When I hide the Prune dataset", ->
-    before (done) ->
+    it "goes to ehg's /datasets", (done) ->
       loginAndGo "ehg", "testing", "/datasets", done
 
-    before (done) ->
+    it "visits the dataset using the previously remembered URL", (done) ->
       setTimeout =>
         wd40.elementByPartialLinkText 'Prune', (err, dataset) =>
           @dataset = dataset
@@ -183,7 +183,7 @@ describe 'Dataset', ->
         done()
 
     context "When I click the undo button", ->
-      before (done) ->
+      it "clicks Undo", (done) ->
         @dataset.elementByCss '.unhide', (err, link) ->
           link.click done
 
@@ -198,15 +198,15 @@ describe 'Dataset', ->
           done()
 
   context "When I click on the Prune dataset", ->
-    before (done) ->
-      loginAndGo "ehg", "testing", "/datasets", ->
-        setTimeout =>
-          wd40.elementByPartialLinkText 'Prune', (err, dataset) =>
-            dataset.click done
-        , 500
+    it "goes to ehg's /datasets", (done) ->
+      loginAndGo "ehg", "testing", "/datasets", done
+
+    it "clicks the Prune dataset", (done) ->
+      wd40.elementByPartialLinkText 'Prune', (err, dataset) =>
+        dataset.click done
 
     context "When I delete the dataset using the toolbar menu", ->
-      before (done) ->
+      it "selects delete dataset menu item", (done) ->
         wd40.click '#dataset-meta .dropdown-toggle', ->
           wd40.click '#dataset-meta .hide-dataset', done
 
@@ -226,7 +226,7 @@ describe 'Dataset', ->
             done()
 
       context "When I click the undo button", ->
-        before (done) ->
+        it "clicks the undo button", (done) ->
           @dataset.elementByCss '.unhide', (err, link) ->
             link.click done
 
@@ -241,7 +241,7 @@ describe 'Dataset', ->
             done()
 
   context "When I go to a dataset that was previously deleted", ->
-    before (done) ->
+    it "goes to ehg's 443057115 dataset", (done) ->
       loginAndGo "ehg", "testing", "/dataset/4443057115", done
 
     it 'shows a "dataset deleted" message', (done) ->
@@ -255,7 +255,7 @@ describe 'Dataset', ->
         done()
 
   context "When I go to a dataset URL that does not exist", ->
-    before (done) ->
+    it "goes to ehg's doesnotexist dataset", (done) ->
       loginAndGo "ehg", "testing", "/dataset/doesnotexist", done
 
     it 'shows a not found error', (done) ->
@@ -264,7 +264,7 @@ describe 'Dataset', ->
         done()
 
   context "When I go to a dataset in somebody else’s data hub, and I’m not staff", ->
-    before (done) ->
+    it "goes to ehg's 1057304856 dataset", (done) ->
       loginAndGo "test", "testing", "/dataset/1057304856", done
 
     it 'shows a not found error', (done) ->

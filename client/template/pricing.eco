@@ -16,9 +16,10 @@
 </div>
 <% end %>
 
-<!-- <div class="plan enterprise account-large swcol">
+<!--
+<div class="plan enterprise account-large swcol">
   <h2>Enterprise</h2>
-  <p class="cost">$199<small>/mth</small></p>
+  <p class="cost">Varies<small>/mth</small></p>
   <p>Unlimited datasets</p>
   <% if @enterprise is 'current': %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
@@ -29,12 +30,13 @@
   <% else: %>
   <a class="cta" href="/signup/enterprise">Sign Up</a>
   <% end %>
-</div> -->
+</div>
+-->
 
 <div class="plan datascientist account-large swcol<% if @upgrade is 'upgrade': %> glowing<% end %>">
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
-  <p>Unlimited datasets</p>
+  <p>100 datasets</p>
   <% if @large is 'current': %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else if @large is 'upgrade': %>
@@ -89,4 +91,10 @@
     <li>Up to 10k Twitter followers</li>
   </ul>
 </div>
+
+<p class="corporate">We also offer Enterprise data hubs with professional services at prices from $1000 / month. 
+For more information read our <a href="https://scraperwiki.com/help/corporate/">Corporate FAQ</a>,
+and if you are interested <a href="https://scraperwiki.com/professional#request">get in touch</a> with our professional services team.
+</p>
+
 

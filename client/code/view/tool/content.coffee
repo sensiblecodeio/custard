@@ -137,6 +137,9 @@ class Cu.View.AppContent extends Cu.View.ToolContent
     query = window.app.pushSqlQuery
     window.app.pushSqlQuery = null
 
+    if not query?
+      query = null
+
     callback
       source:
         apikey: window.user.effective.apiKey
@@ -174,3 +177,4 @@ class Cu.View.PluginContent extends Cu.View.ToolContent
         publishToken: datasetToken
         box: datasetBox
         displayName: displayName
+        sqlQuery: query

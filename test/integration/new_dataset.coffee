@@ -48,14 +48,14 @@ describe 'New dataset tool', ->
       it 'goes to /settings', (done) ->
         browser.get @currentUrl.replace(/\/settings$/, ''), done
 
-      it 'shows that the "View in a table" tool is active', (done) ->
+      it 'shows that the "code a dataset" tool is active', (done) ->
         wd40.elementByCss '#toolbar .active', (err, link) ->
           link.text (err, text) ->
-            text.toLowerCase().replace('\n',' ').should.include 'view in a table'
+            text.toLowerCase().replace('\n',' ').should.include 'code a dataset!'
             done()
 
-      it 'and shows me the "View in a table" tool contents', (done) ->
+      it 'and shows me the "code a dataset" tool contents', (done) ->
         wd40.switchToBottomFrame ->
           wd40.trueURL (err, url) ->
-            url.should.not.equal iframeUrl
+            url.should.equal iframeUrl
             done()

@@ -95,6 +95,8 @@ class Dataset extends ModelBase
     User.findByShortName @user, (err, user) =>
       if err
         return callback err
+      if not user
+        return callback "cleanCrontab user not found: " + @user
       _exec
         user: user
         boxName: @box

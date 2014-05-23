@@ -21,4 +21,7 @@ before (done) ->
 
 after (done) ->
     console.log "[scraperwiki global after]"
-    browser.quit done
+    if process.env.BROWSER_QUIT
+      console.log "Quitting browser"
+      return browser.quit done
+    done()

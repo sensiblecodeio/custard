@@ -14,7 +14,10 @@ before (done) ->
         cleaner.clear_and_set_fixtures ->
           cb()
       (cb) ->
-        wd40.init ->
+        wd40.init (err) ->
+          if err
+            cb new Error("wd40 init error: #{err} -- is your Selenium server running?")
+            return
           browser.get base_url, ->
             cb()
     ], done

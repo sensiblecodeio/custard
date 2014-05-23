@@ -258,4 +258,16 @@ describe 'Pricing', ->
           text.should.match /to be able to process large PDFs/i
           done()
 
+  context 'When I visit the pricing more followers page', ->
+    before (done) ->
+      browser.get base_url + '/pricing/followers', done
+
+    it 'it implores me to upgrade to scrape more Twitter followers', (done) ->
+      wd40.elementByCss '.pricing .alert', (err, element) ->
+        should.exist element
+        element.text (err, text) ->
+          text.should.match /Please upgrade your account/i
+          text.should.match /to be able to get more Twitter followers/i
+          done()
+
 

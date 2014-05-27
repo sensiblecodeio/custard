@@ -296,6 +296,23 @@ describe 'API', ->
           should.exist @tools[0].type
 
     describe 'Datasets', ->
+
+      context 'when I try to create a dataset with bad parameters', ->
+        context 'no tool specified', ->
+          before (done) ->
+            request.post
+              uri: "#{helper.base_url}/api/#{@user}/datasets"
+              form:
+                # no tool
+                displayName: 'Broken'
+            , (err, res, body) =>
+              @response = res
+              done()
+
+          it 'does not create a new dataset', ->
+            @response.statusCode.should.equal 500
+
+
       context 'when I create a dataset', ->
 
         createDatasets = (number, opts, callback) ->

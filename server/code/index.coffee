@@ -652,6 +652,15 @@ app.post '/api/user/?', addUser
 # can post to anyone's status).
 # throttleRoute = throttle.throttle (req) -> req.ident
 
+if process.env.CU_DB == "mongodb://localhost/cu-test"
+  console.warn "Skipping ident because local mongo database is being used"
+  localhostSkipIdent = (req, res, next) ->
+    if req.query.ident
+      req.ident = req.query.ident
+    return next()
+
+  checkIdent = localhostSkipIdent
+
 app.post '/api/status/?', checkIdent, postStatus
 app.delete '/api/status/?', checkIdent, deleteStatus
 

@@ -27,7 +27,6 @@ userSchema = new mongoose.Schema
   accountLevel: String
   planExpires: Date
   recurlyAccount: {type: String, unique: true}
-  trialStarted: {type: Date, default: Date.now}
   acceptedTerms: Number # a value of 0 or null means you need to accept terms on next login
   created: {type: Date, default: Date.now}
   logoUrl: String

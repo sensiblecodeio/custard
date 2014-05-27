@@ -7,3 +7,8 @@
 /chromedriver
 /selenium-*.jar
 /request.csv
+/.cache/
+/.node-gyp/
+/.npm/
+/builtAssets/
+/tmp/

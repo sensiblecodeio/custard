@@ -318,6 +318,7 @@ describe 'Server model: Dataset', ->
       @dataset = new Dataset
         user: 'zarino'
         box: '2416349265'
+        tool: 'funky-tool'
 
       @requestStub = sinon.stub request, 'post', (options, callback) ->
         callback null, {statusCode: 200}, {}
@@ -343,3 +344,6 @@ describe 'Server model: Dataset', ->
     it 'if successful, it should set toBeDeleted to null', ->
       should.not.exist @dataset.toBeDeleted
       @saveSpy.calledOnce.should.be.true
+
+    it 'if successful, it should still have a tool', ->
+      @dataset.tool.should.equal "funky-tool"

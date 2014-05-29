@@ -96,7 +96,6 @@ findUsers = (db, argument, next) ->
   exclude =
     _id: 0
     __v: 0
-    trialStarted: 0
     acceptedTerms: 0
     sshKeys: 0
     password: 0

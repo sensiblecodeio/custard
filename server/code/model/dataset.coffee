@@ -56,7 +56,8 @@ class Dataset extends ModelBase
     super callback
 
   deleteStatus: (callback) ->
-    delete @status
+    @status = null
+
     @save (err) =>
       callback err
 

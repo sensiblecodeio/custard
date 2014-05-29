@@ -503,6 +503,13 @@ exports.datasets = [{
   "user": "zarino",
   "views": []
 }, {
+  "box": "4569872192",
+  "tool": "test-app",
+  "boxServer": "localhost",
+  "displayName": "Pete's favourite status endpoint checking tool",
+  "user": "zarino",
+  "views": []
+}, {
   "box": "3006375823",
   "tool": "test-app",
   "boxServer": "localhost",

@@ -849,7 +849,6 @@ addDataset = (req, resp) ->
               console.warn err
               return resp.send 500, error: "Error saving dataset: #{err}"
 
-            resp.send 200, dataset
 
             _addView user, dataset,
               tool: 'datatables-view-tool'
@@ -857,6 +856,9 @@ addDataset = (req, resp) ->
             , (err, view) ->
               if err?
                 console.warn "Error creating DT view: #{err}"
+                return resp.send 500, error: "Error saving dataset: #{err}"
+
+              return resp.send 200, dataset
 
 # Add view to dataset and save
 addView = (req, resp) ->

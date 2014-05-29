@@ -595,7 +595,7 @@ describe 'API', ->
 
         doRequest = (_, cb) ->
           request.post
-            uri: "#{helper.base_url}/api/status?ident=3006375730"
+            uri: "#{helper.base_url}/api/status?ident=4569872192"
             form:
               type: "ok"
               message: "just testing"
@@ -614,9 +614,9 @@ describe 'API', ->
           @redisClient.on 'pmessage', (pattern, channel, message) =>
             @messagesReceived += 1
 
-          @redisClient.psubscribe("*.cobalt.dataset.3006375730.update")
+          @redisClient.psubscribe("*.cobalt.dataset.4569872192.update")
 
-        xit 'lets me POST to the status API endpoint (and is debounced)', (done) ->
+        it 'lets me POST to the status API endpoint (and is debounced)', (done) ->
           # Debounce meaning rate limit requests
 
           # Fire off 10 post requests (where only the last causes

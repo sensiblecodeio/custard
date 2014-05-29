@@ -1,5 +1,6 @@
 {parallel} = require 'async'
 cleaner = require '../cleaner'
+check_for_cobalt = require '../check_for_cobalt'
 {wd40, browser} = require 'wd40'
 
 base_url = process.env.CU_TEST_URL ? 'http://localhost:3001'
@@ -10,6 +11,9 @@ before (done) ->
     console.log "[scraperwiki global before]"
 
     parallel [
+      (cb) ->
+        check_for_cobalt.check ->
+          cb()
       (cb) ->
         cleaner.clear_and_set_fixtures ->
           cb()

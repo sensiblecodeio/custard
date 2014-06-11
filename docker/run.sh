@@ -29,7 +29,7 @@ then
   echo "custard-data doesn't exist, populating it"
 
   cp ../package.json ./custard-data-image/package.json
-  sed -i '/cake build/d' ./custard-data-image/package.json
+  sed -i .bak '/cake build/d' ./custard-data-image/package.json
 
   docker build -t custard-data-image custard-data-image
 

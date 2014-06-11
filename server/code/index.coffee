@@ -733,6 +733,7 @@ postTool = (req, resp) ->
               code = 200
               action = 'update'
             na.trackEvent 'tools', action, body.name
+            child_process.exec 'scraperwiki-message "' + action + ' tool: ' + tool.name + '"'
             return resp.send code, tool
 
 updateUser = (req, resp) ->

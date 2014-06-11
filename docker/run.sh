@@ -34,7 +34,7 @@ then
   docker build -t custard-data-image custard-data-image
 
   docker run \
-      -name custard-data \
+      --name custard-data \
       -w /data \
       -v /data/node_modules \
       custard-data-image \
@@ -57,7 +57,7 @@ NAME=tang-run-${TANG_SHA}
 # Note: This will all change when we do DIND
 # (docker in docker). Note that the volume mounts only work for DOD.
 time docker -D run -t $ENVS \
-    -name $NAME \
+    --name $NAME \
     -w /opt/custard \
     -volumes-from custard-data \
     -v /var/lib$PWD:/opt/custard \

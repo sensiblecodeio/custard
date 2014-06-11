@@ -5,11 +5,11 @@
   </div>
   <div class="control-group">
     <label for="shortName" class="control-label">Username:</label>
-    <div class="controls"><input type="text" id="shortName" /></div>
+    <div class="controls"><input type="text" id="shortName" autocorrect="off" autocapitalize="off" /></div>
   </div>
   <div class="control-group">
     <label for="email" class="control-label">Email:</label>
-    <div class="controls"><input type="text" id="email" /></div>
+    <div class="controls"><input type="text" id="email" autocorrect="off" autocapitalize="off" /></div>
   </div>
   <div class="control-group" style="margin-bottom: 5px;">
     <div class="controls">

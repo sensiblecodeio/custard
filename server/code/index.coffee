@@ -182,10 +182,14 @@ getSessionUsersFromDB = (reqUser, cb) ->
   User.findByShortName reqUser.effective.shortName, (err, effectiveUser) ->
     if err?
       console.warn err
+    if not effectiveUser
+      console.warn "WARN: Couldn't find user .effective: #{reqUser.effective.shortName}"
 
     User.findByShortName reqUser.real.shortName, (err, realUser) ->
       if err?
         console.warn err
+      if not realUser
+        console.warn "WARN: Couldn't find user .real: #{reqUser.real.shortName}"
 
       cb
         real: getSessionUser realUser

@@ -594,7 +594,12 @@ exports.datasets = [{
 exports.boxes = [{
   "users": ['ehg'],
   "name": "3006375731",
-  "uid": 4678
+  "uid": 4678,
+  "server": "localhost",
+  "boxJSON": {
+    "publish_token": "6cd21c903b864fe",
+    "database": "scraperwiki.sqlite"
+  }
 }, {
   "users": ['ehg'],
   "name": "3006375815",

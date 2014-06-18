@@ -17,7 +17,6 @@ session = require 'express-session'
 serveFavicon = require 'serve-favicon'
 cookieParser = require 'cookie-parser'
 connect = require 'connect'
-na = require 'nodealytics'
 assets = require 'connect-assets'
 ejs = require 'ejs'
 passport = require 'passport'
@@ -55,13 +54,6 @@ mongoose.connect process.env.CU_DB,
 
 mongoose.connection.on 'error', (err) ->
   console.warn "MONGOOSE CONNECTION ERROR #{err}"
-
-if /production/.test process.env.NODE_ENV
-  na.initialize 'UA-21451224-7', 'scraperwiki.com'
-else
-  na =
-    trackPage: -> return true
-    trackEvent: -> return true
 
 # TODO: move into npm module
 requestStream = null
@@ -736,7 +728,6 @@ postTool = (req, resp) ->
             else
               code = 200
               action = 'update'
-            na.trackEvent 'tools', action, body.name
             return resp.send code, tool
 
 updateUser = (req, resp) ->
@@ -915,11 +906,6 @@ listSSHKeys = (req, resp) ->
 
     resp.send 200, user.sshKeys
 
-googleAnalytics = (req, resp, next) ->
-  na.trackPage "#{req.method} #{req.url}", req.url, ->
-    return true
-  next()
-
 changePlan = (req, resp) ->
   [err, dummy] = Plan.getPlan req.params.plan
   if err
@@ -1062,7 +1048,7 @@ app.use "/api", api
 
 # API!
 api.get '/tools/?', listTools
-api.post '/tools/?', googleAnalytics, postTool
+api.post '/tools/?', postTool
 
 api.put '/user/?', updateUser
 

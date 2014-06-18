@@ -29,7 +29,6 @@
     "moment": "~2.6.0",
     "mongoose": "~3.8.9",
     "morgan": "^1.0.1",
-    "nodealytics": "0.0.5",
     "nodemailer": "~0.3.43",
     "nodemon": "~1.0.17",
     "passport": "~0.1.15",

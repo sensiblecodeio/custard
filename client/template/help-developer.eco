@@ -29,7 +29,6 @@
         <li><a data-nonpushstate href="#tools-develop-remotely">Develop on the box</a></li>
       </ul>
     </li>
-    <li><a data-nonpushstate href="#tools-submit">Submit to the Tool Shop</a></li>
     <li class="nav-header">More about boxes</li>
     <li><a data-nonpushstate href="#boxes-settings">Internal box settings</a></li>
     <li><a data-nonpushstate href="#boxes-unix">Unix services</a></li>
@@ -545,72 +544,6 @@ easier solution. In short, set up a local SSH agent, and add this to <code>~/.ss
 <p class="well well-small"><span class="label label-info">Top tip!</span>
 As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to connect to any box.
 </p>
-
-<hr>
-
-<h2 id="tools-submit">Submit to the Tool Shop</h2>
-
-<p>To submit a completed tool (or work in progress!) to ScraperWiki, make a <code>HTTP POST</code> request to <code>/api/tools</code>, with the following body parameters:</p>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>POST&nbsp;parameter</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tr>
-    <td><code>name</code></td>
-    <td>A unique name for your tool. Should contain only alphanumeric characters and hyphens. This internal to ScraperWiki and will not be seen by end-users.</td>
-  </tr>
-  <tr>
-    <td><code>type</code></td>
-    <td>Either <code>importer</code> if your tool creates new datasets, or <code>view</code> if it visualises/exports existing datasets.</td>
-  </tr>
-  <tr>
-    <td><code>public</code></td>
-    <td>Whether your tool is public or not (a private tool will only be visible to you). Can be <code>true</code> or <code>false</code>. It defaults to <code>false</code>.</td>
-  </tr>
-  <tr>
-    <td><code>gitUrl</code></td>
-    <td>URL of your tool&rsquo;s Git repo, eg: <code>git://github.com/scraperwiki/spreadsheet-upload-tool.git</code></td>
-  </tr>
-</table>
-
-<p>This API endpoint currently requires an active ScraperWiki login session. It is therefore easiest to call the API from the Javascript console in your web browser, while you are logged into ScraperWiki. eg:</p>
-
-<pre class="prettyprint">
-$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-upload", type: "view", public: true, gitUrl: "git://github.com/scraperwiki/spreadsheet-upload-tool.git"}}).complete(function(r){ console.log(r.responseText) })
-</pre>
-
-<p>ScraperWiki will check out your Git repo, and extract additional information about your tool from the <code>scraperwiki.json</code> file inside. Please make sure your tool follows <a href="#concepts-tools" data-nonpushstate>the structure outlined above</a>. It must, for example, include a <strong>scraperwiki.json</strong> file that looks something like this:</p>
-
-<pre class="prettyprint linenums">{
-  "displayName": "Download as Spreadsheet",
-  "description": "An Excel or CSV file",
-  "icon": "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-spreadsheet-upload.png",
-  "color": "#029745"
-}</pre>
-
-<p><code>displayName</code> and <code>description</code> should follow the <a href="/help/zig" data-nonpushstate>suggestions laid out in the ZIG</a>.</p>
-
-<p>The <code>icon</code> and <code>color</code> fields are optional. If supplied, <code>icon</code> should be a link to an image file of roughly 40&times;40 pixels. <code>color</code> should be a tool background colour, defined in hex or rgb notation.</p>
-
-<p class="well well-small"><span class="label label-important">Private repo?</span> No worries! Make a new Github user with <span class="text-error">read-only access</span> to your repository, and then give us a <code>gitUrl</code> in the following format: <code>https://user:password@github.com/…</code></p>
-
-<h3>Update your tool shop listing</h3>
-
-<p>To update a tool, call the same API endpoint as for submitting a new tool.
-Specify the <code>name</code>, spelt the same as when you submitted the tool.
-Other parameters are ignored.</p>
-
-<pre class="prettyprint">
-$.ajax({url: "/api/tools", type: "POST", data: {name: "spreadsheet-upload"}}).complete(function(r){ console.log(r.responseText) })
-</pre>
-
-<p>ScraperWiki will get the latest display name, description, icon and colour from <code>scraperwiki.json</code>.
-It will also update the code of any datasets or views that were made using the tool by
-running <code>git pull</code> in their <code>tool</code> directory.</p>
 
 <hr>
 

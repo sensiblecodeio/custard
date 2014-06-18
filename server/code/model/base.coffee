@@ -39,6 +39,7 @@ class ModelBase
     else
       for k of @dbInstance
         @dbInstance[k] = @[k] if @hasOwnProperty k
+    console.log "base.coffee: saving", @constructor.name, @dbInstance
     @dbInstance.save callback
 
   @findAll: (callback) ->

@@ -159,114 +159,6 @@ describe 'API', ->
       , done
 
     describe 'Tools', ->
-      context 'POST /api/tools', ->
-        context 'when I create a tool (without specifying privacy)', ->
-          before (done) ->
-            request.post
-              uri: "#{helper.base_url}/api/tools"
-              form:
-                name: @toolName
-                type: 'view'
-                gitUrl: 'git://github.com/scraperwiki/datatables-view-tool.git'
-            , (err, res, body) =>
-              @response = res
-              @tool = parseJSON res.body
-              done()
-
-          it 'creates a new tool', ->
-            @response.statusCode.should.equal 201
-
-          it 'records a "created" timestamp', ->
-            should.exist @tool.created
-
-          it 'records the owner', ->
-            should.exist @tool.user
-
-          it 'returns the newly created tool', ->
-            should.exist @tool.name
-            @tool.name.should.equal @toolName
-
-          it 'is owned by me', ->
-            @user.should.equal @tool.user
-
-          it 'is private', ->
-            @tool.public.should.be.false
-
-          it 'has a manifest', ->
-            @tool.manifest.displayName.should.equal 'View in a table'
-
-          context 'when I update that tool', ->
-            before (done) ->
-              # short pause, to make sure the updated
-              # timestamp is after the created one
-              setTimeout done, 1
-
-            before (done) ->
-              request.post
-                uri: "#{helper.base_url}/api/tools"
-                form:
-                  name: @toolName
-                  type: 'view'
-                  # note this is a totally new URL for the code!
-                  gitUrl: 'https://github.com/scraperwiki/magic-summary-tool'
-              , (err, res) =>
-                @response = res
-                @tool = parseJSON res.body
-                done()
-
-            it 'updates the tool', ->
-              @response.statusCode.should.equal 200
-
-            it 'is still private', ->
-              @tool.public.should.be.false
-
-            it 'shows a recent "updated" timestamp', ->
-              should.exist @tool.created
-              should.exist @tool.updated
-              @tool.updated.should.be.above @tool.created
-
-            it 'has updated display name from the manifest', ->
-              @tool.manifest.displayName.should.equal 'Summarise this data'
-
-        context 'When I create a private tool', ->
-          before (done) ->
-            request.post
-              uri: "#{helper.base_url}/api/tools"
-              form:
-                name: "#{@toolName}-private"
-                type: 'view'
-                gitUrl: 'git://github.com/scraperwiki/test-app-tool.git'
-                public: false
-            , (err, res, body) =>
-              @response = res
-              @tool = parseJSON res.body
-              done()
-
-          it 'creates a new tool', ->
-            @response.statusCode.should.equal 201
-
-          it 'is private', ->
-            @tool.public.should.be.false
-
-        context 'When I create a public tool', ->
-          before (done) ->
-            request.post
-              uri: "#{helper.base_url}/api/tools"
-              form:
-                name: "#{@toolName}-public"
-                type: 'view'
-                gitUrl: 'git://github.com/scraperwiki/test-app-tool.git'
-                public: true
-            , (err, res, body) =>
-              @response = res
-              @tool = parseJSON res.body
-              done()
-
-          it 'creates a new tool', ->
-            @response.statusCode.should.equal 201
-
-          it 'is public', ->
-            @tool.public.should.be.true
 
       context 'GET /api/tools', ->
         before (done) ->
@@ -278,14 +170,10 @@ describe 'API', ->
         it 'returns a list of tools', ->
           @tools.length.should.be.above 0
 
-        it "includes my first tool", ->
-          should.exist(_.find @tools, (x) => x.name == @toolName)
-
-        it "includes my private tool", ->
+        # TODO(drj): If tools are hanging around, we should make sure that the
+        # behaviour of private tools is correct.
+        xit "includes my private tool", ->
           should.exist(_.find @tools, (x) => x.name == "#{@toolName}-private")
-
-        it "includes my public tool", ->
-          should.exist(_.find @tools, (x) => x.name == "#{@toolName}-public")
 
         it "includes public tools", ->
           should.exist(_.find @tools, (x) => x.name == "test-app")

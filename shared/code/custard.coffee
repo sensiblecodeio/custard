@@ -93,20 +93,3 @@ String::twoLineWrap = ->
   return String(this) if not splitpos
   return this[0..splitpos-1] + '<br>' + this[splitpos+1..]
 
-guiders.createGuider(
-  attachTo: ".new-dataset-tile"
-  buttons: [
-    name: "Close, then click on the clock."
-    onclick: guiders.hideAll
-  ]
-  description: "Custom event handlers can be used to hide and show guiders. This allows you to interactively show the user how to use your software by having them complete steps. To try it, click on the clock."
-  id: "guider3"
-  next: "guider4"
-  position: 3
-  title: "You can advance guiders from custom event handlers."
-  width: 500
-).show()
-
-
-
-

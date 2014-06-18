@@ -679,57 +679,6 @@ listTools = (req, resp) ->
 
     resp.send 200, tools
 
-postTool = (req, resp) ->
-  body = req.body
-  Tool.findOneByName body.name, (err, tool) ->
-    if err?
-      resp.send 500, 'Unknown error #{err}'
-      return
-
-    isNew = not tool?
-    if tool is null
-      publicBool = (body.public is "true")
-      tool = new Tool
-        name: body.name
-        user: req.user.effective.shortName
-        type: body.type
-        gitUrl: body.gitUrl
-        allowedUsers: body.allowedUsers
-        allowedPlans: body.allowedPlans
-        public: publicBool
-    else
-      _.extend tool, body
-
-    tool.gitCloneOrPull dir: process.env.CU_TOOLS_DIR, (err, stdout, stderr) ->
-      console.log "gitCloneOrPull", err, stdout, stderr
-      if err?
-        console.warn err
-        return resp.send 500, error: "Error cloning/updating your tool's Git repo"
-
-      tool.loadManifest (err) ->
-        if err?
-          console.warn err
-          tool.deleteRepo ->
-            return resp.send 500, error: "Error trying to load your tool's manifest"
-          return
-
-        tool.save (err) ->
-          console.warn err if err?
-
-          Tool.findOneById tool._id, (err, tool) ->
-            if err?
-              console.warn err
-              return resp.send 500, error: 'Error trying to find tool'
-
-            code = if isNew then 201 else 200
-            if isNew
-              code = 201
-              action = 'create'
-            else
-              code = 200
-              action = 'update'
-            return resp.send code, tool
-
 updateUser = (req, resp) ->
   User.findByShortName req.user.real.shortName, (err, user) ->
     if err?
@@ -1048,7 +997,6 @@ app.use "/api", api
 
 # API!
 api.get '/tools/?', listTools
-api.post '/tools/?', postTool
 
 api.put '/user/?', updateUser
 

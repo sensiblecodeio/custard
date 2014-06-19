@@ -34,9 +34,6 @@ zDbTool = mongoose.model 'Tool', toolSchema
 class exports.Tool extends ModelBase
   @dbClass: zDbTool
 
-  deleteRepo: (callback) ->
-    rimraf @directory, callback
-
   save: (callback) ->
     @updated = Date.now()
     super callback

@@ -1,4 +1,3 @@
-child_process = require 'child_process'
 fs = require 'fs'
 exists = fs.exists or path.exists
 

@@ -26,10 +26,13 @@ class Cu.View.DatasetList extends Backbone.View
         return
       if not app.datasets().length
         setTimeout ->
-          if window.user.effective.datasetDisplay == 'list'
-            guiderNewDataset('.new-dataset')
-          else
-            guiderNewDataset('.new-dataset-tile')
+          # This is the optimizely id for the "Create dataset guider" experiment.
+          # We only show the guider when the user is in the Variant #1 bucket for it.
+          if window['optimizely'].data.state.variationMap[1346607875] == 1
+            if window.user.effective.datasetDisplay == 'list'
+              guiderNewDataset('.new-dataset')
+            else
+              guiderNewDataset('.new-dataset-tile')
         , 1
     app.on 'route', () ->
       guiders.hideAll()

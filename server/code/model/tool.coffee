@@ -34,21 +34,6 @@ zDbTool = mongoose.model 'Tool', toolSchema
 class exports.Tool extends ModelBase
   @dbClass: zDbTool
 
-  loadManifest: (callback) ->
-    fs.exists @directory, (isok) =>
-      if not isok
-        callback 'not cloned'
-        return
-      fs.readFile "#{@directory}/scraperwiki.json", (err, data) =>
-        if err
-          callback err
-          return
-        try
-          @manifest = JSON.parse data
-        catch error
-          callback error: json: error
-        callback null
-
   deleteRepo: (callback) ->
     rimraf @directory, callback
 

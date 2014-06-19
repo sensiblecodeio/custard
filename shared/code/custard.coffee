@@ -92,3 +92,4 @@ String::twoLineWrap = ->
 
   return String(this) if not splitpos
   return this[0..splitpos-1] + '<br>' + this[splitpos+1..]
+

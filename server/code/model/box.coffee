@@ -32,12 +32,6 @@ _exec = (arg, callback) ->
       cmd: arg.cmd
   , callback
 
-getGitURL = (tool, server) ->
-  if process.env.NODE_ENV is 'production'
-    return "git://git.scraperwiki.net/#{tool.name}"
-  else
-    return tool.gitUrl
-
 class Box extends ModelBase
   @dbClass: zDbBox
   duplicateErrorCount: 0

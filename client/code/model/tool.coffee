@@ -31,7 +31,7 @@ class Cu.Collection.Tools extends Backbone.Collection
     new Cu.Collection.Tools basics
 
   comparator: (model) ->
-    model.get('manifest')?.displayName
+    model.get('manifest')?.position
 
   findByName: (toolName) ->
     @find (tool) -> tool.get('name') is toolName

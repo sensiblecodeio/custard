@@ -215,6 +215,7 @@ exports.tools = [{
   manifest: {
     description: "Create a new, empty dataset",
     displayName: "Code a dataset!",
+    category: "Programming",
     color: "#555",
     icon: "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-code.png"
   }

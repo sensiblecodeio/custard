@@ -42,6 +42,8 @@ zDbUser = mongoose.model 'User', userSchema
 # turns the response into either an error or a javascript object,
 # both of which are passed to the specified callback.
 requestRecurlyAPI = (path, callback) ->
+  if not process.env.RECURLY_API_KEY or not process.env.RECURLY_DOMAIN
+    return callback { error: "RECURLY_API_KEY and RECURLY_DOMAIN need setting" }, null
   request.get
     uri: "https://#{process.env.RECURLY_API_KEY}:@#{process.env.RECURLY_DOMAIN}.recurly.com#{path}"
     strictSSL: true

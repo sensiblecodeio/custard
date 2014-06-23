@@ -16,7 +16,7 @@ main = (TheUser) ->
   paying_plans = _.filter(_.keys(plans), (plan) ->
     return plans[plan]['$']
   )
-  console.log "paying_plans", paying_plans
+  # console.log "paying_plans", paying_plans
 
   TheUser.find { 'accountLevel': { '$in': paying_plans } }, (err, users) ->
     if err?

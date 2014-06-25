@@ -1,17 +1,5 @@
 # The logged-in homepage, showing a user's datasets
 
-guiderNewDataset = (attachTo) ->
-  guiders.createGuider(
-    attachTo: attachTo
-    buttons: [ ]
-    description: "A dataset is an updating table of information from one source, e.g. a Twitter search query, or a PDF."
-    id: "guider-new-dataset"
-    position: 6
-    title: "Hi! First, make a new dataset"
-    width: 300
-    xButton: false
-  ).show()
-
 class Cu.View.DatasetList extends Backbone.View
   className: 'dataset-list row'
 
@@ -19,23 +7,6 @@ class Cu.View.DatasetList extends Backbone.View
     app.datasets().on 'change:state change:displayName', () ->
       app.datasets().sort()
     app.datasets().on 'sort', @addDatasets, @
-
-    # Guiders
-    app.datasets().on 'sync', () ->
-      if Backbone.history.getFragment() != 'datasets'
-        return
-      if not app.datasets().length
-        setTimeout ->
-          # This is the optimizely id for the "Create dataset guider" experiment.
-          # We only show the guider when the user is in the Variant #1 bucket for it.
-          if window['optimizely'].data.state.variationMap[1346607875] == 1
-            if window.user.effective.datasetDisplay == 'list'
-              guiderNewDataset('.new-dataset')
-            else
-              guiderNewDataset('.new-dataset-tile')
-        , 1
-    app.on 'route', () ->
-      guiders.hideAll()
 
   events:
     'click .new-dataset-tile': ->

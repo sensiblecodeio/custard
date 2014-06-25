@@ -19,7 +19,7 @@ class Cu.View.Subscribe extends Backbone.View
         planCode: @options.plan
         distinguishContactFromBillingInfo: true
         collectCompany: true
-        enableCoupons: false
+        enableCoupons: true
         enableAddOns: false
         acceptedCards: ['mastercard', 'visa']
         account:

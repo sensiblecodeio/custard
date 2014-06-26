@@ -742,6 +742,8 @@ updateDataset = (req, resp) ->
       # :todo: should be more systematic about what can be set this way.
       for k of req.body
         dataset[k] = req.body[k]
+
+      console.log "updateDataset: saving", dataset
       dataset.save()
       return resp.send 200, dataset
 

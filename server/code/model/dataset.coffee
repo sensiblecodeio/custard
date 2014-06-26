@@ -90,26 +90,6 @@ class Dataset extends ModelBase
       RedisClient.debouncedPublish @box, channel, message
       callback err
 
-  cleanCrontab: (callback) ->
-    {User} = require 'model/user'
-    User.findByShortName @user, (err, user) =>
-      if err
-        return callback err
-      if not user
-        return callback "cleanCrontab user not found: " + @user
-      _exec
-        user: user
-        boxName: @box
-        boxServer: @boxServer
-        cmd: "crontab -r"
-      , (err, res, body) =>
-        if err?
-          callback err
-        else if res.statusCode isnt 200
-          callback {statusCode: res.statusCode, body: body}
-        else
-          @toBeDeleted = null
-          @save callback
 
   @countVisibleDatasets: (user, callback) ->
     @dbClass.find({user: user, state: {$ne: 'deleted'}}).count callback

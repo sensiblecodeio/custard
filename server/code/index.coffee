@@ -163,6 +163,12 @@ getSessionUser = (user) ->
     session.logoUrl = user.logoUrl
   session
 
+updateLastSeen = (userObject) ->
+  userObject.lastSeen = Date.now()
+  userObject.save (err) ->
+    if err
+      console.warn "Error: updating last seen #{userObject?.shortName}: #{err}"
+
 # TODO: there should be a better way of doing this
 # Get a real + effective user objects from the database,
 # return them in a single object, to be injected into index.html
@@ -182,6 +188,11 @@ getSessionUsersFromDB = (reqUser, cb) ->
         console.warn err
       if not realUser
         console.warn "WARN: Couldn't find user .real: #{reqUser.real.shortName}"
+
+      # Async, don't care about waiting for this.
+      updateLastSeen realUser
+      if realUser?.shortName != effectiveUser?.shortName
+        updateLastSeen effectiveUser
 
       cb
         real: getSessionUser realUser

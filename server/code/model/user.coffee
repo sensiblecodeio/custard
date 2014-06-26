@@ -26,6 +26,7 @@ userSchema = new mongoose.Schema
   isStaff: Boolean
   accountLevel: String
   planExpires: Date
+  lastSeen: Date
   recurlyAccount: {type: String, unique: true}
   acceptedTerms: Number # a value of 0 or null means you need to accept terms on next login
   created: {type: Date, default: Date.now}

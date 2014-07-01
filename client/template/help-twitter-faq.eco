@@ -1,0 +1,66 @@
+<nav class="well optional">
+  <ul class="nav nav-list">
+    <li class="nav-header">These FAQs:</li>
+    <li><a data-nonpushstate href="#historical">How do I search for historical Tweets?</a></li>
+    <li><a data-nonpushstate href="#updated">How often is the Twitter data updated?</a></li>
+    <li><a data-nonpushstate href="#slowdown">&ldquo;Twitter has asked us to slow down&rdquo;</a></li>
+    <li><a data-nonpushstate href="#timezone">What's the time zone of dates?</a></li>
+    <li class="nav-header">Related guides:</li>
+    <li><a href="/help/twitter-search">Scrape Tweets and download as a spreadsheet</a></li>
+  </ul>
+</nav>
+
+<div class="wrapper">
+
+  <h2 id="faq">Twitter FAQs</h3>
+
+  <div class="full-width">
+    <h3 id="historical">How do I search for historical Tweets?</h3>
+    <p>Unfortunately, Twitter only allows its API to reach roughly a week into
+the past. </p>
+    <p>If you need really old data, you&rsquo;ll have to use
+someone like DataSift or Gnip, who re-sell access to the Twitter firehose.
+It's quite expensive.</p>
+
+    <p>If you know in advance that you'll need the data, then 
+    set up the dataset and choose &ldquo;Monitor future Tweets&rdquo;.
+    It'll then be available later when you need it.
+    </p>
+
+    <h3 id="updated">How often is the Twitter data updated?</h3>
+    <p>Assuming you have the &ldquo;Monitor future Tweets&rdquo; checkbox selected, about once an hour.</p>
+    <p>In this mode, the <strong>&ldquo;Search for tweets&rdquo;</strong>
+tool will request tweets newer than the last tweet ID it stored in its previous
+run (so there is no overlap, and no wasted API calls).</p>
+
+    <h3 id="slowdown">What does &ldquo;Twitter has asked us to slow down&rdquo; error &ndash; mean?</h3>
+    <p>Twitter allows us to request 18000 tweets or 75000 followers in total, on a user&rsquo;s
+behalf, in any given 15 minute period. This is called &ldquo;rate limiting&rdquo;.</p>
+
+    <p>You don't need to worry too much if you're hitting the limit, the tools will
+carry on trying and get more data over time. If it is all going too slowly, there
+are several things you can do.</p>
+
+    <ol>
+     <li>The limit is shared across all
+ScraperWiki Twitter tools you might have running at the same time.
+Turn off monitoring or delete ones that you're not using.
+     </li>
+      <li>The rate limit is <i>also</i> shared with any other apps that are
+calling Twitter using your Twitter login details. You can <a
+href="https://twitter.com/settings/applications">see all the apps that are
+accessing your account</a>, and disable ones you don't use.</li>
+      <li>Use multiple Twitter accounts. Each time you make a new dataset,
+      you can authenticate against a different Twitter account. This is useful
+      if, for example, you are doing work for several clients.</li>
+    </ol>
+    <p>Choose the <strong>&ldquo;Diagnostics&rdquo;</strong> link to get 
+    detailed technical information about the rate limits and status.
+    </p>
+
+    <h3 id="timezone">What's the time zone of dates?</h3>
+    <p>The <code>created_at</code> column is in UTC (more commonly called GMT).</p>
+
+  </div>
+
+</div>

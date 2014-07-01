@@ -1,21 +1,3 @@
-<h2>General help</h2>
-
-<div class="row">
-
-  <a class="swcol help-tile" href="/contact/" data-nonpushstate style="background: #F10F0F">
-    <h3>Help! How do I contact&nbsp;you?</h3>
-  </a>
-
-  <a class="swcol help-tile" href="/help/whats-new/" style="background: #f1c40f">
-    <h3>What&rsquo;s ScraperWiki all about?</h3>
-  </a>
-
-  <a class="swcol help-tile" href="/help/scraperwiki-classic/" style="background: #73B3D6">
-    <h3>ScraperWiki Classic retirement guide</h3>
-  </a>
-
-</div>
-
 <h2>Quick start guides</h2>
 
 <div class="row">
@@ -24,30 +6,44 @@
     <h3>Scrape Tweets and download as a spreadsheet</h3>
   </a>
 
-<!--  <a class="swcol help-tile" href="/help/upload-and-summarise/" style="background: #27ae60">
-    <h3>Upload and summarise a spreadsheet of data</h3>
-  </a> -->
+  <a class="swcol help-tile" href="/help/twitter-faq/" style="background: #27ae60">
+    <h3>Twitter FAQs</h3>
+  </a>
 
   <a class="swcol help-tile" href="/help/code-in-your-browser/" style="background: #f39c12">
     <h3>Code a scraper in your browser</h3>
   </a>
 
-<a class="swcol help-tile" href="/help/make-your-own-tool/" style="background: #559920">
-    <h3>Make your own tool with HTML, JavaScript &amp; Python</h3>
-  </a>
-
 </div>
 
-<h2>Reference documentation</h2>
+<h2>General help</h2>
 
 <div class="row">
 
-  <a class="swcol help-tile developer" href="/help/developer/" style="background: #9b59b6">
-    <h3>Developer docs</h3>
+  <a class="swcol help-tile" href="/help/whats-new/" style="background: #f1c40f">
+    <h3>What&rsquo;s ScraperWiki all about?</h3>
+  </a>
+
+  <a class="swcol help-tile" href="/contact/" data-nonpushstate style="background: #F10F0F">
+    <h3>Help! How do I contact&nbsp;you?</h3>
   </a>
 
   <a class="swcol help-tile corporate" href="/help/corporate/" style="background: #1F5DA2">
     <h3>Corporate FAQs</h3>
+  </a>
+
+</div>
+
+<h2>Developers</h2>
+
+<div class="row">
+
+  <a class="swcol help-tile" href="/help/make-your-own-tool/" style="background: #559920">
+    <h3>Make your own tool with HTML, JavaScript &amp; Python</h3>
+  </a>
+
+  <a class="swcol help-tile developer" href="/help/developer/" style="background: #9b59b6">
+    <h3>Developer docs</h3>
   </a>
 
   <a class="swcol help-tile zig" href="/help/zig/">

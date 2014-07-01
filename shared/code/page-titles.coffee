@@ -17,6 +17,9 @@ PageTitles =
   'help-twitter-search':
     heading: "Scrape Tweets and download as a spreadsheet"
     title: "Scrape Tweets | Help | ScraperWiki"
+  'help-twitter-faq':
+    heading: "Twitter FAQs"
+    title: "Twitter FAQs | Help | ScraperWiki"
   'help-upload-and-summarise':
     heading: 'Upload and summarise a spreadsheet of data'
     title: "Upload and Summarise | Help | ScraperWiki"
@@ -26,9 +29,6 @@ PageTitles =
   'help-make-your-own-tool':
     heading: 'Make your own tool with HTML, JavaScript & Python'
     title: "Make your own tool | Help | ScraperWiki"
-  'help-scraperwiki-classic':
-    heading: 'ScraperWiki Classic retirement guide'
-    title: "ScraperWiki Classic | Help | ScraperWiki"
   'terms':
     heading: 'Terms & Conditions'
     title: "Terms & Conditions | ScraperWiki"

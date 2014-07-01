@@ -20,12 +20,12 @@
 
 <div class="row">
 
-  <a class="swcol help-tile" href="/contact/" data-nonpushstate style="background: #F10F0F">
-    <h3>Help! How do I contact&nbsp;you?</h3>
-  </a>
-
   <a class="swcol help-tile" href="/help/whats-new/" style="background: #f1c40f">
     <h3>What&rsquo;s ScraperWiki all about?</h3>
+  </a>
+
+  <a class="swcol help-tile" href="/contact/" data-nonpushstate style="background: #F10F0F">
+    <h3>Help! How do I contact&nbsp;you?</h3>
   </a>
 
   <a class="swcol help-tile corporate" href="/help/corporate/" style="background: #1F5DA2">

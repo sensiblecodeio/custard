@@ -38,7 +38,7 @@ class Cu.View.ResetPassword extends Backbone.View
           _gaq.push ['_trackEvent', 'set-password', 'success', query]
         error: (jqxhr, textStatus, errorThrown) =>
           if jqxhr.status == 404
-            msg = """<div class="alert"><strong>Hmmm. That username could not be found.</strong> Maybe you&rsquo;re trying to <a href="https://classic.scraperwiki.com/accounts/password/reset/">reset a ScraperWiki Classic password?</a></div>"""
+            msg = """<div class="alert"><strong>Hmmm. That username could not be found.</strong></div>"""
           else
             msg = """<div class="alert alert-error"><strong>Hmmm. Something went wrong.</strong> Email <a href="mailto:hello@scraperwiki.com">hello@scraperwiki.com</a> and we&rsquo;ll email you a password reset link manually.</div>"""
           $('form', @$el).prepend msg

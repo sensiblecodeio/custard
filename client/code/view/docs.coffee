@@ -12,6 +12,10 @@ class Cu.View.Help extends Backbone.View
     @el.innerHTML = JST[@options.template]
       user: window.user.effective
     setTimeout @makePrettyLike, 100
+
+    # redirect old URL to new page
+    if window.location.pathname == "/help/twitter-search/" and window.location.hash == "#faq"
+      app.navigate "/help/twitter-faq", trigger: true
     @
 
   navClick: (e) ->

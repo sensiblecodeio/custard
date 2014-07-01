@@ -95,6 +95,9 @@ It's quite expensive.</p>
       <p>In this mode, the <strong>&ldquo;Search for tweets&rdquo;</strong>
 tool will request tweets newer than the last tweet ID it stored in its previous
 run (so there is no overlap, and no wasted API calls).</p>
+
+      <h4>What's the time zone of the data in the created_at column?</h4>
+      <p>This is UTC.</p>
     </div>
     <div style="width: 47%; float: right">
       <h4>I am seeing a &ldquo;Twitter has asked us to slow down&rdquo; error &ndash; what is the problem?</h4>

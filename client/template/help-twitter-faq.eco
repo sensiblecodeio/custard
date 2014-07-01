@@ -41,11 +41,11 @@ tool will request tweets newer than the last tweet ID it stored in its previous
 run (so there is no overlap, and no wasted API calls).</p>
 
       <h4 id="timezone">What's the time zone of dates?</h4>
-      <p>The created_at column is in UTC.</p>
+      <p>The <code>created_at</code> column is in UTC.</p>
     </div>
     <div style="width: 47%; float: right">
       <h4 id="slowdown">I am seeing a &ldquo;Twitter has asked us to slow down&rdquo; error &ndash; what is the problem?</h4>
-      <p>Twitter allows us to request 18000 tweets in total, on a user&rsquo;s
+      <p>Twitter allows us to request 18000 tweets or 75000 followers in total, on a user&rsquo;s
 behalf, in any given 15 minute period. This is called &ldquo;rate limiting&rdquo;.</p>
 
       <p>You don't need to worry too much if you're hitting the limit, the tools will

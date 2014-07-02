@@ -40,7 +40,7 @@ class Cu.View.DatasetList extends Backbone.View
   events:
     'click .new-dataset-tile': ->
       $('#subnav .new-dataset').trigger('click') # :TODO: this is nasty and hacky
-    'click th.sortable': 'sortTable'
+    'click th.sortable': 'sortTableToggle'
 
   render: ->
     if window.user.effective.datasetDisplay == 'list'
@@ -93,18 +93,23 @@ class Cu.View.DatasetList extends Backbone.View
         view = new Cu.View.DatasetTile model: dataset
         @$el.append view.render().el
 
-  sortTable: (e) ->
+  sortTableToggle: (e) ->
     $th = $(e.currentTarget)
-    columnNumber = $th.prevAll().length
+    alert 'moo cow'
     if $th.is '.sorted-asc'
       sortOrder = 'desc'
-      $th.removeClass('sorted-asc').addClass 'sorted-desc'
     else
       sortOrder = 'asc'
-      $th.removeClass('sorted-desc').addClass 'sorted-asc'
+    @sortTable $th, sortOrder
 
+  sortTable: ($th, sortOrder) ->
+    if sortOrder == 'desc'
+      $th.removeClass('sorted-asc').addClass 'sorted-desc'
+    else
+      $th.removeClass('sorted-desc').addClass 'sorted-asc'
     $th.siblings().removeClass 'sorted-asc sorted-desc'
 
+    columnNumber = $th.prevAll().length
     $('tbody>tr', @$el).tsort 'td:eq(' + columnNumber + ')',
       order: sortOrder
       attr: 'data-sortable-value'

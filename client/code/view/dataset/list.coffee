@@ -20,6 +20,14 @@ class Cu.View.DatasetList extends Backbone.View
       app.datasets().sort()
     app.datasets().on 'sort', @addDatasets, @
 
+    # Load saved column sorting
+    app.datasets().on 'sync', () =>
+      if Backbone.history.getFragment() != 'datasets'
+        return
+      if $.cookie("dataset-sort-class")
+        colSelector = "." + $.cookie("dataset-sort-class") + ".sortable"
+        @sortTable $(colSelector), $.cookie("dataset-sort-order")
+
     # Guiders
     app.datasets().on 'sync', () ->
       if Backbone.history.getFragment() != 'datasets'
@@ -95,7 +103,6 @@ class Cu.View.DatasetList extends Backbone.View
 
   sortTableToggle: (e) ->
     $th = $(e.currentTarget)
-    alert 'moo cow'
     if $th.is '.sorted-asc'
       sortOrder = 'desc'
     else
@@ -108,6 +115,10 @@ class Cu.View.DatasetList extends Backbone.View
     else
       $th.removeClass('sorted-desc').addClass 'sorted-asc'
     $th.siblings().removeClass 'sorted-asc sorted-desc'
+
+    # Save column sorting
+    $.cookie("dataset-sort-class", $th.attr('class').split(' ')[0])
+    $.cookie("dataset-sort-order", sortOrder)
 
     columnNumber = $th.prevAll().length
     $('tbody>tr', @$el).tsort 'td:eq(' + columnNumber + ')',

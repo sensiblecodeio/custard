@@ -47,9 +47,9 @@ describe 'Express Routes', ->
     request(app)
       .get('/help/')
       .expect(200)
-      .expect(/General help/)
       .expect(/Quick start guides/)
-      .expect(/Reference documentation/)
+      .expect(/General help/)
+      .expect(/Developers/)
       .end(done)
 
   it '/terms/', (done) ->

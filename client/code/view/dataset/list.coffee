@@ -20,6 +20,14 @@ class Cu.View.DatasetList extends Backbone.View
       app.datasets().sort()
     app.datasets().on 'sort', @addDatasets, @
 
+    # Load saved column sorting
+    app.datasets().on 'sync', () =>
+      if Backbone.history.getFragment() != 'datasets'
+        return
+      if $.cookie("dataset-sort-class")
+        colSelector = "." + $.cookie("dataset-sort-class") + ".sortable"
+        @sortTable $(colSelector), $.cookie("dataset-sort-order")
+
     # Guiders
     app.datasets().on 'sync', () ->
       if Backbone.history.getFragment() != 'datasets'
@@ -40,7 +48,7 @@ class Cu.View.DatasetList extends Backbone.View
   events:
     'click .new-dataset-tile': ->
       $('#subnav .new-dataset').trigger('click') # :TODO: this is nasty and hacky
-    'click th.sortable': 'sortTable'
+    'click th.sortable': 'sortTableToggle'
 
   render: ->
     if window.user.effective.datasetDisplay == 'list'
@@ -93,18 +101,26 @@ class Cu.View.DatasetList extends Backbone.View
         view = new Cu.View.DatasetTile model: dataset
         @$el.append view.render().el
 
-  sortTable: (e) ->
+  sortTableToggle: (e) ->
     $th = $(e.currentTarget)
-    columnNumber = $th.prevAll().length
     if $th.is '.sorted-asc'
       sortOrder = 'desc'
-      $th.removeClass('sorted-asc').addClass 'sorted-desc'
     else
       sortOrder = 'asc'
-      $th.removeClass('sorted-desc').addClass 'sorted-asc'
+    @sortTable $th, sortOrder
 
+  sortTable: ($th, sortOrder) ->
+    if sortOrder == 'desc'
+      $th.removeClass('sorted-asc').addClass 'sorted-desc'
+    else
+      $th.removeClass('sorted-desc').addClass 'sorted-asc'
     $th.siblings().removeClass 'sorted-asc sorted-desc'
 
+    # Save column sorting
+    $.cookie("dataset-sort-class", $th.attr('class').split(' ')[0])
+    $.cookie("dataset-sort-order", sortOrder)
+
+    columnNumber = $th.prevAll().length
     $('tbody>tr', @$el).tsort 'td:eq(' + columnNumber + ')',
       order: sortOrder
       attr: 'data-sortable-value'

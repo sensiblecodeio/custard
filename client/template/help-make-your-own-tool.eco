@@ -143,35 +143,12 @@ scraperwiki.sqlite.save(['name'], images, 'images')</pre>
 
   <h2 id="step6">6. Submit it to the Tool Shop</h2>
 
-  <div class="step full-width">
-    <p>Let&rsquo;s submit this to the Tool Shop, privately, so you can use it again and again on all your other datasets.</p>
-    <p>Switch back to your SSH session, and create a file called <code>scraperwiki.json</code> in the <code>~/tool/</code> directory.</p>
-    <pre>nano ~/tool/scraperwiki.json</pre>
-    <p>Paste these settings into the file:</p>
-    <pre class="prettyprint">{
-  "displayName": "Search Wikipedia images",
-  "description": "Enter a search term. Get images. Simple."
-}</pre>
-  </div>
+  <div class="step">
 
-  <div class="step full-width">
-    <p>The Tool Shop uses Git to pull your tool&rsquo;s latest code. Set up a Git repo in your <code>~/tool/</code> directory:</p>
-    <pre>cd ~/tool
-git init
-git add .
-git commit -m 'initial commit'</pre>
+    <p>If you've got this far, and you've made an interesting tool, please <a href="/contact/">contact us</a> 
+    to add it so everyone else can use it!
+    </p>
 
-    <p class="well well-small"><span class="label label-info">Top tip!</span> Follow <a href="/help/developer/#tools-develop-remotely">these instructions</a> to magically send your local Git settings to the remote box using SSH Agent Forwarding.</p>
-
-    <p>Then push your code to a third-party Git hosting service like <a href="https://help.github.com/articles/pushing-to-a-remote" target="_blank">Github</a> or <a href="https://confluence.atlassian.com/display/BITBUCKET/Creating+a+Repository" target="_blank">BitBucket</a>.</p>
-  </div>
-
-  <div class="step full-width">
-    <p>Now your tool has a <code>scraperwiki.json</code> file, and is on Github or BitBucket, you can submit it to the Tool Shop.</p>
-    <p>Right now, the Tool Shop API requires an active ScraperWiki session cookie, which means it&rsquo;s easiest to call it from directly within your browser.</p>
-    <p>Open up your browser&rsquo;s JavaScript console (Ctrl-Shift-J on a PC, Cmd-Alt-J on a Mac) and paste this code in, making sure to replace <strong>git://github.com/your-repo.git</strong> with your tool&rsquo;s new Git URL:</p>
-    <pre class="prettyprint">$.ajax({url: "/api/tools", type: "POST", data: {name: "wikipedia-<%= @user?.shortName or 'search' %>", type: "importer", public: false, gitUrl: "git://github.com/your-repo.git"}}).complete(function(r){ console.log(r.responseText) })</pre>
-    <p>Once you get a response, your tool has been published! You can find it by clicking &ldquo;<strong>Create a new dataset</strong>&rdquo; on your homepage.</p>
   </div>
 
 </div>

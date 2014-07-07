@@ -34,43 +34,6 @@ zDbTool = mongoose.model 'Tool', toolSchema
 class exports.Tool extends ModelBase
   @dbClass: zDbTool
 
-  rsync: (boxServer, callback) =>
-    if 'testing' == process.env.NODE_ENV
-      callback()
-    else
-      child_process.exec "run-this-one rsync --delete -avz -e 'ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -i /etc/custard/tools_rsa' /opt/tools/ tools@#{boxServer}:", callback
-
-  gitCloneOrPull: (options, callback) ->
-    {Box} = require 'model/box'
-    @directory = "#{options.dir}/#{@name}"
-    # :todo: whitelist @directory
-    fs.exists @directory, (exists) =>
-      if not exists
-        cmd = "mkdir #{@directory} && cd #{@directory} && git init && git fetch #{@gitUrl} && git checkout FETCH_HEAD"
-      else
-        cmd = "cd #{@directory} && git fetch #{@gitUrl} && git checkout FETCH_HEAD"
-      child_process.exec cmd, (error, stdout, stderr) =>
-        if error
-          callback error, stdout, stderr
-        else
-          async.each Box.listServers(), @rsync, callback
-
-
-  # TODO: DRY
-  # This is only used in the edge case where the tool is in the custard DB,
-  # but not on the custard server
-  gitCloneIfNotExists: (options, callback) ->
-    {Box} = require 'model/box'
-    @directory = "#{options.dir}/#{@name}"
-    # :todo: whitelist @directory
-    fs.exists @directory, (exists) =>
-      if not exists
-        cmd = "mkdir #{@directory}; cd #{@directory}; git init; git fetch #{@gitUrl}"
-        child_process.exec cmd, =>
-          async.each Box.listServers(), @rsync, callback
-      else
-        callback null, null
-
   loadManifest: (callback) ->
     fs.exists @directory, (isok) =>
       if not isok

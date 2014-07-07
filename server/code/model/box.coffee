@@ -45,31 +45,30 @@ class Box extends ModelBase
   installTool: (arg, callback) ->
     Tool.findOneForUser {name: arg.toolName, user: arg.user}, (err, tool) =>
       if err?
-        callback "Can't find tool"
-      else if not tool?
-        callback "You don't seem to have permission to install this"
-      else
-        # EG: https://git.scraperwiki.com/tool-name
-        # :todo: When we have paid-for tools (private), then
-        # the https server will need to authenticate each box
-        # to check it has access to the git repo. It can do this
-        # (in principle) using ident-express.
-        gitURL = getGitURL(tool, @server)
-        toolsDir = process.env.CU_TOOLS_DIR
-        # Clone from gitURL if it doesn't exist in the tool cache
-        tool.gitCloneIfNotExists dir: toolsDir, (err) =>
-          _exec
-            user: arg.user
-            boxName: @name
-            boxServer: @server
-            cmd: "mkdir incoming http; ln -s /tools/#{tool.name} tool"
-          , (err, res, body) ->
-            if err?
-              callback err
-            else if res.statusCode isnt 200
-              callback {statusCode: res.statusCode, body: body}
-            else
-              callback null
+        return callback "Can't find tool"
+      if not tool?
+        return callback "You don't seem to have permission to install this"
+
+      # EG: https://git.scraperwiki.com/tool-name
+      # :todo: When we have paid-for tools (private), then
+      # the https server will need to authenticate each box
+      # to check it has access to the git repo. It can do this
+      # (in principle) using ident-express.
+      gitURL = getGitURL(tool, @server)
+      toolsDir = process.env.CU_TOOLS_DIR
+
+      _exec
+        user: arg.user
+        boxName: @name
+        boxServer: @server
+        cmd: "mkdir incoming http; ln -s /tools/#{tool.name} tool"
+      , (err, res, body) ->
+        if err?
+          callback err
+        else if res.statusCode isnt 200
+          callback {statusCode: res.statusCode, body: body}
+        else
+          callback null
 
   endpoint: () ->
     Box.endpoint @server, @name

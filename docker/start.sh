@@ -11,9 +11,6 @@ date "+%H:%M:%S.%N"
 npm install --unsafe-perm
 source activate
 
-echo Starting redis.
-redis-server &
-
 echo Starting mongo.
 # Disable the journal, preallocation and syncing,
 # since the whole database is discardable.
@@ -27,7 +24,6 @@ waitfor() {
 	done
 }
 
-waitfor 6379 redis
 waitfor 27017 mongod
 
 # cake dev &
@@ -46,7 +42,7 @@ set -e
 
 # TODO(pwaller/drj): Integration tests.
 
-# Kill mongo and redis
+# Kill mongo
 kill $(jobs -p)
 wait
 

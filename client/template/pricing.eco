@@ -16,12 +16,6 @@
 </div>
 <% end %>
 
-<% if @upgrade is 'followers': %>
-<div class="alert alert-info" style="margin-left: 20px; margin-bottom: 45px;">
-  <strong>Please upgrade your account</strong> to be able to get more Twitter followers.
-</div>
-<% end %>
-
 <!--
 <div class="plan enterprise account-large swcol">
   <h2>Enterprise</h2>
@@ -56,7 +50,6 @@
   <% end %>
   <ul>
     <li>Handle large PDFs</li>
-    <li>Unlimited Twitter followers</li>
   </ul>
 </div>
 
@@ -77,7 +70,6 @@
   <% end %>
   <ul>
     <li>Handle large PDFs</li>
-    <li>Up to 10k Twitter followers</li>
   </ul>
 </div>
 
@@ -94,7 +86,6 @@
   <% end %>
   <ul>
     <li>Small PDFs only</li>
-    <li>Up to 10k Twitter followers</li>
   </ul>
 </div>
 

@@ -14,12 +14,6 @@ PageTitles =
   'help-zig':
     heading: "ZIG"
     title: "Zarino Interface Guidelines | Help | ScraperWiki"
-  'help-twitter-search':
-    heading: "Scrape Tweets and download as a spreadsheet"
-    title: "Scrape Tweets | Help | ScraperWiki"
-  'help-twitter-faq':
-    heading: "Twitter FAQs"
-    title: "Twitter FAQs | Help | ScraperWiki"
   'help-upload-and-summarise':
     heading: 'Upload and summarise a spreadsheet of data'
     title: "Upload and Summarise | Help | ScraperWiki"

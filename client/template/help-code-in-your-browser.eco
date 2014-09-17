@@ -7,8 +7,6 @@
     <li><a data-nonpushstate href="#step4">4. Scrape the data</a></li>
     <li><a data-nonpushstate href="#step5">5. Save to the datastore</a></li>
     <li><a data-nonpushstate href="#step6">6. Use the data</a></li>
-    <li class="nav-header">Related guides:</li>
-    <li><a href="/help/twitter-search">Scrape and download tweets</a></li>
   </ul>
 </nav>
 

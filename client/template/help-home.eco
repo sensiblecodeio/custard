@@ -2,14 +2,6 @@
 
 <div class="row">
 
-  <a class="swcol help-tile" href="/help/twitter-search/" style="background: #3498db">
-    <h3>Scrape Tweets and download as a spreadsheet</h3>
-  </a>
-
-  <a class="swcol help-tile" href="/help/twitter-faq/" style="background: #27ae60">
-    <h3>Twitter FAQs</h3>
-  </a>
-
   <a class="swcol help-tile" href="/help/code-in-your-browser/" style="background: #f39c12">
     <h3>Code a scraper in your browser</h3>
   </a>

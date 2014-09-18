@@ -638,7 +638,11 @@ supplied with nginx.</p>
 
 <p>Symbolic links will be followed, meaning that you can have a python script called <code>query.py</code> and a symlink to it called <code>query</code> which will lead to slightly nicer URLs.</p>
 
-<p>CGI-bin responses default to a HTTP 200 status. If you want to return a different status, you can print your own `Status:` header. The <a href="http://docs.python.org/3/library/cgi">Python `cgi` module documentation</a> will prove useful if you&rsquo;re writing a Python CGI script. In general, your scripts will look like:</p>
+<p>You must print a `Content-Type:` header, any other headers you need, and then a blank line.  <a href="http://docs.python.org/3/library/cgi">Python `cgi` module documentation</a> will prove useful if you&rsquo;re writing a Python CGI script.</p>
+
+<p>CGI-bin responses default to a HTTP 200 status. If you want to return a different status, you can print your own `Status:` header. </p>
+
+<p>In general, your scripts will look like:</p>
 
 <pre class="prettyprint">
 #!/usr/bin/env python
@@ -650,6 +654,10 @@ import cgi
 # enable printing of tracebacks
 # when something goes wrong
 cgitb.enable()
+
+# Required:
+# Set a content type
+print "Content-Type: text/plain"
 
 # Optional:
 # Set a non 200 HTTP status code

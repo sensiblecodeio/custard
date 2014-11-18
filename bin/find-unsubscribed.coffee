@@ -49,7 +49,14 @@ main = (TheUser) ->
         else if subscription
           console.log "    subscription:", subscription.plan.plan_code
         else
-          console.log "    no subscription"
+          console.log "    no subscription - changing to free-trial"
+          user.accountLevel = 'free-trial'
+          user.planExpires = undefined
+          user.save (err, newUser) ->
+            if err?
+              console.log "    ERROR saving user", err
+            else
+              console.log "    YEP updated user"
         cb null
     , (err) ->
       process.exit() if CLI?

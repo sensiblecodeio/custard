@@ -33,11 +33,6 @@ main = (TheUser) ->
         # scremium is a test account that needs to be on this plan
         if user.shortName == 'scremium'
           return cb null
-        # special case users - check these time to time
-        # Joel Hacker - on xlarge plan at was promised > 100 datsets back in the day
-        # CSV Soundsystem - paid in advance by PayPal for I think 3 years, review again in mid-2015
-        if user.shortName == 'joelhacker' or user.shortName == 'csv'
-          return cb null
 
         # something is up
         console.log "user:", user.shortName, user.displayName, user.email, "mongo plan:", user.accountLevel

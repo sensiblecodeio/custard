@@ -33,6 +33,9 @@ main = (TheUser) ->
         # scremium is a test account that needs to be on this plan
         if user.shortName == 'scremium'
           return cb null
+        # just enable shyam for now, he's mucking with his subscription
+        if user.shortName == 'owl'
+          return cb null
 
         # something is up
         console.log "user:", user.shortName, user.displayName, user.email, "mongo plan:", user.accountLevel

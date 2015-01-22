@@ -121,7 +121,7 @@ class Cu.Router.Main extends Backbone.Router
               cb_datasets: 0
               switch_url: "https://scraperwiki.com/switch/" + real.shortName
               recurly_url: "https://scraperwiki.recurly.com/accounts/" + real.recurlyAccount
-              mongo_url: "https://app.compose.io/mongohq-scraperwiki-com/mongo/cu-live-eu/collections/users?query=%7B%22shortName%22%3A%22" + real.shortName + "%22%7D&fields=%7B%7D&sort=%7B%7D&limit=10"
+              mongo_url: "https://app.compose.io/mongohq-scraperwiki-com/mongodb/databases/cu-live-eu/collections/users/documents?limit=10&find%5Bquery%5D={%22shortName%22%3A%22" + real.shortName + "%22}"
 
             _.each datasets, (dataset) ->
               date = moment(dataset.createdDate, 'YYYY-MM-DD HH:mm:ssZ').unix()

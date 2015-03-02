@@ -617,8 +617,7 @@ app.get '/subscribe/?*', renderClientApp
 app.get '/thankyou/?*', renderClientApp
 
 app.get '/pricing/?*', (req, resp) ->
-  resp.redirect '/login'
-#renderServerAndClientSide page: 'pricing', req, resp
+  renderServerAndClientSide page: 'pricing', req, resp
 
 app.get '/signup/community', (req, resp) ->
   resp.redirect '/signup/freetrial'

@@ -33,6 +33,7 @@
 </div>
 -->
 
+<!--
 <div class="plan datascientist account-large swcol<% if @upgrade is 'upgrade': %> glowing<% end %>">
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
@@ -89,13 +90,19 @@
   </ul>
 </div>
 
-<div class="clearfix"></div>
+-->
+
+<!-- <div class="clearfix"></div>
 
 <p class="alert alert-error"><i class="icon-warning-sign"></i> Sorry, the <strong>twitter tools are not available!</strong> Please <i class="icon-hand-right"></i> <a href="https://blog.scraperwiki.com/2014/08/the-story-of-getting-twitter-data-and-its-missing-middle/">see our blog post</a> for more information.</a></p>
 
-<p class="corporate">We also offer Enterprise data hubs with professional services at prices from $1000 / month. 
+--> 
+
+<p class="corporate">We offer Enterprise data hubs with professional services at prices from $2000 / month. 
 For more information read our <a href="https://scraperwiki.com/help/corporate/">Corporate FAQ</a>,
 and if you are interested <a href="https://scraperwiki.com/professional#request">get in touch</a> with our professional services team.
 </p>
+
+
 
 

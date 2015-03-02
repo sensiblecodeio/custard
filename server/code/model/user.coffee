@@ -55,7 +55,7 @@ requestRecurlyAPI = (path, callback) ->
     if err?
       return callback err, null
     else if recurlyResp.statusCode is 404
-      return callback { error: "You have no Recurly account. Sign up for a paid plan at http://scraperwiki.com/pricing" }, null
+      return callback { error: "You have no Recurly account." }, null
     else if recurlyResp.statusCode isnt 200
       return callback { statusCode: recurlyResp.statusCode, error: recurlyResp.body }, null
 
@@ -118,7 +118,7 @@ class exports.User extends ModelBase
         return callback err, null
 
       if not obj.subscriptions
-        return callback { error: "You do not have a paid subscription. Sign up at http://scraperwiki.com/pricing" }, null
+        return callback { error: "You do not have a paid subscription." }, null
 
       # xml2js converts multiple entities within entities as an array,
       # but a single one is a single object. So we wrap into a list where necessary.

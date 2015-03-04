@@ -5,7 +5,7 @@
   Here&rsquo;s a sixty-second rundown of how it works.</p>
   <p style="margin-bottom: 0">
     <a class="btn btn-large" data-nonpushstate href="/help/" style="margin-right: 20px;">Read the docs</a>
-    <a class="btn btn-primary btn-large" data-nonpushstate href="/pricing">Sign up <i class="icon-chevron-right"></i></a>
+    <a class="btn btn-primary btn-large" data-nonpushstate href="/login">Log in<i class="icon-chevron-right"></i></a>
   </p>
 </div>
 

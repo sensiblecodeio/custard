@@ -214,7 +214,9 @@ exports.tools = [{
   gitUrl: "https://github.com/scraperwiki/newdataset-tool.git",
   manifest: {
     description: "Create a new, empty dataset",
+    position: 10,
     displayName: "Code a dataset!",
+    category: "Programming",
     color: "#555",
     icon: "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-code.png"
   }
@@ -225,6 +227,7 @@ exports.tools = [{
   gitUrl: "https://github.com/scraperwiki/test-app-tool.git",
   manifest: {
     description: "Test app",
+    position: 1,
     displayName: "Test app",
     color: "#b0df18",
     icon: "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-test.png"
@@ -247,6 +250,7 @@ exports.tools = [{
   gitUrl: "https://github.com/scraperwiki/test-push-tool.git",
   manifest: {
     description: "Test push",
+    position: 2,
     displayName: "Test push",
     color: "#b0df18",
     icon: "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-test.png"
@@ -299,7 +303,9 @@ exports.tools = [{
   gitUrl: "git://github.com/scraperwiki/spreadsheet-upload-tool.git",
   manifest: {
     description: "Upload an Excel file or CSV",
+    position: 5,
     displayName: "Upload a spreadsheet",
+    category: "Spreadsheets",
     color: "#029745",
     icon: "https://s3-eu-west-1.amazonaws.com/sw-icons/tool-icon-spreadsheet-upload.png"
   }

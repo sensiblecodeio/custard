@@ -32,12 +32,6 @@ _exec = (arg, callback) ->
       cmd: arg.cmd
   , callback
 
-getGitURL = (tool, server) ->
-  if process.env.NODE_ENV is 'production'
-    return "git://git.scraperwiki.net/#{tool.name}"
-  else
-    return tool.gitUrl
-
 class Box extends ModelBase
   @dbClass: zDbBox
   duplicateErrorCount: 0
@@ -48,14 +42,6 @@ class Box extends ModelBase
         return callback "Can't find tool"
       if not tool?
         return callback "You don't seem to have permission to install this"
-
-      # EG: https://git.scraperwiki.com/tool-name
-      # :todo: When we have paid-for tools (private), then
-      # the https server will need to authenticate each box
-      # to check it has access to the git repo. It can do this
-      # (in principle) using ident-express.
-      gitURL = getGitURL(tool, @server)
-      toolsDir = process.env.CU_TOOLS_DIR
 
       _exec
         user: arg.user

@@ -437,64 +437,6 @@ describe 'API', ->
               obj.canBeReally.should.eql ['test', 'teststaff']
               done err
 
-      context 'POST: /api/status', ->
-        before (done) ->
-          """Check that a local identd is running."""
-          socket = net.connect 113, ->
-            socket.end()
-            done()
-          socket.on 'error', (err) =>
-            if /REFUS/.test err.code # ECONNREFUSED
-              console.warn "          You are not running an identd locally, so this test won't work"
-              @skip = true
-            else
-              throw err
-            done()
-
-        before (done) ->
-          @redisClient = redis.createClient 6379, 'localhost'
-          @redisClient.on 'psubscribe', -> done()
-          @messagesReceived = 0
-          @redisClient.on 'pmessage', (pattern, channel, message) =>
-            @messagesReceived += 1
-
-          @redisClient.psubscribe("*.cobalt.dataset.#{process.env.USER}.update")
-
-        doRequest = (_, cb) ->
-          request.post
-            uri: "#{helper.base_url}/api/status"
-            form:
-              type: "ok"
-              message: "just testing"
-          , (err, res, body) ->
-            # This relies on the fact that there is a box with
-            # the same name as your userid. Add one to
-            # fixtures.js if there isn't one already.
-            res.statusCode.should.equal 200
-            obj = parseJSON body
-            cb err
-
-        # TODO(pwaller): Figure out a better test
-        xit 'lets me POST to the status API endpoint (and is debounced)', (done) ->
-          # Debounce meaning rate limit requests
-          if @skip
-            return done new Error "Skipped because no local identd"
-          # Fire off 10 post requests (where only the last causes
-          # redis activity)
-          async.each [1..10], doRequest, (err) =>
-            # Wait long enough for debounce and message to propagate
-            setTimeout =>
-              @messagesReceived.should.equal 1
-
-              # Make another request and ensure that this one wasn't
-              # culled by the debouncer
-              doRequest "THIS PARAMETER NOT USED", =>
-                setTimeout =>
-                  @messagesReceived.should.equal 2
-                  done()
-                , DEBOUNCE_PERIOD + EPSILON
-            , DEBOUNCE_PERIOD + EPSILON
-
     describe 'Billing', ->
       context 'GET /api/:user/subscription/medium/sign', ->
         before (done) ->
@@ -817,3 +759,92 @@ describe 'API', ->
 
         it "returns a failure", ->
           @resp.statusCode.should.equal 404
+
+
+  context 'status endpoint', ->
+    context 'Posting, getting and deleting the /api/status', ->
+
+      it 'the status endpoint for 4569872192 is unset', (done) ->
+        request.get
+          uri: "#{helper.base_url}/api/status?ident=4569872192"
+        , (err, res, body) ->
+          res.statusCode.should.equal 204
+          done err
+
+      it 'sets the status endpoint', (done) ->
+        request.post
+          uri: "#{helper.base_url}/api/status?ident=4569872192"
+          form: {type: "ok", message: "foobar"}
+        , (err, res, body) ->
+          res.statusCode.should.equal 200
+          done err
+
+      it 'the status endpoint for 4569872192 is set', (done) ->
+        request.get
+          uri: "#{helper.base_url}/api/status?ident=4569872192"
+        , (err, res, body) ->
+          res.statusCode.should.equal 200
+          obj = parseJSON body
+          obj.type.should.equal "ok"
+          obj.message.should.equal "foobar"
+          # TODO(frabcus): Check the date
+          done err
+
+      it 'deletes the status endpoint', (done) ->
+        request.del
+          uri: "#{helper.base_url}/api/status?ident=4569872192"
+        , (err, res, body) ->
+          res.statusCode.should.equal 204
+          done err
+
+      it 'the status endpoint for 4569872192 is unset', (done) ->
+        request.get
+          uri: "#{helper.base_url}/api/status?ident=4569872192"
+        , (err, res, body) ->
+          res.statusCode.should.equal 204
+          done err
+
+    context 'Posts to /api/status are debounced', ->
+
+      doRequest = (_, cb) ->
+        request.post
+          uri: "#{helper.base_url}/api/status?ident=4569872192"
+          form:
+            type: "ok"
+            message: "just testing"
+        , (err, res, body) ->
+          # This relies on the fact that there is a box with
+          # the same name as your userid. Add one to
+          # fixtures.js if there isn't one already.
+          res.statusCode.should.equal 200
+          obj = parseJSON body
+          cb err
+
+      before (done) ->
+        @redisClient = redis.createClient 6379, 'localhost'
+        @redisClient.on 'psubscribe', -> done()
+        @messagesReceived = 0
+        @redisClient.on 'pmessage', (pattern, channel, message) =>
+          @messagesReceived += 1
+
+        @redisClient.psubscribe("*.cobalt.dataset.4569872192.update")
+
+      it 'lets me POST to the status API endpoint (and is debounced)', (done) ->
+        # Debounce meaning rate limit requests
+
+        # Fire off 10 post requests (where only the last causes
+        # redis activity)
+        async.each [1..10], doRequest, (err) =>
+          # Wait long enough for debounce and message to propagate
+
+          setTimeout =>
+            @messagesReceived.should.equal 1
+
+            # Make another request and ensure that this one wasn't
+            # culled by the debouncer
+            doRequest "THIS PARAMETER NOT USED", =>
+              setTimeout =>
+                @messagesReceived.should.equal 2
+                done()
+              , DEBOUNCE_PERIOD + EPSILON
+          , DEBOUNCE_PERIOD + EPSILON

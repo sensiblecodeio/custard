@@ -530,6 +530,19 @@ addUser = (req, resp) ->
 
     return resp.json 201, user
 
+getStatus = (req, resp) ->
+  console.log "GET /api/status/ from ident #{req.ident}"
+
+  Dataset.findOneById req.ident, (err, dataset) ->
+    if err?
+      return resp.send 500, error: "unknown error"
+    if not dataset
+      return resp.send 400, status: "unknown dataset #{req.ident}"
+    if not dataset.status
+      return resp.send 204
+
+    return resp.send 200, dataset.status
+
 postStatus = (req, resp) ->
   console.log "POST /api/status/ from ident #{req.ident}"
   Dataset.findOneById req.ident, (err, dataset) ->
@@ -567,7 +580,8 @@ deleteStatus = (req, resp) ->
       if err?
         console.warn err
         return resp.send 500, error: 'Error trying to delete status'
-      return resp.send 200, status: 'ok'
+
+      return resp.send 204, "null"
 
 # Render login page
 app.get '/login/?', (req, resp) ->
@@ -670,6 +684,7 @@ if process.env.CU_DB == "mongodb://localhost/cu-test"
 
   checkIdent = localhostSkipIdent
 
+app.get '/api/status/?', checkIdent, getStatus
 app.post '/api/status/?', checkIdent, postStatus
 app.delete '/api/status/?', checkIdent, deleteStatus
 

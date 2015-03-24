@@ -10,11 +10,11 @@ describe 'Dashboard', ->
     #                tests otherwise
     cleaner.clear_and_set_fixtures done
 
-  before (done) ->
+  it "goes to ehg's /dashboard", (done) ->
     loginAndGo "ehg", "testing", "/dashboard", done
 
   context 'when I visit the dashboard page', ->
-    before (done) ->
+    it "opens the dashboard", (done) ->
       browser.waitForElementByCss '.dashboard h1', 4000, =>
         wd40.getText 'body', (err, text) =>
           @bodyText = text

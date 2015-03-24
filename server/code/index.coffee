@@ -623,7 +623,9 @@ app.get '/signup/community', (req, resp) ->
   resp.redirect '/signup/freetrial'
 
 app.get '/signup/?*', (req, resp) ->
-  renderServerAndClientSide {page: "sign-up", subnav: 'signupnav'}, req, resp
+  # disable self service signup
+  resp.redirect 'https://scraperwiki.com/products/scraping-platform'
+  #renderServerAndClientSide {page: "sign-up", subnav: 'signupnav'}, req, resp
 
 app.get '/help/?:section', (req, resp) ->
   req.params.section ?= 'home'

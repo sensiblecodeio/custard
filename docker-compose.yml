@@ -1,0 +1,13 @@
+web:
+  environment:
+   - CU_DB=mongodb://db/dev
+   - CU_SESSION_SECRET=foo
+   - NODE_PATH=/usr/src/app/server/code
+  build: .
+  links:
+   - db
+  ports:
+   - "3001:3001"
+db:
+  image: mongo:2.6
+

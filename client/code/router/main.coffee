@@ -102,8 +102,6 @@ class Cu.Router.Main extends Backbone.Router
             settings =
               app_id: window.intercomAppId
               user_hash: window.intercomUserHash
-              widget:
-                activator: "#intercomButton"
               user_id: real.shortName
               name: real.displayName
               email: real.email[0]

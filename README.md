@@ -6,12 +6,11 @@ Together with cobalt, custard powers the [new ScraperWiki platform](https://scra
 
 AGPL Licenced (see LICENCE file).
 
-## Initial setup (mongo, redis, nvm)
+## Initial setup (mongo, nvm)
 
 ### On Debian or Ubuntu:
 
     sudo apt-get install -y mongodb
-    sudo apt-get install -y redis-server
 
 You'll need a bunch of node stuff which we get using `nvm`:
 
@@ -32,10 +31,9 @@ Install Node via nvm:
     curl https://raw.github.com/creationix/nvm/master/install.sh | sh
     nvm install 0.10
 
-Install Mongo and Redis via Homebrew:
+Install Mongo via Homebrew:
 
     brew install mongodb
-    brew install redis
 
 ### Then on all platforms:
 
@@ -44,7 +42,6 @@ Clone this repo (inside `~/sw` preferable) and from within the `custard` directo
     mkdir mongo
     npm install pow-mongodb-fixtures -g
     mongod --dbpath=mongo # might be running already
-    # redis-server # probably don't need this, as it's already running
 
 Alongside custard, you will need to git clone swops-secret
 
@@ -148,7 +145,7 @@ Or one of these:
 
 ## Optional: disabling startup services
 
-You may wish to disable redis-server and mongodb services from autostarting on boot when not developing custard.
+You may wish to disable mongodb services from autostarting on boot when not developing custard.
 
 (Tested on Ubuntu 12.04)
 
@@ -159,11 +156,3 @@ Disable mongo service:
 Enable mongo service:
 
     sudo rm /etc/init/mongodb.override
-
-Disable redis-server service:
-
-    sudo update-rc.d redis-server disable
-
-Enable redis-server service:
-
-    sudo update-rc.d redis-server enable

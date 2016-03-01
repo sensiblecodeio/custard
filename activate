@@ -8,7 +8,7 @@ PATH=$(pwd)/bin:$(pwd)/node_modules/.bin:$PATH
 
 # The default values for these environment variables below are:
 #   a) not secret; and,
-#   b) supposed to work with local demons (mongo and redis)
+#   b) supposed to work with local demons (mongo)
 export CU_DB=mongodb://localhost:27017/cu-test
 export CU_BOX_SERVER=scraperwiki.example.com
 export CU_SESSION_SECRET=foo

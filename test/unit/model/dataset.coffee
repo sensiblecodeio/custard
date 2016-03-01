@@ -7,8 +7,6 @@ sinon = require 'sinon'
 should = require 'should'
 request = require 'request'
 
-RedisClient = require('lib/redisClient').RedisClient
-
 describe 'Client model: Dataset', ->
   helper = require '../helper'
   unless Cu.Model.Tool?
@@ -181,13 +179,9 @@ describe 'Server model: Dataset', ->
     context 'with an ok', ->
       before ->
         @saveSpy = sinon.spy Dataset.dbClass.prototype, 'save'
-        # TODO: will actually connect to redis, stub properly
-        @publishStub = sinon.stub RedisClient, 'debouncedPublish'
 
       after ->
         Dataset.dbClass.prototype.save.restore()
-        RedisClient.debouncedPublish.restore()
-        RedisClient.client?.end?()
 
       before (done) ->
         @dataset = new Dataset
@@ -221,33 +215,6 @@ describe 'Server model: Dataset', ->
 
       it 'saves the status', ->
         @saveSpy.calledOnce.should.be.true
-
-      it 'publishes the update to redis', ->
-        channel = "#{process.env.NODE_ENV}.cobalt.dataset.box.update"
-        expectedMessage =
-          boxes: ['foo', 'bar']
-          type: 'ok'
-          message: 'I scrapped some page :D'
-          origin:
-            box: @dataset.box
-            boxServer: @dataset.boxServer
-            user: @dataset.user
-            tool: @dataset.tool
-            displayName: @dataset.displayName
-            views: @dataset.views
-            boxJSON: @dataset.boxJSON
-            createdDate: @dataset.createdDate
-            creatorShortName: @dataset.creatorShortName
-            creatorDisplayName: @dataset.creatorDisplayName
-
-        # Get the last call
-        call = @publishStub.getCall @publishStub.callCount - 1
-
-        expected = [@dataset.box, channel, expectedMessage]
-        got = [call.args[0], call.args[1], JSON.parse(call.args[2])]
-
-        correct = _.isEqual got, expected
-        correct.should.be.true
 
     context 'with an unknown type', ->
       before ->

@@ -4,7 +4,6 @@ Schema = mongoose.Schema
 request = require 'request'
 
 ModelBase = require 'model/base'
-RedisClient = require('lib/redisClient').RedisClient
 
 viewSchema = new Schema
   box: String
@@ -86,8 +85,6 @@ class Dataset extends ModelBase
         type: @status.type
         message: @status.message
       env = process.env.NODE_ENV
-      channel = "#{env}.cobalt.dataset.#{@box}.update"
-      RedisClient.debouncedPublish @box, channel, message
       callback err
 
 

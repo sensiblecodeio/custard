@@ -6,7 +6,6 @@ _ = require 'underscore'
 request = require 'request'
 should = require 'should'
 async = require 'async'
-redis = require 'redis'
 
 # Timeout period in milliseconds for duplicate request
 # debouncing. (see underscore debounce and test that uses these)
@@ -451,15 +450,6 @@ describe 'API', ->
               throw err
             done()
 
-        before (done) ->
-          @redisClient = redis.createClient 6379, 'localhost'
-          @redisClient.on 'psubscribe', -> done()
-          @messagesReceived = 0
-          @redisClient.on 'pmessage', (pattern, channel, message) =>
-            @messagesReceived += 1
-
-          @redisClient.psubscribe("*.cobalt.dataset.#{process.env.USER}.update")
-
         doRequest = (_, cb) ->
           request.post
             uri: "#{helper.base_url}/api/status"
@@ -473,27 +463,6 @@ describe 'API', ->
             res.statusCode.should.equal 200
             obj = parseJSON body
             cb err
-
-        # TODO(pwaller): Figure out a better test
-        xit 'lets me POST to the status API endpoint (and is debounced)', (done) ->
-          # Debounce meaning rate limit requests
-          if @skip
-            return done new Error "Skipped because no local identd"
-          # Fire off 10 post requests (where only the last causes
-          # redis activity)
-          async.each [1..10], doRequest, (err) =>
-            # Wait long enough for debounce and message to propagate
-            setTimeout =>
-              @messagesReceived.should.equal 1
-
-              # Make another request and ensure that this one wasn't
-              # culled by the debouncer
-              doRequest "THIS PARAMETER NOT USED", =>
-                setTimeout =>
-                  @messagesReceived.should.equal 2
-                  done()
-                , DEBOUNCE_PERIOD + EPSILON
-            , DEBOUNCE_PERIOD + EPSILON
 
     describe 'Billing', ->
       context 'GET /api/:user/subscription/medium/sign', ->

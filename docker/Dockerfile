@@ -3,7 +3,7 @@ FROM scraperwiki/base:precise
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
-RUN apt-get install -y mongodb redis-server
+RUN apt-get install -y mongodb
 RUN apt-get install -y python-software-properties
 
 RUN apt-add-repository -y ppa:chris-lea/node.js

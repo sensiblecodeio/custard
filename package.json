@@ -25,6 +25,7 @@
     "glob": "~3.2.6",
     "ident-express": "*",
     "mailchimp": "~1.1.0",
+    "mixpanel": "0.4.0",
     "moment": "~2.6.0",
     "mongoose": "~3.8.9",
     "morgan": "^1.0.1",

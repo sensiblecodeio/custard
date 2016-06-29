@@ -47,15 +47,14 @@
   <script src="/vendor/js/jquery.tinysort.charorder.min.js"></script>
   <script src="/vendor/js/ZeroClipboard.js"></script>
   <script src="/vendor/js/easyXDM.min.js"></script>
-  <script src="/vendor/js/intercom.v1.js"></script>
   <script src="/vendor/js/guiders.js"></script>
   <script src="/js/custard.js"></script>
   <script>
     window.user = <%- user %>
     window.recurlyDomain = "<%- recurlyDomain %>"
     window.custardEnvironment = "<%- environment %>"
-    window.intercomAppId = "<%- intercomAppId %>"
-    window.intercomUserHash = "<%- intercomUserHash %>"
+    window.mixpanelToken = "<%- mixpanelToken %>"
+    window.mixpanelUserHash = "<%- mixpanelUserHash %>"
     _gaq = [ ['_setAccount', 'UA-21451224-7'], ['_setDomainName', 'scraperwiki.com'] ]
     if(window.custardEnvironment == 'production'){
       (function(){

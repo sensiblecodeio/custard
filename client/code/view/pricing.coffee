@@ -92,4 +92,4 @@ class Cu.View.Pricing extends Backbone.View
 
   downgradeClick: (e) ->
     e.preventDefault()
-    $('#intercomButton').trigger('click')
+    # TODO: make it do something now intercom gone

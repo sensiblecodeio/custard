@@ -338,8 +338,8 @@ renderClientApp = (req, resp) ->
       flash: req.flash()
       environment: process.env.NODE_ENV
       loggedIn: 'real' of usersObj
-      intercomAppId: process.env.INTERCOM_APP_ID
-      intercomUserHash: getIntercomUserHash req.user?.real.shortName
+      mixpanelToken: process.env.MIXPANEL_TOKEN
+      mixpanelUserHash: getMixpanelUserHash req.user?.real.shortName
 
 # Bypass Backbone by parsing and rendering the given
 # client-side page to HTML (useful for SEO on docs pages etc)
@@ -374,14 +374,14 @@ renderServerAndClientSide = (options, req, resp) ->
               flash: req.flash()
               environment: process.env.NODE_ENV
               loggedIn: 'real' of usersObj
-              intercomAppId: process.env.INTERCOM_APP_ID
-              intercomUserHash: getIntercomUserHash req.user?.real.shortName
+              mixpanelToken: process.env.MIXPANEL_TOKEN
+              mixpanelUserHash: getMixpanelUserHash req.user?.real.shortName
 
 # (internal) Get the HMAC hash for the specified user
-getIntercomUserHash = (shortName) ->
+getMixpanelUserHash = (shortName) ->
   hash = null
-  if shortName and process.env.INTERCOM_SECRET_KEY
-    key = process.env.INTERCOM_SECRET_KEY
+  if shortName and process.env.MIXPANEL_USER_ID_SALT
+    key = process.env.MIXPANEL_USER_ID_SALT
     hash = crypto.createHmac('sha256', key).update(shortName).digest('hex')
   return hash
 
@@ -917,31 +917,12 @@ redirectToRecurlyAdmin = (req, resp) ->
         location: recurlyAdminUrl
       resp.end()
 
-# Make a callable to respond to `resp` when intercom replies to us.
-intercomResponseHandler = (resp, reason) ->
-  (err, intercomResp, body) ->
-    if err or intercomResp.statusCode not in [200, 201]
-      resp.send 500, error: 'Intercom communication error: ' + reason + " " + intercomResp.statusCode + " " + intercomResp.body
-    else
-      resp.send 200, success: 'OK'
-
-buildIntercomRequestBody = (endpoint, messageObject) ->
-  url: 'https://api.intercom.io/v1/' + endpoint
-  headers:
-    'Content-Type': 'application/json'
-  auth:
-    user: process.env.INTERCOM_APP_ID
-    pass: process.env.INTERCOM_API_KEY
-  body: JSON.stringify messageObject
-
-sendIntercomMessage = (req, resp) ->
+sendMixpanelMessage = (req, resp) ->
   messageObject =
     user_id: req.user.real.shortName
     url: req.body.url
     body: req.body.message
-
-  body = buildIntercomRequestBody 'users/message_threads', messageObject
-  request.post body, intercomResponseHandler(resp, 'sendIntercomMessage')
+  console.log("*** sendMixpanelMessage", messageObject)
 
 # recursively convert any numeric strings to numbers
 numberify = (obj) ->
@@ -951,21 +932,19 @@ numberify = (obj) ->
     obj = parseFloat obj
   return obj
 
-sendIntercomUserData = (req, resp) ->
+sendMixpanelUserData = (req, resp) ->
   messageObject = numberify req.body
   messageObject.user_id = req.user.real.shortName
 
-  body = buildIntercomRequestBody 'users', messageObject
-  request.put body, intercomResponseHandler(resp, 'sendIntercomUserData')
+  console.log("*** sendMixpanelUserData", messageObject)
 
-sendIntercomTag = (req, resp) ->
+sendMixpanelTag = (req, resp) ->
   messageObject =
     user_ids: [req.user.real.shortName]
     name: req.body.name
     tag_or_untag: "tag"
 
-  body = buildIntercomRequestBody 'tags', messageObject
-  request.post body, intercomResponseHandler(resp, 'sendIntercomTag')
+  console.log("*** sendMixpanelTag", messageObject)
 
 # This does automatic switching if you try to
 # access a dataset not in your current data hub
@@ -1030,9 +1009,9 @@ api.get '/:user/sshkeys/?', listSSHKeys
 api.put '/:user/subscription/change/:plan/?', changePlan
 api.get '/:user/subscription/billing', redirectToRecurlyAdmin
 
-api.post '/reporting/message/?', sendIntercomMessage
-api.post '/reporting/user/?', sendIntercomUserData
-api.post '/reporting/tag/?', sendIntercomTag
+api.post '/reporting/message/?', sendMixpanelMessage
+api.post '/reporting/user/?', sendMixpanelUserData
+api.post '/reporting/tag/?', sendMixpanelTag
 
 app.get '/logout', ensureAuthenticated, logout
 

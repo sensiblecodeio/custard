@@ -13,7 +13,7 @@ class Cu.Router.Main extends Backbone.Router
     @errorView ?= new Cu.View.ErrorAlert el: '#error-alert'
     @on 'route', @errorView.hide
     @on 'route', @trackPageView
-    @on 'route', @trackIntercom
+    @on 'route', @trackMixpanel
     @on 'route', @trackOptimizely
     @on 'route', @checkDaysLeft
 
@@ -42,20 +42,18 @@ class Cu.Router.Main extends Backbone.Router
     # which is exactly what we want when pushState routing happens.
     window.optimizely.push ['activate']
 
-  trackIntercom: ->
-    if 'real' of window.user and window.intercomUserHash != ''
-      @getIntercomSettings (intercomSettings) ->
-        if window.intercomBooted?
-          # tell Intercom we're still here
-          window.Intercom 'update', intercomSettings
-        else
-          # start Intercom, and tell it we're here
-          window.Intercom 'boot', intercomSettings
-          window.intercomBooted = true
-          # check for new Intercom messages/notifications every 30 seconds
-          setInterval ->
-            window.Intercom 'update'
-          , 30000
+  trackMixpanel: ->
+    #alert window.mixpanelUserHash
+    if 'real' of window.user and window.mixpanelUserHash != ''
+      @getMixpanelSettings (mixpanelSettings) ->
+        alert "trackMixPanel"
+        #if window.intercomBooted?
+        #  # tell Intercom we're still here
+        #  window.Intercom 'update', mixpanelSettings
+        #else
+        #  # start Intercom, and tell it we're here
+        #  window.Intercom 'boot', mixpanelSettings
+        #  window.intercomBooted = true
 
   checkDaysLeft: (route) ->
     # Here we enforce the policy that expired free-trial users
@@ -90,7 +88,7 @@ class Cu.Router.Main extends Backbone.Router
       # app.navigate "/pricing/expired", trigger: true
       window.location.href = "/pricing/expired"
 
-  getIntercomSettings: (cb) ->
+  getMixpanelSettings: (cb) ->
     real = window.user.real
     effective = window.user.effective
 
@@ -100,8 +98,8 @@ class Cu.Router.Main extends Backbone.Router
           success: (model) =>
             datasets = model.toJSON()
             settings =
-              app_id: window.intercomAppId
-              user_hash: window.intercomUserHash
+              token: window.mixpanelToken
+              user_hash: window.mixpanelUserHash
               user_id: real.shortName
               name: real.displayName
               email: real.email[0]

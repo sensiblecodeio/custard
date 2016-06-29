@@ -256,7 +256,7 @@ scraperwiki.user.profile = (success) ->
 
 scraperwiki.reporting.message = (message, success, error) ->
   ###
-  Send a message from the current user to Intercom, our reporting package
+  Send a message from the current user to Mixpanel, our reporting package
   ###
   dfd = new jQuery.Deferred()
   if typeof success is 'function'
@@ -270,7 +270,7 @@ scraperwiki.reporting.message = (message, success, error) ->
 
 scraperwiki.reporting.user = (payload, success, error) ->
   ###
-  Communicate user payload data to the /user/ intercom endpoint
+  Communicate user payload data to the /user/ reporting endpoint
   ###
   dfd = new jQuery.Deferred()
   if typeof success is 'function'

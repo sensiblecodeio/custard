@@ -51,7 +51,7 @@ class Cu.Router.Main extends Backbone.Router
         #console.log("mixpanel.people.set", mixpanelSettings)
         mixpanel.people.set(mixpanelSettings)
         path = Backbone.history.getFragment()
-        mixpanel.track("Browse /#{path}")
+        mixpanel.track("Browse")
 
   checkDaysLeft: (route) ->
     # Here we enforce the policy that expired free-trial users

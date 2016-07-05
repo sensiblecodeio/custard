@@ -31,6 +31,7 @@ class Cu.View.ToolContent extends Backbone.View
     if @model.get('tool')
       toolName = @model.get('tool').get 'name'
       _gaq.push ['_trackEvent', 'tools', 'render', toolName]
+      mixpanel.track("Render view", { 'tool': toolName })
 
   setupEasyXdm: (url) ->
     transport = new easyXDM.Rpc

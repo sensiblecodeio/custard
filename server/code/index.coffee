@@ -922,6 +922,7 @@ sendMixpanelMessage = (req, resp) ->
     user_id: req.user.real.shortName
     url: req.body.url
     body: req.body.message
+  # TODO: Not used for now
   console.log("*** sendMixpanelMessage", messageObject)
 
 # recursively convert any numeric strings to numbers
@@ -936,6 +937,7 @@ sendMixpanelUserData = (req, resp) ->
   messageObject = numberify req.body
   messageObject.user_id = req.user.real.shortName
 
+  # TODO: Not used for now
   console.log("*** sendMixpanelUserData", messageObject)
 
 sendMixpanelTag = (req, resp) ->
@@ -944,6 +946,7 @@ sendMixpanelTag = (req, resp) ->
     name: req.body.name
     tag_or_untag: "tag"
 
+  # TODO: Not used for now
   console.log("*** sendMixpanelTag", messageObject)
 
 # This does automatic switching if you try to

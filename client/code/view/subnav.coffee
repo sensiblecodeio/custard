@@ -193,6 +193,7 @@ class Cu.View.Toolbar extends Backbone.View
       @model.save {},
         success: =>
           _gaq.push ['_trackEvent', 'datasets', 'rename', @newName]
+          mixpanel.track("Rename dataset", { "newname" : @newName })
         error: (model, xhr, options) =>
           $label.text @oldName
           @model.set 'displayName', @oldName

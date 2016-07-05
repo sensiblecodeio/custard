@@ -32,7 +32,7 @@ class Cu.Router.Main extends Backbone.Router
 
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
-    _gaq.push ['_trackPageview', "/#{path}"]
+    _gaq.push ['_trackPageview', "Browse /#{path}"]
     if 'real' of window.user
       _gaq.push ['_setCustomVar', 1, 'shortName', window.user.real.shortName, 1]
 
@@ -50,6 +50,8 @@ class Cu.Router.Main extends Backbone.Router
         mixpanel.identify(window.mixpanelUserHash)
         #console.log("mixpanel.people.set", mixpanelSettings)
         mixpanel.people.set(mixpanelSettings)
+        path = Backbone.history.getFragment()
+        mixpanel.track("/#{path}")
 
   checkDaysLeft: (route) ->
     # Here we enforce the policy that expired free-trial users

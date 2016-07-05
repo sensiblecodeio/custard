@@ -46,14 +46,10 @@ class Cu.Router.Main extends Backbone.Router
     #alert window.mixpanelUserHash
     if 'real' of window.user and window.mixpanelUserHash != ''
       @getMixpanelSettings (mixpanelSettings) ->
-        alert "trackMixPanel"
-        #if window.intercomBooted?
-        #  # tell Intercom we're still here
-        #  window.Intercom 'update', mixpanelSettings
-        #else
-        #  # start Intercom, and tell it we're here
-        #  window.Intercom 'boot', mixpanelSettings
-        #  window.intercomBooted = true
+        #console.log("mixpanel.identify", window.mixpanelUserHash)
+        mixpanel.identify(window.mixpanelUserHash)
+        #console.log("mixpanel.people.set", mixpanelSettings)
+        mixpanel.people.set(mixpanelSettings)
 
   checkDaysLeft: (route) ->
     # Here we enforce the policy that expired free-trial users
@@ -98,13 +94,12 @@ class Cu.Router.Main extends Backbone.Router
           success: (model) =>
             datasets = model.toJSON()
             settings =
-              token: window.mixpanelToken
-              user_hash: window.mixpanelUserHash
-              user_id: real.shortName
-              name: real.displayName
-              email: real.email[0]
+              short_name: real.shortName
+              "$name": real.displayName
+              "$email": real.email[0]
               created_at: moment(real.created, 'YYYY-MM-DD HH:mm:ssZ').unix()
-              accountLevel: real.accountLevel
+              "$created": real.created
+              account_level: real.accountLevel
               datahub_id: effective.shortName
               datahub_name: effective.displayName
               datasets: datasets.length

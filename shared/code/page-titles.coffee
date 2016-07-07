@@ -47,9 +47,6 @@ PageTitles =
   '404':
     heading: '404: Not Found'
     title: "404 | ScraperWiki"
-  'index':
-    heading: ''
-    title: "ScraperWiki"
 
 if exports?
   exports.PageTitles = PageTitles

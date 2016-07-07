@@ -642,7 +642,7 @@ app.get '/terms/?', (req, resp) ->
 
 # Anonymous (ie: logged-out) homepage
 app.get '/', (req, resp) ->
-  renderServerAndClientSide {page: "home", subnav: null}, req, resp
+  resp.redirect '/datasets'
 
 # Switch is protected by a specific function.
 app.get '/switch/:username/?', checkSwitchUserRights, switchUser

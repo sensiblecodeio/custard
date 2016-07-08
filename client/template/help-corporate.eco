@@ -160,7 +160,7 @@ in.</p>
 <p>Your data and files are available programmatically at all times, via our
 APIs and using the SFTP file transfer protocol. You can use this to make your
 own backups, or to migrate data off QuickCode. There is no extra charge for this.
-Scrapers and views are written using standard open source tools and
+Datasets and views are written using standard open source tools and
 protocols, making it relatively easy to migrate individual applications to your
 own Linux servers.</p>
 

@@ -8,7 +8,7 @@
     <li><a data-nonpushstate href="#step5">5. Test it out</a></li>
     <li><a data-nonpushstate href="#step6">6. Submit it to the Tool Shop</a></li>
     <li class="nav-header">Related guides:</li>
-    <li><a href="/help/code-in-your-browser">Code a scraper in your browser</a></li>
+    <li><a href="/help/code-in-your-browser">Code a script in your browser</a></li>
     <li><a href="/help/developer">Full developer docs</a></li>
   </ul>
 </nav>

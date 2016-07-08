@@ -172,7 +172,7 @@ your view&rsquo;s HTML <code>&lt;head&gt;</code>, after you load jQuery.</p>
 
 <h3 id="js-readsettings">Read settings</h3>
 
-<p>When somebody loads your view, ScraperWiki passes it a number of settings. The settings are in a URL encoded JSON object after the # in the URL. You can use this helper function to access them easier:</p>
+<p>When somebody loads your view, QuickCode passes it a number of settings. The settings are in a URL encoded JSON object after the # in the URL. You can use this helper function to access them easier:</p>
 
 <pre class="prettyprint">
 scraperwiki.readSettings()
@@ -305,7 +305,7 @@ scraperwiki.tool.rename(username + "'s twitter followers")</pre>
     console.log('Oh no! Error:', jqXHR.responseText, textStatus, errorThrown)
 })</pre>
 
-<p><strong>Make sure to use ANSI standard SQL.</strong> Although all ScraperWiki datasets are currently based on SQLite, it&rsquo;s likely, at some point, we&rsquo;ll allow PostgreSQL databases as well. You should avoid database-specific SQL. For example:</p>
+<p><strong>Make sure to use ANSI standard SQL.</strong> Although all QuickCode datasets are currently based on SQLite, it&rsquo;s likely, at some point, we&rsquo;ll allow PostgreSQL databases as well. You should avoid database-specific SQL. For example:</p>
 
 <table class="table table-bordered">
   <thead>
@@ -427,7 +427,7 @@ href="http://www.sqlite.org/lang_keywords.html">(more info)</a>.</td>
 
 <h2 id="tools-styling">Styling</h2>
 
-<p>It&rsquo;s important that tools share the same styling and fit in with the rest of ScraperWiki.
+<p>It&rsquo;s important that tools share the same styling and fit in with the rest of QuickCode.
 If you&rsquo;re writing your own tool, you&rsquo;ll want to include Bootstrap and our custom style sheet:
 </p>
 
@@ -440,15 +440,15 @@ If you&rsquo;re writing your own tool, you&rsquo;ll want to include Bootstrap an
 well with Bootstrap</a>.
 </p>
 
-<p>You can use the <a href="/style/test.html" data-nonpushstate>ScraperWiki stylesheet preview page</a>, to see how standard Bootstrap styles are rendered on ScraperWiki.</p>
+<p>You can use the <a href="/style/test.html" data-nonpushstate>QuickCode stylesheet preview page</a>, to see how standard Bootstrap styles are rendered on QuickCode.</p>
 
-<p>You might also want to read the <a href="/help/zig">Zarino Interface Guidelines (ZIG)</a>, which lay down a few conventions that ScraperWiki tools should follow.</p>
+<p>You might also want to read the <a href="/help/zig">Zarino Interface Guidelines (ZIG)</a>, which lay down a few conventions that QuickCode tools should follow.</p>
 
 <hr>
 
 <h2 id="tools-develop">Developing your tools</h2>
 
-<p>You can see and edit the code of <strong>any tool</strong> you&rsquo;ve installed on ScraperWiki &ndash; whether you originally wrote it or not!</p>
+<p>You can see and edit the code of <strong>any tool</strong> you&rsquo;ve installed on QuickCode &ndash; whether you originally wrote it or not!</p>
 
 <p>Because tools are simply git repositories in a box, and boxes are just shell accounts, there are a number of ways you can develop your tools. <strong>They are built to fit around your usual development process.</strong></p>
 
@@ -549,14 +549,14 @@ As a bonus, you can also then simply do <code>ssh &lt;box_name&gt;@box</code> to
 
 <h2 id="boxes-settings">Internal box settings</h2>
 
-<p>A box is a Unix user account on ScraperWiki&rsquo;s server cluster. The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy. Your home directory is always <code>/home/</code>. </p>
+<p>A box is a Unix user account on QuickCode&rsquo;s server cluster. The Unix user account has the same name as your box (eg: <code>by227hi</code>) and exists inside a <a href="http://en.wikipedia.org/wiki/Chroot">Chroot jail</a> for security and privacy. Your home directory is always <code>/home/</code>. </p>
 
 <p>Because boxes are just Unix user accounts, all your favourite Unix tools like <code>scp</code>, <code>git</code>, and <code>cron</code> work right out of the box.  You have a permanent POSIX filesystem.</p>
 
 <p>
 At any one time your box is allocated to one particular server, but that
 server might change from time to time.
-Occasionally we may need to migrate your box to a new server (when ScraperWiki has to create or
+Occasionally we may need to migrate your box to a new server (when QuickCode has to create or
 destroy servers).
 In that case we may kill running process on your box. Any new processes
 that your box creates (via the exec endpoint or cron) will run on the new server,
@@ -807,7 +807,7 @@ has no order, the keys in these objects are in the same order as the columns in 
 
 <h3 id="boxes-status">Dataset status API</h3>
 
-<p>ScraperWiki can be informed of the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://scraperwiki.com/api/status</code>. The dataset status will be shown on the ScraperWiki website, in users' dataset lists.</p>
+<p>QuickCode can be informed of the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://scraperwiki.com/api/status</code>. The dataset status will be shown on the QuickCode website, in users' dataset lists.</p>
 
 <table class="table table-bordered">
   <thead>
@@ -824,7 +824,7 @@ has no order, the keys in these objects are in the same order as the columns in 
     <td><code>message</code></td>
     <td><span class="muted">[optional]</span>
     An optional description, such as <code>Scraped 24 new tweets</code> or <code>Invalid password</code>.
-    If not specified, the ScraperWiki website instead shows "Refreshed" or "Error" followed by how long ago
+    If not specified, the QuickCode website instead shows "Refreshed" or "Error" followed by how long ago
     the status was updated.
     </td>
   </tr>

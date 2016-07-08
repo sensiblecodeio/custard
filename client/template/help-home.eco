@@ -3,7 +3,7 @@
 <div class="row">
 
   <a class="swcol help-tile" href="/help/code-in-your-browser/" style="background: #f39c12">
-    <h3>Code a scraper in your browser</h3>
+    <h3>Code a script in your browser</h3>
   </a>
 
 </div>
@@ -13,7 +13,7 @@
 <div class="row">
 
   <a class="swcol help-tile" href="/help/whats-new/" style="background: #f1c40f">
-    <h3>What&rsquo;s ScraperWiki all about?</h3>
+    <h3>What&rsquo;s QuickCode all about?</h3>
   </a>
 
   <a class="swcol help-tile" href="/contact/" data-nonpushstate style="background: #F10F0F">

@@ -63,7 +63,7 @@ describe 'Express Routes', ->
     request(app)
       .get('/terms/enterprise-agreement/')
       .expect(200)
-      .expect(/ScraperWiki Enterprise Agreement/)
+      .expect(/QuickCode Enterprise Agreement/)
       .end(done)
 
   it '/', (done) ->

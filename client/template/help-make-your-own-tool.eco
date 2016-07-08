@@ -8,7 +8,7 @@
     <li><a data-nonpushstate href="#step5">5. Test it out</a></li>
     <li><a data-nonpushstate href="#step6">6. Submit it to the Tool Shop</a></li>
     <li class="nav-header">Related guides:</li>
-    <li><a href="/help/code-in-your-browser">Code a scraper in your browser</a></li>
+    <li><a href="/help/code-in-your-browser">Code a script in your browser</a></li>
     <li><a href="/help/developer">Full developer docs</a></li>
   </ul>
 </nav>
@@ -37,9 +37,9 @@
   <h2 id="step2">2. SSH into the box</h2>
 
   <div class="step">
-    <p>Each ScraperWiki dataset (and each of the tools attached to it, like the table view, and the spreadsheet downloader) are stored in what we call separate &ldquo;boxes&rdquo;.</p>
+    <p>Each QuickCode dataset (and each of the tools attached to it, like the table view, and the spreadsheet downloader) are stored in what we call separate &ldquo;boxes&rdquo;.</p>
     <p style="float: right; width: 40%; font-style: italic; color: #999">You can find out more about boxes, tools and datasets in <a href="/help/developer">our developer documentation</a>.</p>
-    <p style="clear: left">A box is a shell account on the web. You can access it via SSH or SFTP, and you can use special API endpoints to communicate with the rest of ScraperWiki.</p>
+    <p style="clear: left">A box is a shell account on the web. You can access it via SSH or SFTP, and you can use special API endpoints to communicate with the rest of QuickCode.</p>
   </div>
 
   <div class="step">

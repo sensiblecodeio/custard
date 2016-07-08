@@ -1,7 +1,6 @@
 <div class="hero-unit" style="background-color: #DAF0FF">
-  <img class="pull-right" src="/image/tractor-500x320.png" width="220" height="141" alt="The ScraperWiki digger" style="margin: 0 0 10px 10px">
-  <h1>Welcome to ScraperWiki!</h1>
-  <p class="lead">ScraperWiki helps you get data from the web, and use it in the way that you need.
+  <h1>Welcome to QuickCode!</h1>
+  <p class="lead">QuickCode helps you get your data, and use it in the way that you need.
   Here&rsquo;s a sixty-second rundown of how it works.</p>
   <p style="margin-bottom: 0">
     <a class="btn btn-large" data-nonpushstate href="/help/" style="margin-right: 20px;">Read the docs</a>
@@ -11,13 +10,13 @@
 
 <div class="case-study first">
     <h3>The secret sauce: Using&nbsp;tools&nbsp;for instant&nbsp;wins.</h3>
-    <p>ScraperWiki is a simple platform. All of the magic is performed&nbsp;by&nbsp;tools.</p>
+    <p>QuickCode is a simple platform. All of the magic is performed&nbsp;by&nbsp;tools.</p>
     <p>Tools are single-purpose programs which let domain experts do exactly what they need to do, without touching a line&nbsp;of&nbsp;code.</p>
   <a class="btn btn-primary" data-nonpushstate href="/help/">Try the quick start guides <i class="icon-chevron-right"></i></a>
 </div>
 
 <div class="case-study">
-    <h3>ScraperWiki is about datasets&nbsp;and&nbsp;tools.</h3>
+    <h3>QuickCode is about datasets&nbsp;and&nbsp;tools.</h3>
     <p>Tools create, update, analyse and export&nbsp;data.</p>
     <p>You can install new tools from the tool shop, tweak existing ones, or write your&nbsp;own.</p>
 <% if window?.user?.effective: %>
@@ -30,7 +29,7 @@
 <div class="case-study last">
     <h3>Developers! Code locally, or in&nbsp;your&nbsp;browser.</h3>
     <p>You can choose to Code in your Browser.</p>
-    <p>You can also develop in your local environment, and push code to&nbsp;Scraperwiki with Git or SSH.</p>
+    <p>You can also develop in your local environment, and push code to&nbsp;QuickCode with Git or SSH.</p>
   <a class="btn btn-primary" data-nonpushstate href="/help/developer/#concepts-tools">Read more about boxes <i class="icon-chevron-right"></i></a>
 </div>
 

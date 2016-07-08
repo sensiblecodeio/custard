@@ -37,7 +37,7 @@
 <div class="plan datascientist account-large swcol<% if @upgrade is 'upgrade': %> glowing<% end %>">
   <h2>Data Scientist</h2>
   <p class="cost">$29<small>/mth</small></p>
-  <p>100 simultaneous scrapers</p>
+  <p>100 simultaneous datasets</p>
   <% if @large is 'current': %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else if @large is 'upgrade': %>
@@ -57,7 +57,7 @@
 <div class="plan explorer account-medium swcol">
   <h2>Explorer</h2>
   <p class="cost">$9<small>/mth</small></p>
-  <p>10 simultaneous scrapers</p>
+  <p>10 simultaneous datasets</p>
   <% if @medium is 'current': %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else if @medium is 'upgrade': %>
@@ -77,7 +77,7 @@
 <div class="plan freetrial account-free swcol">
   <h2>30 Day Trial</h2>
   <p class="cost">Free</p>
-  <p>3 simultaneous scrapers</p>
+  <p>3 simultaneous datasets</p>
   <% if @free is 'current': %>
   <a class="currentPlan"><i class="icon-ok space"></i> Current Plan</a>
   <% else if @free is 'downgrade': %>

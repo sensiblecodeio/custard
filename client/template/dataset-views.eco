@@ -1,13 +1,13 @@
 <h4>Views on this data:</h4>
 <div class="view spreadsheet">
     <h3><a href="/dataset/<%=@dataset.box %>/spreadsheet">View Spreadsheet</a></h3>
-    <p><i class="icon-user icon-white space"></i> <span>Author:</span> ScraperWiki</p>
+    <p><i class="icon-user icon-white space"></i> <span>Author:</span> QuickCode</p>
 </div>
 <div class="view csvdownload">
     <h3><a href="/dataset/<%=@dataset.box %>/csvdownload">Download CSV</a></h3>
-    <p><i class="icon-user icon-white space"></i> <span>Author:</span> ScraperWiki</p>
+    <p><i class="icon-user icon-white space"></i> <span>Author:</span> QuickCode</p>
 </div>
 <div class="view newdataset">
     <h3><a href="/dataset/<%=@dataset.box %>/newdataset">View Source</a></h3>
-    <p><i class="icon-user icon-white space"></i> <span>Author:</span> ScraperWiki</p>
+    <p><i class="icon-user icon-white space"></i> <span>Author:</span> QuickCode</p>
 </div>

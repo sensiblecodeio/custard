@@ -18,8 +18,8 @@ PageTitles =
     heading: 'Upload and summarise a spreadsheet of data'
     title: "Upload and Summarise | Help | ScraperWiki"
   'help-code-in-your-browser':
-    heading: 'Code a scraper in your browser'
-    title: "Code a Scraper | Help | ScraperWiki"
+    heading: 'Code a script in your browser'
+    title: "Code a Script | Help | ScraperWiki"
   'help-make-your-own-tool':
     heading: 'Make your own tool with HTML, JavaScript & Python'
     title: "Make your own tool | Help | ScraperWiki"
@@ -27,7 +27,7 @@ PageTitles =
     heading: 'Terms & Conditions'
     title: "Terms & Conditions | ScraperWiki"
   'terms-enterprise-agreement':
-    heading: 'ScraperWiki Enterprise Agreement'
+    heading: 'QuickCode Enterprise Agreement'
     title: "Enterprise Agreement | ScraperWiki"
   'pricing':
     heading: 'Pricing'

@@ -54,6 +54,6 @@
 <li class="docs"><a href="/contact/" data-nonpushstate>Contact</a></li>
 <% else: %>
 <li class="login"><a href="/login" data-nonpushstate>Log in</a></li>
-<li class="docs"><a href="/help">Help</a></li>
+<li class="docs"><a href="/help">Docs</a></li>
 <% end %>
 </ul>

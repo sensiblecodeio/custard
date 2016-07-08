@@ -66,7 +66,7 @@ If you find you have lots of sentences, your description is too long.
 
 <h2 id="ts-sql">SQL</h2>
 
-<p>ScraperWiki tools currently store data in SQLite databases.</p>
+<p>QuickCode tools currently store data in SQLite databases.</p>
 
 <p>A convention has developed whereby you can signal to other tools that a table or column should not be shown to end-users: prefixing the table or column name with an underscore.</p>
 
@@ -89,11 +89,11 @@ When in doubt, use <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>
 Bootstrap is a CSS and Javascript framework that makes it easy to build good-looking
 interfaces using a handful of tags and classes. All of the Bootstrap <a
 href="http://twitter.github.com/bootstrap/base-css.html">CSS Classes</a> and
-more <a href="http://twitter.github.com/bootstrap/components.html">Advanced Components</a> are supported in ScraperWiki.
+more <a href="http://twitter.github.com/bootstrap/components.html">Advanced Components</a> are supported in QuickCode.
 </p>
 
 <p>
-Remember to include Bootstrap and the ScraperWiki stylesheet in your HTML <code>&lt;head></code>, as
+Remember to include Bootstrap and the QuickCode stylesheet in your HTML <code>&lt;head></code>, as
 described in <a href="/help#views-basics">the Documentation</a>.
 </p>
 

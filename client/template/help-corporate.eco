@@ -12,12 +12,12 @@
 
 <div class="wrapper">
 
-<h2 id="intro">ScraperWiki for Corporates</h2>
+<h2 id="intro">QuickCode for Corporates</h2>
 
-<p>ScraperWiki helps people manage datasets, and the tools needed to get, clean
+<p>QuickCode helps people manage datasets, and the tools needed to get, clean
 and analyse data.</p>
 
-<p>This page describes the <b>corporate</b> version of ScraperWiki, covering
+<p>This page describes the <b>corporate</b> version of QuickCode, covering
 matters relevant to legal, IT and financial staff. Levels of service for
 non-corporate level customers are lower, and are described in separate terms
 and conditions. End user documentation is also separate.</p>
@@ -30,13 +30,13 @@ improve this living document.</p>
 
 <h2 id="type">Type of cloud service</h2>
 
-<p>ScraperWiki is a hybrid of <abbr title="Software as a Service">SaaS</abbr> and <abbr title="Platform as a Service">PaaS</abbr>. It provides end user tools like a
+<p>QuickCode is a hybrid of <abbr title="Software as a Service">SaaS</abbr> and <abbr title="Platform as a Service">PaaS</abbr>. It provides end user tools like a
 SaaS, yet allows visibility and customisation of all source code like a PaaS.
 This is because data tools need to be <b>easy</b> for anyone to use in most cases, yet
 <b>powerful</b> enough for those who can program to handle edge cases when needed.
 </p>
 
-<p>ScraperWiki is deployed in a Public Cloud model. It is hosted on <abbr title="Infrastructure as a Service">IaaS</abbr>
+<p>QuickCode is deployed in a Public Cloud model. It is hosted on <abbr title="Infrastructure as a Service">IaaS</abbr>
 servers at <a href="https://aws.amazon.com/">Amazon Web Services</a> in Ireland.
 We meet Amazon's tiering standards.
 </p>
@@ -58,7 +58,7 @@ the code of the platform itself is open source.
 
 <h2 id="what">Languages / protocols</h2>
 
-<p>ScraperWiki is a web platform for data science. Subscribers to ScraperWiki can
+<p>QuickCode is a web platform for data science. Subscribers to QuickCode can
 run scripts which get, clean and analyse data &ndash; such as scrapers and
 visualisations. It can be used to gather information from disparate sources,
 including websites, FTP servers, legacy database systems, PDFs, and then export
@@ -66,7 +66,7 @@ that in a common format (Excel, JSON, CSV), or as interactive web
 visualisations.
 </p>
 
-<p>ScraperWiki supports:</p>
+<p>QuickCode supports:</p>
 <ul>
   <li>Any open source programming language &ndash; Python, R, Perl, Java and so on.</li>
   <li>Schema-light SQL datasets (based on SQLite or PostgreSQL).</li>
@@ -159,13 +159,13 @@ in.</p>
 
 <p>Your data and files are available programmatically at all times, via our
 APIs and using the SFTP file transfer protocol. You can use this to make your
-own backups, or to migrate data off ScraperWiki. There is no extra charge for this.
+own backups, or to migrate data off QuickCode. There is no extra charge for this.
 Scrapers and views are written using standard open source tools and
 protocols, making it relatively easy to migrate individual applications to your
 own Linux servers.</p>
 
-<p>In addition, the ScraperWiki platform itself and the core tools are all open
-source (see our <a href="http://github.com/scraperwiki">GitHub account</a>).
+<p>In addition, the QuickCode platform itself and the core tools are all open
+source (see our <a href="http://github.com/QuickCode">GitHub account</a>).
 This gives you the ultimate protection of being able to host it yourself, or 
 pay another organisation to host it for you.
 </p>
@@ -179,7 +179,7 @@ asking us to. It will remain in backups until they are rotated out.
 <!-- TODO: -->
 
 <!-- For current status, and uptime history, see our server monitoring at 
-<a href="http://status.scraperwiki.com/">status.scraperwiki.com</a>. -->
+<a href="http://status.QuickCode.com/">status.QuickCode.com</a>. -->
 
 <!-- Ordering, invoicing and on boarding - how to place order, and set up admin
 users and so on -->
@@ -202,7 +202,7 @@ notice, and help migrating any old tools they have which rely on the changing
 features.  -->
 
 <!-- Documentation, tutorials and training 
-ScraperWiki is open source, and has a thriving community. This supplements paid
+QuickCode is open source, and has a thriving community. This supplements paid
 for support. Questions can be asked and answered on our public data hub, on a
 public mailing list (Google Groups) and on StackOverflow (programming Q&A
 site). Quick and diverse help is immediately available for free from those

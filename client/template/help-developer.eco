@@ -50,7 +50,7 @@
 
 <h2 id="concepts">Core Concepts: Datasets, Tools &amp; Boxes</h2>
 
-<p><strong>ScraperWiki is about datasets.</strong> The simplest dataset is just an SQLite database, shared with a bunch of tools.</p>
+<p><strong>QuickCode is about datasets.</strong> The simplest dataset is just an SQLite database, shared with a bunch of tools.</p>
 
 <p><strong>Tools act on datasets.</strong> Tools are things that populate, update, visualise or export a dataset. </p>
 
@@ -76,7 +76,7 @@ test/
 README.md
 scraperwiki.json</pre>
 
-<p>When someone activates the Upload Spreadsheet tool, ScraperWiki creates a new box, symlinks a global checkout of the Git repository into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe.</p>
+<p>When someone activates the Upload Spreadsheet tool, QuickCode creates a new box, symlinks a global checkout of the Git repository into the box&rsquo;s <code>/home/tool/</code> directory, and shows the tool&rsquo;s <code>http/index.html</code> file to the user in an iframe.</p>
 
 <p>This <code>index.html</code> file contains JavaScript that reads settings and generates a user interface for selecting a spreadsheet to upload. It uses the <a data-nonpushstate href="#js-introduction">scraperwiki.js library</a> to select data and run the server-side <code>extract.py</code> script.</p>
 
@@ -89,7 +89,7 @@ scraperwiki.json</pre>
   "color": "#029745"
 }</pre>
 
-<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by ScraperWiki. You might want to put technical configuration instructions in here.</p>
+<p>A <code>README.md</code> file is included in the Git repo so <a href="https://github.com/scraperwiki/spreadsheet-upload-tool">collaborators on Github</a> know what the tool does. This file is not read by QuickCode. You might want to put technical configuration instructions in here.</p>
 
 <p>The <code>test/</code> directory contains Python unit tests used during development. We suggest you write tests for your tools.</p>
 
@@ -97,7 +97,7 @@ scraperwiki.json</pre>
 
 <h2 id="concepts-tables-grids">Tables and grids</h2>
 
-<p>ScraperWiki is about data. Most of that data is ridigly structured, often stored in SQL tables.</p>
+<p>QuickCode is about data. Most of that data is ridigly structured, often stored in SQL tables.</p>
 
 <p>But sometimes you have to deal with data that has no structure &ndash; like an array of cells in a spreadsheet. There may be structured data buried inside it, but right now it&rsquo;s a bag of cells. We have a term for these bags of cells: <strong>grids</strong>.</p>
 

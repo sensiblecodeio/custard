@@ -27,7 +27,7 @@ PageTitles =
     heading: 'Terms & Conditions'
     title: "Terms & Conditions | ScraperWiki"
   'terms-enterprise-agreement':
-    heading: 'ScraperWiki Enterprise Agreement'
+    heading: 'QuickCode Enterprise Agreement'
     title: "Enterprise Agreement | ScraperWiki"
   'pricing':
     heading: 'Pricing'

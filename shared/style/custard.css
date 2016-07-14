@@ -1303,6 +1303,16 @@ div.pricing p.corporate {
   margin: 0 20px 0 20px;
 }
 
+.login-ad h2 {
+  margin-top: 60px;
+}
+
+.login-ad p {
+  font-size: 16px;
+  clear: both;
+}
+
+
 
 /* Subscription page */
 

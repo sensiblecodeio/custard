@@ -51,7 +51,7 @@
   </ul>
 </li>
 <li class="docs"><a href="/help">Docs</a></li>
-<li class="docs"><a href="/contact/" data-nonpushstate>Contact</a></li>
+<li class="docs"><a href="https://quickcode.io/#contact" data-nonpushstate>Contact</a></li>
 <% else: %>
 <li class="login"><a href="/login" data-nonpushstate>Log in</a></li>
 <li class="docs"><a href="/help">Docs</a></li>

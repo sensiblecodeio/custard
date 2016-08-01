@@ -1,4 +1,5 @@
 <div class="hero-unit" style="background-color: #DAF0FF">
+  <img class="pull-right" src="/image/tractor-500x320.png" width="220" height="141" alt="The QuickCode digger" style="margin: 0 0 10px 10px">
   <h1>Welcome to QuickCode!</h1>
   <p class="lead">QuickCode helps you get your data, and use it in the way that you need.
   Here&rsquo;s a sixty-second rundown of how it works.</p>

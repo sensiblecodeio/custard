@@ -886,7 +886,7 @@ changePlan = (req, resp) ->
       if err?
         return resp.send 404, error: "Couldn't find your subscription"
       if not currentSubscription
-        return resp.send 404, error: "You do not have a recurly subscription. Please get one at https://scraperwiki.com/pricing"
+        return resp.send 404, error: "You do not have a recurly subscription. Please get one at https://app.quickcode.io/pricing"
 
       currentSubscription.upgrade req.params.plan, (err, recurlyResp) ->
         if err?
@@ -912,7 +912,7 @@ redirectToRecurlyAdmin = (req, resp) ->
         return resp.send 404, error: err.error
 
       if not recurlyAdminUrl
-        return resp.send 404, error: "You do not have a recurly hosted_login_token. Contact hello@scraperwiki.com for help."
+        return resp.send 404, error: "You do not have a recurly hosted_login_token. Contact hello@quickcode.io for help."
       resp.writeHead 302,
         location: recurlyAdminUrl
       resp.end()

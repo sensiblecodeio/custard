@@ -170,7 +170,7 @@ class exports.User extends ModelBase
         callback null, null
 
   @findByEmail: (email, callback) ->
-    # Beware: Unlike shortNames, email addresses are not unique in ScraperWiki.
+    # Beware: Unlike shortNames, email addresses are not unique in QuickCode.
     # Therefore, this function returns a list of matching user objects.
     @dbClass.find {email: email}, (err, users) =>
       if err?

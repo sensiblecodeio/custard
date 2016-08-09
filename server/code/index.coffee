@@ -624,7 +624,7 @@ app.get '/signup/community', (req, resp) ->
 
 app.get '/signup/?*', (req, resp) ->
   # disable self service signup
-  resp.redirect 'https://scraperwiki.com/products/scraping-platform'
+  resp.redirect 'https://quickcode.io'
   #renderServerAndClientSide {page: "sign-up", subnav: 'signupnav'}, req, resp
 
 app.get '/help/?:section', (req, resp) ->

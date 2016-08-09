@@ -807,7 +807,7 @@ has no order, the keys in these objects are in the same order as the columns in 
 
 <h3 id="boxes-status">Dataset status API</h3>
 
-<p>QuickCode can be informed of the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://scraperwiki.com/api/status</code>. The dataset status will be shown on the QuickCode website, in users' dataset lists.</p>
+<p>QuickCode can be informed of the status of your datasets (for example, when they last ran, and whether they encountered errors). You can register the status of your dataset by making a <code>HTTP POST</code> request, <em class="text-error">from within the box</em>, to <code>https://app.quickcode.io/api/status</code>. The dataset status will be shown on the QuickCode website, in users' dataset lists.</p>
 
 <table class="table table-bordered">
   <thead>

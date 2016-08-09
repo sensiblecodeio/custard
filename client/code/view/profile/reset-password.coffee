@@ -8,7 +8,7 @@ class Cu.View.ResetPassword extends Backbone.View
     @el.innerHTML = JST['reset-password'] window.user?.real
     $('#forgotten-shortname', @$el).popover(
       title: "No problem!"
-      content: 'Email us for a reset link: <a href="mailto:hello@scraperwiki.com">hello@scraperwiki.com</a>'
+      content: 'Email us for a reset link: <a href="mailto:hello@quickcode.io">hello@quickcode.io</a>'
       html: true
       placement: 'right'
     ).on('click', (e) ->
@@ -40,7 +40,7 @@ class Cu.View.ResetPassword extends Backbone.View
           if jqxhr.status == 404
             msg = """<div class="alert"><strong>Hmmm. That username could not be found.</strong></div>"""
           else
-            msg = """<div class="alert alert-error"><strong>Hmmm. Something went wrong.</strong> Email <a href="mailto:hello@scraperwiki.com">hello@scraperwiki.com</a> and we&rsquo;ll email you a password reset link manually.</div>"""
+            msg = """<div class="alert alert-error"><strong>Hmmm. Something went wrong.</strong> Email <a href="mailto:hello@quickcode.io">hello@quickcode.io</a> and we&rsquo;ll email you a password reset link manually.</div>"""
           $('form', @$el).prepend msg
           $('#go').attr('disabled', false).removeClass('loading')
           _gaq.push ['_trackEvent', 'set-password', 'failure', query]

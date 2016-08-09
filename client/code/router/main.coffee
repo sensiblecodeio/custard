@@ -112,7 +112,7 @@ class Cu.Router.Main extends Backbone.Router
               ts_datasets: 0
               tf_datasets: 0
               cb_datasets: 0
-              switch_url: "https://scraperwiki.com/switch/" + real.shortName
+              switch_url: "https://app.quickcode.io/switch/" + real.shortName
               recurly_url: "https://scraperwiki.recurly.com/accounts/" + real.recurlyAccount
               mongo_url: "https://app.compose.io/mongohq-scraperwiki-com/deployments/cu-2015/mongodb/databases/cu-live/collections/users/documents?limit=10&find%5Bquery%5D={%22shortName%22%3A%22" + real.shortName + "%22}"
 

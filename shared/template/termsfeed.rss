@@ -3,11 +3,11 @@
 
 <channel>
   <title>New QuickCode Terms and Conditions</title>
-  <link>https://scraperwiki.com/</link>
+  <link>https://quickcode.io/</link>
   <description>Changes to our website terms</description>
   <item>
     <title>First version 1</title>
-    <link>https://scraperwiki.com/terms</link>
+    <link>https://app.quickcode.io/terms</link>
     <description>This is the first version.</description>
   </item>
 </channel>

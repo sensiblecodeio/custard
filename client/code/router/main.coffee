@@ -149,7 +149,7 @@ class Cu.Router.Main extends Backbone.Router
 
   dashboard: ->
     contentView = new Cu.View.Dashboard
-    window.document.title = 'Your dashboard | ScraperWiki'
+    window.document.title = 'Your dashboard | QuickCode'
     @appView.showView contentView
     @subnavView.hideView()
 

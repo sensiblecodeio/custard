@@ -327,7 +327,7 @@ checkSwitchUserRights = (req, res, next) ->
 renderClientApp = (req, resp) ->
   getSessionUsersFromDB req.user, (usersObj) ->
     resp.render 'index',
-      title: 'ScraperWiki'
+      title: 'QuickCode'
       nav: ''
       subnav: ''
       content: ''
@@ -363,7 +363,7 @@ renderServerAndClientSide = (options, req, resp) ->
 
         getSessionUsersFromDB req.user, (usersObj) ->
           resp.render 'index',
-              title: options.title or 'ScraperWiki'
+              title: options.title or 'QuickCode'
               nav: eco.render navTemplate.toString()
               subnav: """<div class="subnav-wrapper">#{eco.render subnavTemplate.toString(), options}</div>"""
               content: """<div class="#{options.page}">#{eco.render contentTemplate.toString(), {} }</div>"""

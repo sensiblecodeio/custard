@@ -15,7 +15,7 @@ describe 'Home page (logged in)', ->
 
   it 'contains the scraperwiki logo', (done) ->
     wd40.getText '#logo', (err, h) ->
-      h.should.equal 'ScraperWiki'
+      h.should.equal 'QuickCode'
       done()
 
   it 'shows my datasets as big rectangular tiles', (done) ->

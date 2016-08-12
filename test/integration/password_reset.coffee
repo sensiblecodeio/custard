@@ -133,5 +133,5 @@ describe 'Password reset', ->
         it 'it tells me something unexpected went wrong', (done) ->
           wd40.waitForText 'Something went wrong', done
 
-        it 'it tells me to email hello@scraperwiki.com', (done) ->
-          wd40.waitForText 'hello@scraperwiki.com', done
+        it 'it tells me to email hello@quickcode.io', (done) ->
+          wd40.waitForText 'hello@quickcode.io', done

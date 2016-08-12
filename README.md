@@ -2,7 +2,7 @@
 
 A platform for tools that do stuff with data.
 
-Together with cobalt, custard powers the [new ScraperWiki platform](https://scraperwiki.com).
+Together with cobalt, custard powers the Sensible Code Company's [QuickCode platform](https://quickcode.io).
 
 AGPL Licenced (see LICENCE file).
 

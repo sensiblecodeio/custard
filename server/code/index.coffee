@@ -327,7 +327,7 @@ checkSwitchUserRights = (req, res, next) ->
 renderClientApp = (req, resp) ->
   getSessionUsersFromDB req.user, (usersObj) ->
     resp.render 'index',
-      title: 'ScraperWiki'
+      title: 'QuickCode'
       nav: ''
       subnav: ''
       content: ''
@@ -363,7 +363,7 @@ renderServerAndClientSide = (options, req, resp) ->
 
         getSessionUsersFromDB req.user, (usersObj) ->
           resp.render 'index',
-              title: options.title or 'ScraperWiki'
+              title: options.title or 'QuickCode'
               nav: eco.render navTemplate.toString()
               subnav: """<div class="subnav-wrapper">#{eco.render subnavTemplate.toString(), options}</div>"""
               content: """<div class="#{options.page}">#{eco.render contentTemplate.toString(), {} }</div>"""
@@ -624,7 +624,7 @@ app.get '/signup/community', (req, resp) ->
 
 app.get '/signup/?*', (req, resp) ->
   # disable self service signup
-  resp.redirect 'https://scraperwiki.com/products/scraping-platform'
+  resp.redirect 'https://quickcode.io'
   #renderServerAndClientSide {page: "sign-up", subnav: 'signupnav'}, req, resp
 
 app.get '/help/?:section', (req, resp) ->
@@ -886,7 +886,7 @@ changePlan = (req, resp) ->
       if err?
         return resp.send 404, error: "Couldn't find your subscription"
       if not currentSubscription
-        return resp.send 404, error: "You do not have a recurly subscription. Please get one at https://scraperwiki.com/pricing"
+        return resp.send 404, error: "You do not have a recurly subscription. Please get one at https://app.quickcode.io/pricing"
 
       currentSubscription.upgrade req.params.plan, (err, recurlyResp) ->
         if err?
@@ -912,7 +912,7 @@ redirectToRecurlyAdmin = (req, resp) ->
         return resp.send 404, error: err.error
 
       if not recurlyAdminUrl
-        return resp.send 404, error: "You do not have a recurly hosted_login_token. Contact hello@scraperwiki.com for help."
+        return resp.send 404, error: "You do not have a recurly hosted_login_token. Contact hello@quickcode.io for help."
       resp.writeHead 302,
         location: recurlyAdminUrl
       resp.end()

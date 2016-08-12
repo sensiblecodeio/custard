@@ -139,7 +139,7 @@ class exports.User extends ModelBase
         return callback err, null
 
       if not obj.account?.hosted_login_token
-        return callback { error: "You do not have a recurly hosted_login_token. Contact hello@scraperwiki.com for help." }, null
+        return callback { error: "You do not have a recurly hosted_login_token. Contact hello@quickcode.io for help." }, null
 
       callback null, "https://#{process.env.RECURLY_DOMAIN}.recurly.com/account/#{obj.account.hosted_login_token}"
 
@@ -170,7 +170,7 @@ class exports.User extends ModelBase
         callback null, null
 
   @findByEmail: (email, callback) ->
-    # Beware: Unlike shortNames, email addresses are not unique in ScraperWiki.
+    # Beware: Unlike shortNames, email addresses are not unique in QuickCode.
     # Therefore, this function returns a list of matching user objects.
     @dbClass.find {email: email}, (err, users) =>
       if err?

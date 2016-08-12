@@ -5,7 +5,7 @@ class Cu.View.Subnav extends Backbone.View
     @options = options || {};
 
   render: ->
-    window.document.title = @options.title or 'ScraperWiki'
+    window.document.title = @options.title or 'QuickCode'
     @$el.html JST['subnav'] @options
     @
 
@@ -24,7 +24,7 @@ class Cu.View.DataHubNav extends Backbone.View
 
   render: ->
     name = window.user.effective.displayName or window.user.effective.shortName
-    window.document.title = "#{name}’s data hub | ScraperWiki"
+    window.document.title = "#{name}’s data hub | QuickCode"
     @$el.html JST['subnav-home']
       avatar: window.user.effective.logoUrl or window.user.effective.avatarUrl
       name: name
@@ -99,7 +99,7 @@ class Cu.View.Toolbar extends Backbone.View
 
   initialize: (options) ->
     @options = options || {};
-    window.document.title = "#{@model.get 'displayName'} | ScraperWiki"
+    window.document.title = "#{@model.get 'displayName'} | QuickCode"
     @toolsView = new Cu.View.DatasetTools
       model: @model
       view: @options.view
@@ -129,7 +129,7 @@ class Cu.View.Toolbar extends Backbone.View
 
   renderName: ->
     name = @model.get 'displayName'
-    window.document.title = "#{name} | ScraperWiki"
+    window.document.title = "#{name} | QuickCode"
     @$el.find('#dataset-meta h3').text name
     @$el.find('#dataset-meta input').val name
 
@@ -222,7 +222,7 @@ class Cu.View.SignUpNav extends Backbone.View
     if capitalisedPlan == 'Datascientist'
       capitalisedPlan = 'Data Scientist'
     @$el.html JST['signupnav'] plan: capitalisedPlan
-    window.document.title = "#{capitalisedPlan } | Sign Up | ScraperWiki"
+    window.document.title = "#{capitalisedPlan } | Sign Up | QuickCode"
     this
 
 
@@ -233,7 +233,7 @@ class Cu.View.HelpNav extends Backbone.View
     @options = options || {};
 
   render: ->
-    window.document.title = @options.title or 'ScraperWiki'
+    window.document.title = @options.title or 'QuickCode'
     @$el.html JST['helpnav'] @options
     this
 
@@ -246,7 +246,7 @@ class Cu.View.ToolShopNav extends Backbone.View
     @options = options || {};
     
   render: ->
-    window.document.title = "#{@options.name} | ScraperWiki"
+    window.document.title = "#{@options.name} | QuickCode"
     @$el.html("""
       <div class="btn-toolbar" id="subnav-path">
         <h1 class="btn-group">

@@ -32,9 +32,6 @@ class Cu.Router.Main extends Backbone.Router
 
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
-    _gaq.push ['_trackPageview', "/#{path}"]
-    if 'real' of window.user
-      _gaq.push ['_setCustomVar', 1, 'shortName', window.user.real.shortName, 1]
 
   trackOptimizely: (e) ->
     window.optimizely = window.optimizely or []

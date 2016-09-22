@@ -2,8 +2,8 @@ class Cu.View.ToolContent extends Backbone.View
   id: 'fullscreen'
 
   initialize: ->
-    @model.on 'update:tool', @googleAnalytics, @
-    @googleAnalytics()
+    @model.on 'update:tool', @sendAnalytics, @
+    @sendAnalytics()
 
   render: ->
     $('body').addClass('fullscreen')
@@ -27,10 +27,9 @@ class Cu.View.ToolContent extends Backbone.View
     $('body').removeClass('fullscreen')
     super()
 
-  googleAnalytics: ->
+  sendAnalytics: ->
     if @model.get('tool')
       toolName = @model.get('tool').get 'name'
-      _gaq.push ['_trackEvent', 'tools', 'render', toolName]
       mixpanel.track("Render view", { 'tool': toolName })
 
   setupEasyXdm: (url) ->
@@ -55,7 +54,6 @@ class Cu.View.ToolContent extends Backbone.View
                 success: (model, resp, options) ->
                   model.set 'displayName', name
                   model.save()
-                  _gaq.push ['_trackEvent', 'datasets', 'rename-xdm', name]
         pushSQL: (query, toolName) =>
           # TODO: passing via a global variable is ickly
           window.app.pushSqlQuery = query

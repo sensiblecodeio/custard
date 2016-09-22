@@ -61,17 +61,6 @@ for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElemen
     window.mixpanelUserHash = "<%- mixpanelUserHash %>"
     //console.log("mixpanel.identify", window.mixpanelUserHash)
     mixpanel.identify(window.mixpanelUserHash)
-    _gaq = [ ['_setAccount', 'UA-21451224-7'], ['_setDomainName', 'scraperwiki.com'] ]
-    if(window.custardEnvironment == 'production'){
-      (function(){
-        var g = document.createElement('script'),
-            s = document.getElementsByTagName('script')[0]
-        g.src = '//www.google-analytics.com/ga.js'
-        s.parentNode.insertBefore(g, s)
-      })()
-    } else {
-      console.log('Google Analytics disabled in development environment')
-    }
   </script>
   <%- templates %>
   <%- scripts %>

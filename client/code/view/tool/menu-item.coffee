@@ -104,8 +104,6 @@ class Cu.View.ArchetypeMenuItem extends Backbone.View
             $('a', el).addClass('active')
             $('#toolbar .tools').append el
             $("ul.archetypes a[data-toolname='#{toolName}']").parent().remove()
-            _gaq.push ['_trackEvent', 'tools', 'install', toolName]
-            _gaq.push ['_trackEvent', 'views', 'create']
             mixpanel.track("Create view", { 'tool': @model.get 'name' })
             window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
           else

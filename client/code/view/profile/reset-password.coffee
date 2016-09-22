@@ -35,7 +35,6 @@ class Cu.View.ResetPassword extends Backbone.View
         success: (data) =>
           $('form', @$el).prepend """<div class="alert alert-success"><strong>Password reset link sent.</strong> Please check your emails.</a></div>"""
           $('#go').attr('disabled', false).removeClass('loading')
-          _gaq.push ['_trackEvent', 'set-password', 'success', query]
         error: (jqxhr, textStatus, errorThrown) =>
           if jqxhr.status == 404
             msg = """<div class="alert"><strong>Hmmm. That username could not be found.</strong></div>"""
@@ -43,4 +42,3 @@ class Cu.View.ResetPassword extends Backbone.View
             msg = """<div class="alert alert-error"><strong>Hmmm. Something went wrong.</strong> Email <a href="mailto:hello@quickcode.io">hello@quickcode.io</a> and we&rsquo;ll email you a password reset link manually.</div>"""
           $('form', @$el).prepend msg
           $('#go').attr('disabled', false).removeClass('loading')
-          _gaq.push ['_trackEvent', 'set-password', 'failure', query]

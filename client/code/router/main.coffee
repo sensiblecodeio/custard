@@ -13,7 +13,6 @@ class Cu.Router.Main extends Backbone.Router
     @errorView ?= new Cu.View.ErrorAlert el: '#error-alert'
     @on 'route', @errorView.hide
     @on 'route', @trackPageView
-    @on 'route', @trackOptimizely
     @on 'route', @checkDaysLeft
 
     # TODO: this isn't a great place for this constant
@@ -31,12 +30,6 @@ class Cu.Router.Main extends Backbone.Router
 
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
-
-  trackOptimizely: (e) ->
-    window.optimizely = window.optimizely or []
-    # 'activate' seems to send the current URL to Optimizely
-    # which is exactly what we want when pushState routing happens.
-    window.optimizely.push ['activate']
 
   checkDaysLeft: (route) ->
     # Here we enforce the policy that expired free-trial users

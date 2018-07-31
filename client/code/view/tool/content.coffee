@@ -30,7 +30,6 @@ class Cu.View.ToolContent extends Backbone.View
   sendAnalytics: ->
     if @model.get('tool')
       toolName = @model.get('tool').get 'name'
-      mixpanel.track("Render view", { 'tool': toolName })
 
   setupEasyXdm: (url) ->
     transport = new easyXDM.Rpc

@@ -338,8 +338,6 @@ renderClientApp = (req, resp) ->
       flash: req.flash()
       environment: process.env.NODE_ENV
       loggedIn: 'real' of usersObj
-      mixpanelToken: process.env.MIXPANEL_TOKEN
-      mixpanelUserHash: getMixpanelUserHash req.user?.real.shortName
 
 # Bypass Backbone by parsing and rendering the given
 # client-side page to HTML (useful for SEO on docs pages etc)
@@ -374,16 +372,6 @@ renderServerAndClientSide = (options, req, resp) ->
               flash: req.flash()
               environment: process.env.NODE_ENV
               loggedIn: 'real' of usersObj
-              mixpanelToken: process.env.MIXPANEL_TOKEN
-              mixpanelUserHash: getMixpanelUserHash req.user?.real.shortName
-
-# (internal) Get the HMAC hash for the specified user
-getMixpanelUserHash = (shortName) ->
-  hash = null
-  if shortName and process.env.MIXPANEL_USER_ID_SALT
-    key = process.env.MIXPANEL_USER_ID_SALT
-    hash = crypto.createHmac('sha256', key).update(shortName).digest('hex')
-  return hash
 
 # (internal) Add a view to a dataset
 _addView = (user, dataset, attributes, callback) ->
@@ -917,14 +905,6 @@ redirectToRecurlyAdmin = (req, resp) ->
         location: recurlyAdminUrl
       resp.end()
 
-sendMixpanelMessage = (req, resp) ->
-  messageObject =
-    user_id: req.user.real.shortName
-    url: req.body.url
-    body: req.body.message
-  # TODO: Not used for now
-  console.log("*** sendMixpanelMessage", messageObject)
-
 # recursively convert any numeric strings to numbers
 numberify = (obj) ->
   if typeof obj == 'object'
@@ -932,22 +912,6 @@ numberify = (obj) ->
   else if not isNaN parseFloat obj
     obj = parseFloat obj
   return obj
-
-sendMixpanelUserData = (req, resp) ->
-  messageObject = numberify req.body
-  messageObject.user_id = req.user.real.shortName
-
-  # TODO: Not used for now
-  console.log("*** sendMixpanelUserData", messageObject)
-
-sendMixpanelTag = (req, resp) ->
-  messageObject =
-    user_ids: [req.user.real.shortName]
-    name: req.body.name
-    tag_or_untag: "tag"
-
-  # TODO: Not used for now
-  console.log("*** sendMixpanelTag", messageObject)
 
 # This does automatic switching if you try to
 # access a dataset not in your current data hub
@@ -1011,10 +975,6 @@ api.get '/:user/sshkeys/?', listSSHKeys
 
 api.put '/:user/subscription/change/:plan/?', changePlan
 api.get '/:user/subscription/billing', redirectToRecurlyAdmin
-
-api.post '/reporting/message/?', sendMixpanelMessage
-api.post '/reporting/user/?', sendMixpanelUserData
-api.post '/reporting/tag/?', sendMixpanelTag
 
 app.get '/logout', ensureAuthenticated, logout
 

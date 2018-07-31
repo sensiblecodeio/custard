@@ -191,8 +191,6 @@ class Cu.View.Toolbar extends Backbone.View
       $label.text(@newName).parent().show()
       @model.set 'displayName', @newName
       @model.save {},
-        success: =>
-          mixpanel.track("Rename dataset", { "newname" : @newName })
         error: (model, xhr, options) =>
           $label.text @oldName
           @model.set 'displayName', @oldName

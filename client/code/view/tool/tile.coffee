@@ -51,7 +51,6 @@ class Cu.View.AppTile extends Cu.View.ToolTile
     dataset.save {},
       wait: true
       success: =>
-        mixpanel.track("Create dataset", { 'tool': @model.get 'name' })
         delete dataset.new
         window.app.navigate "/dataset/#{dataset.id}/settings", {trigger: true}
         $('#chooser').fadeOut 200, ->
@@ -96,7 +95,6 @@ class Cu.View.PluginTile extends Cu.View.ToolTile
             $('a', el).addClass('active')
             $('#toolbar .tool.active').removeClass("active")
             $('#toolbar .tools').append el
-            mixpanel.track("Create view", { 'tool': @model.get 'name' })
             window.app.navigate "/dataset/#{dataset.id}/view/#{view.id}", trigger: true
 
           $('#chooser').fadeOut 200, ->

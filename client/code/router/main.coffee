@@ -13,8 +13,6 @@ class Cu.Router.Main extends Backbone.Router
     @errorView ?= new Cu.View.ErrorAlert el: '#error-alert'
     @on 'route', @errorView.hide
     @on 'route', @trackPageView
-    @on 'route', @trackMixpanel
-    @on 'route', @trackOptimizely
     @on 'route', @checkDaysLeft
 
     # TODO: this isn't a great place for this constant
@@ -32,23 +30,6 @@ class Cu.Router.Main extends Backbone.Router
 
   trackPageView: (e) ->
     path = Backbone.history.getFragment()
-
-  trackOptimizely: (e) ->
-    window.optimizely = window.optimizely or []
-    # 'activate' seems to send the current URL to Optimizely
-    # which is exactly what we want when pushState routing happens.
-    window.optimizely.push ['activate']
-
-  trackMixpanel: ->
-    #alert window.mixpanelUserHash
-    if 'real' of window.user and window.mixpanelUserHash != ''
-      @getMixpanelSettings (mixpanelSettings) ->
-        #console.log("mixpanel.identify", window.mixpanelUserHash)
-        mixpanel.identify(window.mixpanelUserHash)
-        #console.log("mixpanel.people.set", mixpanelSettings)
-        mixpanel.people.set(mixpanelSettings)
-        path = Backbone.history.getFragment()
-        mixpanel.track("Browse")
 
   checkDaysLeft: (route) ->
     # Here we enforce the policy that expired free-trial users
@@ -82,54 +63,6 @@ class Cu.Router.Main extends Backbone.Router
       # app.navigate doesn't work, but setting location.href does.
       # app.navigate "/pricing/expired", trigger: true
       window.location.href = "/pricing/expired"
-
-  getMixpanelSettings: (cb) ->
-    real = window.user.real
-    effective = window.user.effective
-
-    app.tools().fetch
-      success: =>
-        app.datasets().fetch
-          success: (model) =>
-            datasets = model.toJSON()
-            settings =
-              short_name: real.shortName
-              "$name": real.displayName
-              "$email": real.email[0]
-              created_at: moment(real.created, 'YYYY-MM-DD HH:mm:ssZ').unix()
-              "$created": real.created
-              account_level: real.accountLevel
-              datahub_id: effective.shortName
-              datahub_name: effective.displayName
-              datasets: datasets.length
-              dataset_created_at: null
-              tx_datasets: 0
-              tx_downloads: 0
-              tx_created_at: null
-              ts_datasets: 0
-              tf_datasets: 0
-              cb_datasets: 0
-              switch_url: "https://app.quickcode.io/switch/" + real.shortName
-              recurly_url: "https://scraperwiki.recurly.com/accounts/" + real.recurlyAccount
-              mongo_url: "https://app.compose.io/mongohq-scraperwiki-com/deployments/cu-2015/mongodb/databases/cu-live/collections/users/documents?limit=10&find%5Bquery%5D={%22shortName%22%3A%22" + real.shortName + "%22}"
-
-            _.each datasets, (dataset) ->
-              date = moment(dataset.createdDate, 'YYYY-MM-DD HH:mm:ssZ').unix()
-              settings.dataset_created_at = Math.max date, settings.dataset_created_at
-              if dataset.tool == 'table-xtract'
-                settings.tx_created_at = Math.max date, settings.tx_created_at
-                settings.tx_datasets += 1
-                _.each dataset.views, (view) ->
-                  if view.tool == 'spreadsheet-download'
-                    settings.tx_downloads += 1
-              else if dataset.tool == 'twitter-search'
-                settings.ts_datasets += 1
-              else if dataset.tool == 'twitter-follows'
-                settings.tf_datasets += 1
-              else if dataset.tool == 'code-scraper-in-browser'
-                settings.cb_datasets += 1
-
-            cb settings
 
   homeAnonymous: ->
     contentView = new Cu.View.Home

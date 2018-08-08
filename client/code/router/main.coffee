@@ -16,7 +16,7 @@ class Cu.Router.Main extends Backbone.Router
     @on 'route', @checkDaysLeft
 
     # TODO: this isn't a great place for this constant
-    window.latestTerms = 1
+    window.latestTerms = 2
 
     if window.user?.real
       if isNaN(window.user.real.acceptedTerms) or window.user.real.acceptedTerms < window.latestTerms

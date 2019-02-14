@@ -15,7 +15,7 @@
     "connect": "~2.15.0",
     "connect-assets": "~2.5.5",
     "connect-flash": "~0.1.0",
-    "connect-mongo": "~0.4.0",
+    "connect-mongo": "~0.4.2",
     "cookie-parser": "^1.0.1",
     "eco": "~1.1.0-rc-3",
     "ejs": "~0.8.3",
@@ -26,7 +26,7 @@
     "ident-express": "*",
     "mailchimp": "~1.1.0",
     "moment": "~2.6.0",
-    "mongoose": "~3.8.9",
+    "mongoose": "~3.8.25",
     "morgan": "^1.0.1",
     "nodemailer": "~0.3.43",
     "nodemon": "~1.0.17",
@@ -63,7 +63,7 @@
     "jsdom": "~0.10.1",
     "wd": "~0.2.21",
     "wd40": "~0.1.0",
-    "mongodb": "~1.2.12",
+    "mongodb": "~2.2.19",
     "sqlite3": "~2.1.7"
   },
   "engines": {

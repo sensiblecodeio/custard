@@ -1038,9 +1038,6 @@ process.on 'SIGTERM', ->
 
 if /staging|production/.test process.env.NODE_ENV
   process.on 'uncaughtException', (err) ->
-    console.warn err
-    setTimeout ->
-      process.kill process.pid, 'SIGTERM'
-    , 500
+    throw err
 
 exports.app = app
